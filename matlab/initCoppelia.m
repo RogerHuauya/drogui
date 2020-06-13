@@ -1,4 +1,3 @@
-
 disp('Program started');
 sim = remApi('remoteApi'); % using the prototype file (remoteApiProto.m)
 sim.simxFinish(-1); % just in case, close all opened connections
