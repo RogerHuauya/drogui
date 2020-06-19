@@ -1,4 +1,5 @@
 #include <xc.h>
+#include <p33FJ128MC804.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -90,7 +91,7 @@ int main(void){
                         Piston press: %.2f\n",\
                         lung->val, flow -> val,  piston -> val);
                     
-        serialWriteString(buff, 50);
+        serialWriteString(buff);
     }
     return 0;
 }

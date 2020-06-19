@@ -7,6 +7,6 @@
 void initSerial();
 bool serialAvailable();
 void serialWriteChar(char data);
-void serialWriteString(char* s, int nbytes);
+void serialWriteString(char* s);
 char serialReadChar();
 #endif
