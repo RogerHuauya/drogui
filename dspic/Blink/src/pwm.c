@@ -58,8 +58,8 @@ void setPwmDuty(pwm* p, double percent){
     int DC = (int) percent/100*(p -> period);
     switch (p -> n){
         case 1: if(p->mod == 1) P1DC1 = DC; else P2DC1 = DC; break; 
-        case 2: if(p->mod == 1) P1DC2 = DC; /*else P2DC2 = DC;*/ /*break;
-        case 3: if(p->mod == 1) P1DC3 = DC; /*else P2DC3 = DC;*//* break;
+        case 2: if(p->mod == 1) P1DC2 = DC; /*else P2DC2 = DC; break;
+        case 3: if(p->mod == 1) P1DC3 = DC; /*else P2DC3 = DC;break;
         //case 4: if(p->mod == 1) P1DC4 = DC; else P2DC4 = DC; break;
     }
 }

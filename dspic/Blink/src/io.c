@@ -1,11 +1,19 @@
 #include "io.h"
 
 void digitalWrite(int port, int pin, bool on){
-    int num = ( ( (int) on ) << pin);
-    switch (port){
-        case PRTA: LATA |= num; break;
-        case PRTB: LATB |= num; break;
-        case PRTC: LATC |= num; break;
+    if(on){
+        switch (port){
+            case PRTA:  LATA |= (1 << pin); break;
+            case PRTB:  LATB |= (1 << pin); break;
+            case PRTC:  LATC |= (1 << pin); break;
+        } 
+    }
+    else{
+        switch (port){
+            case PRTA:  LATA &= ~(1 << pin); break;
+            case PRTB:  LATB &= ~(1 << pin); break;
+            case PRTC:  LATC &= ~(1 << pin); break;
+        }
     }
 }
 
@@ -52,6 +60,6 @@ void pinMode(int port, int pin, bool in){
     switch (port){
         case PRTA:  TRISA ^= (1 << pin); break;
         case PRTB:  TRISB ^= (1 << pin); break;
-        case PRTC:  TRISC ^= (1 << pin); break;
+        case PRTC:  TRISC ^= (1 << pin);; break;
     } 
 }

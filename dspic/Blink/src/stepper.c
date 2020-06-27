@@ -1,32 +1,21 @@
 #include "stepper.h"
 
-double vel = 0;
-timer *velo, *accel;
 
-
-void initStepper(){
-    initTimer(velo, 0, 0, 0);
-    initTimer(accel, 0, 0, 0);
+void initStepper(stepper *s, int port, int p_dir, int p_stp){
+    s -> p_dir = p_dir;
+    s -> p_stp = p_stp;
+    s -> port = port;
+    pinMode(port, p_dir, OUTPUT);
+    pinMode(port, p_stp, OUTPUT);
 }
 
-void setDir(bool dir){
-    PIN_DIR = dir;
-}
-
-
-void step(){
-    PIN_STP = 1;
-    Nop(), Nop();
-    PIN_STP = 0;
+void setStepperDir(stepper *s, bool dir){
+    digitalWrite(s->port , s->p_dir, dir);
 }
 
 
-void stopStepper(){
-    setVelStepper(0);
+void stepStepper(stepper *s){
+    digitalWrite(s -> port, s->p_stp, 0);
+    __delay_us(2);
+    digitalWrite(s -> port, s->p_stp, 1);
 }
-
-
-void setVelStepper(double x){
-
-}
-

@@ -1,7 +1,7 @@
 #ifndef I2C_H
 #define I2C_H
-/*#include <xc.h>
-
+#include <xc.h>
+/*
 void initI2C();
 int i2cWrite(char data);
 void i2cStart();

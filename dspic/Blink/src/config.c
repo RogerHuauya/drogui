@@ -1,15 +1,15 @@
-#include <config.h>
+#include "config.h"
 // FGS
 #pragma config GWRP = OFF               // General Segment Write-Protect bit (General Segment may be written)
 #pragma config GSS = OFF                // General Segment Code-Protect bit (General Segment Code protect is disabled)
 #pragma config GSSK = OFF               // General Segment Key bits (General Segment Write Protection and Code Protection is Disabled)
 
 // FOSCSEL
-#pragma config FNOSC = PRIPLL          // Initial Oscillator Source Selection Bits (Internal Fast RC (FRC) Oscillator with postscaler)
+#pragma config FNOSC = PRIPLL           // Initial Oscillator Source Selection Bits (Internal Fast RC (FRC) Oscillator with postscaler)
 #pragma config IESO = ON                // Two-speed Oscillator Start-up Enable bit (Start up device with FRC, then switch to user-selected oscillator source)
 
 // FOSC
-#pragma config POSCMD = HS            // Primary Oscillator Mode Select bits (Primary Oscillator disabled)
+#pragma config POSCMD = HS              // Primary Oscillator Mode Select bits (Primary Oscillator disabled)
 #pragma config OSCIOFNC = OFF           // OSC2 Pin Function bit (OSC2 is clock output)
 #pragma config IOL1WAY = ON             // Peripheral pin select configuration (Allow only one reconfiguration)
 #pragma config FCKSM = CSDCMD           // Clock Switching Mode bits (Both Clock switching and Fail-safe Clock Monitor are disabled)
@@ -41,7 +41,9 @@
 void initConfig(){
     // setup internal clock for 80MHz/40MIPS
     // 7.37/2=3.685*43=158.455/2=79.2275
+    // 8
     CLKDIVbits.PLLPRE = 0;        // PLLPRE (N2) 0=/2
-    PLLFBD = 38;                  // pll multiplier (M) = +2
+    PLLFBDbits.PLLDIV = 38;       // pll multiplier (M) = +2
     CLKDIVbits.PLLPOST = 0;       // PLLPOST (N1) 0=/2
+    //while(!OSCCONbits.LOCK);    // wait for PLL ready
 }
