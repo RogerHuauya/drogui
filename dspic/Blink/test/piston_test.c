@@ -1,5 +1,5 @@
-//#define MAIN
-#ifdef MAIN
+#ifdef PISTON_TEST
+
 #include <xc.h>
 #include "config.h"
 #include <libpic30.h>
