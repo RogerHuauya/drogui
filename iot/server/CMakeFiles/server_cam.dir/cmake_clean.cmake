@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/server_cam.dir/server_cam.cpp.o"
-  "server_cam"
   "server_cam.pdb"
+  "server_cam"
 )
 
 # Per-language clean rules from dependency scanning.

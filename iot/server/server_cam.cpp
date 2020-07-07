@@ -14,14 +14,14 @@
 
 using namespace cv;
 using namespace std;
-void buffToMat(Mat* im, char buff[]);
+void mat2Buff(Mat* im, unsigned char buff[]);
 int main(int argc, char const *argv[]) 
 { 
 	int server_fd, new_socket, valread; 
 	struct sockaddr_in address; 
-	int opt = 1; 
+	int opt = 0; 
 	int addrlen = sizeof(address); 
-	char buffer[480*640] = {0}; 
+	unsigned char buffer[480*640] = {0}; 
 	char * hello = "Hello from server"; 
 
 	// Creating socket file descriptor 
@@ -55,7 +55,7 @@ int main(int argc, char const *argv[])
 
 	  Mat frame, outImg;
     VideoCapture cap;
-    int deviceID = 0;
+    int deviceID = 1;
     int apiID = cv::CAP_ANY;
   int lazo;
     cap.open(deviceID + apiID);
@@ -65,21 +65,27 @@ int main(int argc, char const *argv[])
         return -1;
     }
     
-    cout << "Start grabbing" << endl
-        << "Press any key to terminate" << endl;
+    cout << "Start grabbing" << "\n"<< "Press any key to terminate" << endl;
     for (;;){
         cap.read(frame);
         if (frame.empty()) {
             cerr << "ERROR! blank frame grabbed\n";
             break;
         }
-        cv::resize(frame, outImg, cv::Size(200,200), 0, 0, INTER_LINEAR);
-        buffToMat(&outImg, buffer);
+        
+		cv::resize(frame, outImg, cv::Size(50,50), 0, 0, INTER_LINEAR);
+        
+		mat2Buff(&outImg, buffer);
         //sprintf(buffer,"Hola Inglis\n");
-	    send(new_socket , buffer , strlen(buffer) , 0 ); 
-        //printf(buffer);
+		int c = 0;
+		while (c < 50*50){
+	    	c += send(new_socket , buffer , 50*50 , 0 ); 
+			printf("%d\n", c);
+		}
+        //sprintf("Buffer: %s\n",buffer);
         printf("Image sent\n");
-        cin>>lazo;
+        //cin>>lazo;
+		sleep(1);
     }
     
     
@@ -87,12 +93,12 @@ int main(int argc, char const *argv[])
 	return 0; 
 } 
 
-  void buffToMat(Mat* im, char buff[]){
+  void mat2Buff(Mat* im,unsigned char buff[]){
   uchar* p;
   for (int i = 0; i < im->rows; ++i) {
       p = im->ptr<uchar>(i);
       for (int j = 0; j < im->cols; ++j) {
-          buff[i * im -> cols + j] = p[j];
+        buff[i * im -> cols + j] = p[j];
       }
-  }
+  	}
   }
