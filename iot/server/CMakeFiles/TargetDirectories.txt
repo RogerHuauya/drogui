@@ -1,0 +1,3 @@
+/home/roger/Documents/Github/drogui/iot/server/CMakeFiles/rebuild_cache.dir
+/home/roger/Documents/Github/drogui/iot/server/CMakeFiles/edit_cache.dir
+/home/roger/Documents/Github/drogui/iot/server/CMakeFiles/server_cam.dir
