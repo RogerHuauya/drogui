@@ -3,14 +3,22 @@
 
 #include <xc.h>
 #include "config.h"
+#include <stdbool.h>
+#include <stdint.h>
 
 typedef struct _pwm{
-    int mod, n, prescaler, postscaler, period;
+    int n;
+    uint16_t period; 
+    bool primary;
 } pwm;
 
 
-void initPwm(pwm* p, int mod, int n, int prescaler, int postscaler);
-void setPwmFrecuency(pwm* p, int freq);
+void initPwmPin(pwm* p, int n, bool primary);
+void initPwm();
+void setPwmPrescaler(int prescaler);
+void setPwmFrecuency(pwm *p, double freq);
+
 void setPwmDuty(pwm* p, double percent);
+
 
 #endif
