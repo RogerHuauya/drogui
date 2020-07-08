@@ -9,8 +9,12 @@
 /home/roger/Github/drogui/iot/receiveCamera.cpp
 stdio.h
 -
-opencv2/opencv.hpp
--
+opencv2/core/core.hpp
+/home/roger/Github/drogui/iot/opencv2/core/core.hpp
+opencv2/highgui/highgui.hpp
+/home/roger/Github/drogui/iot/opencv2/highgui/highgui.hpp
+opencv2/imgproc/imgproc.hpp
+/home/roger/Github/drogui/iot/opencv2/imgproc/imgproc.hpp
 sys/socket.h
 -
 arpa/inet.h

@@ -10,7 +10,12 @@
 #include <stdlib.h> 
 #include <netinet/in.h> 
 #include <string.h> 
-#define PORT 8080 
+#define PORT 8889 
+#define HEIGHT 480
+#define WIDTH 640
+#define BUFF_LENGTH (HEIGHT*WIDTH)
+#define ip  "192.168.1.3"
+#define port 8889
 
 using namespace cv;
 using namespace std;
@@ -57,35 +62,33 @@ int main(int argc, char const *argv[])
     VideoCapture cap;
     int deviceID = 1;
     int apiID = cv::CAP_ANY;
-  int lazo;
+  	int lazo;
     cap.open(deviceID + apiID);
     
     if (!cap.isOpened()) {
         cerr << "ERROR! Unable to open camera\n";
         return -1;
     }
-    
+	   
     cout << "Start grabbing" << "\n"<< "Press any key to terminate" << endl;
     for (;;){
         cap.read(frame);
+		//frame = imread("lena.jpg", 0);
         if (frame.empty()) {
             cerr << "ERROR! blank frame grabbed\n";
             break;
         }
         
-		cv::resize(frame, outImg, cv::Size(50,50), 0, 0, INTER_LINEAR);
-        
+		//cv::resize(frame, outImg, cv::Size(WIDTH, HEIGHT), 0, 0, INTER_LINEAR);
+        cvtColor(frame, outImg, COLOR_RGB2GRAY);
 		mat2Buff(&outImg, buffer);
         //sprintf(buffer,"Hola Inglis\n");
 		int c = 0;
-		while (c < 50*50){
-	    	c += send(new_socket , buffer , 50*50 , 0 ); 
-			printf("%d\n", c);
+		while(c < BUFF_LENGTH){
+			
+			c += send(new_socket , buffer , BUFF_LENGTH - c, 0); 
 		}
-        //sprintf("Buffer: %s\n",buffer);
-        printf("Image sent\n");
-        //cin>>lazo;
-		sleep(1);
+		usleep(10000);
     }
     
     
