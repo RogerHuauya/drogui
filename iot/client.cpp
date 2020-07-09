@@ -7,10 +7,10 @@
 
 int main(int argc, char** argv ){
 	
-	int port = atoi(argv[0]);
+	int port = atoi(argv[1]);
 	Socket drone = Socket("190.232.68.139", port);
 	unsigned char buffer[BUFF_LENGTH]; 
-	drone.clientStart();
+	printf("Error: %d\n", drone.clientStart());
 
 	cv::Mat image(WIDTH, HEIGHT, CV_8UC1);
     cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
