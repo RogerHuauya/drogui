@@ -49,7 +49,7 @@ int Socket::Listen(){
 }
 
 int Socket::Accept(){
-	if ((child_socket = accept(child_socket, (struct sockaddr *)&addr, (socklen_t *)&addrlen))<0) { 
+	if ((child_socket = accept(sock, (struct sockaddr *)&addr, (socklen_t *)&addrlen))<0) { 
 		perror("accept "); 
         return -1;
 	} 
@@ -80,5 +80,8 @@ void Socket::readBuffer(unsigned char buff[], int len){
 }
 
 void Socket::sendBuffer(unsigned char buff[], int len){
-    send(child_socket , buff , len, 0); 	
+    valread = 0;
+    while(valread < len){
+        valread += send(child_socket , buff + valread, len - valread, 0);
+    } 
 }

@@ -17,16 +17,18 @@ void buff2Mat(cv::Mat* im, unsigned char buff[]){
 
 int Camera::getFrame(){
     cap.read(frame);
+    
     if (frame.empty()) {
         perror("ERROR! blank frame grabbed\n");
         return -1;
     }
+    cv::cvtColor(frame,bwframe, cv::COLOR_RGB2GRAY);
     return 0;
 }
 
 int Camera::getFrameAsBuffer(unsigned char buff[]){
     getFrame();
-    mat2Buff(&frame, buff);
+    mat2Buff(&bwframe, buff);
 }
 
 int Camera::open(){    

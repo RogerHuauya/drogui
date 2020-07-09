@@ -12,7 +12,7 @@ int main(int argc, char** argv ){
 	unsigned char buffer[BUFF_LENGTH]; 
 	printf("Error: %d\n", drone.clientStart());
 
-	cv::Mat image(WIDTH, HEIGHT, CV_8UC1);
+	cv::Mat image(HEIGHT, WIDTH, CV_8UC1);
     cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
     
     while(1){   
