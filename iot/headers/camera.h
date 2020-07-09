@@ -9,7 +9,7 @@ struct Camera{
     int deviceID, apiID;
     cv::VideoCapture cap;
     cv::Mat frame;
-
+    cv::Mat bwframe;
     int getFrame();
     int getFrameAsBuffer(unsigned char buff[]);
     int open();
