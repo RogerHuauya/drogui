@@ -1,3 +1,0 @@
-/home/guillermoinglis/drogui/iot/CMakeFiles/rebuild_cache.dir
-/home/guillermoinglis/drogui/iot/CMakeFiles/iot.dir
-/home/guillermoinglis/drogui/iot/CMakeFiles/edit_cache.dir
