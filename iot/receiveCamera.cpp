@@ -7,11 +7,11 @@
 #include <unistd.h> 
 #include <string.h>
 using namespace cv;
-#define HEIGHT 20
-#define WIDTH 20
+#define HEIGHT 50
+#define WIDTH 50
 #define BUFF_LENGTH (HEIGHT*WIDTH)
-#define ip  "192.168.1.3"
-#define port 8080
+#define ip  "190.232.68.139"
+#define port 8888 
 
 void buffToMat(Mat* im, unsigned char buff[]){
     uchar* p;
@@ -58,19 +58,20 @@ int main(int argc, char** argv )
     
 	namedWindow( "Display window", WINDOW_AUTOSIZE );
     while(1){   
-        //printf("Waiting for message\n");
+        printf("Waiting for message\n");
 		valread = 0;
 		while(valread < BUFF_LENGTH){
         	valread += read(sock , buffer, BUFF_LENGTH - valread);
-			//printf("%d\n", valread);
+			printf("%d\n", valread);
 		} 
-        //printf("Buffer received: \n%d\n", valread);
+        printf("Buffer received: \n%d\n", valread);
 		buffToMat(&image, buffer);
 
-        //printf("Image processed\n");
+        printf("Image processed\n");
 
-        imshow("Display window", image);
-		waitKey(1);
+
+        imshow("Display Image", image);
+		if(waitKey(5) >= 0) break;
     }
     return 0;
 
