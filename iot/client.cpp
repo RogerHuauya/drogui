@@ -1,41 +1,25 @@
-// Client side C/C++ program to demonstrate Socket programming 
-#include <stdio.h> 
-#include <sys/socket.h> 
-#include <arpa/inet.h> 
-#include <unistd.h> 
-#include <string.h> 
-#define PORT 8888 
+#include "camera.h"
+#include "sockets.h"
 
-int main(int argc, char const *argv[]) 
-{ 
-	int sock = 0, valread; 
-	struct sockaddr_in serv_addr; 
-	char *hello = "Hello from client"; 
-	char buffer[1024] = {0}; 
-	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) 
-	{ 
-		printf("\n Socket creation error \n"); 
-		return -1; 
-	} 
+#define HEIGHT 480
+#define WIDTH 640
+#define BUFF_LENGTH (HEIGHT*WIDTH)
 
-	serv_addr.sin_family = AF_INET; 
-	serv_addr.sin_port = htons(PORT); 
+int main(int argc, char** argv ){
 	
-	// Convert IPv4 and IPv6 addresses from text to binary form 
-	if(inet_pton(AF_INET, "190.232.68.139", &serv_addr.sin_addr)<=0) 
-	{ 
-		printf("\nInvalid address/ Address not supported \n"); 
-		return -1; 
-	} 
+	int port = atoi(argv[0]);
+	Socket drone = Socket("190.232.68.139", port);
+	unsigned char buffer[BUFF_LENGTH]; 
+	drone.clientStart();
 
-	if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) 
-	{ 
-		printf("\nConnection Failed \n"); 
-		return -1; 
-	} 
-	send(sock , hello , strlen(hello) , 0 ); 
-	printf("Hello message sent\n"); 
-	valread = read( sock , buffer, 1024); 
-	printf("%s\n",buffer ); 
-	return 0; 
+	cv::Mat image(WIDTH, HEIGHT, CV_8UC1);
+    cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
+    
+    while(1){   
+		drone.readBuffer(buffer, BUFF_LENGTH);
+		buff2Mat(&image, buffer);
+		cv::imshow("Display Image", image);
+		cv::waitKey(1);
+    }
+    return 0;
 } 
