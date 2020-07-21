@@ -1,0 +1,7 @@
+[n,wh] = vrimport(which('Drone complete matlab.STL'));
+open(wh);
+disp(nodes(wh, '-full'))
+view(wh)
+for i = 1:360
+    n.rotation = [1 1 1 0]
+end
