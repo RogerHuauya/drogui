@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/simpleTest.dir/simpleTest.cpp.o CMakeFiles/simpleTest.dir/remoteApi/extApi.c.o CMakeFiles/simpleTest.dir/remoteApi/extApiPlatform.c.o  -o simpleTest -lpthread 
