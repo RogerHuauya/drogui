@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/guillermoinglis/drogui/imu/coppelia/simpleTest.cpp
+stdio.h
+-
+stdlib.h
+-
+string
+-
+string.h
+-
+fcntl.h
+-
+errno.h
+-
+termios.h
+-
+unistd.h
+-
+sys/ioctl.h
+-
+iostream
+-
+extApi.h
+/home/guillermoinglis/drogui/imu/coppelia/extApi.h
+
+include/simConst.h
+
+remoteApi/extApi.h
+extApiPlatform.h
+remoteApi/extApiPlatform.h
+simConst.h
+remoteApi/simConst.h
+
+remoteApi/extApiPlatform.h
+stdint.h
+-
+

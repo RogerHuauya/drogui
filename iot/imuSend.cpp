@@ -1,5 +1,5 @@
-#include "camera.h"
 #include "sockets.h"
+#include "serial.h"
 
 #define HEIGHT 480
 #define WIDTH 640
@@ -11,15 +11,11 @@ int main(int argc, char** argv ){
 	Socket drone = Socket("190.232.68.139", port);
 	unsigned char buffer[BUFF_LENGTH]; 
 	printf("Error: %d\n", drone.clientStart());
-
-	cv::Mat image(HEIGHT, WIDTH, CV_8UC1);
-    cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
     
+    char read_buf [256];
+	memset(&read_buf, '\0', sizeof(read_buf));
+
     while(1){   
-		drone.readBuffer(buffer, BUFF_LENGTH);
-		buff2Mat(&image, buffer);
-		cv::imshow("Display Image", image);
-		cv::waitKey(1);
     }
     return 0;
 } 

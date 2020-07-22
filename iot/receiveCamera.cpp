@@ -51,6 +51,7 @@ int main(int argc, char** argv ){
 
     namedWindow("Display Image", WINDOW_AUTOSIZE );
     
+	namedWindow( "Display window", WINDOW_AUTOSIZE );
     while(1){   
 		printf("Waiting for message\n");
 		valread = 0;
