@@ -9,7 +9,7 @@ void i2cStart();
 void i2cStop();
 void i2cRestart();
 int i2cWriteString(char* s);
-char i2cRead(bool ack);
+char i2cRead();
 int i2cReadString(char *s, int len);
 
 void i2cSendACK();
