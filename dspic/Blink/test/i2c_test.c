@@ -9,14 +9,21 @@
 #include "io.h"
 #include "serial.h"
 #include "i2c.h"
-#define LED PRTD, 4
+
+#define LED PRTD, 8
 #define ADD 64
 #define READ_CMD 0xF1
+
+
 int press = 0;
 char crc = 0;
 char s[50];
 int s1, s2, s3;
+
+
+char c1,c2,c3;
 int main(){
+
     initConfig();
     initSerial();
     initI2C();
@@ -28,29 +35,26 @@ int main(){
     while(1){
         
         i2cStart();
-        serialWriteString("I2c start\n");
-        s1 = i2cWrite(ADD << 1 );
-        sprintf(s,"result write: %d\n",s1);
-        serialWriteString(s);
-        s2 = i2cWrite(READ_CMD);
-        sprintf(s,"result command: %d\n",s2);
-        serialWriteString(s);
+        i2cWrite(ADD << 1);
+        i2cWrite(READ_CMD);
         
-        s1 = i2cWrite((ADD << 1) | 1);
-        sprintf(s,"result: %d\n",s1);
-        serialWriteString(s);
+        i2cStop();
+        
+        i2cStart();
 
+        i2cWrite((ADD << 1) | 1);
+        
         press  = ((int)i2cRead()<<8); i2cSendACK();
         press |= ((int)i2cRead()); i2cSendACK();
         crc = ((short)i2cRead()); i2cSendACK();
         i2cStop();
 
-        sprintf(s,"Presion %d Checksum %d\n", press, crc);
+        sprintf(s,"%.5lf\n", press/60.0);
         serialWriteString(s);
         digitalWrite(LED, 1);
-        __delay_ms(100);
+        __delay_ms(10);
         digitalWrite(LED, 0);
-        __delay_ms(100);
+        __delay_ms(10);
     }
     return 0;
 }

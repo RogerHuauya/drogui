@@ -1,18 +1,25 @@
 #ifndef SPI_H
 #define SPI_H
 #include <xc.h>
+#include <stdint.h>
+#include <stdbool.h>
+#define CS PRTF, 3
 void initSPI();
 
 // Full Duplex SPI Functions
-uint8_t spiExchangeByte(uint8_t b);
-void spiExchangeBlock(void *block, int blockSize);
+char spiExchangeByte(char b);
+void spiExchangeBlock(char *block, int blockSize);
 
 // Half Duplex SPI Functions
-void spiWriteBlock(void *block, int blockSize);
-void spiReadBlock(void *block, int blockSize);
+void spiWriteBlock(char *block, int blockSize);
+void spiReadBlock(char *block, int blockSize);
 
-void spiWriteByte(uint8_t byte);
+void spiWriteByte(char byte);
 
-uint8_t spiReadByte(void);
+char spiReadByte(void);
+
+bool spiAvailable();
+void spiStart();
+void spiStop();
 
 #endif
