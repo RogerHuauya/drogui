@@ -14,7 +14,7 @@
 #define LED PRTD, 8
 pwm m1, m2; 
 char s[50];
-int x = 0;
+long long x = 0;
 
 int main(void){
 
@@ -23,7 +23,7 @@ int main(void){
     initAnalog();
 
     initPwmPin(&m1, 3, 1, 0);
-    setPwmPrescaler(2);
+    setPwmPrescaler(0);
     setPwmDutyLimits(&m1, 125, 250);
     setPwmFrecuency(&m1, 3500); 
        
@@ -34,11 +34,13 @@ int main(void){
     pinMode(LED, OUTPUT);
     
     while (true){
-        uint16_t an = analogRead(5);
-        setPwmDutyTime(&m1, (100.0*an/(1<<12)));
-
-        sprintf(s, "%lf\n", (100.0*an/(1<<12)));
-        //serialWriteString(s);
+        if(serialAvailable()){
+            
+            x = serialParseInt();
+            sprintf(s, "pwm: %lld\n", x);
+            serialWriteString(s);
+            setPwmDutyTime(&m1, min(max(x,0), 100));
+        }
         digitalToggle(LED);
         __delay_ms(50);
     }
