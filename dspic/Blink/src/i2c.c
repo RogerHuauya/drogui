@@ -31,25 +31,21 @@ void i2cRestart(){
     I2C2CONbits.RSEN = 1;
 }
 
-int i2cWrite(char data){
-    serialWriteString("1\n");
+int i2cWrite(unsigned char data){
     idleI2C();
-    serialWriteString("2\n");
     while(I2C2STATbits.TBF){}
-    serialWriteString("3\n");
     I2C2TRN = data;
     if(I2C2STATbits.IWCOL)        
         return -1;
     else{
         idleI2C();                  
-        serialWriteString("4\n");
         if( I2C2STATbits.ACKSTAT ) 
     	    return -2;
 	    else return 0;
     }
 }   
 
-int i2cWriteString(char * s){
+int i2cWriteString(unsigned char * s){
     while(*s){
         if(i2cWrite(*s) == -1)
             return -3;                         
@@ -61,7 +57,7 @@ int i2cWriteString(char * s){
 }
 
 
-char i2cRead(){
+unsigned char i2cRead(){
     idleI2C();
     I2C2CONbits.RCEN = 1;
     while(I2C2CONbits.RCEN){};
@@ -69,7 +65,7 @@ char i2cRead(){
     return I2C2RCV;
 }
 
-int i2cReadString(char* s, int len){
+int i2cReadString(unsigned char* s, int len){
     while(len){
         I2C2CONbits.RCEN = 1;
         while(!i2cAvailable());

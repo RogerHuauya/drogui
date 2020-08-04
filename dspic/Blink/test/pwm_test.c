@@ -1,4 +1,4 @@
-//#define PWM_TEST
+#define PWM_TEST
 #ifdef PWM_TEST
 
 #include "config.h"
@@ -11,6 +11,7 @@
 #include "serial.h"
 #include "analog.h"
 
+#define LED PRTD, 8
 pwm m1, m2; 
 char s[50];
 int x = 0;
@@ -21,27 +22,24 @@ int main(void){
     initSerial();
     initAnalog();
 
-    initPwmPin(&m1, 1, 1);
-    initPwmPin(&m2, 1, 0);
-
-    setPwmPrescaler(0);
-    
-    setPwmFrecuency(&m1, 8000);    
-    setPwmFrecuency(&m2, 4000);    
-    setPwmDuty(&m1, 20);
-    setPwmDuty(&m2, 50);
+    initPwmPin(&m1, 3, 1, 0);
+    setPwmPrescaler(2);
+    setPwmDutyLimits(&m1, 125, 250);
+    setPwmFrecuency(&m1, 3500); 
+       
+    setPwmDutyTime(&m1, 0);
     initPwm();
 
-    
     __delay_ms(1000);
-    pinMode(PRTB, 4, OUTPUT);
+    pinMode(LED, OUTPUT);
+    
     while (true){
         uint16_t an = analogRead(5);
+        setPwmDutyTime(&m1, (100.0*an/(1<<12)));
 
-        setPwmDuty(&m1, 100.0*an/(1<<12));
-        digitalWrite(PRTB, 4, HIGH);
-        __delay_ms(50);
-        digitalWrite(PRTB, 4, LOW);
+        sprintf(s, "%lf\n", (100.0*an/(1<<12)));
+        //serialWriteString(s);
+        digitalToggle(LED);
         __delay_ms(50);
     }
     return 0;
