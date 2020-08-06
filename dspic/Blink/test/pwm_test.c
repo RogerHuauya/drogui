@@ -1,4 +1,4 @@
-#define PWM_TEST
+//#define PWM_TEST
 #ifdef PWM_TEST
 
 #include "config.h"
