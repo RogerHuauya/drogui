@@ -74,11 +74,8 @@ void setPwmDutyLimits(pwm *p, int min_time,int max_time){
 }
 
 void setPwmDutyTime(pwm *p, double percent){
-    double time = (p->range_time)/(100.0/percent) + p -> min_time;
+    double time = (p->range_time)*percent/100.0 + p -> min_time;
     uint16_t DC = (time) * ( FCY/(1000000LL * master_prescaler) )*2LL   -  1;
-    sprintf(buff, "%lf, %d %d\n", time, DC, p->period);
-    serialWriteString(buff);
-
 
 
     switch (p -> n){

@@ -18,9 +18,8 @@ void serialWriteString(char* s){
 }
 
 void initSerial(){
-
-    RPINR18bits.U1RXR = 70;
-    RPOR3bits.RP71R = 1;
+    RPINR18bits.U1RXR = 112;
+    RPOR13bits.RP113R = 1;
 
     U1MODEbits.UARTEN = 1;
     U1MODEbits.UEN = 0;
@@ -32,7 +31,7 @@ void initSerial(){
     U1STAbits.UTXEN = 1;
     U1STAbits.URXISEL = 0;
 
-    IPC2bits.U1RXIP = 1;
+    IPC2bits.U1RXIP = 4;
     IFS0bits.U1RXIF = 0; 
     IEC0bits.U1RXIE = 1;
     
@@ -50,6 +49,7 @@ char serialReadChar(){
 }
 
 void uartRxInterrupt(1){
+
     while(U1STAbits.URXDA){
         buf[buff_head++] = U1RXREG;
         buff_head %= BUFF_LENGTH;
@@ -57,4 +57,23 @@ void uartRxInterrupt(1){
         buff_tail %= BUFF_LENGTH;
     }
     IFS0bits.U1RXIF = 0; 
+}
+
+long long serialParseInt(){
+    long long ans = 0LL;
+    char c = '*';
+    bool flag = false;
+
+    while(1){
+        while(!serialAvailable());
+        c = serialReadChar();
+        if(c == '-') flag = true;
+        else if(c == '$') break;
+        else{
+            ans *= 10LL;
+            ans += (int) (c - '0');
+        }
+    }
+    if(flag) ans *= -1LL;
+    return ans;
 }
