@@ -13,5 +13,17 @@ int main(){
     cout << "Last name: " << v["lastname"].asString() << endl;
     cout << "First name: " << v["firstname"].asString() << endl;
     cout << "DNI: " << v["dni"].asInt()<< endl;
+
+    Value root, child;
+    root["NUM"] = 5;
+    root["STRING"] = "hello_world";
+    child["username"] = "guest";
+    child["pass"] = "1234";
+    root["child"] = child;
+    
+    FastWriter fw;
+    string s = fw.write(root);
+    cout << s << endl;
+
     return 0;
 }
