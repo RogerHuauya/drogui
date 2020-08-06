@@ -1,51 +1,145 @@
 #include <bits/stdc++.h>
-#include <RPI.h>
+#include "sockets.h"
+#include <jsoncpp/json/json.h>
+#include <time.h>
+#include <cstdlib>
 using namespace std;
 
+Json::Value root;
+Json:: FastWriter fw;
+string s;
+char buff[500];
+
+Socket base;
+
 void cls(){
-    for (int n = 0; n < 10; n++)
-      printf( "\n\n\n\n\n\n\n\n\n\n" );
+    system("clear");
 }
 
-int emergencyStop(){
-    sendStop();
+void startServer(){
+    int err = base.serverStart();
+    if (err!= 0) printf("The error %d has occurred, please verify network\n", err);
+    else printf("Server initialized successfully");
 }
 
-int desplazamiento(){
-    sendDesplazamiento();
+
+void emergencyStop(){
+    s = fw.write(root);
+    cout << s << endl;
 }
+
+void desplazamiento(){
+    
+    double dx, dy, dz, dphi;
+    Json::Value desplazamiento(Json::arrayValue);
+    
+    cls();
+    printf("Insertar desplazamiento en metros y sexagesimales (dx, dy, dz, dphi)\n");
+    cin >> dx >> dy >> dz >> dphi;
+    desplazamiento.append(dx);
+    desplazamiento.append(dy);
+    desplazamiento.append(dz);
+    desplazamiento.append(dphi);
+    root["desplazamiento"] = desplazamiento;
+    s = fw.write(root);
+    cout << s << endl;
+}
+
+void dataSensor(){
+    s = fw.write(root);
+    cout << s << endl;
+}
+
+void showImage(){
+
+    s = fw.write(root);
+    int camera;
+    cls();
+    printf("Insertar camara\n[1] ELP\n[2] Makerfocus\n");
+    cin >> camera;
+    root["camera"] = camera;
+    s = fw.write(root);
+    cout << s << endl;
+}
+
+
+void finalCoordinates(){
+    
+    double x, y, z, phi;
+    Json::Value position(Json::arrayValue);
+
+    cls();
+    printf("Insertar posición final en metros y grados sexagesimales (dx, dy, dz, dphi)\n");
+    cin >> x >> y >> z >> phi;
+
+    position.append(x);
+    position.append(y);
+    position.append(z);
+    position.append(phi);
+    root["position"] = position;
+    s = fw.write(root);
+    cout << s << endl;
+}
+
+void ARM(){
+    s = fw.write(root);
+    cout << s << endl;
+}
+
+void calibrateESC(){
+    s = fw.write(root);
+    cout << s << endl;
+}
+
+
+void zeroPosition(){
+    s = fw.write(root);
+    cout << s << endl;
+}
+
 
 
 int menu(){
-    cls();
+std::system("clear");
+    root.clear();
     printf("\t\t Principal menu\n");
-    printf("[1] Emergency stop\n");
-    printf("[2] Desplazamiento (dx, dy , dz, dphi)");
-    printf("[3] Show data sensor\n");
-    printf("[4] Show image\n");
-    printf("[5] Final coordinates\n");
-    printf("[6] ARM\n");
-    printf("[7] Calibrar ESC\n");
-    printf("[8] Zero position\n");
+    printf("[1] Start server\n");
+    printf("[2] Emergency stop\n");
+    printf("[3] Desplazamiento (dx, dy , dz, dphi)"\n);
+    printf("[4] Show data sensor\n");
+    printf("[5] Show image\n");
+    printf("[6] Final coordinates\n");
+    printf("[7] ARM\n");
+    printf("[8] Calibrar ESC\n");
+    printf("[9] Zero position\n");
     int op;
-    scanf("%d", &op);
+    cin>>op;
+    root["function"] = op;
     switch(op){
-        case 1: emergencyStop(); break;
-        case 2: desplazamiento(); break;
-        case 3: dataSensor(); break;
-        case 4: showImage(); break;
-        case 5: finalCoordinates(); break;
-        case 6: ARM(); break;
-        case 7: calibrateESC(); break;
-        case 8: zeroPosition(); break;
-        default: printf("%d is not an option, please enter option again\n"); menu(); break;
+        case 1: startServer(); break;
+        case 2: emergencyStop(); break;
+        case 3: desplazamiento(); break;
+        case 4: dataSensor(); break;
+        case 5: showImage(); break;
+        case 6: finalCoordinates(); break;
+        case 7: ARM(); break;
+        case 8: calibrateESC(); break;
+        case 9: zeroPosition(); break;
+        default: printf("%d is not an option, please enter option again\n", op); menu(); break;
     }
     
+    sleep(2);
 }
 
 
 
-int main(){
+int main(int argc, char const *argv[]) { 
+	
+    /*
+    int port = atoi(argv[1]);
+	cout<<"Port elected: "<<port<<endl;
+	Socket base = Socket(" ", port);
+    */
     while(1){
         menu();
     }
