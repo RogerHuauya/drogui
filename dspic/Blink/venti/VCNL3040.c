@@ -1,4 +1,4 @@
-//#define VCNL3040
+#define VCNL3040
 #ifdef VCNL3040
 
 #include "config.h"

@@ -1,9 +1,9 @@
 #ifndef CAMERA_H
 #define CAMERA_H
-#include <opencv2/core.hpp>
-#include <opencv2/videoio.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/imgproc.hpp>
+#include <opencv4/opencv2/core.hpp>
+#include <opencv4/opencv2/videoio.hpp>
+#include <opencv4/opencv2/highgui.hpp>
+#include <opencv4/opencv2/imgproc.hpp>
 
 struct Camera{
     int deviceID, apiID;

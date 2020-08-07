@@ -26,7 +26,7 @@ void startServer(){
 void emergencyStop(){
     s = fw.write(root);
     cout << s << endl;
-    base.sendJson(s);
+    //base.sendJson(s);
 }
 
 void desplazamiento(){
@@ -44,13 +44,13 @@ void desplazamiento(){
     root["desplazamiento"] = desplazamiento;
     s = fw.write(root);
     cout << s << endl;
-    base.sendJson(s);
+    //base.sendJson(s);
 }
 
 void dataSensor(){
     s = fw.write(root);
     cout << s << endl;
-    base.sendJson(s);
+    //base.sendJson(s);
 }
 
 void showImage(){
@@ -63,7 +63,7 @@ void showImage(){
     root["camera"] = camera;
     s = fw.write(root);
     cout << s << endl;
-    base.sendJson(s);
+    //base.sendJson(s);
 }
 
 
@@ -83,26 +83,26 @@ void finalCoordinates(){
     root["position"] = position;
     s = fw.write(root);
     cout << s << endl;
-    base.sendJson(s);
+    //base.sendJson(s);
 }
 
 void ARM(){
     s = fw.write(root);
     cout << s << endl;
-    base.sendJson(s);
+    //base.sendJson(s);
 }
 
 void calibrateESC(){
     s = fw.write(root);
     cout << s << endl;
-    base.sendJson(s);
+    //base.sendJson(s);
 }
 
 
 void zeroPosition(){
     s = fw.write(root);
     cout << s << endl;
-    base.sendJson(s);
+    //base.sendJson(s);
 }
 
 
@@ -113,7 +113,7 @@ std::system("clear");
     printf("\t\t Principal menu\n");
     printf("[1] Start server\n");
     printf("[2] Emergency stop\n");
-    printf("[3] Desplazamiento (dx, dy , dz, dphi)"\n);
+    printf("[3] Desplazamiento (dx, dy , dz, dphi)\n");
     printf("[4] Show data sensor\n");
     printf("[5] Show image\n");
     printf("[6] Final coordinates\n");

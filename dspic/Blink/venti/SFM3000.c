@@ -1,4 +1,4 @@
-#define SFM3000
+//#define SFM3000
 #ifdef SFM3000
 
 #include "config.h"
