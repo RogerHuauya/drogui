@@ -1,10 +1,15 @@
 #ifndef SOCKETS_H
 #define SOCKETS_H
-#include <bits/stdc++.h>
-#include <sys/socket.h> 
-#include <arpa/inet.h> 
+#if defined WIN32
+#include <winsock.h>
+#else
+#define closesocket close
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#endif
 #include <stdio.h>
-#include <unistd.h> 
+
 
 struct Socket{
     char* ip;
