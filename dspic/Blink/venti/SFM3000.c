@@ -32,13 +32,12 @@ int main(){
     pinMode(LED, OUTPUT);
 
     i2cStart();
-    i2cWrite(ADD << 1);
-    i2cWrite(START_MSB);
-    i2cWrite(START_LSB);
+    s1  = i2cWrite(ADD << 1);
+    s2  = i2cWrite(START_MSB);
+    s3  = i2cWrite(START_LSB);
     i2cStop();
-
-
-
+    sprintf(s, "Start: %d %d %d \n", s1, s2 ,s3);
+    serialWriteString(s);
 
     while(1){
         
@@ -52,12 +51,12 @@ int main(){
         crc = ((short)i2cRead()); i2cSendNACK();
         i2cStop();
 
-        sprintf(s,"%.5lf\n", press/60.0);
+        sprintf(s,"%d\n", press);
         serialWriteString(s);
         digitalWrite(LED, 1);
-        __delay_ms(10);
+        __delay_ms(100);
         digitalWrite(LED, 0);
-        __delay_ms(10);
+        __delay_ms(100);
     }
     return 0;
 }
