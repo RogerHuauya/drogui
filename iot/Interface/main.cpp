@@ -5,6 +5,26 @@
 #include <cstdlib>
 using namespace std;
 
+#define red(n)      "\033[1;31m"#n"\033[0m"
+#define green(n)    "\033[1;32m"#n"\033[0m"
+#define yellow(n)   "\033[1;33m"#n"\033[0m"
+#define blue(n)     "\033[1;34m"#n"\033[0m"
+#define white(n)     "\033[1;37m"#n"\033[0m"
+
+
+/*
+         foreground background
+black        30         40
+red          31         41
+green        32         42
+yellow       33         43
+blue         34         44
+magenta      35         45
+cyan         36         46
+white        37         47
+*/
+
+
 Json::Value root;
 Json:: FastWriter fw;
 string s;
@@ -35,7 +55,7 @@ void desplazamiento(){
     Json::Value desplazamiento(Json::arrayValue);
     
     cls();
-    printf("Insertar desplazamiento en metros y sexagesimales (dx, dy, dz, dphi)\n");
+    printf(white(Insertar desplazamiento en metros y sexagesimales) "\n" blue((dx, dy, dz, dphi))"\n");
     cin >> dx >> dy >> dz >> dphi;
     desplazamiento.append(dx);
     desplazamiento.append(dy);
@@ -58,7 +78,7 @@ void showImage(){
     s = fw.write(root);
     int camera;
     cls();
-    printf("Insertar camara\n[1] ELP\n[2] Makerfocus\n");
+    printf(white(Insertar camara\n) green([1]) " " white(ELP\n) green([2])" " white(Makerfocus\n));
     cin >> camera;
     root["camera"] = camera;
     s = fw.write(root);
@@ -73,7 +93,7 @@ void finalCoordinates(){
     Json::Value position(Json::arrayValue);
 
     cls();
-    printf("Insertar posición final en metros y grados sexagesimales (dx, dy, dz, dphi)\n");
+    printf(white(Insertar posición final en \n metros y grados sexagesimales) "\n" blue((dx, dy, dz, dphi)) "\n");
     cin >> x >> y >> z >> phi;
 
     position.append(x);
@@ -110,16 +130,16 @@ void zeroPosition(){
 int menu(){
 std::system("clear");
     root.clear();
-    printf("\t\t Principal menu\n");
-    printf("[1] Start server\n");
-    printf("[2] Emergency stop\n");
-    printf("[3] Desplazamiento (dx, dy , dz, dphi)\n");
-    printf("[4] Show data sensor\n");
-    printf("[5] Show image\n");
-    printf("[6] Final coordinates\n");
-    printf("[7] ARM\n");
-    printf("[8] Calibrar ESC\n");
-    printf("[9] Zero position\n");
+    printf("\t\t\t\t" blue(Principal menu) "\n");
+    printf(green([1]) " " white( Start server\n));
+    printf(green([2]) " " white( Emergency stop\n));
+    printf(green([3]) " " white(Desplazamiento\n));
+    printf(green([4]) " " white(Show data sensor\n));
+    printf(green([5]) " " white(Show image\n));
+    printf(green([6]) " " white(Final coordinates\n));
+    printf(green([7]) " " white(ARM\n));
+    printf(green([8]) " " white(Calibrar ESC\n));
+    printf(green([9]) " " white(Zero position\n));
     int op;
     cin>>op;
     root["function"] = op;
@@ -137,6 +157,7 @@ std::system("clear");
     }
     
     sleep(2);
+    return 0;
 }
 
 
@@ -148,6 +169,7 @@ int main(int argc, char const *argv[]) {
 	cout<<"Port elected: "<<port<<endl;
 	Socket base = Socket(" ", port);
     */
+   
     while(1){
         menu();
     }
