@@ -1,4 +1,4 @@
-#define VCNL3040
+//#define VCNL3040
 #ifdef VCNL3040
 
 #include "config.h"
@@ -35,18 +35,21 @@ int main(){
         sprintf(s,"ACK Write: %d ID: %d\n", s1, s2);
         serialWriteString(s);
         
-        i2cRestart();
+        i2cStart();
         
         s1 = i2cWrite((ADD << 1) | 1);
         
         sprintf(s,"ACK Read: %d\n", s1);
         serialWriteString(s);
 
-        press  = ((int)i2cRead()<<8); i2cSendACK();
-        press |= ((int)i2cRead()); i2cSendNACK();
+        /*press  = ((int)i2cRead()<<8); i2cSendACK();
+        press |= ((int)i2cRead()); i2cSendNACK();*/
+
+        c1 = i2cRead(); i2cSendACK();
+        c2 = i2cRead(); i2cSendNACK();
         i2cStop();
 
-        sprintf(s,"Answer: %d \n", press);
+        sprintf(s,"Answer: %hhx %hhx \n", c1 , c2);
         serialWriteString(s);
 
         digitalWrite(LED, 1);

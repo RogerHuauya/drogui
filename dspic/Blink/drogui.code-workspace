@@ -6,11 +6,14 @@
 	],
 	"settings": {
 		"C_Cpp.default.includePath": [
-				"C:\\Program Files\\Microchip\\xc16\\v1.50\\support\\dsPIC33F\\h",
+				"C:\\Program Files\\Microchip\\xc16\\v1.50\\support\\dsPIC33E\\h",
 				"C:\\Program Files\\Microchip\\xc16\\v1.50\\support\\generic\\h",
-				"C:\\Program Files (x86)\\Microchip\\xc16\\v1.41\\support\\dsPIC33F\\h",
+				"C:\\Program Files (x86)\\Microchip\\xc16\\v1.41\\support\\dsPIC33E\\h",
 				"C:\\Program Files (x86)\\Microchip\\xc16\\v1.41\\support\\generic\\h",
-				"${workspaceFolder}\\headers"
+				"${workspaceFolder}\\headers",
+				"/opt/microchip/xc16/v1.50/support/generic/h",
+				"/opt/microchip/xc16/v1.50/support/dspic33E/h"
+				
 			]
 	}
 }

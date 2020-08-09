@@ -20,7 +20,7 @@ int main(){
     pinMode(LED, OUTPUT);    
     while(1){
         digitalWrite(LED, HIGH);
-        serialWriteString("Hola mundo!!\n");
+        serialWriteString("Hola mundo!!\n\r");
         __delay_ms(500);
         digitalWrite(LED, LOW);
         __delay_ms(500);
