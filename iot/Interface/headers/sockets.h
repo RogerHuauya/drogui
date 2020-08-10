@@ -10,6 +10,7 @@
 #endif
 #include <stdio.h>
 #include <string>
+#include <iostream>
 
 
 struct Socket{
@@ -33,6 +34,7 @@ struct Socket{
     void sendBuffer(unsigned char buff[], int len);
 
     void sendJson(std::string s);
+    void readJson(std::string * s);
 
     Socket(const char* _ip, int _port){
         ip = (char *)_ip, port = _port;

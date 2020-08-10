@@ -17,7 +17,7 @@ server: $(TAR_SERVER) cleanObjects
 
 $(TAR_SERVER) : $(OBJ_SERVER) $(OBJS)
 	@echo Linking objects
-	$(CXX) -o $(TAR_SERVER) $(OBJ_SERVER) $(OBJS) $(PCFG) 
+	$(CXX) -o $(TAR_SERVER) $(OBJ_SERVER) $(OBJS) $(PCFG) $(INC)
 
 $(OBJ_SERVER): $(SRC_SERVER) $(HDRS)
 	@echo Creating object file for server $@

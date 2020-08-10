@@ -1,4 +1,5 @@
 #include "sockets.h"
+typedef unsigned char uchar;
 
 int Socket::Connect(){
     if (connect(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0){ 
@@ -13,6 +14,7 @@ int Socket::Create(){
         perror("\n Socket creation error \n"); 
         return -1; 
     }
+    else printf("Socket created ...\n");
     return 0;
 }
 
@@ -20,7 +22,8 @@ int Socket::Address(){
     if(inet_pton(AF_INET,ip, &addr.sin_addr)<=0){ 
         perror("\nInvalid address/ Address not supported \n"); 
         return -1; 
-    } 
+    }
+    else printf("Address is correct");
     return 0;
 }
 
@@ -28,7 +31,8 @@ int Socket::Attach(){
     if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))){ 
 		perror("setsockopt"); 
 		return -1;
-	} 
+	}
+    printf("Socket attached ...\n"); 
     return 0;
 }
 
@@ -37,6 +41,7 @@ int Socket::Bind(){
 		perror("bind failed"); 
 		return -1;
 	} 
+    printf("Binding terminated ...\n");
     return 0;
 }
 
@@ -45,10 +50,12 @@ int Socket::Listen(){
 		perror("listen"); 
 		return -1; 
 	} 
+    printf("Socket is listening ...\n");
     return 0;
 }
 
 int Socket::Accept(){
+    printf("Socket is waiting for incoming connection ...\n");
 	if ((child_socket = accept(sock, (struct sockaddr *)&addr, (socklen_t *)&addrlen))<0) { 
 		perror("accept "); 
         return -1;
@@ -87,6 +94,25 @@ void Socket::sendBuffer(unsigned char buff[], int len){
 }
 
 void Socket::sendJson(std::string s){
-    unsigned int dataLenght = htonl(s.size());
+    unsigned int dataLenght = s.size();
+    unsigned char p[50];
+    for(int i = 0; i < sizeof(unsigned int); i++) p[i] = (dataLenght >> (8*i)) & (0xFF);
+    std::cout<<"Lenght sent "<< dataLenght<<std::endl;
+    send(child_socket, p, sizeof(unsigned int), MSG_CONFIRM);
     send(child_socket, s.c_str(), dataLenght, MSG_CONFIRM);
+}
+
+void Socket::readJson(std::string * s){
+    uchar num[50];
+    char buffer[5000];
+    uint valread = 0;
+    uint len = 0;
+    read(sock, num, sizeof(uint));
+    for(int i = 0; i < sizeof(uint); i++) {
+        len = len | (num[i] << (8*i));
+    }
+    while(valread < len){
+        valread += read(sock, buffer + valread, len - valread);
+    } 
+    *s = buffer;
 }

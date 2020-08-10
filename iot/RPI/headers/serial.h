@@ -17,8 +17,8 @@ struct Serial{
     }
 
     void initSerial();
-    void readBuffer();
+    void readBuffer(char* read_buf, int sz);
 
-}
+};
 
 #endif
