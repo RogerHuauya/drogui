@@ -1,49 +1,33 @@
 CXX = g++
+INC = -I/home/roger/installation/OpenCV-4.4/include -I/home/roger/installation/OpenCV-4.4/include/opencv4
+PCFG = `pkg-config --cflags --libs opencv4` -ljsoncpp
+#PCFG =  -ljsoncpp
 
 SOURCES :=  $(wildcard src/*.cpp)
 OBJS := $(patsubst %.cpp, %.o,$(SOURCES))
 HDRS := $(wildcard headers/*.h)
-CFLAGS= -I headers -c
+CFLAGS= -I headers -c 
 
-SRC_SERVER:= server.cpp
-OBJ_SERVER:= server.o
-TAR_SERVER = server
-
-SRC_CLIENT:= client.cpp
-OBJ_CLIENT:= client.o
-TAR_CLIENT = client
-
-all: $(TAR_SERVER).out $(TAR_CLIENT).out cleanObjects
+SRC_SERVER:= rpi.cpp
+OBJ_SERVER:= rpi.o
+TAR_SERVER = rpi
 
 .PHONY: server
 
-server: $(TAR_SERVER).out cleanObjects
+server: $(TAR_SERVER) cleanObjects
 
-$(TAR_SERVER).out : $(OBJ_SERVER) $(OBJS)
+$(TAR_SERVER) : $(OBJ_SERVER) $(OBJS)
 	@echo Linking objects
-	$(CXX) -o $(TAR_SERVER).out $(OBJ_SERVER) $(OBJS) `pkg-config --cflags --libs opencv`
+	$(CXX) -o $(TAR_SERVER) $(OBJ_SERVER) $(OBJS) $(PCFG) $(INC)
 
 $(OBJ_SERVER): $(SRC_SERVER) $(HDRS)
 	@echo Creating object file for server $@
-	$(CXX) $(CFLAGS) -o $@ $<
-
-
-.PHONY: client
-
-client: $(TAR_CLIENT).out cleanObjects
-
-$(TAR_CLIENT).out : $(OBJ_CLIENT) $(OBJS)
-	@echo Linking objects
-	$(CXX) -o $(TAR_CLIENT).out $(OBJ_CLIENT) $(OBJS) `pkg-config --cflags --libs opencv`
-
-$(OBJ_CLIENT): $(SRC_CLIENT) $(HDRS)
-	@echo Creating object file for client $@
-	$(CXX) $(CFLAGS) -o $@ $< 
+	$(CXX) $(CFLAGS) -o $@ $<  $(INC)
 
 
 src/%.o : src/%.cpp $(HDRS)
 	@echo Creating object file $@
-	$(CXX) $(CFLAGS) -o $@ $< 
+	$(CXX) $(CFLAGS) -o $@ $< $(INC)
 
 
 .PHONY: clean

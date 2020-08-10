@@ -37,25 +37,30 @@ void cls(){
 }
 
 void startServer(){
+    cls();
+    printf("Starting server ...\n");
     int err = base.serverStart();
     if (err!= 0) printf("The error %d has occurred, please verify network\n", err);
-    else printf("Server initialized successfully");
+    else printf("Incoming connection from drone has been established\n \
+                waiting for instructions ...\n");
+    string msg = "Hello from Roger Server\n";
+    base.sendJson(msg);
+
 }
 
 
 void emergencyStop(){
     s = fw.write(root);
     cout << s << endl;
-    //base.sendJson(s);
+    base.sendJson(s);
 }
 
 void desplazamiento(){
     
     double dx, dy, dz, dphi;
     Json::Value desplazamiento(Json::arrayValue);
-    
     cls();
-    printf(white(Insertar desplazamiento en metros y sexagesimales) "\n" blue((dx, dy, dz, dphi))"\n");
+    printf(white(Insertar desplazamiento en metros y grados sexagesimales) "\n" blue((dx, dy, dz, dphi))"\n");
     cin >> dx >> dy >> dz >> dphi;
     desplazamiento.append(dx);
     desplazamiento.append(dy);
@@ -64,7 +69,7 @@ void desplazamiento(){
     root["desplazamiento"] = desplazamiento;
     s = fw.write(root);
     cout << s << endl;
-    //base.sendJson(s);
+    base.sendJson(s);
 }
 
 void dataSensor(){
@@ -83,7 +88,7 @@ void showImage(){
     root["camera"] = camera;
     s = fw.write(root);
     cout << s << endl;
-    //base.sendJson(s);
+    base.sendJson(s);
 }
 
 
@@ -103,32 +108,32 @@ void finalCoordinates(){
     root["position"] = position;
     s = fw.write(root);
     cout << s << endl;
-    //base.sendJson(s);
+    base.sendJson(s);
 }
 
 void ARM(){
     s = fw.write(root);
     cout << s << endl;
-    //base.sendJson(s);
+    base.sendJson(s);
 }
 
 void calibrateESC(){
     s = fw.write(root);
     cout << s << endl;
-    //base.sendJson(s);
+    base.sendJson(s);
 }
 
 
 void zeroPosition(){
     s = fw.write(root);
     cout << s << endl;
-    //base.sendJson(s);
+    base.sendJson(s);
 }
 
 
 
 int menu(){
-std::system("clear");
+    cls();    
     root.clear();
     printf("\t\t\t\t" blue(Principal menu) "\n");
     printf(green([1]) " " white( Start server\n));
@@ -141,6 +146,8 @@ std::system("clear");
     printf(green([8]) " " white(Calibrar ESC\n));
     printf(green([9]) " " white(Zero position\n));
     int op;
+    printf("\n");
+    printf(blue(Please enter an option >>>));
     cin>>op;
     root["function"] = op;
     switch(op){
@@ -155,7 +162,6 @@ std::system("clear");
         case 9: zeroPosition(); break;
         default: printf("%d is not an option, please enter option again\n", op); menu(); break;
     }
-    
     sleep(2);
     return 0;
 }
@@ -164,11 +170,10 @@ std::system("clear");
 
 int main(int argc, char const *argv[]) { 
 	
-    /*
+
     int port = atoi(argv[1]);
 	cout<<"Port elected: "<<port<<endl;
-	Socket base = Socket(" ", port);
-    */
+	base = Socket(INADDR_ANY, port);
    
     while(1){
         menu();
