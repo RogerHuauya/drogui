@@ -67,6 +67,7 @@ int Socket::clientStart(){
     if(Create() < 0)    return -1;
     if(Address() < 0)   return -2;
     if(Connect() <0)    return -3;
+    child_socket = sock;
     return 0;
 }
 
@@ -82,7 +83,7 @@ int Socket::serverStart(){
 void Socket::readBuffer(unsigned char buff[], int len){
     valread = 0;
     while(valread < len){
-        valread += read(sock , buff + valread, len - valread);
+        valread += read(child_socket , buff + valread, len - valread);
     } 
 }
 
@@ -104,15 +105,17 @@ void Socket::sendJson(std::string s){
 
 void Socket::readJson(std::string * s){
     uchar num[50];
-    char buffer[5000];
+    char buffer[500000];
     uint valread = 0;
     uint len = 0;
-    read(sock, num, sizeof(uint));
+    read(child_socket, num, sizeof(uint));
     for(int i = 0; i < sizeof(uint); i++) {
+        std::cout<<num[i]<<" "<<int(num[i])<<'\n';
         len = len | (num[i] << (8*i));
     }
+    std::cout<<"len data: "<<len<<'\n';
     while(valread < len){
-        valread += read(sock, buffer + valread, len - valread);
+        valread += read(child_socket, buffer + valread, len - valread);
     } 
     *s = buffer;
 }

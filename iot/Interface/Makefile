@@ -22,7 +22,7 @@ $(TAR_SERVER) : $(OBJ_SERVER) $(OBJS)
 
 $(OBJ_SERVER): $(SRC_SERVER) $(HDRS)
 	@echo Creating object file for server $@
-	$(CXX) $(CFLAGS) -o $@ $< 
+	$(CXX) $(CFLAGS) -o $@ $< $(INC)
 
 
 src/%.o : src/%.cpp $(HDRS)

@@ -1,5 +1,11 @@
 #include <bits/stdc++.h>
 #include "sockets.h"
+#include "camera.h"
+#include <opencv2/core.hpp>
+#include <opencv2/videoio.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
+
 #include <jsoncpp/json/json.h>
 #include <time.h>
 #include <cstdlib>
@@ -11,6 +17,8 @@ using namespace std;
 #define blue(n)     "\033[1;34m"#n"\033[0m"
 #define white(n)     "\033[1;37m"#n"\033[0m"
 
+#define HEIGHT 480
+#define WIDTH 640
 
 /*
          foreground background
@@ -43,8 +51,9 @@ void startServer(){
     if (err!= 0) printf("The error %d has occurred, please verify network\n", err);
     else printf("Incoming connection from drone has been established\n \
                 waiting for instructions ...\n");
-    string msg = "Hello from Roger Server\n";
-    base.sendJson(msg);
+    //string msg = "Hello from Roger Server\n";
+    s = fw.write(root);
+    base.sendJson(s);
 
 }
 
@@ -75,7 +84,9 @@ void desplazamiento(){
 void dataSensor(){
     s = fw.write(root);
     cout << s << endl;
-    //base.sendJson(s);
+    base.sendJson(s);
+    base.readJson(&s);
+    cout<<"Data recieved: "<<s<<endl;
 }
 
 void showImage(){
@@ -89,6 +100,17 @@ void showImage(){
     s = fw.write(root);
     cout << s << endl;
     base.sendJson(s);
+    base.readJson(&s);
+    Json::Reader r;
+    Json::Value v;
+    r.parse(s, v);
+	cv::Mat image(HEIGHT, WIDTH,  CV_8UC1);
+    buff2Mat(&image, (unsigned char *)v['image'].asCString());
+    cv::namedWindow("Image from drone", cv::WINDOW_AUTOSIZE);
+    while(1){
+        cv::imshow("Image from drone",image);
+        cv::waitKey(0);
+    }
 }
 
 

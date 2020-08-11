@@ -19,6 +19,7 @@ struct Camera{
         apiID = cv::CAP_ANY;
     }
     Camera(){};
+    
 };
 
 void buff2Mat(cv::Mat* im, unsigned char buff[]);
