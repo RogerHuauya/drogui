@@ -194,7 +194,7 @@ int main(int argc, char const *argv[]) {
 	
 
     int port = atoi(argv[1]);
-	cout<<"Port elected: "<<port<<endl;
+	cout << "Port elected: "<< port <<endl;
 	base = Socket(INADDR_ANY, port);
    
     while(1){

@@ -7,7 +7,7 @@ OBJS := $(patsubst %.cpp, %.o,$(SOURCES))
 HDRS := $(wildcard headers/*.h)
 CFLAGS= -I headers -c 
 
-SRC_SERVER:= huffman.cpp
+SRC_SERVER:= main.cpp
 OBJ_SERVER:= main.o
 TAR_SERVER = main
 

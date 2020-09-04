@@ -23,17 +23,17 @@ int main(void){
     initAnalog();
 
     initPwmPin(&m1, 3, 1, 0);
-    initPwmPin(&m2, 4, 1, 0);
+    //initPwmPin(&m2, 4, 1, 0);
     setPwmPrescaler(0);
 
     setPwmDutyLimits(&m1, 125, 250);
     setPwmFrecuency(&m1, 3500);
     setPwmDutyTime(&m1, 0);
     
-    
+    /*
     setPwmDutyLimits(&m2, 125, 250);
     setPwmFrecuency(&m2, 3500);
-    setPwmDutyTime(&m2, 0);
+    setPwmDutyTime(&m2, 0);*/
     
     initPwm();
 
@@ -47,7 +47,7 @@ int main(void){
             sprintf(s, "pwm: %lld\n", x);
             serialWriteString(s);
             setPwmDutyTime(&m1, min(max(x,0), 100));
-            setPwmDutyTime(&m2, min(max(x,0), 100));
+            //setPwmDutyTime(&m2, min(max(x,0), 100));
         }
         digitalToggle(LED);
         __delay_ms(50);
