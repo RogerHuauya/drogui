@@ -39,7 +39,7 @@ all : $(TARGET).hex
 $(TARGET).hex : $(TARGET).elf
 	@echo Creating hex file
 	$(HX) $(TARGET).elf
-	$(RM) *.map *.elf *.dep        
+	$(RM) *.map *.elf *.dep *.o    
 
 # Link all the object files into an elf file.
 $(TARGET).elf : $(OBJS)

@@ -1,42 +1,24 @@
 #include <bits/stdc++.h>
 #include "sockets.h"
-#include "camera.h"
-#include <opencv2/core.hpp>
-#include <opencv2/videoio.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/imgproc.hpp>
-
 #include <jsoncpp/json/json.h>
-#include <time.h>
-#include <cstdlib>
+#include "camera.h"
+#include "utils.h"
+
 using namespace std;
 
+unsigned char buffer [500000];
 #define red(n)      "\033[1;31m"#n"\033[0m"
 #define green(n)    "\033[1;32m"#n"\033[0m"
 #define yellow(n)   "\033[1;33m"#n"\033[0m"
 #define blue(n)     "\033[1;34m"#n"\033[0m"
-#define white(n)     "\033[1;37m"#n"\033[0m"
-
-#define HEIGHT 480
-#define WIDTH 640
-
-/*
-         foreground background
-black        30         40
-red          31         41
-green        32         42
-yellow       33         43
-blue         34         44
-magenta      35         45
-cyan         36         46
-white        37         47
-*/
+#define white(n)    "\033[1;37m"#n"\033[0m"
 
 
 Json::Value root;
 Json:: FastWriter fw;
-string s;
+string s, s2;
 char buff[500];
+Camera c;
 
 Socket base;
 
@@ -48,19 +30,21 @@ void startServer(){
     cls();
     printf("Starting server ...\n");
     int err = base.serverStart();
-    if (err!= 0) printf("The error %d has occurred, please verify network\n", err);
+    if (err != 0) printf("The error %d has occurred, please verify network\n", err);
     else printf("Incoming connection from drone has been established\n \
                 waiting for instructions ...\n");
-    //string msg = "Hello from Roger Server\n";
-    s = fw.write(root);
-    base.sendJson(s);
+    string msg = "Hello from Roger Server\n";
+    base.sendJson(msg);
 
 }
 
 
 void emergencyStop(){
     s = fw.write(root);
-    cout << s << endl;
+    s.pop_back();
+    cout << s << " size: " << s.size() <<endl;
+    s2 = compress_string(s, 9);
+    cout << s2 << "  size: "<< s2.size()<<endl;
     base.sendJson(s);
 }
 
@@ -77,16 +61,20 @@ void desplazamiento(){
     desplazamiento.append(dphi);
     root["desplazamiento"] = desplazamiento;
     s = fw.write(root);
-    cout << s << endl;
+    s.pop_back();
+    cout << s << " size: " << s.size() <<endl;
+    s2 = compress_string(s, 9);
+    cout << s2 << "  size: "<< s2.size()<<endl;
     base.sendJson(s);
 }
 
 void dataSensor(){
     s = fw.write(root);
-    cout << s << endl;
+    s.pop_back();
+    cout << s << " size: " << s.size() <<endl;
+    s2 = compress_string(s, 9);
+    cout << s2 << "  size: "<< s2.size()<<endl;
     base.sendJson(s);
-    base.readJson(&s);
-    cout<<"Data recieved: "<<s<<endl;
 }
 
 void showImage(){
@@ -97,20 +85,19 @@ void showImage(){
     printf(white(Insertar camara\n) green([1]) " " white(ELP\n) green([2])" " white(Makerfocus\n));
     cin >> camera;
     root["camera"] = camera;
+    c.getFrame();
+    mat2Buff(&c.bwframe, buffer);
+    string s3((char*) buffer);
+    root["fame"] = s3;
     s = fw.write(root);
-    cout << s << endl;
+    s.pop_back();
+    cout << " size: " << s.size() <<endl;
+    s2 = compress_string(s, 9);
+    cout << "  size: "<< s2.size()<<endl;
     base.sendJson(s);
-    base.readJson(&s);
-    Json::Reader r;
-    Json::Value v;
-    r.parse(s, v);
-	cv::Mat image(HEIGHT, WIDTH,  CV_8UC1);
-    buff2Mat(&image, (unsigned char *)v['image'].asCString());
-    cv::namedWindow("Image from drone", cv::WINDOW_AUTOSIZE);
-    while(1){
-        cv::imshow("Image from drone",image);
-        cv::waitKey(0);
-    }
+    
+    cv::imshow("Display Image", c.bwframe);
+    cv::waitKey(0);
 }
 
 
@@ -120,7 +107,7 @@ void finalCoordinates(){
     Json::Value position(Json::arrayValue);
 
     cls();
-    printf(white(Insertar posición final en \n metros y grados sexagesimales) "\n" blue((dx, dy, dz, dphi)) "\n");
+    printf(white(Insertar posición final en metros y grados sexagesimales) "\n" blue((dx, dy, dz, dphi)) "\n");
     cin >> x >> y >> z >> phi;
 
     position.append(x);
@@ -129,26 +116,38 @@ void finalCoordinates(){
     position.append(phi);
     root["position"] = position;
     s = fw.write(root);
-    cout << s << endl;
+    s.pop_back();
+    cout << s << " size: " << s.size() <<endl;
+    s2 = compress_string(s, 9);
+    cout << s2 << "  size: "<< s2.size()<<endl;
     base.sendJson(s);
 }
 
 void ARM(){
     s = fw.write(root);
-    cout << s << endl;
+    s.pop_back();
+    cout << s << " size: " << s.size() <<endl;
+    s2 = compress_string(s, 9);
+    cout << s2 << "  size: "<< s2.size()<<endl;
     base.sendJson(s);
 }
 
 void calibrateESC(){
     s = fw.write(root);
-    cout << s << endl;
+    s.pop_back();
+    cout << s << " size: " << s.size() <<endl;
+    s2 = compress_string(s, 9);
+    cout << s2 << "  size: "<< s2.size()<<endl;
     base.sendJson(s);
 }
 
 
 void zeroPosition(){
     s = fw.write(root);
-    cout << s << endl;
+    s.pop_back();
+    cout << s << " size: " << s.size() <<endl;
+    s2 = compress_string(s, 9);
+    cout << s2 << "  size: "<< s2.size()<<endl;
     base.sendJson(s);
 }
 
@@ -157,7 +156,7 @@ void zeroPosition(){
 int menu(){
     cls();    
     root.clear();
-    printf("\t\t\t\t" blue(Principal menu) "\n");
+    printf("\t\t\t\t\t\t\t\t" blue(Principal menu) "\n");
     printf(green([1]) " " white( Start server\n));
     printf(green([2]) " " white( Emergency stop\n));
     printf(green([3]) " " white(Desplazamiento\n));
@@ -184,7 +183,8 @@ int menu(){
         case 9: zeroPosition(); break;
         default: printf("%d is not an option, please enter option again\n", op); menu(); break;
     }
-    sleep(2);
+    
+    sleep(3);
     return 0;
 }
 
@@ -194,7 +194,7 @@ int main(int argc, char const *argv[]) {
 	
 
     int port = atoi(argv[1]);
-	cout<<"Port elected: "<<port<<endl;
+	cout << "Port elected: "<< port <<endl;
 	base = Socket(INADDR_ANY, port);
    
     while(1){

@@ -7,7 +7,7 @@
 #include <string.h>
 #include <stdint.h>
 #include "io.h"
-#define LED PRTB, 4
+#define LED PRTD, 8 
 
 char s[50];
 

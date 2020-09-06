@@ -18,8 +18,8 @@ void serialWriteString(char* s){
 }
 
 void initSerial(){
-    RPINR18bits.U1RXR = 112;
-    RPOR13bits.RP113R = 1;
+    RPINR18bits.U1RXR = 97;
+    RPOR3bits.RP71R = 1;
 
     U1MODEbits.UARTEN = 1;
     U1MODEbits.UEN = 0;

@@ -1,7 +1,6 @@
 CXX = g++
-INC = -I/home/roger/installation/OpenCV-4.4/include -I/home/roger/installation/OpenCV-4.4/include/opencv4
-PCFG = `pkg-config --cflags --libs opencv4` -ljsoncpp
-#PCFG =  -ljsoncpp
+INC = -I/usr/local/include/opencv4
+PCFG = `pkg-config --cflags --libs opencv4` -ljsoncpp -lz
 
 SOURCES :=  $(wildcard src/*.cpp)
 OBJS := $(patsubst %.cpp, %.o,$(SOURCES))
@@ -22,7 +21,7 @@ $(TAR_SERVER) : $(OBJ_SERVER) $(OBJS)
 
 $(OBJ_SERVER): $(SRC_SERVER) $(HDRS)
 	@echo Creating object file for server $@
-	$(CXX) $(CFLAGS) -o $@ $<  $(INC)
+	$(CXX) $(CFLAGS) -o $@ $< $(INC)
 
 
 src/%.o : src/%.cpp $(HDRS)

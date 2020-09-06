@@ -9,7 +9,7 @@ void initSPI(){
 
 
     pinMode(PRTF, 2, INPUT);
-    pinMode(PRTF, 3, OUTPUT);
+    pinMode(CS, OUTPUT);
     pinMode(PRTF, 8, OUTPUT);
     pinMode(PRTD, 15, OUTPUT);
     spiStop();

@@ -81,7 +81,7 @@ int portDigitalRead(int port){
 
 
 void pinMode(int port, int pin, bool in){
-    bool change = true;
+    int change = 0;
     switch (port){
         case PRTA:  change = (TRISA >> pin) ^ in; break;
         case PRTB:  change = (TRISB >> pin) ^ in; break;
@@ -92,7 +92,7 @@ void pinMode(int port, int pin, bool in){
         case PRTG:  change = (TRISG >> pin) ^ in; break;
     } 
     
-    if(!change) return;
+    if(!(change & 1)) return;
     
     switch (port){
         case PRTA:  TRISA ^= (1 << pin); break;
