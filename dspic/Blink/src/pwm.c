@@ -1,8 +1,6 @@
 #include "pwm.h"
 #include "serial.h"
 
-char buff[50];
-
 short init_done = 0;
 int master_prescaler = 0;
 
