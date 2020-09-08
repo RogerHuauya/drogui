@@ -1,6 +1,8 @@
 #include "mpu9250.h"
 #include <libpic30.h>
-
+#include <stdlib.h> 
+#include <math.h>
+char s[50];
 // TODO: Add setter methods for this hard coded stuff
 // Specify sensor full scale
 uint8_t Gscale = GFS_250DPS;
@@ -32,7 +34,9 @@ float gyroBias[3]  = {0, 0, 0},
 
 void initMPU9250(mpu9250 *mpu, uint8_t address, double clock_frequency )
 {
-    initI2C(&(mpu->_wire), I2C1, address,  clock_frequency);
+    initI2C(&(mpu->mpuI2C), I2C1, address,  clock_frequency);
+    //initI2C(&(mpu->mpuI2C), I2C1, address,  clock_frequency);
+
 }
 void awakeMPU9250(mpu9250 *mpu){
   // Clear sleep mode bit (6), enable all sensors
@@ -340,6 +344,8 @@ void calibrateMPU9250(mpu9250 * mpu)
   // Read FIFO sample count
   readBytesWire(&mpu, FIFO_COUNTH, 2, &data[0]);
   fifo_count = ((uint16_t)data[0] << 8) | data[1];
+  sprintf(s,"Fifo count: %d\n", fifo_count);
+  serialWriteString(s);
   // How many sets of full gyro and accelerometer data for averaging
   packet_count = fifo_count/12;
 
@@ -485,7 +491,7 @@ void calibrateMPU9250(mpu9250 * mpu)
 // Accelerometer and gyroscope self test; check calibration wrt factory settings
 // Should return percent deviation from factory trim values, +/- 14 or less
 // deviation is a pass.
-void MPU9250SelfTest(mpu9250 * mpu, float * destination)
+void MPU9250SelfTest(mpu9250 * mpu)
 {
   uint8_t rawData[6] = {0, 0, 0, 0, 0, 0};
   uint8_t selfTest[6];
@@ -518,8 +524,7 @@ void MPU9250SelfTest(mpu9250 * mpu, float * destination)
     aAvg[ii] /= 200;
     gAvg[ii] /= 200;
   char s[60];
-    sprintf(s, "%d %d\n", aAvg[ii]);
-    serialWriteString(s);
+
   }
   // Configure the accelerometer for self-test
   // Enable self test on all three axes and set accelerometer range to +/- 2 g
@@ -592,9 +597,11 @@ void MPU9250SelfTest(mpu9250 * mpu, float * destination)
   for (int i = 0; i < 3; i++)
   {
     // Report percent differences
-    destination[i] = 100.0 * ((float)(aSTAvg[i] - aAvg[i])) / factoryTrim[i]- 100.;
+    
+    mpu->selfTest[i] = 100.0 * ((float)(aSTAvg[i] - aAvg[i])) / factoryTrim[i]- 100.;
     // Report percent differences
-    destination[i+3] = 100.0*((float)(gSTAvg[i] - gAvg[i]))/factoryTrim[i+3]- 100.;
+    mpu->selfTest[i+3] = 100.0*((float)(gSTAvg[i] - gAvg[i])) / factoryTrim[i+3]- 100.;
+    //sprintf(s,"%.3f")
   }
 }
 
@@ -692,10 +699,10 @@ void magCalMPU9250(mpu9250 * mpu, float * bias_dest, float * scale_dest)
 
 uint8_t writeByteWire(mpu9250 * mpu, uint8_t registerAddress, uint8_t data)
 {
-  	i2cStart(&(mpu->_wire));  	// Initialize the Tx buffer
-    i2cStartWrite(&(mpu->_wire));
-    i2cWrite(&(mpu->_wire), data);
-    i2cStop(&(mpu->_wire));
+  	i2cStart(&(mpu->mpuI2C));  	// Initialize the Tx buffer
+    i2cStartWrite(&(mpu->mpuI2C));
+    i2cWrite(&(mpu->mpuI2C), data);
+    i2cStop(&(mpu->mpuI2C));
   	return 0;
 }
 
@@ -704,32 +711,38 @@ uint8_t writeByteWire(mpu9250 * mpu, uint8_t registerAddress, uint8_t data)
 uint8_t readByteWire(mpu9250 * mpu, uint8_t registerAddress)
 {
     uint8_t data; // `data` will store the register data
-    i2cStart(&(mpu->_wire));  	// Initialize the Tx buffer
-    i2cStartWrite(&(mpu->_wire));
-    i2cWrite(&(mpu->_wire), registerAddress);
-    i2cRestart(&(mpu->_wire));
-    i2cStartRead(&(mpu->_wire));
-    data =  i2cRead(&(mpu->_wire)); i2cSendACK(&(mpu->_wire));
-    i2cStop(&(mpu->_wire));
+    i2cStart(&(mpu->mpuI2C));  	// Initialize the Tx buffer
+    serialWriteString("Trash\n");
+    i2cStartWrite(&(mpu->mpuI2C));
+    serialWriteString("Trash\n");
+    i2cWrite(&(mpu->mpuI2C), registerAddress);
+    serialWriteString("Trash\n");
+    i2cRestart(&(mpu->mpuI2C));
+    serialWriteString("Trash\n");
+    i2cStartRead(&(mpu->mpuI2C));
+    serialWriteString("Trash\n");
+    data =  i2cRead(&(mpu->mpuI2C)); i2cSendACK(&(mpu->mpuI2C));
+    serialWriteString("Trash\n");
+    i2cStop(&(mpu->mpuI2C));
     return data;
 }
 
 uint8_t readBytesWire(mpu9250 * mpu, uint8_t registerAddress,  uint8_t count, uint8_t * dest)
 {
   // Initialize the Tx buffer
-    i2cStart(&(mpu->_wire));  	// Initialize the Tx buffer
+    i2cStart(&(mpu->mpuI2C));  	// Initialize the Tx buffer
   // Put slave register address in Tx buffer
-    i2cStartWrite(&(mpu->_wire));
-    i2cWrite(&(mpu->_wire), registerAddress);  // Send the Tx buffer, but send a restart to keep connection alive
-    i2cRestart(&(mpu->_wire));
+    i2cStartWrite(&(mpu->mpuI2C));
+    i2cWrite(&(mpu->mpuI2C), registerAddress);  // Send the Tx buffer, but send a restart to keep connection alive
+    i2cRestart(&(mpu->mpuI2C));
 
     uint8_t i = 0;
     for(i = 0; i < count; i++){
         //serialWriteString("aiuda\n");
-        dest[i] = i2cRead(&(mpu->_wire)); i2cSendACK(&(mpu->_wire));
+        dest[i] = i2cRead(&(mpu->mpuI2C)); i2cSendACK(&(mpu->mpuI2C));
     // Read bytes from slave register address
     }
-    i2cStop(&(mpu->_wire));
+    i2cStop(&(mpu->mpuI2C));
 
   return i; // Return number of bytes written
 }

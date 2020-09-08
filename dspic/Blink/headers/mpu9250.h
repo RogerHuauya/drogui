@@ -211,7 +211,7 @@ typedef struct _mpu9250{
     };
 
     
-    i2c _wire;						// Allows for use of various I2C ports
+    i2c mpuI2C;						// Allows for use of various I2C ports
     int16_t gyroCount[3];   // Stores the 16-bit signed gyro sensor output
     int16_t magCount[3];    // Stores the 16-bit signed magnetometer sensor output
     // Scale resolutions per LSB for the sensors
@@ -230,7 +230,7 @@ typedef struct _mpu9250{
 } mpu9250;
     
 void initMPU9250(mpu9250 *mpu, uint8_t address, double clock_frequency);
-void MPU9250SelfTest(mpu9250 * mpu, float * destination);
+void MPU9250SelfTest(mpu9250 * mpu);
 void awakeMPU9250(mpu9250 *mpu);
 uint8_t readByteWire(mpu9250 * mpu, uint8_t registerAddress);
 uint8_t writeByteWire(mpu9250 * mpu, uint8_t registerAddress, uint8_t data);

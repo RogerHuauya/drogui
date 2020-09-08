@@ -23,6 +23,7 @@ void initI2C(i2c* c, int n, char adress, double freq){
     c -> address = adress;
 
     int BRG = ((1 / freq) - 130e-9) * FCY - 2;
+    BRG = 8;
     char s[20];
     sprintf(s, "BRG: %d\n", BRG);
     serialWriteString(s);
