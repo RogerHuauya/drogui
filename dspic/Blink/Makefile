@@ -2,7 +2,7 @@
 PROC = 33EP512MU810
 
 #the c compiler
-CC = xc16-gcc
+CC = xc16-gcc -std=c99
 
 #the hexfile maker
 HX= xc16-bin2hex

@@ -1,99 +1,167 @@
 #include "i2c.h"
 #include "serial.h"
-
+/*
 void idleI2C(){
     while(I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN 
             || I2C2CONbits.ACKEN || I2C2STATbits.TRSTAT);	
-}
+}*/
 
-void initI2C(){
-    
-    I2C2CONbits.A10M = 0;       // 7bit address
-    I2C2CONbits.I2CSIDL = 0;
-    I2C2BRG = 0x23; 
-    I2C2CONbits.I2CEN = 1;    
-    i2cStop();
-    //((1/FSCL - Delay)*FCY/2) - 2;
-}
+bool on1 = false, on2 = false , on3 = false;
 
-void i2cStart(){
-    idleI2C();
-    I2C2CONbits.SEN = 1;
-}
+void idleI2C(i2c *c){
+    switch(c -> n){
+        case I2C1: while(I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RCEN || I2C1CONbits.RSEN 
+                        || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT);	break;
+        case I2C2: while(I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN || I2C2CONbits.RSEN 
+                        || I2C2CONbits.ACKEN || I2C2STATbits.TRSTAT);   break;
 
-void i2cStop(){
-    idleI2C();
-     I2C2CONbits.PEN = 1;
-}
-
-void i2cRestart(){
-    idleI2C();
-    I2C2CONbits.RSEN = 1;
-}
-
-int i2cWrite(unsigned char data){
-    idleI2C();
-    while(I2C2STATbits.TBF){}
-    I2C2TRN = data;
-    if(I2C2STATbits.IWCOL)        
-        return -1;
-    else{
-        idleI2C();                  
-        if( I2C2STATbits.ACKSTAT ) 
-    	    return -2;
-	    else return 0;
     }
+}
+
+void initI2C(i2c* c, int n, char adress, double freq){
+    c -> n = n;
+    c -> address = adress;
+
+    int BRG = ((1 / (2 * freq)) - 0.000000104) * ((FCY / 2) - 2);
+    char s[20];
+    sprintf(s, "mierd: %d\n", BRG);
+    serialWriteString(s);
+    switch(c->n){
+        
+        case I2C1: if(on1) break; I2C1BRG = BRG; I2C1CONbits.DISSLW = 0; I2C1CONbits.I2CEN = 1; on1 = 1; break;
+        case I2C2: if(on2) break; I2C2BRG = BRG; I2C2CONbits.DISSLW = 0; I2C2CONbits.I2CEN = 1; on2 = 1; break;
+    } 
+}
+
+void i2cStart(i2c* c){
+    idleI2C(c);
+    switch(c -> n){
+        case I2C1: I2C1CONbits.SEN = 1; break;
+        case I2C2: I2C2CONbits.SEN = 1; break;
+    }
+}
+
+void i2cStop(i2c* c){
+    idleI2C(c);
+    switch(c -> n){
+        case I2C1: I2C1CONbits.PEN = 1; break;
+        case I2C2: I2C2CONbits.PEN = 1; break;
+    }
+}
+
+void i2cRestart(i2c* c){
+    idleI2C(c);
+    switch(c -> n){
+        case I2C1: I2C1CONbits.RSEN = 1; break;
+        case I2C2: I2C2CONbits.RSEN = 1; break;
+    }
+}
+
+int i2cWrite(i2c* c, unsigned char data){
+    idleI2C(c);
+    int ans;
+    switch(c -> n){
+        case I2C1:
+            while(I2C1STATbits.TBF){}
+            I2C1TRN = data;
+            if(I2C1STATbits.IWCOL)        
+                ans = -1;
+            else{
+                idleI2C(c); 
+                if(I2C1STATbits.ACKSTAT) ans = -2;
+                else ans =  0;
+            }
+            break;
+        case I2C2:
+            while(I2C2STATbits.TBF){}
+            I2C2TRN = data;
+            if(I2C2STATbits.IWCOL) ans = -1;
+            else{
+                idleI2C(c);                  
+                if( I2C2STATbits.ACKSTAT ) 
+                    ans = -2;
+                else ans =  0;
+            }
+            break;
+
+    }
+    return ans;
 }   
 
-int i2cWriteString(unsigned char * s){
+int i2cWriteString(i2c* c, char * s){
     while(*s){
-        if(i2cWrite(*s) == -1)
-            return -3;                         
-        while(I2C2STATbits.TBF);
-        idleI2C();
+        if(i2cWrite(c, *s) == -1)
+            return -3; 
+        switch (c->n){
+            case I2C1:   while(I2C1STATbits.TBF); break;
+            case I2C2:   while(I2C2STATbits.TBF); break;
+        }
+        idleI2C(c);
         s++;
     }
     return 0;
 }
 
 
-unsigned char i2cRead(){
-    idleI2C();
-    I2C2CONbits.RCEN = 1;
-    while(I2C2CONbits.RCEN){};
-    I2C2STATbits.I2COV = 0;
-    return I2C2RCV;
+unsigned char i2cRead(i2c* c){
+    idleI2C(c);
+    unsigned char ans;
+    switch (c->n){
+        case I2C1:    I2C1CONbits.RCEN = 1;  while(I2C1CONbits.RCEN){}; 
+                        I2C1STATbits.I2COV = 0; while(!I2C1STATbits.RBF){}; 
+                        ans = I2C1RCV; break;
+        case I2C2:    I2C2CONbits.RCEN = 1; while(I2C2CONbits.RCEN){};
+                        I2C2STATbits.I2COV = 0; ans = I2C2RCV; break;
+
+    }
+    return ans;
 }
 
-int i2cReadString(unsigned char* s, int len){
+int i2cReadString(i2c* c, char* s, int len){
     while(len){
-        I2C2CONbits.RCEN = 1;
-        while(!i2cAvailable());
+        *s = i2cRead(c);
         
-        *s = I2C2RCV;
         s++;  len--;
         if(len == 0)
-            I2C2CONbits.ACKDT = 1; // nack
+            i2cSendNACK(c);
         else
-            I2C2CONbits.ACKDT = 0; // ack
+            i2cSendACK(c);
 
-        I2C2CONbits.ACKEN = 1;
-        while(I2C2CONbits.ACKEN == 1);
+        idleI2C(c);
     }
     return 0;
 }
 
 
-void i2cSendACK(){
-    I2C2CONbits.ACKDT = 0;
-    I2C2CONbits.ACKEN = 1;
+void i2cSendACK(i2c* c){
+    idleI2C(c);
+    switch(c -> n){
+        case I2C1: I2C1CONbits.ACKDT = 0, I2C1CONbits.ACKEN = 1; break;
+        case I2C2: I2C2CONbits.ACKDT = 0, I2C2CONbits.ACKEN = 1; break;
+    }
 }
 
-void i2cSendNACK(){
-    I2C2CONbits.ACKDT = 1;
-    I2C2CONbits.ACKEN = 1;
+void i2cSendNACK(i2c* c){
+    idleI2C(c);
+    switch(c -> n){
+        case I2C1: I2C1CONbits.ACKDT = 1, I2C1CONbits.ACKEN = 1; break;
+        case I2C2: I2C2CONbits.ACKDT = 1, I2C2CONbits.ACKEN = 1; break;
+    }
 }
 
-char i2cAvailable(){
-    return I2C2STATbits.RBF;
+char i2cAvailable(i2c* c){
+    char ans;
+    switch(c -> n){
+        case I2C1: ans = I2C1STATbits.RBF; break;
+        case I2C2: ans = I2C2STATbits.RBF; break;
+    }
+    return ans;
+}
+
+int i2cStartWrite(i2c* c){
+    return i2cWrite(c, (c->address << 1));
+}
+
+int i2cStartRead(i2c* c){
+    return i2cWrite(c, (c->address << 1) + 1);
 }

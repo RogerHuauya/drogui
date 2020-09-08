@@ -1,4 +1,4 @@
-#define SPI_TEST
+//#define SPI_TEST
 #ifdef SPI_TEST
 
 #include "config.h"
