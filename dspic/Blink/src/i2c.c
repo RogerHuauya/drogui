@@ -22,12 +22,11 @@ void initI2C(i2c* c, int n, char adress, double freq){
     c -> n = n;
     c -> address = adress;
 
-    int BRG = ((1 / (2 * freq)) - 0.000000104) * ((FCY / 2) - 2);
+    int BRG = ((1 / freq) - 130e-9) * FCY - 2;
     char s[20];
-    sprintf(s, "mierd: %d\n", BRG);
+    sprintf(s, "BRG: %d\n", BRG);
     serialWriteString(s);
     switch(c->n){
-        
         case I2C1: if(on1) break; I2C1BRG = BRG; I2C1CONbits.DISSLW = 0; I2C1CONbits.I2CEN = 1; on1 = 1; break;
         case I2C2: if(on2) break; I2C2BRG = BRG; I2C2CONbits.DISSLW = 0; I2C2CONbits.I2CEN = 1; on2 = 1; break;
     } 
@@ -57,7 +56,7 @@ void i2cRestart(i2c* c){
     }
 }
 
-int i2cWrite(i2c* c, unsigned char data){
+int i2cWrite(i2c* c, uint8_t data){
     idleI2C(c);
     int ans;
     switch(c -> n){
@@ -88,7 +87,7 @@ int i2cWrite(i2c* c, unsigned char data){
     return ans;
 }   
 
-int i2cWriteString(i2c* c, char * s){
+int i2cWriteString(i2c* c, uint8_t * s){
     while(*s){
         if(i2cWrite(c, *s) == -1)
             return -3; 
@@ -117,7 +116,7 @@ unsigned char i2cRead(i2c* c){
     return ans;
 }
 
-int i2cReadString(i2c* c, char* s, int len){
+int i2cReadString(i2c* c, uint8_t* s, int len){
     while(len){
         *s = i2cRead(c);
         

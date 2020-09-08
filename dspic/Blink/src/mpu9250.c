@@ -30,10 +30,9 @@ float gyroBias[3]  = {0, 0, 0},
         magScale[3]  = {0, 0, 0};
 
 
-void initMPU9250(mpu9250 *mpu, uint8_t address, uint32_t clock_frequency )
+void initMPU9250(mpu9250 *mpu, uint8_t address, double clock_frequency )
 {
     initI2C(&(mpu->_wire), I2C1, address,  clock_frequency);
- // wake up device
 }
 void awakeMPU9250(mpu9250 *mpu){
   // Clear sleep mode bit (6), enable all sensors

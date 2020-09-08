@@ -229,7 +229,7 @@ typedef struct _mpu9250{
     
 } mpu9250;
     
-void initMPU9250(mpu9250 *mpu, uint8_t address, uint32_t clock_frequency);
+void initMPU9250(mpu9250 *mpu, uint8_t address, double clock_frequency);
 void MPU9250SelfTest(mpu9250 * mpu, float * destination);
 void awakeMPU9250(mpu9250 *mpu);
 uint8_t readByteWire(mpu9250 * mpu, uint8_t registerAddress);
