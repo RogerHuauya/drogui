@@ -32,11 +32,9 @@ float gyroBias[3]  = {0, 0, 0},
         magScale[3]  = {0, 0, 0};
 
 
-void initMPU9250(mpu9250 *mpu, uint8_t address, double clock_frequency )
-{
+void initMPU9250(mpu9250 *mpu, uint8_t address, double clock_frequency ){
     initI2C(&(mpu->mpuI2C), I2C1, address,  clock_frequency);
     //initI2C(&(mpu->mpuI2C), I2C1, address,  clock_frequency);
-
 }
 void awakeMPU9250(mpu9250 *mpu){
   // Clear sleep mode bit (6), enable all sensors
@@ -114,10 +112,7 @@ void awakeMPU9250(mpu9250 *mpu){
 
 }
 
-
-
-void getMres(mpu9250 * mpu)
-{
+void getMres(mpu9250 * mpu){
   switch (Mscale)
   {
     // Possible magnetometer scales (and their register bit settings) are:
@@ -189,7 +184,6 @@ void readAccelData(mpu9250 * mpu, int16_t * destination)
   destination[1] = ((int16_t)rawData[2] << 8) | rawData[3] ;
   destination[2] = ((int16_t)rawData[4] << 8) | rawData[5] ;
 }
-
 
 void readGyroData(mpu9250 * mpu, int16_t * destination)
 {
@@ -491,7 +485,7 @@ void calibrateMPU9250(mpu9250 * mpu)
 // Accelerometer and gyroscope self test; check calibration wrt factory settings
 // Should return percent deviation from factory trim values, +/- 14 or less
 // deviation is a pass.
-void MPU9250SelfTest(mpu9250 * mpu)
+void selfTestMPU9250(mpu9250 * mpu)
 {
   uint8_t rawData[6] = {0, 0, 0, 0, 0, 0};
   uint8_t selfTest[6];
@@ -504,47 +498,26 @@ void MPU9250SelfTest(mpu9250 * mpu)
   writeByteWire(mpu, GYRO_CONFIG, FS<<3);  // Set full scale range for the gyro to 250 dps
   writeByteWire(mpu, ACCEL_CONFIG2, 0x02); // Set accelerometer rate to 1 kHz and bandwidth to 92 Hz
   writeByteWire(mpu, ACCEL_CONFIG, FS<<3); // Set full scale range for the accelerometer to 2 g
-  uint8_t x = readByteWire(mpu, ACCEL_XOUT_H); 
-  sprintf(s, "Test: %hhu \n", x);
-  serialWriteString(s);
-      uint8_t au[6];
-    readBytesWire(mpu, ACCEL_XOUT_H, 6, &au[0]);        // Read the six raw data registers into data array
 
-    for(int i = 0; i < 6; i++){
-        sprintf(s,"%hhu ", au[i]);
-        serialWriteString(s);
-    }
   for( int ii = 0; ii < 200; ii++) {  // get average current values of gyro and acclerometer
   
     readBytesWire(mpu, ACCEL_XOUT_H, 6, &rawData[0]);        // Read the six raw data registers into data array
     aAvg[0] += (int16_t)(((int16_t)rawData[0] << 8) | rawData[1]) ;  // Turn the MSB and LSB into a signed 16-bit value
     aAvg[1] += (int16_t)(((int16_t)rawData[2] << 8) | rawData[3]) ;  
     aAvg[2] += (int16_t)(((int16_t)rawData[4] << 8) | rawData[5]) ; 
-    for(int i = 0; i < 6; i++){
-        sprintf(s,"%hhu ", rawData[i]);
-        serialWriteString(s);
-    }
+
     readBytesWire(mpu, GYRO_XOUT_H, 6, &rawData[0]);       // Read the six raw data registers sequentially into data array
     gAvg[0] += (int16_t)(((int16_t)rawData[0] << 8) | rawData[1]) ;  // Turn the MSB and LSB into a signed 16-bit value
     gAvg[1] += (int16_t)(((int16_t)rawData[2] << 8) | rawData[3]) ;  
     gAvg[2] += (int16_t)(((int16_t)rawData[4] << 8) | rawData[5]) ; 
-        for(int i = 0; i < 6; i++){
-        sprintf(s,"%hhu ", rawData[i]);
-        serialWriteString(s);
-    }
-        serialWriteChar('\n');
-        __delay_ms(1);
+
   }
 
   // Get average of 200 values and store as average current readings
-  for (int ii =0; ii < 3; ii++)
-  {
+  for (int ii =0; ii < 3; ii++){
     aAvg[ii] /= 200;
     gAvg[ii] /= 200;
-
   }
-  sprintf(s,"mag x min/max: %d %d\n",aAvg[0], gAvg[0]);
-  serialWriteString(s);
   // Configure the accelerometer for self-test
   // Enable self test on all three axes and set accelerometer range to +/- 2 g
   writeByteWire(mpu, ACCEL_CONFIG, 0xE0);
@@ -731,28 +704,26 @@ uint8_t readByteWire(mpu9250 * mpu, uint8_t registerAddress)
 {
     uint8_t data; // `data` will store the register data
     i2cStart(&(mpu->mpuI2C));  	// Initialize the Tx buffer
-    //serialWriteString("Trash\n");
     i2cStartWrite(&(mpu->mpuI2C));
-    //serialWriteString("Trash\n");
+    
     i2cWrite(&(mpu->mpuI2C), registerAddress);
-    //serialWriteString("Trash\n");
+    
     i2cRestart(&(mpu->mpuI2C));
-    //serialWriteString("Trash\n");
+    
     i2cStartRead(&(mpu->mpuI2C));
-    //serialWriteString("Trash\n");
+    
     data =  i2cRead(&(mpu->mpuI2C)); i2cSendNACK(&(mpu->mpuI2C));
-    //serialWriteString("Trash\n");
+    
     i2cStop(&(mpu->mpuI2C));
     return data;
 }
 
 uint8_t readBytesWire(mpu9250 * mpu, uint8_t registerAddress,  uint8_t count, uint8_t * dest)
-{
+{ 
     i2cStart(&(mpu->mpuI2C));  	
     i2cStartWrite(&(mpu->mpuI2C));
     i2cWrite(&(mpu->mpuI2C), registerAddress); 
     i2cRestart(&(mpu->mpuI2C));
-
     i2cStartRead(&(mpu->mpuI2C));
 
     uint8_t i = 0;
@@ -761,8 +732,7 @@ uint8_t readBytesWire(mpu9250 * mpu, uint8_t registerAddress,  uint8_t count, ui
     }
     dest[count-1] = i2cRead(&(mpu->mpuI2C)); i2cSendNACK(&(mpu->mpuI2C));
     i2cStop(&(mpu->mpuI2C));
-idleI2C(&(mpu->mpuI2C));
-  return i; 
+    return i; 
 }
 
 
