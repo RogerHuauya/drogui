@@ -18,19 +18,32 @@ mpu9250 mpu;
 char c1,c2,c3;
 int main(){
     char s[50];
-    uint8_t c;
+    uint8_t c, d;
     int16_t accel[3];
     initConfig();
     initSerial();
     initMPU9250(&mpu, MPU9250_ADDRESS, I2Cclock);
     __delay_ms(1000);
     c = readByteWire(&mpu, WHO_AM_I_MPU9250);
-    sprintf(s, "Id: %hhu\n", c);
-    if (c == 0x71)  serialWriteString("MPU9250 is online..."); // WHO_AM_I should always be 0x71
+    d = readByteWire(&mpu, WHO_AM_I_MPU9250);
+    sprintf(s, "Id: %hhu %hhu\n", c, d);
+    serialWriteString(s);
+    if (c == 0x71)  serialWriteString("MPU9250 is online...\n"); // WHO_AM_I should always be 0x71
     else sprintf(s, "Id: %hhu\n", c), serialWriteString(s);
     MPU9250SelfTest(&mpu);
     serialWriteString("alv\n");
+      uint8_t x = readByteWire(&mpu, ACCEL_XOUT_H); 
+  sprintf(s, "Test: %hhu \n", x);
+  serialWriteString(s);
+    uint8_t au[6];
+    readBytesWire(&mpu, ACCEL_XOUT_H, 6, &au[0]);        // Read the six raw data registers into data array
+
     for(int i = 0; i < 6; i++){
+        sprintf(s,"%hhu ", au[i]);
+        serialWriteString(s);
+    }
+    serialWriteChar('\n');
+        for(int i = 0; i < 6; i++){
         sprintf(s,"%.3f ", mpu.selfTest[i]);
         serialWriteString(s);
     }
@@ -45,8 +58,9 @@ int main(){
         serialWriteString("Communication failed, abort!\n");
     }
     else serialWriteString("asserted\n");
-    serialWriteString("MPU9250 initialized for active data mode....\n");
+    
     awakeMPU9250(&mpu);
+    serialWriteString("MPU9250 initialized for active data mode....\n");
       // Communication failed, stop here
 
     __delay_ms(1000);
