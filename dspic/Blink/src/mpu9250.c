@@ -712,39 +712,36 @@ uint8_t readByteWire(mpu9250 * mpu, uint8_t registerAddress)
 {
     uint8_t data; // `data` will store the register data
     i2cStart(&(mpu->mpuI2C));  	// Initialize the Tx buffer
-    serialWriteString("Trash\n");
+    //serialWriteString("Trash\n");
     i2cStartWrite(&(mpu->mpuI2C));
-    serialWriteString("Trash\n");
+    //serialWriteString("Trash\n");
     i2cWrite(&(mpu->mpuI2C), registerAddress);
-    serialWriteString("Trash\n");
+    //serialWriteString("Trash\n");
     i2cRestart(&(mpu->mpuI2C));
-    serialWriteString("Trash\n");
+    //serialWriteString("Trash\n");
     i2cStartRead(&(mpu->mpuI2C));
-    serialWriteString("Trash\n");
-    data =  i2cRead(&(mpu->mpuI2C)); i2cSendACK(&(mpu->mpuI2C));
-    serialWriteString("Trash\n");
+    //serialWriteString("Trash\n");
+    data =  i2cRead(&(mpu->mpuI2C)); i2cSendNACK(&(mpu->mpuI2C));
+    //serialWriteString("Trash\n");
     i2cStop(&(mpu->mpuI2C));
     return data;
 }
 
 uint8_t readBytesWire(mpu9250 * mpu, uint8_t registerAddress,  uint8_t count, uint8_t * dest)
 {
-  // Initialize the Tx buffer
-    i2cStart(&(mpu->mpuI2C));  	// Initialize the Tx buffer
-  // Put slave register address in Tx buffer
+    i2cStart(&(mpu->mpuI2C));  	
     i2cStartWrite(&(mpu->mpuI2C));
-    i2cWrite(&(mpu->mpuI2C), registerAddress);  // Send the Tx buffer, but send a restart to keep connection alive
+    i2cWrite(&(mpu->mpuI2C), registerAddress); 
     i2cRestart(&(mpu->mpuI2C));
 
     uint8_t i = 0;
-    for(i = 0; i < count; i++){
-        //serialWriteString("aiuda\n");
+    for(i = 0; i < count-1; i++){
         dest[i] = i2cRead(&(mpu->mpuI2C)); i2cSendACK(&(mpu->mpuI2C));
-    // Read bytes from slave register address
     }
+    dest[count-1] = i2cRead(&(mpu->mpuI2C)); i2cSendNACK(&(mpu->mpuI2C));
     i2cStop(&(mpu->mpuI2C));
 
-  return i; // Return number of bytes written
+  return i; 
 }
 
 
