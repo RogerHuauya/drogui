@@ -5,13 +5,13 @@
 //#include <SPI.h>
 #include <xc.h>
 #include "i2c.h"
+#include "serial.h"
 #include <stdint.h>
 #include <stdbool.h>
 #include "config.h"
 
 #include <libpic30.h>
 
-#define SERIAL_DEBUG true
 
 // See also MPU-9250 Register Map and Descriptions, Revision 4.0,
 // RM-MPU-9250A-00, Rev. 1.4, 9/9/2013 for registers not listed in above
@@ -178,83 +178,71 @@
 
 
 #define READ_FLAG 0x80
-#define NOT_SPI -1
-#define SPI_DATA_RATE 1000000 // 1MHz is the max speed of the MPU-9250
-#define SPI_MODE SPI_MODE3
+enum Ascale
+{
+  AFS_2G = 0,
+  AFS_4G,
+  AFS_8G,
+  AFS_16G
+};
+
+enum Gscale {
+  GFS_250DPS = 0,
+  GFS_500DPS,
+  GFS_1000DPS,
+  GFS_2000DPS
+};
+
+enum Mscale {
+  MFS_14BITS = 0, // 0.6 mG per LSB
+  MFS_16BITS      // 0.15 mG per LSB
+};
+
+enum M_MODE {
+  M_8HZ = 0x02,  // 8 Hz update
+  M_100HZ = 0x06 // 100 Hz continuous magnetometer
+};
 
 typedef struct _mpu9250{
-
-
-    enum Ascale
-    {
-      AFS_2G = 0,
-      AFS_4G,
-      AFS_8G,
-      AFS_16G
-    };
-
-    enum Gscale {
-      GFS_250DPS = 0,
-      GFS_500DPS,
-      GFS_1000DPS,
-      GFS_2000DPS
-    };
-
-    enum Mscale {
-      MFS_14BITS = 0, // 0.6 mG per LSB
-      MFS_16BITS      // 0.15 mG per LSB
-    };
-
-    enum M_MODE {
-      M_8HZ = 0x02,  // 8 Hz update
-      M_100HZ = 0x06 // 100 Hz continuous magnetometer
-    };
-
-    
-    i2c mpuI2C;						// Allows for use of various I2C ports
+    i2c mpuI2C, magI2C;						// Allows for use of various I2C ports
+    int16_t accelCount[3]; // Stores the 16-bit signed accelerometer sensor output
     int16_t gyroCount[3];   // Stores the 16-bit signed gyro sensor output
     int16_t magCount[3];    // Stores the 16-bit signed magnetometer sensor output
     // Scale resolutions per LSB for the sensors
     float aRes, gRes, mRes;
     // Variables to hold latest sensor data values
     float ax, ay, az, gx, gy, gz, mx, my, mz;
-    uint32_t _interfaceSpeed;				// Stores the desired I2C or SPi clock rate
 
     float pitch, yaw, roll;
     float selfTest[6];
-    // Stores the 16-bit signed accelerometer sensor output
-    int16_t accelCount[3];
-
-
     
+    float gyroBias[3],
+        accelBias[3],
+        magBias[3],
+        magScale[3];
+
 } mpu9250;
     
 void initMPU9250(mpu9250 *mpu, uint8_t address, double clock_frequency);
-void MPU9250SelfTest(mpu9250 * mpu);
+void initAK8963(mpu9250 * mpu, float * destination);
+
+void selfTestMPU9250(mpu9250 * mpu);
 void awakeMPU9250(mpu9250 *mpu);
-uint8_t readByteWire(mpu9250 * mpu, uint8_t registerAddress);
-uint8_t writeByteWire(mpu9250 * mpu, uint8_t registerAddress, uint8_t data);
-uint8_t readBytesWire(mpu9250 * mpu, uint8_t registerAddress, uint8_t count, uint8_t * dest);
-void readAccelData(mpu9250 * m, int16_t *);
+
+uint8_t readByteWire(i2c * device, uint8_t registerAddress);
+uint8_t writeByteWire(i2c * device, uint8_t registerAddress, uint8_t data);
+uint8_t readBytesWire(i2c * device, uint8_t registerAddress,  uint8_t count, uint8_t * dest);
+void readAccelData(mpu9250 * mpu);
+void readGyroData(mpu9250 * mpu);
+void readMagData(mpu9250 * mpu);
+void readAll(mpu9250 * mpu);
+int16_t readTempData(mpu9250 * mpu);
+
+void getMres(mpu9250 *mpu);
+void getGres(mpu9250 *mpu);
+void getAres(mpu9250 *mpu);
 
 void calibrateMPU9250(mpu9250 * mpu);
-
-/*
-bool magInit(mpu9250 * m);
-void kickHardware(mpu9250 * m);
-void initMPU9250(mpu9250 * m, uint8_t address , int n);
-void getMres(mpu9250 * m);
-void getGres(mpu9250 * m);
-void getAres(mpu9250 * m);
-void readGyroData(mpu9250 * m, int16_t *);
-void readMagData(mpu9250 * m, int16_t *);
-int16_t readTempData(mpu9250 * m);
-void MPU9250SelfTest(mpu9250 * m, float * destination);
-void magCalMPU9250(mpu9250 * m, float * dest1, float * dest2);
-uint8_t writeByte(mpu9250 * m, uint8_t, uint8_t, uint8_t);
-uint8_t readByte(mpu9250 * m, uint8_t, uint8_t);
-uint8_t readBytes(mpu9250 * m, uint8_t, uint8_t, uint8_t, uint8_t *);
-// TODO: make SPI/Wire private
-uint8_t readBytesWire(mpu9250 * m, uint8_t, uint8_t, uint8_t, uint8_t *);*/
+void printIMU(mpu9250 * mpu);
 
 #endif
