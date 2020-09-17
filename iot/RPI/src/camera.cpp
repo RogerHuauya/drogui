@@ -29,6 +29,7 @@ int Camera::getFrame(){
 int Camera::getFrameAsBuffer(unsigned char buff[]){
     getFrame();
     mat2Buff(&bwframe, buff);
+    return 0;
 }
 
 int Camera::open(){    
@@ -37,4 +38,5 @@ int Camera::open(){
         perror("ERROR! Unable to open camera\n");
         return -1;
     }
+    return 0;
 }

@@ -1,6 +1,6 @@
 CXX = g++
 INC = -I/usr/local/include/opencv4
-PCFG = `pkg-config --cflags --libs opencv4` -ljsoncpp
+PCFG = `pkg-config --cflags --libs opencv4` -ljsoncpp -lz
 
 SOURCES :=  $(wildcard src/*.cpp)
 OBJS := $(patsubst %.cpp, %.o,$(SOURCES))
@@ -17,11 +17,11 @@ server: $(TAR_SERVER) cleanObjects
 
 $(TAR_SERVER) : $(OBJ_SERVER) $(OBJS)
 	@echo Linking objects
-	$(CXX) -o $(TAR_SERVER) $(OBJ_SERVER) $(OBJS) $(PCFG) 
+	$(CXX) -o $(TAR_SERVER) $(OBJ_SERVER) $(OBJS) $(PCFG) $(INC)
 
 $(OBJ_SERVER): $(SRC_SERVER) $(HDRS)
 	@echo Creating object file for server $@
-	$(CXX) $(CFLAGS) -o $@ $< 
+	$(CXX) $(CFLAGS) -o $@ $< $(INC)
 
 
 src/%.o : src/%.cpp $(HDRS)

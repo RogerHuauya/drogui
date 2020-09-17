@@ -2,7 +2,7 @@
 PROC = 33EP512MU810
 
 #the c compiler
-CC = xc16-gcc
+CC = xc16-gcc -std=c99
 
 #the hexfile maker
 HX= xc16-bin2hex
@@ -39,7 +39,7 @@ all : $(TARGET).hex
 $(TARGET).hex : $(TARGET).elf
 	@echo Creating hex file
 	$(HX) $(TARGET).elf
-	$(RM) *.map *.elf *.dep        
+	$(RM) *.map *.elf *.dep *.o    
 
 # Link all the object files into an elf file.
 $(TARGET).elf : $(OBJS)

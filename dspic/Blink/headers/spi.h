@@ -3,7 +3,9 @@
 #include <xc.h>
 #include <stdint.h>
 #include <stdbool.h>
-#define CS PRTF, 3
+
+#define CS PRTE, 9
+
 void initSPI();
 
 // Full Duplex SPI Functions

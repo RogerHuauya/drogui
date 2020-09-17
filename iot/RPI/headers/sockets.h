@@ -1,11 +1,11 @@
 #ifndef SOCKETS_H
 #define SOCKETS_H
-#include <string.h>
+#include <string>
+#include <iostream>
 #include <sys/socket.h> 
 #include <arpa/inet.h> 
 #include <stdio.h>
 #include <unistd.h> 
-
 struct Socket{
     char* ip;
     int port, sock, valread, child_socket, addrlen, opt;
@@ -39,6 +39,8 @@ struct Socket{
     }
 
     Socket(){};
+    void sendJson(std::string s);
+    void readJson(std::string * s);
 };
 
 
