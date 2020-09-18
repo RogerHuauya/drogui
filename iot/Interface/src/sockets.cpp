@@ -94,6 +94,14 @@ void Socket::sendBuffer(unsigned char buff[], int len){
     } 
 }
 
+<<<<<<< HEAD
+void Socket::sendJson(string s){
+    unsigned int dataLenght = htonl(s.size());
+    send(child_socket, s.c_str(), dataLenght, MSG_CONFIRM);
+}
+
+void Socket::readJson()
+=======
 void Socket::sendJson(std::string s){
     unsigned int dataLenght = s.size();
     unsigned char p[50];
@@ -119,3 +127,4 @@ void Socket::readJson(std::string * s){
     } 
     *s = buffer;
 }
+>>>>>>> 73f29d6b904f8ab1a13527ba1a88c293307797fd
