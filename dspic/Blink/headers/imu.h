@@ -225,7 +225,7 @@ typedef struct _imu{
 
 } imu;
     
-void initMPU9250(imu *im, uint8_t address, double clock_frequency);
+void initMPU9250(imu *im, int n,double clock_frequency);
 void initAK8963(imu * im, float * destination);
 
 void selfTestMPU9250(imu * im);
