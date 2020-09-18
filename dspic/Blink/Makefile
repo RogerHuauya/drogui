@@ -2,7 +2,7 @@
 PROC = 33EP512MU810
 
 #the c compiler
-CC = xc16-gcc
+CC = xc16-gcc -std=c99
 
 #the hexfile maker
 HX= xc16-bin2hex
@@ -21,8 +21,8 @@ ifdef LINKSCRIPT
 	LINKFLAGS:=--script=$(LINKSCRIPT),$(LINKFLAGS)
 endif
 
-SOURCES := $(wildcard *.c) $(wildcard src/*.c ) $(wildcard test/*.c)
-OBJS := $(patsubst %.c, %.o,$(SOURCES))
+SOURCES := $(wildcard *.c) $(wildcard src/*.c ) $(wildcard test/*.c) $(wildcard venti/*.c)
+OBJS := $(patsubst %.c, obj/%.o,$(SOURCES))
 HDRS := $(wildcard headers/*.h)
 CFLAGS=-g -O1 -x c -I headers 
 
@@ -39,7 +39,7 @@ all : $(TARGET).hex
 $(TARGET).hex : $(TARGET).elf
 	@echo Creating hex file
 	$(HX) $(TARGET).elf
-	$(RM) *.map *.o *.elf *.dep        
+	$(RM) *.map *.elf *.dep *.o    
 
 # Link all the object files into an elf file.
 $(TARGET).elf : $(OBJS)
@@ -47,8 +47,8 @@ $(TARGET).elf : $(OBJS)
 	$(CC) -mprocessor=$(PROC) -o $(TARGET).elf $(OBJS) -T p$(PROC).gld -Wl,$(LINKFLAGS)
 
 # Create an object file for each C file.
-%.o : %.c $(HDRS)
-	@echo Creating object file $@
+ obj/%.o : %.c $(HDRS)
+	@echo Creating object file $@ from $<
 	$(CC) $(CFLAGS) -c -mcpu=$(PROC) -o $@ $< -T p$(PROC).gld
 
 #path to harmony framework, harmony peripherals, harmony dsp library, harmony libq
@@ -56,5 +56,5 @@ $(TARGET).elf : $(OBJS)
 
 # Erase all hex, map, object, and elf files.
 clean :
-	$(RM) *.hex *.map *.o *.elf *.dep *.dis
+	$(RM) *.hex *.map *.elf *.dep *.dis *.o
 	     

@@ -1,0 +1,85 @@
+<robot name="drogui">
+    <link name="base">
+        <visual name="">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="D:\homeK\Code\Proyectos\drogui\coppelia\urdf\body.STL" scale="1"/>
+            </geometry>
+        </visual>
+    </link>
+    
+
+    <link name="prop_1">
+        <visual name="">
+            <origin xyz="0.0 0.0 0.0" rpy="1.570796 0.0 0.0"/>
+            <geometry>
+                <mesh filename="D:\homeK\Code\Proyectos\drogui\coppelia\urdf\prop.STL" scale="1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <joint name="joint_prop_1" type="revolute">
+        <origin xyz="184.44e-3 241.51e-3 -3.82e-3" rpy="0.0  0.0 0.0"/>
+        <parent link="base"/>
+        <child link="prop_1"/>
+        <axis xyz="0.0 0.0 0.0"/>
+    </joint>
+
+    <link name="prop_2">
+        <visual name="">
+            <origin xyz="0.0 0.0 0.0" rpy="1.570796 0.0 0.0"/>
+            <geometry>
+                <mesh filename="D:\homeK\Code\Proyectos\drogui\coppelia\urdf\prop.STL" scale="1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <joint name="joint_prop_2" type="revolute">
+        <origin xyz="184.44e-3 -241.51e-3 -3.82e-3" rpy="0.0  0.0 0.0"/>
+        <parent link="base"/>
+        <child link="prop_2"/>
+        <axis xyz="0.0 0.0 0.0"/>
+    </joint>
+    
+    <link name="prop_3">
+        <visual name="">
+            <origin xyz="0.0 0.0 0.0" rpy="1.570796 0.0 0.0"/>
+            <geometry>
+                <mesh filename="D:\homeK\Code\Proyectos\drogui\coppelia\urdf\prop.STL" scale="1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <joint name="joint_prop_3" type="revolute">
+        <origin xyz="-144.44e-3 241.51e-3 -3.82e-3" rpy="0.0  0.0 0.0"/>
+        <parent link="base"/>
+        <child link="prop_3"/>
+        <axis xyz="0.0 0.0 0.0"/>
+    </joint>
+    
+    <link name="prop_4">
+        <visual name="">
+            <origin xyz="0.0 0.0 0.0" rpy="1.570796 0.0 0.0"/>
+            <geometry>
+                <mesh filename="D:\homeK\Code\Proyectos\drogui\coppelia\urdf\prop.STL" scale="1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <joint name="joint_prop_4" type="revolute">
+        <origin xyz="-144.44e-3 -241.51e-3 -3.82e-3" rpy="0.0  0.0 0.0"/>
+        <parent link="base"/>
+        <child link="prop_4"/>
+        <axis xyz="0.0 0.0 0.0"/>
+    </joint>
+
+<!--
+    //184.44, 241.51, -3.82
+
+    //184.44, -241.51, -3.82
+
+    // -144.44, -241.51, -3.82
+    
+    // 144.44, -241.51, -3.82
+-->
+</robot>

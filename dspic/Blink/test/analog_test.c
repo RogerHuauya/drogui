@@ -1,4 +1,4 @@
-#define ANALOG_TEST
+//#define ANALOG_TEST
 #ifdef ANALOG_TEST
 
 #include "config.h"

@@ -14,6 +14,8 @@ void serialWriteChar(char data);
 void serialWriteString(char* s);
 char serialReadChar();
 
+long long serialParseInt();
+
 
 
 #endif

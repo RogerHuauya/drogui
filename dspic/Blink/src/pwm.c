@@ -1,66 +1,89 @@
 #include "pwm.h"
+#include "serial.h"
+
+char buff[50];
+
 short init_done = 0;
-/*
-void initPwm1(int prescaler, int postscaler){
-    P1TCONbits.PTEN = 1;
-    P1TCONbits.PTOPS = postscaler;
-    P1TCONbits.PTCKPS = prescaler;
-    P1TMRbits.PTDIR = 1; // Counting up
+int master_prescaler = 0;
 
-}
-
-void initPwm2(int prescaler, int postscaler){
-    P2TCONbits.PTEN = 1;
-    P2TCONbits.PTOPS = postscaler;
-    P2TCONbits.PTCKPS = prescaler;
-    P2TMRbits.PTDIR = 1; // Counting up
-}
-
-void initPwm(pwm* p, int mod, int n, int prescaler, int postscaler){
-    p -> mod = mod;
-    p -> n = n;
-    p -> prescaler = prescaler;
-    p -> postscaler = postscaler;
-    if( (init_done & (1 << (mod))) == 0){
-        switch (mod){
-            case 1: initPwm1(prescaler, postscaler); break;
-            case 2: initPwm2(prescaler, postscaler); break;
-        }
-        init_done |= 1 << (mod); 
-    }
+void initPwmPin(pwm* p, int n, bool primary, bool polarity){
     
+    p -> n = n;
+    p -> primary  = primary;
     switch (n){
         case 1:
-            if(mod == 1)  PWM1CON1bits.PEN1H = 1, PWM1CON1bits.PEN1L = 1; 
-            else   PWM2CON1bits.PEN1H = 1, PWM2CON1bits.PEN1L = 1; break; 
+            PWMCON1bits.ITB = 1;  IOCON1bits.PMOD = 3;  
+            if(primary)  IOCON1bits.PENH = 1, IOCON1bits.POLH = polarity; 
+            else IOCON1bits.PENL = 1, IOCON1bits.POLH = polarity; break; 
         case 2:
-            if(mod == 1)  PWM1CON1bits.PEN2H = 1, PWM1CON1bits.PEN2L = 1; break;
-            //else   PWM2CON1bits.PEN1H = 1, PWM2CON1bits.PEN1L = 1; break; 
+            PWMCON2bits.ITB = 1;  IOCON2bits.PMOD = 3; 
+            if(primary)  IOCON2bits.PENH = 1, IOCON2bits.POLH = polarity;
+            else IOCON2bits.PENL = 1, IOCON2bits.POLL = polarity; break;
         case 3:
-            if(mod == 1)  PWM1CON1bits.PEN3H = 1, PWM1CON1bits.PEN3L = 1; break; 
-            //else   PWM2CON1bits.PEN1H = 1, PWM2CON1bits.PEN1L = 1; break; 
-        //case 4:
-        //    if(p->mod == 1) P1DC4 = DC; else P2DC4 = DC; break;
+            PWMCON3bits.ITB = 1;  IOCON3bits.PMOD = 3;  
+            if(primary)  IOCON3bits.PENH = 1, IOCON3bits.POLH = polarity; 
+            else IOCON3bits.PENL = 1, IOCON3bits.POLL = polarity; break; 
     }
 }
 
-void setPwmFrecuency(pwm* p, int freq){
-    int PR = (int) FCY/(freq*p->prescaler*2) - 1;
-    p -> period = PR;
-    switch (p -> mod){
-        case 1: P1TPER  = PR; break;
-        case 2: P2TPER  = PR; break;
+void setPwmPrescaler(int prescaler){
+    master_prescaler = (1 << prescaler);
+    PTCON2bits.PCLKDIV = prescaler;
+}
+
+void initPwm(){
+    PTCONbits.PTEN = 1;
+}
+
+
+void setPwmFrecuency(pwm* p, double freq){
+    uint16_t PR =  FCY/(freq*master_prescaler)*2LL - 1;
+    p -> period = PR; 
+    switch (p -> n){
+        case 1:
+            if(p->primary)  PHASE1 = PR; else SPHASE1 = PR; break; 
+        case 2:
+            if(p->primary)  PHASE2 = PR; else SPHASE2 = PR; break;
+        case 3:
+            if(p->primary)  PHASE3 = PR; else SPHASE3 = PR; break; 
     }
 }
+
+
+
 
 void setPwmDuty(pwm* p, double percent){
     
-    int DC = (int) percent/100*(p -> period);
+    uint16_t DC = (p->period)/(100.0/percent);
+
     switch (p -> n){
-        case 1: if(p->mod == 1) P1DC1 = DC; else P2DC1 = DC; break; 
-        case 2: if(p->mod == 1) P1DC2 = DC; /*else P2DC2 = DC; break;
-        case 3: if(p->mod == 1) P1DC3 = DC; /*else P2DC3 = DC;break;
-        //case 4: if(p->mod == 1) P1DC4 = DC; else P2DC4 = DC; break;
+        case 1:
+            if(p->primary)  PDC1 = DC; else SDC1 = DC; break; 
+        case 2:
+            if(p->primary)  PDC2 = DC; else SDC2 = DC; break;
+        case 3:
+            if(p->primary)  PDC3 = DC; else SDC3 = DC; break; 
     }
 }
-*/
+
+
+
+void setPwmDutyLimits(pwm *p, int min_time,int max_time){
+    p->min_time = min_time;
+    p->range_time = max_time - min_time;
+}
+
+void setPwmDutyTime(pwm *p, double percent){
+    double time = (p->range_time)*percent/100.0 + p -> min_time;
+    uint16_t DC = (time) * ( FCY/(1000000LL * master_prescaler) )*2LL   -  1;
+
+
+    switch (p -> n){
+        case 1:
+            if(p->primary)  PDC1 = DC; else SDC1 = DC; break; 
+        case 2:
+            if(p->primary)  PDC2 = DC; else SDC2 = DC; break;
+        case 3:
+            if(p->primary)  PDC3 = DC; else SDC3 = DC; break; 
+    }
+}

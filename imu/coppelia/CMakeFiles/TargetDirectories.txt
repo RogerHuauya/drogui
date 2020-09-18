@@ -1,0 +1,3 @@
+/home/guillermoinglis/drogui/imu/coppelia/CMakeFiles/rebuild_cache.dir
+/home/guillermoinglis/drogui/imu/coppelia/CMakeFiles/simpleTest.dir
+/home/guillermoinglis/drogui/imu/coppelia/CMakeFiles/edit_cache.dir
