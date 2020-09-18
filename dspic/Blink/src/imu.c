@@ -29,16 +29,16 @@ float factoryMagCalibration[3] = {0, 0, 0}, factoryMagBias[3] = {0, 0, 0};
 
 
 
-void initMPU9250(mpu9250 *mpu, uint8_t n, double clock_frequency ){
-    initI2C(&(mpu->mpuI2C), n, MPU9250_ADDRESS_AD0, clock_frequency);
-    initI2C(&(mpu->magI2C), n, AK8963_ADDRESS, clock_frequency);
+void initMPU9250(imu *imu, uint8_t address, double clock_frequency){
+    initI2C(&(imu->imuI2C), n, imu9250_ADDRESS_AD0, clock_frequency);
+    initI2C(&(imu->magI2C), n, AK8963_ADDRESS, clock_frequency);
     
-    uint8_t c = readByteWire(&(mpu->mpuI2C), WHO_AM_I_MPU9250);
-    if (c == 0x71)  serialWriteString("MPU9250 is online...\n"); // WHO_AM_I should always be 0x71
+    uint8_t c = readByteWire(&(imu->imuI2C), WHO_AM_I_imu9250);
+    if (c == 0x71)  serialWriteString("imu9250 is online...\n"); // WHO_AM_I should always be 0x71
     else serialWriteString("Something is wrong ..\n");
     
-    selfTestMPU9250(mpu);
-    calibrateMPU9250(mpu);
+    selfTestimu9250(imu);
+    calibrateimu9250(mpu);
     serialWriteString("Calibration finished\n");
     awakeMPU9250(mpu);
     float dest[5];

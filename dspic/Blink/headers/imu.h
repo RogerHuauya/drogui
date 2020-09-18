@@ -1,5 +1,5 @@
-#ifndef MPU9250_H
-#define MPU9250_H
+#ifndef IMU_H
+#define IMU_H
 
 
 //#include <SPI.h>
@@ -203,7 +203,9 @@ enum M_MODE {
   M_100HZ = 0x06 // 100 Hz continuous magnetometer
 };
 
-typedef struct _mpu9250{
+enum DEVICE {MPU, MAG};
+
+typedef struct _imu{
     i2c mpuI2C, magI2C;						// Allows for use of various I2C ports
     int16_t accelCount[3]; // Stores the 16-bit signed accelerometer sensor output
     int16_t gyroCount[3];   // Stores the 16-bit signed gyro sensor output
@@ -221,28 +223,30 @@ typedef struct _mpu9250{
         magBias[3],
         magScale[3];
 
-} mpu9250;
+} imu;
     
-void initMPU9250(mpu9250 *mpu, uint8_t address, double clock_frequency);
-void initAK8963(mpu9250 * mpu, float * destination);
+void initMPU9250(imu *im, uint8_t address, double clock_frequency);
+void initAK8963(imu * im, float * destination);
 
-void selfTestMPU9250(mpu9250 * mpu);
-void awakeMPU9250(mpu9250 *mpu);
+void selfTestMPU9250(imu * im);
+void awakeMPU9250(imu *im);
 
-uint8_t readByteWire(i2c * device, uint8_t registerAddress);
-uint8_t writeByteWire(i2c * device, uint8_t registerAddress, uint8_t data);
-uint8_t readBytesWire(i2c * device, uint8_t registerAddress,  uint8_t count, uint8_t * dest);
-void readAccelData(mpu9250 * mpu);
-void readGyroData(mpu9250 * mpu);
-void readMagData(mpu9250 * mpu);
-void readAll(mpu9250 * mpu);
-int16_t readTempData(mpu9250 * mpu);
+uint8_t readByteIMU(imu * im, int device, uint8_t registerAddress);
+uint8_t writeByteIMU(imu * im, int device, uint8_t registerAddress, uint8_t data);
+uint8_t readBytesIMU(imu *, int device, uint8_t registerAddress,  uint8_t count, uint8_t * dest);
 
-void getMres(mpu9250 *mpu);
-void getGres(mpu9250 *mpu);
-void getAres(mpu9250 *mpu);
+void readAccelData(imu * im);
+void readGyroData(imu * im);
+void readMagData(imu * im);
+void readAll(imu * im);
 
-void calibrateMPU9250(mpu9250 * mpu);
-void printIMU(mpu9250 * mpu);
+int16_t readTempData(imu * im);
+
+void getMres(imu *im);
+void getGres(imu *im);
+void getAres(imu *im);
+
+void calibrateMPU9250(imu * mpu);
+void printIMU(imu * mpu);
 
 #endif

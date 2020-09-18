@@ -1,43 +1,15 @@
-/**
-*  @filename   :   sim7x00.cpp
-*  @brief      :   Implements for sim7x00 library
-*  @author     :   Kaloha from Waveshare
-*
-*  Copyright (C) Waveshare     April 27 2018
-*  http://www.waveshare.com  http://www.waveshare.net
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documnetation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to  whom the Software is
-* furished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS OR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
-
-
-#include "sim7x00.h"
+#include "GSM.h"
 #include "arduPi.h"
 
-Sim7x00::Sim7x00(){
+GSM::GSM(){
 }
 
-Sim7x00::~Sim7x00(){
+GSM::~GSM(){
 }
 
 
-/**************************Power on Sim7x00**************************/
-void Sim7x00::PowerOn(int PowerKey = powerkey){
+/**************************Power on GSM**************************/
+void GSM::PowerOn(int PowerKey = powerkey){
    uint8_t answer = 0;
 
 	Serial.begin(115200);
@@ -67,145 +39,8 @@ void Sim7x00::PowerOn(int PowerKey = powerkey){
 	while ((sendATcommand("AT+CREG?", "+CREG: 0,1", 500) || sendATcommand("AT+CREG?", "+CREG: 0,5", 500)) == 0)
 		delay(500);
 }
-
-/**************************Phone Calls**************************/
-void Sim7x00::PhoneCall(const char* PhoneNumber) {
-	char aux_str[30];
-
-//	printf("Enter the phone number:");
-
-//	scanf("%s", PhoneNumber);
-
-	sprintf(aux_str, "ATD%s;", PhoneNumber);
-	sendATcommand(aux_str, "OK", 10000);
-
-	// press the button for hang the call 
-	//while (digitalRead(button) == 1);
-
-	delay(20000);
-
-	Serial.println("AT+CHUP");            // disconnects the existing call
-	printf("Call disconnected\n");
-}
-
-/**************************SMS sending and receiving message **************************/
-//SMS sending short message
-bool Sim7x00::SendingShortMessage(const char* PhoneNumber,const char* Message){
-	uint8_t answer = 0;
-	char aux_string[30];
-
-	printf("Setting SMS mode...\n");
-    sendATcommand("AT+CMGF=1", "OK", 1000);    // sets the SMS mode to text
-    printf("Sending Short Message\n");
-    
-    sprintf(aux_string,"AT+CMGS=\"%s\"", PhoneNumber);
-
-   answer = sendATcommand(aux_string, ">", 2000);    // send the SMS number
-    if (answer == 1)
-    {
-        Serial.println(Message);
-        Serial.write(0x1A);
-        answer = sendATcommand("", "OK", 20000);
-        if (answer == 1)
-        {
-            printf("Sent successfully \n"); 
-			return true;   
-        }
-        else
-        {
-            printf("error \n");
-			return false;
-        }
-    }
-    else
-    {
-        printf("error %o\n",answer);
-		return false;
-    }
-}
-
-//SMS receiving short message
-bool Sim7x00::ReceivingShortMessage(){
-	uint8_t answer = 0;
-	int i = 0;
-	char RecMessage[200];
-
-	printf("Setting SMS mode...\n");
-    sendATcommand("AT+CMGF=1", "OK", 1000);    // sets the SMS mode to text
-	sendATcommand("AT+CPMS=\"SM\",\"SM\",\"SM\"", "OK", 1000);    // selects the memory
-
-    answer = sendATcommand("AT+CMGR=1", "+CMGR:", 2000);    // reads the first SMS
-
-	if (answer == 1)
-    {
-        answer = 0;
-        while(Serial.available() == 0);
-        // this loop reads the data of the SMS
-        do{
-            // if there are data in the UART input buffer, reads it and checks for the asnwer
-            if(Serial.available() > 0){    
-                RecMessage[i] = Serial.read();
-                i++;
-                // check if the desired answer (OK) is in the response of the module
-                if (strstr(RecMessage, "OK") != NULL)    
-                {
-                    answer = 1;
-                }
-            }
-        }while(answer == 0);    // Waits for the asnwer with time out
-        
-        RecMessage[i] = '\0';
-        
-        printf("%s\n",RecMessage);    
-        
-    }
-    else
-    {
-        printf("error %o\n",answer);
-		return false;
-    }
-
-	return true;
-}
-
-/**************************FTP download file to Module EFS , uploading EFS file to FTP**************************/
-void Sim7x00::ConfigureFTP(const char* FTPServer,const char* FTPUserName,const char* FTPPassWord){
-    char aux_str[50];
-  
-    // sets the paremeters for the FTP server
-	sendATcommand("AT+CFTPPORT=21", "OK", 2000);
-	sendATcommand("AT+CFTPMODE=1", "OK", 2000);
-	sendATcommand("AT+CFTPTYPE=A", "OK", 2000);
-
-//	sprintf(aux_str,"AT+CFTPSERV=\"%s\"", FTPServer);
-
-    snprintf(aux_str, sizeof(aux_str), "AT+CFTPSERV=\"%s\"", FTPServer);
-    sendATcommand(aux_str, "OK", 2000);
-    
-    snprintf(aux_str, sizeof(aux_str), "AT+CFTPUN=\"%s\"", FTPUserName);
-    sendATcommand(aux_str, "OK", 2000);
-    snprintf(aux_str, sizeof(aux_str), "AT+CFTPPW=\"%s\"", FTPPassWord);
-    sendATcommand(aux_str, "OK", 2000);
-}
-
-void Sim7x00::UploadToFTP(const char* FileName){
-	char aux_str[50];
-
-	printf("Upload file to FTP...\n");
-	snprintf(aux_str, sizeof(aux_str), "AT+CFTPPUTFILE=\"%s\",0", FileName);
-    sendATcommand(aux_str, "OK", 2000);
-}
-
-void Sim7x00::DownloadFromFTP(const char* FileName){
-	char aux_str[50];
-	
-	printf("Download file from FTP...\n");
-	snprintf(aux_str, sizeof(aux_str), "AT+CFTPGETFILE=\"%s\",0", FileName);
-    sendATcommand(aux_str, "OK", 2000);
-}
-
 /**************************GPS positoning**************************/
-bool Sim7x00::GPSPositioning(){
+bool GSM::GPSPositioning(){
 
     uint8_t answer = 0;
     bool RecNull = true;
@@ -305,7 +140,7 @@ bool Sim7x00::GPSPositioning(){
 }
 
 /**************************Other functions**************************/
-char Sim7x00::sendATcommand(const char* ATcommand, unsigned int timeout) {
+char GSM::sendATcommand(const char* ATcommand, unsigned int timeout) {
 	uint8_t x = 0, answer = 0;
 	char response[100];
 	unsigned long previous;
@@ -333,7 +168,7 @@ char Sim7x00::sendATcommand(const char* ATcommand, unsigned int timeout) {
 	return answer;
 }
 
-char Sim7x00::sendATcommand(const char* ATcommand, const char* expected_answer, unsigned int timeout) {
+char GSM::sendATcommand(const char* ATcommand, const char* expected_answer, unsigned int timeout) {
 
 	char x = 0, answer = 0;
 	char response[100];
@@ -372,7 +207,7 @@ char Sim7x00::sendATcommand(const char* ATcommand, const char* expected_answer, 
 	return answer;
 }
 
-char Sim7x00::sendATcommand2(const char* ATcommand, const char* expected_answer1, const char* expected_answer2, unsigned int timeout){
+char GSM::sendATcommand2(const char* ATcommand, const char* expected_answer1, const char* expected_answer2, unsigned int timeout){
 	uint8_t x=0,  answer=0;
     char response[100];
     unsigned long previous;
@@ -416,5 +251,5 @@ char Sim7x00::sendATcommand2(const char* ATcommand, const char* expected_answer1
 
 }
 
-Sim7x00 sim7600 = Sim7x00();
+GSM sim7600 = GSM();
 
