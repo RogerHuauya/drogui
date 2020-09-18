@@ -22,6 +22,7 @@ int main(){
     int16_t accel[3], gyro[3], mag[3];
     initConfig();
     initSerial();
+    serialWriteString("PIC initialized\n");
     initMPU9250(&mpu, I2C1, I2Cclock);
     __delay_ms(1000);
 
