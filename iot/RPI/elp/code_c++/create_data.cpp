@@ -1,7 +1,6 @@
 #include "opencv2/opencv.hpp"
 #include <iostream>
 #include "utils.h"
-
 utils::FPS fps;
 
 int font = cv::FONT_HERSHEY_SIMPLEX;

@@ -1,3 +1,6 @@
+#ifndef UTILS_H
+#define UTILS_H
+
 #include <iostream>
 #include <chrono>  // get time
 #include <iomanip> //set precision
@@ -14,3 +17,5 @@ namespace utils
         double get_time();
     };
 }
+
+#endif
