@@ -1,3 +1,4 @@
+/*
 #include "opencv2/opencv.hpp"
 #include <iostream>
 #include "utils.h"
@@ -49,9 +50,11 @@ int main(){
       cv::imwrite(PATH_IMAGES+"stereo/"+std::to_string(cnt_save)+".jpg", frame);
       std::cout<<"save images : "+std::to_string(cnt_save)<<std::endl;
     }
+    
     // Display the resulting frame
-    cv::putText(camera1,fps.get(), cv::Point(20,20), font, 0.6, cv::Scalar(0,0,255),1, 16 /*CV_AA*/);
-    cv::putText(camera2,fps.get(), cv::Point(20,20), font, 0.6, cv::Scalar(0,0,255),1, 16 /*CV_AA*/);
+    //cv::putText(camera1,fps.get(), cv::Point(20,20), font, 0.6, cv::Scalar(0,0,255),1, 16 /*CV_AA)
+    /*
+    cv::putText(camera2,fps.get(), cv::Point(20,20), font, 0.6, cv::Scalar(0,0,255),1, 16 /*CV_AA
     cv::imshow( "camera1", camera1 );
     cv::imshow( "camera2", camera2 );
     if (cnt==512) break;
@@ -65,3 +68,4 @@ int main(){
 	
   return 0;
 }
+*/
