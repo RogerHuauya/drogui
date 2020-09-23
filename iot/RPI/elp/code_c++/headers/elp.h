@@ -8,26 +8,29 @@
 #include "utils.h"
 
 struct elp{
+    struct subcamera{
+        cv:: Mat img;
+        std::vector<cv::Point2f> corners_pts;
+        std::vector<std::vector<cv::Point3f> > objpoints;
+        std::vector<std::vector<cv::Point2f> > imgpoints;
+        cv::Mat cameraMatrix,distCoeffs;
+        std::vector< cv::Mat > Rvecs,Tvecs;
+    };
+
     private:
         utils::FPS fps;
-        cv::Mat left_img, right_img, deep_img;
-        std::vector<cv::Point2f> left_corner_pts,right_corner_pts;
-        std::vector<std::vector<cv::Point3f> > left_objpoints,right_objpoints;
-        std::vector<std::vector<cv::Point2f> > left_imgpoints,right_imgpoints;
-        std::vector<cv::Point3f> aux_objp;
-        int width,height;
+        cv::Mat deep_img;
+        subcamera left,right;
         cv::VideoCapture cap;
+        int width,height;
+        std::vector<cv::Point3f> aux_objp;
         int font = cv::FONT_HERSHEY_SIMPLEX;
-        cv::Mat left_cameraMatrix,left_distCoeffs,left_R,left_T;
-        cv::Mat right_cameraMatrix,right_distCoeffs,right_R,right_T;
-
         std::string FOLDER ="results";
         int CHECKERBOARD[2]{6,9};
         float square_size = 0.02423;
         cv::TermCriteria TERMINATION_CRITERIA = cv::TermCriteria(cv::TermCriteria::EPS+cv::TermCriteria::MAX_ITER, 30, 0.01);
         cv::TermCriteria calib_criteria = cv::TermCriteria(cv::TermCriteria::EPS +cv::TermCriteria::MAX_ITER, 10, 1e-6);
         int calibration_flags = cv::fisheye::CALIB_RECOMPUTE_EXTRINSIC |  cv::fisheye::CALIB_FIX_SKEW;
-
         cv::Mat rotationMatrix;
         cv::Mat translationVector;
     public:
@@ -35,6 +38,7 @@ struct elp{
         void create_folders();
         void getCalibrationData();
         void calibrate();
+        void calibrate_camera(struct subcamera& cam,std::string name);
         std::vector<cv::Point2f>  getCornersPoints(cv::Mat *frame);
         bool create_folder(std::string name);
         void getFrames();

@@ -12,21 +12,21 @@ void elp::getCalibrationData(){
         fps.start();
         getFrames();
         cv::Scalar color = cv::Scalar(0,0,255);
-        std::vector<cv::Point2f> left_cor = getCornersPoints(&left_img);
-        std::vector<cv::Point2f> right_cor = getCornersPoints(&right_img);
+        std::vector<cv::Point2f> left_cor = getCornersPoints(&left.img);
+        std::vector<cv::Point2f> right_cor = getCornersPoints(&right.img);
         
         if (left_cor.size()==54 && right_cor.size()==54){
             color = cv::Scalar(255,0,0);
-            left_objpoints.push_back(aux_objp);
-            left_imgpoints.push_back(left_cor);
-            right_objpoints.push_back(aux_objp);
-            right_imgpoints.push_back(right_cor);
+            left.objpoints.push_back(aux_objp);
+            left.imgpoints.push_back(left_cor);
+            right.objpoints.push_back(aux_objp);
+            right.imgpoints.push_back(right_cor);
             c++;
         }
-        cv::putText(left_img,fps.get()+" :"+std::to_string(c),cv::Point(20,20), font, 0.6,color,1, 16 /*CV_AA*/);
-        cv::putText(right_img,fps.get()+" :"+std::to_string(c),cv::Point(20,20), font, 0.6,color,1, 16 /*CV_AA*/);
-        cv::imshow( "camera1", left_img);
-        cv::imshow( "camera2", right_img);
+        cv::putText(left.img,fps.get()+" :"+std::to_string(c),cv::Point(20,20), font, 0.6,color,1, 16 /*CV_AA*/);
+        cv::putText(right.img,fps.get()+" :"+std::to_string(c),cv::Point(20,20), font, 0.6,color,1, 16 /*CV_AA*/);
+        cv::imshow( "camera1", left.img);
+        cv::imshow( "camera2", right.img);
         if (waitKey()) break;
     };
     cap.release();
@@ -40,51 +40,42 @@ bool elp::create_folder(std::string name){
 	else std::cout << "Directory created"<<std::endl;
     return true;
 };
+void elp::calibrate_camera(struct subcamera& cam,std::__cxx11::string name){
+    int flag = 0;
+    flag |= CV_CALIB_FIX_K4;
+    flag |= CV_CALIB_FIX_K5;
+    cv::Size DIM = cv::Size(cam.img.rows,cam.img.cols);
+    //std::cout<<" size "+name<<cam.img.size()<<DIM<<cam.objpoints.size()<<" | "<<cam.imgpoints.size()<<std::endl;
+    cv::calibrateCamera(cam.objpoints,cam.imgpoints,DIM,cam.cameraMatrix,
+    cam.distCoeffs,cam.Rvecs,cam.Tvecs,flag,TERMINATION_CRITERIA);
+    const std::string filename = FOLDER+"/"+name;
+
+    cv::FileStorage fs1(filename, cv::FileStorage::WRITE);
+    if (fs1.isOpened()){
+        fs1 << "cameraMatrix" << cam.cameraMatrix
+         << "distCoeffs" << cam.distCoeffs 
+         << "objpoints" << cam.objpoints 
+         << "imgpoints" << cam.imgpoints
+         << "board_height"<< CHECKERBOARD[1]
+         << "board_width"<<CHECKERBOARD[0]
+         << "square_size" << square_size;
+    }
+};
 void elp::calibrate(){
-    cv::Vec3f pt(0, 0, 0);
-    cv::Size DIM = cv::Size(left_img.rows,left_img.cols);
-    //cv::calibrateCamera(left_objpoints,left_imgpoints, cv::Size(left_img.rows,left_img.cols),left_cameraMatrix, left_distCoeffs, left_R, left_T);
     std::cout<<"Starting left calibration .."<<std::endl;
-    double rms = cv::fisheye::calibrate(left_objpoints, left_imgpoints,DIM,left_cameraMatrix, left_distCoeffs, left_R, left_T, calibration_flags, calib_criteria);
-    cv::Mat map1, map2;
-    cv::fisheye::initUndistortRectifyMap(left_cameraMatrix,left_distCoeffs,pt,left_cameraMatrix, DIM, CV_16SC2, map1, map2);
-    cv::FileStorage fs1(FOLDER + "/calibration_camera_left.yml", cv::FileStorage::WRITE);
-     if (fs1.isOpened()){
-        fs1 << "map1" << map1 << "map2" << map2 << "objpoints" << left_objpoints << "imgpoints" <<
-              left_imgpoints << "camera_matrix" << left_cameraMatrix << "distortion_coeff" << left_distCoeffs;
-    }
-    std::cout<<"Finished left calibration."<<std::endl;
-
+    calibrate_camera(left,"calibration_camera_left.yml");
     std::cout<<"Starting right calibration .."<<std::endl;
-    cv::Mat right_map1, right_map2;
+    calibrate_camera(right,"calibration_camera_right.yml");
+    std::cout<<"Finished calibration."<<std::endl;
 
-    //cv::calibrateCamera(right_objpoints,right_imgpoints, cv::Size(right_img.rows,right_img.cols),right_cameraMatrix, right_distCoeffs, right_R, right_T);
-    rms = cv::fisheye::calibrate(right_objpoints, right_imgpoints,DIM,right_cameraMatrix, right_distCoeffs, right_R, right_T, calibration_flags, calib_criteria);
-    cv::fisheye::initUndistortRectifyMap(right_cameraMatrix,right_distCoeffs,pt,right_cameraMatrix, DIM, CV_16SC2, right_map1, right_map2);
-    cv::FileStorage fs2(FOLDER + "/calibration_camera_right.yml", cv::FileStorage::WRITE);
-     if (fs2.isOpened()){
-        fs2 << "map1" << right_map1 << "map2" << right_map2 << "objpoints" << right_objpoints << "imgpoints" <<
-              right_imgpoints << "camera_matrix" << right_cameraMatrix << "distortion_coeff" << right_distCoeffs;
-    }
-    std::cout<<"Finished right calibration."<<std::endl;
-    
-    std::cout<<"Starting stereo calibration .."<<std::endl;
-    int fisheyeFlags = 0;
-    fisheyeFlags |= cv::fisheye::CALIB_FIX_INTRINSIC;
-    //fisheyeFlags &= cv::fisheye::CALIB_CHECK_COND;
-    rms = cv::fisheye::stereoCalibrate(left_objpoints, left_imgpoints, right_imgpoints,left_cameraMatrix, left_distCoeffs,
-    right_cameraMatrix, right_distCoeffs, cv::Size(right_img.rows,right_img.cols), rotationMatrix, translationVector,
-                                              fisheyeFlags, TERMINATION_CRITERIA);
-    std::cout<<"Finished stereo calibration"<<std::endl;
-    
 };
 void elp::getFrames(){
     cv::Mat frame,frame2;
     cap >> frame;
     if (frame.empty()) return;
     cv::flip(frame,frame2,1);
-    left_img = frame2(cv::Range(0,height), cv::Range(0,width/2)); //240x320
-    right_img = frame2(cv::Range(0,height), cv::Range(width/2,width)); //240x320
+    left.img = frame2(cv::Range(0,height), cv::Range(0,width/2)); //240x320
+    right.img = frame2(cv::Range(0,height), cv::Range(width/2,width)); //240x320
 };
 void elp::processDeep(){
 };
