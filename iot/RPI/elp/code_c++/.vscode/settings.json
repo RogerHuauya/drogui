@@ -57,5 +57,6 @@
         "set": "cpp",
         "string": "cpp",
         "string_view": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }

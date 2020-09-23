@@ -4,6 +4,9 @@
 elp::elp(int id, int w,int h){
     create_capture(id,w,h);
     init_chess();
+    flag |= CV_CALIB_FIX_K4;
+    flag |= CV_CALIB_FIX_K5;
+
 };
 void elp::getCalibrationData(){
     create_folders();
@@ -40,16 +43,26 @@ bool elp::create_folder(std::string name){
 	else std::cout << "Directory created"<<std::endl;
     return true;
 };
+double elp::errorcalibration_camera(struct subcamera& cam){
+  std::vector< cv::Point2f > imagePoints2;
+  int i, totalPoints = 0;
+  double totalErr = 0, err;
+  for (i = 0; i < (int)cam.objpoints.size(); ++i) {
+    cv::projectPoints(cv::Mat(cam.objpoints[i]),cam.Rvecs[i],cam.Tvecs[i],cam.cameraMatrix,cam.distCoeffs,imagePoints2);
+    err = cv::norm(cv::Mat(cam.imgpoints[i]), cv::Mat(imagePoints2), CV_L2);
+    int n = (int)cam.objpoints[i].size();
+    totalErr += err*err;
+    totalPoints += n;
+  }
+  return std::sqrt(totalErr/totalPoints);
+};
 void elp::calibrate_camera(struct subcamera& cam,std::__cxx11::string name){
-    int flag = 0;
-    flag |= CV_CALIB_FIX_K4;
-    flag |= CV_CALIB_FIX_K5;
     cv::Size DIM = cv::Size(cam.img.rows,cam.img.cols);
     //std::cout<<" size "+name<<cam.img.size()<<DIM<<cam.objpoints.size()<<" | "<<cam.imgpoints.size()<<std::endl;
-    cv::calibrateCamera(cam.objpoints,cam.imgpoints,DIM,cam.cameraMatrix,
+    cv::calibrateCamera(cam.objpoints,cam.imgpoints,cam.img.size(),cam.cameraMatrix,
     cam.distCoeffs,cam.Rvecs,cam.Tvecs,flag,TERMINATION_CRITERIA);
-    const std::string filename = FOLDER+"/"+name;
-
+    std::cout<<"error :"<<errorcalibration_camera(cam)<<std::endl;
+    const std::string filename = FOLDER+"/individual/"+name;
     cv::FileStorage fs1(filename, cv::FileStorage::WRITE);
     if (fs1.isOpened()){
         fs1 << "cameraMatrix" << cam.cameraMatrix
@@ -67,7 +80,17 @@ void elp::calibrate(){
     std::cout<<"Starting right calibration .."<<std::endl;
     calibrate_camera(right,"calibration_camera_right.yml");
     std::cout<<"Finished calibration."<<std::endl;
-
+    cv::Mat R, F, E;
+    cv::Vec3d T;
+    std::cout<<"Starting stereo calibration .."<<std::endl;
+    cv::stereoCalibrate(left.objpoints,left.imgpoints,right.imgpoints,left.cameraMatrix,left.distCoeffs,
+    right.cameraMatrix,right.distCoeffs,right.img.size(),R,T,E,F,flag,TERMINATION_CRITERIA);
+    std::cout<<"Finished stereo calibration"<<std::endl;
+    std::cout<<"Rectification stereo calibration"<<std::endl;
+    cv::Mat R1, R2, P1, P2, Q;
+    cv::stereoRectify(left.cameraMatrix,left.distCoeffs,right.cameraMatrix,right.distCoeffs,right.img.size(),
+    R,T,R1,R2,P1,P2,Q);
+    std::cout<<"Finished rectification"<<std::endl;
 };
 void elp::getFrames(){
     cv::Mat frame,frame2;
@@ -109,11 +132,9 @@ void elp::create_folders(){
     while (!(create_folder(FOLDER))){
         FOLDER = FOLDER.substr(0,size)+std::to_string(c);
         c++;
-    }     
-    create_folder(FOLDER+"/videos/");
-    create_folder(FOLDER+"/images/");
-    create_folder(FOLDER+"/images/left");
-    create_folder(FOLDER+"/images/right");
+    }
+    create_folder(FOLDER+"/individual");
+    create_folder(FOLDER+"/stereo");    
 };
 bool elp::waitKey(){
     char k=(char) cv::waitKey(25);
