@@ -1,7 +1,10 @@
 #include "elp.h"
 
 
-elp::elp(int id, int w,int h){
+elp::elp(int id_, int w_,int h_){
+    id = id_;
+    w = w_;
+    h = h_;
     create_capture(id,w,h);
     init_chess();
     flag |= CV_CALIB_FIX_K4;
@@ -32,6 +35,7 @@ void elp::getCalibrationData(){
         cv::imshow( "camera2", right.img);
         if (waitKey()) break;
     };
+    std::cout<<" Total images captured : "<<c<<std::endl;
     cap.release();
     destroyAllWindows();
 };
@@ -40,7 +44,7 @@ bool elp::create_folder(std::string name){
         std::cout<<"Folder "<<name<<" exits"<<std::endl;
         return false;
     }
-	else std::cout << "Directory created"<<std::endl;
+	else std::cout <<name<<" Directory created"<<std::endl;
     return true;
 };
 double elp::errorcalibration_camera(struct subcamera& cam){
@@ -87,10 +91,34 @@ void elp::calibrate(){
     right.cameraMatrix,right.distCoeffs,right.img.size(),R,T,E,F,flag,TERMINATION_CRITERIA);
     std::cout<<"Finished stereo calibration"<<std::endl;
     std::cout<<"Rectification stereo calibration"<<std::endl;
-    cv::Mat R1, R2, P1, P2, Q;
     cv::stereoRectify(left.cameraMatrix,left.distCoeffs,right.cameraMatrix,right.distCoeffs,right.img.size(),
-    R,T,R1,R2,P1,P2,Q);
+    R,T,R1,R2,P1,P2,Q,flag,1,left.img.size(),&left.roi,&right.roi);
     std::cout<<"Finished rectification"<<std::endl;
+    undistort(left);
+    undistort(right);
+    const std::string filename = FOLDER+"/stereo/total_calibration.yml";
+    cv::FileStorage fs1(filename, cv::FileStorage::WRITE);
+    if (fs1.isOpened()){
+        fs1 << "leftMapX" << left.mapx
+         << "leftMapY" << left.mapy 
+         << "leftROI" << left.roi
+         << "rightMapX" << right.mapx
+         << "rightMapY"<< right.mapy
+         << "rightROI"<< right.roi
+         << "img_size" << left.img.size();
+    }
+    /*
+    stereoMatcher.setMinDisparity(4);
+    stereoMatcher.setNumDisparities(128);
+    stereoMatcher.setBlockSize(21);
+    stereoMatcher.setROI1(left.roi);
+    stereoMatcher.setROI2(right.roi);
+    stereoMatcher.setSpeckleRange(16);
+    stereoMatcher.setSpeckleWindowSize(45);
+    */
+};
+void elp::undistort(struct subcamera& cam){
+    cv::initUndistortRectifyMap(cam.cameraMatrix,cam.distCoeffs, R1, P1, cam.img.size(), CV_32F, cam.mapx,cam.mapy);
 };
 void elp::getFrames(){
     cv::Mat frame,frame2;
@@ -147,3 +175,29 @@ void elp::init_chess(){
             aux_objp.push_back(cv::Point3f((float)j*square_size,(float)i*square_size,0));
     }
 };
+void elp::see_rectify(){
+    create_capture(id,w,h);
+
+    while(1){
+        fps.start();
+        getFrames();
+        cv::Mat left_,right_;
+        cv::Scalar color = cv::Scalar(0,255,0);
+        cv::remap(left.img,left_, left.mapx, left.mapy, cv::INTER_LINEAR);
+        cv::remap(right.img,right_,right.mapx,right.mapy, cv::INTER_LINEAR);
+        
+        cv::Mat left_gray,right_gray,depth;
+        cv::cvtColor(left_,left_gray,CV_BGR2GRAY);
+        cv::cvtColor(right_,right_gray,CV_BGR2GRAY);
+        stereoMatcher->compute(left_gray,right_gray,depth);
+        cv::putText(left_,fps.get(),cv::Point(20,20), font, 0.6,color,1, 16 /*CV_AA*/);
+        cv::putText(right_,fps.get(),cv::Point(20,20), font, 0.6,color,1, 16 /*CV_AA*/);
+        cv::imshow( "camera1", left_);
+        cv::imshow( "camera2", right_);
+        cv::imshow( "camera3", depth/2048);
+        
+        if (waitKey()) break;
+    };
+    cap.release();
+    destroyAllWindows();
+}

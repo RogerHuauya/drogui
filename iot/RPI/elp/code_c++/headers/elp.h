@@ -16,8 +16,12 @@ struct elp{
         cv::Mat cameraMatrix,distCoeffs;
         std::vector< cv::Mat > Rvecs,Tvecs;
         std::string name;
+        cv::Mat mapx, mapy;
+        cv::Rect roi;
     };
     private:
+        int id,w,h;
+        cv::Mat R1, R2, P1, P2, Q;
         utils::FPS fps;
         cv::Mat deep_img;
         subcamera left,right;
@@ -35,11 +39,14 @@ struct elp{
         cv::Mat rotationMatrix;
         cv::Mat translationVector;
     public:
-        elp(int id, int w,int h);
+        elp(int id_, int w_,int h_);
+        cv::Ptr<cv::StereoBM> stereoMatcher = cv::StereoBM::create(128,7);
+        void see_rectify();
         void create_folders();
         void getCalibrationData();
         void calibrate();
         double errorcalibration_camera(struct subcamera& cam);
+        void undistort(struct subcamera& cam);
         void calibrate_camera(struct subcamera& cam,std::string name);
         std::vector<cv::Point2f>  getCornersPoints(cv::Mat *frame);
         bool create_folder(std::string name);

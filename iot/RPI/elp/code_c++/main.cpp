@@ -12,5 +12,6 @@ int main(){
     elp elp1(id,width,height);
     elp1.getCalibrationData();
     elp1.calibrate();
+    elp1.see_rectify();
     return 0;
 };
