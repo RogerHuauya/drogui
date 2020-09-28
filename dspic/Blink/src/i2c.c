@@ -21,7 +21,7 @@ void initI2C(i2c* c, int n, char adress, double freq){
     c -> n = n;
     c -> address = adress;
 
-    int BRG = (( ((1 / (freq)) - 0.000000110) * (FCY) ) - 2);
+    int BRG = ((1 / freq) - 130e-9) * FCY - 2;
     switch(c->n){
         case I2C1: if(on1) break; I2C1BRG = BRG; I2C1CONbits.DISSLW = 0; I2C1CONbits.I2CEN = 1; on1 = 1; break;
         case I2C2: if(on2) break; I2C2BRG = BRG; I2C2CONbits.DISSLW = 0; I2C2CONbits.I2CEN = 1; on2 = 1; break;
@@ -52,7 +52,7 @@ void i2cRestart(i2c* c){
     }
 }
 
-int i2cWrite(i2c* c, char data){
+int i2cWrite(i2c* c, uint8_t data){
     idleI2C(c);
     int ans;
     switch(c -> n){
@@ -63,8 +63,8 @@ int i2cWrite(i2c* c, char data){
                 ans = -1;
             else{
                 idleI2C(c); 
-                if(I2C1STATbits.ACKSTAT) ans = -2;
-                else ans =  0;
+                while(I2C1STATbits.ACKSTAT){};
+                ans =  0;
             }
             break;
         case I2C2:
@@ -73,9 +73,8 @@ int i2cWrite(i2c* c, char data){
             if(I2C2STATbits.IWCOL) ans = -1;
             else{
                 idleI2C(c);                  
-                if( I2C2STATbits.ACKSTAT ) 
-                    ans = -2;
-                else ans =  0;
+                while( I2C2STATbits.ACKSTAT ) {}
+                ans =  0;
             }
             break;
 
@@ -83,7 +82,7 @@ int i2cWrite(i2c* c, char data){
     return ans;
 }   
 
-int i2cWriteString(i2c* c, char * s){
+int i2cWriteString(i2c* c, uint8_t * s){
     while(*s){
         if(i2cWrite(c, *s) == -1)
             return -3; 
@@ -102,10 +101,10 @@ unsigned char i2cRead(i2c* c){
     idleI2C(c);
     unsigned char ans;
     switch (c->n){
-        case I2C1:    I2C1CONbits.RCEN = 1;  while(I2C1CONbits.RCEN){}; 
+        case I2C1:      I2C1CONbits.RCEN = 1;  while(I2C1CONbits.RCEN){}; 
                         I2C1STATbits.I2COV = 0; while(!I2C1STATbits.RBF){}; 
                         ans = I2C1RCV; break;
-        case I2C2:    I2C2CONbits.RCEN = 1; while(I2C2CONbits.RCEN){};
+        case I2C2:      I2C2CONbits.RCEN = 1; while(I2C2CONbits.RCEN){};
                         I2C2STATbits.I2COV = 0; while(!I2C2STATbits.RBF){}; 
                         ans = I2C2RCV; break;
 
@@ -113,7 +112,7 @@ unsigned char i2cRead(i2c* c){
     return ans;
 }
 
-int i2cReadString(i2c* c, char* s, int len){
+int i2cReadString(i2c* c, uint8_t* s, int len){
     while(len){
         *s = i2cRead(c);
         

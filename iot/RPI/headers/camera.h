@@ -1,5 +1,6 @@
 #ifndef CAMERA_H
 #define CAMERA_H
+/*
 #include <opencv2/core.hpp>
 #include <opencv2/videoio.hpp>
 #include <opencv2/highgui.hpp>
@@ -23,5 +24,5 @@ struct Camera{
 
 void buff2Mat(cv::Mat* im, unsigned char buff[]);
 void mat2Buff(cv::Mat* im, unsigned char buff[]);
-
+*/
 #endif

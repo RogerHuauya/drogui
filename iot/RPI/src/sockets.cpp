@@ -100,7 +100,7 @@ void Socket::sendJson(std::string s){
 
 void Socket::readJson(std::string * s){
     uchar num[50];
-    char buffer[5000];
+    char buffer[500000];
     uint valread = 0, len = 0;
     read(child_socket, num, sizeof(uint));
     for(int i = 0; i < sizeof(uint); i++) {
