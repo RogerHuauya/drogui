@@ -1,4 +1,4 @@
-//#define PWM_TEST
+#define PWM_TEST
 #ifdef PWM_TEST
 
 #include "config.h"
@@ -20,7 +20,6 @@ int main(void){
 
     initConfig();
     initSerial();
-    initAnalog();
 
     initPwmPin(&m1, 3, 1, 0);
     //initPwmPin(&m2, 4, 1, 0);
