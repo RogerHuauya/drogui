@@ -18,7 +18,7 @@ void idleI2C(i2c *c){
     }
 }
 
-void initI2C(i2c* c, int n, char adress, double freq){
+void initI2C(i2c* c, int n, char adress, double freq, bool mode){
     c -> n = n;
     c -> address = adress;
 
@@ -27,6 +27,8 @@ void initI2C(i2c* c, int n, char adress, double freq){
         case I2C1: if(on1) break; I2C1BRG = BRG; I2C1CONbits.DISSLW = 0; I2C1CONbits.I2CEN = 1; on1 = 1; break;
         case I2C2: if(on2) break; I2C2BRG = BRG; I2C2CONbits.DISSLW = 0; I2C2CONbits.I2CEN = 1; on2 = 1; break;
     } 
+    if (mode == SLAVE) I2C1ADD = adress;
+    return;
 }
 
 void i2cStart(i2c* c){
@@ -160,4 +162,42 @@ int i2cStartWrite(i2c* c){
 
 int i2cStartRead(i2c* c){
     return i2cWrite(c, (c->address << 1) + 1);
+}
+
+void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C1Interrupt( void ){
+ 
+    uint8_t temp, datain, timeout, dataout;
+    
+    if( (I2C1STATbits.R_W == 0) && (I2C1STATbits.D_A == 0) )
+    {
+        temp = I2C1RCV; 
+        I2C1CONbits.SCLREL = 1;
+        
+    }
+    else if( (I2C1STATbits.R_W == 0) && (I2C1STATbits.D_A == 1) ) 
+    {
+    
+        datain = I2C1RCV; 
+        I2C1CONbits.SCLREL = 1;
+    }
+    else if( (I2C1STATbits.R_W == 1) && (I2C1STATbits.D_A == 0) ) 
+    {
+    
+        temp = I2C1RCV;
+        I2C1TRN = dataout++;
+        I2C1CONbits.SCLREL = 1;
+    
+    
+    }
+    
+    else if ( (I2C1STATbits.R_W == 1) && (I2C1STATbits.D_A == 1) && (I2C1STATbits.ACKSTAT == 0 ))
+    {
+    temp = I2C1RCV;
+    I2C1TRN = dataout++;
+    I2C1CONbits.SCLREL = 1; 
+    
+    }
+    
+    _SI2C1IF = 0;
+ 
 }

@@ -2,14 +2,16 @@
 #define I2C_H
 #include <xc.h>
 #include <stdint.h>
-enum I2C_PORTS {I2C1, I2C2, I2C4};
+#include <stdbool.h>
 
+enum I2C_PORTS {I2C1, I2C2, I2C4};
+enum I2C_MODE {MASTER, SLAVE};
 typedef struct _i2c{
     int n; char address;
 } i2c;
 
 void idleI2C(i2c *c);
-void initI2C(i2c* c, int n, char adress, double freq);
+void initI2C(i2c* c, int n, char adress, double freq, bool mode);
 int i2cWrite(i2c* c, uint8_t data);
 void i2cStart(i2c* c);
 void i2cStop(i2c* c);
