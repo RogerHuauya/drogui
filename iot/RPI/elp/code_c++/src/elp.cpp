@@ -7,8 +7,8 @@ elp::elp(int id_, int w_,int h_){
     h = h_;
     create_capture(id,w,h);
     init_chess();
-    flag |= CV_CALIB_FIX_K4;
-    flag |= CV_CALIB_FIX_K5;
+    flag |= cv::CALIB_FIX_K4;
+    flag |= cv::CALIB_FIX_K5;
 
 };
 void elp::getCalibrationData(){
@@ -53,7 +53,7 @@ double elp::errorcalibration_camera(struct subcamera& cam){
   double totalErr = 0, err;
   for (i = 0; i < (int)cam.objpoints.size(); ++i) {
     cv::projectPoints(cv::Mat(cam.objpoints[i]),cam.Rvecs[i],cam.Tvecs[i],cam.cameraMatrix,cam.distCoeffs,imagePoints2);
-    err = cv::norm(cv::Mat(cam.imgpoints[i]), cv::Mat(imagePoints2), CV_L2);
+    err = cv::norm(cv::Mat(cam.imgpoints[i]), cv::Mat(imagePoints2), cv::NORM_L2);
     int n = (int)cam.objpoints[i].size();
     totalErr += err*err;
     totalPoints += n;
@@ -118,7 +118,7 @@ void elp::calibrate(){
     */
 };
 void elp::undistort(struct subcamera& cam){
-    cv::initUndistortRectifyMap(cam.cameraMatrix,cam.distCoeffs, R1, P1, cam.img.size(), CV_32F, cam.mapx,cam.mapy);
+    cv::initUndistortRectifyMap(cam.cameraMatrix,cam.distCoeffs, R1, P1, cam.img.size(), 5, cam.mapx,cam.mapy);
 };
 void elp::getFrames(){
     cv::Mat frame,frame2;
@@ -133,8 +133,8 @@ void elp::processDeep(){
 void elp::create_capture(int id,int w, int h){
     std::cout<<"tmr "<<std::endl;
     cap.open(id);
-    cap.set(CV_CAP_PROP_FRAME_WIDTH,w);
-    cap.set(CV_CAP_PROP_FRAME_HEIGHT,h); 
+    cap.set(cv::CAP_PROP_FRAME_WIDTH,w);
+    cap.set(cv::CAP_PROP_FRAME_HEIGHT,h); 
     width  = cap.get(3);
     height = cap.get(4);
     std::cout<<"height: "<<height<<" width: "<<width<<std::endl;        
@@ -147,7 +147,7 @@ std::vector<cv::Point2f> elp::getCornersPoints(cv::Mat *frame){
     std::vector<cv::Point2f> corners;
     cv::cvtColor(*frame,gray,cv::COLOR_BGR2GRAY);
     bool success = cv::findChessboardCorners(gray, cv::Size(CHECKERBOARD[0], CHECKERBOARD[1]),
-    corners, CV_CALIB_CB_ADAPTIVE_THRESH | CV_CALIB_CB_FAST_CHECK | CV_CALIB_CB_NORMALIZE_IMAGE);
+    corners, cv::CALIB_CB_ADAPTIVE_THRESH | cv::CALIB_CB_FAST_CHECK | cv::CALIB_CB_NORMALIZE_IMAGE);
     if (success){
         cv::TermCriteria criteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 30, 0.001);
         cv::cornerSubPix(gray,corners,cv::Size(11,11), cv::Size(-1,-1),criteria);
@@ -187,8 +187,8 @@ void elp::see_rectify(){
         cv::remap(right.img,right_,right.mapx,right.mapy, cv::INTER_LINEAR);
         
         cv::Mat left_gray,right_gray,depth;
-        cv::cvtColor(left_,left_gray,CV_BGR2GRAY);
-        cv::cvtColor(right_,right_gray,CV_BGR2GRAY);
+        cv::cvtColor(left_,left_gray,cv::COLOR_BGR2GRAY);
+        cv::cvtColor(right_,right_gray,cv::COLOR_BGR2GRAY);
         stereoMatcher->compute(left_gray,right_gray,depth);
         cv::putText(left_,fps.get(),cv::Point(20,20), font, 0.6,color,1, 16 /*CV_AA*/);
         cv::putText(right_,fps.get(),cv::Point(20,20), font, 0.6,color,1, 16 /*CV_AA*/);

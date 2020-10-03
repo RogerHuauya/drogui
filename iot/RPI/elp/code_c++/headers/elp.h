@@ -2,6 +2,7 @@
 #define ELP_H
 
 #include "opencv2/opencv.hpp"
+#include <opencv2/highgui/highgui_c.h>
 #include <iostream>
 #include <sys/stat.h> 
 #include <string>
