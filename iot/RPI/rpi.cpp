@@ -37,14 +37,14 @@ void dataSensor(){
 
 void showImage(){
 	root.clear();
-	/*
+	
 	cam.getFrame();
 	cv::Size siz = cam.bwframe.size(); 
-	cout << siz.height << " " << siz.width << endl;*/
-	//mat2Buff(&cam.bwframe, buff);
+	cout << siz.height << " " << siz.width << endl;
+	mat2Buff(&cam.bwframe, buff);
 	string s2((char*)buff);
 	root["image"] = s2;
-	//cout << s2.size() << endl;
+	cout << s2.size() << endl;
 	s = fw.write(root);
 
 	cout << s.size() << endl;
@@ -65,11 +65,11 @@ int main(int argc, char** argv ){
 
 	int cstart = drone.clientStart();
 	if(cstart) printf("Error %d\n", cstart);
-	/*
+	
 
 	cam = Camera(0);
     cam.open();
-	*/
+
 	std::string msg;
     
 	while(1){
