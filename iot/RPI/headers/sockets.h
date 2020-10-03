@@ -26,8 +26,7 @@ struct Socket{
     void readBuffer(unsigned char buff[], int len);
     void sendBuffer(unsigned char buff[], int len);
 
-    void sendJson(string s);
-    void readJson(string s);
+
 
     Socket(const char* _ip, int _port){
         ip = (char *)_ip, port = _port;
