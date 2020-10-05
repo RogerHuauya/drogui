@@ -1,6 +1,6 @@
 CXX = g++
-INC = -I/usr/local/include/opencv
-PCFG = `pkg-config --cflags --libs opencv` -ljsoncpp -lz -lbcm2835 -lrt -lpthread
+INC = 
+PCFG = -ljsoncpp -lz -lbcm2835 -lrt -lpthread
 
 SOURCES :=  $(wildcard src/*.cpp)
 OBJS := $(patsubst %.cpp, %.o,$(SOURCES))
