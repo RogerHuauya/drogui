@@ -1,12 +1,9 @@
 #include "i2c.h"
 #include "serial.h"
-/*
-void idleI2C(){
-    while(I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN 
-            || I2C2CONbits.ACKEN || I2C2STATbits.TRSTAT);	
-}*/
 
 bool on1 = false, on2 = false , on3 = false;
+uint8_t temp, datain, dataout, index;
+uint8_t i2c1Reg[20];
 
 void idleI2C(i2c *c){
     switch(c -> n){
@@ -18,19 +15,27 @@ void idleI2C(i2c *c){
     }
 }
 
-void initI2C(i2c* c, int n, char adress, double freq, bool mode){
+void initI2C(i2c* c, int n, uint8_t address, double freq, int mode){
     c -> n = n;
-    c -> address = adress;
-
+    c -> address = address;
+    c -> mode = mode;
     int BRG = ((1 / freq) - 130e-9) * FCY - 2;
+    if (c -> mode == SLAVE){
+        switch (c->n){
+            case I2C1: I2C1ADD = c->address; IEC1bits.MI2C1IE = 1; IEC1bits.SI2C1IE = 1; I2C1CONbits.STREN = 1;
+            case I2C2: I2C2ADD = c->address; IEC3bits.MI2C2IE = 1; IEC3bits.SI2C2IE = 1; I2C2CONbits.STREN = 1;
+        }
+
+    }
     switch(c->n){
         case I2C1: if(on1) break; I2C1BRG = BRG; I2C1CONbits.DISSLW = 0; I2C1CONbits.I2CEN = 1; on1 = 1; break;
         case I2C2: if(on2) break; I2C2BRG = BRG; I2C2CONbits.DISSLW = 0; I2C2CONbits.I2CEN = 1; on2 = 1; break;
     } 
-    if (mode == SLAVE) I2C1ADD = adress;
     return;
 }
-
+void i2cInitRegister(i2c* c){
+    for(uint8_t i = 0; i < 20; i++) c->reg[i] = 2*i;
+}
 void i2cStart(i2c* c){
     idleI2C(c);
     switch(c -> n){
@@ -163,38 +168,55 @@ int i2cStartWrite(i2c* c){
 int i2cStartRead(i2c* c){
     return i2cWrite(c, (c->address << 1) + 1);
 }
-
+int i2cState = 0;
 void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C1Interrupt( void ){
- 
-    uint8_t temp, datain, timeout, dataout;
+    serialWriteString("i2c int\n");
+    serialWriteChar(i2c1Reg[0x05]);
+    serialWriteChar('\n');
     
-    if( (I2C1STATbits.R_W == 0) && (I2C1STATbits.D_A == 0) )
-    {
+    if (I2C1STATbits.S == 1 && i2cState == 0) {i2cState = 1;}
+    //else if (I2C1STATbits.S == 1 && i2cState == 1) i2cState = 2;
+    else if (I2C1STATbits.P == 1) i2cState = 0;
+    
+    if( (I2C1STATbits.R_W == 0) && (I2C1STATbits.D_A == 0) ){
         temp = I2C1RCV; 
+        __delay_ms(1000);
+
         I2C1CONbits.SCLREL = 1;
         
     }
-    else if( (I2C1STATbits.R_W == 0) && (I2C1STATbits.D_A == 1) ) 
-    {
-    
-        datain = I2C1RCV; 
+    else if( (I2C1STATbits.R_W == 0) && (I2C1STATbits.D_A == 1) ) {
+        
+        if(i2cState == 1){
+            datain = I2C1RCV;
+            serialWriteString("mierda\n");
+            i2cState++;
+
+        } 
+        else {
+            i2c1Reg[datain++] = I2C1RCV; 
+            serialWriteString("mierda2\n");
+        }
+        __delay_ms(1000);
+
         I2C1CONbits.SCLREL = 1;
     }
-    else if( (I2C1STATbits.R_W == 1) && (I2C1STATbits.D_A == 0) ) 
-    {
-    
+    else if( (I2C1STATbits.R_W == 1) && (I2C1STATbits.D_A == 0) ) {
         temp = I2C1RCV;
-        I2C1TRN = dataout++;
+        //I2C1TRN = dataout;
+        serialWriteString("aiuda1\n");
+        __delay_ms(1000);
         I2C1CONbits.SCLREL = 1;
     
-    
     }
-    
-    else if ( (I2C1STATbits.R_W == 1) && (I2C1STATbits.D_A == 1) && (I2C1STATbits.ACKSTAT == 0 ))
-    {
-    temp = I2C1RCV;
-    I2C1TRN = dataout++;
-    I2C1CONbits.SCLREL = 1; 
+    else if ( (I2C1STATbits.R_W == 1) && (I2C1STATbits.D_A == 1) && (I2C1STATbits.ACKSTAT == 0 )){
+        serialWriteString("aiuda\n");
+        temp = I2C1RCV;
+        dataout = i2c1Reg[datain++];
+        I2C1TRN = dataout;
+        __delay_ms(1000);
+
+        I2C1CONbits.SCLREL = 1; 
     
     }
     
