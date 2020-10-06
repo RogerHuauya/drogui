@@ -4,7 +4,7 @@
 
 //#include <SPI.h>
 #include <xc.h>
-#include "i2c.h"
+//#include "i2c.h"
 #include "serial.h"
 #include <stdint.h>
 #include <stdbool.h>
@@ -206,7 +206,7 @@ enum M_MODE {
 enum DEVICE {MPU, MAG};
 
 typedef struct _imu{
-    i2c mpuI2C, magI2C;						// Allows for use of various I2C ports
+    //i2c mpuI2C, magI2C;						// Allows for use of various I2C ports
     int16_t accelCount[3]; // Stores the 16-bit signed accelerometer sensor output
     int16_t gyroCount[3];   // Stores the 16-bit signed gyro sensor output
     int16_t magCount[3];    // Stores the 16-bit signed magnetometer sensor output

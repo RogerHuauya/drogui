@@ -2,8 +2,11 @@
 #include "serial.h"
 
 bool on1 = false, on2 = false , on3 = false;
-uint8_t temp, datain, dataout, index;
+uint8_t temp, datain, dataout;
+int i2c1State = 0, i2c2State = 0;
+
 uint8_t i2c1Reg[20];
+uint8_t i2c2Reg[20];
 
 void idleI2C(i2c *c){
     switch(c -> n){
@@ -168,33 +171,29 @@ int i2cStartWrite(i2c* c){
 int i2cStartRead(i2c* c){
     return i2cWrite(c, (c->address << 1) + 1);
 }
-int i2cState = 0;
 void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C1Interrupt( void ){
 
-    serialWriteString("i2c int\n");
-    if (I2C1STATbits.S == 1) {serialWriteString("start\n"); I2C1STATbits.S = 0;}
-        //else if (I2C1STATbits.S == 1 && i2cState == 1) i2cState = 2;
-    if (I2C1STATbits.P == 1) {serialWriteString("stop tmr\n");  i2cState = 0;}
+    if (I2C1STATbits.P == 1) i2c1State = 0;
     
     if( (I2C1STATbits.R_W == 0) && (I2C1STATbits.D_A == 0) ){
         temp = I2C1RCV; 
         //__delay_ms(1000);
-        serialWriteString("addrress match write\n");
+        //serialWriteString("addrress match write\n");
         I2C1CONbits.SCLREL = 1;
         
     }
     else if( (I2C1STATbits.R_W == 0) && (I2C1STATbits.D_A == 1) ) {
         
-        if(i2cState == 0){
+        if(i2c1State == 0){
             datain = I2C1RCV;
-            serialWriteString("datain received\n");
-            i2cState++;
+            //serialWriteString("datain received\n");
+            i2c1State++;
 
         } 
         else {
             i2c1Reg[datain++] = I2C1RCV; 
-            i2cState = 0;
-            serialWriteString("register changed\n");
+            i2c1State = 0;
+            //serialWriteString("register changed\n");
         }
         //__delay_ms(1000);
 
@@ -204,13 +203,13 @@ void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C1Interrupt( void ){
         temp = I2C1RCV;
         dataout = i2c1Reg[datain++];
         I2C1TRN = dataout;
-        serialWriteString("addres match read\n");
+        //serialWriteString("addres match read\n");
         //__delay_ms(1000);
         I2C1CONbits.SCLREL = 1;
     
     }
     else if ( (I2C1STATbits.R_W == 1) && (I2C1STATbits.D_A == 1) && (I2C1STATbits.ACKSTAT == 0 )){
-        serialWriteString("register sent\n");
+        //serialWriteString("register sent\n");
         temp = I2C1RCV;
         dataout = i2c1Reg[datain++];
         I2C1TRN = dataout;
@@ -219,5 +218,55 @@ void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C1Interrupt( void ){
     }
     
     _SI2C1IF = 0;
+ 
+}
+
+void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C2Interrupt( void ){
+
+    if (I2C2STATbits.P == 1) i2c2State = 0;
+    
+    if( (I2C2STATbits.R_W == 0) && (I2C2STATbits.D_A == 0) ){
+        temp = I2C2RCV; 
+        //__delay_ms(1000);
+        //serialWriteString("addrress match write\n");
+        I2C2CONbits.SCLREL = 1;
+        
+    }
+    else if( (I2C2STATbits.R_W == 0) && (I2C2STATbits.D_A == 1) ) {
+        
+        if(i2c2State == 0){
+            datain = I2C2RCV;
+            //serialWriteString("datain received\n");
+            i2c1State++;
+
+        } 
+        else {
+            i2c2Reg[datain++] = I2C1RCV; 
+            i2c2State = 0;
+            //serialWriteString("register changed\n");
+        }
+        //__delay_ms(1000);
+
+        I2C2CONbits.SCLREL = 1;
+    }
+    else if( (I2C2STATbits.R_W == 1) && (I2C2STATbits.D_A == 0) ) {
+        temp = I2C2RCV;
+        dataout = i2c2Reg[datain++];
+        I2C2TRN = dataout;
+        //serialWriteString("addres match read\n");
+        //__delay_ms(1000);
+        I2C2CONbits.SCLREL = 1;
+    
+    }
+    else if ( (I2C2STATbits.R_W == 1) && (I2C2STATbits.D_A == 1) && (I2C2STATbits.ACKSTAT == 0 )){
+        //serialWriteString("register sent\n");
+        temp = I2C2RCV;
+        dataout = i2c2Reg[datain++];
+        I2C2TRN = dataout;
+        //__delay_ms(1000);
+        I2C2CONbits.SCLREL = 1; 
+    }
+    
+    _SI2C2IF = 0;
  
 }

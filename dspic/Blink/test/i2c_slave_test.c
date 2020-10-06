@@ -9,7 +9,6 @@
 #include "io.h"
 #include "serial.h"
 #include "i2c.h"
-
 #define ADD 64
 #define READ_CMD 0xF1
 
@@ -30,6 +29,7 @@ int main(){
     __delay_ms(1000);
 
     while(1){
+        serialWriteChar(i2c1Reg[0x05]);
         serialWriteString("Nice\n");
         __delay_ms(1000);
 

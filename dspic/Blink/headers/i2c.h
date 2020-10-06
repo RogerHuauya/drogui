@@ -13,6 +13,9 @@ typedef struct _i2c{
     uint8_t mode;
     uint8_t reg[20];
 } i2c;
+
+extern uint8_t i2c1Reg[20];
+
 void idleI2C(i2c *c);
 void initI2C(i2c* c, int n, uint8_t address, double freq, int mode);
 void i2cInitRegister(i2c* c);
