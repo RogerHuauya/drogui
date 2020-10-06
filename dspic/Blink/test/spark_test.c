@@ -1,4 +1,4 @@
-#define SPARK_TEST
+//#define SPARK_TEST
 #ifdef SPARK_TEST
 
 #include "config.h"

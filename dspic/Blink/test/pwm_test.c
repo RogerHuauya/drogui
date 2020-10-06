@@ -1,4 +1,4 @@
-#define PWM_TEST
+//#define PWM_TEST
 #ifdef PWM_TEST
 
 #include "config.h"
@@ -21,8 +21,8 @@ int main(void){
     initConfig();
     initSerial();
 
-    initPwmPin(&m1, 3, 1, 0);
-    //initPwmPin(&m2, 4, 1, 0);
+    initPwmPin(&m1, PWM3_H);
+    initPwmPin(&m2, PWM4_H);
     setPwmPrescaler(0);
 
     setPwmDutyLimits(&m1, 125, 250);

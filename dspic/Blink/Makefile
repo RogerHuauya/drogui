@@ -22,7 +22,7 @@ ifdef LINKSCRIPT
 endif
 
 SOURCES := $(wildcard *.c) $(wildcard src/*.c ) $(wildcard test/*.c) $(wildcard venti/*.c)
-OBJS := $(patsubst %.c, obj/%.o,$(SOURCES))
+OBJS := $(patsubst %.c, %.o,$(SOURCES))
 HDRS := $(wildcard headers/*.h)
 CFLAGS=-g -O1 -x c -I headers 
 
@@ -47,7 +47,7 @@ $(TARGET).elf : $(OBJS)
 	$(CC) -mprocessor=$(PROC) -o $(TARGET).elf $(OBJS) -T p$(PROC).gld -Wl,$(LINKFLAGS)
 
 # Create an object file for each C file.
- obj/%.o : %.c $(HDRS)
+%.o : %.c $(HDRS)
 	@echo Creating object file $@ from $<
 	$(CC) $(CFLAGS) -c -mcpu=$(PROC) -o $@ $< -T p$(PROC).gld
 
