@@ -85,10 +85,10 @@ int menu(){
 
 int main(int argc, char** argv ){
 	dspic.begin();
-	dspic.beginTransmission(0x20);
-	dspic.requestFrom(0x10, 1);
+	dspic.beginTransmission(0x55);
+	dspic.write(0x20);
 	dspic.endTransmission();
-	char ans = dspic.read();
+	char ans = 'h';
 	cout<<"answer is: "<<ans<<endl;
 	/*
 	while(1){
