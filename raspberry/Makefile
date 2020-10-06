@@ -1,6 +1,6 @@
 CXX = g++
 INC = 
-PCFG = -ljsoncpp -lz -lbcm2835 -lrt -lpthread
+PCFG = -ljsoncpp -lz -lbcm2835 -lrt -lpthread -lwiringPi
 
 SOURCES :=  $(wildcard src/*.cpp)
 OBJS := $(patsubst %.cpp, %.o,$(SOURCES))

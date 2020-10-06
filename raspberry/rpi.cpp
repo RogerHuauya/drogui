@@ -1,10 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <unistd.h> 
-#include "bcm2835.h"
-#include "arduPi.h"
+#include <wiringPiI2C.h>
 
-WirePi dspic;
 
 using namespace std;
 
@@ -90,12 +88,16 @@ int menu(){
 }
 
 int main(int argc, char** argv ){
-	dspic.begin();
-	dspic.beginTransmission(0x55);
-	dspic.write(0x20);
-	dspic.endTransmission();
-	char ans = 'h';
-	cout<<"answer is: "<<ans<<endl;
+	int fd;
+ 	fd = wiringPiI2CSetup (0x60);
+	wiringPiI2CWriteReg8 (fd, 0x05, 'x');
+	cout<<"Data sent"<<endl;
+	sleep(5);
+	char ans;
+	ans = wiringPiI2CReadReg8 (fd, 0x05);
+
+	cout<<"register "<<ans<<endl;
+	sleep(1);
 	/*
 	while(1){
 		menu();
