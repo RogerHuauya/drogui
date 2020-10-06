@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+/*
 char s[80];
 // TODO: Add setter methods for this hard coded stuff
 // Specify sensor full scale
@@ -767,3 +768,4 @@ uint8_t readBytesIMU(imu* im, int device, uint8_t registerAddress,  uint8_t coun
 }
 
 
+*/

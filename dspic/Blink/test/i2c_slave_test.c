@@ -16,21 +16,23 @@
 
 int press = 0;
 char crc = 0;
-char s[50];
 int s1, s2, s3;
 
 
 char c1,c2,c3;
 i2c slave;
 int main(){
+    char s[50];
 
     initConfig();
     initSerial();
-    initI2C(&slave, I2C1, 0x55, 400000, SLAVE);
+    initI2C(&slave, I2C1, 0x60, 400000, SLAVE);
     __delay_ms(1000);
 
     while(1){
         serialWriteString("Nice\n");
+        __delay_ms(1000);
+
     }
     return 0;
 }
