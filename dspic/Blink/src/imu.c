@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+/*
 char s[80];
 // TODO: Add setter methods for this hard coded stuff
 // Specify sensor full scale
@@ -32,8 +33,8 @@ float factoryMagCalibration[3] = {0, 0, 0}, factoryMagBias[3] = {0, 0, 0};
 
 
 void initMPU9250(imu *im, int n, double clock_frequency){
-    initI2C(&(im->mpuI2C), n, MPU9250_ADDRESS_AD0, clock_frequency);
-    initI2C(&(im->magI2C), n, AK8963_ADDRESS, clock_frequency);
+    initI2C(&(im->mpuI2C), n, MPU9250_ADDRESS_AD0, clock_frequency, MASTER);
+    initI2C(&(im->magI2C), n, AK8963_ADDRESS, clock_frequency, MASTER);
     
     uint8_t c = readByteIMU(im, MPU, WHO_AM_I_MPU9250);
     if (c == 0x71)  serialWriteString("imu9250 is online...\n"); // WHO_AM_I should always be 0x71
@@ -767,3 +768,4 @@ uint8_t readBytesIMU(imu* im, int device, uint8_t registerAddress,  uint8_t coun
 }
 
 
+*/

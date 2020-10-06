@@ -13,11 +13,11 @@
 
 #define LED PRTD, 8
 pwm m1, m2; 
-char s[50];
+
 long long x = 0;
 
 int main(void){
-
+char s[50];
     initConfig();
     initSerial();
 
