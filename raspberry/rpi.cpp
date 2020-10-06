@@ -55,6 +55,12 @@ void zeroPosition(){
 void calibrateESC(){}
 void emergencyStop(){}
 
+void sendMCU(uint8_t reg, uint8_t val){}
+void sendMCU(uint8_t reg, uint8_t* vals, int n){}
+uint8_t readMCU(uint8_t reg){}
+void readMCU(uint8_t reg, uint8_t* vals){}
+
+
 int menu(){
     cls();    
     printf("\t\t\t\t\t\t\t\t" blue(Principal menu) "\n");
