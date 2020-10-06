@@ -28,7 +28,7 @@ void initI2C(i2c* c, int n, uint8_t address, double freq, int mode){
 
     }
     switch(c->n){
-        case I2C1: if(on1) break; I2C1BRG = BRG; I2C1CONbits.DISSLW = 0; I2C1CONbits.I2CEN = 1; on1 = 1; break;
+        case I2C1: if(on1) break; I2C1BRG = BRG; I2C1CONbits.DISSLW = 1; I2C1CONbits.I2CEN = 1; on1 = 1; break;
         case I2C2: if(on2) break; I2C2BRG = BRG; I2C2CONbits.DISSLW = 0; I2C2CONbits.I2CEN = 1; on2 = 1; break;
     } 
     return;
@@ -170,54 +170,52 @@ int i2cStartRead(i2c* c){
 }
 int i2cState = 0;
 void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C1Interrupt( void ){
+
     serialWriteString("i2c int\n");
-    serialWriteChar(i2c1Reg[0x05]);
-    serialWriteChar('\n');
-    
-    if (I2C1STATbits.S == 1 && i2cState == 0) {i2cState = 1;}
-    //else if (I2C1STATbits.S == 1 && i2cState == 1) i2cState = 2;
-    else if (I2C1STATbits.P == 1) i2cState = 0;
+    if (I2C1STATbits.S == 1) {serialWriteString("start\n"); I2C1STATbits.S = 0;}
+        //else if (I2C1STATbits.S == 1 && i2cState == 1) i2cState = 2;
+    if (I2C1STATbits.P == 1) {serialWriteString("stop tmr\n");  i2cState = 0;}
     
     if( (I2C1STATbits.R_W == 0) && (I2C1STATbits.D_A == 0) ){
         temp = I2C1RCV; 
-        __delay_ms(1000);
-
+        //__delay_ms(1000);
+        serialWriteString("addrress match write\n");
         I2C1CONbits.SCLREL = 1;
         
     }
     else if( (I2C1STATbits.R_W == 0) && (I2C1STATbits.D_A == 1) ) {
         
-        if(i2cState == 1){
+        if(i2cState == 0){
             datain = I2C1RCV;
-            serialWriteString("mierda\n");
+            serialWriteString("datain received\n");
             i2cState++;
 
         } 
         else {
             i2c1Reg[datain++] = I2C1RCV; 
-            serialWriteString("mierda2\n");
+            i2cState = 0;
+            serialWriteString("register changed\n");
         }
-        __delay_ms(1000);
+        //__delay_ms(1000);
 
         I2C1CONbits.SCLREL = 1;
     }
     else if( (I2C1STATbits.R_W == 1) && (I2C1STATbits.D_A == 0) ) {
         temp = I2C1RCV;
-        //I2C1TRN = dataout;
-        serialWriteString("aiuda1\n");
-        __delay_ms(1000);
+        dataout = i2c1Reg[datain++];
+        I2C1TRN = dataout;
+        serialWriteString("addres match read\n");
+        //__delay_ms(1000);
         I2C1CONbits.SCLREL = 1;
     
     }
     else if ( (I2C1STATbits.R_W == 1) && (I2C1STATbits.D_A == 1) && (I2C1STATbits.ACKSTAT == 0 )){
-        serialWriteString("aiuda\n");
+        serialWriteString("register sent\n");
         temp = I2C1RCV;
         dataout = i2c1Reg[datain++];
         I2C1TRN = dataout;
-        __delay_ms(1000);
-
+        //__delay_ms(1000);
         I2C1CONbits.SCLREL = 1; 
-    
     }
     
     _SI2C1IF = 0;
