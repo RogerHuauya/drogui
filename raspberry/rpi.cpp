@@ -12,7 +12,7 @@ using namespace std;
 #define blue(n)     "\033[1;34m"#n"\033[0m"
 #define white(n)    "\033[1;37m"#n"\033[0m"
 #define BUFF_LENGTH 500
-
+int fd;
 void desplazamiento(){
 	//auto v = root["desplazamiento"];
 	double x, y, z, alp;
@@ -51,12 +51,16 @@ void zeroPosition(){
 
 }
 void calibrateESC(){}
-void emergencyStop(){}
+void emergencyStop(){
+	
+}
 
-void sendMCU(uint8_t reg, uint8_t val){}
-void sendMCU(uint8_t reg, uint8_t* vals, int n){}
-uint8_t readMCU(uint8_t reg){}
-void readMCU(uint8_t reg, uint8_t* vals){}
+void writeMCU(uint8_t reg, uint8_t val){	
+	wiringPiI2CWriteReg8 (fd, reg, val);
+}
+uint8_t readMCU(uint8_t reg){
+	return wiringPiI2CReadReg8 (fd, reg);
+}
 
 
 int menu(){
@@ -88,7 +92,6 @@ int menu(){
 }
 
 int main(int argc, char** argv ){
-	int fd;
  	fd = wiringPiI2CSetup (0x60);
 	wiringPiI2CWriteReg8 (fd, 0x05, 'x');
 	cout<<"Data sent"<<endl;
