@@ -241,7 +241,7 @@ void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C2Interrupt( void ){
 
         } 
         else {
-            i2c2Reg[datain++] = I2C1RCV; 
+            i2c2Reg[datain++] = I2C2RCV; 
             i2c2State = 0;
             //serialWriteString("register changed\n");
         }
