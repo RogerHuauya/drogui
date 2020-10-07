@@ -9,32 +9,32 @@ void initPwmPin(pwm* p, int n){
     p -> n = n;
     switch (n){
         case PWM1_H:    PWMCON1bits.ITB = 1;  IOCON1bits.PMOD = 3;
-                        IOCON1bits.PENH = 1, IOCON1bits.POLH = 1; break;
+                        IOCON1bits.PENH = 1, IOCON1bits.POLH = 0; break;
         case PWM1_L:    PWMCON1bits.ITB = 1;  IOCON1bits.PMOD = 3;
                         IOCON1bits.PENH = 1, IOCON1bits.POLH = 0; break;
         
         case PWM2_H:    PWMCON2bits.ITB = 1;  IOCON2bits.PMOD = 3;
-                        IOCON2bits.PENH = 1, IOCON2bits.POLH = 1; break;
+                        IOCON2bits.PENH = 1, IOCON2bits.POLH = 0; break;
         case PWM2_L:    PWMCON2bits.ITB = 1;  IOCON2bits.PMOD = 3;
                         IOCON2bits.PENH = 1, IOCON2bits.POLH = 0; break;
         
         case PWM3_H:    PWMCON3bits.ITB = 1;  IOCON3bits.PMOD = 3;
-                        IOCON3bits.PENH = 1, IOCON3bits.POLH = 1; break;
-        case PWM3_L:    PWMCON3bits.ITB = 1;  IOCON3bits.PMOD = 3;
                         IOCON3bits.PENH = 1, IOCON3bits.POLH = 0; break;
+        case PWM3_L:    PWMCON3bits.ITB = 1;  IOCON3bits.PMOD = 3;
+                        IOCON3bits.PENL = 1, IOCON3bits.POLL = 0; break;
         
         case PWM4_H:    PWMCON4bits.ITB = 1;  IOCON4bits.PMOD = 3;
-                        IOCON4bits.PENH = 1, IOCON4bits.POLH = 1; break;
+                        IOCON4bits.PENH = 1, IOCON4bits.POLH = 0; break;
         case PWM4_L:    PWMCON4bits.ITB = 1;  IOCON4bits.PMOD = 3;
                         IOCON4bits.PENH = 1, IOCON4bits.POLH = 0; break;
         
         case PWM5_H:    PWMCON5bits.ITB = 1;  IOCON5bits.PMOD = 3;
-                        IOCON5bits.PENH = 1, IOCON5bits.POLH = 1; break;
+                        IOCON5bits.PENH = 1, IOCON5bits.POLH = 0; break;
         case PWM5_L:    PWMCON5bits.ITB = 1;  IOCON5bits.PMOD = 3;
                         IOCON5bits.PENH = 1, IOCON5bits.POLH = 0; break;
         
         case PWM6_H:    PWMCON6bits.ITB = 1;  IOCON6bits.PMOD = 3;
-                        IOCON6bits.PENH = 1, IOCON6bits.POLH = 1; break;
+                        IOCON6bits.PENH = 1, IOCON6bits.POLH = 0; break;
         case PWM6_L:    PWMCON6bits.ITB = 1;  IOCON6bits.PMOD = 3;
                         IOCON6bits.PENH = 1, IOCON6bits.POLH = 0; break;
          

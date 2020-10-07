@@ -11,6 +11,7 @@
 #include "piston.h"
 #include "control.h"
 #include "pwm.h"
+#include "i2c.h"
 
 pwm m1, m2, m3, m4;
 
@@ -57,9 +58,30 @@ void initializeSystem(){
     
     initPwm();
 }
-
+i2c slave;
+int vel = 0;
 int main(void){
-    
+    initConfig();
+    initSerial();
+    initializeSystem();
+    initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
+    __delay_ms(1000);
+    char buffer[80];
+    serialWriteString("init");
+    while(1){
+        if(serialAvailable()){
+            vel = serialParseInt();
+            sprintf(buffer, "velocidad seteada: %d\n", vel);
+            serialWriteString(buffer);
+        }
+        setPwmDutyTime(&m1, min(max(vel,0), 100));
+        setPwmDutyTime(&m2, min(max(vel,0), 100));
+        setPwmDutyTime(&m3, min(max(vel,0), 100));
+        setPwmDutyTime(&m4, min(max(vel,0), 100));
+        
+        __delay_ms(100);
+
+    }
     return 0;
 }
 
