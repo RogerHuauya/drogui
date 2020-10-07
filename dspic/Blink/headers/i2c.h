@@ -15,6 +15,7 @@ typedef struct _i2c{
 } i2c;
 
 extern uint8_t i2c1Reg[20];
+extern uint8_t i2c2Reg[20];
 
 void idleI2C(i2c *c);
 void initI2C(i2c* c, int n, uint8_t address, double freq, int mode);
@@ -27,13 +28,9 @@ void i2cRestart(i2c* c);
 int i2cWriteString(i2c* c, uint8_t* s);
 unsigned char i2cRead(i2c* c);
 int i2cReadString(i2c* c, uint8_t *s, int len);
-
 void i2cSendACK(i2c* c);
 void i2cSendNACK(i2c* c);
-
 char i2cAvailable(i2c* c);
-
-
 int i2cStartRead(i2c* c);
 int i2cStartWrite(i2c* c);
 

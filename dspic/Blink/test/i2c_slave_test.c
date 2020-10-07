@@ -1,4 +1,4 @@
-#define I2C_SLAVE_TEST
+//#define I2C_SLAVE_TEST
 #ifdef I2C_SLAVE_TEST
 
 #include "config.h"

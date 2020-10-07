@@ -10,11 +10,10 @@ uint8_t i2c2Reg[20];
 
 void idleI2C(i2c *c){
     switch(c -> n){
-        case I2C1: while(I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RCEN || I2C1CONbits.RSEN 
+        case I2C1: while(I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RCEN || I2C1CONbits.RSEN
                         || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT);	break;
-        case I2C2: while(I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN || I2C2CONbits.RSEN 
+        case I2C2: while(I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN || I2C2CONbits.RSEN
                         || I2C2CONbits.ACKEN || I2C2STATbits.TRSTAT);   break;
-
     }
 }
 
@@ -74,7 +73,7 @@ int i2cWrite(i2c* c, uint8_t data){
                 ans = -1;
             else{
                 idleI2C(c); 
-                while(I2C1STATbits.ACKSTAT){} //ans = -2;
+                while(I2C1STATbits.ACKSTAT){};
                 ans =  0;
             }
             break;
@@ -85,7 +84,6 @@ int i2cWrite(i2c* c, uint8_t data){
             else{
                 idleI2C(c);                  
                 while( I2C2STATbits.ACKSTAT ) {}
-                    //ans = -2;
                 ans =  0;
             }
             break;
@@ -113,11 +111,12 @@ unsigned char i2cRead(i2c* c){
     idleI2C(c);
     unsigned char ans;
     switch (c->n){
-        case I2C1:    I2C1CONbits.RCEN = 1;  while(I2C1CONbits.RCEN){}; 
+        case I2C1:      I2C1CONbits.RCEN = 1;  while(I2C1CONbits.RCEN){}; 
                         I2C1STATbits.I2COV = 0; while(!I2C1STATbits.RBF){}; 
                         ans = I2C1RCV; break;
-        case I2C2:    I2C2CONbits.RCEN = 1; while(I2C2CONbits.RCEN){};
-                        I2C2STATbits.I2COV = 0; ans = I2C2RCV; break;
+        case I2C2:      I2C2CONbits.RCEN = 1; while(I2C2CONbits.RCEN){};
+                        I2C2STATbits.I2COV = 0; while(!I2C2STATbits.RBF){}; 
+                        ans = I2C2RCV; break;
 
     }
     return ans;
@@ -237,7 +236,7 @@ void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C2Interrupt( void ){
         if(i2c2State == 0){
             datain = I2C2RCV;
             //serialWriteString("datain received\n");
-            i2c1State++;
+            i2c2    State++;
 
         } 
         else {
