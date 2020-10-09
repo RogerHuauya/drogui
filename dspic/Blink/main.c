@@ -68,17 +68,20 @@ int main(void){
     __delay_ms(1000);
     char buffer[80];
     serialWriteString("init");
-    while(1){
+    while(1){/*
         if(serialAvailable()){
             vel = serialParseInt();
             sprintf(buffer, "velocidad seteada: %d\n", vel);
             serialWriteString(buffer);
-        }
+        }*/
+        sprintf(buffer,"register value: %d\n", (int)i2c2Reg[0x05]);
+        serialWriteString(buffer);
+        /*
         setPwmDutyTime(&m1, min(max(vel,0), 100));
         setPwmDutyTime(&m2, min(max(vel,0), 100));
         setPwmDutyTime(&m3, min(max(vel,0), 100));
         setPwmDutyTime(&m4, min(max(vel,0), 100));
-        
+        */
         __delay_ms(100);
 
     }

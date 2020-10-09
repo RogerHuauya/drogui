@@ -234,15 +234,15 @@ void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C2Interrupt( void ){
     else if( (I2C2STATbits.R_W == 0) && (I2C2STATbits.D_A == 1) ) {
         
         if(i2c2State == 0){
-            datain = I2C2RCV;
-            //serialWriteString("datain received\n");
-            i2c2    State++;
+            datain = I2C2RCV; //0x05
+            //serialWriteString("datain received index\n");
+            i2c2State++;
 
         } 
         else {
             i2c2Reg[datain++] = I2C2RCV; 
             i2c2State = 0;
-            //serialWriteString("register changed\n");
+            //serialWriteString("register value changed\n");
         }
         //__delay_ms(1000);
 
@@ -252,13 +252,14 @@ void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C2Interrupt( void ){
         temp = I2C2RCV;
         dataout = i2c2Reg[datain++];
         I2C2TRN = dataout;
+        i2c2State = 0;
         //serialWriteString("addres match read\n");
         //__delay_ms(1000);
         I2C2CONbits.SCLREL = 1;
     
     }
     else if ( (I2C2STATbits.R_W == 1) && (I2C2STATbits.D_A == 1) && (I2C2STATbits.ACKSTAT == 0 )){
-        //serialWriteString("register sent\n");
+        //serialWriteString("register read \n");
         temp = I2C2RCV;
         dataout = i2c2Reg[datain++];
         I2C2TRN = dataout;
