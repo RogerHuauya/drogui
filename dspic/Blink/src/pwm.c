@@ -1,28 +1,43 @@
 #include "pwm.h"
 #include "serial.h"
 
-char buff[50];
-
 short init_done = 0;
 int master_prescaler = 0;
 
-void initPwmPin(pwm* p, int n, bool primary, bool polarity){
+void initPwmPin(pwm* p, int n){
     
     p -> n = n;
-    p -> primary  = primary;
     switch (n){
-        case 1:
-            PWMCON1bits.ITB = 1;  IOCON1bits.PMOD = 3;  
-            if(primary)  IOCON1bits.PENH = 1, IOCON1bits.POLH = polarity; 
-            else IOCON1bits.PENL = 1, IOCON1bits.POLH = polarity; break; 
-        case 2:
-            PWMCON2bits.ITB = 1;  IOCON2bits.PMOD = 3; 
-            if(primary)  IOCON2bits.PENH = 1, IOCON2bits.POLH = polarity;
-            else IOCON2bits.PENL = 1, IOCON2bits.POLL = polarity; break;
-        case 3:
-            PWMCON3bits.ITB = 1;  IOCON3bits.PMOD = 3;  
-            if(primary)  IOCON3bits.PENH = 1, IOCON3bits.POLH = polarity; 
-            else IOCON3bits.PENL = 1, IOCON3bits.POLL = polarity; break; 
+        case PWM1_H:    PWMCON1bits.ITB = 1;  IOCON1bits.PMOD = 3;
+                        IOCON1bits.PENH = 1, IOCON1bits.POLH = 0; break;
+        case PWM1_L:    PWMCON1bits.ITB = 1;  IOCON1bits.PMOD = 3;
+                        IOCON1bits.PENH = 1, IOCON1bits.POLH = 0; break;
+        
+        case PWM2_H:    PWMCON2bits.ITB = 1;  IOCON2bits.PMOD = 3;
+                        IOCON2bits.PENH = 1, IOCON2bits.POLH = 0; break;
+        case PWM2_L:    PWMCON2bits.ITB = 1;  IOCON2bits.PMOD = 3;
+                        IOCON2bits.PENH = 1, IOCON2bits.POLH = 0; break;
+        
+        case PWM3_H:    PWMCON3bits.ITB = 1;  IOCON3bits.PMOD = 3;
+                        IOCON3bits.PENH = 1, IOCON3bits.POLH = 0; break;
+        case PWM3_L:    PWMCON3bits.ITB = 1;  IOCON3bits.PMOD = 3;
+                        IOCON3bits.PENL = 1, IOCON3bits.POLL = 0; break;
+        
+        case PWM4_H:    PWMCON4bits.ITB = 1;  IOCON4bits.PMOD = 3;
+                        IOCON4bits.PENH = 1, IOCON4bits.POLH = 0; break;
+        case PWM4_L:    PWMCON4bits.ITB = 1;  IOCON4bits.PMOD = 3;
+                        IOCON4bits.PENH = 1, IOCON4bits.POLH = 0; break;
+        
+        case PWM5_H:    PWMCON5bits.ITB = 1;  IOCON5bits.PMOD = 3;
+                        IOCON5bits.PENH = 1, IOCON5bits.POLH = 0; break;
+        case PWM5_L:    PWMCON5bits.ITB = 1;  IOCON5bits.PMOD = 3;
+                        IOCON5bits.PENH = 1, IOCON5bits.POLH = 0; break;
+        
+        case PWM6_H:    PWMCON6bits.ITB = 1;  IOCON6bits.PMOD = 3;
+                        IOCON6bits.PENH = 1, IOCON6bits.POLH = 0; break;
+        case PWM6_L:    PWMCON6bits.ITB = 1;  IOCON6bits.PMOD = 3;
+                        IOCON6bits.PENH = 1, IOCON6bits.POLH = 0; break;
+         
     }
 }
 
@@ -40,12 +55,23 @@ void setPwmFrecuency(pwm* p, double freq){
     uint16_t PR =  FCY/(freq*master_prescaler)*2LL - 1;
     p -> period = PR; 
     switch (p -> n){
-        case 1:
-            if(p->primary)  PHASE1 = PR; else SPHASE1 = PR; break; 
-        case 2:
-            if(p->primary)  PHASE2 = PR; else SPHASE2 = PR; break;
-        case 3:
-            if(p->primary)  PHASE3 = PR; else SPHASE3 = PR; break; 
+        case PWM1_H: PHASE1 = PR; break;
+        case PWM1_L: SPHASE1 = PR; break;
+        
+        case PWM2_H: PHASE2 = PR; break;
+        case PWM2_L: SPHASE2 = PR; break; 
+        
+        case PWM3_H: PHASE3 = PR; break;
+        case PWM3_L: SPHASE3 = PR; break; 
+        
+        case PWM4_H: PHASE4 = PR; break;
+        case PWM4_L: SPHASE4 = PR; break; 
+        
+        case PWM5_H: PHASE5 = PR; break;
+        case PWM5_L: SPHASE5 = PR; break; 
+        
+        case PWM6_H: PHASE6 = PR; break;
+        case PWM6_L: SPHASE6 = PR; break;   
     }
 }
 
@@ -57,12 +83,23 @@ void setPwmDuty(pwm* p, double percent){
     uint16_t DC = (p->period)/(100.0/percent);
 
     switch (p -> n){
-        case 1:
-            if(p->primary)  PDC1 = DC; else SDC1 = DC; break; 
-        case 2:
-            if(p->primary)  PDC2 = DC; else SDC2 = DC; break;
-        case 3:
-            if(p->primary)  PDC3 = DC; else SDC3 = DC; break; 
+        case PWM1_H: PDC1 = DC; break;
+        case PWM1_L: SDC1 = DC; break;
+        
+        case PWM2_H: PDC2 = DC; break;
+        case PWM2_L: SDC2 = DC; break;
+        
+        case PWM3_H: PDC3 = DC; break;
+        case PWM3_L: SDC3 = DC; break;
+        
+        case PWM4_H: PDC4 = DC; break;
+        case PWM4_L: SDC4 = DC; break;
+        
+        case PWM5_H: PDC5 = DC; break;
+        case PWM5_L: SDC5 = DC; break;
+        
+        case PWM6_H: PDC6 = DC; break;
+        case PWM6_L: SDC6 = DC; break;
     }
 }
 
@@ -79,11 +116,22 @@ void setPwmDutyTime(pwm *p, double percent){
 
 
     switch (p -> n){
-        case 1:
-            if(p->primary)  PDC1 = DC; else SDC1 = DC; break; 
-        case 2:
-            if(p->primary)  PDC2 = DC; else SDC2 = DC; break;
-        case 3:
-            if(p->primary)  PDC3 = DC; else SDC3 = DC; break; 
+        case PWM1_H: PDC1 = DC; break;
+        case PWM1_L: SDC1 = DC; break;
+        
+        case PWM2_H: PDC2 = DC; break;
+        case PWM2_L: SDC2 = DC; break;
+        
+        case PWM3_H: PDC3 = DC; break;
+        case PWM3_L: SDC3 = DC; break;
+        
+        case PWM4_H: PDC4 = DC; break;
+        case PWM4_L: SDC4 = DC; break;
+        
+        case PWM5_H: PDC5 = DC; break;
+        case PWM5_L: SDC5 = DC; break;
+        
+        case PWM6_H: PDC6 = DC; break;
+        case PWM6_L: SDC6 = DC; break;
     }
 }

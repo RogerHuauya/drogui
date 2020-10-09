@@ -3,7 +3,7 @@
 #include <xc.h>
 
 #define FCY 40000000LL
-#define BAUDRATE 9600
+#define BAUDRATE 115200
 #define BRGVAL ((FCY/BAUDRATE)/4)-1
 
 void initConfig();
