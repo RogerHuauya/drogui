@@ -3,12 +3,12 @@
 
 #include <math.h>
 #define PI 3.14159264
-void MadgwickQuaternionUpdate(float ax, float ay, float az, float gx, float gy,
-                              float gz, float mx, float my, float mz,
-                              float deltat);
-void MahonyQuaternionUpdate(float ax, float ay, float az, float gx, float gy,
-                            float gz, float mx, float my, float mz,
-                            float deltat);
-const float * getQ();
+void MadgwickQuaternionUpdate(double ax, double ay, double az, double gx, double gy,
+                              double gz, double mx, double my, double mz,
+                              double deltat);
+void MahonyQuaternionUpdate(double ax, double ay, double az, double gx, double gy,
+                            double gz, double mx, double my, double mz,
+                            double deltat);
+const double * getQ();
 
 #endif // _QUATERNIONFILTERS_H_

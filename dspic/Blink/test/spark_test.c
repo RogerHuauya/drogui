@@ -2,7 +2,6 @@
 #ifdef SPARK_TEST
 
 #include "config.h"
-#include "quaternionFilters.h"
 #include <libpic30.h>
 #include <stdio.h>
 #include <string.h>
@@ -11,6 +10,9 @@
 #include "serial.h"
 #include "i2c.h"
 #include "imu.h"
+#include "MahonyAHRS.h"
+#include "utils.h"
+
 #define MPU9250_ADDRESS MPU9250_ADDRESS_AD0
 #define I2Cclock 100000
 
@@ -31,16 +33,20 @@ int main(){
     while(1){
         if (readByteIMU(&myIMU, MPU, INT_STATUS)& 0x01){
             readAll(&myIMU);
-            //printIMU(&myIMU);
-            MahonyQuaternionUpdate(myIMU.ax, myIMU.ay, myIMU.az, myIMU.gx * PI/180.0f,
-                         myIMU.gy * PI/180.0f, myIMU.gz * PI/180.0f, myIMU.my,
-                         myIMU.mx, myIMU.mz, 100);
-            sprintf(s,"%.3f %.3f %.3f %.3f \n", *getQ(), *(getQ() + 1), *(getQ() + 2), *(getQ() + 3));
+            /*printIMU(&myIMU);
+            break;*/
+            MahonyAHRSupdate( myIMU.gx * pi/180.0f,myIMU.gy * pi/180.0f, myIMU.gz * pi/180.0f,  
+                                    myIMU.ax, myIMU.ay, myIMU.az, 
+                                    myIMU.mx, myIMU.my, myIMU.mz);
+
+            sprintf(s,"%.3lf\t%.3lf\t%.3lf\n",
+                *(getMahonyEuler()), *(getMahonyEuler()+1), *(getMahonyEuler()+2));
             serialWriteString(s);
         }
         else serialWriteString("test\n");
-        __delay_ms(100);
+        __delay_ms(2);
     }
     return 0;
 }
+
 #endif  

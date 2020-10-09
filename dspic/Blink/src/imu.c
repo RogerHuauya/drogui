@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-/*
+
 char s[80];
 // TODO: Add setter methods for this hard coded stuff
 // Specify sensor full scale
@@ -258,7 +258,7 @@ void readAll(imu* im){
 }
 
 void printIMU(imu* im){
-  sprintf(s, "%.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f \n", im->ax, im->ay, im->az, im->gx, im->gy, im->gz, im->mx, im->my, im->mz);
+  sprintf(s, "%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\n", im->ax, im->ay, im->az, im->gx, im->gy, im->gz, im->mx, im->my, im->mz);
   serialWriteString(s);
 }
 
@@ -443,7 +443,7 @@ void calibrateMPU9250(imu* im)
   // the accelerometer biases calculated above must be divided by 8.
 
   // A place to hold the factory accelerometer trim biases
-  int32_t accel_bias_reg[3] = {0, 0, 0};
+  int64_t accel_bias_reg[3] = {0, 0, 0};
   // Read factory accelerometer trim values
   readBytesIMU(im, MPU, XA_OFFSET_H, 2, &data[0]);
   accel_bias_reg[0] = (int32_t) (((int16_t)data[0] << 8) | data[1]);
@@ -626,7 +626,6 @@ void selfTestMPU9250(imu* im)
 // Function which accumulates magnetometer data after device initialization.
 // It calculates the bias and scale in the x, y, and z axes.
 void magCalMPU9250(imu* im, float * bias_dest, float * scale_dest)
-
 {
   uint16_t ii = 0, sample_count = 0;
   int32_t mag_bias[3]  = {0, 0, 0},
@@ -733,19 +732,27 @@ uint8_t readByteIMU(imu* im ,int device, uint8_t registerAddress)
     
     i2c* aux = (device == MPU ? &(im -> mpuI2C): &(im -> magI2C));
     
+    serialWriteChar('1');
     i2cStart(aux);  	// Initialize the Tx buffer
     
+    serialWriteChar('2');
     i2cStartWrite(aux);
     
+    serialWriteChar('3');
     i2cWrite(aux, registerAddress);
     
+    serialWriteChar('4');
     i2cRestart(aux);
     
+    serialWriteChar('5');
     i2cStartRead(aux);
     
+    serialWriteChar('6');
     data =  i2cRead(aux); i2cSendNACK(aux);
     
+    serialWriteChar('7');
     i2cStop(aux);
+    
     return data;
 }
 
@@ -766,6 +773,3 @@ uint8_t readBytesIMU(imu* im, int device, uint8_t registerAddress,  uint8_t coun
     i2cStop(aux);
     return i; 
 }
-
-
-*/

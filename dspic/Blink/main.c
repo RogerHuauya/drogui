@@ -8,10 +8,18 @@
 #include "io.h"
 #include "serial.h"
 #include "timer.h"
-#include "piston.h"
 #include "control.h"
 #include "pwm.h"
 #include "i2c.h"
+#include "imu.h"
+#include "MahonyAHRS.h"
+#include "utils.h"
+
+#define MPU9250_ADDRESS MPU9250_ADDRESS_AD0
+#define I2Cclock 100000
+char buffer[80];
+    
+imu myIMU;
 
 pwm m1, m2, m3, m4;
 
@@ -22,6 +30,11 @@ pid y_control;
 pid th_control;
 pid phi_control;
 pid tri_control;
+
+
+timer readSensors;
+double roll, pitch, yaw;
+
 
 void initializeSystem(){
     
@@ -57,30 +70,44 @@ void initializeSystem(){
     setPwmDutyTime(&m4, 0);
     
     initPwm();
+    
+    initMPU9250(&myIMU, I2C1, I2Cclock);
+    initTimer(&readSensors, 2, DIV256, 7);
+    setTimerFrecuency(&readSensors, 50);
+
 }
+
+void timerInterrupt(2){
+    if (readByteIMU(&myIMU, MPU, INT_STATUS)& 0x01){
+        __delay_ms(1);
+        readAll(&myIMU);
+        MahonyAHRSupdate(   myIMU.gx * pi/180.0f,myIMU.gy * pi/180.0f, myIMU.gz * pi/180.0f,  
+                                myIMU.ax, myIMU.ay, myIMU.az, 
+                                myIMU.mx, myIMU.my, myIMU.mz);
+        roll = *(getMahonyEuler());
+        pitch = *(getMahonyEuler()+1);
+        yaw  = *(getMahonyEuler()+2);
+    }
+    clearTimerFlag(&readSensors);
+}
+
+
+
 i2c slave;
 int vel = 0;
+
 int main(void){
     initConfig();
     initSerial();
     initializeSystem();
-    initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
+    
+    //initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
     __delay_ms(1000);
-    char buffer[80];
     serialWriteString("init");
+    
     while(1){
-        if(serialAvailable()){
-            vel = serialParseInt();
-            sprintf(buffer, "velocidad seteada: %d\n", vel);
-            serialWriteString(buffer);
-        }
-        setPwmDutyTime(&m1, min(max(vel,0), 100));
-        setPwmDutyTime(&m2, min(max(vel,0), 100));
-        setPwmDutyTime(&m3, min(max(vel,0), 100));
-        setPwmDutyTime(&m4, min(max(vel,0), 100));
         
-        __delay_ms(100);
-
+        __delay_ms(10000);
     }
     return 0;
 }
