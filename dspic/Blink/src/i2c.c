@@ -238,7 +238,11 @@ void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C2Interrupt( void ){
         if(i2c2State == 0){
             datain = I2C2RCV;
             //serialWriteString("datain received\n");
+<<<<<<< HEAD
             i2c2State++;
+=======
+            i2c2    State++;
+>>>>>>> be6f01198daef7e0d709f81cce0132e988c223a7
 
         } 
         else {
