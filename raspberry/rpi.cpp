@@ -94,16 +94,16 @@ int menu(){
 int main(int argc, char** argv ){
  	fd = wiringPiI2CSetup (0x60);
 	cout<<"Start :) "<<endl;
-        while(1){
-            int roger; 
-            uint8_t valor;
-            cin>>roger;//scanf(valor);
+        for(int roger = 1; roger < 200; roger++){
+            //int roger; 
+            uint8_t valor;std::cin.clear();
+        //    cin>>roger;//scanf(valor);
             valor = (uint8_t)roger & 0xff;//sscanf("valor =", "%2",&valor);
             cout<<"Data sent : "<<roger<<" "<<+valor<<endl;
             wiringPiI2CWriteReg8 (fd,0x05,valor);
-	    //sleep(3);
+	 	 sleep(1);
             uint8_t ans; 
-	    ans = wiringPiI2CReadReg8 (fd, 0x05) &0xff;
+	    ans = wiringPiI2CReadReg8 (fd, 0x05);
 	    cout<<"register "<<+ans<<endl;
 	    sleep(1);
         }
