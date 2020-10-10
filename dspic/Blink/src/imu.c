@@ -732,25 +732,18 @@ uint8_t readByteIMU(imu* im ,int device, uint8_t registerAddress)
     
     i2c* aux = (device == MPU ? &(im -> mpuI2C): &(im -> magI2C));
     
-    serialWriteChar('1');
     i2cStart(aux);  	// Initialize the Tx buffer
     
-    serialWriteChar('2');
     i2cStartWrite(aux);
     
-    serialWriteChar('3');
     i2cWrite(aux, registerAddress);
     
-    serialWriteChar('4');
     i2cRestart(aux);
     
-    serialWriteChar('5');
     i2cStartRead(aux);
     
-    serialWriteChar('6');
     data =  i2cRead(aux); i2cSendNACK(aux);
     
-    serialWriteChar('7');
     i2cStop(aux);
     
     return data;

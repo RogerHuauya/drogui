@@ -111,10 +111,8 @@ unsigned char i2cRead(i2c* c){
     idleI2C(c);
     unsigned char ans;
     switch (c->n){
-        case I2C1:    I2C1CONbits.RCEN = 1; serialWriteChar('a');  
-                        while(I2C1CONbits.RCEN){}; serialWriteChar('b');
-                        I2C1STATbits.I2COV = 0; serialWriteChar('c');
-                        while(!I2C1STATbits.RBF){}; serialWriteChar('d');
+        case I2C1:    I2C1CONbits.RCEN = 1; while(I2C1CONbits.RCEN){};
+                        I2C1STATbits.I2COV = 0;while(!I2C1STATbits.RBF){}; 
                         ans = I2C1RCV; break;
         case I2C2:      I2C2CONbits.RCEN = 1; while(I2C2CONbits.RCEN){};
                         I2C2STATbits.I2COV = 0; while(!I2C2STATbits.RBF){}; 

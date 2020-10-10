@@ -27,14 +27,16 @@ pid z_control;
 pid x_control;
 pid y_control;
 
-pid th_control;
-pid phi_control;
-pid tri_control;
+pid roll_control;
+pid pitch_control;
+pid yaw_control;
 
 
 timer readSensors;
-double roll, pitch, yaw;
+timer millis;
 
+double roll, pitch, yaw;
+volatile unsigned long time = 0;
 
 void initializeSystem(){
     
@@ -42,10 +44,11 @@ void initializeSystem(){
     initPid(&x_control, 1, 0, 0, 0, 10 , 100);
     initPid(&y_control, 1, 0, 0, 0, 10 , 100);
     
-    initPid(&th_control, 1, 0, 0, 0, 10 , 100);
-    initPid(&phi_control, 1, 0, 0, 0, 10 , 100);
-    initPid(&tri_control, 1, 0, 0, 0, 10 , 100);
+    initPid(&roll_control, 2, 0, 0, 0, 1, 100);
+    initPid(&pitch_control, 2, 0, 0, 0, 1, 100);
+    initPid(&yaw_control, 2, 0, 0, 0, 1, 100);
     
+    resetPid(&roll_control, 0);
     
     setPwmPrescaler(0);
 
@@ -71,10 +74,14 @@ void initializeSystem(){
     
     initPwm();
     
-    initMPU9250(&myIMU, I2C1, I2Cclock);
-    initTimer(&readSensors, 2, DIV256, 7);
-    setTimerFrecuency(&readSensors, 50);
+    //initMPU9250(&myIMU, I2C1, I2Cclock);
+    
+    //initTimer(&readSensors, 2, DIV256, 6);
+    //setTimerFrecuency(&readSensors, 50);
 
+    initTimer(&millis, 3, DIV256, 7);
+    setTimerFrecuency(&millis, 1000);
+    
 }
 
 void timerInterrupt(2){
@@ -91,25 +98,82 @@ void timerInterrupt(2){
     clearTimerFlag(&readSensors);
 }
 
+void timerInterrupt(3){
+    time++;
+    clearTimerFlag(&millis);
+}
 
+double angle_dif(double angle1, double angle2);
 
 i2c slave;
 int vel = 0;
-
+double H, R, P, Y;
+double M1, M2, M3, M4;
 int main(void){
     initConfig();
     initSerial();
     initializeSystem();
+    initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
     
-    //initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
     __delay_ms(1000);
     serialWriteString("init");
-    
+    i2c2Reg[0x01] = 0;
+    int val = 0;
     while(1){
+        if(serialAvailable()){
+            val = serialParseInt();
+            sprintf(buffer, "H= %d\n", val);
+            serialWriteString(buffer);
+        }
+       /*
+        roll +1 +4 -2 -3 pi
         
-        __delay_ms(10000);
+        pitch +4 +2 -1 -3 0
+
+        yaw   +1 +2 -3 -4 pi
+
+       */
+
+        H = (double) i2c2Reg[0x05];
+        R = computePid(&roll_control, angle_dif(pi, roll), time);
+        P = computePid(&pitch_control, angle_dif(0, pitch), time);
+        Y = computePid(&yaw_control, angle_dif(pi, yaw), time);
+        R = P = Y = 0;
+        M1 = H + R - P + Y;
+        M2 = H - R + P + Y;
+        M3 = H - R - P - Y;
+        M4 = H + R + P - Y;
+
+
+        //sprintf(buffer,"%.3lf\t%.3lf\t%.3lf\t\t%.3lf\t%.3lf\t%.3lf\t%.3lf\n",
+        //        roll, pitch, yaw, M1, M2, M3, M4);
+        //serialWriteString(buffer);
+        
+        setPwmDutyTime(&m1, min(max(M1,0), 100));
+        setPwmDutyTime(&m2, min(max(M2,0), 100));
+        setPwmDutyTime(&m3, min(max(M3,0), 100));
+        setPwmDutyTime(&m4, min(max(M4,0), 100));
+
+        __delay_ms(100);
+
+
     }
     return 0;
 }
+
+double angle_dif(double angle1, double angle2){
+    if(angle1 > angle2){
+        if((angle1 - angle2) > (2*pi - angle1 + angle2)) return -2*pi + angle1 - angle2;
+        else return angle1 - angle2;
+    }
+    else{
+        if((angle2 - angle1) > (2*pi - angle2 + angle1)) return 2*pi - angle1 + angle2;
+        else return angle1 - angle2;
+    }
+}
+
+
+
+
 
 #endif
