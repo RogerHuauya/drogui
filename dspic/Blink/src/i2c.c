@@ -4,18 +4,34 @@
 bool on1 = false, on2 = false , on3 = false;
 uint8_t temp, datain, dataout;
 int i2c1State = 0, i2c2State = 0;
-
+int err_aux = 0;
 uint8_t i2c1Reg[20];
 uint8_t i2c2Reg[20];
 
-void idleI2C(i2c *c){
+int idleI2C(i2c *c){
+    int ans = SUCCESS, timeout = 0;
     switch(c -> n){
-        case I2C1: while(I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RCEN || I2C1CONbits.RSEN
-                        || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT);	break;
-        case I2C2: while(I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN || I2C2CONbits.RSEN
-                        || I2C2CONbits.ACKEN || I2C2STATbits.TRSTAT);   break;
+        case I2C1: while((I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RCEN || I2C1CONbits.RSEN
+                            || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT) && timeout < TIME_OUT){timeout++;} break;
+        case I2C2: while((I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN || I2C2CONbits.RSEN
+                            || I2C2CONbits.ACKEN || I2C2STATbits.TRSTAT) && timeout < TIME_OUT){timeout++;} break;
     }
+    if(timeout == TIME_OUT) ans = TIMEOUT_ERROR;
+    return ans;
 }
+
+void rebootI2C(i2c *c){
+    switch(c-> n){
+    case I2C1:    I2C1CONbits.SEN = I2C1CONbits.PEN = I2C1CONbits.RCEN \
+                    = I2C1CONbits.RSEN= I2C1CONbits.ACKEN = I2C1STATbits.TRSTAT = 0;
+                    break;
+    case I2C2:    I2C2CONbits.SEN = I2C2CONbits.PEN = I2C2CONbits.RCEN \
+                    = I2C2CONbits.RSEN = I2C2CONbits.ACKEN = I2C2STATbits.TRSTAT = 0;
+                    break;
+    }
+    i2cStop(c);
+}
+
 
 void initI2C(i2c* c, int n, uint8_t address, double freq, int mode){
     c -> n = n;
@@ -35,27 +51,32 @@ void initI2C(i2c* c, int n, uint8_t address, double freq, int mode){
     } 
     return;
 }
-void i2cInitRegister(i2c* c){
-    for(uint8_t i = 0; i < 20; i++) c->reg[i] = 2*i;
-}
-void i2cStart(i2c* c){
-    idleI2C(c);
+
+
+int i2cStart(i2c* c){
+    err_aux = idleI2C(c);
+    if(err_aux != SUCCESS) return err_aux;
+    
     switch(c -> n){
         case I2C1: I2C1CONbits.SEN = 1; break;
         case I2C2: I2C2CONbits.SEN = 1; break;
     }
 }
 
-void i2cStop(i2c* c){
-    idleI2C(c);
+int i2cStop(i2c* c){
+    err_aux = idleI2C(c);
+    if(err_aux != SUCCESS) return err_aux;
+    
     switch(c -> n){
         case I2C1: I2C1CONbits.PEN = 1; break;
         case I2C2: I2C2CONbits.PEN = 1; break;
     }
 }
 
-void i2cRestart(i2c* c){
-    idleI2C(c);
+int i2cRestart(i2c* c){
+    err_aux = idleI2C(c);
+    if(err_aux != SUCCESS) return err_aux;
+    
     switch(c -> n){
         case I2C1: I2C1CONbits.RSEN = 1; break;
         case I2C2: I2C2CONbits.RSEN = 1; break;
@@ -64,103 +85,131 @@ void i2cRestart(i2c* c){
 
 int i2cWrite(i2c* c, uint8_t data){
     idleI2C(c);
-    int ans;
+    int ans, timeout = 0;
     switch(c -> n){
         case I2C1:
-            while(I2C1STATbits.TBF){}
+            while(I2C1STATbits.TBF && timeout < TIME_OUT){timeout++;}
+            if(I2C1STATbits.TBF){ ans = TMR_FULL_ERROR; break;}
+            timeout = 0;
             I2C1TRN = data;
-            if(I2C1STATbits.IWCOL)        
-                ans = -1;
-            else{
-                idleI2C(c); 
-                while(I2C1STATbits.ACKSTAT){};
-                ans =  0;
+            if(I2C1STATbits.IWCOL) ans = COL_ERROR;
+            else{      
+                err_aux = idleI2C(c);
+                if(err_aux != SUCCESS){ ans = err_aux; break;}
+                while(I2C1STATbits.ACKSTAT && timeout < TIME_OUT){timeout++;}
+                if(I2C1STATbits.ACKSTAT) ans = ACK_ERROR;
+                else ans = SUCCESS;
             }
             break;
         case I2C2:
-            while(I2C2STATbits.TBF){}
+            
+            while(I2C2STATbits.TBF && timeout < TIME_OUT){timeout++;}
+            if(I2C2STATbits.TBF){ans = TMR_FULL_ERROR; break;}
+            timeout = 0;
             I2C2TRN = data;
-            if(I2C2STATbits.IWCOL) ans = -1;
+            
+            if(I2C2STATbits.IWCOL) ans = COL_ERROR;
             else{
-                idleI2C(c);                  
-                while( I2C2STATbits.ACKSTAT ) {}
-                ans =  0;
+                err_aux = idleI2C(c);        
+                if(err_aux != SUCCESS){ ans = err_aux; break;}          
+                while(I2C2STATbits.ACKSTAT && timeout < TIME_OUT) {timeout++;}
+                if(I2C2STATbits.ACKSTAT) ans = ACK_ERROR;
+                else ans = SUCCESS;
             }
-            break;
 
+            break;
     }
     return ans;
 }   
 
 int i2cWriteString(i2c* c, uint8_t * s){
+    int ans = SUCCESS;
+    int timeout = 0;
     while(*s){
-        if(i2cWrite(c, *s) == -1)
-            return -3; 
+        err_aux = i2cWrite(c, *s); 
+        if(err_aux != SUCCESS){ ans = err_aux; break;} 
+        
         switch (c->n){
-            case I2C1:   while(I2C1STATbits.TBF); break;
-            case I2C2:   while(I2C2STATbits.TBF); break;
+            case I2C1: while(I2C2STATbits.TBF && timeout < TIME_OUT){timeout++;}; 
+                       if(I2C2STATbits.TBF) ans = TMR_FULL_ERROR; break;
+            case I2C2: while(I2C2STATbits.TBF && timeout < TIME_OUT){timeout++;}; 
+                       if(I2C2STATbits.TBF) ans = TMR_FULL_ERROR; break;
         }
-        idleI2C(c);
+
+        if(err_aux != SUCCESS) break;
+        
+        err_aux = idleI2C(c);
+        if(err_aux != SUCCESS){ans = err_aux; break;}
+        
         s++;
-    }
-    return 0;
-}
-
-
-unsigned char i2cRead(i2c* c){
-    idleI2C(c);
-    unsigned char ans;
-    switch (c->n){
-        case I2C1:      I2C1CONbits.RCEN = 1;  while(I2C1CONbits.RCEN){}; 
-                        I2C1STATbits.I2COV = 0; while(!I2C1STATbits.RBF){}; 
-                        ans = I2C1RCV; break;
-        case I2C2:      I2C2CONbits.RCEN = 1; while(I2C2CONbits.RCEN){};
-                        I2C2STATbits.I2COV = 0; while(!I2C2STATbits.RBF){}; 
-                        ans = I2C2RCV; break;
-
     }
     return ans;
 }
 
+
+int i2cRead(i2c* c, uint8_t* data){
+    idleI2C(c);
+    int timeout = 0, ans;
+    switch (c->n){
+        case I2C1:    I2C1CONbits.RCEN = 1; 
+                        while(I2C1CONbits.RCEN && timeout < TIME_OUT){timeout++;}
+                        if(I2C1CONbits.RCEN){ ans = RCV_ERROR; break;}
+                        I2C1STATbits.I2COV = 0; timeout = 0;
+                        while(!I2C1STATbits.RBF && timeout < TIME_OUT){timeout++;}
+                        if(!I2C1STATbits.RBF){ans = RBF_ERROR; break;} 
+                        *data = I2C1RCV; break;
+                        
+        case I2C2:    I2C2CONbits.RCEN = 1; 
+                        while(I2C2CONbits.RCEN && timeout < TIME_OUT){timeout++;}
+                        if(I2C2CONbits.RCEN){ ans = RCV_ERROR; break;}
+                        I2C2STATbits.I2COV = 0; timeout = 0;
+                        while(!I2C2STATbits.RBF && timeout < TIME_OUT){timeout++;}
+                        if(!I2C2STATbits.RBF){ans = RBF_ERROR; break;} 
+                        *data = I2C2RCV; break;
+    }
+    return SUCCESS;
+}
+
 int i2cReadString(i2c* c, uint8_t* s, int len){
+    int ans = SUCCESS;
     while(len){
-        *s = i2cRead(c);
+        err_aux = i2cRead(c, s);
+        if(err_aux != SUCCESS){ans = err_aux; break;}
         
         s++;  len--;
         if(len == 0)
-            i2cSendNACK(c);
+            err_aux = i2cSendNACK(c);
+            if(err_aux != SUCCESS) return err_aux;
         else
-            i2cSendACK(c);
+            err_aux = i2cSendACK(c);
+            if(err_aux != SUCCESS) return err_aux;
 
-        idleI2C(c);
+        err_aux = idleI2C(c);
+        if(err_aux != SUCCESS){ans = err_aux; break;}
     }
-    return 0;
+    return ans;
 }
 
 
-void i2cSendACK(i2c* c){
-    idleI2C(c);
+int i2cSendACK(i2c* c){
+    err_aux = idleI2C(c);
+    if(err_aux != SUCCESS) return err_aux;
+    
     switch(c -> n){
         case I2C1: I2C1CONbits.ACKDT = 0, I2C1CONbits.ACKEN = 1; break;
         case I2C2: I2C2CONbits.ACKDT = 0, I2C2CONbits.ACKEN = 1; break;
     }
 }
 
-void i2cSendNACK(i2c* c){
-    idleI2C(c);
+int i2cSendNACK(i2c* c){
+    err_aux = idleI2C(c);
+    if(err_aux != SUCCESS) return err_aux;
+
     switch(c -> n){
         case I2C1: I2C1CONbits.ACKDT = 1, I2C1CONbits.ACKEN = 1; break;
         case I2C2: I2C2CONbits.ACKDT = 1, I2C2CONbits.ACKEN = 1; break;
     }
-}
 
-char i2cAvailable(i2c* c){
-    char ans;
-    switch(c -> n){
-        case I2C1: ans = I2C1STATbits.RBF; break;
-        case I2C2: ans = I2C2STATbits.RBF; break;
-    }
-    return ans;
 }
 
 int i2cStartWrite(i2c* c){
@@ -170,6 +219,9 @@ int i2cStartWrite(i2c* c){
 int i2cStartRead(i2c* c){
     return i2cWrite(c, (c->address << 1) + 1);
 }
+
+
+
 void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C1Interrupt( void ){
 
     if (I2C1STATbits.P == 1) i2c1State = 0;
@@ -234,8 +286,8 @@ void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C2Interrupt( void ){
     else if( (I2C2STATbits.R_W == 0) && (I2C2STATbits.D_A == 1) ) {
         
         if(i2c2State == 0){
-            datain = I2C2RCV; //0x05
-            //serialWriteString("datain received index\n");
+            
+            datain = I2C2RCV;
             i2c2State++;
 
         } 

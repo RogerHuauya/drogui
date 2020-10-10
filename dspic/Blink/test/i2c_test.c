@@ -1,5 +1,6 @@
 //#define I2C_TEST
-#ifdef I2C_TEST
+
+/*#ifdef I2C_TEST
 
 #include "config.h"
 #include <libpic30.h>
@@ -59,3 +60,4 @@ int main(){
     return 0;
 }
 #endif  
+*/
