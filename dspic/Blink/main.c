@@ -18,7 +18,11 @@
 #define MPU9250_ADDRESS MPU9250_ADDRESS_AD0
 #define I2Cclock 100000
 char buffer[80];
-    
+
+#define R_REG  0x10
+#define P_REG  0x11
+#define Y_REG  0x12
+
 imu myIMU;
 
 pwm m1, m2, m3, m4;
@@ -40,6 +44,9 @@ volatile unsigned long time = 0;
 
 void initializeSystem(){
     
+    initConfig();
+    initSerial();
+
     initPid(&z_control, 1, 0, 0, 0, 10 , 100);
     initPid(&x_control, 1, 0, 0, 0, 10 , 100);
     initPid(&y_control, 1, 0, 0, 0, 10 , 100);
@@ -74,13 +81,21 @@ void initializeSystem(){
     
     initPwm();
     
-    //initMPU9250(&myIMU, I2C1, I2Cclock);
+    initMPU9250(&myIMU, I2C1, I2Cclock);
     
-    //initTimer(&readSensors, 2, DIV256, 6);
-    //setTimerFrecuency(&readSensors, 50);
+    initTimer(&readSensors, 2, DIV256, 6);
+    setTimerFrecuency(&readSensors, 50);
 
     initTimer(&millis, 3, DIV256, 7);
     setTimerFrecuency(&millis, 1000);
+    
+    
+    initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
+    i2c2Reg[0x01] = 0;
+
+    __delay_ms(500);
+    
+    serialWriteString("init");
     
 }
 
@@ -110,21 +125,13 @@ int vel = 0;
 double H, R, P, Y;
 double M1, M2, M3, M4;
 int main(void){
-    initConfig();
-    initSerial();
-    initializeSystem();
-    initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
     
-    __delay_ms(1000);
-    serialWriteString("init");
-    i2c2Reg[0x01] = 0;
+    initializeSystem();
+    
+    
     int val = 0;
+    
     while(1){
-        if(serialAvailable()){
-            val = serialParseInt();
-            sprintf(buffer, "H= %d\n", val);
-            serialWriteString(buffer);
-        }
        /*
         roll +1 +4 -2 -3 pi
         
@@ -133,11 +140,16 @@ int main(void){
         yaw   +1 +2 -3 -4 pi
 
        */
-
+      
         H = (double) i2c2Reg[0x05];
         R = computePid(&roll_control, angle_dif(pi, roll), time);
         P = computePid(&pitch_control, angle_dif(0, pitch), time);
         Y = computePid(&yaw_control, angle_dif(pi, yaw), time);
+        
+        i2c2Reg[R_REG] = (uint8_t) ((roll/pi)*120+120);
+        i2c2Reg[P_REG] = (uint8_t) ((pitch/pi)*120+120);
+        i2c2Reg[Y_REG] = (uint8_t) ((yaw/pi)*120+120);
+        
         R = P = Y = 0;
         M1 = H + R - P + Y;
         M2 = H - R + P + Y;
@@ -171,9 +183,5 @@ double angle_dif(double angle1, double angle2){
         else return angle1 - angle2;
     }
 }
-
-
-
-
 
 #endif

@@ -29,7 +29,7 @@ uint32_t Now = 0;        // used to calculate integration interval
 // Factory mag calibration and mag bias
 float factoryMagCalibration[3] = {0, 0, 0}, factoryMagBias[3] = {0, 0, 0};
 // Bias corrections for gyro, accelerometer, and magnetometer
-
+int status = SUCCESS;
 
 
 void initMPU9250(imu *im, int n, double clock_frequency){
@@ -715,54 +715,64 @@ void magCalMPU9250(imu* im, float * bias_dest, float * scale_dest)
 
 uint8_t writeByteIMU(imu* im, int device, uint8_t registerAddress, uint8_t data)
 {	
-	i2c* aux = (device == MPU ? &(im -> mpuI2C): &(im -> magI2C));
-  	i2cStart(aux);  	// Initialize the Tx buffer
-    i2cStartWrite(aux);
-    i2cWrite(aux, registerAddress);
-    i2cWrite(aux, data);
-    i2cStop(aux);
+	  i2c* aux = (device == MPU ? &(im -> mpuI2C): &(im -> magI2C));
+    while(1){
+        __delay_ms(1);
+        if(i2cStart(aux)!= SUCCESS)                   rebootI2C(aux), continue;  	// Initialize the Tx buffer
+        if(i2cStartWrite(aux) != SUCCESS)             rebootI2C(aux), continue;
+        if(i2cWrite(aux, registerAddress)!= SUCCESS)  rebootI2C(aux), continue;    
+        if(i2cWrite(aux, data)!= SUCCESS)             rebootI2C(aux), continue;
+        if(i2cStop(aux)!= SUCCESS)                    rebootI2C(aux), continue;
+        break;
+    }
+    
   	return 0;
 }
-
-
-
 uint8_t readByteIMU(imu* im ,int device, uint8_t registerAddress)
 {
     uint8_t data; // `data` will store the register data
     
     i2c* aux = (device == MPU ? &(im -> mpuI2C): &(im -> magI2C));
+    while(1){
+      __delay_ms(1);
+      if(i2cStart(aux)!= SUCCESS)                   rebootI2C(aux), continue;  	// Initialize the Tx buffer
+      if(i2cStartWrite(aux) != SUCCESS)             rebootI2C(aux), continue;
+      if(i2cWrite(aux, registerAddress)!= SUCCESS)  rebootI2C(aux), continue;
+      if(i2cRestart(aux) != SUCCESS)                rebootI2C(aux), continue;
+      
+      if(i2cStartRead(aux)!= SUCCESS)             rebootI2C(aux), continue;
     
-    i2cStart(aux);  	// Initialize the Tx buffer
-    
-    i2cStartWrite(aux);
-    
-    i2cWrite(aux, registerAddress);
-    
-    i2cRestart(aux);
-    
-    i2cStartRead(aux);
-    
-    data =  i2cRead(aux); i2cSendNACK(aux);
-    
-    i2cStop(aux);
-    
+      if(i2cRead(aux, &data)!= SUCCESS)           rebootI2C(aux), continue;
+      if(i2cSendNACK(aux)!= SUCCESS)              rebootI2C(aux), continue;
+      if(i2cStop(aux)!= SUCCESS)                    rebootI2C(aux), continue;
+      break;
+    }
     return data;
 }
 
 uint8_t readBytesIMU(imu* im, int device, uint8_t registerAddress,  uint8_t count, uint8_t * dest)
 {   
     i2c* aux = (device == MPU ? &(im -> mpuI2C): &(im -> magI2C));
-    i2cStart(aux);  	
-    i2cStartWrite(aux);
-    i2cWrite(aux, registerAddress); 
-    i2cRestart(aux);
-    i2cStartRead(aux);
-
+    while(1){
+      __delay_ms(1);
+      if(i2cStart(aux)!= SUCCESS)                   rebootI2C(aux), continue;  	// Initialize the Tx buffer
+      if(i2cStartWrite(aux) != SUCCESS)             rebootI2C(aux), continue;
+      if(i2cWrite(aux, registerAddress)!= SUCCESS)  rebootI2C(aux), continue;
+      if(i2cRestart(aux) != SUCCESS)                rebootI2C(aux), continue;
+      
+      if(i2cStartRead(aux)!= SUCCESS)             rebootI2C(aux), continue;
+      
+      break;
+    }
+    
     uint8_t i = 0;
     for(i = 0; i < count-1; i++){
-        dest[i] = i2cRead(aux); i2cSendACK(aux); idleI2C(aux);
+        if(i2cRead(aux, dest + i)!= SUCCESS)  return i;
+        if(i2cSendACK(aux)!= SUCCESS ) return i;
     }
-    dest[count-1] = i2cRead(aux); i2cSendNACK(aux);
-    i2cStop(aux);
+    
+    if(i2cRead(aux, dest + count - 1) != SUCCESS) return i;  
+    if(i2cSendNACK(aux) != SUCCESS) return i;
+    i2cStop(aux);    
     return i; 
 }
