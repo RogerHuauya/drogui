@@ -1,9 +1,6 @@
 #include <stdio.h>
-<<<<<<< HEAD
-=======
-using namespace std;
+#include "utils.h"
 
->>>>>>> origin/master
 int main(){
     printf("Hello world\n");
     return 0;

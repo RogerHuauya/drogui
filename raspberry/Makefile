@@ -7,9 +7,9 @@ OBJS := $(patsubst %.cpp, %.o,$(SOURCES))
 HDRS := $(wildcard headers/*.h)
 CFLAGS= -I headers -c 
 
-SRC_SERVER:= rpi.cpp
-OBJ_SERVER:= rpi.o
-TAR_SERVER = rpi
+SRC_SERVER:= main.cpp
+OBJ_SERVER:= main.o
+TAR_SERVER = main
 
 .PHONY: server
 
