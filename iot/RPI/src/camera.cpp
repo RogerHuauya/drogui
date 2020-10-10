@@ -1,5 +1,4 @@
 #include "camera.h"
-/*
 void mat2Buff(cv::Mat* im,unsigned char buff[]){
     uchar* p;
     for (int i = 0; i < im->rows; ++i) {
@@ -40,4 +39,3 @@ int Camera::open(){
     }
     return 0;
 }
-*/

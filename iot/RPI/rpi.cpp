@@ -16,8 +16,8 @@ Reader r;
 FastWriter fw;
 Value root;
 string s;
-Camera cam;
-uchar buff[5000000];
+//Camera cam;
+unsigned char buff[5000000];
 
 
 void desplazamiento(){
@@ -37,6 +37,7 @@ void dataSensor(){
 
 void showImage(){
 	root.clear();
+	
 	cam.getFrame();
 	cv::Size siz = cam.bwframe.size(); 
 	cout << siz.height << " " << siz.width << endl;
@@ -47,7 +48,7 @@ void showImage(){
 	s = fw.write(root);
 
 	cout << s.size() << endl;
-	drone.sendJson(s);
+	//drone.sendJson(s);
 }
 
 void finalCoordinates(){
@@ -68,7 +69,7 @@ int main(int argc, char** argv ){
 
 	cam = Camera(0);
     cam.open();
-	
+
 	std::string msg;
     
 	while(1){
