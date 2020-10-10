@@ -12,7 +12,7 @@
 #include "control.h"
 #include "pwm.h"
 #include "i2c.h"
-
+#include "utils.h"
 pwm m1, m2, m3, m4;
 
 pid z_control;
@@ -63,6 +63,7 @@ int vel = 0;
 int main(void){
     initConfig();
     initSerial();
+    /*
     initializeSystem();
     initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
     __delay_ms(1000);
@@ -74,6 +75,7 @@ int main(void){
             sprintf(buffer, "velocidad seteada: %d\n", vel);
             serialWriteString(buffer);
         }*/
+        /*
         sprintf(buffer,"register value: %d\n", (int)i2c2Reg[0x05]);
         serialWriteString(buffer);
         /*
@@ -81,9 +83,36 @@ int main(void){
         setPwmDutyTime(&m2, min(max(vel,0), 100));
         setPwmDutyTime(&m3, min(max(vel,0), 100));
         setPwmDutyTime(&m4, min(max(vel,0), 100));
-        */
+        *//*
         __delay_ms(100);
 
+    }*/
+    while(1){
+        char buffer[50];
+        float f = 2.5, ans;
+        int32_t f2= 124, ans2;
+        uint8_t arr[4];
+        floattobytes(f, arr);
+        /*
+        for(int i=0;i<4;i++){
+            sprintf(buffer,"%d  - %d\n",i,(int)arr[i]);
+            serialWriteString(buffer);
+        }*/
+        bytestofloat(arr, &ans);
+        sprintf(buffer, "float - %.3f %.3f\n", f, ans);
+        serialWriteString(buffer);
+
+        int32tobytes(f2, arr);
+        /*
+        for(int i=0;i<4;i++){
+            sprintf(buffer,"%d  - %d\n",i,(int)arr[i]);
+            serialWriteString(buffer);
+        }*/
+        bytestoint32(arr, &ans2);
+        sprintf(buffer, "int32 - %ld %ld\n", ans2, f2);
+        serialWriteString(buffer);
+
+        __delay_ms(1000);
     }
     return 0;
 }
