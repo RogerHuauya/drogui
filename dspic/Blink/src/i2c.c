@@ -26,7 +26,7 @@ void rebootI2C(i2c *c){
                     = I2C1CONbits.RSEN= I2C1CONbits.ACKEN = I2C1STATbits.TRSTAT = 0;
                     break;
     case I2C2:    I2C2CONbits.SEN = I2C2CONbits.PEN = I2C2CONbits.RCEN \
-                    = I2C2CONbits.RSEN = I2C2CONbits.ACKEN = I2C2STATbits.TRSTA = 0;
+                    = I2C2CONbits.RSEN = I2C2CONbits.ACKEN = I2C2STATbits.TRSTAT = 0;
                     break;
     }
     i2cStop(c);
@@ -124,6 +124,7 @@ int i2cWrite(i2c* c, uint8_t data){
 
 int i2cWriteString(i2c* c, uint8_t * s){
     int ans = SUCCESS;
+    int timeout = 0;
     while(*s){
         err_aux = i2cWrite(c, *s); 
         if(err_aux != SUCCESS){ ans = err_aux; break;} 
@@ -170,6 +171,7 @@ int i2cRead(i2c* c, uint8_t* data){
 }
 
 int i2cReadString(i2c* c, uint8_t* s, int len){
+    int ans = SUCCESS;
     while(len){
         err_aux = i2cRead(c, s);
         if(err_aux != SUCCESS){ans = err_aux; break;}
@@ -185,7 +187,7 @@ int i2cReadString(i2c* c, uint8_t* s, int len){
         err_aux = idleI2C(c);
         if(err_aux != SUCCESS){ans = err_aux; break;}
     }
-    return SUCCESS;
+    return ans;
 }
 
 

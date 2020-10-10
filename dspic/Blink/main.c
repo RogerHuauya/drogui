@@ -24,6 +24,7 @@ char buffer[80];
 #define Y_REG  0x12
 
 imu myIMU;
+i2c slave;
 
 pwm m1, m2, m3, m4;
 
@@ -109,6 +110,9 @@ void timerInterrupt(2){
         roll = *(getMahonyEuler());
         pitch = *(getMahonyEuler()+1);
         yaw  = *(getMahonyEuler()+2);
+
+        sprintf(buffer, "%.3lf\t%.3lf\t%.3lf\t\n", roll, pitch, yaw);
+        serialWriteString(buffer);
     }
     clearTimerFlag(&readSensors);
 }
@@ -120,7 +124,6 @@ void timerInterrupt(3){
 
 double angle_dif(double angle1, double angle2);
 
-i2c slave;
 int vel = 0;
 double H, R, P, Y;
 double M1, M2, M3, M4;

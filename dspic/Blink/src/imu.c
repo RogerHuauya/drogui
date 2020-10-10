@@ -718,11 +718,11 @@ uint8_t writeByteIMU(imu* im, int device, uint8_t registerAddress, uint8_t data)
 	  i2c* aux = (device == MPU ? &(im -> mpuI2C): &(im -> magI2C));
     while(1){
         __delay_ms(1);
-        if(i2cStart(aux)!= SUCCESS)                   rebootI2C(aux), continue;  	// Initialize the Tx buffer
-        if(i2cStartWrite(aux) != SUCCESS)             rebootI2C(aux), continue;
-        if(i2cWrite(aux, registerAddress)!= SUCCESS)  rebootI2C(aux), continue;    
-        if(i2cWrite(aux, data)!= SUCCESS)             rebootI2C(aux), continue;
-        if(i2cStop(aux)!= SUCCESS)                    rebootI2C(aux), continue;
+        if(i2cStart(aux)!= SUCCESS)                   {rebootI2C(aux); continue;}  	// Initialize the Tx buffer
+        if(i2cStartWrite(aux) != SUCCESS)             {rebootI2C(aux); continue;}
+        if(i2cWrite(aux, registerAddress)!= SUCCESS)  {rebootI2C(aux); continue;}    
+        if(i2cWrite(aux, data)!= SUCCESS)             {rebootI2C(aux); continue;}
+        if(i2cStop(aux)!= SUCCESS)                    {rebootI2C(aux); continue;}
         break;
     }
     
@@ -735,16 +735,16 @@ uint8_t readByteIMU(imu* im ,int device, uint8_t registerAddress)
     i2c* aux = (device == MPU ? &(im -> mpuI2C): &(im -> magI2C));
     while(1){
       __delay_ms(1);
-      if(i2cStart(aux)!= SUCCESS)                   rebootI2C(aux), continue;  	// Initialize the Tx buffer
-      if(i2cStartWrite(aux) != SUCCESS)             rebootI2C(aux), continue;
-      if(i2cWrite(aux, registerAddress)!= SUCCESS)  rebootI2C(aux), continue;
-      if(i2cRestart(aux) != SUCCESS)                rebootI2C(aux), continue;
+      if(i2cStart(aux)!= SUCCESS)                   {rebootI2C(aux); continue;}  	// Initialize the Tx buffer
+      if(i2cStartWrite(aux) != SUCCESS)             {rebootI2C(aux); continue;}
+      if(i2cWrite(aux, registerAddress)!= SUCCESS)  {rebootI2C(aux); continue;}
+      if(i2cRestart(aux) != SUCCESS)                {rebootI2C(aux); continue;}
       
-      if(i2cStartRead(aux)!= SUCCESS)             rebootI2C(aux), continue;
+      if(i2cStartRead(aux)!= SUCCESS)             {rebootI2C(aux); continue;}
     
-      if(i2cRead(aux, &data)!= SUCCESS)           rebootI2C(aux), continue;
-      if(i2cSendNACK(aux)!= SUCCESS)              rebootI2C(aux), continue;
-      if(i2cStop(aux)!= SUCCESS)                    rebootI2C(aux), continue;
+      if(i2cRead(aux, &data)!= SUCCESS)           {rebootI2C(aux); continue;}
+      if(i2cSendNACK(aux)!= SUCCESS)              {rebootI2C(aux); continue;}
+      if(i2cStop(aux)!= SUCCESS)                    {rebootI2C(aux); continue;}
       break;
     }
     return data;
@@ -755,12 +755,11 @@ uint8_t readBytesIMU(imu* im, int device, uint8_t registerAddress,  uint8_t coun
     i2c* aux = (device == MPU ? &(im -> mpuI2C): &(im -> magI2C));
     while(1){
       __delay_ms(1);
-      if(i2cStart(aux)!= SUCCESS)                   rebootI2C(aux), continue;  	// Initialize the Tx buffer
-      if(i2cStartWrite(aux) != SUCCESS)             rebootI2C(aux), continue;
-      if(i2cWrite(aux, registerAddress)!= SUCCESS)  rebootI2C(aux), continue;
-      if(i2cRestart(aux) != SUCCESS)                rebootI2C(aux), continue;
-      
-      if(i2cStartRead(aux)!= SUCCESS)             rebootI2C(aux), continue;
+      if(i2cStart(aux)!= SUCCESS)                   {rebootI2C(aux); continue;}  	// Initialize the Tx buffer
+      if(i2cStartWrite(aux) != SUCCESS)             {rebootI2C(aux); continue;}
+      if(i2cWrite(aux, registerAddress)!= SUCCESS)  {rebootI2C(aux); continue;}
+      if(i2cRestart(aux) != SUCCESS)                {rebootI2C(aux); continue;}
+      if(i2cStartRead(aux)!= SUCCESS)             {rebootI2C(aux); continue;}
       
       break;
     }
