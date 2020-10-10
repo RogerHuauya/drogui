@@ -6,6 +6,24 @@
 
 using namespace std;
 
+#define RmoveM1   0x01
+#define RmoveM2   0x02
+#define RmoveM3   0x03
+#define RmoveM4   0x04
+#define RcalibM   0x05
+#define RpauseM   0x06
+#define Rstop     0x07
+#define RpX       0x08
+#define RpY       0X09
+#define RpZ       0x10
+#define RdiffX    0x11
+#define RdiffY    0x12
+#define RdiffZ    0x13
+#define Ralpha    0x14
+#define Rpresion  0x15
+#define Rimu      0x16
+#define Rbateria  0x17    
+
 #define red(n)      "\033[1;31m"#n"\033[0m"
 #define green(n)    "\033[1;32m"#n"\033[0m"
 #define yellow(n)   "\033[1;33m"#n"\033[0m"
