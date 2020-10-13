@@ -63,7 +63,7 @@ int vel = 0;
 int main(void){
     initConfig();
     initSerial();
-    /*
+    
     initializeSystem();
     initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
     __delay_ms(1000);
@@ -75,18 +75,19 @@ int main(void){
             sprintf(buffer, "velocidad seteada: %d\n", vel);
             serialWriteString(buffer);
         }*/
-        /*
+        
         sprintf(buffer,"register value: %d\n", (int)i2c2Reg[0x05]);
         serialWriteString(buffer);
-        /*
+        
+        vel = i2c2Reg[0x05]; 
         setPwmDutyTime(&m1, min(max(vel,0), 100));
         setPwmDutyTime(&m2, min(max(vel,0), 100));
         setPwmDutyTime(&m3, min(max(vel,0), 100));
         setPwmDutyTime(&m4, min(max(vel,0), 100));
-        *//*
+        
         __delay_ms(100);
 
-    }*/
+    }
     while(1){
         char buffer[50];
         float f = 2.5, ans;
