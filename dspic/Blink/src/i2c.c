@@ -23,7 +23,8 @@ int idleI2C(i2c *c){
 void rebootI2C(i2c *c){
     switch(c-> n){
     case I2C1:    I2C1CONbits.SEN = I2C1CONbits.PEN = I2C1CONbits.RCEN \
-                    = I2C1CONbits.RSEN= I2C1CONbits.ACKEN = I2C1STATbits.TRSTAT = 0;
+                    = I2C1CONbits.RSEN = I2C1CONbits.ACKEN = I2C1STATbits.TRSTAT = 0;
+                    I2C1CONbits.I2CEN = 0; __delay_us(10); I2C1CONbits.I2CEN = 1;
                     break;
     case I2C2:    I2C2CONbits.SEN = I2C2CONbits.PEN = I2C2CONbits.RCEN \
                     = I2C2CONbits.RSEN = I2C2CONbits.ACKEN = I2C2STATbits.TRSTAT = 0;
