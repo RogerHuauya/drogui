@@ -1,6 +1,6 @@
 CXX = g++
-INC = 
-PCFG = -lz -lrt -lpthread -lwiringPi
+INC = -I/usr/local/include/opencv4
+PCFG = `pkg-config --cflags --libs opencv4` -ljsoncpp -lz -lrt -lpthread
 
 SOURCES :=  $(wildcard src/*.cpp)
 OBJS := $(patsubst %.cpp, %.o,$(SOURCES))
@@ -11,9 +11,9 @@ SRC_SERVER:= main.cpp
 OBJ_SERVER:= main.o
 TAR_SERVER = main
 
-.PHONY: server
+.PHONY: all
 
-server: $(TAR_SERVER) cleanObjects
+all: $(TAR_SERVER) cleanObjects
 
 $(TAR_SERVER) : $(OBJ_SERVER) $(OBJS)
 	@echo Linking objects

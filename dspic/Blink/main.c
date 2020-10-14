@@ -8,18 +8,13 @@
 #include "io.h"
 #include "serial.h"
 #include "timer.h"
+#include "piston.h"
 #include "control.h"
 #include "pwm.h"
 #include "i2c.h"
 #include "utils.h"
 
-#define MPU9250_ADDRESS MPU9250_ADDRESS_AD0
-#define I2Cclock 100000
 char buffer[80];
-
-#define R_REG  0x10
-#define P_REG  0x11
-#define Y_REG  0x12
 
 i2c slave;
 
@@ -52,11 +47,10 @@ void initializeSystem(){
     initPid(&x_control, 1, 0, 0, 0, 10 , 100);
     initPid(&y_control, 1, 0, 0, 0, 10 , 100);
     
-    initPid(&roll_control, 2, 0, 0, 0, 1, 100);
-    initPid(&pitch_control, 2, 0, 0, 0, 1, 100);
-    initPid(&yaw_control, 2, 0, 0, 0, 1, 100);
+    initPid(&roll_control, 1, 0, 0, 0, 10 , 100);
+    initPid(&pitch_control, 1, 0, 0, 0, 10 , 100);
+    initPid(&yaw_control, 1, 0, 0, 0, 10 , 100);
     
-    resetPid(&roll_control, 0);
     
     setPwmPrescaler(0);
 
@@ -117,13 +111,11 @@ void timerInterrupt(3){
     time++;
     clearTimerFlag(&millis);
 }
-
-double angle_dif(double angle1, double angle2);
-
+i2c slave;
 int vel = 0;
-double H, R, P, Y;
-double M1, M2, M3, M4;
 int main(void){
+    initConfig();
+    initSerial();
     
     initializeSystem();
     int val = 0;
@@ -143,9 +135,6 @@ int main(void){
         P = computePid(&pitch_control, angle_dif(0, pitch), time);
         Y = computePid(&yaw_control, angle_dif(pi, yaw), time);
         
-        i2c2Reg[R_REG] = (uint8_t) ((roll/pi)*120+120);
-        i2c2Reg[P_REG] = (uint8_t) ((pitch/pi)*120+120);
-        i2c2Reg[Y_REG] = (uint8_t) ((yaw/pi)*120+120);
         
         R = P = Y = 0;
         M1 = H + R - P + Y;
@@ -153,26 +142,10 @@ int main(void){
         M3 = H - R - P - Y;
         M4 = H + R + P - Y;
         
-        setPwmDutyTime(&m1, min(max(M1,0), 100));
-        setPwmDutyTime(&m2, min(max(M2,0), 100));
-        setPwmDutyTime(&m3, min(max(M3,0), 100));
-        setPwmDutyTime(&m4, min(max(M4,0), 100));
-
         __delay_ms(100);
 
     }
     return 0;
-}
-
-double angle_dif(double angle1, double angle2){
-    if(angle1 > angle2){
-        if((angle1 - angle2) > (2*pi - angle1 + angle2)) return -2*pi + angle1 - angle2;
-        else return angle1 - angle2;
-    }
-    else{
-        if((angle2 - angle1) > (2*pi - angle2 + angle1)) return 2*pi - angle1 + angle2;
-        else return angle1 - angle2;
-    }
 }
 
 #endif

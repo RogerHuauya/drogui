@@ -2,10 +2,18 @@
 #define UTILS_H
 
 #include <math.h>
-#define max(x,y) ((x) > (y) ? (x) : (y))
-#define min(x,y) ((x) > (y) ? (y) : (x))
-//#define abs(x)  ( (x > 0) ? (x) : (-1*(x)) )
-#define copysign(x,y)  ( ( (x > 0 && y< 0) || (x < 0 && y > 0) ) ? (x) : (-1*(x)))
+#include <stdint.h>
+#include <stdio.h>
+#define max(x,y) (x > y ? x : y)
+#define min(x,y) (x > y ? y : x)
 #define pi acos(-1)
+
+//union UStuff;
+
+void bytestoint32(uint8_t *bytesint32,int32_t *n);
+void int32tobytes(int32_t n,uint8_t *bytesint32);
+void floattobytes(float n,uint8_t *bytesfloat);
+void bytestofloat(uint8_t *bytesfloat,float *n);
+
 
 #endif
