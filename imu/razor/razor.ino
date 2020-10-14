@@ -48,31 +48,19 @@ void setup()
   // TWBR = 12;  // 400 kbit/sec I2C 
   Wire.begin();
   SerialPort.begin(115200);
-  Serial1.begin(115200);
   
-  delay(100);
-  SerialPort.println("Serial initialized");
-  Serial1.println("Serial initialized");
   // Set up the interrupt pin, its set as active high, push-pull
   pinMode(intPin, INPUT);
   digitalWrite(intPin, LOW);
   pinMode(myLed, OUTPUT);
   digitalWrite(myLed, HIGH);
 
-  Serial1.println("Lazaro");
   // Read the WHO_AM_I register, this is a good test of communication
   byte c = myIMU.readByte(MPU9250_ADDRESS, WHO_AM_I_MPU9250);
-  Serial1.println("Inglis");
-  SerialPort.print("MPU9250 I AM 0x");
-  Serial1.print("MPU9250 I AM 0x");
-  SerialPort.print(c, HEX);
-  SerialPort.print(" I should be 0x");
-  SerialPort.println(0x71, HEX);
-
+  
   if (c == 0x71) // WHO_AM_I should always be 0x71
   {
-    SerialPort.println(F("MPU9250 is online..."));
-
+    
     // Start by performing self test and reporting values
     myIMU.MPU9250SelfTest(myIMU.selfTest);
 
@@ -84,31 +72,21 @@ void setup()
     myIMU.initMPU9250();
     // Initialize device for active mode read of acclerometer, gyroscope, and
     // temperature
-    SerialPort.println("MPU9250 initialized for active data mode....");
-
+    
     // Read the WHO_AM_I register of the magnetometer, this is a good test of
     // communication
     byte d = myIMU.readByte(AK8963_ADDRESS, WHO_AM_I_AK8963);
-    SerialPort.print("AK8963 ");
-    SerialPort.print("I AM 0x");
-    SerialPort.print(d, HEX);
-    SerialPort.print(" I should be 0x");
-    SerialPort.println(0x48, HEX);
-
+    
 
     if (d != 0x48)
     {
-      // Communication failed, stop here
-      SerialPort.println(F("Communication failed, abort!"));
-      SerialPort.flush();
       abort();
     }
 
     // Get magnetometer calibration from AK8963 ROM
     myIMU.initAK8963(myIMU.factoryMagCalibration);
     // Initialize device for active mode read of magnetometer
-    SerialPort.println("AK8963 initialized for active data mode....");
-    //myIMU.magCalMPU9250()
+    
 
 
     // Get sensor resolutions, only need to do this once
@@ -122,109 +100,133 @@ void setup()
   } // if (c == 0x71)
   else
   {
-    SerialPort.print("Could not connect to MPU9250: 0x");
-    SerialPort.println(c, HEX);
-
-    // Communication failed, stop here
-    SerialPort.println(F("Communication failed, abort!"));
-    SerialPort.flush();
     abort();
   }
+}
+
+int sumDigits(long long x){
+	int ans = 0;
+	while(x > 0){
+		ans += x%10;
+		x/=10;
+	}
+	return ans;
 }
 
 void loop()
 { 
   // If intPin goes high, all data registers have new data
   // On interrupt, check if data ready interrupt
-  if (myIMU.readByte(MPU9250_ADDRESS, INT_STATUS) & 0x01)
-  {
-    myIMU.readAccelData(myIMU.accelCount);  // Read the x/y/z adc values
+	if (myIMU.readByte(MPU9250_ADDRESS, INT_STATUS) & 0x01){
 
-    // Now we'll calculate the accleration value into actual g's
-    // This depends on scale being set
-    myIMU.ax = (float)myIMU.accelCount[0] * myIMU.aRes; // - myIMU.accelBias[0];
-    myIMU.ay = (float)myIMU.accelCount[1] * myIMU.aRes; // - myIMU.accelBias[1];
-    myIMU.az = (float)myIMU.accelCount[2] * myIMU.aRes; // - myIMU.accelBias[2];
+		myIMU.readAccelData(myIMU.accelCount);  // Read the x/y/z adc values
 
-    myIMU.readGyroData(myIMU.gyroCount);  // Read the x/y/z adc values
+		// Now we'll calculate the accleration value into actual g's
+		// This depends on scale being set
+		myIMU.ax = (float)myIMU.accelCount[0] * myIMU.aRes; // - myIMU.accelBias[0];
+		myIMU.ay = (float)myIMU.accelCount[1] * myIMU.aRes; // - myIMU.accelBias[1];
+		myIMU.az = (float)myIMU.accelCount[2] * myIMU.aRes; // - myIMU.accelBias[2];
 
-    // Calculate the gyro value into actual degrees per second
-    // This depends on scale being set
-    myIMU.gx = (float)myIMU.gyroCount[0] * myIMU.gRes;
-    myIMU.gy = (float)myIMU.gyroCount[1] * myIMU.gRes;
-    myIMU.gz = (float)myIMU.gyroCount[2] * myIMU.gRes;
+		myIMU.readGyroData(myIMU.gyroCount);  // Read the x/y/z adc values
 
-    myIMU.readMagData(myIMU.magCount);  // Read the x/y/z adc values
+		// Calculate the gyro value into actual degrees per second
+		// This depends on scale being set
+		myIMU.gx = (float)myIMU.gyroCount[0] * myIMU.gRes;
+		myIMU.gy = (float)myIMU.gyroCount[1] * myIMU.gRes;
+		myIMU.gz = (float)myIMU.gyroCount[2] * myIMU.gRes;
 
-    // Calculate the magnetometer values in milliGauss
-    // Include factory calibration per data sheet and user environmental
-    // corrections
-    // Get actual magnetometer value, this depends on scale being set
-    myIMU.mx = (float)myIMU.magCount[0] * myIMU.mRes
-               * myIMU.factoryMagCalibration[0] - myIMU.magBias[0];
-    myIMU.my = (float)myIMU.magCount[1] * myIMU.mRes
-               * myIMU.factoryMagCalibration[1] - myIMU.magBias[1];
-    myIMU.mz = (float)myIMU.magCount[2] * myIMU.mRes
-               * myIMU.factoryMagCalibration[2] - myIMU.magBias[2];
-  } // if (readByte(MPU9250_ADDRESS, INT_STATUS) & 0x01)
+		myIMU.readMagData(myIMU.magCount);  // Read the x/y/z adc values
 
-  // Must be called before updating quaternions!
-  myIMU.updateTime();
+		// Calculate the magnetometer values in milliGauss
+		// Include factory calibration per data sheet and user environmental
+		// corrections
+		// Get actual magnetometer value, this depends on scale being set
+		myIMU.mx = (float)myIMU.magCount[0] * myIMU.mRes
+				* myIMU.factoryMagCalibration[0] - myIMU.magBias[0];
+		myIMU.my = (float)myIMU.magCount[1] * myIMU.mRes
+				* myIMU.factoryMagCalibration[1] - myIMU.magBias[1];
+		myIMU.mz = (float)myIMU.magCount[2] * myIMU.mRes
+				* myIMU.factoryMagCalibration[2] - myIMU.magBias[2];
+	} // if (readByte(MPU9250_ADDRESS, INT_STATUS) & 0x01)
 
-  // Sensors x (y)-axis of the accelerometer is aligned with the y (x)-axis of
-  // the magnetometer; the magnetometer z-axis (+ down) is opposite to z-axis
-  // (+ up) of accelerometer and gyro! We have to make some allowance for this
-  // orientationmismatch in feeding the output to the quaternion filter. For the
-  // MPU-9250, we have chosen a magnetic rotation that keeps the sensor forward
-  // along the x-axis just like in the LSM9DS0 sensor. This rotation can be
-  // modified to allow any convenient orientation convention. This is ok by
-  // aircraft orientation standards! Pass gyro rate as rad/s
-  MahonyQuaternionUpdate(myIMU.ax, myIMU.ay, myIMU.az, myIMU.gx * DEG_TO_RAD,
-                         myIMU.gy * DEG_TO_RAD, myIMU.gz * DEG_TO_RAD, myIMU.my,
-                         myIMU.mx, myIMU.mz, myIMU.deltat);
+	// Must be called before updating quaternions!
+	myIMU.updateTime();
+
+	// Sensors x (y)-axis of the accelerometer is aligned with the y (x)-axis of
+	// the magnetometer; the magnetometer z-axis (+ down) is opposite to z-axis
+	// (+ up) of accelerometer and gyro! We have to make some allowance for this
+	// orientationmismatch in feeding the output to the quaternion filter. For the
+	// MPU-9250, we have chosen a magnetic rotation that keeps the sensor forward
+	// along the x-axis just like in the LSM9DS0 sensor. This rotation can be
+	// modified to allow any convenient orientation convention. This is ok by
+	// aircraft orientation standards! Pass gyro rate as rad/s
+	MahonyQuaternionUpdate(myIMU.ax, myIMU.ay, myIMU.az, myIMU.gx * DEG_TO_RAD,
+							myIMU.gy * DEG_TO_RAD, myIMU.gz * DEG_TO_RAD, myIMU.my,
+							myIMU.mx, myIMU.mz, myIMU.deltat);
 
 
     // Serial print and/or display at 0.5 s rate independent of data rates
     myIMU.delt_t = millis() - myIMU.count;
 
     // update LCD once per half-second independent of read rate
-    if (myIMU.delt_t > 10)
+    if (myIMU.delt_t > 20)
     {
 
-      myIMU.yaw   = atan2(2.0f * (*(getQ()+1) * *(getQ()+2) + *getQ()
-                    * *(getQ()+3)), *getQ() * *getQ() + *(getQ()+1)
-                    * *(getQ()+1) - *(getQ()+2) * *(getQ()+2) - *(getQ()+3)
-                    * *(getQ()+3));
-      myIMU.pitch = -asin(2.0f * (*(getQ()+1) * *(getQ()+3) - *getQ()
-                    * *(getQ()+2)));
-      myIMU.roll  = atan2(2.0f * (*getQ() * *(getQ()+1) + *(getQ()+2)
-                    * *(getQ()+3)), *getQ() * *getQ() - *(getQ()+1)
-                    * *(getQ()+1) - *(getQ()+2) * *(getQ()+2) + *(getQ()+3)
-                    * *(getQ()+3));
-      myIMU.pitch *= RAD_TO_DEG;
-      myIMU.yaw   *= RAD_TO_DEG;
+		myIMU.yaw   = atan2(2.0f * (*(getQ()+1) * *(getQ()+2) + *getQ()
+						* *(getQ()+3)), *getQ() * *getQ() + *(getQ()+1)
+						* *(getQ()+1) - *(getQ()+2) * *(getQ()+2) - *(getQ()+3)
+						* *(getQ()+3));
+		myIMU.pitch = -asin(2.0f * (*(getQ()+1) * *(getQ()+3) - *getQ()
+						* *(getQ()+2)));
+		myIMU.roll  = atan2(2.0f * (*getQ() * *(getQ()+1) + *(getQ()+2)
+						* *(getQ()+3)), *getQ() * *getQ() - *(getQ()+1)
+						* *(getQ()+1) - *(getQ()+2) * *(getQ()+2) + *(getQ()+3)
+						* *(getQ()+3));
+		myIMU.pitch *= RAD_TO_DEG;
+		myIMU.yaw   *= RAD_TO_DEG;
 
-      // Declination of SparkFun Electronics (40°05'26.6"N 105°11'05.9"W) is
-      // 	8° 30' E  ± 0° 21' (or 8.5°) on 2016-07-19
-      // - http://www.ngdc.noaa.gov/geomag-web/#declination
-      myIMU.yaw  -= 8.5;
-      myIMU.roll *= RAD_TO_DEG;
+		// Declination of SparkFun Electronics (40°05'26.6"N 105°11'05.9"W) is
+		// 	8° 30' E  ± 0° 21' (or 8.5°) on 2016-07-19
+		// - http://www.ngdc.noaa.gov/geomag-web/#declination
+		myIMU.yaw  -= 8.5;
+		myIMU.roll *= RAD_TO_DEG;
 
-      //SerialPort.print("Yaw, Pitch, Roll: ");
-      SerialPort.print(myIMU.yaw, 2);
-      SerialPort.print(" ");
-      SerialPort.print(myIMU.pitch, 2);
-      SerialPort.print(" ");
-      SerialPort.println(myIMU.roll, 2);
-/*
-      SerialPort.print("rate = ");
-      SerialPort.print((float)myIMU.sumCount / myIMU.sum, 2);
-      SerialPort.println(" Hz");
-      
-*/
-      myIMU.count = millis();
-      myIMU.sumCount = 0;
-      myIMU.sum = 0;
+		//SerialPort.print("Yaw, Pitch, Roll: ");
+		int r,p,y;
+
+		r = myIMU.roll + 180;
+		p = myIMU.pitch+ 180;
+		y = myIMU.yaw+ 180;
+		/*SerialPort.print(myIMU.roll);
+		SerialPort.print('\t');
+		SerialPort.print(myIMU.pitch);
+		SerialPort.print('\t');
+		SerialPort.print(yaw);
+		SerialPort.print('\n');
+		*/
+		char buffer[80];
+		long long data = r + p*360 + y*360*360;
+		int dat1 = data%10000LL;
+		int dat2 = data/10000;
+		int dig = sumDigits(data);
+		sprintf(buffer, "%d%04d#%d$",dat2,dat1, dig);
+		SerialPort.print(buffer);
+		/*SerialPort.print(dat1);
+		SerialPort.print('#');
+		SerialPort.print(dig);
+		SerialPort.print('$');*/
+
+		//SerialPort.println(1.0*data/1000.0);
+
+	/*
+		SerialPort.print("rate = ");
+		SerialPort.print((float)myIMU.sumCount / myIMU.sum, 2);
+		SerialPort.println(" Hz");
+		
+	*/
+		myIMU.count = millis();
+		myIMU.sumCount = 0;
+		myIMU.sum = 0;
     } // if (myIMU.delt_t > 500)
 
 }

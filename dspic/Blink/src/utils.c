@@ -1,6 +1,6 @@
 #include "utils.h"
 
-
+/*
 
 void bytestoint32(uint8_t *bytesint32,int32_t *n){
     *n = (int32_t) (int32_t)(bytesint32[0]) << 24 |
@@ -20,3 +20,4 @@ void floattobytes(float n,uint8_t* bytesfloat){
 void bytestofloat(uint8_t *bytesfloat,float *n){
     memcpy(n, bytesfloat, sizeof *n);
 }
+*/
