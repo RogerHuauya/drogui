@@ -47,7 +47,7 @@ void initSerial(serial* s, int n, long long baudrate){
         
         case SERIAL2:
             s2 = s;
-            RPINR18bits.U1RXR = 74;
+            RPINR19bits.U2RXR = 74;
             //RPOR3bits.RP71R = 1;
 
             U2MODEbits.UARTEN = 1;
@@ -94,7 +94,7 @@ void uartRxInterrupt(1){
 
 void uartRxInterrupt(2){
     while(U2STAbits.URXDA){
-        s2->buf[ (s2->buff_head)++] = U1RXREG;
+        s2->buf[ (s2->buff_head)++] = U2RXREG;
         (s2->buff_head) %= BUFF_LENGTH;
         (s2->buff_tail) += ((s2->buff_head) == (s2->buff_tail));
         (s2->buff_tail) %= BUFF_LENGTH;
@@ -102,23 +102,24 @@ void uartRxInterrupt(2){
     IFS1bits.U2RXIF = 0; 
 }
 
-long long serialParseInt(serial* s){
-    long long ans = 0LL;
+int serialParseInt(serial* s, long long *ans){
+    *ans = 0LL;
     char c = '*';
     bool flag = false;
-
+    long long t;
     while(1){
-        while(!serialAvailable(s));
+        while(!serialAvailable(s) && (++t) < 10000LL);
+        if(t >= 10000LL) return -1;
         c = serialReadChar(s);
         if(c == '-') flag = true;
         else if(c == '$') break;
         else{
-            ans *= 10LL;
-            ans += (int) (c - '0');
+            *ans *= 10LL;
+            *ans += (int) (c - '0');
         }
     }
-    if(flag) ans *= -1LL;
-    return ans;
+    if(flag) *ans *= -1LL;
+    return 0;
 }
 
 void serialFlush(serial* s){

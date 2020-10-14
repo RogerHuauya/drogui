@@ -22,7 +22,7 @@ void serialWriteChar(serial *s, char data);
 void serialWriteString(serial *s, char* str);
 char serialReadChar(serial *s);
 
-long long serialParseInt(serial *s);
+int serialParseInt(serial *s, long long* k);
 
 void serialFlush(serial* s);
 
