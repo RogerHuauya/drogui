@@ -83,7 +83,9 @@ void initializeSystem(){
     initPwm();
     
     initTimer(&readSensors, 2, DIV256, 6);
-    setTimerFrecuency(&readSensors, 50);
+    serialFlush(&Serial2);
+    setTimerFrecuency(&readSensors, 100);
+    
 
     initTimer(&millis, 3, DIV256, 7);
     setTimerFrecuency(&millis, 1000);
@@ -99,11 +101,15 @@ void initializeSystem(){
 }
 
 void timerInterrupt(2){
+    long long entrada;
     if(serialAvailable(&Serial2)){
-        roll = 1.0*(serialParseInt(&Serial2))/180*pi;
-        pitch = 1.0*(serialParseInt(&Serial2))/180*pi;
-        yaw = 1.0*(serialParseInt(&Serial2))/180*pi;
+        entrada = serialParseInt(&Serial2);
+        roll = 1.0*(entrada%360)/180*pi;
+        pitch = 1.0*((entrada/360)%360)/180*pi;
+        yaw = 1.0*((entrada/(360LL*360))%360)/180*pi;
     }
+    sprintf(buffer, "%lld\n", entrada);
+    serialWriteString(&Serial1, buffer);
     clearTimerFlag(&readSensors);
 }
 

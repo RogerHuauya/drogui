@@ -1,3 +1,4 @@
+#ifdef NOSE
 #include "imu.h"
 #include <libpic30.h>
 #include <stdlib.h> 
@@ -776,3 +777,4 @@ uint8_t readBytesIMU(imu* im, int device, uint8_t registerAddress,  uint8_t coun
     i2cStop(aux);    
     return i; 
 }
+#endif

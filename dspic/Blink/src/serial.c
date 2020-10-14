@@ -47,8 +47,8 @@ void initSerial(serial* s, int n, long long baudrate){
         
         case SERIAL2:
             s2 = s;
-            RPINR18bits.U1RXR = 97;
-            RPOR3bits.RP71R = 1;
+            RPINR18bits.U1RXR = 74;
+            //RPOR3bits.RP71R = 1;
 
             U2MODEbits.UARTEN = 1;
             U2MODEbits.UEN = 0;
@@ -120,3 +120,8 @@ long long serialParseInt(serial* s){
     if(flag) ans *= -1LL;
     return ans;
 }
+
+void serialFlush(serial* s){
+    s -> buff_head = s -> buff_tail;
+}
+

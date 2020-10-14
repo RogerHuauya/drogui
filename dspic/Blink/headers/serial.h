@@ -24,6 +24,6 @@ char serialReadChar(serial *s);
 
 long long serialParseInt(serial *s);
 
-
+void serialFlush(serial* s);
 
 #endif
