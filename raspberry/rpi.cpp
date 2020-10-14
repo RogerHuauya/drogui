@@ -3,7 +3,8 @@
 #include <unistd.h> 
 #include <wiringPiI2C.h>
 #include <pthread.h>
-#include <registerMap.h>
+#include "registerMap.h"
+#include "utils.h"
 using namespace std;
 
 #define BUFF_LENGTH 500
@@ -114,12 +115,12 @@ void *menu(void *threadid){
     printf(green([0]) " " white(Emergency stop\n));
     printf(green([1]) " " white(Desplazamiento\n));
     printf(green([2]) " " white(Show data sensor\n));
-    printf(green([3]) " " white(Final coordinates\n));
+    printf(green([3]) " " white(Final coordinates \n));
     printf(green([4]) " " white(ARM\n));
-    printf(green([5]) " " white(Calibrar ESC\n));
-    printf(green([6]) " " white(Zero position\n));
-    printf(green([7]) " " white(Write register\n));
-    printf(green([8]) " " white(Read register\n));
+    printf(green([5]) " " white(Calibrar ESC \n));
+    printf(green([6]) " " white(Zero position \n));
+    printf(green([7]) " " white(Write register \n));
+    printf(green([8]) " " white(Read register \n));
     printf("\n");
     printf(blue(Please enter an option >>>));
     while(!inputReceived){};
