@@ -2,8 +2,7 @@
 #include <fstream>
 #include <unistd.h> 
 #include <wiringPiI2C.h>
-
-
+#include <pthread.h>
 using namespace std;
 
 #define RmoveM1   0x01
@@ -115,16 +114,18 @@ int main(int argc, char** argv ){
         while(1){//for(int roger = 1; roger < 200; roger++){
             int roger,value; 
             uint8_t valor,regist;std::cin.clear();
-            cin>>roger>>value;//scanf(valor);
-            valor = (uint8_t)value & 0xff;//sscanf("valor =", "%2",&valor);
-            regist = (uint8_t)roger & 0xff;
-            cout<<"Data sent : "<<+regist<<" "<<+valor<<endl;
-            wiringPiI2CWriteReg8 (fd,regist,valor);
+            //cin>>roger>>value;//scanf(valor);
+            //valor = (uint8_t)value & 0xff;//sscanf("valor =", "%2",&valor);
+            ///regist = (uint8_t)roger & 0xff;
+            //cout<<"Data sent : "<<+regist<<" "<<+valor<<endl;
+            //wiringPiI2CWriteReg8 (fd,regist,valor);
+            cout<<"Hellod world"<<endl;
+            //if(kbhit()){cout<<"Button pressed"<<endl;}
 	    sleep(1);
-            uint8_t ans; 
+        /*    uint8_t ans; 
 	    ans = wiringPiI2CReadReg8 (fd,regist);
 	    cout<<"register "<<+ans<<endl;
-	    sleep(1);
+	    sleep(1);*/
         }
 	/*
 	while(1){
