@@ -144,7 +144,7 @@ void *menu(void *threadid){
 
 int main(int argc, char** argv ){
     pthread_t threads[NUM_THREADS];
- 	fd = wiringPiI2CSetup (0x60);
+ 	fd = wiringPiI2CSetup(DSPIC_ADDRESS);
 	cout<<"Program has started"<<endl;
     rc = pthread_create(&threads[0], NULL, menu, (void *)0);
     while(1){
