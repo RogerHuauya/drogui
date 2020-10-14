@@ -188,7 +188,7 @@ void loop()
     myIMU.delt_t = millis() - myIMU.count;
 
     // update LCD once per half-second independent of read rate
-    if (myIMU.delt_t > 10)
+    if (myIMU.delt_t > 20)
     {
 
       myIMU.yaw   = atan2(2.0f * (*(getQ()+1) * *(getQ()+2) + *getQ()
@@ -211,11 +211,19 @@ void loop()
       myIMU.roll *= RAD_TO_DEG;
 
       //SerialPort.print("Yaw, Pitch, Roll: ");
-      SerialPort.print(myIMU.yaw, 2);
-      SerialPort.print(" ");
-      SerialPort.print(myIMU.pitch, 2);
-      SerialPort.print(" ");
-      SerialPort.println(myIMU.roll, 2);
+      int r,p,y;
+
+      r = myIMU.roll*180/acos(-1) + 180;
+      p = myIMU.pitch*180/acos(-1) + 180;
+      y = myIMU.yaw*180/acos(-1) + 180;
+
+      long long data = r + p*360 + y*360*360;
+      int dat1 = data%10000LL;
+      int dat2 = data/10000;
+      SerialPort.print(dat2);
+      SerialPort.print(dat1);
+      SerialPort.print('$');
+
 /*
       SerialPort.print("rate = ");
       SerialPort.print((float)myIMU.sumCount / myIMU.sum, 2);
