@@ -108,7 +108,7 @@ void setup()
     myIMU.initAK8963(myIMU.factoryMagCalibration);
     // Initialize device for active mode read of magnetometer
     SerialPort.println("AK8963 initialized for active data mode....");
-
+    //myIMU.magCalMPU9250()
 
 
     // Get sensor resolutions, only need to do this once
