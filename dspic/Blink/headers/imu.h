@@ -248,5 +248,6 @@ void getAres(imu *im);
 
 void calibrateMPU9250(imu * mpu);
 void printIMU(imu * mpu);
+void imuSetSerial(serial* ser);
 
 #endif

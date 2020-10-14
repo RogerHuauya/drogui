@@ -11,8 +11,6 @@
 #include "control.h"
 #include "pwm.h"
 #include "i2c.h"
-#include "imu.h"
-#include "MahonyAHRS.h"
 #include "utils.h"
 
 #define MPU9250_ADDRESS MPU9250_ADDRESS_AD0
@@ -23,7 +21,6 @@ char buffer[80];
 #define P_REG  0x11
 #define Y_REG  0x12
 
-imu myIMU;
 i2c slave;
 
 pwm m1, m2, m3, m4;
@@ -36,6 +33,8 @@ pid roll_control;
 pid pitch_control;
 pid yaw_control;
 
+serial Serial1, Serial2;
+
 
 timer readSensors;
 timer millis;
@@ -46,7 +45,8 @@ volatile unsigned long time = 0;
 void initializeSystem(){
     
     initConfig();
-    initSerial();
+    initSerial(&Serial1, SERIAL1, 115200);
+    initSerial(&Serial2, SERIAL2, 115200);
 
     initPid(&z_control, 1, 0, 0, 0, 10 , 100);
     initPid(&x_control, 1, 0, 0, 0, 10 , 100);
@@ -82,8 +82,6 @@ void initializeSystem(){
     
     initPwm();
     
-    initMPU9250(&myIMU, I2C1, I2Cclock);
-    
     initTimer(&readSensors, 2, DIV256, 6);
     setTimerFrecuency(&readSensors, 50);
 
@@ -96,23 +94,15 @@ void initializeSystem(){
 
     __delay_ms(500);
     
-    serialWriteString("init");
+    serialWriteString(&Serial1, "init");
     
 }
 
 void timerInterrupt(2){
-    if (readByteIMU(&myIMU, MPU, INT_STATUS)& 0x01){
-        __delay_ms(1);
-        readAll(&myIMU);
-        MahonyAHRSupdate(   myIMU.gx * pi/180.0f,myIMU.gy * pi/180.0f, myIMU.gz * pi/180.0f,  
-                                myIMU.ax, myIMU.ay, myIMU.az, 
-                                myIMU.mx, myIMU.my, myIMU.mz);
-        roll = *(getMahonyEuler());
-        pitch = *(getMahonyEuler()+1);
-        yaw  = *(getMahonyEuler()+2);
-
-        sprintf(buffer, "%.3lf\t%.3lf\t%.3lf\t\n", roll, pitch, yaw);
-        serialWriteString(buffer);
+    if(serialAvailable(&Serial2)){
+        roll = 1.0*(serialParseInt(&Serial2))/180*pi;
+        pitch = 1.0*(serialParseInt(&Serial2))/180*pi;
+        yaw = 1.0*(serialParseInt(&Serial2))/180*pi;
     }
     clearTimerFlag(&readSensors);
 }
@@ -130,8 +120,6 @@ double M1, M2, M3, M4;
 int main(void){
     
     initializeSystem();
-    
-    
     int val = 0;
     
     while(1){
@@ -158,11 +146,6 @@ int main(void){
         M2 = H - R + P + Y;
         M3 = H - R - P - Y;
         M4 = H + R + P - Y;
-
-
-        //sprintf(buffer,"%.3lf\t%.3lf\t%.3lf\t\t%.3lf\t%.3lf\t%.3lf\t%.3lf\n",
-        //        roll, pitch, yaw, M1, M2, M3, M4);
-        //serialWriteString(buffer);
         
         setPwmDutyTime(&m1, min(max(M1,0), 100));
         setPwmDutyTime(&m2, min(max(M2,0), 100));
@@ -170,7 +153,6 @@ int main(void){
         setPwmDutyTime(&m4, min(max(M4,0), 100));
 
         __delay_ms(100);
-
 
     }
     return 0;

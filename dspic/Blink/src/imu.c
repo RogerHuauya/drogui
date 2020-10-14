@@ -5,6 +5,7 @@
 #include <string.h>
 #include <math.h>
 
+extern serial Serial1;
 char s[80];
 // TODO: Add setter methods for this hard coded stuff
 // Specify sensor full scale
@@ -37,19 +38,19 @@ void initMPU9250(imu *im, int n, double clock_frequency){
     initI2C(&(im->magI2C), n, AK8963_ADDRESS, clock_frequency, MASTER);
     
     uint8_t c = readByteIMU(im, MPU, WHO_AM_I_MPU9250);
-    if (c == 0x71)  serialWriteString("imu9250 is online...\n"); // WHO_AM_I should always be 0x71
-    else serialWriteString("Something is wrong ..\n");
+    if (c == 0x71)  serialWriteString(&Serial1,"imu9250 is online...\n"); // WHO_AM_I should always be 0x71
+    else serialWriteString(&Serial1,"Something is wrong ..\n");
     
     selfTestMPU9250(im);
     calibrateMPU9250(im);
-    serialWriteString("Calibration finished\n");
+    serialWriteString(&Serial1,"Calibration finished\n");
     awakeMPU9250(im);
     float dest[5];
     initAK8963(im, dest);
 
     c = readByteIMU(im, MAG, WHO_AM_I_AK8963);
-    if (c == 0x48)serialWriteString("MPU9250 is online...\n");
-    else serialWriteString("Something is wrong ..\n");
+    if (c == 0x48)serialWriteString(&Serial1,"MPU9250 is online...\n");
+    else serialWriteString(&Serial1,"Something is wrong ..\n");
     getAres(im);
     getGres(im);
     getMres(im);
@@ -259,7 +260,7 @@ void readAll(imu* im){
 
 void printIMU(imu* im){
   sprintf(s, "%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\n", im->ax, im->ay, im->az, im->gx, im->gy, im->gz, im->mx, im->my, im->mz);
-  serialWriteString(s);
+  serialWriteString(&Serial1,s);
 }
 
 int16_t readTempData(imu* im){
@@ -635,8 +636,8 @@ void magCalMPU9250(imu* im, float * bias_dest, float * scale_dest)
   // Make sure resolution has been calculated
   getMres(im);
 
-  serialWriteString("Mag Calibration: Wave device in a figure 8 until done!");
-  serialWriteString("  4 seconds to get ready followed by 15 seconds of sampling)");
+  serialWriteString(&Serial1,"Mag Calibration: Wave device in a figure 8 until done!");
+  serialWriteString(&Serial1,"  4 seconds to get ready followed by 15 seconds of sampling)");
   __delay_ms(4000);
 
   // shoot for ~fifteen seconds of mag data
@@ -677,9 +678,9 @@ void magCalMPU9250(imu* im, float * bias_dest, float * scale_dest)
     }
   }
 
-  // serialWriteString("mag x min/max:"); serialWriteString(mag_max[0]); serialWriteString(mag_min[0]);
-  // serialWriteString("mag y min/max:"); serialWriteString(mag_max[1]); serialWriteString(mag_min[1]);
-  // serialWriteString("mag z min/max:"); serialWriteString(mag_max[2]); serialWriteString(mag_min[2]);
+  // serialWriteString(&Serial1,"mag x min/max:"); serialWriteString(&Serial1,mag_max[0]); serialWriteString(&Serial1,mag_min[0]);
+  // serialWriteString(&Serial1,"mag y min/max:"); serialWriteString(&Serial1,mag_max[1]); serialWriteString(&Serial1,mag_min[1]);
+  // serialWriteString(&Serial1,"mag z min/max:"); serialWriteString(&Serial1,mag_max[2]); serialWriteString(&Serial1,mag_min[2]);
 
   // Get hard iron correction
   // Get 'average' x mag bias in counts
@@ -709,7 +710,7 @@ void magCalMPU9250(imu* im, float * bias_dest, float * scale_dest)
   scale_dest[1] = avg_rad / ((float)mag_scale[1]);
   scale_dest[2] = avg_rad / ((float)mag_scale[2]);
 
-  serialWriteString("Mag Calibration done!");
+  serialWriteString(&Serial1,"Mag Calibration done!");
 }
 
 
