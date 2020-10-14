@@ -7,7 +7,7 @@
  */
 #ifndef _MPU9250_H_
 #define _MPU9250_H_
-
+#include <Arduino.h>
 #include <SPI.h>
 #include <Wire.h>
 
@@ -178,9 +178,7 @@
 
 
 #define READ_FLAG 0x80
-#define NOT_SPI -1
-#define SPI_DATA_RATE 1000000 // 1MHz is the max speed of the MPU-9250
-#define SPI_MODE SPI_MODE3
+
 
 class MPU9250
 {
@@ -215,11 +213,8 @@ class MPU9250
     };
 
     
-    TwoWire * _wire;						// Allows for use of various I2C ports
     uint8_t _I2Caddr = MPU9250_ADDRESS_AD0;	// Use AD0 by default
 
- 	SPIClass * _spi;						// Allows for use of different SPI ports
-    int8_t _csPin; 							// SPI chip select pin
 
     uint32_t _interfaceSpeed;				// Stores the desired I2C or SPi clock rate
 
@@ -237,19 +232,10 @@ class MPU9250
     
 
     uint8_t writeByteWire(uint8_t, uint8_t, uint8_t);
-    uint8_t writeByteSPI(uint8_t, uint8_t);
-    uint8_t writeMagByteSPI(uint8_t subAddress, uint8_t data);
-    uint8_t readByteSPI(uint8_t subAddress);
-    uint8_t readMagByteSPI(uint8_t subAddress);
     uint8_t readByteWire(uint8_t address, uint8_t subAddress);
-    bool magInit();
-    void kickHardware();
-    void select();
-    void deselect();
-    void setupMagForSPI();
+
 // TODO: Remove this next line
 public:
-    uint8_t ak8963WhoAmI_SPI();
 
   public:
     float pitch, yaw, roll;
@@ -280,8 +266,7 @@ public:
     int16_t accelCount[3];
 
     // Public method declarations
-    MPU9250( int8_t csPin, SPIClass &spiInterface = SPI, uint32_t spi_freq = SPI_DATA_RATE);
-    MPU9250( uint8_t address = MPU9250_ADDRESS_AD0, TwoWire &wirePort = Wire, uint32_t clock_frequency = 100000 );
+    MPU9250( uint8_t address = MPU9250_ADDRESS_AD0, uint32_t clock_frequency = 100000 );
     void getMres();
     void getGres();
     void getAres();
@@ -299,10 +284,7 @@ public:
     uint8_t readByte(uint8_t, uint8_t);
     uint8_t readBytes(uint8_t, uint8_t, uint8_t, uint8_t *);
     // TODO: make SPI/Wire private
-    uint8_t readBytesSPI(uint8_t, uint8_t, uint8_t *);
     uint8_t readBytesWire(uint8_t, uint8_t, uint8_t, uint8_t *);
-    bool isInI2cMode() { return _csPin == -1; }
-    bool begin();
 };  // class MPU9250
 
 #endif // _MPU9250_H_
