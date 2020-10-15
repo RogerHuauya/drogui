@@ -8,11 +8,10 @@ sensor acc, ori;
 int main(){
     initConfig();
     initSerial(&Serial1, SERIAL1, 115200);
-    
-    
     char s[50];
-
+    int res = initMM7150();
     while(1){
+        
         serialWriteString(&Serial1,"Hola mundo!!\n\r");
         __delay_ms(500);
     }

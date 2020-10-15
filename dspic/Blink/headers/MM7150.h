@@ -513,7 +513,7 @@ typedef struct GET_SET_PARAMS
     BOOL bDataRateValid;
 } GET_SET_PARAMS;
 
-UINT8 VREG_init();
+UINT8 initMM7150();
 UINT8 HOST_SF_LIB_VREG_read(UINT8, UINT16 *);
 UINT8 HOST_SF_LIB_VREG_write(UINT8, UINT16 );
 void parse_update_VREG_data (UINT8, UINT8 *);
