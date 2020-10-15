@@ -19,7 +19,10 @@ UINT16 usPREV_SHC_STATE = 0;
 //#include "interrups.h"
 
 void intInterrupt(1){
+	
     EC_DATA_AVAIL =  !digitalRead(PIN_INT);
+	INTCON2bits.INT1EP = 1 - INTCON2bits.INT1EP;
+	clearIntFlag(1);
 }
 
 
