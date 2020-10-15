@@ -148,8 +148,13 @@ void *menu(void *threadid){
 
 int main(int argc, char** argv ){
     pthread_t threads[NUM_THREADS];
+<<<<<<< HEAD
     fd = wiringPiI2CSetup (0x60);
     cout<<"Program has started"<<endl;
+=======
+ 	fd = wiringPiI2CSetup(DSPIC_ADDRESS);
+	cout<<"Program has started"<<endl;
+>>>>>>> 6d7a5db6c10b510e9db830a8c7924a426c43fb80
     rc = pthread_create(&threads[0], NULL, menu, (void *)0);
     while(1){
         std::cin.clear();
