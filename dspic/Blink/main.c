@@ -1,10 +1,9 @@
-#define MAIN
+//#define MAIN
 #ifdef MAIN
 #include <xc.h>
 #include "config.h"
 #include <libpic30.h>
-#include <stdio.h>
-#include <string.h>
+
 #include "io.h"
 #include "serial.h"
 #include "timer.h"
