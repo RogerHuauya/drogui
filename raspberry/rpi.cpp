@@ -11,7 +11,8 @@ using namespace std;
 #define DSPIC_ADDRESS 0x60
 int fd;
 bool inputReceived = false;
-int index, value; 
+int index_, value; 
+int rc;
 
 /*
 #include <iostream>
@@ -100,16 +101,17 @@ uint8_t readMCU(uint8_t reg){
 void writeRegister(){
     while(!inputReceived){}
     inputReceived = false;
-    writeMCU(index, value)
+    writeMCU(index_, value);
 }
 
 void readRegister(){
     while(!inputReceived){}
     inputReceived = false;
-    uint8_t val = readMCU(index, value);
+    uint8_t val = readMCU(index_);
 }
 
 void *menu(void *threadid){
+    while(1){
     cls();    
     printf("\t\t\t\t\t\t\t\t" blue(Principal menu) "\n");
     printf(green([0]) " " white(Emergency stop\n));
@@ -125,8 +127,8 @@ void *menu(void *threadid){
     printf(blue(Please enter an option >>>));
     while(!inputReceived){};
     inputReceived = false;
-    switch(index){
-		case 0: emergencyStop(); break;
+    switch(index_){
+	case 0: emergencyStop(); break;
         case 1: desplazamiento(); break;
         case 2: dataSensor(); break;
         case 3: finalCoordinates(); break;
@@ -135,24 +137,25 @@ void *menu(void *threadid){
         case 6: zeroPosition(); break;
         case 7: writeRegister(); break;
         case 8: readRegister(); break;
-        default: printf("%d is not an option, please enter option again\n", op); menu(); break;
+        default: printf("%d is not an option, please enter option again\n", index_); break;
     }
     sleep(2);
-    return 0;
+    //return 0;
+    }
     pthread_exit(NULL);
+    return 0;
 }
 
 int main(int argc, char** argv ){
     pthread_t threads[NUM_THREADS];
- 	fd = wiringPiI2CSetup (0x60);
-	cout<<"Program has started"<<endl;
+    fd = wiringPiI2CSetup (0x60);
+    cout<<"Program has started"<<endl;
     rc = pthread_create(&threads[0], NULL, menu, (void *)0);
     while(1){
         std::cin.clear();
-        cin>>index>>value;
+        cin>>index_>>value;
         inputReceived = true;
         sleep(1);
-
     }
 /*
 while(1){
