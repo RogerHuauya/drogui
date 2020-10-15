@@ -4,6 +4,9 @@
 #include <xc.h>
 #include <stdbool.h>
 #include "utils.h"
+#include <stdio.h>
+#include <string.h>
+
 #define BUFF_LENGTH 32
 
 #define uartRxInterrupt(n) __attribute__((interrupt, no_auto_psv)) _U##n##RXInterrupt(void)
