@@ -27,6 +27,7 @@
 #include "quaternionFilters.h"
 #include <Wire.h>
 #include "MPU9250.h"
+#include "MahonyAHRS.h" 
 
 #define SerialPort Serial1
 
@@ -160,35 +161,29 @@ void loop()
 	// along the x-axis just like in the LSM9DS0 sensor. This rotation can be
 	// modified to allow any convenient orientation convention. This is ok by
 	// aircraft orientation standards! Pass gyro rate as rad/s
-	MahonyQuaternionUpdate(myIMU.ax, myIMU.ay, myIMU.az, myIMU.gx * DEG_TO_RAD,
-							myIMU.gy * DEG_TO_RAD, myIMU.gz * DEG_TO_RAD, myIMU.my,
-							myIMU.mx, myIMU.mz, myIMU.deltat);
+	
 
 
     // Serial print and/or display at 0.5 s rate independent of data rates
     myIMU.delt_t = millis() - myIMU.count;
 
     // update LCD once per half-second independent of read rate
-    if (myIMU.delt_t > 20)
-    {
+    if (myIMU.delt_t > 2)
+    {	
+		MahonyAHRSupdate(myIMU.gx, myIMU.gy, myIMU.gz,\
+					myIMU.ax, myIMU.ay, myIMU.az,\
+					myIMU.mx, myIMU.my, myIMU.mz);
 
-		myIMU.yaw   = atan2(2.0f * (*(getQ()+1) * *(getQ()+2) + *getQ()
-						* *(getQ()+3)), *getQ() * *getQ() + *(getQ()+1)
-						* *(getQ()+1) - *(getQ()+2) * *(getQ()+2) - *(getQ()+3)
-						* *(getQ()+3));
-		myIMU.pitch = -asin(2.0f * (*(getQ()+1) * *(getQ()+3) - *getQ()
-						* *(getQ()+2)));
-		myIMU.roll  = atan2(2.0f * (*getQ() * *(getQ()+1) + *(getQ()+2)
-						* *(getQ()+3)), *getQ() * *getQ() - *(getQ()+1)
-						* *(getQ()+1) - *(getQ()+2) * *(getQ()+2) + *(getQ()+3)
-						* *(getQ()+3));
+		myIMU.yaw   = *getMahonyEuler();
+		myIMU.pitch = *(getMahonyEuler() + 1);
+		myIMU.roll  = *(getMahonyEuler() + 2);
 		myIMU.pitch *= RAD_TO_DEG;
 		myIMU.yaw   *= RAD_TO_DEG;
 
 		// Declination of SparkFun Electronics (40°05'26.6"N 105°11'05.9"W) is
 		// 	8° 30' E  ± 0° 21' (or 8.5°) on 2016-07-19
 		// - http://www.ngdc.noaa.gov/geomag-web/#declination
-		myIMU.yaw  -= 8.5;
+		//myIMU.yaw  -= 8.5;
 		myIMU.roll *= RAD_TO_DEG;
 
 		//SerialPort.print("Yaw, Pitch, Roll: ");
@@ -197,13 +192,13 @@ void loop()
 		r = myIMU.roll + 180;
 		p = myIMU.pitch+ 180;
 		y = myIMU.yaw+ 180;
-		/*SerialPort.print(myIMU.roll);
+		SerialPort.print(myIMU.roll);
 		SerialPort.print('\t');
 		SerialPort.print(myIMU.pitch);
 		SerialPort.print('\t');
-		SerialPort.print(yaw);
+		SerialPort.print(myIMU.yaw);
 		SerialPort.print('\n');
-		*/
+		/*
 		char buffer[80];
 		long long data = r + p*360 + y*360*360;
 		int dat1 = data%10000LL;
@@ -211,6 +206,7 @@ void loop()
 		int dig = sumDigits(data);
 		sprintf(buffer, "%d%04d#%d$",dat2,dat1, dig);
 		SerialPort.print(buffer);
+		*/
 		/*SerialPort.print(dat1);
 		SerialPort.print('#');
 		SerialPort.print(dig);
