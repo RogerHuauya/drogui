@@ -69,6 +69,8 @@ void initSerial(serial* s, int n, long long baudrate){
             break;
 
     }
+    __delay_ms(1000);
+
 }
 
 

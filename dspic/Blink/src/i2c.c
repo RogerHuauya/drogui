@@ -48,7 +48,7 @@ void initI2C(i2c* c, int n, uint8_t address, double freq, int mode){
     }
     switch(c->n){
         case I2C1: if(on1) break; I2C1BRG = BRG; I2C1CONbits.DISSLW = 1; I2C1CONbits.I2CEN = 1; on1 = 1; break;
-        case I2C2: if(on2) break; I2C2BRG = BRG; I2C2CONbits.DISSLW = 0; I2C2CONbits.I2CEN = 1; on2 = 1; break;
+        case I2C2: if(on2) break; I2C2BRG = BRG; I2C2CONbits.DISSLW = 1; I2C2CONbits.I2CEN = 1; on2 = 1; break;
     } 
     return;
 }
@@ -221,7 +221,7 @@ int i2cStartRead(i2c* c){
     return i2cWrite(c, (c->address << 1) + 1);
 }
 
-
+/*
 
 void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C1Interrupt( void ){
 
@@ -272,7 +272,7 @@ void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C1Interrupt( void ){
     _SI2C1IF = 0;
  
 }
-
+*/
 void __attribute__ ( (interrupt, no_auto_psv) ) _SI2C2Interrupt( void ){
 
     if (I2C2STATbits.P == 1) i2c2State = 0;

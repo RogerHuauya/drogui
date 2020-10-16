@@ -2,7 +2,7 @@
 #define CONFIG_H
 #include <xc.h>
 
-#define FCY 40000000LL
+#define FCY 70000000LL
 
 void initConfig();
 

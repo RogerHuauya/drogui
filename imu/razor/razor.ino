@@ -162,33 +162,34 @@ void loop()
 	// aircraft orientation standards! Pass gyro rate as rad/s
 	MahonyQuaternionUpdate(myIMU.ax, myIMU.ay, myIMU.az, myIMU.gx * DEG_TO_RAD,
 							myIMU.gy * DEG_TO_RAD, myIMU.gz * DEG_TO_RAD, myIMU.my,
-							myIMU.mx, myIMU.mz, myIMU.deltat);
+							myIMU.mx, -myIMU.mz, myIMU.deltat);
 
 
     // Serial print and/or display at 0.5 s rate independent of data rates
+		// roll (x-axis rotation)
     myIMU.delt_t = millis() - myIMU.count;
 
     // update LCD once per half-second independent of read rate
     if (myIMU.delt_t > 20)
     {
+		double sinr_cosp = 2 * ((*getQ()) * (*(getQ()+1)) + (*(getQ()+2)) * (*(getQ()+3)));
+		double cosr_cosp = 1 - 2 * ((*(getQ()+1)) * (*(getQ()+1)) + (*(getQ()+2)) * (*(getQ()+2)));
+		myIMU.roll = atan2(sinr_cosp, cosr_cosp);
 
-		myIMU.yaw   = atan2(2.0f * (*(getQ()+1) * *(getQ()+2) + *getQ()
-						* *(getQ()+3)), *getQ() * *getQ() + *(getQ()+1)
-						* *(getQ()+1) - *(getQ()+2) * *(getQ()+2) - *(getQ()+3)
-						* *(getQ()+3));
-		myIMU.pitch = -asin(2.0f * (*(getQ()+1) * *(getQ()+3) - *getQ()
-						* *(getQ()+2)));
-		myIMU.roll  = atan2(2.0f * (*getQ() * *(getQ()+1) + *(getQ()+2)
-						* *(getQ()+3)), *getQ() * *getQ() - *(getQ()+1)
-						* *(getQ()+1) - *(getQ()+2) * *(getQ()+2) + *(getQ()+3)
-						* *(getQ()+3));
+		// pitch (y-axis rotation)
+		double sinp = 2 * ((*getQ()) * (*(getQ()+2)) - (*(getQ()+3)) * (*(getQ()+1)));
+		if (abs(sinp) >= 1)
+			myIMU.pitch = copysign(PI / 2, sinp); // use 90 degrees if out of range
+		else
+			myIMU.pitch = asin(sinp);
+
+		// yaw (z-axis rotation)
+		double siny_cosp = 2 * ((*getQ()) * (*(getQ()+3)) + (*(getQ()+1)) * (*(getQ()+2)));
+		double cosy_cosp = 1 - 2 * ((*(getQ()+2)) * (*(getQ()+2)) + (*(getQ()+3)) * (*(getQ()+3)));
+		myIMU.yaw = atan2(siny_cosp, cosy_cosp);
+
 		myIMU.pitch *= RAD_TO_DEG;
 		myIMU.yaw   *= RAD_TO_DEG;
-
-		// Declination of SparkFun Electronics (40°05'26.6"N 105°11'05.9"W) is
-		// 	8° 30' E  ± 0° 21' (or 8.5°) on 2016-07-19
-		// - http://www.ngdc.noaa.gov/geomag-web/#declination
-		myIMU.yaw  -= 8.5;
 		myIMU.roll *= RAD_TO_DEG;
 
 		//SerialPort.print("Yaw, Pitch, Roll: ");
@@ -197,20 +198,20 @@ void loop()
 		r = myIMU.roll + 180;
 		p = myIMU.pitch+ 180;
 		y = myIMU.yaw+ 180;
-		/*SerialPort.print(myIMU.roll);
+		SerialPort.print(myIMU.roll);
 		SerialPort.print('\t');
 		SerialPort.print(myIMU.pitch);
 		SerialPort.print('\t');
-		SerialPort.print(yaw);
+		SerialPort.print(myIMU.yaw);
 		SerialPort.print('\n');
-		*/
+		/*
 		char buffer[80];
 		long long data = r + p*360 + y*360*360;
 		int dat1 = data%10000LL;
 		int dat2 = data/10000;
 		int dig = sumDigits(data);
 		sprintf(buffer, "%d%04d#%d$",dat2,dat1, dig);
-		SerialPort.print(buffer);
+		SerialPort.print(buffer);*/
 		/*SerialPort.print(dat1);
 		SerialPort.print('#');
 		SerialPort.print(dig);

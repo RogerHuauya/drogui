@@ -7,7 +7,7 @@ i2c imu;
 extern serial Serial1;
 volatile BOOL EC_DATA_AVAIL = FALSE, flag = FALSE;                                // EC data available for read flag
 //#include "system.h"
-char _glob[40];
+char _glob[40], buffer_mm[80];
 
 SF_VREGS _VREG;
 
@@ -29,7 +29,10 @@ void intInterrupt(1){
 UINT8 initMM7150(){
 
 	pinMode(PIN_RST, OUTPUT);
-    initI2C(&imu, I2C1, SLAVE_ADDR, 400000, MASTER);
+    digitalWrite(PIN_RST, HIGH);
+    __delay_ms(1000);
+    digitalWrite(PIN_RST, LOW);
+    initI2C(&imu, I2C1, SLAVE_ADDR, 100000, MASTER);
 	initInterrupt(1, 5);
 
 
@@ -40,6 +43,7 @@ UINT8 initMM7150(){
     memset(&_VREG, 0x00, sizeof(_VREG));                            // Initialize VREG registers 
 
     
+    serialWriteString(&Serial1, "GET_HID_DESC\n");
     if ( hid_i2c_descriptor_handler(GET_HID_DESC) )                 // get HID descriptor from SSC7150
     {
         _VREG.stat.stat4.SHStartStatus = VREG_SHSTART_FAIL;         // update status register (VREG 0x3F) for failure to get HID descriptor
@@ -49,18 +53,21 @@ UINT8 initMM7150(){
     hid_i2c_cmd_process(ucBuf, POWER_ON, ARB_ID);                   // Issue HID Power ON command to SSC7150 (NOTE: 'ucBuf' and 'ARB_ID' are don't cares for POWER_ON command)
     _VREG.SHC.reset = VREG_RESET_INIT;
 
+    serialWriteString(&Serial1, "RESET_DEV_CMD\n");
     if ( hid_i2c_cmd_process (ucBuf, RESET_DEV_CMD, ARB_ID) )       // Issue HID Reset command  (NOTE: 'ucBuf' and 'ARB_ID' are don't cares for RESET_REG command)
     {
         _VREG.stat.stat4.SHStartStatus = VREG_SHSTART_FAIL;         // If HID Reset fails, update status register (VREG 0x3F)
         return RESET_FAIL;
     }
 
+    serialWriteString(&Serial1, "GET_RPT_DESC\n");
     if ( hid_i2c_descriptor_handler(GET_RPT_DESC) )                 // Get HID Report descriptor from SSC7150 
     {
         _VREG.stat.stat4.SHStartStatus = VREG_SHSTART_FAIL;         // HID report descriptor error, update status register (VREG 0x3F)
         return RPT_DESC_FAIL;
     }  
 
+    serialWriteString(&Serial1, "Sensors\n");
     for (ucSensor_num = 0; ucSensor_num <= NUM_SENS; ucSensor_num++) //go through the sensor list but only GetFeatureReport for valid ids   
     {
         if (SENSOR[ucSensor_num].id != 0xFF && SENSOR[ucSensor_num].id != 0)
@@ -630,6 +637,7 @@ void gets_I2C1(UINT8 *ucRdptr, UINT16 usLength, BOOL bAdjust) {
 
 
   	while (usLength--){
+        //  __delay_us(100);
     	if (usLength){
        		i2cRead(&imu, &ucRdptr[i++]);
 	   		i2cSendACK(&imu);
@@ -640,8 +648,8 @@ void gets_I2C1(UINT8 *ucRdptr, UINT16 usLength, BOOL bAdjust) {
     	}
 
 		if (bAdjust && i == 2){
-			usLength = ((ucRdptr[1] << BYTE_SHIFT) | ucRdptr[0]) - 2;
-			ucSize = usLength;
+			usLength = (( ((UINT16) ucRdptr[1]) << BYTE_SHIFT) | ucRdptr[0]) - 2;
+            ucSize = usLength;
 		}
   	}
 
@@ -704,11 +712,13 @@ UINT8 i2c_cmd_WrRd(UINT8 ucCmd, UINT8 ucBytes_wr, UINT8 *ucData_wr, UINT16 usByt
 
 			for (i = 0; i < ucBytes_wr; i++){
 				status = i2cWrite(&imu, ucData_wr[i]);
+                __delay_us(10);
 				if (status)
 					error_handler("i2c ", 0, I2C_ERROR);
 			}
 
     		status = i2cRestart(&imu);
+            __delay_us(100);
     		if (status)
       		error_handler("i2c ", 0, I2C_ERROR);
 
@@ -773,10 +783,10 @@ UINT16 hid_i2c_descriptor_handler(UINT8 ucCmd_req)
             
             serialWriteString(&Serial1, "--------------------------------------------------------\n");
             serialWriteString(&Serial1, "HID Descriptor\n");
-            
-			for (int i = 0 ; i < 10 ; i++)
-            	serialWriteChar(&Serial1, HID_DESC[i]);
-            
+			for (int i = 0 ; i < 10 ; i++){
+                sprintf(buffer_mm, "%x ", HID_DESC[i]);
+            	serialWriteString(&Serial1, buffer_mm);
+            }
 			serialWriteString(&Serial1, "--------------------------------------------------------\n");
 
             if (ucRet)
@@ -825,10 +835,12 @@ UINT16 hid_i2c_descriptor_handler(UINT8 ucCmd_req)
                                 FALSE);                             //flag indicating that we specified the number of bytes to read explicitly
             serialWriteString(&Serial1, "--------------------------------------------------------\n");
             serialWriteString(&Serial1, "Report Descriptor ");
-            
-			for (int i = 1000 ; i < 1020 ; i++)
-            	serialWriteChar(&Serial1, RPT_DESC[i]);
-            
+                sprintf(buffer_mm, "%d ", HID_FIELD.wRepDescLen);
+            	serialWriteString(&Serial1, buffer_mm);          
+			for (int i = 1000 ; i < 1020 ; i++){
+                sprintf(buffer_mm, "%x ", RPT_DESC[i]);
+            	serialWriteString(&Serial1, buffer_mm);
+            }
 			serialWriteString(&Serial1, "--------------------------------------------------------\n");
                         
             if (ucRet)

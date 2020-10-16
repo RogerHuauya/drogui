@@ -593,9 +593,8 @@ void MPU9250::magCalMPU9250(float * bias_dest, float * scale_dest)
   // Make sure resolution has been calculated
   getMres();
 
-  Serial.println(F("Mag Calibration: Wave device in a figure 8 until done!"));
-  Serial.println(
-      F("  4 seconds to get ready followed by 15 seconds of sampling)"));
+  Serial1.println("Mag Calibration: Wave device in a figure 8 until done!");
+  Serial1.println("  4 seconds to get ready followed by 15 seconds of sampling)");
   delay(4000);
 
   // shoot for ~fifteen seconds of mag data
