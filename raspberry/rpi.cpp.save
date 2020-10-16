@@ -124,7 +124,7 @@ void *menu(void *threadid){
     printf(green([7]) " " white(Write register \n));
     printf(green([8]) " " white(Read register \n));
     printf("\n");
-    //printf(blue(Please enter an option >>>));
+    printf(blue(Please enter an option ));
     while(!inputReceived){};
     inputReceived = false;
     cout<<"menu "<<index_<<endl;
@@ -149,13 +149,12 @@ void *menu(void *threadid){
 
 int main(int argc, char** argv ){
     pthread_t threads[NUM_THREADS];
-    fd = wiringPiI2CSetup(DSPIC_ADDRESS);
-    cout<<"Program has started"<<endl;
+ 	fd = wiringPiI2CSetup(DSPIC_ADDRESS);
+	cout<<"Program has started"<<endl;
     rc = pthread_create(&threads[0], NULL, menu, (void *)0);
-    cout<<"Thread created "<<endl;
     while(1){
         std::cin.clear();
-        cout<<"write input : index value";
+        cout<<"write input "<<endl;
         cin>>index_>>value;
         cout<<"main : "<<index_<<value<<endl;
         inputReceived = true;
