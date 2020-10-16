@@ -15,8 +15,8 @@ void initInterrupt(int n, int priority){
 
       case 1:
          pinMode(PRTA, 14, INPUT);
-         RPINR0bits.INT1R = 30;  // RD1
-         INTCON2bits.INT1EP = 0;
+         RPINR0bits.INT1R = 30;  // RA14
+         INTCON2bits.INT1EP = 1;
          IPC5bits.INT1IP = priority;
          IFS1bits.INT1IF = 0;
          IEC1bits.INT1IE = 1;
