@@ -19,9 +19,9 @@
 #define RdiffZ    0x13
 #define Ralpha    0x14
 #define Rpresion  0x15
-#define Rroll     0x16
-#define Rpitch    0x17
-#define Ryaw      0x18
+#define Rroll     0X0C
+#define Rpitch    0X0D
+#define Ryaw      0x0E
 #define Rbateria  0x19 
 
 #endif
