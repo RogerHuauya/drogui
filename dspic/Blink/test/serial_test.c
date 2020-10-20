@@ -1,4 +1,4 @@
-//#define SERIAL_TEST
+#define SERIAL_TEST
 #ifdef SERIAL_TEST
 #include "config.h"
 #include <libpic30.h>

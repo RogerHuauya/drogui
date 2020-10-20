@@ -10,14 +10,14 @@
 #include "serial.h"
 #include "BMP280.h"
 
+serial Serial1;
 char crc = 0;
 char s[50];
-int s1, s2, s3;
 
 int main(){
 
     initConfig();
-    initSerial();
+    initSerial(&Serial1, SERIAL1, 115200);
     initBmp280();
     
     __delay_ms(1000);
@@ -37,7 +37,7 @@ int main(){
         sprintf(buff,"Raw data = %ld %ld\t", raw_press, raw_temp);
         serialWriteString(buff);*/
         sprintf(s,"%.3lf %.3lf\n", press, temp);
-        serialWriteString(s);
+        serialWriteString(&Serial1, s);
         
         __delay_ms(200);
     }

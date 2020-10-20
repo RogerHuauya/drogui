@@ -17,4 +17,9 @@
 #define PITCH_DEG 0X0D
 #define YAW_DEG 0x0E
 
+#define R_CONTROL 0x0F
+#define P_CONTROL 0x10
+#define Y_CONTROL 0x11
+
+
 #endif

@@ -5,8 +5,8 @@ bool on1 = false, on2 = false , on3 = false;
 uint8_t temp, datain, dataout;
 int i2c1State = 0, i2c2State = 0;
 int err_aux = 0;
-uint8_t i2c1Reg[20];
-uint8_t i2c2Reg[20];
+uint8_t i2c1Reg[40];
+uint8_t i2c2Reg[40];
 
 int idleI2C(i2c *c){
     int ans = SUCCESS, timeout = 0;

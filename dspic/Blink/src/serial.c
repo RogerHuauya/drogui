@@ -104,15 +104,18 @@ void uartRxInterrupt(2){
     IFS1bits.U2RXIF = 0; 
 }
 
-int serialParseInt(serial* s, long long *ans){
+int serialParseInt(serial* ser, long long *ans){
     *ans = 0LL;
     char c = '*';
     bool flag = false;
     long long t;
     while(1){
-        while(!serialAvailable(s) && (++t) < 10000LL);
-        if(t >= 10000LL) return -1;
-        c = serialReadChar(s);
+        switch(ser -> n){
+            case SERIAL1: while(!serialAvailable(s1)); break;
+            case SERIAL2: while(!serialAvailable(s2)); break;
+        }
+        c = serialReadChar(ser);
+        serialWriteChar(ser, c);
         if(c == '-') flag = true;
         else if(c == '$') break;
         else{
