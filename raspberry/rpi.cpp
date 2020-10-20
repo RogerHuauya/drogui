@@ -1,10 +1,19 @@
+//#define raspberry
+
 #include <iostream>
 #include <fstream>
 #include <unistd.h> 
+
+#ifdef raspberry
 #include <wiringPiI2C.h>
+#endif
+
 #include <pthread.h>
 #include "registerMap.h"
 #include "utils.h"
+#include <ctime>
+
+
 using namespace std;
 
 #define BUFF_LENGTH 500
@@ -13,7 +22,9 @@ int fd;
 bool inputReceived = false;
 int index_, value; 
 int rc;
-
+void cls(){
+    system("clear");
+}
 /*
 #include <iostream>
 #include <cstdlib>
@@ -51,16 +62,32 @@ gcc test.cpp -lpthread
 
 */
 void desplazamiento(){
+    /*
 	//auto v = root["desplazamiento"];
 	double x, y, z, alp;
 	cin>>x>>y>>z>>alp;
 	printf("X: %lf, Y: %lf, Z: %lf, alpha: %lf\n", x, y, z, alp);
 	//printf("X: %lf, Y: %lf, Z: %lf, alpha: %lf\n", v[0].asDouble(), v[1].asDouble(), v[2].asDouble(), v[3].asDouble());
-
+    */
 }
 
 void dataSensor(){
+    while(true){
+        
+        uint8_t r = rand()%15, p = rand()%15, y = rand()%15;
+        #ifdef raspberry
+            r = readMCU(Rroll);
+            p = readMCU(Rpitch);
+            y = readMCU(Ryaw); 
+        #endif
+        cls();
+        printf(green(roll\t)  " "  green(pitch\t) " " green(yaw\t\n));
+        printf("%d\t%d\t%d\n", r, p, y);
+        if(inputReceived) break;
+        sleep(1);
 
+        
+    }
 	/*root.clear();
 	root["imu"] = 5.42;
 	root["pressure"] = 1033.05;
@@ -68,6 +95,7 @@ void dataSensor(){
 	s = fw.write(root);
 	drone.sendJson(s);
 	*/
+
 }
 
 void finalCoordinates(){
@@ -81,9 +109,7 @@ void finalCoordinates(){
 void ARM(){
 
 }
-void cls(){
-    system("clear");
-}
+
 void zeroPosition(){
 
 }
@@ -92,11 +118,19 @@ void emergencyStop(){
 	
 }
 
-void writeMCU(uint8_t reg, uint8_t val){	
+void writeMCU(uint8_t reg, uint8_t val){
+    #ifdef raspberry	
 	wiringPiI2CWriteReg8 (fd, reg, val);
+    #endif
+    cout<<"Register "<<reg<<" has been written with "<<val<<endl;
 }
 uint8_t readMCU(uint8_t reg){
-	return wiringPiI2CReadReg8 (fd, reg);
+    uint8_t val;
+    #ifdef raspberry
+	val = wiringPiI2CReadReg8 (fd, reg);
+    #endif
+    cout<<"Register "<<reg<<" has been written with "<<val<<endl;
+    return val;
 }
 void writeRegister(){
     while(!inputReceived){}
@@ -123,13 +157,16 @@ void *menu(void *threadid){
     printf(green([6]) " " white(Zero position \n));
     printf(green([7]) " " white(Write register \n));
     printf(green([8]) " " white(Read register \n));
-    printf("\n");
-    //printf(blue(Please enter an option >>>));
-    while(!inputReceived){};
+    printf(white(Enter an option = \n));
+     while(!inputReceived){
+        // paralelizando
+        //cout<<" roger "<<endl;
+    };
     inputReceived = false;
     cout<<"menu "<<index_<<endl;
+    sleep(1);
     switch(index_){
-	case 0: emergencyStop(); break;
+    	case 0: emergencyStop(); break;
         case 1: desplazamiento(); break;
         case 2: dataSensor(); break;
         case 3: finalCoordinates(); break;
@@ -140,7 +177,7 @@ void *menu(void *threadid){
         case 8: readRegister(); break;
         default: printf("%d is not an option, please enter option again\n", index_); break;
     }
-    sleep(2);
+    //sleep(2);
     //return 0;
     }
     pthread_exit(NULL);
@@ -149,22 +186,24 @@ void *menu(void *threadid){
 
 int main(int argc, char** argv ){
     pthread_t threads[NUM_THREADS];
+    srand((unsigned) time(NULL));
+
+    #ifdef raspberry
     fd = wiringPiI2CSetup(DSPIC_ADDRESS);
+    #endif
     cout<<"Program has started"<<endl;
     rc = pthread_create(&threads[0], NULL, menu, (void *)0);
     cout<<"Thread created "<<endl;
     while(1){
         std::cin.clear();
-        cout<<"write input : index value";
-        cin>>index_>>value;
-        cout<<"main : "<<index_<<value<<endl;
+        cin>>index_;
+        cout<<"main : "<<index_<<endl;
         inputReceived = true;
-        sleep(1);
     }
-/*
-while(1){
-    menu();
-    sleep(2);
-}*/
+    /*
+    while(1){
+        menu();
+        sleep(2);
+    }*/
     return 0;
 }
