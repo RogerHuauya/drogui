@@ -1,15 +1,15 @@
 CXX = g++
 INC = 
-PCFG = -lz -lrt -lpthread #-lwiringPi
+PCFG = -lz -lrt -lpthread -lwiringPi
 
 SOURCES :=  $(wildcard src/*.cpp)
 OBJS := $(patsubst %.cpp, %.o,$(SOURCES))
 HDRS := $(wildcard headers/*.h)
 CFLAGS= -I headers -c 
 
-SRC_SERVER:= rpi.cpp
-OBJ_SERVER:= rpi.o
-TAR_SERVER = rpi.out
+SRC_SERVER:= data.cpp
+OBJ_SERVER:= data.o
+TAR_SERVER = data.out
 
 .PHONY: server
 

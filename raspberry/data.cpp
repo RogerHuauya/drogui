@@ -194,17 +194,17 @@ int main(int argc, char** argv ){
     fd = wiringPiI2CSetup(DSPIC_ADDRESS);
     #endif
     cout<<"Program has started"<<endl;
-    //rc = pthread_create(&threads[0], NULL, menu, (void *)0);
+    rc = pthread_create(&threads[0], NULL, menu, (void *)0);
     cout<<"Thread created "<<endl;
     while(1){
         std::cin.clear();
         cin>>index_>>value;
         cout<<"main : "<<index_<<endl;
         inputReceived = true;
-        writeRegister();
-        inputReceived = true;
-        readRegister();
-        cout<<value<<endl;
+        //writeRegister();
+        //inputReceived = true;
+        //readRegister();
+        //cout<<value<<endl;
     }
     /*
     while(1){
