@@ -1,4 +1,4 @@
-//define MAIN
+#define MAIN
 #ifdef MAIN
 #include <xc.h>
 #include "config.h"
@@ -41,17 +41,7 @@ volatile unsigned long time = 0;
 void initializeSystem(){
     
     initConfig();
-    initSerial(&Serial1, SERIAL1, 115200);
-
-    initPid(&z_control, 1, 0, 0, 0, 10 , 100);
-    initPid(&x_control, 1, 0, 0, 0, 10 , 100);
-    initPid(&y_control, 1, 0, 0, 0, 10 , 100);
     
-    initPid(&roll_control, 20, 0, 0, 0, 10 , 100);
-    initPid(&pitch_control, 20, 0, 0, 0, 10 , 100);
-    initPid(&yaw_control, 20, 0, 0, 0, 10 , 100);
-    
-   
     setPwmPrescaler(0);
 
     initPwmPin(&m1, PWM3_H);
@@ -76,6 +66,17 @@ void initializeSystem(){
     
     initPwm();
 
+    initSerial(&Serial1, SERIAL1, 115200);
+
+    initPid(&z_control, 1, 0, 0, 0, 10 , 100);
+    initPid(&x_control, 1, 0, 0, 0, 10 , 100);
+    initPid(&y_control, 1, 0, 0, 0, 10 , 100);
+    
+    initPid(&roll_control, 20, 0, 0, 0, 10 , 100);
+    initPid(&pitch_control, 20, 0, 0, 0, 10 , 100);
+    initPid(&yaw_control, 20, 0, 0, 0, 10 , 100);
+    
+
     initMM7150();
     initAccel(&acc, 100, 20);
     initOrient(&ori, 100,20);
@@ -91,11 +92,26 @@ void initializeSystem(){
     initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
     i2c2Reg[0x01] = 0;
     i2c2Reg[0x05] = 0;
+    i2c2Reg[0x06] = 0;
+    i2c2Reg[0x07] = 0;
+    i2c2Reg[0x08] = 0;
 
     __delay_ms(500);
     
     serialWriteString(&Serial1, "init");
     
+}
+
+void armingSequence(){
+    for(int i = -100 ; i <= 100 ; i++){
+        setPwmDutyTime(&m1, min(max(100 - abs(i),0), 100));
+        setPwmDutyTime(&m2, min(max(100 - abs(i),0), 100));
+        setPwmDutyTime(&m3, min(max(100 - abs(i),0), 100));
+        setPwmDutyTime(&m4, min(max(100 - abs(i),0), 100));
+        sprintf(buffer, "%d\n", 50 - abs(i));
+        serialWriteString(&Serial1, buffer);
+        __delay_ms(100);
+    }
 }
 
 void getEuler(double q0,double q1,double q2, double q3);
@@ -107,6 +123,11 @@ int dig = 0;
 void timerInterrupt(2){
     readOrient(&ori);        
     getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
+    
+    i2c2Reg[ROLL_DEG] = roll*180.0/pi+180;
+    i2c2Reg[PITCH_DEG] = pitch*180.0/pi+180;
+    i2c2Reg[YAW_DEG] = yaw*180.0/pi+180;
+
     clearTimerFlag(&readSensors);
 }
 
@@ -131,14 +152,10 @@ int main(void){
     roll_off = roll;
     pitch_off = pitch;
     yaw_off = yaw;
+    //armingSequence();
     while(1){
-       /* if(serialAvailable(&Serial1)){
-            //serialWriteChar(&Serial1, serialReadChar(&Serial1));
-            int res = serialParseInt(&Serial1, &pm);
-            sprintf(buffer, "%lld\n", pm);
-            serialWriteString(&Serial1, buffer);
-        }
-       
+        
+       /*
         roll +1 +4 -2 -3 pi
         
         pitch +4 -2 -1 +3 0
@@ -149,8 +166,11 @@ int main(void){
       
     
         H = i2c2Reg[0x05];
-        R = computePid(&roll_control, angle_dif(roll_off, roll), time);
-        P = computePid(&pitch_control, angle_dif(pitch_off, pitch), time);
+        roll_control.kp = i2c2Reg[0x06];
+        pitch_control.kp = i2c2Reg[0x07];
+        yaw_control.kp = i2c2Reg[0x08];
+        R = computePid(&roll_control, angle_dif(-pi, roll), time);
+        P = computePid(&pitch_control, angle_dif(0, pitch), time);
         Y = computePid(&yaw_control, angle_dif(yaw_off, yaw), time);
         
 
@@ -158,12 +178,12 @@ int main(void){
         M2 = H - R - P + Y;
         M3 = H - R + P - Y;
         M4 = H + R + P + Y;
-        
+        if(H == 0) M1 = M2 = M3 = M4 = 0;
         setPwmDutyTime(&m1, min(max(M1,0), 100));
         setPwmDutyTime(&m2, min(max(M2,0), 100));
         setPwmDutyTime(&m3, min(max(M3,0), 100));
         setPwmDutyTime(&m4, min(max(M4,0), 100));
-     
+        
         sprintf(buffer, "%.3lf %.3lf %.3lf \t\t%d %d %d %d\n", roll, pitch, yaw, M1, M2, M3, M4);
         serialWriteString(&Serial1, buffer);
         __delay_ms(100);
