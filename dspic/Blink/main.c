@@ -138,9 +138,9 @@ void timerInterrupt(3){
 
 double angle_dif(double angle1, double angle2);
 
-int  H,R,P,Y;
-int M1,M2,M3,M4;
-
+double  H,R,P,Y, Haux;
+double M1,M2,M3,M4;
+uint8_t haux = 0;
 double roll_off, pitch_off, yaw_off;
 long long pm = 0;
 int main(void){
@@ -163,9 +163,11 @@ int main(void){
         yaw   -1 +2 -3 +4 pi
 
        */
-      
-    
-        H = i2c2Reg[0x05];
+        if(haux != i2c2Reg[0x05]){
+            haux = i2c2Reg[0x05];
+            Haux = haux;
+        }
+        H += abs(Haux - H) > 0.1  ? (copysign(0.1, (H - Haux))) : 0;
         roll_control.kp = i2c2Reg[0x06];
         pitch_control.kp = i2c2Reg[0x07];
         yaw_control.kp = i2c2Reg[0x08];

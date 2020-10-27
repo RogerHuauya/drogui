@@ -10,11 +10,9 @@
 #define copysign(x, y) ( ( (x>0 && y<0) || (x<0 && y>0) ) ? (-1*x) : x )
 
 //union UStuff;
-/*
-void bytestoint32(uint8_t *bytesint32,int32_t *n);
+int32_t bytestoint32(uint8_t *bytesint32);
 void int32tobytes(int32_t n,uint8_t *bytesint32);
-void floattobytes(float n,uint8_t *bytesfloat);
-void bytestofloat(uint8_t *bytesfloat,float *n);
-*/
+void floattobytes(float n, uint8_t* bytesfloat);
+float bytestofloat(uint8_t *bytesfloat);
 
 #endif
