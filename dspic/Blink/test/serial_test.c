@@ -9,15 +9,15 @@
 #include "serial.h"
 #include "i2c.h"
 
-
+serial Serial1;
 
 int main(){
     initConfig();
-    initSerial();
+    initSerial(&Serial1, SERIAL1, 115200);
     char s[50];
 
     while(1){
-        serialWriteString("Hola mundo!!\n\r");
+        serialWriteString(&Serial1,"Hola mundo!!\n\r");
         __delay_ms(500);
     }
     return 0;

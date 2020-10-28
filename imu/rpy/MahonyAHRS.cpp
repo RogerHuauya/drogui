@@ -1,33 +1,10 @@
-//#define NOSE
-#ifdef NOSE
-//=====================================================================================================
-// MahonyAHRS.c
-//=====================================================================================================
-//
-// Madgwick's implementation of Mayhony's AHRS algorithm.
-// See: http://www.x-io.co.uk/node/8#open_source_ahrs_and_imu_algorithms
-//
-// Date				Author			Notes
-// 29/09/2011	SOH Madgwick    Initial release
-// 02/10/2011	SOH Madgwick	Optimised for reduced CPU load
-//
-//=====================================================================================================
-
-//---------------------------------------------------------------------------------------------------
-// Header files
-
 #include "MahonyAHRS.h"
 #include <stdlib.h>
 #include <math.h>
-#include "utils.h"
 
 #define PI 3.14159264
-
-//---------------------------------------------------------------------------------------------------
-// Definitions
-
-#define sampleFreq	50.0f			// sample frequency in Hz
-#define twoKpDef	(2.0f * 50.0f)	// 2 * proportional gain
+#define sampleFreq	100.0f			// sample frequency in Hz
+#define twoKpDef	(2.0f * 5.0f)	// 2 * proportional gain
 #define twoKiDef	(2.0f * 0.0f)	// 2 * integral gain
 
 //---------------------------------------------------------------------------------------------------
@@ -268,4 +245,3 @@ double *getMahonyEuler(){
 //====================================================================================================
 // END OF CODE
 //====================================================================================================
-#endif

@@ -42,7 +42,7 @@ void initConfig(){
     // setup internal clock for 80MHz/40MIPS
     // 8/2=4*40=160/2=80
     CLKDIVbits.PLLPRE = 0;        // PLLPRE (N2) 0=/2
-    PLLFBDbits.PLLDIV = 38;       // pll multiplier (M) = +2
+    PLLFBDbits.PLLDIV = 68;       // pll multiplier (M) = +2
     CLKDIVbits.PLLPOST = 0;       // PLLPOST (N1) 0=/2
     //while(!OSCCONbits.LOCK);    // wait for PLL ready
 }

@@ -2,9 +2,7 @@
 #define CONFIG_H
 #include <xc.h>
 
-#define FCY 40000000LL
-#define BAUDRATE 115200
-#define BRGVAL ((FCY/BAUDRATE)/4)-1
+#define FCY 70000000LL
 
 void initConfig();
 

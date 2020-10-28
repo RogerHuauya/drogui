@@ -6,7 +6,7 @@
 #include <stdbool.h>
 #include <libpic30.h>
 
-#define TIME_OUT 1000
+#define TIME_OUT 100000
 
 enum I2C_PORTS {I2C1, I2C2, I2C4};
 enum I2C_MODE {MASTER, SLAVE};
