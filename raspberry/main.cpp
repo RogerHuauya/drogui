@@ -5,8 +5,10 @@
 #include <unistd.h> 
 
 #ifdef raspberry
+
 #include <wiringPiI2C.h>
 #include <pthread.h>
+
 #endif
 
 #include "registerMap.h"
@@ -19,8 +21,8 @@ using namespace std;
 
 #define BUFF_LENGTH 500
 #define DSPIC_ADDRESS 0x60
-int fd;
 bool inputReceived = false;
+int fd;
 int index_, value; 
 int rc;
 void cls(){
@@ -28,40 +30,6 @@ void cls(){
 }
 uint8_t readMCU(uint8_t rogerperry);
 
-/*
-#include <iostream>
-
-using namespace std;
-
-#define NUM_THREADS 5
-
-void *pLeerSerial(void *threadid) {
-   long tid;
-   tid = (long)threadid;
-   cout << "Hello World! Thread ID, " << tid << endl;
-   pthread_exit(NULL);
-}
-
-int main () {
-   pthread_t threads[NUM_THREADS];
-   int rc;
-   int i;
-   
-   for( i = 0; i < NUM_THREADS; i++ ) {
-      cout << "main() : creating thread, " << i << endl;
-      rc = pthread_create(&threads[i], NULL, pLeerSerial, (void *)i);
-      
-      if (rc) {
-         cout << "Error:unable to create thread," << rc << endl;
-         exit(-1);
-      }
-   }
-   pthread_exit(NULL);
-}
-
-gcc test.cpp -lpthread
-
-*/
 void desplazamiento(){
     /*
 	//auto v = root["desplazamiento"];
@@ -189,10 +157,6 @@ void sendFloat(uint8_t reg, float val){
     floattobytes(val, buff);
     print4bytes(buff);
     for(uint8_t i = 0; i < 4; i++) writeMCU(reg+i, buff[i]);
-<<<<<<< HEAD
-=======
-
->>>>>>> 5d34d786c4bdc2e93b12b9cd978fa7189512d5dc
     return;
 }
 float readFloat(uint8_t reg){
@@ -204,21 +168,20 @@ float readFloat(uint8_t reg){
 int main(int argc, char** argv ){
     pthread_t threads[NUM_THREADS];
     srand((unsigned) time(NULL));
-
     #ifdef raspberry
     fd = wiringPiI2CSetup(DSPIC_ADDRESS);
     #endif
     cout<<"Program has started"<<endl;
-    //rc = pthread_create(&threads[0], NULL, menu, (void *)0);
+    rc = pthread_create(&threads[0], NULL, menu, (void *)0);
     cout<<"Thread created "<<endl;
+    /*
     while(1){
         float value;
         cin>>value;
         sendFloat(M1_VAL, value);
         cout<<"Value sent : "<<endl;
         cout<<"Value confirm : "<<readFloat(M1_VAL)<<endl;
-    }
-    /*
+    }*/
     while(1){
         std::cin.clear();
         cin>>index_>>value;
@@ -228,11 +191,6 @@ int main(int argc, char** argv ){
         inputReceived = true;
         readRegister();
         cout<<value<<endl;
-    }*/
-    /*
-    while(1){
-        menu();
-        sleep(2);
-    }*/
+    }
     return 0;
 }
