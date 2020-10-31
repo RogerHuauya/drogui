@@ -1,4 +1,4 @@
-#define MM7150_TEST
+//#define MM7150_TEST
 #ifdef MM7150_TEST
 #include "config.h"
 #include "MM7150.h"
@@ -20,10 +20,10 @@ int main(){
     double q0, q1, q2, q3, roll, pitch, yaw; 
     while(1){
         readOrient(&ori);
-        q0 = ori.dDataX;
-        q1 = ori.dDataY;
-        q2 = ori.dDataZ;
-        q3 = ori.dDataW;
+        q0 = ori.dDataW;
+        q1 = ori.dDataX;
+        q2 = ori.dDataY;
+        q3 = ori.dDataZ;
         //sprintf(s, "%.3f %.3f %.3f %.3f\n", ori.dDataX, ori.dDataY, ori.dDataZ, ori.dDataW);
         //serialWriteString(&Serial1, s);
             // roll (x-axis rotation)
@@ -42,7 +42,7 @@ int main(){
         double siny_cosp = 2 * (q0 * q3 + q1 * q2);
         double cosy_cosp = 1 - 2 * (q2 * q2 + q3 * q3);
         yaw = atan2(siny_cosp, cosy_cosp);
-        sprintf(s, "%.3f %.3f %.3f\n", roll*180/PI, pitch*180/PI, yaw*180/PI);
+        sprintf(s, "%.3f %.3f %.3f\n", roll, pitch, yaw);
         serialWriteString(&Serial1, s);
         __delay_ms(10);
     }

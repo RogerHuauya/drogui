@@ -49,6 +49,7 @@ UINT8 initMM7150(){
         _VREG.stat.stat4.SHStartStatus = VREG_SHSTART_FAIL;         // update status register (VREG 0x3F) for failure to get HID descriptor
         return HID_DESC_FAIL;
     }        
+	
     hid_i2c_cmd_process(ucBuf, POWER_ON, ARB_ID);                   // Issue HID Power ON command to SSC7150 (NOTE: 'ucBuf' and 'ARB_ID' are don't cares for POWER_ON command)
     _VREG.SHC.reset = VREG_RESET_INIT;
 
@@ -893,7 +894,8 @@ UINT8 hid_i2c_cmd_process(UINT8 *ucCmdDatbuf, UINT8 ucCmd_req, UINT8 ucReport_id
             
             for(int i = 0 ; i < 50 && !EC_DATA_AVAIL ; i++)
               __delay_ms(20);
-            if (!EC_DATA_AVAIL)                                  // EC interrupt asserted (data is available)
+            
+			if (!EC_DATA_AVAIL)                                  // EC interrupt asserted (data is available)
                 return RESET_FAIL;                                  // timeout occured without device responding with interrupt
                 
             ucRetStat = i2c_cmd_WrRd (READ,                         // EC_DATA_AVAIL flag was set indicating SSC7150 has data available to be read in response to the RESET CMD
