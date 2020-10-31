@@ -1,4 +1,4 @@
-#define raspberry
+//#define raspberry
 
 #include <iostream>
 #include <fstream>
@@ -6,9 +6,9 @@
 
 #ifdef raspberry
 #include <wiringPiI2C.h>
+#include <pthread.h>
 #endif
 
-#include <pthread.h>
 #include "registerMap.h"
 #include "utils.h"
 #include <ctime>
@@ -182,20 +182,24 @@ void *menu(void *threadid){
     //sleep(2);
     //return 0;
     }
+    #ifdef raspberry
     pthread_exit(NULL);
+    #endif
+
     return 0;
 }
 
 int main(int argc, char** argv ){
-    pthread_t threads[NUM_THREADS];
+    cout<<"Program has started"<<endl;
     srand((unsigned) time(NULL));
 
     #ifdef raspberry
+    pthread_t threads[NUM_THREADS];
     fd = wiringPiI2CSetup(DSPIC_ADDRESS);
-    #endif
-    cout<<"Program has started"<<endl;
     rc = pthread_create(&threads[0], NULL, menu, (void *)0);
     cout<<"Thread created "<<endl;
+    #endif
+
     while(1){
         std::cin.clear();
         cin>>index_>>value;
