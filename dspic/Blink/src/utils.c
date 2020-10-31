@@ -7,17 +7,31 @@ int32_t bytestoint32(uint8_t *bytesint32){
             (int32_t)(bytesint32[3]);
     return val;
 }
+
 void int32tobytes(int32_t n,uint8_t *bytesint32){
     bytesint32[0] =(uint8_t) (n >> 24) & 0xFF;
     bytesint32[1] =(uint8_t) (n >> 16) & 0xFF;
     bytesint32[2] =(uint8_t) (n >> 8) & 0xFF;
     bytesint32[3] =(uint8_t)  n & 0xFF;
 }
+
 void floattobytes(float n, uint8_t* bytesfloat){
     memcpy(bytesfloat, &n, sizeof n);
 }
+
 float bytestofloat(uint8_t *bytesfloat){
     float val;
-    memcpy(&val, bytesfloat, sizeof val);
+    memcpy(&val, bytesfloat, sizeof(val));
     return val;
+}
+
+float getReg(uint8_t reg){
+    double val;
+    val = bytestofloat(i2c2Reg + reg); 
+    return val; 
+}
+
+void setReg(uint8_t reg, float val){
+    floattobytes(val, i2c2Reg + reg);
+    return;
 }
