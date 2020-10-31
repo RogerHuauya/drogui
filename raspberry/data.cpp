@@ -196,7 +196,9 @@ int main(int argc, char** argv ){
     #ifdef raspberry
     pthread_t threads[NUM_THREADS];
     fd = wiringPiI2CSetup(DSPIC_ADDRESS);
-    rc = pthread_create(&threads[0], NULL, menu, (void *)0);
+    #endif
+    cout<<"Program has started"<<endl;
+    //rc = pthread_create(&threads[0], NULL, menu, (void *)0);
     cout<<"Thread created "<<endl;
     #endif
 
@@ -204,7 +206,9 @@ int main(int argc, char** argv ){
         std::cin.clear();
         cin>>index_>>value;
         cout<<"main : "<<index_<<endl;
-        inputReceived = true;
+        writeMCU(index_,value);
+        cout<<+readMCU(index_)<<endl;
+         //inputReceived = true;
         //writeRegister();
         //inputReceived = true;
         //readRegister();
