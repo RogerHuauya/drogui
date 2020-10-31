@@ -187,7 +187,9 @@ void *menu(void *threadid){
 void sendFloat(uint8_t reg, float val){
     uint8_t buff[4];
     floattobytes(val, buff);
-    for(int i = 0; i < 4; i++) writeMCU(reg, buff[i]);
+    print4bytes(buff);
+    for(uint8_t i = 0; i < 4; i++) writeMCU(reg+i, buff[i]);
+
     return;
 }
 int main(int argc, char** argv ){

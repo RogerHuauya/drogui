@@ -29,7 +29,7 @@ int main(){
 
     initConfig();
     initSerial(&Serial1, SERIAL1,  115200);
-    initI2C(&slave, I2C1, 0x60, 400000, SLAVE);
+    initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
     __delay_ms(1000);
     serialWriteString(&Serial1, "Hola mundo\n");
     while(1){
