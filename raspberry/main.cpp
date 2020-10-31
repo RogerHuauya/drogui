@@ -189,6 +189,10 @@ void sendFloat(uint8_t reg, float val){
     floattobytes(val, buff);
     print4bytes(buff);
     for(uint8_t i = 0; i < 4; i++) writeMCU(reg+i, buff[i]);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5d34d786c4bdc2e93b12b9cd978fa7189512d5dc
     return;
 }
 float readFloat(uint8_t reg){
