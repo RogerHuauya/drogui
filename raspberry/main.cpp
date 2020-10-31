@@ -11,6 +11,7 @@
 #include "registerMap.h"
 #include "utils.h"
 #include <ctime>
+#include <cstdlib>
 
 
 using namespace std;
@@ -28,7 +29,6 @@ uint8_t readMCU(uint8_t rogerperry);
 
 /*
 #include <iostream>
-#include <cstdlib>
 
 using namespace std;
 
