@@ -8,6 +8,7 @@
 #include <wiringPiI2C.h>
 #include <pthread.h>
 #endif
+
 #include "registerMap.h"
 #include "utils.h"
 #include <ctime>
@@ -75,9 +76,9 @@ void dataSensor(){
     while(true){
         uint8_t r = rand()%15, p = rand()%15, y = rand()%15;
         #ifdef raspberry
-            r = readMCU(Rroll);
-            p = readMCU(Rpitch);
-            y = readMCU(Ryaw);
+            //r = readMCU(Rroll);
+            //p = readMCU(Rpitch);
+            //y = readMCU(Ryaw);
         #endif
         //cls();
         //usleep(200);
