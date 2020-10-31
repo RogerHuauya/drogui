@@ -1,5 +1,4 @@
 #include "utils.h"
-
 int32_t bytestoint32(uint8_t *bytesint32){
     int32_t val = (int32_t) (int32_t)(bytesint32[0]) << 24 |
             (int32_t)(bytesint32[1]) << 16 |
