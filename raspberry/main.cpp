@@ -1,34 +1,28 @@
 #define raspberry
+#define BUFF_LENGTH 500
+#define DSPIC_ADDRESS 0x60
 
 #include <iostream>
-#include <fstream>
-#include <unistd.h> 
+#include "registerMap.h"
+#include <ctime>
+#include <signal.h>
 
 #ifdef raspberry
-
-#include <wiringPiI2C.h>
-#include <pthread.h>
-
-#endif
-
-#include "registerMap.h"
 #include "utils.h"
-#include <ctime>
-#include <cstdlib>
-
+#include <pthread.h>
+rasp_I2C rasp_i2c(DSPIC_ADDRESS);
+#endif
 
 using namespace std;
 
-#define BUFF_LENGTH 500
-#define DSPIC_ADDRESS 0x60
+
+
 bool inputReceived = false;
-int fd;
-int index_, value; 
-int rc;
-void cls(){
-    system("clear");
-}
-uint8_t readMCU(uint8_t rogerperry);
+bool cin_thread = false;
+int id_choosen, value; 
+int id_threads;
+
+
 
 void desplazamiento(){
     /*
@@ -41,21 +35,22 @@ void desplazamiento(){
 }
 
 void dataSensor(){
-    while(true){
+    int cnt= 0;
+    while(cnt<100){//true){
         uint8_t r = rand()%15, p = rand()%15, y = rand()%15;
         #ifdef raspberry
-            //r = readMCU(Rroll);
+            //r = rasp_i2c.readMCU(Rroll);
             //p = readMCU(Rpitch);
             //y = readMCU(Ryaw);
         #endif
         //cls();
-        //usleep(200);
+        usleep(500000);
         //printf(green(roll\t)  " "  green(pitch\t) " " green(yaw\t\n));
-        printf("%d\t%d\t%d\n", r, p, y);
+        printf("%d\t %d\t%d\t%d\n",cnt, r, p, y);
         //printf("prueba \n");
+        cnt++;
         if(inputReceived) break;
-        //sleep(1);
-        
+        sleep(1);        
     }
 	/*root.clear();
 	root["imu"] = 5.42;
@@ -67,130 +62,184 @@ void dataSensor(){
 
 }
 
-void finalCoordinates(){
-	/*
-	auto v = root["position"];
-	printf("X: %lf, Y: %lf, Z: %lf, alpha: %lf\n", v[0].asDouble(), \
-	v[1].asDouble(), v[2].asDouble(), v[3].asDouble());
-	*/
-}
-
-void ARM(){
-
-}
-
 void zeroPosition(){
+    return;
 
 }
-void calibrateESC(){}
-void emergencyStop(){
-	
+void normalStop(){
+	return;
+}
+void handler_stop(int s){
+    normalStop();
+    printf("Emergency exit CTRL+C - Caught signal %d\n",s);
+    exit(1); 
+}
+void enable_emergency_stop(){
+    struct sigaction sigIntHandler;
+    sigIntHandler.sa_handler = handler_stop;
+    sigemptyset(&sigIntHandler.sa_mask);
+    sigIntHandler.sa_flags = 0;
+    sigaction(SIGINT, &sigIntHandler, NULL);
+    return;
 }
 
-void writeMCU(uint8_t reg, uint8_t val){
-    #ifdef raspberry	
-	wiringPiI2CWriteReg8 (fd, reg, val);
-    #endif
-    //cout<<"Register "<<reg<<" has been written with "<<val<<endl;
+void send_PID_ROLL(){    
+    cin_thread=true;
+    cls(); 
+    float value1,value2,value3;
+    printf(green(PID ROLL) "\n");
+    cout<<"KP KI KD = "<<endl;
+    cin>>value1>>value2>>value3;
+    if(cin.fail()) throw 505;
+    rasp_i2c.sendFloat(ROLL_KP, value1);
+    rasp_i2c.sendFloat(ROLL_KI, value2);
+    rasp_i2c.sendFloat(ROLL_KD, value3);
+    cout<<"Values sent : "<<endl;
+    sleep(1);
+    cin_thread=false;
+    return;
 }
-uint8_t readMCU(uint8_t reg){
-    uint8_t val;
-    #ifdef raspberry
-	val = wiringPiI2CReadReg8 (fd, reg);
-    #endif
-    //cout<<"Register "<<reg<<" has been written with "<<val<<endl;
-    return val;
+void send_PID_PITCH(){    
+    cin_thread=true;
+    cls(); 
+    float value1,value2,value3;
+    printf(green(PID PITCH) "\n");
+    cout<<"KP KI KD = "<<endl;
+    cin>>value1>>value2>>value3;
+    if(cin.fail()) throw 505;
+    rasp_i2c.sendFloat(PITCH_KP, value1);
+    rasp_i2c.sendFloat(PITCH_KI, value2);
+    rasp_i2c.sendFloat(PITCH_KD, value3);
+    cout<<"Values sent : "<<endl;
+    sleep(1);
+    cin_thread=false;
+    return;
 }
+void send_PID_YAW(){    
+    cin_thread=true;
+    cls(); 
+    float value1,value2,value3;
+    printf(green(PID YAW) "\n");
+    cout<<"KP KI KD = "<<endl;
+    cin>>value1>>value2>>value3;
+    if(cin.fail()) throw 505;
+    rasp_i2c.sendFloat(YAW_KP, value1);
+    rasp_i2c.sendFloat(YAW_KI, value2);
+    rasp_i2c.sendFloat(YAW_KD, value3);
+    cout<<"Values sent : "<<endl;
+    sleep(1);
+    cin_thread=false;
+    return;
+}
+
+
 void writeRegister(){
-    while(!inputReceived){}
-    inputReceived = false;
-    writeMCU(index_, value);
+    cin_thread=true;
+    cls(); 
+    int reg;
+    float value;
+    cout<<"REG  FLOAT = "<<endl;
+    cin>>reg>>value;
+    if(cin.fail()) throw 505;
+    rasp_i2c.sendFloat((uint8_t)reg, value);
+    cout<<"Value sent : "<<value<<endl;
+    cout<<"Value confirm : "<<rasp_i2c.readFloat(reg)<<endl;
+    sleep(1);
+    cin_thread=false;
+    return;
 }
-
 void readRegister(){
-    while(!inputReceived){}
-    inputReceived = false;
-    value = readMCU(index_);
+    cin_thread=true;
+    cls(); 
+    int reg;
+    cout<<"REG = "<<endl;
+    cin>>reg;
+    if(cin.fail()) throw 505;
+    cout<<"Value sent : "<<reg<<endl;
+    cout<<"Value readed : "<<rasp_i2c.readFloat((uint8_t)reg)<<endl;
+    sleep(1);
+    cin_thread=false;
+    return;
 }
-
 void *menu(void *threadid){
     while(1){
-    cls();    
-    printf("\t\t\t\t\t\t\t\t" blue(Principal menu) "\n");
-    printf(green([0]) " " white(Emergency stop\n));
-    printf(green([1]) " " white(Desplazamiento\n));
-    printf(green([2]) " " white(Show data sensor\n));
-    printf(green([3]) " " white(Final coordinates \n));
-    printf(green([4]) " " white(ARM\n));
-    printf(green([5]) " " white(Calibrar ESC \n));
-    printf(green([6]) " " white(Zero position \n));
-    printf(green([7]) " " white(Write register \n));
-    printf(green([8]) " " white(Read register \n));
-    printf(white(Enter an option = \n));
-     while(!inputReceived){
-        // paralelizando
-        //cout<<" roger "<<endl;
-    };
-    inputReceived = false;
-    cout<<"menu "<<index_<<endl;
-    sleep(1);
-    switch(index_){
-    	case 0: emergencyStop(); break;
-        case 1: desplazamiento(); break;
-        case 2: dataSensor(); break;
-        case 3: finalCoordinates(); break;
-        case 4: ARM(); break;
-        case 5: calibrateESC(); break;
-        case 6: zeroPosition(); break;
-        case 7: writeRegister(); break;
-        case 8: readRegister(); break;
-        default: printf("%d is not an option, please enter option again\n", index_); break;
-    }
-    //sleep(2);
-    //return 0;
+        cls();    
+        printf("\t\t\t\t\t\t\t\t" blue(Principal menu) "\n");
+        printf(green([0]) " " white(Emergency stop\n));
+        printf(green([1]) " " white(Desplazamiento\n));
+        printf(green([2]) " " white(Show data sensor\n));
+        printf(green([3]) " " white(Send PID ROLL \n));
+        printf(green([4]) " " white(Send PID PITCH\n));
+        printf(green([5]) " " white(Send PID YAW  \n));
+        printf(green([6]) " " white(Zero position \n));
+        printf(green([7]) " " white(Write register \n));
+        printf(green([8]) " " white(Read register \n));
+        printf(white(Enter an option = \n));
+        while(!inputReceived){
+            // paralelizando
+            //cout<<" roger "<<endl;
+        };
+        inputReceived = false;
+        cout<<"menu : "<<id_choosen<<endl;
+        sleep(1);
+        switch(id_choosen){
+            case 0: normalStop(); break;
+            case 1: desplazamiento(); break;
+            case 2: dataSensor(); break;
+            case 3: send_PID_ROLL(); break;
+            case 4: send_PID_PITCH(); break;
+            case 5: send_PID_YAW(); break;
+            case 6: zeroPosition(); break;
+            case 7: writeRegister(); break;
+            case 8: readRegister(); break;
+            default: printf("%d is not an option, please enter option again\n", id_choosen); break;
+        }
+        //sleep(2);
+        //return 0;
     }
     pthread_exit(NULL);
     return 0;
 }
-void sendFloat(uint8_t reg, float val){
-    uint8_t buff[4];
-    floattobytes(val, buff);
-    print4bytes(buff);
-    for(uint8_t i = 0; i < 4; i++) writeMCU(reg+i, buff[i]);
-    return;
-}
-float readFloat(uint8_t reg){
-    uint8_t buff[4];
-    for (uint8_t i=0;i<4;i++)  buff[i] = readMCU(reg+i);
-    return bytestofloat(buff);
-}
 
 int main(int argc, char** argv ){
-    pthread_t threads[NUM_THREADS];
-    srand((unsigned) time(NULL));
-    #ifdef raspberry
-    fd = wiringPiI2CSetup(DSPIC_ADDRESS);
-    #endif
-    cout<<"Program has started"<<endl;
-    rc = pthread_create(&threads[0], NULL, menu, (void *)0);
-    cout<<"Thread created "<<endl;
-    /*
-    while(1){
-        float value;
-        cin>>value;
-        sendFloat(M1_VAL, value);
-        cout<<"Value sent : "<<endl;
-        cout<<"Value confirm : "<<readFloat(M1_VAL)<<endl;
-    }*/
-    while(1){
-        std::cin.clear();
-        cin>>index_>>value;
-        cout<<"main : "<<index_<<endl;
-        inputReceived = true;
-        writeRegister();
-        inputReceived = true;
-        readRegister();
-        cout<<value<<endl;
+	try{ 
+        enable_emergency_stop();
+        srand((unsigned) time(NULL));
+        cout<<"Program has started"<<endl;
+        #ifdef raspberry
+        pthread_t threads[NUM_THREADS];
+        id_threads  = pthread_create(&threads[0], NULL, menu, (void *)0);
+        cout<<"Thread created "<<endl;
+        #endif
+        /*
+        while(1){
+            #ifdef raspberry
+            float value;
+            cin>>value;
+            if(cin.fail()) throw 505;
+            rasp_i2c.sendFloat(M1_VAL, value);
+            cout<<"Value sent : "<<endl;
+            cout<<"Value confirm : "<<rasp_i2c.readFloat(M1_VAL)<<endl;
+            #endif
+        }*/
+        while(1){
+            #ifdef raspberry
+            if(!cin_thread){
+                std::cin.clear();
+                cout<<"id function : "<<endl;
+                cin>>id_choosen;
+                if(cin.fail()) throw 505;
+                cout<<"function choosen: "<<id_choosen<<endl;
+                if(id_choosen==7 ||  id_choosen==8) cin_thread=true;
+                inputReceived = true;
+            #endif
+            }
+        }
     }
+	catch (...){
+        normalStop();
+		cout << "Error exception occurred!" << endl;
+		return 0;
+	}
     return 0;
 }
