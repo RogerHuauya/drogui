@@ -115,6 +115,22 @@ void send_PID_PITCH(){
     cin_thread=false;
     return;
 }
+
+void send_H(){
+    cin_thread=true;
+    cls(); 
+    float value1,value2;
+    printf(green(H value and stepsize) "\n");
+    cout<<"H deltaH = "<<endl;
+    cin>>value1>>value2;
+    if(cin.fail()) throw 505;
+    rasp_i2c.sendFloat(H_VAL, value1);
+    rasp_i2c.sendFloat(H_STEP_SIZE, value2);
+    cout<<"Values sent : "<<endl;
+    sleep(1);
+    cin_thread=false;
+    return; 
+}
 void send_PID_YAW(){    
     cin_thread=true;
     cls(); 
@@ -172,8 +188,9 @@ void *menu(void *threadid){
         printf(green([4]) " " white(Send PID PITCH\n));
         printf(green([5]) " " white(Send PID YAW  \n));
         printf(green([6]) " " white(Zero position \n));
-        printf(green([7]) " " white(Write register \n));
-        printf(green([8]) " " white(Read register \n));
+        printf(green([7]) " " white(Send H \n));
+        printf(green([8]) " " white(Write register \n));
+        printf(green([9]) " " white(Read register \n));
         printf(white(Enter an option = \n));
         while(!inputReceived){
             // paralelizando
@@ -190,8 +207,9 @@ void *menu(void *threadid){
             case 4: send_PID_PITCH(); break;
             case 5: send_PID_YAW(); break;
             case 6: zeroPosition(); break;
-            case 7: writeRegister(); break;
-            case 8: readRegister(); break;
+            case 7: send_H(); break;
+            case 8: writeRegister(); break;
+            case 9: readRegister(); break;
             default: printf("%d is not an option, please enter option again\n", id_choosen); break;
         }
         //sleep(2);
@@ -230,7 +248,7 @@ int main(int argc, char** argv ){
                 cin>>id_choosen;
                 if(cin.fail()) throw 505;
                 cout<<"function choosen: "<<id_choosen<<endl;
-                if(id_choosen==7 ||  id_choosen==8) cin_thread=true;
+                if(id_choosen==8 ||  id_choosen==9) cin_thread=true;
                 inputReceived = true;
             #endif
             }
