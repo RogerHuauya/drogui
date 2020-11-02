@@ -1,4 +1,4 @@
-//#define MAIN
+#define MAIN
 #ifdef MAIN
 #include <xc.h>
 #include "config.h"
@@ -90,11 +90,7 @@ void initializeSystem(){
     
     
     initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
-    i2c2Reg[0x01] = 0;
-    i2c2Reg[0x05] = 0;
-    i2c2Reg[0x06] = 0;
-    i2c2Reg[0x07] = 0;
-    i2c2Reg[0x08] = 0;
+    clearI2Cregisters(I2C2);
 
     __delay_ms(500);
     
@@ -154,23 +150,12 @@ int main(void){
     yaw_off = yaw;
     //armingSequence();
     while(1){
-        
-       /*
-        roll +1 +4 -2 -3 pi
-        
-        pitch +4 -2 -1 +3 0
 
-        yaw   -1 +2 -3 +4 pi
-
-       */
-        if(haux != i2c2Reg[0x05]){
-            haux = i2c2Reg[0x05];
-            Haux = haux;
-        }
-        H += abs(Haux - H) > 0.1  ? (copysign(0.1, (H - Haux))) : 0;
-        roll_control.kp = i2c2Reg[0x06];
-        pitch_control.kp = i2c2Reg[0x07];
-        yaw_control.kp = i2c2Reg[0x08];
+        H += fabs(getReg(H_VAL) - H) > 0.1  ? (copysign(0.1, (H - getReg(H_VAL)))) : 0;
+        roll_control.kp = getReg(ROLL_KP);
+        pitch_control.kp = getReg(PITCH_KP);
+        yaw_control.kp = getReg(YAW_KP);
+        
         R = computePid(&roll_control, angle_dif(-pi, roll), time);
         P = computePid(&pitch_control, angle_dif(0, pitch), time);
         Y = computePid(&yaw_control, angle_dif(yaw_off, yaw), time);

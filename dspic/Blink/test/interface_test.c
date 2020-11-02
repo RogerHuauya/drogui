@@ -1,4 +1,4 @@
-#define INTERFACE_TEST
+//#define INTERFACE_TEST
 #ifdef INTERFACE_TEST
 #include "config.h"
 #include <libpic30.h>
