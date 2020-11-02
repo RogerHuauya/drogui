@@ -177,6 +177,20 @@ void readRegister(){
     cin_thread=false;
     return;
 }
+void send_TS(){
+    cin_thread=true;
+    cls(); 
+    float value1;
+    printf(green(Tsampling) "\n");
+    cout<<"Ts = "<<endl;
+    cin>>value1;
+    if(cin.fail()) throw 505;
+    rasp_i2c.sendFloat(TS_CONTROL, value1);
+    cout<<"Values sent : "<<endl;
+    sleep(1);
+    cin_thread=false;
+    return; 
+}
 void *menu(void *threadid){
     while(1){
         cls();    
@@ -189,8 +203,9 @@ void *menu(void *threadid){
         printf(green([5]) " " white(Send PID YAW  \n));
         printf(green([6]) " " white(Zero position \n));
         printf(green([7]) " " white(Send H \n));
-        printf(green([8]) " " white(Write register \n));
-        printf(green([9]) " " white(Read register \n));
+        printf(green([8]) " " white(Sample period (ms) PID TS \n));
+        printf(green([9]) " " white(Write register \n));
+        printf(green([10]) " " white(Read register \n));
         printf(white(Enter an option = \n));
         while(!inputReceived){
             // paralelizando
@@ -208,8 +223,9 @@ void *menu(void *threadid){
             case 5: send_PID_YAW(); break;
             case 6: zeroPosition(); break;
             case 7: send_H(); break;
-            case 8: writeRegister(); break;
-            case 9: readRegister(); break;
+            case 8: send_TS(); break;
+            case 9: writeRegister(); break;
+            case 10: readRegister(); break;
             default: printf("%d is not an option, please enter option again\n", id_choosen); break;
         }
         //sleep(2);
