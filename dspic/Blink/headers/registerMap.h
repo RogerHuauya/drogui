@@ -27,5 +27,7 @@
 #define YAW_SEN     0x49
 
 #define H_VAL 0x4D
+#define H_STEP_SIZE 0x51
+#define TS_CONTROL 0X55
 
 #endif
