@@ -90,17 +90,7 @@ void initializeSystem(){
     
     
     initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
-    i2c2Reg[0x01] = 0;
-
-    i2c2Reg[0x02] = 0;
-
-    i2c2Reg[0x03] = 0;
-    i2c2Reg[0x04] = 0;
-    i2c2Reg[0x05] = 0;
-    
-    i2c2Reg[0x06] = 0;
-    i2c2Reg[0x07] = 0;
-    i2c2Reg[0x08] = 0;
+    clearI2Cregisters(I2C2);
 
     i2c2Reg[0x09] = 0;
     i2c2Reg[0x0A] = 0;

@@ -1,47 +1,95 @@
+#define raspberry
+
 #include <iostream>
 #include <fstream>
 #include <unistd.h> 
+
+#ifdef raspberry
 #include <wiringPiI2C.h>
+#endif
+
+#include <pthread.h>
+#include "registerMap.h"
+#include "utils.h"
+#include <ctime>
 
 
 using namespace std;
 
-#define RmoveM1   0x01
-#define RmoveM2   0x02
-#define RmoveM3   0x03
-#define RmoveM4   0x04
-#define RcalibM   0x05
-#define RpauseM   0x06
-#define Rstop     0x07
-#define RpX       0x08
-#define RpY       0X09
-#define RpZ       0x10
-#define RdiffX    0x11
-#define RdiffY    0x12
-#define RdiffZ    0x13
-#define Ralpha    0x14
-#define Rpresion  0x15
-#define Rimu      0x16
-#define Rbateria  0x17    
-
-#define red(n)      "\033[1;31m"#n"\033[0m"
-#define green(n)    "\033[1;32m"#n"\033[0m"
-#define yellow(n)   "\033[1;33m"#n"\033[0m"
-#define blue(n)     "\033[1;34m"#n"\033[0m"
-#define white(n)    "\033[1;37m"#n"\033[0m"
 #define BUFF_LENGTH 500
+#define DSPIC_ADDRESS 0x60
 int fd;
+bool inputReceived = false;
+int index_, value; 
+int rc;
+void cls(){
+    system("clear");
+}
+uint8_t readMCU(uint8_t rogerperry);
+
+/*
+#include <iostream>
+#include <cstdlib>
+#include <pthread.h>
+
+using namespace std;
+
+#define NUM_THREADS 5
+
+void *pLeerSerial(void *threadid) {
+   long tid;
+   tid = (long)threadid;
+   cout << "Hello World! Thread ID, " << tid << endl;
+   pthread_exit(NULL);
+}
+
+int main () {
+   pthread_t threads[NUM_THREADS];
+   int rc;
+   int i;
+   
+   for( i = 0; i < NUM_THREADS; i++ ) {
+      cout << "main() : creating thread, " << i << endl;
+      rc = pthread_create(&threads[i], NULL, pLeerSerial, (void *)i);
+      
+      if (rc) {
+         cout << "Error:unable to create thread," << rc << endl;
+         exit(-1);
+      }
+   }
+   pthread_exit(NULL);
+}
+
+gcc test.cpp -lpthread
+
+*/
 void desplazamiento(){
+    /*
 	//auto v = root["desplazamiento"];
 	double x, y, z, alp;
 	cin>>x>>y>>z>>alp;
 	printf("X: %lf, Y: %lf, Z: %lf, alpha: %lf\n", x, y, z, alp);
 	//printf("X: %lf, Y: %lf, Z: %lf, alpha: %lf\n", v[0].asDouble(), v[1].asDouble(), v[2].asDouble(), v[3].asDouble());
-
+    */
 }
 
 void dataSensor(){
-
+    while(true){
+        uint8_t r = rand()%15, p = rand()%15, y = rand()%15;
+        #ifdef raspberry
+            r = readMCU(Rroll);
+            p = readMCU(Rpitch);
+            y = readMCU(Ryaw);
+        #endif
+        //cls();
+        //usleep(200);
+        //printf(green(roll\t)  " "  green(pitch\t) " " green(yaw\t\n));
+        printf("%d\t%d\t%d\n", r, p, y);
+        //printf("prueba \n");
+        if(inputReceived) break;
+        //sleep(1);
+        
+    }
 	/*root.clear();
 	root["imu"] = 5.42;
 	root["pressure"] = 1033.05;
@@ -49,6 +97,7 @@ void dataSensor(){
 	s = fw.write(root);
 	drone.sendJson(s);
 	*/
+
 }
 
 void finalCoordinates(){
@@ -62,9 +111,7 @@ void finalCoordinates(){
 void ARM(){
 
 }
-void cls(){
-    system("clear");
-}
+
 void zeroPosition(){
 
 }
@@ -73,63 +120,96 @@ void emergencyStop(){
 	
 }
 
-void writeMCU(uint8_t reg, uint8_t val){	
+void writeMCU(uint8_t reg, uint8_t val){
+    #ifdef raspberry	
 	wiringPiI2CWriteReg8 (fd, reg, val);
+    #endif
+    //cout<<"Register "<<reg<<" has been written with "<<val<<endl;
 }
 uint8_t readMCU(uint8_t reg){
-	return wiringPiI2CReadReg8 (fd, reg);
+    uint8_t val;
+    #ifdef raspberry
+	val = wiringPiI2CReadReg8 (fd, reg);
+    #endif
+    //cout<<"Register "<<reg<<" has been written with "<<val<<endl;
+    return val;
+}
+void writeRegister(){
+    while(!inputReceived){}
+    inputReceived = false;
+    writeMCU(index_, value);
 }
 
+void readRegister(){
+    while(!inputReceived){}
+    inputReceived = false;
+    value = readMCU(index_);
+}
 
-int menu(){
+void *menu(void *threadid){
+    while(1){
     cls();    
     printf("\t\t\t\t\t\t\t\t" blue(Principal menu) "\n");
-    printf(green([0]) " " white( Emergency stop\n));
+    printf(green([0]) " " white(Emergency stop\n));
     printf(green([1]) " " white(Desplazamiento\n));
     printf(green([2]) " " white(Show data sensor\n));
-    printf(green([3]) " " white(Final coordinates\n));
+    printf(green([3]) " " white(Final coordinates \n));
     printf(green([4]) " " white(ARM\n));
-    printf(green([5]) " " white(Calibrar ESC\n));
-    printf(green([6]) " " white(Zero position\n));
-    int op;
-    printf("\n");
-    printf(blue(Please enter an option >>>));
-    cin>>op;
-    switch(op){
-		case 0: emergencyStop(); break;
+    printf(green([5]) " " white(Calibrar ESC \n));
+    printf(green([6]) " " white(Zero position \n));
+    printf(green([7]) " " white(Write register \n));
+    printf(green([8]) " " white(Read register \n));
+    printf(white(Enter an option = \n));
+     while(!inputReceived){
+        // paralelizando
+        //cout<<" roger "<<endl;
+    };
+    inputReceived = false;
+    cout<<"menu "<<index_<<endl;
+    sleep(1);
+    switch(index_){
+    	case 0: emergencyStop(); break;
         case 1: desplazamiento(); break;
         case 2: dataSensor(); break;
         case 3: finalCoordinates(); break;
         case 4: ARM(); break;
         case 5: calibrateESC(); break;
         case 6: zeroPosition(); break;
-        default: printf("%d is not an option, please enter option again\n", op); menu(); break;
+        case 7: writeRegister(); break;
+        case 8: readRegister(); break;
+        default: printf("%d is not an option, please enter option again\n", index_); break;
     }
-    sleep(2);
+    //sleep(2);
+    //return 0;
+    }
+    pthread_exit(NULL);
     return 0;
 }
 
 int main(int argc, char** argv ){
- 	fd = wiringPiI2CSetup (0x60);
-	cout<<"Start :) "<<endl;
-        while(1){//for(int roger = 1; roger < 200; roger++){
-            int roger,value; 
-            uint8_t valor,regist;std::cin.clear();
-            cin>>roger>>value;//scanf(valor);
-            valor = (uint8_t)value & 0xff;//sscanf("valor =", "%2",&valor);
-            regist = (uint8_t)roger & 0xff;
-            cout<<"Data sent : "<<+regist<<" "<<+valor<<endl;
-            wiringPiI2CWriteReg8 (fd,regist,valor);
-	    sleep(1);
-            uint8_t ans; 
-	    ans = wiringPiI2CReadReg8 (fd,regist);
-	    cout<<"register "<<+ans<<endl;
-	    sleep(1);
-        }
-	/*
-	while(1){
-		menu();
-		sleep(2);
+    pthread_t threads[NUM_THREADS];
+    srand((unsigned) time(NULL));
+
+    #ifdef raspberry
+    fd = wiringPiI2CSetup(DSPIC_ADDRESS);
+    #endif
+    cout<<"Program has started"<<endl;
+    //rc = pthread_create(&threads[0], NULL, menu, (void *)0);
+    cout<<"Thread created "<<endl;
+    while(1){
+        std::cin.clear();
+        cin>>index_>>value;
+        cout<<"main : "<<index_<<endl;
+        inputReceived = true;
+        writeRegister();
+        inputReceived = true;
+        readRegister();
+        cout<<value<<endl;
+    }
+    /*
+    while(1){
+        menu();
+        sleep(2);
     }*/
     return 0;
 }
