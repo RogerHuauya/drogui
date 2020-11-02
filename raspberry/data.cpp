@@ -200,11 +200,13 @@ int main(int argc, char** argv ){
         std::cin.clear();
         cin>>index_>>value;
         cout<<"main : "<<index_<<endl;
-        inputReceived = true;
-        writeRegister();
-        inputReceived = true;
-        readRegister();
-        cout<<value<<endl;
+        writeMCU(index_,value);
+        cout<<+readMCU(index_)<<endl;
+         //inputReceived = true;
+        //writeRegister();
+        //inputReceived = true;
+        //readRegister();
+        //cout<<value<<endl;
     }
     /*
     while(1){
