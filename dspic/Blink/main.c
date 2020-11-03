@@ -1,5 +1,6 @@
 #define MAIN
 #ifdef MAIN
+
 #include <xc.h>
 #include "config.h"
 #include <libpic30.h>
@@ -102,17 +103,6 @@ void initializeSystem(){
     
 }
 
-void armingSequence(){
-    for(int i = -100 ; i <= 100 ; i++){
-        setPwmDutyTime(&m1, min(max(100 - abs(i),0), 100));
-        setPwmDutyTime(&m2, min(max(100 - abs(i),0), 100));
-        setPwmDutyTime(&m3, min(max(100 - abs(i),0), 100));
-        setPwmDutyTime(&m4, min(max(100 - abs(i),0), 100));
-        sprintf(buffer, "%d\n", 50 - abs(i));
-        serialWriteString(&Serial1, buffer);
-        __delay_ms(100);
-    }
-}
 
 void getEuler(double q0,double q1,double q2, double q3);
 
@@ -154,7 +144,7 @@ int main(void){
     roll_off = roll;
     pitch_off = pitch;
     yaw_off = yaw;
-    //armingSequence();
+    
     while(1){
 
         H += fabs(getReg(H_VAL) - H) >= getReg(H_STEP_SIZE)  ? copysign(getReg(H_STEP_SIZE), getReg(H_VAL) - H) : 0;
@@ -194,7 +184,7 @@ int main(void){
         
         sprintf(buffer, "%.3lf %.3lf %.3lf %.3lf\n", H, R, P, Y);
         serialWriteString(&Serial1, buffer);
-        __delay_ms(max((int) getReg(TS_CONTROL), 100);
+        __delay_ms(max((int) getReg(TS_CONTROL), 100));
 
     }
     return 0;
