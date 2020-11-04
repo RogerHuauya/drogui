@@ -168,11 +168,30 @@ void readRegister(){
     cin_thread=true;
     cls(); 
     int reg;
-    cout<<"REG = "<<endl;
-    cin>>reg;
+    
+    printf("\t\t\t\t\t\t\t\t" blue(Principal menu) "\n");
+    printf(green([0]) " " white(H_dH\n));
+    printf(green([1]) " " white(PID_ROLL\n));
+    printf(green([2]) " " white(PID_PITCH\n));
+    printf(green([3]) " " white(PID_YAW\n));
+
+    cin >> reg;
     if(cin.fail()) throw 505;
-    cout<<"Value sent : "<<reg<<endl;
-    cout<<"Value readed : "<<rasp_i2c.readFloat((uint8_t)reg)<<endl;
+    switch(reg){
+        case 0: cout << rarasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE) << endl; break;
+        case 1: cout << rasp_i2c.readFloat(ROLL_KP) << " ";
+                 cout << rasp_i2c.readFloat(ROLL_KI) << " ";
+                 cout << rasp_i2c.readFloat(ROLL_KD) << endl; break;
+        
+        case 2: cout << rasp_i2c.readFloat(PITCH_KP) << " ";
+                 cout << rasp_i2c.readFloat(PITCH_KI) << " ";
+                 cout << rasp_i2c.readFloat(PITCH_KD) << endl; break;
+        
+        case 3:cout << rasp_i2c.readFloat(YAW_KP) << " ";
+                 cout << rasp_i2c.readFloat(YAW_KI) << " ";
+                 cout << rasp_i2c.readFloat(YAW_KD) << endl; break;
+    }
+
     sleep(1);
     cin_thread=false;
     return;
@@ -213,7 +232,7 @@ void *menu(void *threadid){
         };
         inputReceived = false;
         cout<<"menu : "<<id_choosen<<endl;
-        sleep(1);
+        //sleep(1);
         switch(id_choosen){
             case 0: normalStop(); break;
             case 1: desplazamiento(); break;
@@ -264,7 +283,10 @@ int main(int argc, char** argv ){
                 cin>>id_choosen;
                 if(cin.fail()) throw 505;
                 cout<<"function choosen: "<<id_choosen<<endl;
-                if(id_choosen==8 ||  id_choosen==9) cin_thread=true;
+                if(id_choosen==3 ||  id_choosen==4 ||\
+                 id_choosen ==5 || id_choosen == 7 || \
+                 id_choosen == 8 || id_choosen == 9 || id_choosen == 10) 
+                 cin_thread=true;
                 inputReceived = true;
             #endif
             }
