@@ -1,5 +1,5 @@
 #include "control.h"
-double computePid(pid* p, double error, unsigned long t){
+double computePid(pid* p, double error, unsigned long long t){
     p->dt = (t - p->tant)/1000.0;
     p->tant = t;
     p->erri = max(min(p->erri + error*p->dt,p->isat),-p->isat);

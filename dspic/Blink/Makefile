@@ -56,5 +56,5 @@ $(TARGET).elf : $(OBJS)
 
 # Erase all hex, map, object, and elf files.
 clean :
-	$(RM) *.hex *.map *.elf *.dep *.dis *.o
+	del *.hex *.map *.elf *.dep *.dis *.o
 	     

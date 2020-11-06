@@ -1,7 +1,6 @@
 #ifndef REGISTER_MAP_H
 #define REGISTER_MAP_H
 
-#define NUM_THREADS 2
 #define M1_VAL   0x01
 #define M2_VAL   0x05
 #define M3_VAL   0x09
@@ -26,5 +25,11 @@
 #define ROLL_SEN    0x41
 #define PITCH_SEN   0x45
 #define YAW_SEN     0x49
+
+#define H_VAL 0x4D
+#define H_STEP_SIZE 0x51
+#define TS_CONTROL 0X55
+
+#define NUM_THREADS 2
 
 #endif
