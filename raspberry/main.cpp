@@ -178,7 +178,7 @@ void readRegister(){
     cin >> reg;
     if(cin.fail()) throw 505;
     switch(reg){
-        case 0: cout << rarasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE) << endl; break;
+        case 0: cout << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE) << endl; break;
         case 1: cout << rasp_i2c.readFloat(ROLL_KP) << " ";
                  cout << rasp_i2c.readFloat(ROLL_KI) << " ";
                  cout << rasp_i2c.readFloat(ROLL_KD) << endl; break;
