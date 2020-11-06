@@ -123,11 +123,9 @@ int dig = 0;
 void timerInterrupt(2){
     readOrient(&ori);        
     getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
-    
-    i2c2Reg[ROLL_DEG] = roll*180.0/pi+180;
-    i2c2Reg[PITCH_DEG] = pitch*180.0/pi+180;
-    i2c2Reg[YAW_DEG] = yaw*180.0/pi+180;
-
+    setReg(ROLL_DEG,(float)roll*180.0/pi+180);
+    setReg(PITCH_DEG,(float)pitch*180.0/pi+180);
+    setReg(YAW_DEG,(float)yaw*180.0/pi+180);
     clearTimerFlag(&readSensors);
 }
 
