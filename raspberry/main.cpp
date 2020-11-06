@@ -1,7 +1,7 @@
 #define raspberry
 #define BUFF_LENGTH 500
 #define DSPIC_ADDRESS 0x60
-
+#define pi 3.141592
 #include <iostream>
 #include "registerMap.h"
 #include <ctime>
@@ -36,21 +36,21 @@ void desplazamiento(){
 
 void dataSensor(){
     int cnt= 0;
-    while(cnt<100){//true){
-        uint8_t r = rand()%15, p = rand()%15, y = rand()%15;
+    while(true){
+        float r = rand()%15, p = rand()%15, y = rand()%15;
         #ifdef raspberry
-            //r = rasp_i2c.readMCU(Rroll);
-            //p = readMCU(Rpitch);
-            //y = readMCU(Ryaw);
+            r = rasp_i2c.readFloat(ROLL_DEG)*180.0/pi+180;
+            p = rasp_i2c.readFloat(PITCH_DEG)*180.0/pi+180;
+            y = rasp_i2c.readFloat(YAW_DEG)*180.0/pi+180;
         #endif
         //cls();
-        usleep(500000);
+        usleep(50000);
         //printf(green(roll\t)  " "  green(pitch\t) " " green(yaw\t\n));
-        printf("%d\t %d\t%d\t%d\n",cnt, r, p, y);
+        printf("%d\t %f\t%f\t%f\n",cnt, r, p, y);
         //printf("prueba \n");
         cnt++;
         if(inputReceived) break;
-        sleep(1);        
+        //sleep(1);        
     }
 	/*root.clear();
 	root["imu"] = 5.42;
