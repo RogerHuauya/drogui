@@ -39,9 +39,9 @@ void dataSensor(){
     while(cnt<100){//true){
         uint8_t r = rand()%15, p = rand()%15, y = rand()%15;
         #ifdef raspberry
-            //r = rasp_i2c.readMCU(Rroll);
-            //p = readMCU(Rpitch);
-            //y = readMCU(Ryaw);
+            r = rasp_i2c.readFloat(ROLL_DEG);
+            p = rasp_i2c.readFloat(PITCH_DEG);
+            y = rasp_i2c.readFloat(YAW_DEG);
         #endif
         //cls();
         usleep(500000);
