@@ -39,9 +39,9 @@ void dataSensor(){
     while(cnt<100){//true){
         uint8_t r = rand()%15, p = rand()%15, y = rand()%15;
         #ifdef raspberry
-            //r = rasp_i2c.readMCU(Rroll);
-            //p = readMCU(Rpitch);
-            //y = readMCU(Ryaw);
+            r = rasp_i2c.readFloat(ROLL_DEG);
+            p = rasp_i2c.readFloat(PITCH_DEG);
+            y = rasp_i2c.readFloat(YAW_DEG);
         #endif
         //cls();
         usleep(500000);
@@ -115,6 +115,22 @@ void send_PID_PITCH(){
     cin_thread=false;
     return;
 }
+
+void send_H(){
+    cin_thread=true;
+    cls(); 
+    float value1,value2;
+    printf(green(H value and stepsize) "\n");
+    cout<<"H deltaH = "<<endl;
+    cin>>value1>>value2;
+    if(cin.fail()) throw 505;
+    rasp_i2c.sendFloat(H_VAL, value1);
+    rasp_i2c.sendFloat(H_STEP_SIZE, value2);
+    cout<<"Values sent : "<<endl;
+    sleep(1);
+    cin_thread=false;
+    return; 
+}
 void send_PID_YAW(){    
     cin_thread=true;
     cls(); 
@@ -152,14 +168,47 @@ void readRegister(){
     cin_thread=true;
     cls(); 
     int reg;
-    cout<<"REG = "<<endl;
-    cin>>reg;
+    
+    printf("\t\t\t\t\t\t\t\t" blue(Principal menu) "\n");
+    printf(green([0]) " " white(H_dH\n));
+    printf(green([1]) " " white(PID_ROLL\n));
+    printf(green([2]) " " white(PID_PITCH\n));
+    printf(green([3]) " " white(PID_YAW\n));
+
+    cin >> reg;
     if(cin.fail()) throw 505;
-    cout<<"Value sent : "<<reg<<endl;
-    cout<<"Value readed : "<<rasp_i2c.readFloat((uint8_t)reg)<<endl;
+    switch(reg){
+        case 0: cout << rarasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE) << endl; break;
+        case 1: cout << rasp_i2c.readFloat(ROLL_KP) << " ";
+                 cout << rasp_i2c.readFloat(ROLL_KI) << " ";
+                 cout << rasp_i2c.readFloat(ROLL_KD) << endl; break;
+        
+        case 2: cout << rasp_i2c.readFloat(PITCH_KP) << " ";
+                 cout << rasp_i2c.readFloat(PITCH_KI) << " ";
+                 cout << rasp_i2c.readFloat(PITCH_KD) << endl; break;
+        
+        case 3:cout << rasp_i2c.readFloat(YAW_KP) << " ";
+                 cout << rasp_i2c.readFloat(YAW_KI) << " ";
+                 cout << rasp_i2c.readFloat(YAW_KD) << endl; break;
+    }
+
     sleep(1);
     cin_thread=false;
     return;
+}
+void send_TS(){
+    cin_thread=true;
+    cls(); 
+    float value1;
+    printf(green(Tsampling) "\n");
+    cout<<"Ts = "<<endl;
+    cin>>value1;
+    if(cin.fail()) throw 505;
+    rasp_i2c.sendFloat(TS_CONTROL, value1);
+    cout<<"Values sent : "<<endl;
+    sleep(1);
+    cin_thread=false;
+    return; 
 }
 void *menu(void *threadid){
     while(1){
@@ -172,8 +221,10 @@ void *menu(void *threadid){
         printf(green([4]) " " white(Send PID PITCH\n));
         printf(green([5]) " " white(Send PID YAW  \n));
         printf(green([6]) " " white(Zero position \n));
-        printf(green([7]) " " white(Write register \n));
-        printf(green([8]) " " white(Read register \n));
+        printf(green([7]) " " white(Send H \n));
+        printf(green([8]) " " white(Sample period (ms) PID TS \n));
+        printf(green([9]) " " white(Write register \n));
+        printf(green([10]) " " white(Read register \n));
         printf(white(Enter an option = \n));
         while(!inputReceived){
             // paralelizando
@@ -181,7 +232,7 @@ void *menu(void *threadid){
         };
         inputReceived = false;
         cout<<"menu : "<<id_choosen<<endl;
-        sleep(1);
+        //sleep(1);
         switch(id_choosen){
             case 0: normalStop(); break;
             case 1: desplazamiento(); break;
@@ -190,8 +241,10 @@ void *menu(void *threadid){
             case 4: send_PID_PITCH(); break;
             case 5: send_PID_YAW(); break;
             case 6: zeroPosition(); break;
-            case 7: writeRegister(); break;
-            case 8: readRegister(); break;
+            case 7: send_H(); break;
+            case 8: send_TS(); break;
+            case 9: writeRegister(); break;
+            case 10: readRegister(); break;
             default: printf("%d is not an option, please enter option again\n", id_choosen); break;
         }
         //sleep(2);
@@ -230,7 +283,10 @@ int main(int argc, char** argv ){
                 cin>>id_choosen;
                 if(cin.fail()) throw 505;
                 cout<<"function choosen: "<<id_choosen<<endl;
-                if(id_choosen==7 ||  id_choosen==8) cin_thread=true;
+                if(id_choosen==3 ||  id_choosen==4 ||\
+                 id_choosen ==5 || id_choosen == 7 || \
+                 id_choosen == 8 || id_choosen == 9 || id_choosen == 10) 
+                 cin_thread=true;
                 inputReceived = true;
             #endif
             }
