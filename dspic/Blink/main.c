@@ -1,5 +1,6 @@
-//#define MAIN
+#define MAIN
 #ifdef MAIN
+
 #include <xc.h>
 #include "config.h"
 #include <libpic30.h>
@@ -36,7 +37,7 @@ timer readSensors;
 timer millis;
 
 double roll, pitch, yaw;
-volatile unsigned long time = 0;
+volatile unsigned long long time = 0;
 
 void initializeSystem(){
     
@@ -72,9 +73,9 @@ void initializeSystem(){
     initPid(&x_control, 1, 0, 0, 0, 10 , 100);
     initPid(&y_control, 1, 0, 0, 0, 10 , 100);
     
-    initPid(&roll_control, 20, 0, 0, 0, 10 , 100);
-    initPid(&pitch_control, 20, 0, 0, 0, 10 , 100);
-    initPid(&yaw_control, 20, 0, 0, 0, 10 , 100);
+    initPid(&roll_control, 0, 0, 0, 0, 1 , 100);
+    initPid(&pitch_control, 0, 0, 0, 0, 1 , 100);
+    initPid(&yaw_control, 0, 0, 0, 0, 1 , 100);
     
 
     initMM7150();
@@ -90,11 +91,7 @@ void initializeSystem(){
     
     
     initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
-    i2c2Reg[0x01] = 0;
-    i2c2Reg[0x05] = 0;
-    i2c2Reg[0x06] = 0;
-    i2c2Reg[0x07] = 0;
-    i2c2Reg[0x08] = 0;
+    clearI2Cregisters(I2C2);
 
     __delay_ms(500);
     
@@ -102,17 +99,6 @@ void initializeSystem(){
     
 }
 
-void armingSequence(){
-    for(int i = -100 ; i <= 100 ; i++){
-        setPwmDutyTime(&m1, min(max(100 - abs(i),0), 100));
-        setPwmDutyTime(&m2, min(max(100 - abs(i),0), 100));
-        setPwmDutyTime(&m3, min(max(100 - abs(i),0), 100));
-        setPwmDutyTime(&m4, min(max(100 - abs(i),0), 100));
-        sprintf(buffer, "%d\n", 50 - abs(i));
-        serialWriteString(&Serial1, buffer);
-        __delay_ms(100);
-    }
-}
 
 void getEuler(double q0,double q1,double q2, double q3);
 
@@ -123,9 +109,17 @@ int dig = 0;
 void timerInterrupt(2){
     readOrient(&ori);        
     getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
+<<<<<<< HEAD
     setReg(ROLL_DEG,(float)roll*180.0/pi+180);
     setReg(PITCH_DEG,(float)pitch*180.0/pi+180);
     setReg(YAW_DEG,(float)yaw*180.0/pi+180);
+=======
+    
+    setReg(ROLL_DEG,(float)(roll));
+    setReg(PITCH_DEG,(float)(pitch));
+    setReg(YAW_DEG,(float)(yaw));
+    
+>>>>>>> origin/inglis
     clearTimerFlag(&readSensors);
 }
 
@@ -136,11 +130,13 @@ void timerInterrupt(3){
 
 double angle_dif(double angle1, double angle2);
 
-double  H,R,P,Y, Haux;
+double  H,R,P,Y;
 double M1,M2,M3,M4;
 uint8_t haux = 0;
 double roll_off, pitch_off, yaw_off;
 long long pm = 0;
+
+
 int main(void){
     
     initializeSystem();
@@ -150,53 +146,53 @@ int main(void){
     roll_off = roll;
     pitch_off = pitch;
     yaw_off = yaw;
-    //armingSequence();
+
     while(1){
-        
-       /*
-        roll +1 +4 -2 -3 pi
-        
-        pitch +4 -2 -1 +3 0
 
-        yaw   -1 +2 -3 +4 pi
-
-       */
-        if(haux != i2c2Reg[0x05]){
-            haux = i2c2Reg[0x05];
-            Haux = haux;
-        }
-        H += abs(Haux - H) > 0.1  ? (copysign(0.1, (H - Haux))) : 0;
-        roll_control.kp = i2c2Reg[0x06];
-        pitch_control.kp = i2c2Reg[0x07];
-        yaw_control.kp = i2c2Reg[0x08];
+        H += fabs(getReg(H_VAL) - H) >= getReg(H_STEP_SIZE)  ? copysign(getReg(H_STEP_SIZE), getReg(H_VAL) - H) : 0;
+        
         R = computePid(&roll_control, angle_dif(-pi, roll), time);
         P = computePid(&pitch_control, angle_dif(0, pitch), time);
         Y = computePid(&yaw_control, angle_dif(yaw_off, yaw), time);
         
-
         M1 = H + R - P - Y;
         M2 = H - R - P + Y;
         M3 = H - R + P - Y;
         M4 = H + R + P + Y;
-        if(H == 0) M1 = M2 = M3 = M4 = 0;
+        
+        if(getReg(H_VAL) == 0){
+            H = 0;
+            M1 = M2 = M3 = M4 = 0;
+            
+            roll_control.kp = getReg(ROLL_KP);
+            roll_control.ki = getReg(ROLL_KI);
+            roll_control.kd = getReg(ROLL_KD);
+            
+            pitch_control.kp = getReg(PITCH_KP);
+            pitch_control.ki = getReg(PITCH_KI);
+            pitch_control.kd = getReg(PITCH_KD);
+            
+            yaw_control.kp = getReg(YAW_KP);
+            yaw_control.ki = getReg(YAW_KI);
+            yaw_control.kd = getReg(YAW_KD);
+
+            resetPid(&roll_control, time);
+            resetPid(&pitch_control, time);
+            resetPid(&yaw_control, time);
+        }
+
         setPwmDutyTime(&m1, min(max(M1,0), 100));
         setPwmDutyTime(&m2, min(max(M2,0), 100));
         setPwmDutyTime(&m3, min(max(M3,0), 100));
         setPwmDutyTime(&m4, min(max(M4,0), 100));
         
-        sprintf(buffer, "%.3lf %.3lf %.3lf \t\t%d %d %d %d\n", roll, pitch, yaw, M1, M2, M3, M4);
+        sprintf(buffer, "%.3lf %.3lf %.3lf %.3lf\n", H, R, P, Y);
         serialWriteString(&Serial1, buffer);
-        __delay_ms(100);
+        __delay_ms(max((int) getReg(TS_CONTROL), 5));
 
     }
     return 0;
 }
-/*
-    180, -170
-    -170, 180
-    180, 160
-    160, 180
-*/
 
 double angle_dif(double angle1, double angle2){
     if(angle1 > angle2){
