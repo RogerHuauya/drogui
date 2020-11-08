@@ -113,11 +113,9 @@ int dig = 0;
 void timerInterrupt(2){
     readOrient(&ori);        
     getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
-    
     setReg(ROLL_DEG,(float)(roll));
     setReg(PITCH_DEG,(float)(pitch));
     setReg(YAW_DEG,(float)(yaw));
-    
     clearTimerFlag(&readSensors);
 }
 
