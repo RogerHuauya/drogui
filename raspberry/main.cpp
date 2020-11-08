@@ -4,8 +4,12 @@
 #define pi 3.141592
 #include <iostream>
 #include "registerMap.h"
+#include "arduPi.h"
+#include "sim7x00.h"
 #include <ctime>
 #include <signal.h>
+#include <time.h>
+#include <unistd.h>
 
 #ifdef raspberry
 #include "utils.h"
@@ -17,12 +21,15 @@ using namespace std;
 
 
 
-bool inputReceived = false;
+bool inputReceived = false, logging_state = false;
 bool cin_thread = false;
 int id_choosen, value; 
 int id_threads;
-
-
+int id_threads_log;
+void sleep(unsigned milliseconds)
+{
+    unistd::usleep(milliseconds * 1000); // takes microseconds
+}
 
 void desplazamiento(){
     /*
@@ -44,7 +51,7 @@ void dataSensor(){
             y = rasp_i2c.readFloat(YAW_DEG)*180.0/pi+180;
         #endif
         //cls();
-        usleep(50000);
+        //usleep(50000);
         //printf(green(roll\t)  " "  green(pitch\t) " " green(yaw\t\n));
         printf("%d\t %f\t%f\t%f\n",cnt, r, p, y);
         //printf("prueba \n");
@@ -127,6 +134,8 @@ void send_H(){
     rasp_i2c.sendFloat(H_VAL, value1);
     rasp_i2c.sendFloat(H_STEP_SIZE, value2);
     cout<<"Values sent : "<<endl;
+    if(value1 == 0) logging_state = false;
+    else logging_state = true;
     sleep(1);
     cin_thread=false;
     return; 
@@ -210,6 +219,40 @@ void send_TS(){
     cin_thread=false;
     return; 
 }
+void send_AT_command(){
+    cin_thread = true;
+    cls();
+    char at_command[100];
+    memset(at_command, '\0', 100);    // Initialize the string
+    delay(100);
+    while (Serial.available() > 0) Serial.read();    // Clean the input buffer
+
+    printf("Please input the AT command\n:");
+    cin>>at_command;
+
+    Serial.println(at_command);
+    sim7600.sendATcommand(at_command, 2000);
+    cin_thread = false;
+    printf("Trash\n");
+    return;
+}
+
+void *logging(void *threadid){
+    ofstream log_file;
+    while(1){
+        while(!logging_state){}
+        log_file.open("log_01");
+        while(1){
+            log_file<<rasp_i2c.readFloat(YAW_DEG)*180.0/pi+180;
+            log_file<<" ";
+            log_file<<rasp_i2c.readFloat(ROLL_DEG)*180.0/pi+180;
+            log_file<<" ";
+            log_file<<rasp_i2c.readFloat(PITCH_DEG)*180.0/pi+180<<endl;
+            unistd::usleep(10); // takes microseconds
+            if(!logging_state) break;
+        }
+    }
+}
 void *menu(void *threadid){
     while(1){
         cls();    
@@ -225,6 +268,7 @@ void *menu(void *threadid){
         printf(green([8]) " " white(Sample period (ms) PID TS \n));
         printf(green([9]) " " white(Write register \n));
         printf(green([10]) " " white(Read register \n));
+        printf(green([11]) " " white(Send AT command \n));
         printf(white(Enter an option = \n));
         while(!inputReceived){
             // paralelizando
@@ -245,6 +289,7 @@ void *menu(void *threadid){
             case 8: send_TS(); break;
             case 9: writeRegister(); break;
             case 10: readRegister(); break;
+            case 11: send_AT_command(); break;
             default: printf("%d is not an option, please enter option again\n", id_choosen); break;
         }
         //sleep(2);
@@ -255,14 +300,15 @@ void *menu(void *threadid){
 }
 
 int main(int argc, char** argv ){
-	try{ 
+	//try{ 
         enable_emergency_stop();
         srand((unsigned) time(NULL));
         cout<<"Program has started"<<endl;
         #ifdef raspberry
         pthread_t threads[NUM_THREADS];
         id_threads  = pthread_create(&threads[0], NULL, menu, (void *)0);
-        cout<<"Thread created "<<endl;
+        id_threads_log  = pthread_create(&threads[1], NULL, logging, (void *)0);
+        cout<<"Threads created "<<endl;
         #endif
         /*
         while(1){
@@ -275,6 +321,7 @@ int main(int argc, char** argv ){
             cout<<"Value confirm : "<<rasp_i2c.readFloat(M1_VAL)<<endl;
             #endif
         }*/
+
         while(1){
             #ifdef raspberry
             if(!cin_thread){
@@ -291,11 +338,11 @@ int main(int argc, char** argv ){
             #endif
             }
         }
-    }
-	catch (...){
+    //}
+	/*catch (...){
         normalStop();
 		cout << "Error exception occurred!" << endl;
 		return 0;
-	}
+	}*/
     return 0;
 }
