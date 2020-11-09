@@ -409,7 +409,3 @@ extern WirePi Wire;
 extern SPIPi SPI;
 
 #endif
-<<<<<<< HEAD
-=======
-
->>>>>>> b92f1f312d195e5754e1eace887630ea83a4c911
