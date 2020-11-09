@@ -110,6 +110,7 @@ void timerInterrupt(2){
     readOrient(&ori);        
     getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
 <<<<<<< HEAD
+<<<<<<< HEAD
     setReg(ROLL_DEG,(float)roll*180.0/pi+180);
     setReg(PITCH_DEG,(float)pitch*180.0/pi+180);
     setReg(YAW_DEG,(float)yaw*180.0/pi+180);
@@ -120,6 +121,11 @@ void timerInterrupt(2){
     setReg(YAW_DEG,(float)(yaw));
     
 >>>>>>> origin/inglis
+=======
+    setReg(ROLL_DEG,(float)(roll));
+    setReg(PITCH_DEG,(float)(pitch));
+    setReg(YAW_DEG,(float)(yaw));
+>>>>>>> b92f1f312d195e5754e1eace887630ea83a4c911
     clearTimerFlag(&readSensors);
 }
 

@@ -1426,7 +1426,11 @@ int getBoardRev(){
 	if (REV != 0) return REV;
 	
 	if ((cpu_info = fopen("/proc/cpuinfo","r"))==NULL){
+<<<<<<< HEAD
 		fprintf(stderr,"Unable to open /proc/cpuinfo. Cannot determine board reivision.\n");
+=======
+		fprintf(stderr,"Unable to open /proc/cpuinfo. Cannot determine boad reivision.\n");
+>>>>>>> b92f1f312d195e5754e1eace887630ea83a4c911
 		exit(1);
 	}
 	
@@ -1574,3 +1578,7 @@ void * threadFunction(void *args){
 SerialPi Serial = SerialPi();
 WirePi Wire = WirePi();
 SPIPi SPI = SPIPi();
+<<<<<<< HEAD
+=======
+
+>>>>>>> b92f1f312d195e5754e1eace887630ea83a4c911

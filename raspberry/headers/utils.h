@@ -9,6 +9,10 @@
 #include <cstdint>
 #include <fstream>
 #include <unistd.h> 
+
+#include <iomanip>
+#include <ctime>
+
 //#include <stdlib.h>
 //#include <stdio.h>
 
@@ -36,5 +40,6 @@ class rasp_I2C{
 };
 
 void cls();
+std::string str_datetime();
 
 #endif
