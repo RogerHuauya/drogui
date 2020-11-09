@@ -26,6 +26,11 @@ bool cin_thread = false;
 int id_choosen, value; 
 int id_threads;
 int id_threads_log;
+
+
+ofstream log_file;
+
+
 void sleep(unsigned milliseconds)
 {
     unistd::usleep(milliseconds * 1000); // takes microseconds
@@ -51,7 +56,7 @@ void dataSensor(){
             y = rasp_i2c.readFloat(YAW_DEG)*180.0/pi+180;
         #endif
         //cls();
-        //usleep(50000);
+        //usleep(50000);s
         //printf(green(roll\t)  " "  green(pitch\t) " " green(yaw\t\n));
         printf("%d\t %f\t%f\t%f\n",cnt, r, p, y);
         //printf("prueba \n");
@@ -238,17 +243,25 @@ void send_AT_command(){
 }
 
 void *logging(void *threadid){
-    ofstream log_file;
+    
     while(1){
+        //ofstream log_file;
+        //std::string name_log = str_datetime(); 
         while(!logging_state){}
-        log_file.open("log_01");
+        //log_file.open("logs/"+name_log);
+
+        log_file << "H_VAL   H_STEP_SIZE :" << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE)<< endl;
+        log_file << "ROLL KP - KI -KD    :" << rasp_i2c.readFloat(ROLL_KP) << " " <<rasp_i2c.readFloat(ROLL_KI) << " " <<rasp_i2c.readFloat(ROLL_KD)<<endl;
+        log_file << "PITCH KP - KI -KD   :" << rasp_i2c.readFloat(PITCH_KP) << " " <<rasp_i2c.readFloat(PITCH_KI) << " " <<rasp_i2c.readFloat(PITCH_KD)<<endl;
+        log_file << "YAW KP - KI -KD     :" << rasp_i2c.readFloat(YAW_KP) << " " <<rasp_i2c.readFloat(YAW_KI) << " " <<rasp_i2c.readFloat(YAW_KD)<<endl;
         while(1){
             log_file<<rasp_i2c.readFloat(YAW_DEG)*180.0/pi+180;
             log_file<<" ";
             log_file<<rasp_i2c.readFloat(ROLL_DEG)*180.0/pi+180;
             log_file<<" ";
             log_file<<rasp_i2c.readFloat(PITCH_DEG)*180.0/pi+180<<endl;
-            unistd::usleep(10); // takes microseconds
+            //unistd::usleep(50000); // takes microseconds
+            sleep(100);
             if(!logging_state) break;
         }
     }
@@ -307,6 +320,9 @@ int main(int argc, char** argv ){
         #ifdef raspberry
         pthread_t threads[NUM_THREADS];
         id_threads  = pthread_create(&threads[0], NULL, menu, (void *)0);
+        std::string name_log = str_datetime(); 
+        log_file.open("logs/"+name_log+".txt");
+
         id_threads_log  = pthread_create(&threads[1], NULL, logging, (void *)0);
         cout<<"Threads created "<<endl;
         #endif
