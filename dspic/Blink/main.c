@@ -145,8 +145,8 @@ int main(void){
 
         H += fabs(getReg(H_VAL) - H) >= getReg(H_STEP_SIZE)  ? copysign(getReg(H_STEP_SIZE), getReg(H_VAL) - H) : 0;
         
-        R = computePid(&roll_control, angle_dif(-pi, roll), time);
-        P = computePid(&pitch_control, angle_dif(0, pitch), time);
+        R = computePid(&roll_control, angle_dif(-3.09995788, roll), time);
+        P = computePid(&pitch_control, angle_dif(0.0170128063, pitch), time);
         Y = computePid(&yaw_control, angle_dif(yaw_off, yaw), time);
         
         M1 = H + R - P - Y;
@@ -174,6 +174,10 @@ int main(void){
             resetPid(&pitch_control, time);
             resetPid(&yaw_control, time);
         }
+        
+        setReg(ROLL_SEN, (float) R);
+        setReg(PITCH_SEN, (float) P);
+        setReg(YAW_SEN, (float) Y);
 
         setPwmDutyTime(&m1, min(max(M1,0), 100));
         setPwmDutyTime(&m2, min(max(M2,0), 100));
