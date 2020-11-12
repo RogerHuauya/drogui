@@ -246,6 +246,7 @@ void send_AT_command(){
 void getGPSdata(){
     cls();
     sim7600.GPSPositioning();
+    delay(5000);
     return;
 }
 void *logging(void *threadid){

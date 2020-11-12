@@ -55,6 +55,7 @@ public:
 	void DownloadFromFTP(const char* FileName);
 
 	// GPS positoning
+    float Lat,Log;
 	bool GPSPositioning();
 
 	//TCP and UDP communication
