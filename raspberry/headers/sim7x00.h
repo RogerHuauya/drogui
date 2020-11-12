@@ -27,7 +27,7 @@
 
 #ifndef sim7x00_h
 #define sim7x00_h
-
+#include <string>
 /* Sim7x00 Class */
 class Sim7x00 {
 
@@ -55,6 +55,7 @@ public:
 	void DownloadFromFTP(const char* FileName);
 
 	// GPS positoning
+    float Lat,Log;
 	bool GPSPositioning();
 
 	//TCP and UDP communication

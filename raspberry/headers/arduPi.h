@@ -47,7 +47,7 @@
 #include <poll.h>
 #include <bcm2835.h>
 #include <stdarg.h> //Include forva_start, va_arg and va_end strings functions
-
+#include <string>
 #define IOBASE   0x3f000000
 
 
@@ -321,6 +321,7 @@ public:
 	void print(char message);
 	void print(unsigned char i,Representation rep);
 	void print(float f, int precission);
+	void println(std::string message);
 	void println(const char *message);
 	void println(char message);
 	void println(int i, Representation rep);
@@ -409,4 +410,3 @@ extern WirePi Wire;
 extern SPIPi SPI;
 
 #endif
-

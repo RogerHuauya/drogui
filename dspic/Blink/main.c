@@ -93,10 +93,6 @@ void initializeSystem(){
     initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
     clearI2Cregisters(I2C2);
 
-    i2c2Reg[0x09] = 0;
-    i2c2Reg[0x0A] = 0;
-    i2c2Reg[0x0B] = 0;
-
     __delay_ms(500);
     
     serialWriteString(&Serial1, "init");
@@ -113,9 +109,23 @@ int dig = 0;
 void timerInterrupt(2){
     readOrient(&ori);        
     getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
+<<<<<<< HEAD
+<<<<<<< HEAD
+    setReg(ROLL_DEG,(float)roll*180.0/pi+180);
+    setReg(PITCH_DEG,(float)pitch*180.0/pi+180);
+    setReg(YAW_DEG,(float)yaw*180.0/pi+180);
+=======
+    
     setReg(ROLL_DEG,(float)(roll));
     setReg(PITCH_DEG,(float)(pitch));
     setReg(YAW_DEG,(float)(yaw));
+    
+>>>>>>> origin/inglis
+=======
+    setReg(ROLL_DEG,(float)(roll));
+    setReg(PITCH_DEG,(float)(pitch));
+    setReg(YAW_DEG,(float)(yaw));
+>>>>>>> b92f1f312d195e5754e1eace887630ea83a4c911
     clearTimerFlag(&readSensors);
 }
 
@@ -142,7 +152,7 @@ int main(void){
     roll_off = roll;
     pitch_off = pitch;
     yaw_off = yaw;
-    
+
     while(1){
 
         H += fabs(getReg(H_VAL) - H) >= getReg(H_STEP_SIZE)  ? copysign(getReg(H_STEP_SIZE), getReg(H_VAL) - H) : 0;
@@ -155,6 +165,7 @@ int main(void){
         M2 = H - R - P + Y;
         M3 = H - R + P - Y;
         M4 = H + R + P + Y;
+        
         if(getReg(H_VAL) == 0){
             H = 0;
             M1 = M2 = M3 = M4 = 0;
@@ -175,6 +186,7 @@ int main(void){
             resetPid(&pitch_control, time);
             resetPid(&yaw_control, time);
         }
+
         setPwmDutyTime(&m1, min(max(M1,0), 100));
         setPwmDutyTime(&m2, min(max(M2,0), 100));
         setPwmDutyTime(&m3, min(max(M3,0), 100));
@@ -182,17 +194,11 @@ int main(void){
         
         sprintf(buffer, "%.3lf %.3lf %.3lf %.3lf\n", H, R, P, Y);
         serialWriteString(&Serial1, buffer);
-        __delay_ms(max((int) getReg(TS_CONTROL), 100));
+        __delay_ms(max((int) getReg(TS_CONTROL), 5));
 
     }
     return 0;
 }
-/*
-    180, -170
-    -170, 180
-    180, 160
-    160, 180
-*/
 
 double angle_dif(double angle1, double angle2){
     if(angle1 > angle2){
