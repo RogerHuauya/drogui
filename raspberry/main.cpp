@@ -117,6 +117,10 @@ void send_PID_PITCH(){
     cls(); 
     float value1,value2,value3;
     printf(green(PID PITCH) "\n");
+    cout<<"Set index:"<<endl;
+    cin>>value1;
+    if(cin.fail()) throw 505;
+    rasp_i2c.sendFloat(PID_INDEX, value1);
     cout<<"KP KI KD = "<<endl;
     cin>>value1>>value2>>value3;
     if(cin.fail()) throw 505;
@@ -356,11 +360,7 @@ int main(int argc, char** argv ){
                 cin>>id_choosen;
                 if(cin.fail()) throw 505;
                 cout<<"function choosen: "<<id_choosen<<endl;
-                if(id_choosen==3 ||  id_choosen==4 ||\
-                 id_choosen ==5 || id_choosen == 7 || \
-                 id_choosen == 8 || id_choosen == 9 ||\
-		 id_choosen == 10 || id_choosen == 11) 
-                 cin_thread=true;
+                cin_thread=true;
                 inputReceived = true;
             #endif
             }
