@@ -25,15 +25,10 @@ bool inputReceived = false, logging_state = false;
 bool cin_thread = false;
 int id_choosen, value; 
 int id_threads;
-int id_threads_log;
-
-
-ofstream log_file;
-
 
 void sleep(unsigned milliseconds)
 {
-    unistd::usleep(milliseconds * 1000); // takes microseconds
+i    unistd::usleep(milliseconds * 1000); // takes microseconds
 }
 
 void desplazamiento(){
@@ -56,7 +51,7 @@ void dataSensor(){
             y = rasp_i2c.readFloat(YAW_DEG)*180.0/pi+180;
         #endif
         //cls();
-        //usleep(50000);s
+        //usleep(50000);
         //printf(green(roll\t)  " "  green(pitch\t) " " green(yaw\t\n));
         printf("%d\t %f\t%f\t%f\n",cnt, r, p, y);
         //printf("prueba \n");
@@ -188,7 +183,7 @@ void readRegister(){
     printf(green([1]) " " white(PID_ROLL\n));
     printf(green([2]) " " white(PID_PITCH\n));
     printf(green([3]) " " white(PID_YAW\n));
-    printf(green([4]) " " white(RPY_SEN\n));
+
     cin >> reg;
     if(cin.fail()) throw 505;
     switch(reg){
@@ -201,16 +196,12 @@ void readRegister(){
                  cout << rasp_i2c.readFloat(PITCH_KI) << " ";
                  cout << rasp_i2c.readFloat(PITCH_KD) << endl; break;
         
-        case 3: cout << rasp_i2c.readFloat(YAW_KP) << " ";
+        case 3:cout << rasp_i2c.readFloat(YAW_KP) << " ";
                  cout << rasp_i2c.readFloat(YAW_KI) << " ";
                  cout << rasp_i2c.readFloat(YAW_KD) << endl; break;
+    }
 
-	case 4: cout<< rasp_i2c.readFloat(ROLL_SEN) << " ";
-		cout << rasp_i2c.readFloat(PITCH_SEN) << " ";
-		cout << rasp_i2c.readFloat(YAW_SEN) << endl;   
-}
-
-    sleep(1000);
+    sleep(1);
     cin_thread=false;
     return;
 }
@@ -247,33 +238,15 @@ void send_AT_command(){
 }
 
 void *logging(void *threadid){
-    
+    ofstream log_file;
     while(1){
-        //ofstream log_file;
-        //std::string name_log = str_datetime(); 
         while(!logging_state){}
-        //log_file.open("logs/"+name_log);
-
-        log_file << "H_VAL   H_STEP_SIZE " << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE)<< endl;
-        log_file << "ROLL KP KI KD " << rasp_i2c.readFloat(ROLL_KP) << " " <<rasp_i2c.readFloat(ROLL_KI) << " " <<rasp_i2c.readFloat(ROLL_KD)<<endl;
-        log_file << "PITCH KP KI KD " << rasp_i2c.readFloat(PITCH_KP) << " " <<rasp_i2c.readFloat(PITCH_KI) << " " <<rasp_i2c.readFloat(PITCH_KD)<<endl;
-        log_file << "YAW KP KI KD " << rasp_i2c.readFloat(YAW_KP) << " " <<rasp_i2c.readFloat(YAW_KI) << " " <<rasp_i2c.readFloat(YAW_KD)<<endl;
+        log_file.open("log_01");
         while(1){
-            log_file<<rasp_i2c.readFloat(H_VAL);
-            log_file<<" ";
-            log_file<<rasp_i2c.readFloat(YAW_DEG)*180.0/pi+180;
-            log_file<<" ";
-            log_file<<rasp_i2c.readFloat(ROLL_DEG)*180.0/pi+180;
-            log_file<<" ";
-            log_file<<rasp_i2c.readFloat(PITCH_DEG)*180.0/pi+180;
-	    log_file<<" ";
-	    log_file<<rasp_i2c.readFloat(ROLL_SEN);
-	    log_file<<" ";
-	    log_file<<rasp_i2c.readFloat(PITCH_SEN);
-	    log_file<<" ";
-	    log_file<<rasp_i2c.readFloat(YAW_SEN)<<endl;
-            //unistd::usleep(50000); // takes microseconds
-            sleep(100);
+            log_file<<rasp_i2c.readFloat(YAW_DEG);
+            log_file<<rasp_i2c.readFloat(ROLL_DEG);
+            log_file<<rasp_i2c.readFloat(PITCH_DEG)<<endl;
+            unistd::usleep(10); // takes microseconds
             if(!logging_state) break;
         }
     }
@@ -332,9 +305,6 @@ int main(int argc, char** argv ){
         #ifdef raspberry
         pthread_t threads[NUM_THREADS];
         id_threads  = pthread_create(&threads[0], NULL, menu, (void *)0);
-        std::string name_log = str_datetime(); 
-        log_file.open("logs/"+name_log+".txt");
-
         id_threads_log  = pthread_create(&threads[1], NULL, logging, (void *)0);
         cout<<"Threads created "<<endl;
         #endif
