@@ -21,7 +21,7 @@
 
 
 #include "arduPi.h"
-
+#include <string>
 struct bcm2835_peripheral gpio = {GPIO_BASE2};
 struct bcm2835_peripheral bsc_rev1 = {IOBASE + 0X205000};
 struct bcm2835_peripheral bsc_rev2 = {IOBASE + 0X804000};
@@ -183,6 +183,12 @@ void SerialPi::print(float f, int precission){
 
 /* Prints data to the serial port as human-readable ASCII text followed
  * by a carriage retrun character '\r' and a newline character '\n' */
+void SerialPi::println(std::string message){
+	const char *newline="\r\n";
+	char * msg = NULL;
+	asprintf(&msg,"%s%s",message,newline);
+    unistd::write(sd,msg,strlen(msg));
+}
 void SerialPi::println(const char *message){
 	const char *newline="\r\n";
 	char * msg = NULL;

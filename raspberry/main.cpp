@@ -16,9 +16,8 @@
 #include <pthread.h>
 rasp_I2C rasp_i2c(DSPIC_ADDRESS);
 #endif
-
+#define POWERKEY 6
 using namespace std;
-
 
 
 bool inputReceived = false, logging_state = false;
@@ -27,9 +26,11 @@ int id_choosen, value;
 int id_threads;
 int id_threads_log;
 
-
 ofstream log_file;
 
+void setup() {
+	sim7600.PowerOn(POWERKEY);
+}
 
 void sleep(unsigned milliseconds)
 {
@@ -231,17 +232,22 @@ void send_AT_command(){
     memset(at_command, '\0', 100);    // Initialize the string
     delay(100);
     while (Serial.available() > 0) Serial.read();    // Clean the input buffer
+    while(1){
+        printf("Please input the AT command: \n>>>");
+	    scanf("%s", at_command);
+        if(at_command[0] == '0') break;
+        Serial.println(at_command);
+        sim7600.sendATcommand(at_command, 2000);
+    }
 
-    printf("Please input the AT command\n:");
-    cin>>at_command;
-
-    Serial.println(at_command);
-    sim7600.sendATcommand(at_command, 2000);
     cin_thread = false;
-    printf("Trash\n");
     return;
 }
-
+void getGPSdata(){
+    cls();
+    sim7600.GPSPositioning();
+    return;
+}
 void *logging(void *threadid){
     
     while(1){
@@ -282,6 +288,7 @@ void *menu(void *threadid){
         printf(green([9]) " " white(Write register \n));
         printf(green([10]) " " white(Read register \n));
         printf(green([11]) " " white(Send AT command \n));
+        printf(green([12]) " " white(GPS position \n));
         printf(white(Enter an option = \n));
         while(!inputReceived){
             // paralelizando
@@ -303,6 +310,7 @@ void *menu(void *threadid){
             case 9: writeRegister(); break;
             case 10: readRegister(); break;
             case 11: send_AT_command(); break;
+            case 12: getGPSdata(); break;
             default: printf("%d is not an option, please enter option again\n", id_choosen); break;
         }
         //sleep(2);
@@ -316,6 +324,7 @@ int main(int argc, char** argv ){
 	//try{ 
         enable_emergency_stop();
         srand((unsigned) time(NULL));
+        setup();
         cout<<"Program has started"<<endl;
         #ifdef raspberry
         pthread_t threads[NUM_THREADS];
@@ -348,7 +357,8 @@ int main(int argc, char** argv ){
                 cout<<"function choosen: "<<id_choosen<<endl;
                 if(id_choosen==3 ||  id_choosen==4 ||\
                  id_choosen ==5 || id_choosen == 7 || \
-                 id_choosen == 8 || id_choosen == 9 || id_choosen == 10) 
+                 id_choosen == 8 || id_choosen == 9 ||\
+		 id_choosen == 10 || id_choosen == 11) 
                  cin_thread=true;
                 inputReceived = true;
             #endif
