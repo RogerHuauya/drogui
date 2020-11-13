@@ -157,9 +157,9 @@ int main(void){
 
         H += fabs(getReg(H_VAL) - H) >= getReg(H_STEP_SIZE)  ? copysign(getReg(H_STEP_SIZE), getReg(H_VAL) - H) : 0;
         
-        R = computePid(&roll_control, angle_dif(-pi, roll), time);
-        P = computePid(&pitch_control, angle_dif(0, pitch), time);
-        Y = computePid(&yaw_control, angle_dif(yaw_off, yaw), time);
+        R = computePid(&roll_control, angle_dif(-3.09995788, roll), time, H);
+        P = computePid(&pitch_control, angle_dif(0.0170128063, pitch), time, H);
+        Y = computePid(&yaw_control, angle_dif(yaw_off, yaw), time, H);
         
         M1 = H + R - P - Y;
         M2 = H - R - P + Y;
@@ -169,23 +169,27 @@ int main(void){
         if(getReg(H_VAL) == 0){
             H = 0;
             M1 = M2 = M3 = M4 = 0;
+            int index = getReg(PID_INDEX);
+            roll_control.kp[index] = getReg(ROLL_KP);
+            roll_control.ki[index] = getReg(ROLL_KI);
+            roll_control.kd[index] = getReg(ROLL_KD);
             
-            roll_control.kp = getReg(ROLL_KP);
-            roll_control.ki = getReg(ROLL_KI);
-            roll_control.kd = getReg(ROLL_KD);
+            pitch_control.kp[index] = getReg(PITCH_KP);
+            pitch_control.ki[index] = getReg(PITCH_KI);
+            pitch_control.kd[index] = getReg(PITCH_KD);
             
-            pitch_control.kp = getReg(PITCH_KP);
-            pitch_control.ki = getReg(PITCH_KI);
-            pitch_control.kd = getReg(PITCH_KD);
-            
-            yaw_control.kp = getReg(YAW_KP);
-            yaw_control.ki = getReg(YAW_KI);
-            yaw_control.kd = getReg(YAW_KD);
+            yaw_control.kp[index] = getReg(YAW_KP);
+            yaw_control.ki[index] = getReg(YAW_KI);
+            yaw_control.kd[index] = getReg(YAW_KD);
 
             resetPid(&roll_control, time);
             resetPid(&pitch_control, time);
             resetPid(&yaw_control, time);
         }
+        
+        setReg(ROLL_SEN, (float) R);
+        setReg(PITCH_SEN, (float) P);
+        setReg(YAW_SEN, (float) Y);
 
         setPwmDutyTime(&m1, min(max(M1,0), 100));
         setPwmDutyTime(&m2, min(max(M2,0), 100));
