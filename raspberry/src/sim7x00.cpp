@@ -28,7 +28,7 @@
 
 #include "sim7x00.h"
 #include "arduPi.h"
-
+#include "string"
 Sim7x00::Sim7x00(){
 }
 
@@ -44,7 +44,7 @@ void Sim7x00::PowerOn(int PowerKey = powerkey){
 
 	// checks if the module is started
 	answer = sendATcommand("AT", "OK", 2000);
-	if (answer == 0)
+	/*if (answer == 0)
 	{
 		printf("Starting up...\n");
 
@@ -60,12 +60,12 @@ void Sim7x00::PowerOn(int PowerKey = powerkey){
 			answer = sendATcommand("AT", "OK", 2000);
 		}
 
-	}
+	}*/
 
-	delay(5000);
+	//delay(5000);
 
-	while ((sendATcommand("AT+CREG?", "+CREG: 0,1", 500) || sendATcommand("AT+CREG?", "+CREG: 0,5", 500)) == 0)
-		delay(500);
+	//while ((sendATcommand("AT+CREG?", "+CREG: 0,1", 500) || sendATcommand("AT+CREG?", "+CREG: 0,5", 500)) == 0)
+	//	delay(500);
 }
 
 /**************************Phone Calls**************************/
@@ -168,42 +168,6 @@ bool Sim7x00::ReceivingShortMessage(){
 	return true;
 }
 
-/**************************FTP download file to Module EFS , uploading EFS file to FTP**************************/
-void Sim7x00::ConfigureFTP(const char* FTPServer,const char* FTPUserName,const char* FTPPassWord){
-    char aux_str[50];
-  
-    // sets the paremeters for the FTP server
-	sendATcommand("AT+CFTPPORT=21", "OK", 2000);
-	sendATcommand("AT+CFTPMODE=1", "OK", 2000);
-	sendATcommand("AT+CFTPTYPE=A", "OK", 2000);
-
-//	sprintf(aux_str,"AT+CFTPSERV=\"%s\"", FTPServer);
-
-    snprintf(aux_str, sizeof(aux_str), "AT+CFTPSERV=\"%s\"", FTPServer);
-    sendATcommand(aux_str, "OK", 2000);
-    
-    snprintf(aux_str, sizeof(aux_str), "AT+CFTPUN=\"%s\"", FTPUserName);
-    sendATcommand(aux_str, "OK", 2000);
-    snprintf(aux_str, sizeof(aux_str), "AT+CFTPPW=\"%s\"", FTPPassWord);
-    sendATcommand(aux_str, "OK", 2000);
-}
-
-void Sim7x00::UploadToFTP(const char* FileName){
-	char aux_str[50];
-
-	printf("Upload file to FTP...\n");
-	snprintf(aux_str, sizeof(aux_str), "AT+CFTPPUTFILE=\"%s\",0", FileName);
-    sendATcommand(aux_str, "OK", 2000);
-}
-
-void Sim7x00::DownloadFromFTP(const char* FileName){
-	char aux_str[50];
-	
-	printf("Download file from FTP...\n");
-	snprintf(aux_str, sizeof(aux_str), "AT+CFTPGETFILE=\"%s\",0", FileName);
-    sendATcommand(aux_str, "OK", 2000);
-}
-
 /**************************GPS positoning**************************/
 bool Sim7x00::GPSPositioning(){
 
@@ -213,7 +177,6 @@ bool Sim7x00::GPSPositioning(){
 	char RecMessage[200];
     char LatDD[2],LatMM[9],LogDD[3],LogMM[9],DdMmYy[6] ,UTCTime[6];
     int DayMonthYear;
-    float Lat,Log;
 
 	printf("Start GPS session...\n");
     sendATcommand("AT+CGPS=1,1", "OK:", 1000);    // start GPS session, standalone mode
@@ -223,7 +186,6 @@ bool Sim7x00::GPSPositioning(){
     while(RecNull)
     {
         answer = sendATcommand("AT+CGPSINFO", "+CGPSINFO: ", 1000);    // start GPS session, standalone mode
-        answer = 1;
         if (answer == 1)
         {
             answer = 0;
