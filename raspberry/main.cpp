@@ -250,11 +250,13 @@ void *logging(void *threadid){
         while(!logging_state){}
         //log_file.open("logs/"+name_log);
 
-        log_file << "H_VAL   H_STEP_SIZE :" << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE)<< endl;
-        log_file << "ROLL KP - KI -KD    :" << rasp_i2c.readFloat(ROLL_KP) << " " <<rasp_i2c.readFloat(ROLL_KI) << " " <<rasp_i2c.readFloat(ROLL_KD)<<endl;
-        log_file << "PITCH KP - KI -KD   :" << rasp_i2c.readFloat(PITCH_KP) << " " <<rasp_i2c.readFloat(PITCH_KI) << " " <<rasp_i2c.readFloat(PITCH_KD)<<endl;
-        log_file << "YAW KP - KI -KD     :" << rasp_i2c.readFloat(YAW_KP) << " " <<rasp_i2c.readFloat(YAW_KI) << " " <<rasp_i2c.readFloat(YAW_KD)<<endl;
+        log_file << "H_VAL   H_STEP_SIZE " << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE)<< endl;
+        log_file << "ROLL KP KI KD " << rasp_i2c.readFloat(ROLL_KP) << " " <<rasp_i2c.readFloat(ROLL_KI) << " " <<rasp_i2c.readFloat(ROLL_KD)<<endl;
+        log_file << "PITCH KP KI KD " << rasp_i2c.readFloat(PITCH_KP) << " " <<rasp_i2c.readFloat(PITCH_KI) << " " <<rasp_i2c.readFloat(PITCH_KD)<<endl;
+        log_file << "YAW KP KI KD " << rasp_i2c.readFloat(YAW_KP) << " " <<rasp_i2c.readFloat(YAW_KI) << " " <<rasp_i2c.readFloat(YAW_KD)<<endl;
         while(1){
+            log_file<<rasp_i2c.readFloat(H_VAL);
+            log_file<<" ";
             log_file<<rasp_i2c.readFloat(YAW_DEG)*180.0/pi+180;
             log_file<<" ";
             log_file<<rasp_i2c.readFloat(ROLL_DEG)*180.0/pi+180;
