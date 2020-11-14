@@ -30,9 +30,9 @@
 #define H_STEP_SIZE 0x51
 #define TS_CONTROL 0X55
 
-#define GYRO_X 0x59
-#define GYRO_Y 0x5D
-#define GYRO_Z 0x61
-
 #define PID_INDEX 0x59
+
+#define GYRO_X 0x5D
+#define GYRO_Y 0x61
+#define GYRO_Z 0x65
 #endif
