@@ -101,10 +101,6 @@ void send_PID_ROLL(){
     cls(); 
     float value1,value2,value3;
     printf(green(PID ROLL) "\n");
-    cout<<"Set index:"<<endl;
-    cin>>value1;
-    if(cin.fail()) throw 505;
-    rasp_i2c.sendFloat(PID_INDEX, value1);
     cout<<"KP KI KD = "<<endl;
     cin>>value1>>value2>>value3;
     if(cin.fail()) throw 505;
@@ -159,10 +155,6 @@ void send_PID_YAW(){
     cls(); 
     float value1,value2,value3;
     printf(green(PID YAW) "\n");
-    cout<<"Set index:"<<endl;
-    cin>>value1;
-    if(cin.fail()) throw 505;
-    rasp_i2c.sendFloat(PID_INDEX, value1);
     cout<<"KP KI KD = "<<endl;
     cin>>value1>>value2>>value3;
     if(cin.fail()) throw 505;
