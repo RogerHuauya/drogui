@@ -1,4 +1,4 @@
-//#define MAIN
+#define MAIN
 #ifdef MAIN
 
 #include <xc.h>
@@ -21,7 +21,7 @@ i2c slave;
 
 pwm m1, m2, m3, m4;
 
-sensor acc, ori;
+sensor acc, gyro, ori;
 
 pid z_control;
 pid x_control;
@@ -80,6 +80,7 @@ void initializeSystem(){
 
     initMM7150();
     initAccel(&acc, 100, 20);
+    initGyro(&gyro, 100, 20);
     initOrient(&ori, 100,20);
     
     initTimer(&readSensors, 2, DIV256, 3);
@@ -108,6 +109,7 @@ long long entrada = 0;
 int dig = 0;
 void timerInterrupt(2){
     readOrient(&ori);        
+    readGyro(&gyro);
     getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
     
     setReg(ROLL_DEG,(float)(roll));
@@ -145,9 +147,9 @@ int main(void){
 
         H += fabs(getReg(H_VAL) - H) >= getReg(H_STEP_SIZE)  ? copysign(getReg(H_STEP_SIZE), getReg(H_VAL) - H) : 0;
         
-        R = computePid(&roll_control, angle_dif(-3.09995788, roll), time, H);
-        P = computePid(&pitch_control, angle_dif(0.0170128063, pitch), time, H);
-        Y = computePid(&yaw_control, angle_dif(yaw_off, yaw), time, H);
+        R = computePid(&roll_control, angle_dif(-3.09995788, roll), gyro.dDataX, time, H);
+        P = computePid(&pitch_control, angle_dif(0.0170128063, pitch), -gyro.dDataY, time, H);
+        Y = computePid(&yaw_control, angle_dif(yaw_off, yaw), gyro.dDataZ, time, H);
         
         M1 = H + R - P - Y;
         M2 = H - R - P + Y;

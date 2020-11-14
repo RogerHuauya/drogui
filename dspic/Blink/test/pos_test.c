@@ -1,4 +1,4 @@
-#define POS_TEST_H
+//#define POS_TEST_H
 #ifdef POS_TEST_H
 
 #include <xc.h>
@@ -15,7 +15,7 @@
 #define PI 3.14159264
 i2c slave;
 serial Serial1;
-sensor acc, ori;
+sensor acc, gyro, ori;
 double roll, pitch, yaw;
 timer readSensors;
 char buffer[50];
@@ -62,12 +62,15 @@ int main(){
     char s[50];
     initMM7150();
     initAccel(&acc, 100, 20);
+    initGyro(&gyro, 100, 20);
     initOrient(&ori, 100,20);
     double q0, q1, q2, q3, roll, pitch, yaw; 
     //initTimer(&readSensors, 2, DIV256, 3);
     while(1){
         readAccel(&acc);
+        readGyro(&gyro);
         //getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
+        /*
         v[0] += acc.dDataX*dt;
         v[1] += acc.dDataY*dt;
         v[2] += acc.dDataZ*dt;
@@ -75,8 +78,8 @@ int main(){
         x[0] += v[0];
         x[1] += v[1];
         x[2] += v[2];
-
-        sprintf(buffer, "%.3f %.3f %.3f %.3f %.3f %.3f\n", acc.dDataX, acc.dDataY, acc.dDataZ, x[0], x[1], x[2]);
+        */
+        sprintf(buffer, "%.3f %.3f %.3f %.3f %.3f %.3f\n", acc.dDataX, acc.dDataY, acc.dDataZ, gyro.dDataX, gyro.dDataY, gyro.dDataZ);
         serialWriteString(&Serial1, buffer);
         __delay_ms(100);
     }
