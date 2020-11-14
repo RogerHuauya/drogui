@@ -280,7 +280,14 @@ void *logging(void *threadid){
             log_file<<" ";
             log_file<<rasp_i2c.readFloat(ROLL_DEG)*180.0/pi+180;
             log_file<<" ";
-            log_file<<rasp_i2c.readFloat(PITCH_DEG)*180.0/pi+180<<endl;
+            log_file<<rasp_i2c.readFloat(PITCH_DEG)*180.0/pi+180;
+            log_file<<" ";
+            log_file<<rasp_i2c.readFloat(GYRO_X);
+            log_file<<" ";
+            log_file<<rasp_i2c.readFloat(GYRO_Y);
+            log_file<<" ";
+            log_file<<rasp_i2c.readFloat(GYRO_Z);
+            
             //unistd::usleep(50000); // takes microseconds
             sleep(100);
             if(!logging_state) break;
