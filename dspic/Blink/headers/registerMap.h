@@ -30,4 +30,5 @@
 #define H_STEP_SIZE 0x51
 #define TS_CONTROL 0X55
 
+#define PID_INDEX 0x59
 #endif
