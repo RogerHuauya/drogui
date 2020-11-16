@@ -133,7 +133,7 @@ double angle_dif(double angle1, double angle2);
 double  H,R,P,Y;
 double M1,M2,M3,M4;
 uint8_t haux = 0;
-double roll_off, pitch_off, yaw_off, roll_ref = -3.09995788, pitch_ref = 0.0170128063, yaw_ref = 0;
+double roll_off = -3.09995788 , pitch_off = 0.0170128063, yaw_off = 0, roll_ref, pitch_ref, yaw_ref;
 long long pm = 0;
 
 
@@ -143,17 +143,11 @@ int main(void){
     int val = 0;
     int Kp, Ki, Kd, roll_d, pitch_d, yaw_d;
     __delay_ms(1000);
-    roll_off = roll;
-    pitch_off = pitch;
     yaw_off = yaw;
-    setReg(ROLL_REF, roll_ref);
-    setReg(PITCH_REF, pitch_ref);
-    setReg(YAW_REF, yaw_ref);
-
     while(1){
-        roll_ref = getReg(ROLL_REF);
-        pitch_ref = getReg(PITCH_REF);
-        yaw_ref = getReg(YAW_REF);
+        roll_ref = getReg(ROLL_REF) + roll_off;
+        pitch_ref = getReg(PITCH_REF) + pitch_off;
+        yaw_ref = getReg(YAW_REF) + yaw_off;
 
         H += fabs(getReg(H_VAL) - H) >= getReg(H_STEP_SIZE)  ? copysign(getReg(H_STEP_SIZE), getReg(H_VAL) - H) : 0;
         
