@@ -1,5 +1,0 @@
-H_VAL   H_STEP_SIZE :5 1
-ROLL KP - KI -KD    :1.1 2.2 3.3
-PITCH KP - KI -KD   :4.4 5.5 6.6
-YAW KP - KI -KD     :6.6 7.7 8.8
-163.705 2.24 181.362

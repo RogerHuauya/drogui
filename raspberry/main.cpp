@@ -286,7 +286,7 @@ void *logging(void *threadid){
             log_file<<" ";
             log_file<<rasp_i2c.readFloat(GYRO_Y);
             log_file<<" ";
-            log_file<<rasp_i2c.readFloat(GYRO_Z);
+            log_file<<rasp_i2c.readFloat(GYRO_Z)<<endl;
             
             //unistd::usleep(50000); // takes microseconds
             sleep(100);
