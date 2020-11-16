@@ -151,8 +151,8 @@ int main(void){
 
         H += fabs(getReg(H_VAL) - H) >= getReg(H_STEP_SIZE)  ? copysign(getReg(H_STEP_SIZE), getReg(H_VAL) - H) : 0;
         
-        R = computePid(&roll_control, angle_dif( roll_ref, roll), gyro.dDataX, time, H);
-        P = computePid(&pitch_control, angle_dif( pitch_ref, pitch), -gyro.dDataY, time, H);
+        R = computePid(&roll_control, angle_dif( roll_ref, roll), -gyro.dDataX, time, H);
+        P = computePid(&pitch_control, angle_dif( pitch_ref, pitch), gyro.dDataY, time, H);
         Y = computePid(&yaw_control, angle_dif(yaw_ref, yaw), gyro.dDataZ, time, H);
         
         M1 = H + R - P - Y;
