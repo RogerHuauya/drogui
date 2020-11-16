@@ -253,7 +253,7 @@ void readRegister(){
                  cout << rasp_i2c.readFloat(YAW_REF) << endl; break;
     }
 
-    sleep(1);
+    sleep(3000);
     cin_thread=false;
     return;
 }
