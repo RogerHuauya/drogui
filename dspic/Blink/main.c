@@ -80,7 +80,7 @@ void initializeSystem(){
 
     initMM7150();
     initAccel(&acc, 100, 20);
-    initGyro(&gyro, 100, 20);
+    initGyro(&gyro, 100, 1);
     initOrient(&ori, 100,20);
     
     initTimer(&readSensors, 2, DIV256, 3);
@@ -115,6 +115,10 @@ void timerInterrupt(2){
     setReg(ROLL_DEG,(float)(roll));
     setReg(PITCH_DEG,(float)(pitch));
     setReg(YAW_DEG,(float)(yaw));
+
+    setReg(GYRO_X, gyro.dDataX);
+    setReg(GYRO_Y, gyro.dDataY);
+    setReg(GYRO_Z, gyro.dDataZ);
     
     clearTimerFlag(&readSensors);
 }
@@ -129,7 +133,7 @@ double angle_dif(double angle1, double angle2);
 double  H,R,P,Y;
 double M1,M2,M3,M4;
 uint8_t haux = 0;
-double roll_off, pitch_off, yaw_off;
+double roll_off, pitch_off, yaw_off, roll_ref = -3.09995788, pitch_ref = 0.0170128063, yaw_ref = 0;
 long long pm = 0;
 
 
@@ -142,14 +146,20 @@ int main(void){
     roll_off = roll;
     pitch_off = pitch;
     yaw_off = yaw;
+    setReg(ROLL_REF, roll_ref);
+    setReg(PITCH_REF, pitch_ref);
+    setReg(YAW_REF, yaw_ref);
 
     while(1){
+        roll_ref = getReg(ROLL_REF);
+        pitch_ref = getReg(PITCH_REF);
+        yaw_ref = getReg(YAW_REF);
 
         H += fabs(getReg(H_VAL) - H) >= getReg(H_STEP_SIZE)  ? copysign(getReg(H_STEP_SIZE), getReg(H_VAL) - H) : 0;
         
-        R = computePid(&roll_control, angle_dif(-3.09995788, roll), gyro.dDataX, time, H);
-        P = computePid(&pitch_control, angle_dif(0.0170128063, pitch), -gyro.dDataY, time, H);
-        Y = computePid(&yaw_control, angle_dif(yaw_off, yaw), gyro.dDataZ, time, H);
+        R = computePid(&roll_control, angle_dif( roll_ref, roll), gyro.dDataX, time, H);
+        P = computePid(&pitch_control, angle_dif( pitch_ref, pitch), -gyro.dDataY, time, H);
+        Y = computePid(&yaw_control, angle_dif(yaw_ref, yaw), gyro.dDataZ, time, H);
         
         M1 = H + R - P - Y;
         M2 = H - R - P + Y;

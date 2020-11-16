@@ -31,11 +31,13 @@ double angle_dif(double angle1, double angle2){
     }
 }
 float dt = 0.01, v[3] = {0, 0, 0}, x[3] = {0, 0, 0};
-/*
+
 void timerInterrupt(2){
-    //readOrient(&ori);        
+    readOrient(&ori);        
     readAccel(&acc);
-    //getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
+    readGyro(&gyro);
+    getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
+    /*
     v[0] += acc.dDataX*dt;
     v[1] += acc.dDataY*dt;
     v[2] += acc.dDataZ*dt;
@@ -43,32 +45,34 @@ void timerInterrupt(2){
     x[0] += v[0];
     x[1] += v[1];
     x[2] += v[2];
-
+*/
     
     /*
     setReg(ROLL_DEG,(float)(roll));
     setReg(PITCH_DEG,(float)(pitch));
     setReg(YAW_DEG,(float)(yaw));
     */
-    //clearTimerFlag(&readSensors);
-//}*/
+    clearTimerFlag(&readSensors);
+}
 
 int main(){
     initConfig();
-
-    //setTimerFrecuency(&readSensors, 100);
 
     initSerial(&Serial1, SERIAL1, 115200);
     char s[50];
     initMM7150();
     initAccel(&acc, 100, 20);
-    initGyro(&gyro, 100, 20);
+    initGyro(&gyro, 100, 1);
     initOrient(&ori, 100,20);
+
+    setTimerFrecuency(&readSensors, 100);
+    initTimer(&readSensors, 2, DIV256, 3);
+
     double q0, q1, q2, q3, roll, pitch, yaw; 
     //initTimer(&readSensors, 2, DIV256, 3);
     while(1){
-        readAccel(&acc);
-        readGyro(&gyro);
+        //readAccel(&acc);
+        //readGyro(&gyro);
         //getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
         /*
         v[0] += acc.dDataX*dt;
