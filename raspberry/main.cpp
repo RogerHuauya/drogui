@@ -179,6 +179,7 @@ void send_setpoint(){
     cin_thread=true;
     int op; 
     float val;
+    cls();
     printf("\t\t\t\t\t\t\t\t" blue(Setpoint menu) "\n");
     printf(green([0]) " " white(SP_ROLL\n));
     printf(green([1]) " " white(SP_PITCH\n));
@@ -229,6 +230,7 @@ void readRegister(){
     printf(green([1]) " " white(PID_ROLL\n));
     printf(green([2]) " " white(PID_PITCH\n));
     printf(green([3]) " " white(PID_YAW\n));
+    printf(green([4]) " " white(SETPOINTS\n));
 
     cin >> reg;
     if(cin.fail()) throw 505;
@@ -245,6 +247,10 @@ void readRegister(){
         case 3:cout << rasp_i2c.readFloat(YAW_KP) << " ";
                  cout << rasp_i2c.readFloat(YAW_KI) << " ";
                  cout << rasp_i2c.readFloat(YAW_KD) << endl; break;
+
+        case 4:cout << rasp_i2c.readFloat(ROLL_REF) << " ";
+                 cout << rasp_i2c.readFloat(PITCH_REF) << " ";
+                 cout << rasp_i2c.readFloat(YAW_REF) << endl; break;
     }
 
     sleep(1);
