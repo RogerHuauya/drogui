@@ -175,6 +175,34 @@ void send_PID_YAW(){
     return;
 }
 
+void send_setpoint(){
+    cin_thread=true;
+    int op; 
+    float val;
+    printf("\t\t\t\t\t\t\t\t" blue(Setpoint menu) "\n");
+    printf(green([0]) " " white(SP_ROLL\n));
+    printf(green([1]) " " white(SP_PITCH\n));
+    printf(green([2]) " " white(SP_YAW\n));
+    cin >> op;
+    cout<<"Value :" << endl;
+    cin>> val;
+    if(cin.fail()) throw 505;
+    switch (op)
+    {
+    case 0:
+        rasp_i2c.sendFloat(ROLL_REF, val);
+        break;
+    case 1:
+        rasp_i2c.sendFloat(PITCH_REF, val);
+        break;
+    case 2:
+        rasp_i2c.sendFloat(YAW_REF, val);
+        break;
+
+    }
+    cin_thread=false;
+    return;
+}
 
 void writeRegister(){
     cin_thread=true;
@@ -282,12 +310,11 @@ void *logging(void *threadid){
             log_file<<" ";
             log_file<<rasp_i2c.readFloat(PITCH_DEG)*180.0/pi+180;
             log_file<<" ";
-            log_file<<rasp_i2c.readFloat(GYRO_X);
+            log_file<<rasp_i2c.readFloat(ROLL_REF);
             log_file<<" ";
-            log_file<<rasp_i2c.readFloat(GYRO_Y);
+            log_file<<rasp_i2c.readFloat(PITCH_REF);
             log_file<<" ";
-            log_file<<rasp_i2c.readFloat(GYRO_Z)<<endl;
-            
+            log_file<<rasp_i2c.readFloat(YAW_REF)<<endl;
             //unistd::usleep(50000); // takes microseconds
             sleep(100);
             if(!logging_state) break;
@@ -311,6 +338,7 @@ void *menu(void *threadid){
         printf(green([10]) " " white(Read register \n));
         printf(green([11]) " " white(Send AT command \n));
         printf(green([12]) " " white(GPS position \n));
+        printf(green([13]) " " white(Send setpoint \n));
         printf(white(Enter an option = \n));
         while(!inputReceived){
             // paralelizando
@@ -333,6 +361,7 @@ void *menu(void *threadid){
             case 10: readRegister(); break;
             case 11: send_AT_command(); break;
             case 12: getGPSdata(); break;
+            case 13: send_setpoint(); break;
             default: printf("%d is not an option, please enter option again\n", id_choosen); break;
         }
         //sleep(2);
