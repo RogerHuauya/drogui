@@ -187,6 +187,7 @@ void send_setpoint(){
     cin >> op;
     cout<<"Value :" << endl;
     cin>> val;
+    val *= 3.14159265/180.0;
     if(cin.fail()) throw 505;
     switch (op)
     {
