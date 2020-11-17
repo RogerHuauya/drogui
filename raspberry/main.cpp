@@ -311,17 +311,17 @@ void *logging(void *threadid){
         while(1){
             log_file<<rasp_i2c.readFloat(H_VAL);
             log_file<<" ";
-            log_file<<rasp_i2c.readFloat(YAW_DEG)*180.0/pi+180;
-            log_file<<" ";
             log_file<<rasp_i2c.readFloat(ROLL_DEG)*180.0/pi+180;
             log_file<<" ";
             log_file<<rasp_i2c.readFloat(PITCH_DEG)*180.0/pi+180;
             log_file<<" ";
-            log_file<<rasp_i2c.readFloat(ROLL_SEN);
+            log_file<<rasp_i2c.readFloat(YAW_DEG)*180.0/pi+180;
             log_file<<" ";
-            log_file<<rasp_i2c.readFloat(PITCH_SEN);
+            log_file<<rasp_i2c.readFloat(ROLL_REF);
             log_file<<" ";
-            log_file<<rasp_i2c.readFloat(YAW_SEN)<<endl;
+            log_file<<rasp_i2c.readFloat(PITCH_REF);
+            log_file<<" ";
+            log_file<<rasp_i2c.readFloat(YAW_REF)<<endl;
             //unistd::usleep(50000); // takes microseconds
             sleep(100);
             if(!logging_state) break;
