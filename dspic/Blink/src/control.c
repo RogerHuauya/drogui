@@ -3,7 +3,8 @@ double computePid(pid* p, double error, double errord, unsigned long long t, dou
     p->dt = (t - p->tant)/1000.0;
     p->tant = t;
     p->erri = max(min(p->erri + error*p->dt,p->isat),-p->isat);
-    p->errd = errord;//(error - p->e_ant)/p->dt;
+    //p->errd = errord;
+    p->errd = (error - p->e_ant)/p->dt;
     p->e_ant = error;
     if(h <= 60)
         return max(min(p->kp[0]*error + p->ki[0]*p->erri + p->kd[0]*p->errd,p->osat),-p->osat);
