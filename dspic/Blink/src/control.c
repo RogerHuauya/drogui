@@ -1,8 +1,9 @@
 #include "control.h"
-double computePid(pid* p, double error, unsigned long long t, double h){
+double computePid(pid* p, double error, double errord, unsigned long long t, double h){
     p->dt = (t - p->tant)/1000.0;
     p->tant = t;
     p->erri = max(min(p->erri + error*p->dt,p->isat),-p->isat);
+    //p->errd = errord;
     p->errd = (error - p->e_ant)/p->dt;
     p->e_ant = error;
     if(h <= 60)
