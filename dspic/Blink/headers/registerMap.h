@@ -31,4 +31,6 @@
 #define TS_CONTROL 0X55
 
 #define PID_INDEX 0x59
+
+#define GPS 0x5D
 #endif
