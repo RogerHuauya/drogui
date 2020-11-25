@@ -40,6 +40,4 @@
 #define PITCH_REF 0x6D
 #define YAW_REF 0x71
 
-#define NUM_THREADS 2
-
 #endif

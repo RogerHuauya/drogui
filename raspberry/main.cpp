@@ -3,19 +3,22 @@
 #define DSPIC_ADDRESS 0x60
 #define pi 3.141592
 #include <iostream>
-#include "registerMap.h"
-#include "arduPi.h"
-#include "sim7x00.h"
 #include <ctime>
 #include <signal.h>
 #include <time.h>
 #include <unistd.h>
+
+#include "registerMap.h"
+#include "arduPi.h"
+#include "sim7600.h"
 
 #ifdef raspberry
 #include "utils.h"
 #include <pthread.h>
 rasp_I2C rasp_i2c(DSPIC_ADDRESS);
 #endif
+
+#define NUM_THREADS 2
 #define POWERKEY 6
 using namespace std;
 
@@ -23,20 +26,20 @@ using namespace std;
 bool inputReceived = false, logging_state = false;
 bool cin_thread = false;
 int id_choosen, value; 
-int id_threads;
-int id_threads_log;
+int id_thread_menu, id_thread_log, id_thread_gps;
+
 
 ofstream log_file;
 
 void setup() {
 	sim7600.PowerOn(POWERKEY);
 }
-
+/*
 void sleep(unsigned milliseconds)
 {
     unistd::usleep(milliseconds * 1000); // takes microseconds
 }
-
+*/
 void desplazamiento(){
     /*
 	//auto v = root["desplazamiento"];
@@ -59,20 +62,12 @@ void dataSensor(){
         //cls();
         //usleep(50000);s
         //printf(green(roll\t)  " "  green(pitch\t) " " green(yaw\t\n));
-        printf("%d\t %f\t%f\t%f\n",cnt, r, p, y);
+        printf("%d\t%f\t%f\t%f\n",cnt, r, p, y);
         //printf("prueba \n");
         cnt++;
         if(inputReceived) break;
         //sleep(1);        
     }
-	/*root.clear();
-	root["imu"] = 5.42;
-	root["pressure"] = 1033.05;
-	root["current"] = 0.03;
-	s = fw.write(root);
-	drone.sendJson(s);
-	*/
-
 }
 
 void zeroPosition(){
@@ -80,6 +75,7 @@ void zeroPosition(){
 
 }
 void normalStop(){
+    rasp_i2c.sendFloat(H_VAL,  0);
 	return;
 }
 void handler_stop(int s){
@@ -121,7 +117,7 @@ void send_PID_PITCH(){
     cls(); 
     float value1,value2,value3;
     printf(green(PID PITCH) "\n");
-    cout<<"Set index:"<<endl;
+    printf("Set index:\n");
     cin>>value1;
     if(cin.fail()) throw 505;
     rasp_i2c.sendFloat(PID_INDEX, value1);
@@ -283,7 +279,7 @@ void send_AT_command(){
         printf("Please input the AT command: \n>>>");
 	    scanf("%s", at_command);
         if(at_command[0] == '0') break;
-        Serial.println(at_command);
+        //Serial.println(at_command);
         sim7600.sendATcommand(at_command, 2000);
     }
 
@@ -297,7 +293,9 @@ void getGPSdata(){
     return;
 }
 void *logging(void *threadid){
-    
+    while (!logging_state){};
+    std::string name_log = str_datetime(); 
+    log_file.open("logs/"+name_log+".txt");
     while(1){
         //ofstream log_file;
         //std::string name_log = str_datetime(); 
@@ -378,6 +376,9 @@ void *menu(void *threadid){
     return 0;
 }
 
+void *gpsReading(void *threadid){
+    return 0;
+}
 int main(int argc, char** argv ){
 	//try{ 
         enable_emergency_stop();
@@ -386,11 +387,11 @@ int main(int argc, char** argv ){
         cout<<"Program has started"<<endl;
         #ifdef raspberry
         pthread_t threads[NUM_THREADS];
-        id_threads  = pthread_create(&threads[0], NULL, menu, (void *)0);
-        std::string name_log = str_datetime(); 
-        log_file.open("logs/"+name_log+".txt");
+        id_thread_menu  = pthread_create(&threads[0], NULL, menu, (void *)0);
 
-        id_threads_log  = pthread_create(&threads[1], NULL, logging, (void *)0);
+
+        id_thread_log  = pthread_create(&threads[1], NULL, logging, (void *)0);
+        id_thread_gps = pthread_create(&threads[2], NULL, gpsReading, (void *)0);
         cout<<"Threads created "<<endl;
         #endif
         /*

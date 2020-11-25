@@ -1,43 +1,13 @@
-/**
-*  @filename   :   sim7x00.cpp
-*  @brief      :   Implements for sim7x00 library
-*  @author     :   Kaloha from Waveshare
-*
-*  Copyright (C) Waveshare     April 27 2018
-*  http://www.waveshare.com  http://www.waveshare.net
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documnetation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to  whom the Software is
-* furished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS OR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
-
-
-#include "sim7x00.h"
+#include "sim7600.h"
 #include "arduPi.h"
 #include "string"
-Sim7x00::Sim7x00(){
-}
+Sim7600::Sim7600(){}
 
-Sim7x00::~Sim7x00(){
-}
+Sim7600::~Sim7600(){}
 
 
-/**************************Power on Sim7x00**************************/
-void Sim7x00::PowerOn(int PowerKey = powerkey){
+/**************************Power on Sim7600**************************/
+void Sim7600::PowerOn(int PowerKey = powerkey){
    uint8_t answer = 0;
 
 	Serial.begin(115200);
@@ -69,7 +39,7 @@ void Sim7x00::PowerOn(int PowerKey = powerkey){
 }
 
 /**************************Phone Calls**************************/
-void Sim7x00::PhoneCall(const char* PhoneNumber) {
+void Sim7600::PhoneCall(const char* PhoneNumber) {
 	char aux_str[30];
 
 //	printf("Enter the phone number:");
@@ -90,7 +60,7 @@ void Sim7x00::PhoneCall(const char* PhoneNumber) {
 
 /**************************SMS sending and receiving message **************************/
 //SMS sending short message
-bool Sim7x00::SendingShortMessage(const char* PhoneNumber,const char* Message){
+bool Sim7600::SendingShortMessage(const char* PhoneNumber,const char* Message){
 	uint8_t answer = 0;
 	char aux_string[30];
 
@@ -125,7 +95,7 @@ bool Sim7x00::SendingShortMessage(const char* PhoneNumber,const char* Message){
 }
 
 //SMS receiving short message
-bool Sim7x00::ReceivingShortMessage(){
+bool Sim7600::ReceivingShortMessage(){
 	uint8_t answer = 0;
 	int i = 0;
 	char RecMessage[200];
@@ -169,7 +139,7 @@ bool Sim7x00::ReceivingShortMessage(){
 }
 
 /**************************GPS positoning**************************/
-bool Sim7x00::GPSPositioning(){
+bool Sim7600::GPSPositioning(){
 
     uint8_t answer = 0;
     bool RecNull = true;
@@ -178,7 +148,7 @@ bool Sim7x00::GPSPositioning(){
     char LatDD[2],LatMM[9],LogDD[3],LogMM[9],DdMmYy[6] ,UTCTime[6];
     int DayMonthYear;
 
-	printf("Start GPS session...\n");
+	//printf("Start GPS session...\n");
     sendATcommand("AT+CGPS=1,1", "OK:", 1000);    // start GPS session, standalone mode
 
     delay(2000);
@@ -267,7 +237,7 @@ bool Sim7x00::GPSPositioning(){
 }
 
 /**************************Other functions**************************/
-char Sim7x00::sendATcommand(const char* ATcommand, unsigned int timeout) {
+char Sim7600::sendATcommand(const char* ATcommand, unsigned int timeout) {
 	uint8_t x = 0, answer = 0;
 	char response[100];
 	unsigned long previous;
@@ -295,7 +265,7 @@ char Sim7x00::sendATcommand(const char* ATcommand, unsigned int timeout) {
 	return answer;
 }
 
-char Sim7x00::sendATcommand(const char* ATcommand, const char* expected_answer, unsigned int timeout) {
+char Sim7600::sendATcommand(const char* ATcommand, const char* expected_answer, unsigned int timeout) {
 
 	char x = 0, answer = 0;
 	char response[100];
@@ -334,7 +304,7 @@ char Sim7x00::sendATcommand(const char* ATcommand, const char* expected_answer, 
 	return answer;
 }
 
-char Sim7x00::sendATcommand2(const char* ATcommand, const char* expected_answer1, const char* expected_answer2, unsigned int timeout){
+char Sim7600::sendATcommand2(const char* ATcommand, const char* expected_answer1, const char* expected_answer2, unsigned int timeout){
 	uint8_t x=0,  answer=0;
     char response[100];
     unsigned long previous;
@@ -378,5 +348,5 @@ char Sim7x00::sendATcommand2(const char* ATcommand, const char* expected_answer1
 
 }
 
-Sim7x00 sim7600 = Sim7x00();
+Sim7600 sim7600 = Sim7600();
 
