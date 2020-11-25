@@ -415,8 +415,8 @@ int main(int argc, char** argv ){
                 cout<<"function choosen: "<<id_choosen<<endl;
                 cin_thread=true;
                 inputReceived = true;
-            #endif
             }
+            #endif
         }
     //}
 	/*catch (...){
