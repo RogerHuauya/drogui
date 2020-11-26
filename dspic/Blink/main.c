@@ -21,7 +21,7 @@ i2c slave;
 
 pwm m1, m2, m3, m4;
 
-sensor acc, ori;
+sensor acc, gyro, ori;
 
 pid z_control;
 pid x_control;
@@ -80,7 +80,10 @@ void initializeSystem(){
 
     initMM7150();
     initAccel(&acc, 100, 20);
-    initOrient(&ori, 100,20);
+    //initGyro(&gyro, 100, 1);
+    serialWriteString(&Serial1, "before init");
+    initOrient(&ori, 50, 10);
+    serialWriteString(&Serial1,"after init");
     
     initTimer(&readSensors, 2, DIV256, 3);
     setTimerFrecuency(&readSensors, 100);
@@ -108,6 +111,7 @@ long long entrada = 0;
 int dig = 0;
 void timerInterrupt(2){
     readOrient(&ori);        
+    readGyro(&gyro);
     getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -119,6 +123,10 @@ void timerInterrupt(2){
     setReg(ROLL_DEG,(float)(roll));
     setReg(PITCH_DEG,(float)(pitch));
     setReg(YAW_DEG,(float)(yaw));
+
+    setReg(GYRO_X, gyro.dDataX);
+    setReg(GYRO_Y, gyro.dDataY);
+    setReg(GYRO_Z, gyro.dDataZ);
     
 >>>>>>> origin/inglis
 =======
@@ -139,9 +147,41 @@ double angle_dif(double angle1, double angle2);
 double  H,R,P,Y;
 double M1,M2,M3,M4;
 uint8_t haux = 0;
-double roll_off, pitch_off, yaw_off;
+double roll_off = -3.09995788 , pitch_off = 0.0170128063, yaw_off = 0, roll_ref, pitch_ref, yaw_ref;
 long long pm = 0;
-
+enum PIDconstants {ROLL, PITCH, YAW};
+double roll_const[5][3] = {{25, 25, 10}, {25,25, 10}, {20, 25, 15}, {20, 25, 15}, {20, 25, 15}};
+double pitch_const[5][3] = {{25, 25, 10}, {25,25, 10}, {20, 25, 15}, {20, 25, 15}, {20, 25, 15}};
+double yaw_const[5][3] = {{0, 0, 0}, {0,0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+void initPIDconstants(pid* p, int indx){
+    switch (indx)
+    {
+    case ROLL:
+        for(int i = 0; i < 5; i ++){
+            p->kp[i] = roll_const[i][0];
+            p->ki[i] = roll_const[i][1];
+            p->kd[i] = roll_const[i][2];
+        }
+        break;
+    case PITCH:
+        for(int i = 0; i < 5; i ++){
+            p->kp[i] = pitch_const[i][0];
+            p->ki[i] = pitch_const[i][1];
+            p->kd[i] = pitch_const[i][2];
+        }
+        break;
+    case YAW:
+        for(int i = 0; i < 5; i ++){
+            p->kp[i] = yaw_const[i][0];
+            p->ki[i] = yaw_const[i][1];
+            p->kd[i] = yaw_const[i][2];
+        }
+        break;
+    
+    default:
+        break;
+    }
+}
 
 int main(void){
     
@@ -149,27 +189,33 @@ int main(void){
     int val = 0;
     int Kp, Ki, Kd, roll_d, pitch_d, yaw_d;
     __delay_ms(1000);
-    roll_off = roll;
-    pitch_off = pitch;
     yaw_off = yaw;
-
+    initPIDconstants(&roll_control, ROLL);
+    initPIDconstants(&pitch_control, PITCH);
+    initPIDconstants(&yaw_control, YAW);
+    setReg(PID_INDEX, -1);
     while(1){
+        roll_ref = getReg(ROLL_REF) + roll_off;
+        pitch_ref = getReg(PITCH_REF) + pitch_off;
+        yaw_ref = getReg(YAW_REF) + yaw_off;
 
         H += fabs(getReg(H_VAL) - H) >= getReg(H_STEP_SIZE)  ? copysign(getReg(H_STEP_SIZE), getReg(H_VAL) - H) : 0;
         
-        R = computePid(&roll_control, angle_dif(-3.09995788, roll), time, H);
-        P = computePid(&pitch_control, angle_dif(0.0170128063, pitch), time, H);
-        Y = computePid(&yaw_control, angle_dif(yaw_off, yaw), time, H);
+        R = computePid(&roll_control, angle_dif( roll_ref, roll), -gyro.dDataX, time, H);
+        P = computePid(&pitch_control, angle_dif( pitch_ref, pitch), gyro.dDataY, time, H);
+        Y = computePid(&yaw_control, angle_dif(yaw_ref, yaw), gyro.dDataZ, time, H);
         
         M1 = H + R - P - Y;
         M2 = H - R - P + Y;
         M3 = H - R + P - Y;
         M4 = H + R + P + Y;
         
-        if(getReg(H_VAL) == 0){
+        if(getReg(H_VAL) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
+            setReg(H_VAL, 0);
             H = 0;
             M1 = M2 = M3 = M4 = 0;
             int index = getReg(PID_INDEX);
+            if(index >= 0) {
             roll_control.kp[index] = getReg(ROLL_KP);
             roll_control.ki[index] = getReg(ROLL_KI);
             roll_control.kd[index] = getReg(ROLL_KD);
@@ -181,7 +227,7 @@ int main(void){
             yaw_control.kp[index] = getReg(YAW_KP);
             yaw_control.ki[index] = getReg(YAW_KI);
             yaw_control.kd[index] = getReg(YAW_KD);
-
+            }
             resetPid(&roll_control, time);
             resetPid(&pitch_control, time);
             resetPid(&yaw_control, time);
@@ -196,7 +242,8 @@ int main(void){
         setPwmDutyTime(&m3, min(max(M3,0), 100));
         setPwmDutyTime(&m4, min(max(M4,0), 100));
         
-        sprintf(buffer, "%.3lf %.3lf %.3lf %.3lf\n", H, R, P, Y);
+        //sprintf(buffer, "%.3lf %.3lf %.3lf %.3lf\n", H, R, P, Y);
+        sprintf(buffer, "%.3lf %.3lf %.3lf\n", roll, pitch, yaw);
         serialWriteString(&Serial1, buffer);
         __delay_ms(max((int) getReg(TS_CONTROL), 5));
 

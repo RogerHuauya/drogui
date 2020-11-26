@@ -11,7 +11,7 @@ typedef struct _pid{
     double isat, osat, dt;
 } pid;
 
-double computePid(pid* p, double error, unsigned long long t, double h);
+double computePid(pid* p, double error, double errord, unsigned long long t, double h);
 void resetPid(pid* p, double ti);
 void initPid(pid* p, double kp, double kd, double ki,double ti,double isat,double osat);
 

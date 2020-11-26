@@ -31,4 +31,13 @@
 #define TS_CONTROL 0X55
 
 #define PID_INDEX 0x59
+
+#define GYRO_X 0x5D
+#define GYRO_Y 0x61
+#define GYRO_Z 0x65
+
+#define ROLL_REF 0x69
+#define PITCH_REF 0x6D
+#define YAW_REF 0x71
+
 #endif
