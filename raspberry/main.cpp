@@ -5,7 +5,7 @@
 #include <iostream>
 #include "registerMap.h"
 #include "arduPi.h"
-#include "sim7x00.h"
+#include "sim7600.h"
 #include <ctime>
 #include <signal.h>
 #include <time.h>
@@ -56,22 +56,12 @@ void dataSensor(){
             p = rasp_i2c.readFloat(PITCH_DEG)*180.0/pi+180;
             y = rasp_i2c.readFloat(YAW_DEG)*180.0/pi+180;
         #endif
-        //cls();
-        //usleep(50000);s
-        //printf(green(roll\t)  " "  green(pitch\t) " " green(yaw\t\n));
         printf("%d\t %f\t%f\t%f\n",cnt, r, p, y);
-        //printf("prueba \n");
         cnt++;
         if(inputReceived) break;
         //sleep(1);        
     }
-	/*root.clear();
-	root["imu"] = 5.42;
-	root["pressure"] = 1033.05;
-	root["current"] = 0.03;
-	s = fw.write(root);
-	drone.sendJson(s);
-	*/
+
 
 }
 
@@ -80,11 +70,12 @@ void zeroPosition(){
 
 }
 void normalStop(){
+    rasp_i2c.sendFloat(H_VAL, 0);
 	return;
 }
 void handler_stop(int s){
     normalStop();
-    printf("Emergency exit CTRL+C - Caught signal %d\n",s);
+    printf("Emergency exit CTRL+C - Caught signal %d ... turning off motors\n",s);
     exit(1); 
 }
 void enable_emergency_stop(){
@@ -302,8 +293,9 @@ void *logging(void *threadid){
         //ofstream log_file;
         //std::string name_log = str_datetime(); 
         while(!logging_state){}
-        //log_file.open("logs/"+name_log);
-
+        std::string name_log = str_datetime(); 
+        log_file.open("logs/"+name_log+".txt");
+        
         log_file << "H_VAL   H_STEP_SIZE " << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE)<< endl;
         log_file << "ROLL KP KI KD " << rasp_i2c.readFloat(ROLL_KP) << " " <<rasp_i2c.readFloat(ROLL_KI) << " " <<rasp_i2c.readFloat(ROLL_KD)<<endl;
         log_file << "PITCH KP KI KD " << rasp_i2c.readFloat(PITCH_KP) << " " <<rasp_i2c.readFloat(PITCH_KI) << " " <<rasp_i2c.readFloat(PITCH_KD)<<endl;
@@ -347,10 +339,7 @@ void *menu(void *threadid){
         printf(green([12]) " " white(GPS position \n));
         printf(green([13]) " " white(Send setpoint \n));
         printf(white(Enter an option = \n));
-        while(!inputReceived){
-            // paralelizando
-            //cout<<" roger "<<endl;
-        };
+        while(!inputReceived){};
         inputReceived = false;
         cout<<"menu : "<<id_choosen<<endl;
         //sleep(1);
@@ -371,58 +360,39 @@ void *menu(void *threadid){
             case 13: send_setpoint(); break;
             default: printf("%d is not an option, please enter option again\n", id_choosen); break;
         }
-        //sleep(2);
-        //return 0;
     }
     pthread_exit(NULL);
     return 0;
 }
 
 int main(int argc, char** argv ){
-	//try{ 
         enable_emergency_stop();
         srand((unsigned) time(NULL));
         setup();
-        cout<<"Program has started"<<endl;
+        printf("Program has started\n");
         #ifdef raspberry
         pthread_t threads[NUM_THREADS];
         id_threads  = pthread_create(&threads[0], NULL, menu, (void *)0);
-        std::string name_log = str_datetime(); 
-        log_file.open("logs/"+name_log+".txt");
+
 
         id_threads_log  = pthread_create(&threads[1], NULL, logging, (void *)0);
-        cout<<"Threads created "<<endl;
+        printf("Threads created \n");
         #endif
-        /*
-        while(1){
-            #ifdef raspberry
-            float value;
-            cin>>value;
-            if(cin.fail()) throw 505;
-            rasp_i2c.sendFloat(M1_VAL, value);
-            cout<<"Value sent : "<<endl;
-            cout<<"Value confirm : "<<rasp_i2c.readFloat(M1_VAL)<<endl;
-            #endif
-        }*/
+
 
         while(1){
             #ifdef raspberry
             if(!cin_thread){
                 std::cin.clear();
-                cout<<"id function : "<<endl;
+                printf("id function : \n");
                 cin>>id_choosen;
                 if(cin.fail()) throw 505;
-                cout<<"function choosen: "<<id_choosen<<endl;
+                printf("function choosen: \n");
                 cin_thread=true;
                 inputReceived = true;
             }
             #endif
         }
-    //}
-	/*catch (...){
-        normalStop();
-		cout << "Error exception occurred!" << endl;
-		return 0;
-	}*/
+
     return 0;
 }
