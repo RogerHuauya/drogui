@@ -13,12 +13,11 @@
 
 #ifdef raspberry
 #include "utils.h"
+#include "control.h"
 #include <pthread.h>
 rasp_I2C rasp_i2c(DSPIC_ADDRESS);
 #endif
 #define POWERKEY 6
-using namespace std;
-
 
 bool inputReceived = false, logging_state = false;
 bool cin_thread = false;
@@ -26,7 +25,7 @@ int id_choosen, value;
 int id_threads;
 int id_threads_log;
 
-ofstream log_file;
+std::ofstream log_file;
 
 void setup() {
 	sim7600.PowerOn(POWERKEY);
@@ -41,7 +40,7 @@ void desplazamiento(){
     /*
 	//auto v = root["desplazamiento"];
 	double x, y, z, alp;
-	cin>>x>>y>>z>>alp;
+	std::cin>>x>>y>>z>>alp;
 	printf("X: %lf, Y: %lf, Z: %lf, alpha: %lf\n", x, y, z, alp);
 	//printf("X: %lf, Y: %lf, Z: %lf, alpha: %lf\n", v[0].asDouble(), v[1].asDouble(), v[2].asDouble(), v[3].asDouble());
     */
@@ -87,128 +86,19 @@ void enable_emergency_stop(){
     return;
 }
 
-void send_PID_ROLL(){    
-    cin_thread=true;
-    cls(); 
-    float value1,value2,value3;
-    printf(green(PID ROLL) "\n");
-    cout<<"Set index:"<<endl;
-    cin>>value1;
-    if(cin.fail()) throw 505;
-    rasp_i2c.sendFloat(PID_INDEX, value1);
-    cout<<"KP KI KD = "<<endl;
-    cin>>value1>>value2>>value3;
-    if(cin.fail()) throw 505;
-    rasp_i2c.sendFloat(ROLL_KP, value1);
-    rasp_i2c.sendFloat(ROLL_KI, value2);
-    rasp_i2c.sendFloat(ROLL_KD, value3);
-    cout<<"Values sent : "<<endl;
-    sleep(1);
-    cin_thread=false;
-    return;
-}
-void send_PID_PITCH(){    
-    cin_thread=true;
-    cls(); 
-    float value1,value2,value3;
-    printf(green(PID PITCH) "\n");
-    cout<<"Set index:"<<endl;
-    cin>>value1;
-    if(cin.fail()) throw 505;
-    rasp_i2c.sendFloat(PID_INDEX, value1);
-    cout<<"KP KI KD = "<<endl;
-    cin>>value1>>value2>>value3;
-    if(cin.fail()) throw 505;
-    rasp_i2c.sendFloat(PITCH_KP, value1);
-    rasp_i2c.sendFloat(PITCH_KI, value2);
-    rasp_i2c.sendFloat(PITCH_KD, value3);
-    cout<<"Values sent : "<<endl;
-    sleep(1);
-    cin_thread=false;
-    return;
-}
-
-void send_H(){
-    cin_thread=true;
-    cls(); 
-    float value1,value2;
-    printf(green(H value and stepsize) "\n");
-    cout<<"H deltaH = "<<endl;
-    cin>>value1>>value2;
-    if(cin.fail()) throw 505;
-    rasp_i2c.sendFloat(H_VAL, value1);
-    rasp_i2c.sendFloat(H_STEP_SIZE, value2);
-    cout<<"Values sent : "<<endl;
-    if(value1 == 0) logging_state = false;
-    else logging_state = true;
-    sleep(1);
-    cin_thread=false;
-    return; 
-}
-void send_PID_YAW(){    
-    cin_thread=true;
-    cls(); 
-    float value1,value2,value3;
-    printf(green(PID YAW) "\n");
-    cout<<"Set index:"<<endl;
-    cin>>value1;
-    if(cin.fail()) throw 505;
-    rasp_i2c.sendFloat(PID_INDEX, value1);
-    cout<<"KP KI KD = "<<endl;
-    cin>>value1>>value2>>value3;
-    if(cin.fail()) throw 505;
-    rasp_i2c.sendFloat(YAW_KP, value1);
-    rasp_i2c.sendFloat(YAW_KI, value2);
-    rasp_i2c.sendFloat(YAW_KD, value3);
-    cout<<"Values sent : "<<endl;
-    sleep(1);
-    cin_thread=false;
-    return;
-}
-
-void send_setpoint(){
-    cin_thread=true;
-    int op; 
-    float val;
-    cls();
-    printf("\t\t\t\t\t\t\t\t" blue(Setpoint menu) "\n");
-    printf(green([0]) " " white(SP_ROLL\n));
-    printf(green([1]) " " white(SP_PITCH\n));
-    printf(green([2]) " " white(SP_YAW\n));
-    cin >> op;
-    cout<<"Value :" << endl;
-    cin>> val;
-    val *= 3.14159265/180.0;
-    if(cin.fail()) throw 505;
-    switch (op)
-    {
-    case 0:
-        rasp_i2c.sendFloat(ROLL_REF, val);
-        break;
-    case 1:
-        rasp_i2c.sendFloat(PITCH_REF, val);
-        break;
-    case 2:
-        rasp_i2c.sendFloat(YAW_REF, val);
-        break;
-
-    }
-    cin_thread=false;
-    return;
-}
-
 void writeRegister(){
     cin_thread=true;
     cls(); 
     int reg;
     float value;
-    cout<<"REG  FLOAT = "<<endl;
-    cin>>reg>>value;
-    if(cin.fail()) throw 505;
+    printf("REG  FLOAT = \n");
+    std::cin>>reg>>value;
+    if(std::cin.fail()) throw 505;
     rasp_i2c.sendFloat((uint8_t)reg, value);
-    cout<<"Value sent : "<<value<<endl;
-    cout<<"Value confirm : "<<rasp_i2c.readFloat(reg)<<endl;
+    printf("Value sent : %.3f\n", value);
+    printf("Value retrieved : %.3f\n", rasp_i2c.readFloat(reg));
     sleep(1);
+
     cin_thread=false;
     return;
 }
@@ -224,25 +114,25 @@ void readRegister(){
     printf(green([3]) " " white(PID_YAW\n));
     printf(green([4]) " " white(SETPOINTS\n));
 
-    cin >> reg;
-    if(cin.fail()) throw 505;
+    std::cin >> reg;
+    if(std::cin.fail()) throw 505;
     switch(reg){
-        case 0: cout << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE) << endl; break;
-        case 1: cout << rasp_i2c.readFloat(ROLL_KP) << " ";
-                 cout << rasp_i2c.readFloat(ROLL_KI) << " ";
-                 cout << rasp_i2c.readFloat(ROLL_KD) << endl; break;
+        case 0: std::cout << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE) << std::endl; break;
+        case 1: std::cout << rasp_i2c.readFloat(ROLL_KP) << " ";
+                 std::cout << rasp_i2c.readFloat(ROLL_KI) << " ";
+                 std::cout << rasp_i2c.readFloat(ROLL_KD) << std::endl; break;
         
-        case 2: cout << rasp_i2c.readFloat(PITCH_KP) << " ";
-                 cout << rasp_i2c.readFloat(PITCH_KI) << " ";
-                 cout << rasp_i2c.readFloat(PITCH_KD) << endl; break;
+        case 2: std::cout << rasp_i2c.readFloat(PITCH_KP) << " ";
+                 std::cout << rasp_i2c.readFloat(PITCH_KI) << " ";
+                 std::cout << rasp_i2c.readFloat(PITCH_KD) << std::endl; break;
         
-        case 3:cout << rasp_i2c.readFloat(YAW_KP) << " ";
-                 cout << rasp_i2c.readFloat(YAW_KI) << " ";
-                 cout << rasp_i2c.readFloat(YAW_KD) << endl; break;
+        case 3:std::cout << rasp_i2c.readFloat(YAW_KP) << " ";
+                 std::cout << rasp_i2c.readFloat(YAW_KI) << " ";
+                 std::cout << rasp_i2c.readFloat(YAW_KD) << std::endl; break;
 
-        case 4:cout << rasp_i2c.readFloat(ROLL_REF) << " ";
-                 cout << rasp_i2c.readFloat(PITCH_REF) << " ";
-                 cout << rasp_i2c.readFloat(YAW_REF) << endl; break;
+        case 4:std::cout << rasp_i2c.readFloat(ROLL_REF) << " ";
+                 std::cout << rasp_i2c.readFloat(PITCH_REF) << " ";
+                 std::cout << rasp_i2c.readFloat(YAW_REF) << std::endl; break;
     }
 
     sleep(3000);
@@ -254,11 +144,11 @@ void send_TS(){
     cls(); 
     float value1;
     printf(green(Tsampling) "\n");
-    cout<<"Ts = "<<endl;
-    cin>>value1;
-    if(cin.fail()) throw 505;
+    printf("Ts = \n");
+    std::cin>>value1;
+    if(std::cin.fail()) throw 505;
     rasp_i2c.sendFloat(TS_CONTROL, value1);
-    cout<<"Values sent : "<<endl;
+    printf("Values sent : \n");
     sleep(1);
     cin_thread=false;
     return; 
@@ -296,10 +186,10 @@ void *logging(void *threadid){
         std::string name_log = str_datetime(); 
         log_file.open("logs/"+name_log+".txt");
         
-        log_file << "H_VAL   H_STEP_SIZE " << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE)<< endl;
-        log_file << "ROLL KP KI KD " << rasp_i2c.readFloat(ROLL_KP) << " " <<rasp_i2c.readFloat(ROLL_KI) << " " <<rasp_i2c.readFloat(ROLL_KD)<<endl;
-        log_file << "PITCH KP KI KD " << rasp_i2c.readFloat(PITCH_KP) << " " <<rasp_i2c.readFloat(PITCH_KI) << " " <<rasp_i2c.readFloat(PITCH_KD)<<endl;
-        log_file << "YAW KP KI KD " << rasp_i2c.readFloat(YAW_KP) << " " <<rasp_i2c.readFloat(YAW_KI) << " " <<rasp_i2c.readFloat(YAW_KD)<<endl;
+        log_file << "H_VAL   H_STEP_SIZE " << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE)<< std::endl;
+        log_file << "ROLL KP KI KD " << rasp_i2c.readFloat(ROLL_KP) << " " <<rasp_i2c.readFloat(ROLL_KI) << " " <<rasp_i2c.readFloat(ROLL_KD)<<std::endl;
+        log_file << "PITCH KP KI KD " << rasp_i2c.readFloat(PITCH_KP) << " " <<rasp_i2c.readFloat(PITCH_KI) << " " <<rasp_i2c.readFloat(PITCH_KD)<<std::endl;
+        log_file << "YAW KP KI KD " << rasp_i2c.readFloat(YAW_KP) << " " <<rasp_i2c.readFloat(YAW_KI) << " " <<rasp_i2c.readFloat(YAW_KD)<<std::endl;
         while(1){
             log_file<<rasp_i2c.readFloat(H_VAL);
             log_file<<" ";
@@ -313,7 +203,7 @@ void *logging(void *threadid){
             log_file<<" ";
             log_file<<rasp_i2c.readFloat(PITCH_REF);
             log_file<<" ";
-            log_file<<rasp_i2c.readFloat(YAW_REF)<<endl;
+            log_file<<rasp_i2c.readFloat(YAW_REF)<<std::endl;
             //unistd::usleep(50000); // takes microseconds
             sleep(100);
             if(!logging_state) break;
@@ -341,7 +231,7 @@ void *menu(void *threadid){
         printf(white(Enter an option = \n));
         while(!inputReceived){};
         inputReceived = false;
-        cout<<"menu : "<<id_choosen<<endl;
+        std::cout << "menu : "<<id_choosen<<std::endl;
         //sleep(1);
         switch(id_choosen){
             case 0: normalStop(); break;
@@ -385,8 +275,8 @@ int main(int argc, char** argv ){
             if(!cin_thread){
                 std::cin.clear();
                 printf("id function : \n");
-                cin>>id_choosen;
-                if(cin.fail()) throw 505;
+                std::cin>>id_choosen;
+                if(std::cin.fail()) throw 505;
                 printf("function choosen: \n");
                 cin_thread=true;
                 inputReceived = true;
