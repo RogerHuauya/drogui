@@ -1,4 +1,6 @@
 #include "control.h"
+#include "registerMap.h"
+#include <iostream.h>
 
 void send_PID_ROLL(){    
     cin_thread=true;
@@ -49,8 +51,8 @@ void send_H(){
     std::cout<<"H deltaH = "<<std::endl;
     std::cin>>value1>>value2;
     if(std::cin.fail()) throw 505;
-    rasp_i2c.sendFloat(H_VAL, value1);
-    rasp_i2c.sendFloat(H_STEP_SIZE, value2);
+    rasp_i2c.sendFloat(Z_REF, value1);
+    rasp_i2c.sendFloat(Z_REF_SIZE, value2);
     std::cout<<"Values sent : "<<std::endl;
     if(value1 == 0) logging_state = false;
     else logging_state = true;
