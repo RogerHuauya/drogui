@@ -9,5 +9,5 @@ extern int id_choosen, value, id_thread_menu, id_thread_log, id_thread_gps;
 void send_PID_ROLL();
 void send_PID_PITCH();    
 void send_PID_YAW();
-void send_H();
+void send_Zref();
 void send_setpoint();
