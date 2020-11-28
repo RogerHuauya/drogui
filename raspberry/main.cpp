@@ -38,7 +38,7 @@ void sleep(unsigned milliseconds){
 void desplazamiento(){}
 
 void dataSensor(){
-
+    int reg;
     printf("\t\t\t\t\t\t\t\t" blue(Sensors) "\n");
     printf(green([0]) " " white(IMU\n));
     printf(green([1]) " " white(GPS\n));
@@ -117,7 +117,7 @@ void readRegister(){
     std::cin >> reg;
     if(std::cin.fail()) throw 505;
     switch(reg){
-        case 0: std::cout << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE) << std::endl; break;
+        case 0: std::cout << rasp_i2c.readFloat(Z_REF) << " " << rasp_i2c.readFloat(Z_REF_SIZE) << std::endl; break;
         case 1: std::cout << rasp_i2c.readFloat(ROLL_KP) << " ";
                  std::cout << rasp_i2c.readFloat(ROLL_KI) << " ";
                  std::cout << rasp_i2c.readFloat(ROLL_KD) << std::endl; break;
