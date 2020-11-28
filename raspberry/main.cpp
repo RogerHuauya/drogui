@@ -43,6 +43,8 @@ void dataSensor(){
     printf(green([0]) " " white(IMU\n));
     printf(green([1]) " " white(GPS\n));
     printf(green([2]) " " white(BMP280\n));
+    printf(green([3]) " " white(Z value\n));
+    
 
     std::cin >> reg;
     if(std::cin.fail()) throw 505;
@@ -59,7 +61,9 @@ void dataSensor(){
                     std::cout << rasp_i2c.readFloat(TEMP_ABS) << " ";
                     std::cout << rasp_i2c.readFloat(RAW_PRESS) << " ";
                     std::cout << rasp_i2c.readFloat(PRESS_ABS) << std::endl; break;
+            case 3: std::cout << rasp_i2c.readFloat(Z_VAL) <<std::endl; break;
         }
+        sleep(100);
     }
     return;
 }
@@ -230,17 +234,15 @@ void *menu(void *threadid){
         printf(green([0]) " " white(Emergency stop\n));
         printf(green([1]) " " white(Desplazamiento\n));
         printf(green([2]) " " white(Show data sensor\n));
-        printf(green([3]) " " white(Send PID ROLL \n));
-        printf(green([4]) " " white(Send PID PITCH\n));
-        printf(green([5]) " " white(Send PID YAW  \n));
-        printf(green([6]) " " white(Zero position \n));
-        printf(green([7]) " " white(Send H \n));
-        printf(green([8]) " " white(Sample period (ms) PID TS \n));
-        printf(green([9]) " " white(Write register \n));
-        printf(green([10]) " " white(Read register \n));
-        printf(green([11]) " " white(Send AT command \n));
-        printf(green([12]) " " white(GPS position \n));
-        printf(green([13]) " " white(Send setpoint \n));
+        printf(green([3]) " " white(Send PID\n));
+        printf(green([4]) " " white(Zero position \n));
+        printf(green([5]) " " white(Send reference \n));
+        printf(green([6]) " " white(Sample period (ms) PID TS \n));
+        printf(green([7]) " " white(Write register \n));
+        printf(green([8]) " " white(Read register \n));
+        printf(green([9]) " " white(Send AT command \n));
+        printf(green([10]) " " white(GPS position \n));
+        printf(green([11]) " " white(Send setpoint \n));
         printf(white(Enter an option = \n));
         while(!inputReceived){};
         inputReceived = false;
@@ -250,17 +252,15 @@ void *menu(void *threadid){
             case 0: normalStop(); break;
             case 1: desplazamiento(); break;
             case 2: dataSensor(); break;
-            case 3: send_PID_ROLL(); break;
-            case 4: send_PID_PITCH(); break;
-            case 5: send_PID_YAW(); break;
-            case 6: zeroPosition(); break;
-            case 7: send_H(); break;
-            case 8: send_TS(); break;
-            case 9: writeRegister(); break;
-            case 10: readRegister(); break;
-            case 11: send_AT_command(); break;
-            case 12: getGPSdata(); break;
-            case 13: break;//send_setpoint(); break;
+            case 3: send_PID(); break;
+            case 4: zeroPosition(); break;
+            case 5: send_ref();break;
+            case 6: send_comp_mg(); break;
+            case 7: writeRegister(); break;
+            case 8: readRegister(); break;
+            case 9: send_AT_command(); break;
+            case 10: getGPSdata(); break;
+            case 11: break;//send_setpoint(); break;
             default: printf("%d is not an option, please enter option again\n", id_choosen); break;
         }
     }
