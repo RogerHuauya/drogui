@@ -5,6 +5,11 @@
 
 extern bool cin_thread;
 extern bool logging_state;
+
+void send_PID_ROLL();
+void send_PID_PITCH();    
+void send_PID_YAW();
+void send_PID_Z();
 void send_PID(){
     cin_thread = true;
     cls();
@@ -97,19 +102,47 @@ void send_PID_Z(){
     sleep(1);
     return;
 }
-
-void send_Zref(){
-    cls(); 
+enum REF_OP {REF_ROLL, REF_PITCH, REF_YAW, REF_X, REF_Y, REF_Z};
+char ref_op[6][40] = {"ref_roll delta_roll_ref\n", "ref_pitch delta_pitch_ref\n", "ref_yaw delta_yaw_ref\n", \
+                        "ref_x delta_x_ref\n", "ref_y delta_y_ref\n", "ref_z delta_z_ref\n"};
+void send_ref(){
+    cin_thread = true;
+    //sleep(1000);
+    cls();
+    int op;
+    printf("\t\t\t\t\t\t\t\t" blue(Principal menu) "\n");
+    printf(green([0]) " " white(ROLL REF\n));
+    printf(green([1]) " " white(PITCH REF\n));
+    printf(green([2]) " " white(YAW REF\n));
+    printf(green([3]) " " white(X REF\n));
+    printf(green([4]) " " white(Y REF\n));
+    printf(green([5]) " " white(Z REF\n));
+    std::cin>>op;
     float value1,value2;
-    printf(green(Z ref and Z stepsize) "\n");
-    std::cout<<"Zref deltaZref = "<<std::endl;
+    printf(green(%s) "\n", ref_op[op]);
     std::cin>>value1>>value2;
     if(std::cin.fail()) throw 505;
-    rasp_i2c.sendFloat(Z_REF, value1);
-    rasp_i2c.sendFloat(Z_REF_SIZE, value2);
+    switch(op){
+        case REF_ROLL: rasp_i2c.sendFloat(ROLL_REF, value1); rasp_i2c.sendFloat(ROLL_REF_SIZE, value2); break;
+        case REF_PITCH: rasp_i2c.sendFloat(PITCH_REF, value1); rasp_i2c.sendFloat(PITCH_REF_SIZE, value2); break;
+        case REF_YAW: rasp_i2c.sendFloat(YAW_REF, value1); rasp_i2c.sendFloat(YAW_REF_SIZE, value2); break;
+        case REF_X: rasp_i2c.sendFloat(X_REF, value1); rasp_i2c.sendFloat(X_REF_SIZE, value2); break;
+        case REF_Y: rasp_i2c.sendFloat(Y_REF, value1); rasp_i2c.sendFloat(Y_REF_SIZE, value2); break;
+        case REF_Z: rasp_i2c.sendFloat(Z_REF, value1); rasp_i2c.sendFloat(Z_REF_SIZE, value2); break;
+    }
+
     std::cout<<"Values have been sent over I2C : "<<std::endl;
     if(value1 == 0) logging_state = false;
     else logging_state = true;
     sleep(1);
     return; 
+    cin_thread = false; 
+}
+void send_comp_mg(){
+    cin_thread = true;
+    printf("Enter Compensation:\n");
+    float mg;
+    std::cin>>mg;
+    rasp_i2c.sendFloat(Z_MG, mg);
+    cin_thread = false;
 }

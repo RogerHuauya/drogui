@@ -232,7 +232,7 @@ void *menu(void *threadid){
         printf(green([2]) " " white(Show data sensor\n));
         printf(green([3]) " " white(Send PID\n));
         printf(green([4]) " " white(Zero position \n));
-        printf(green([5]) " " white(Send H \n));
+        printf(green([5]) " " white(Send reference \n));
         printf(green([6]) " " white(Sample period (ms) PID TS \n));
         printf(green([7]) " " white(Write register \n));
         printf(green([8]) " " white(Read register \n));
@@ -250,8 +250,8 @@ void *menu(void *threadid){
             case 2: dataSensor(); break;
             case 3: send_PID(); break;
             case 4: zeroPosition(); break;
-            case 5: send_H(); break;
-            case 6: send_TS(); break;
+            case 5: send_ref();break;
+            case 6: send_comp_mg(); break;
             case 7: writeRegister(); break;
             case 8: readRegister(); break;
             case 9: send_AT_command(); break;
