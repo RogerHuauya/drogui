@@ -17,7 +17,7 @@ typedef struct _i2c{
     int n; uint8_t address;
     uint8_t mode;
 } i2c;
-#define I2C_REG_SIZE 200
+#define I2C_REG_SIZE 300
 extern uint8_t i2c1Reg[I2C_REG_SIZE];
 extern uint8_t i2c2Reg[I2C_REG_SIZE];
 

@@ -37,21 +37,30 @@ void sleep(unsigned milliseconds){
 void desplazamiento(){}
 
 void dataSensor(){
-    int cnt= 0;
-    while(true){
-        float r = rand()%15, p = rand()%15, y = rand()%15;
-        #ifdef raspberry
-            r = rasp_i2c.readFloat(ROLL_DEG)*180.0/pi+180;
-            p = rasp_i2c.readFloat(PITCH_DEG)*180.0/pi+180;
-            y = rasp_i2c.readFloat(YAW_DEG)*180.0/pi+180;
-        #endif
-        printf("%d\t %f\t%f\t%f\n",cnt, r, p, y);
-        cnt++;
-        if(inputReceived) break;
-        //sleep(1);        
+
+    printf("\t\t\t\t\t\t\t\t" blue(Sensors) "\n");
+    printf(green([0]) " " white(IMU\n));
+    printf(green([1]) " " white(GPS\n));
+    printf(green([2]) " " white(BMP280\n));
+
+    std::cin >> reg;
+    if(std::cin.fail()) throw 505;
+    while(1){
+        switch(reg){
+            case 0: std::cout << rasp_i2c.readFloat(ROLL_VAL) <<" " ;
+                    std::cout << rasp_i2c.readFloat(PITCH_VAL) << " ";
+                    std::cout << rasp_i2c.readFloat(YAW_VAL) << std::endl; break;
+
+            case 1: std::cout << rasp_i2c.readFloat(GPS_X) << " ";
+                    std::cout << rasp_i2c.readFloat(GPS_Y) << std::endl; break;
+            
+            case 2: std::cout << rasp_i2c.readFloat(RAW_TEMP) << " ";
+                    std::cout << rasp_i2c.readFloat(TEMP_ABS) << " ";
+                    std::cout << rasp_i2c.readFloat(RAW_PRESS) << " ";
+                    std::cout << rasp_i2c.readFloat(PRESS_ABS) << std::endl; break;
+        }
     }
-
-
+    return;
 }
 
 void zeroPosition(){
@@ -59,7 +68,7 @@ void zeroPosition(){
 
 }
 void normalStop(){
-    rasp_i2c.sendFloat(H_VAL, 0);
+    rasp_i2c.sendFloat(Z_REF, 0);
 	return;
 }
 void handler_stop(int s){
