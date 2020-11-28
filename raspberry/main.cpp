@@ -286,7 +286,6 @@ void *gps_data(void *threadid){
         }
         delay(100);
     }
-    return;
 }
 int main(int argc, char** argv ){
         enable_emergency_stop();
