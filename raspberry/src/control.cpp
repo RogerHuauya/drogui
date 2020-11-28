@@ -1,6 +1,10 @@
 #include "control.h"
 #include "registerMap.h"
-#include <iostream.h>
+#include <iostream>
+#include "utils.h"
+
+extern bool cin_thread;
+extern bool logging_state;
 
 void send_PID_ROLL(){    
     cin_thread=true;
