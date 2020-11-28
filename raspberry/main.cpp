@@ -10,6 +10,7 @@
 #include <signal.h>
 #include <time.h>
 #include <unistd.h>
+#include <math.h>
 
 #ifdef raspberry
 #include "utils.h"
@@ -215,7 +216,7 @@ void *logging(void *threadid){
             log_file<<rasp_i2c.readFloat(RAW_PRESS);
             log_file<<"\t";
             log_file<<rasp_i2c.readFloat(PRESS_ABS);
-            log_file<<endl;
+            log_file<<std::endl;
             //unistd::usleep(50000); // takes microseconds
             sleep(100);
             if(!logging_state) break;
