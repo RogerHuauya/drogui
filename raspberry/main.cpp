@@ -55,7 +55,9 @@ void dataSensor(){
             p = rasp_i2c.readFloat(PITCH_DEG)*180.0/pi+180;
             y = rasp_i2c.readFloat(YAW_DEG)*180.0/pi+180;
         #endif
-        printf("%d\t %f\t%f\t%f\n",cnt, r, p, y);
+	float press;
+	press = rasp_i2c.readFloat(PRESS_ABS);
+        printf("%d\t %f\t%f\t%f\t%f\n",cnt, r, p, y, press);
         cnt++;
         if(inputReceived) break;
         //sleep(1);        
@@ -192,18 +194,20 @@ void *logging(void *threadid){
         log_file << "YAW KP KI KD " << rasp_i2c.readFloat(YAW_KP) << " " <<rasp_i2c.readFloat(YAW_KI) << " " <<rasp_i2c.readFloat(YAW_KD)<<std::endl;
         while(1){
             log_file<<rasp_i2c.readFloat(H_VAL);
-            log_file<<" ";
+            log_file<<"\t";
             log_file<<rasp_i2c.readFloat(ROLL_DEG)*180.0/pi+180;
-            log_file<<" ";
+            log_file<<"\t";
             log_file<<rasp_i2c.readFloat(PITCH_DEG)*180.0/pi+180;
-            log_file<<" ";
+            log_file<<"\t";
             log_file<<rasp_i2c.readFloat(YAW_DEG)*180.0/pi+180;
-            log_file<<" ";
+            log_file<<"\t";
             log_file<<rasp_i2c.readFloat(ROLL_REF);
-            log_file<<" ";
+            log_file<<"\t";
             log_file<<rasp_i2c.readFloat(PITCH_REF);
-            log_file<<" ";
-            log_file<<rasp_i2c.readFloat(YAW_REF)<<std::endl;
+            log_file<<"\t";
+            log_file<<rasp_i2c.readFloat(YAW_REF);
+	    log_file<<"\t";
+	    log_file<<rasp_i2c.readFloat(PRESS_ABS) << std::endl;
             //unistd::usleep(50000); // takes microseconds
             sleep(100);
             if(!logging_state) break;
@@ -247,7 +251,7 @@ void *menu(void *threadid){
             case 10: readRegister(); break;
             case 11: send_AT_command(); break;
             case 12: getGPSdata(); break;
-            case 13: send_setpoint(); break;
+            case 13: break;//send_setpoint(); break;
             default: printf("%d is not an option, please enter option again\n", id_choosen); break;
         }
     }
