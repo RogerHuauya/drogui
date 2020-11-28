@@ -354,7 +354,7 @@ void Sim7600::GPSStart(){
 
 }
 bool Sim7600::GPSGet(){
-
+    /*int answer;
     answer = sendATcommand("AT+CGPSINFO", "+CGPSINFO: ", 1000);    // start GPS session, standalone mode
     if (answer == 1){
         answer = 0;
@@ -426,7 +426,7 @@ bool Sim7600::GPSGet(){
     UTCTime[6] = '\0';
     printf("UTC time is %s\n",UTCTime);
     
-	return true;
+	return true;*/
 }
 Sim7600 sim7600 = Sim7600();
 

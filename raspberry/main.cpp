@@ -296,7 +296,7 @@ int main(int argc, char** argv ){
         pthread_t threads[NUM_THREADS];
         id_thread_menu  = pthread_create(&threads[0], NULL, menu, (void *)0);
         id_thread_log  = pthread_create(&threads[1], NULL, logging, (void *)0);
-        id_thread_gps = pthread_create(&threads[2], NULL, gps_data, (void *)0);
+        //id_thread_gps = pthread_create(&threads[2], NULL, gps_data, (void *)0);
         printf("Threads created \n");
         #endif
 
