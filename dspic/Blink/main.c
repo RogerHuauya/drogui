@@ -21,16 +21,11 @@ char buffer[80];
 i2c slave;
 
 pwm m1, m2, m3, m4;
-
 sensor acc, gyro, ori;
 
-pid z_control;
-pid x_control;
-pid y_control;
+pid z_control, x_control, y_control;
 
-pid roll_control;
-pid pitch_control;
-pid yaw_control;
+pid roll_control, pitch_control, yaw_control;
 
 serial Serial1;
 
@@ -96,7 +91,6 @@ void timerInterrupt(2){
     setReg(PITCH_VAL,(float)(pitch));
     setReg(YAW_VAL,(float)(yaw));
 
-    
     clearTimerFlag(&readSensors);
 }
 
@@ -142,11 +136,11 @@ long long pm = 0;
 int main(void){
     
     initializeSystem();
-    int val = 0;
-    int Kp, Ki, Kd, roll_d, pitch_d, yaw_d;
     __delay_ms(1000);
+    
     yaw_off = yaw;
     setReg(PID_INDEX, -1);
+
     while(1){
         roll_ref = getReg(ROLL_REF) + roll_off;
         pitch_ref = getReg(PITCH_REF) + pitch_off;
@@ -208,8 +202,8 @@ int main(void){
         setPwmDutyTime(&m4, min(max(M4,0), 100));
         
         //sprintf(buffer, "%.3lf %.3lf %.3lf %.3lf\n", H, R, P, Y);
-        sprintf(buffer, "%.3lf %.3lf %.3lf\n", roll, pitch, yaw);
-        serialWriteString(&Serial1, buffer);
+        //sprintf(buffer, "%.3lf %.3lf %.3lf\n", roll, pitch, yaw);
+        //serialWriteString(&Serial1, buffer);
         __delay_ms(max((int) getReg(TS_CONTROL), 5));
 
     }
