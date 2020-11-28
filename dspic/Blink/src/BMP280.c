@@ -14,9 +14,9 @@ void initBmp280(){
     spiStart();
     spiExchangeByte(0x74);
     spiExchangeByte(0x57);
-    /*
+    
     spiExchangeByte(0x75);
-    spiExchangeByte(---);*/
+    spiExchangeByte(0x1C);
     spiStop();
 
     int16_t lsb, msb;

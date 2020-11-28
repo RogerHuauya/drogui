@@ -14,7 +14,7 @@
 #include "i2c.h"
 #include "utils.h"
 #include "registerMap.h"
-
+#include "bmp280.h"
 char buffer[80];
 
 i2c slave;
@@ -35,6 +35,7 @@ serial Serial1;
 
 timer readSensors;
 timer millis;
+timer readPress;
 
 double roll, pitch, yaw;
 volatile unsigned long long time = 0;
@@ -84,10 +85,14 @@ void initializeSystem(){
     serialWriteString(&Serial1, "before init");
     initOrient(&ori, 50, 10);
     serialWriteString(&Serial1,"after init");
-    
+
+    initBmp280();
+
     initTimer(&readSensors, 2, DIV256, 3);
     setTimerFrecuency(&readSensors, 100);
 
+    initTimer(&readPress, 4, DIV256, 3);
+    setTimerFrecuency(&readPress, 20);
 
     initTimer(&millis, 3, DIV256, 3);
     setTimerFrecuency(&millis, 1000);
@@ -113,7 +118,7 @@ void timerInterrupt(2){
     readOrient(&ori);        
     readGyro(&gyro);
     getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
-    
+
     setReg(ROLL_DEG,(float)(roll));
     setReg(PITCH_DEG,(float)(pitch));
     setReg(YAW_DEG,(float)(yaw));
@@ -123,6 +128,18 @@ void timerInterrupt(2){
     setReg(GYRO_Z, gyro.dDataZ);
     
     clearTimerFlag(&readSensors);
+}
+
+int32_t raw_press, raw_temp;
+float press, temper;
+void timerInterrupt(4){
+    
+    raw_temp = bmpReadTemperature();
+    raw_press = bmpReadPressure();
+    temper = bmp280CompensateTemperature(raw_temp);
+    press = bmp280CompensatePressure(raw_press);
+    setReg(PRESS_ABS, press);
+    clearTimerFlag(&readPress);
 }
 
 void timerInterrupt(3){
