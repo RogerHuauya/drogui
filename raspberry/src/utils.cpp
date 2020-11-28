@@ -49,6 +49,7 @@ float rasp_I2C::readFloat(uint8_t reg){
     for (uint8_t i=0;i<4;i++)  buff[i] = rasp_I2C::readMCU(reg+i);
     return bytestofloat(buff);
 }
+
 void rasp_I2C::print4bytes(uint8_t *data){
     for (int i = 0; i < 4; ++i){
         std::cout<<+data[i]<<" ";

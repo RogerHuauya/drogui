@@ -184,12 +184,14 @@ void *logging(void *threadid){
         while(!logging_state){}
         std::string name_log = str_datetime(); 
         log_file.open("logs/"+name_log+".txt");
-        
+        /*
         log_file << "H_VAL   H_STEP_SIZE " << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE)<< std::endl;
         log_file << "ROLL KP KI KD " << rasp_i2c.readFloat(ROLL_KP) << " " <<rasp_i2c.readFloat(ROLL_KI) << " " <<rasp_i2c.readFloat(ROLL_KD)<<std::endl;
         log_file << "PITCH KP KI KD " << rasp_i2c.readFloat(PITCH_KP) << " " <<rasp_i2c.readFloat(PITCH_KI) << " " <<rasp_i2c.readFloat(PITCH_KD)<<std::endl;
         log_file << "YAW KP KI KD " << rasp_i2c.readFloat(YAW_KP) << " " <<rasp_i2c.readFloat(YAW_KI) << " " <<rasp_i2c.readFloat(YAW_KD)<<std::endl;
+        */
         while(1){
+            /*
             log_file<<rasp_i2c.readFloat(H_VAL);
             log_file<<"\t";
             log_file<<rasp_i2c.readFloat(ROLL_DEG)*180.0/pi+180;
@@ -205,6 +207,15 @@ void *logging(void *threadid){
             log_file<<rasp_i2c.readFloat(YAW_REF);
 	    log_file<<"\t";
 	    log_file<<rasp_i2c.readFloat(PRESS_ABS) << std::endl;
+        */
+            log_file<<rasp_i2c.readFloat(RAW_TEMP);
+            log_file<<"\t";           
+            log_file<<rasp_i2c.readFloat(TEMP_ABS);
+            log_file<<"\t";
+            log_file<<rasp_i2c.readFloat(RAW_PRESS);
+            log_file<<"\t";
+            log_file<<rasp_i2c.readFloat(PRESS_ABS);
+            log_file<<endl;
             //unistd::usleep(50000); // takes microseconds
             sleep(100);
             if(!logging_state) break;
