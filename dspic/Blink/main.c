@@ -47,38 +47,16 @@ void initializeSystem(){
     
     setPwmPrescaler(0);
 
-    initPwmPin(&m1, PWM3_H);
-    setPwmDutyLimits(&m1, 125, 250);
-    setPwmFrecuency(&m1, 3500);
-    setPwmDutyTime(&m1, 0);
-    
-    initPwmPin(&m2, PWM4_H);
-    setPwmDutyLimits(&m2, 125, 250);
-    setPwmFrecuency(&m2, 3500);
-    setPwmDutyTime(&m2, 0);
-
-    initPwmPin(&m3, PWM5_H);
-    setPwmDutyLimits(&m3, 125, 250);
-    setPwmFrecuency(&m3, 3500);
-    setPwmDutyTime(&m3, 0);
-    
-    initPwmPin(&m4, PWM6_H);
-    setPwmDutyLimits(&m4, 125, 250);
-    setPwmFrecuency(&m4, 3500);
-    setPwmDutyTime(&m4, 0);
+    initOneshot125(&m1, PWM3_H);
+    initOneshot125(&m2, PWM4_H);
+    initOneshot125(&m3, PWM5_H);
+    initOneshot125(&m4, PWM6_H);
     
     initPwm();
 
     initSerial(&Serial1, SERIAL1, 115200);
 
-    initPid(&z_control, 0, 0, 0, 0, 10 , 100);
-    initPid(&x_control, 0, 0, 0, 0, 10 , 100);
-    initPid(&y_control, 0, 0, 0, 0, 10 , 100);
-    
-    initPid(&roll_control, 0, 0, 0, 0, 1 , 100);
-    initPid(&pitch_control, 0, 0, 0, 0, 1 , 100);
-    initPid(&yaw_control, 0, 0, 0, 0, 1 , 100);
-    
+    initPidConstants();
 
     initMM7150();
     initAccel(&acc, 100, 20);
@@ -106,15 +84,13 @@ void initializeSystem(){
 }
 
 
-void getEuler(double q0,double q1,double q2, double q3);
-
 bool caso = true;
 
 long long entrada = 0;
 int dig = 0;
 void timerInterrupt(2){
     readOrient(&ori);        
-    getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
+    getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ, &roll, &pitch, &yaw);
 
     setReg(ROLL_VAL,(float)(roll));
     setReg(PITCH_VAL,(float)(pitch));
@@ -125,7 +101,8 @@ void timerInterrupt(2){
 }
 
 int32_t raw_press, raw_temp;
-float press, temper;
+float press, temper, press_ref = 0, med = 0;
+
 void timerInterrupt(4){
     
     raw_temp = bmpReadTemperature();
@@ -137,7 +114,13 @@ void timerInterrupt(4){
     setReg(RAW_PRESS, raw_press);
     setReg(PRESS_ABS, press);
 
-    //Cálculo de z
+    if(med < 10){
+        press_ref += press/10.0, z = 0;        
+        med++;
+    }
+    else z = 44330 *(1-pow(1.0*press/press_ref, 0.1903));
+    
+    z = max(z, 0);
     setReg(Z_VAL, z);
     clearTimerFlag(&readPress);
 }
@@ -147,47 +130,14 @@ void timerInterrupt(3){
     clearTimerFlag(&millis);
 }
 
-double angle_dif(double angle1, double angle2);
 
-double  H,R,P,Y, Zdes;
+double  H,R,P,Y;
 double M1,M2,M3,M4;
 uint8_t haux = 0;
 double roll_off = -3.09995788 , pitch_off = 0.0170128063, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
 double roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
 long long pm = 0;
-enum PIDconstants {ROLL, PITCH, YAW};
-double roll_const[5][3] = {{25, 25, 10}, {25,25, 10}, {20, 25, 15}, {20, 25, 15}, {20, 25, 15}};
-double pitch_const[5][3] = {{25, 25, 10}, {25,25, 10}, {20, 25, 15}, {20, 25, 15}, {20, 25, 15}};
-double yaw_const[5][3] = {{0, 0, 0}, {0,0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
-void initPIDconstants(pid* p, int indx){
-    switch (indx)
-    {
-    case ROLL:
-        for(int i = 0; i < 5; i ++){
-            p->kp[i] = roll_const[i][0];
-            p->ki[i] = roll_const[i][1];
-            p->kd[i] = roll_const[i][2];
-        }
-        break;
-    case PITCH:
-        for(int i = 0; i < 5; i ++){
-            p->kp[i] = pitch_const[i][0];
-            p->ki[i] = pitch_const[i][1];
-            p->kd[i] = pitch_const[i][2];
-        }
-        break;
-    case YAW:
-        for(int i = 0; i < 5; i ++){
-            p->kp[i] = yaw_const[i][0];
-            p->ki[i] = yaw_const[i][1];
-            p->kd[i] = yaw_const[i][2];
-        }
-        break;
-    
-    default:
-        break;
-    }
-}
+
 
 int main(void){
     
@@ -196,9 +146,6 @@ int main(void){
     int Kp, Ki, Kd, roll_d, pitch_d, yaw_d;
     __delay_ms(1000);
     yaw_off = yaw;
-    initPIDconstants(&roll_control, ROLL);
-    initPIDconstants(&pitch_control, PITCH);
-    initPIDconstants(&yaw_control, YAW);
     setReg(PID_INDEX, -1);
     while(1){
         roll_ref = getReg(ROLL_REF) + roll_off;
@@ -269,34 +216,4 @@ int main(void){
     return 0;
 }
 
-double angle_dif(double angle1, double angle2){
-    if(angle1 > angle2){
-        if((angle1 - angle2) > (2*pi - angle1 + angle2)) return -2*pi + angle1 - angle2;
-        else return angle1 - angle2;
-    }
-    else{
-        if((angle2 - angle1) > (2*pi - angle2 + angle1)) return 2*pi - angle2 + angle1;
-        else return angle1 - angle2;
-    }
-}
-
-void getEuler(double q0, double q1, double q2, double q3){
-	
-    // roll (x-axis rotation)
-    double sinr_cosp = 2 * (q0 * q1 + q2 * q3);
-    double cosr_cosp = 1 - 2 * (q1 * q1 + q2 * q2);
-    roll = atan2(sinr_cosp, cosr_cosp);
-
-    // pitch (y-axis rotation)
-    double sinp = 2 * (q0 * q2 - q3 * q1);
-    if (abs(sinp) >= 1)
-        pitch = copysign(pi / 2, sinp); // use 90 degrees if out of range
-    else
-        pitch = asin(sinp);
-
-    // yaw (z-axis rotation)
-    double siny_cosp = 2 * (q0 * q3 + q1 * q2);
-    double cosy_cosp = 1 - 2 * (q2 * q2 + q3 * q3);
-    yaw = atan2(siny_cosp, cosy_cosp);
-}
 #endif

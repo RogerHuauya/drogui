@@ -1,4 +1,14 @@
 #include "control.h"
+
+extern pid z_control;
+extern pid x_control;
+extern pid y_control;
+
+extern pid roll_control;
+extern pid pitch_control;
+extern pid yaw_control;
+
+
 double computeIndexedPid(pid* p, double error, unsigned long long t, double h){
     p->dt = (t - p->tant)/1000.0;
     p->tant = t;
@@ -43,4 +53,37 @@ void initPid(pid* p, double kp, double kd, double ki,double ti,double isat,doubl
     }
     p->tant = ti;
     p->isat = isat, p->osat = osat;
+}
+
+
+double roll_const[5][3] = {{25, 25, 10}, {25,25, 10}, {20, 25, 15}, {20, 25, 15}, {20, 25, 15}};
+double pitch_const[5][3] = {{25, 25, 10}, {25,25, 10}, {20, 25, 15}, {20, 25, 15}, {20, 25, 15}};
+double yaw_const[5][3] = {{10, 0, 10}, {10,0, 10}, {10, 0, 10}, {10, 0, 10}, {10, 0, 10}};
+
+void initPidConstants(){
+    
+    initPid(&z_control, 0, 0, 0, 0, 10 , 100);
+    initPid(&x_control, 0, 0, 0, 0, 10 , 100);
+    initPid(&y_control, 0, 0, 0, 0, 10 , 100);
+    
+    initPid(&roll_control, 0, 0, 0, 0, 1 , 100);
+    initPid(&pitch_control, 0, 0, 0, 0, 1 , 100);
+    initPid(&yaw_control, 0, 0, 0, 0, 1 , 100);
+    
+    for(int i = 0; i < 5; i ++){
+        roll_control.kp[i] = roll_const[i][0];
+        roll_control.ki[i] = roll_const[i][1];
+        roll_control.kd[i] = roll_const[i][2];
+    }
+    for(int i = 0; i < 5; i ++){
+        pitch_control.kp[i] = pitch_const[i][0];
+        pitch_control.ki[i] = pitch_const[i][1];
+        pitch_control.kd[i] = pitch_const[i][2];
+    }
+    for(int i = 0; i < 5; i ++){
+        yaw_control.kp[i] = yaw_const[i][0];
+        yaw_control.ki[i] = yaw_const[i][1];
+        yaw_control.kd[i] = yaw_const[i][2];
+    }
+
 }
