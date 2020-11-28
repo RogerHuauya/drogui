@@ -1,5 +1,5 @@
 #include "control.h"
-double computePid(pid* p, double error, double errord, unsigned long long t, double h){
+double computeIndexedPid(pid* p, double error, unsigned long long t, double h){
     p->dt = (t - p->tant)/1000.0;
     p->tant = t;
     p->erri = max(min(p->erri + error*p->dt,p->isat),-p->isat);
@@ -17,6 +17,17 @@ double computePid(pid* p, double error, double errord, unsigned long long t, dou
     else if(h <= 100)
         return max(min(p->kp[4]*error + p->ki[4]*p->erri + p->kd[4]*p->errd,p->osat),-p->osat);
 }
+
+double computePid(pid* p, double error, unsigned long long t){
+    p->dt = (t - p->tant)/1000.0;
+    p->tant = t;
+    p->erri = max(min(p->erri + error*p->dt,p->isat),-p->isat);
+    //p->errd = errord;
+    p->errd = (error - p->e_ant)/p->dt;
+    p->e_ant = error;
+    return max(min(p->kp[0]*error + p->ki[0]*p->erri + p->kd[0]*p->errd,p->osat),-p->osat);
+}
+
 
 void resetPid(pid* p, double ti){
     p->tant = ti;

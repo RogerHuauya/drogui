@@ -1,7 +1,5 @@
 #include "control.h"
 
-
-
 void send_PID_ROLL(){    
     cin_thread=true;
     cls(); 

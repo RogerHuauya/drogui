@@ -11,6 +11,7 @@
 #include "timer.h"
 #include "registerMap.h"
 #include "utils.h"
+#include "matlib.h"
 
 #define PI 3.14159264
 i2c slave;
@@ -19,17 +20,7 @@ sensor acc, gyro, ori, inc;
 double roll, pitch, yaw;
 timer readSensors;
 char buffer[50];
-void getEuler(double q0,double q1,double q2, double q3);
-double angle_dif(double angle1, double angle2){
-    if(angle1 > angle2){
-        if((angle1 - angle2) > (2*pi - angle1 + angle2)) return -2*pi + angle1 - angle2;
-        else return angle1 - angle2;
-    }
-    else{
-        if((angle2 - angle1) > (2*pi - angle2 + angle1)) return 2*pi - angle2 + angle1;
-        else return angle1 - angle2;
-    }
-}
+
 float dt = 0.01, v[3] = {0, 0, 0}, x[3] = {0, 0, 0};
 
 void timerInterrupt(2){

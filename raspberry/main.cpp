@@ -22,8 +22,7 @@ rasp_I2C rasp_i2c(DSPIC_ADDRESS);
 bool inputReceived = false, logging_state = false;
 bool cin_thread = false;
 int id_choosen, value; 
-int id_threads;
-int id_threads_log;
+int id_thread_menu, id_thread_log, id_thread_gps;
 
 std::ofstream log_file;
 
@@ -31,39 +30,37 @@ void setup() {
 	sim7600.PowerOn(POWERKEY);
 }
 
-void sleep(unsigned milliseconds)
-{
+void sleep(unsigned milliseconds){
     unistd::usleep(milliseconds * 1000); // takes microseconds
 }
 
-void desplazamiento(){
-    /*
-	//auto v = root["desplazamiento"];
-	double x, y, z, alp;
-	std::cin>>x>>y>>z>>alp;
-	printf("X: %lf, Y: %lf, Z: %lf, alpha: %lf\n", x, y, z, alp);
-	//printf("X: %lf, Y: %lf, Z: %lf, alpha: %lf\n", v[0].asDouble(), v[1].asDouble(), v[2].asDouble(), v[3].asDouble());
-    */
-}
+void desplazamiento(){}
 
 void dataSensor(){
-    int cnt= 0;
-    while(true){
-        float r = rand()%15, p = rand()%15, y = rand()%15;
-        #ifdef raspberry
-            r = rasp_i2c.readFloat(ROLL_DEG)*180.0/pi+180;
-            p = rasp_i2c.readFloat(PITCH_DEG)*180.0/pi+180;
-            y = rasp_i2c.readFloat(YAW_DEG)*180.0/pi+180;
-        #endif
-	float press;
-	press = rasp_i2c.readFloat(PRESS_ABS);
-        printf("%d\t %f\t%f\t%f\t%f\n",cnt, r, p, y, press);
-        cnt++;
-        if(inputReceived) break;
-        //sleep(1);        
+
+    printf("\t\t\t\t\t\t\t\t" blue(Sensors) "\n");
+    printf(green([0]) " " white(IMU\n));
+    printf(green([1]) " " white(GPS\n));
+    printf(green([2]) " " white(BMP280\n));
+
+    std::cin >> reg;
+    if(std::cin.fail()) throw 505;
+    while(1){
+        switch(reg){
+            case 0: std::cout << rasp_i2c.readFloat(ROLL_VAL) <<" " ;
+                    std::cout << rasp_i2c.readFloat(PITCH_VAL) << " ";
+                    std::cout << rasp_i2c.readFloat(YAW_VAL) << std::endl; break;
+
+            case 1: std::cout << rasp_i2c.readFloat(GPS_X) << " ";
+                    std::cout << rasp_i2c.readFloat(GPS_Y) << std::endl; break;
+            
+            case 2: std::cout << rasp_i2c.readFloat(RAW_TEMP) << " ";
+                    std::cout << rasp_i2c.readFloat(TEMP_ABS) << " ";
+                    std::cout << rasp_i2c.readFloat(RAW_PRESS) << " ";
+                    std::cout << rasp_i2c.readFloat(PRESS_ABS) << std::endl; break;
+        }
     }
-
-
+    return;
 }
 
 void zeroPosition(){
@@ -71,7 +68,7 @@ void zeroPosition(){
 
 }
 void normalStop(){
-    rasp_i2c.sendFloat(H_VAL, 0);
+    rasp_i2c.sendFloat(Z_REF, 0);
 	return;
 }
 void handler_stop(int s){
@@ -259,6 +256,26 @@ void *menu(void *threadid){
     return 0;
 }
 
+void *gps_data(void *threadid){
+    sim7600.GPSStart();
+    float offset_x = 0, offset_y = 0, r = 1;
+    for(int i = 0; i < 10; i++){
+        if(sim7600.GPSGet()){
+            offset_x += r*sim7600.Log*cos(sim7600.Lat*pi/180);
+            offset_y += r*sim7600.Lat;
+        }
+        offset_x /= 10;
+        offset_y /= 10;
+    }
+    while(1){
+        if(sim7600.GPSGet()){
+            rasp_i2c.sendFloat(GPS_X, r*sim7600.Log*cos(sim7600.Lat*pi/180) - offset_x);
+            rasp_i2c.sendFloat(GPS_Y, r*sim7600.Lat - offset_y);
+        }
+        delay(100);
+    }
+    return;
+}
 int main(int argc, char** argv ){
         enable_emergency_stop();
         srand((unsigned) time(NULL));
@@ -266,10 +283,9 @@ int main(int argc, char** argv ){
         printf("Program has started\n");
         #ifdef raspberry
         pthread_t threads[NUM_THREADS];
-        id_threads  = pthread_create(&threads[0], NULL, menu, (void *)0);
-
-
-        id_threads_log  = pthread_create(&threads[1], NULL, logging, (void *)0);
+        id_thread_menu  = pthread_create(&threads[0], NULL, menu, (void *)0);
+        id_thread_log  = pthread_create(&threads[1], NULL, logging, (void *)0);
+        id_thread_gps = pthread_create(&threads[2], NULL, gps_data, (void *)0);
         printf("Threads created \n");
         #endif
 
