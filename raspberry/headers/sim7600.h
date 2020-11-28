@@ -25,7 +25,8 @@ public:
 	// GPS positoning
     float Lat,Log;
 	bool GPSPositioning();
-
+	void GPSStart();
+	bool GPSGet();
 	//TCP and UDP communication
 //	bool PDPSetting(const char* APN);
 //	bool TCPClientCM(const char* ServerIP,const char* Port,const char* Message,const char* MessageSize);  //TCP Client Command Mode

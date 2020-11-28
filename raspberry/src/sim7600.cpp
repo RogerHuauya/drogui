@@ -348,5 +348,85 @@ char Sim7600::sendATcommand2(const char* ATcommand, const char* expected_answer1
 
 }
 
+void Sim7600::GPSStart(){
+    sendATcommand("AT+CGPS=1,1", "OK:", 1000);    // start GPS session, standalone mode
+    delay(2000);
+
+}
+bool Sim7600::GPSGet(){
+
+    answer = sendATcommand("AT+CGPSINFO", "+CGPSINFO: ", 1000);    // start GPS session, standalone mode
+    if (answer == 1){
+        answer = 0;
+        while(Serial.available() == 0);
+        // this loop reads the data of the SMS
+        do{
+            // if there are data in the UART input buffer, reads it and checks for the asnwer
+            if(Serial.available() > 0){    
+                RecMessage[i] = Serial.read();
+                i++;
+                // check if the desired answer (OK) is in the response of the module
+                if (strstr(RecMessage, "OK") != NULL)    
+                {
+                    answer = 1;
+                }
+            }
+        }while(answer == 0);    // Waits for the asnwer with time out
+
+        RecMessage[i] = '\0';
+        printf("%s\n",RecMessage); 
+        
+        if (strstr(RecMessage, ",,,,,,,,") != NULL) 
+        {
+            memset(RecMessage, '\0', i);    // Initialize the string
+            RecNull = true;
+            i = 0;
+            answer = 0;
+            delay(1000);
+        }
+        else
+        {
+            RecNull = false;
+        } 
+            
+        
+    }
+    else{
+        printf("error %o\n",answer);
+        sendATcommand("AT+CGPS=0", "OK:", 1000);
+        return false;
+    }
+    delay(100);
+
+    strncpy(LatDD,RecMessage,2);
+    strncpy(LatMM,RecMessage+2,9);
+    Lat = atoi(LatDD) + (atof(LatMM)/60);
+    if(RecMessage[12] == 'N')
+        printf("Latitude is %f N\n",Lat);
+    else if(RecMessage[12] == 'S')
+        printf("Latitude is %f S\n",Lat);
+    else
+        return false;
+
+    strncpy(LogDD,RecMessage+14,3);
+    strncpy(LogMM,RecMessage+17,9);
+    Log = atoi(LogDD) + (atof(LogMM)/60);
+    if(RecMessage[27] == 'E')
+        printf("Longitude is %f E\n",Log);
+    else if(RecMessage[27] == 'W')
+        printf("Longitude is %f W\n",Log);
+    else
+        return false;
+
+    strncpy(DdMmYy,RecMessage+29,6);
+    DdMmYy[6] = '\0';
+    printf("Day Month Year is %s\n",DdMmYy);
+
+    strncpy(UTCTime,RecMessage+36,6);
+    UTCTime[6] = '\0';
+    printf("UTC time is %s\n",UTCTime);
+    
+	return true;
+}
 Sim7600 sim7600 = Sim7600();
 

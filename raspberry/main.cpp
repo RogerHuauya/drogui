@@ -22,8 +22,7 @@ rasp_I2C rasp_i2c(DSPIC_ADDRESS);
 bool inputReceived = false, logging_state = false;
 bool cin_thread = false;
 int id_choosen, value; 
-int id_threads;
-int id_threads_log;
+int id_thread_menu, id_thread_log, id_thread_gps;
 
 std::ofstream log_file;
 
@@ -31,20 +30,11 @@ void setup() {
 	sim7600.PowerOn(POWERKEY);
 }
 
-void sleep(unsigned milliseconds)
-{
+void sleep(unsigned milliseconds){
     unistd::usleep(milliseconds * 1000); // takes microseconds
 }
 
-void desplazamiento(){
-    /*
-	//auto v = root["desplazamiento"];
-	double x, y, z, alp;
-	std::cin>>x>>y>>z>>alp;
-	printf("X: %lf, Y: %lf, Z: %lf, alpha: %lf\n", x, y, z, alp);
-	//printf("X: %lf, Y: %lf, Z: %lf, alpha: %lf\n", v[0].asDouble(), v[1].asDouble(), v[2].asDouble(), v[3].asDouble());
-    */
-}
+void desplazamiento(){}
 
 void dataSensor(){
     int cnt= 0;
@@ -255,6 +245,26 @@ void *menu(void *threadid){
     return 0;
 }
 
+void *gps_data(void *threadid){
+    sim7600.GPSStart();
+    float offset_x = 0, offset_y = 0, r = 1;
+    for(int i = 0; i < 10; i++){
+        if(sim7600.GPSGet()){
+            offset_x += r*sim7600.Log*cos(sim7600.Lat*pi/180);
+            offset_y += r*sim7600.Lat;
+        }
+        offset_x /= 10;
+        offset_y /= 10;
+    }
+    while(1){
+        if(sim7600.GPSGet()){
+            rasp_i2c.sendFloat(GPS_X, r*sim7600.Log*cos(sim7600.Lat*pi/180) - offset_x);
+            rasp_i2c.sendFloat(GPS_Y, r*sim7600.Lat - offset_y);
+        }
+        delay(100);
+    }
+    return;
+}
 int main(int argc, char** argv ){
         enable_emergency_stop();
         srand((unsigned) time(NULL));
@@ -262,10 +272,9 @@ int main(int argc, char** argv ){
         printf("Program has started\n");
         #ifdef raspberry
         pthread_t threads[NUM_THREADS];
-        id_threads  = pthread_create(&threads[0], NULL, menu, (void *)0);
-
-
-        id_threads_log  = pthread_create(&threads[1], NULL, logging, (void *)0);
+        id_thread_menu  = pthread_create(&threads[0], NULL, menu, (void *)0);
+        id_thread_log  = pthread_create(&threads[1], NULL, logging, (void *)0);
+        id_thread_gps = pthread_create(&threads[2], NULL, gps_data, (void *)0);
         printf("Threads created \n");
         #endif
 

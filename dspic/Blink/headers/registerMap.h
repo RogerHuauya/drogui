@@ -40,4 +40,8 @@
 #define PITCH_REF 0x6D
 #define YAW_REF 0x71
 
+#define GPS_X 0x75
+#define GPS_Y 0x79
+#define NUM_THREADS 2
+
 #endif
