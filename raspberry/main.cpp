@@ -43,6 +43,8 @@ void dataSensor(){
     printf(green([0]) " " white(IMU\n));
     printf(green([1]) " " white(GPS\n));
     printf(green([2]) " " white(BMP280\n));
+    printf(green([3]) " " white(Z value\n));
+    
 
     std::cin >> reg;
     if(std::cin.fail()) throw 505;
@@ -59,7 +61,9 @@ void dataSensor(){
                     std::cout << rasp_i2c.readFloat(TEMP_ABS) << " ";
                     std::cout << rasp_i2c.readFloat(RAW_PRESS) << " ";
                     std::cout << rasp_i2c.readFloat(PRESS_ABS) << std::endl; break;
+            case 3: std::cout << rasp_i2c.readFloat(Z_VAL) <<std::endl; break;
         }
+        sleep(100);
     }
     return;
 }
