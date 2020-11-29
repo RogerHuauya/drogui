@@ -38,7 +38,9 @@ void sleep(unsigned milliseconds){
 void desplazamiento(){}
 
 void dataSensor(){
+    cin_thread = true;
     int reg;
+    cls();
     printf("\t\t\t\t\t\t\t\t" blue(Sensors) "\n");
     printf(green([0]) " " white(IMU\n));
     printf(green([1]) " " white(GPS\n));
@@ -65,6 +67,7 @@ void dataSensor(){
         }
         sleep(100);
     }
+    cin_thread = false;
     return;
 }
 
@@ -213,6 +216,7 @@ void *logging(void *threadid){
 	    log_file<<"\t";
 	    log_file<<rasp_i2c.readFloat(PRESS_ABS) << std::endl;
         */
+       /*
             log_file<<rasp_i2c.readFloat(RAW_TEMP);
             log_file<<"\t";           
             log_file<<rasp_i2c.readFloat(TEMP_ABS);
@@ -220,6 +224,13 @@ void *logging(void *threadid){
             log_file<<rasp_i2c.readFloat(RAW_PRESS);
             log_file<<"\t";
             log_file<<rasp_i2c.readFloat(PRESS_ABS);
+            */
+            log_file<<rasp_i2c.readFloat(Z_REF);
+            log_file<<"\t";
+            log_file<<rasp_i2c.readFloat(Z_U);
+            log_file<<"\t";
+            log_file<<rasp_i2c.readFloat(Z_VAL);
+            log_file<<"\t";
             log_file<<std::endl;
             //unistd::usleep(50000); // takes microseconds
             sleep(100);
