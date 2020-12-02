@@ -20,15 +20,21 @@ int main(){
 
     serialWriteString(&Serial1,"hola1");
 
+    matInit(&mat1, 2, 2);
+    eye(&mat2, 2);
+    matInit(&mat3, 2, 2);
+
     setMatVal(&mat1, 0, 0, 0.3);
     setMatVal(&mat1, 0, 1, 0.2);
     setMatVal(&mat1, 1, 0, 0.1);
     setMatVal(&mat1, 1, 1, 0.8);
 
+    
+    /*
     setMatVal(&mat2, 0, 0, -0.1);
     setMatVal(&mat2, 0, 1, 0.4);
     setMatVal(&mat2, 1, 0, 0.2);
-    setMatVal(&mat2, 1, 1, 0.9);
+    setMatVal(&mat2, 1, 1, 0.9);*/
 
     serialWriteString(&Serial1,"hola1");
     matMult(&mat3, &mat1, &mat2);

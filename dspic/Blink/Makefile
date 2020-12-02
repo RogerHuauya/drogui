@@ -14,7 +14,7 @@ OBJDMP= xc16-objdump
 TARGET=out
 
 #additional linker flags
-LINKFLAGS=-Map=$(TARGET).map
+LINKFLAGS=-Map=$(TARGET).map,--heap=512
 
 #if we have specified a linker script add it
 ifdef LINKSCRIPT

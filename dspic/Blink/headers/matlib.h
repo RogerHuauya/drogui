@@ -1,11 +1,12 @@
 #ifndef MATLIB_H
 #define MATLIB_H
 #include <dsp.h>
-typedef struct _mat
-{
+
+typedef struct _mat{
     int row, col;
-    fractional val[6][6];
+    fractional* val;
 } mat;
+
 void matInit(mat* m, int row, int col);
 void matMult(mat* ans, mat* a, mat* b);
 void quaternionToR(mat* R, float q1, float q2, float q3, float q4);
