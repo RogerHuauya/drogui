@@ -16,8 +16,7 @@
 
 
 #define PI 3.14159264
-
-fractional x;
+#define G 9.81
 i2c slave;
 serial Serial1;
 sensor acc, gyro, ori, inc;
@@ -34,15 +33,15 @@ void timerInterrupt(2){
     
     quaternionToR(&Rq, ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
     
-    setMatVal(s.val, 0, 0, acc.dDataX);
-    setMatVal(s.val, 1, 0, acc.dDataY);
-    setMatVal(s.val, 2, 0, acc.dDataZ);
+    setMatVal(&s, 0, 0, acc.dDataX/(2 * G));
+    setMatVal(&s, 1, 0, acc.dDataY/(2 * G));
+    setMatVal(&s, 2, 0, acc.dDataZ/(2 * G));
 
     matMult(&acel, &Rq, &s); 
     
-    v[0] += acel.val[0][0]*dt;
-    v[1] += acel.val[1][0]*dt;
-    v[2] += acel.val[2][0]*dt;
+    v[0] += getMatVal(&acel, 0, 0)*dt*G;
+    v[1] += getMatVal(&acel, 1, 0)*dt*G;
+    v[2] += getMatVal(&acel, 2, 0)*dt*G;
 
     x[0] += v[0];
     x[1] += v[1];
