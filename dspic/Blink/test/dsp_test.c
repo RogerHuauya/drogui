@@ -19,6 +19,7 @@ int main(){
     __delay_ms(1000);
 
     serialWriteString(&Serial1,"hola1");
+
     setMatVal(&mat1, 0, 0, 0.3);
     setMatVal(&mat1, 0, 1, 0.2);
     setMatVal(&mat1, 1, 0, 0.1);
@@ -40,7 +41,7 @@ int main(){
         serialWriteString(&Serial1, s);
         __delay_ms(1000);
     }
-    
+
 }
 
 #endif
