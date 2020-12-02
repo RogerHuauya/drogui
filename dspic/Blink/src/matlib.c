@@ -24,3 +24,12 @@ void quaternionToR(mat* R, float q1, float q2, float q3, float q4){
     R->val[2][1] = 2*(q3*q4 + q1*q2);
     R->val[2][2] = 2*(q1*q1 + q4*q4) - 1;
 }
+
+double q2double(int q){
+    return  q/32768.0;
+}
+
+
+int double2q(double d){
+    return  d*32768.0;
+}

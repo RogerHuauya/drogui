@@ -1,10 +1,14 @@
 #ifndef MATLIB_H
 #define MATLIB_H
 typedef struct _mat
+
 {
     int row, col;
     float val[5][5];
 } mat;
+
 void matMult(mat* ans, mat* a, mat* b);
 void quaternionToR(mat* R, float q1, float q2, float q3, float q4);
+double q2double(int q);
+int double2q(double d);
 #endif

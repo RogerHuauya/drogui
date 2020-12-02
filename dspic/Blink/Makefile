@@ -44,7 +44,7 @@ $(TARGET).hex : $(TARGET).elf
 # Link all the object files into an elf file.
 $(TARGET).elf : $(OBJS)
 	@echo Linking elf file
-	$(CC) -mprocessor=$(PROC) -o $(TARGET).elf $(OBJS) -T p$(PROC).gld -Wl,$(LINKFLAGS)
+	$(CC) -mprocessor=$(PROC) -o $(TARGET).elf $(OBJS) -T p$(PROC).gld -ldsp -Wl,$(LINKFLAGS)
 
 # Create an object file for each C file.
 %.o : %.c $(HDRS)

@@ -23,9 +23,9 @@ i2c slave;
 pwm m1, m2, m3, m4;
 sensor acc, gyro, ori;
 
-pid z_control, x_control, y_control;
+extern pid z_control, x_control, y_control;
 
-pid roll_control, pitch_control, yaw_control;
+extern pid roll_control, pitch_control, yaw_control;
 
 serial Serial1;
 
