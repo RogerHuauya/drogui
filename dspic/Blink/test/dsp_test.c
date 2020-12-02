@@ -1,4 +1,4 @@
-#define DSP_TEST
+//#define DSP_TEST
 #ifdef DSP_TEST
 
 #include <xc.h>
@@ -19,7 +19,6 @@ int main(){
     initSerial(&Serial1, SERIAL1, 115200);
     __delay_ms(1000);
     
-    serialWriteString(&Serial1,"hola1");
     mat1[0][0] = Float2Fract(0.3); 
     mat1[0][1] = Float2Fract(0.2);
     mat1[1][0] = Float2Fract(0.1);
@@ -29,10 +28,8 @@ int main(){
     mat2[0][1] = Float2Fract(0.4);
     mat2[1][0] = Float2Fract(0.2);
     mat2[1][1] = Float2Fract(0.9);
-    serialWriteString(&Serial1,"hola1");
-    MatrixMultiply(2, 2, 2, &mat3[0][0], &mat1[0][0], &mat2[0][0]);
 
-    serialWriteString(&Serial1,"hola1");
+    MatrixMultiply(2, 2, 2, &mat3[0][0], &mat1[0][0], &mat2[0][0]);
 
     sprintf(s, "%.2lf\t%.2lf\n%.2lf\t%.2lf\n\n", Fract2Float(mat3[0][0]), Fract2Float(mat3[0][1])\
                                                         , Fract2Float(mat3[1][0]), Fract2Float(mat3[1][1]));

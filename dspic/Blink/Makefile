@@ -21,7 +21,7 @@ ifdef LINKSCRIPT
 	LINKFLAGS:=--script=$(LINKSCRIPT),$(LINKFLAGS)
 endif
 
-SOURCES := $(wildcard *.c) $(wildcard src/*.c ) $(wildcard test/*.c) $(wildcard venti/*.c)
+SOURCES := $(wildcard *.c) $(wildcard src/*.c ) $(wildcard test/*.c) 
 OBJS := $(patsubst %.c, %.o,$(SOURCES))
 HDRS := $(wildcard headers/*.h)
 CFLAGS=-g -O1 -x c -I headers  -mno-eds-warn
