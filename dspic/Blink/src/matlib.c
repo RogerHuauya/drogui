@@ -13,6 +13,7 @@ void matMult(mat* ans, mat* a, mat* b){
 }
 
 void quaternionToR(mat* R, float q1, float q2, float q3, float q4){
+    R->row = R->col = 3;
     R->val[0][0] = 2*(q1*q1 + q2*q2) - 1;
     R->val[0][1] = 2*(q2*q3 - q1*q4);
     R->val[0][2] = 2*(q2*q4 + q1*q4);

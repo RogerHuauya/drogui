@@ -1,5 +1,5 @@
 
-#define MAIN
+//#define MAIN
 #ifdef MAIN
 
 #include <xc.h>
