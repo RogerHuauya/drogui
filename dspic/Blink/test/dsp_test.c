@@ -20,15 +20,16 @@ int main(){
     __delay_ms(1000);
 
     serialWriteString(&Serial1,"hola1");
-    mat1.val[0][0] = Float2Fract(0.3); 
-    mat1.val[0][1] = Float2Fract(0.2);
-    mat1.val[1][0] = Float2Fract(0.1);
-    mat1.val[1][1] = Float2Fract(0.8);
+    setMatVal(&mat1, 0, 0, 0.3);
+    setMatVal(&mat1, 0, 1, 0.2);
+    setMatVal(&mat1, 1, 0, 0.1);
+    setMatVal(&mat1, 1, 1, 0.8);
 
-    mat2.val[0][0] = Float2Fract(-0.1);
-    mat2.val[0][1] = Float2Fract(0.4);
-    mat2.val[1][0] = Float2Fract(0.2);
-    mat2.val[1][1] = Float2Fract(0.9);
+    setMatVal(&mat2, 0, 0, -0.1);
+    setMatVal(&mat2, 0, 1, 0.4);
+    setMatVal(&mat2, 1, 0, 0.2);
+    setMatVal(&mat2, 1, 1, 0.9);
+
     serialWriteString(&Serial1,"hola1");
     matMult(&mat3, &mat1, &mat2);
     serialWriteString(&Serial1,"hola1");

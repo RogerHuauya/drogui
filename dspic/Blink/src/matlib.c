@@ -35,6 +35,9 @@ double q2double(int q){
     return  q/32768.0;
 }
 
+void setMatVal(mat* m, int i, int j, float value){
+    m->val[i][j] = Float2Fract(value);
+}
 
 int double2q(double d){
     return  d*32768.0;
