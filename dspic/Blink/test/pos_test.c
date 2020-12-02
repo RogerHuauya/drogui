@@ -1,4 +1,4 @@
-//#define POS_TEST
+#define POS_TEST
 #ifdef POS_TEST
 
 #include <xc.h>
@@ -34,9 +34,9 @@ void timerInterrupt(2){
     
     quaternionToR(&Rq, ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
     
-    s.val[0][0] = acc.dDataX;
-    s.val[1][0] = acc.dDataY,
-    s.val[2][0] = acc.dDataZ,
+    setMatVal(s.val, 0, 0, acc.dDataX);
+    setMatVal(s.val, 1, 0, acc.dDataY);
+    setMatVal(s.val, 2, 0, acc.dDataZ);
 
     matMult(&acel, &Rq, &s); 
     
@@ -54,10 +54,9 @@ void timerInterrupt(2){
 
 int main(){
     initConfig();
-    acel.row = 3;
-    acel.col = 1;
-    s.row = 3;
-    s.col = 1;
+    matInit(&acel, 3, 1);
+    matInit(&s, 3, 1);
+    
     initSerial(&Serial1, SERIAL1, 115200);
     char s[50];
     initMM7150();
