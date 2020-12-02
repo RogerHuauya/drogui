@@ -18,8 +18,6 @@ int main(){
     initSerial(&Serial1, SERIAL1, 115200);
     __delay_ms(1000);
 
-    serialWriteString(&Serial1,"hola1");
-
     matInit(&mat1, 2, 2);
     eye(&mat2, 2);
     matInit(&mat3, 2, 2);
@@ -36,9 +34,7 @@ int main(){
     setMatVal(&mat2, 1, 0, 0.2);
     setMatVal(&mat2, 1, 1, 0.9);*/
 
-    serialWriteString(&Serial1,"hola1");
     matMult(&mat3, &mat1, &mat2);
-    serialWriteString(&Serial1,"hola1");
 
     sprintf(s, "%.2lf\t%.2lf\n%.2lf\t%.2lf\n\n",   getMatVal(&mat3,0,0), getMatVal(&mat3,0,1),\
                                                             getMatVal(&mat3,1,0), getMatVal(&mat3,1,1));
