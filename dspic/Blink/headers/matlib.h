@@ -1,10 +1,10 @@
 #ifndef MATLIB_H
 #define MATLIB_H
+#include <dsp.h>
 typedef struct _mat
-
 {
     int row, col;
-    float val[5][5];
+    fractional val[6][6];
 } mat;
 
 void matMult(mat* ans, mat* a, mat* b);
