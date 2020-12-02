@@ -39,6 +39,11 @@ void setMatVal(mat* m, int i, int j, float value){
     m->val[i][j] = Float2Fract(value);
 }
 
+float getMatVal(mat* m, int i, int j){
+    return Fract2Float(m->val[i][j]);
+}
+
+
 int double2q(double d){
     return  d*32768.0;
 }

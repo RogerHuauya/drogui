@@ -1,8 +1,7 @@
-//#define DSP_TEST
+#define DSP_TEST
 #ifdef DSP_TEST
 
 #include <xc.h>
-#include <dsp.h>
 #include "config.h" 
 #include "serial.h"
 #include "matlib.h"
@@ -34,13 +33,14 @@ int main(){
     matMult(&mat3, &mat1, &mat2);
     serialWriteString(&Serial1,"hola1");
 
-    sprintf(s, "%.2lf\t%.2lf\n%.2lf\t%.2lf\n\n", Fract2Float(mat3.val[0][0]), Fract2Float(mat3.val[0][1])\
-                                                        , Fract2Float(mat3.val[1][0]), Fract2Float(mat3.val[1][1]));
-    
+    sprintf(s, "%.2lf\t%.2lf\n%.2lf\t%.2lf\n\n",   getMatVal(&mat3,0,0), getMatVal(&mat3,0,1),\
+                                                            getMatVal(&mat3,1,0), getMatVal(&mat3,1,1));
+
     while(1){
         serialWriteString(&Serial1, s);
         __delay_ms(1000);
     }
+    
 }
 
 #endif

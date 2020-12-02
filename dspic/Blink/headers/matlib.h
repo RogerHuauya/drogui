@@ -12,4 +12,5 @@ void quaternionToR(mat* R, float q1, float q2, float q3, float q4);
 double q2double(int q);
 int double2q(double d);
 void setMatVal(mat* m, int i, int j, float value);
+float getMatVal(mat* m, int i, int j);
 #endif
