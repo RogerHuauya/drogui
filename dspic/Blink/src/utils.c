@@ -56,7 +56,7 @@ void getEuler(double q0, double q1, double q2, double q3, double* roll, double *
 
     // pitch (y-axis rotation)
     double sinp = 2 * (q0 * q2 - q3 * q1);
-    if (abs(sinp) >= 1)
+    if (fabs(sinp) >= 1)
         *pitch = copysign(pi / 2, sinp); // use 90 degrees if out of range
     else
         *pitch = asin(sinp);

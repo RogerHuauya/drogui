@@ -59,7 +59,7 @@ void initializeSystem(){
 
     initBmp280();
 
-    initTimer(&readSensors, 2, DIV256, 3);
+    initTimer(&readSensors, 2, DIV256, 4);
     setTimerFrecuency(&readSensors, 100);
 
     initTimer(&readPress, 4, DIV256, 3);
@@ -95,7 +95,8 @@ void timerInterrupt(2){
 }
 
 int32_t raw_press, raw_temp;
-float press, temper, press_ref = 0, med = 0;
+float press, temper, press_ref = 0;
+int med = 0;
 
 void timerInterrupt(4){
     
@@ -114,7 +115,9 @@ void timerInterrupt(4){
     }
     else z = 44330 *(1-pow(1.0*press/press_ref, 0.1903));
     
-    z = max(z, 0);
+    if(z < 0) press_ref = press;
+
+    setReg(RAW_TEMP, med);
     setReg(Z_VAL, z);
     clearTimerFlag(&readPress);
 }
@@ -125,7 +128,7 @@ void timerInterrupt(3){
 }
 
 
-double  H,R,P,Y;
+double  H,R,P,Y, H_ref;
 double M1,M2,M3,M4;
 uint8_t haux = 0;
 double roll_off = -3.09995788 , pitch_off = 0.0170128063, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
@@ -148,9 +151,12 @@ int main(void){
 
         z_ref += fabs(getReg(Z_REF) - z_ref) >= getReg(Z_REF_SIZE)  ? copysign(getReg(Z_REF_SIZE), getReg(Z_REF) - z_ref) : 0;
         
-        H = computePid(&z_control, z_ref - z, time) + getReg(Z_MG);
-        R = computeIndexedPid(&roll_control, angle_dif( roll_ref, roll), time, H);
-        P = computeIndexedPid(&pitch_control, angle_dif( pitch_ref, pitch),time, H);
+        H_ref = computePid(&z_control, z_ref - z, time) + getReg(Z_MG);
+
+        H += fabs(H_ref - H) >= 0.1  ? copysign(0.1, H_ref - H) : 0;
+
+        R = computeIndexedPid(&roll_control, angle_dif(roll_ref, roll), time, H);
+        P = computeIndexedPid(&pitch_control, angle_dif(pitch_ref, pitch),time, H);
         Y = computeIndexedPid(&yaw_control, angle_dif(yaw_ref, yaw),time, H);
         
         setReg(ROLL_U, R);
@@ -165,6 +171,7 @@ int main(void){
         M4 = H + R + P + Y;
         
         if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
+            
             setReg(Z_REF, 0);
             H = 0; z_ref = 0;
             M1 = M2 = M3 = M4 = 0;
