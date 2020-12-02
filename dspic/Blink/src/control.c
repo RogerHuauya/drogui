@@ -59,7 +59,7 @@ void initPid(pid* p, double kp, double kd, double ki,double ti,double isat,doubl
 double roll_const[5][3] = {{25, 25, 10}, {25,25, 10}, {20, 25, 15}, {20, 25, 15}, {20, 25, 15}};
 double pitch_const[5][3] = {{25, 25, 10}, {25,25, 10}, {20, 25, 15}, {20, 25, 15}, {20, 25, 15}};
 double yaw_const[5][3] = {{10, 0, 10}, {10,0, 10}, {10, 0, 10}, {10, 0, 10}, {10, 0, 10}};
-
+/*
 void initPidConstants(){
     
     initPid(&z_control, 0, 0, 0, 0, 10 , 100);
@@ -86,4 +86,4 @@ void initPidConstants(){
         yaw_control.kd[i] = yaw_const[i][2];
     }
 
-}
+}*/

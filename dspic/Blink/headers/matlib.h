@@ -6,4 +6,5 @@ typedef struct _mat
     float val[5][5];
 } mat;
 void matMult(mat* ans, mat* a, mat* b);
+void quaternionToR(mat* R, float q1, float q2, float q3, float q4);
 #endif
