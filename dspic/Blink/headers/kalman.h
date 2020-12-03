@@ -4,6 +4,7 @@
 #include "utils.h"
 #include "matlib.h"
 
+void kynematics(mat* p, mat* v, mat* u, mat* Rq,float Ts);
 
 
 #endif
