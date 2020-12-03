@@ -58,6 +58,7 @@ void *logging(void *threadid){
 
 void *gps_data(void *threadid){
     sim7600.GPSStart();
+    unistd::usleep(1000*1000);
     float offset_x = 0, offset_y = 0, r = 1;
     for(int i = 0; i < 10; i++){
         if(sim7600.GPSGet()){

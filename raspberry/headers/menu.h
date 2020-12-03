@@ -15,5 +15,5 @@
 #include <pthread.h>
 
 void handler_stop(int s);
-
+void menu();
 #endif

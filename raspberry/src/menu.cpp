@@ -142,37 +142,39 @@ void getGPSdata(){
 
 void menu(){
     while(1){
-        cls();    
-        printf("\t\t\t\t\t\t\t\t" blue(Principal menu) "\n");
-        printf(green([1]) " " white(Desplazamiento\n));
-        printf(green([2]) " " white(Show data sensor\n));
-        printf(green([3]) " " white(Send PID\n));
-        printf(green([4]) " " white(Zero position \n));
-        printf(green([5]) " " white(Send reference \n));
-        printf(green([6]) " " white(Sample period (ms) PID TS \n));
-        printf(green([7]) " " white(Write register \n));
-        printf(green([8]) " " white(Read register \n));
-        printf(green([9]) " " white(Send AT command \n));
-        printf(green([10]) " " white(GPS position \n));
-        printf(green([11]) " " white(Send setpoint \n));
-        printf(white(Enter an option = \n));
-        while(!inputReceived){};
-        inputReceived = false;
-        std::cout << "menu : "<<id_choosen<<std::endl;
-        //unistd::sleep(1);
-        switch(id_choosen){
-            case 1: desplazamiento(); break;
-            case 2: dataSensor(); break;
-            case 3: send_PID(); break;
-            case 4: zeroPosition(); break;
-            case 5: send_ref();break;
-            case 6: send_comp_mg(); break;
-            case 7: writeRegister(); break;
-            case 8: readRegister(); break;
-            case 9: send_AT_command(); break;
-            case 10: getGPSdata(); break;
-            case 11: break;//send_setpoint(); break;
-            default: printf("%d is not an option, please enter option again\n", id_choosen); break;
+        if(!cin_thread){
+            cls();    
+            printf("\t\t\t\t\t\t\t\t" blue(Principal menu) "\n");
+            printf(green([1]) " " white(Desplazamiento\n));
+            printf(green([2]) " " white(Show data sensor\n));
+            printf(green([3]) " " white(Send PID\n));
+            printf(green([4]) " " white(Zero position \n));
+            printf(green([5]) " " white(Send reference \n));
+            printf(green([6]) " " white(Sample period (ms) PID TS \n));
+            printf(green([7]) " " white(Write register \n));
+            printf(green([8]) " " white(Read register \n));
+            printf(green([9]) " " white(Send AT command \n));
+            printf(green([10]) " " white(GPS position \n));
+            printf(green([11]) " " white(Send setpoint \n));
+            printf(white(Enter an option = \n));
+            std::cin>>id_choosen;
+            cin_thread=true;
+            std::cout << "menu : "<<id_choosen<<std::endl;
+            //unistd::sleep(1);
+            switch(id_choosen){
+                case 1: desplazamiento(); break;
+                case 2: dataSensor(); break;
+                case 3: send_PID(); break;
+                case 4: zeroPosition(); break;
+                case 5: send_ref();break;
+                case 6: send_comp_mg(); break;
+                case 7: writeRegister(); break;
+                case 8: readRegister(); break;
+                case 9: send_AT_command(); break;
+                case 10: getGPSdata(); break;
+                case 11: break;//send_setpoint(); break;
+                default: printf("%d is not an option, please enter option again\n", id_choosen); break;
+            }
         }
     }
 }

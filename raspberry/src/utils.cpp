@@ -40,7 +40,6 @@ float rasp_I2C::bytestofloat(uint8_t *bytesfloat){
 void rasp_I2C::sendFloat(uint8_t reg, float val){
     uint8_t buff[4];
     rasp_I2C::floattobytes(val, buff);
-    rasp_I2C::print4bytes(buff);
     for(uint8_t i = 0; i < 4; i++) rasp_I2C::writeMCU(reg+i, buff[i]);
     return;
 }
