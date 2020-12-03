@@ -25,13 +25,16 @@ void dataSensor(){
             case 1: std::cout << rasp_i2c.readFloat(GPS_X) << " ";
                     std::cout << rasp_i2c.readFloat(GPS_Y) << std::endl; break;
 
-            case 2: std::cout << sim7600.pos_x << " " << sim7600.pos_y << std::endl; break;
+            case 2: std::cout << sim7600.Lat << " ";
+                    std::cout << sim7600.Log << " ";
+                    std::cout << sim7600.pos_x << " ";
+                    std::cout << sim7600.pos_y << std::endl; break;
             
             case 3: std::cout << rasp_i2c.readFloat(RAW_TEMP) << " ";
                     std::cout << rasp_i2c.readFloat(TEMP_ABS) << " ";
                     std::cout << rasp_i2c.readFloat(RAW_PRESS) << " ";
                     std::cout << rasp_i2c.readFloat(PRESS_ABS) << std::endl; break;
-                    
+
             case 4: std::cout << rasp_i2c.readFloat(Z_VAL) <<std::endl; break;
         }
         unistd::sleep(1);
