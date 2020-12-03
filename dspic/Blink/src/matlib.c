@@ -22,7 +22,13 @@ void matMult(mat* ans, mat* a, mat* b){
     }
     return;
 }
+void matScale(mat* ans, mat* a, float alpha){
+    MatrixScale(ans->row, ans->col, ans->val[0][0], a->val[0][0], Float2Fract(alpha));
+}
 
+void matAdd(mat* ans, mat* a, mat* b){
+    MatrixAdd(ans->row, ans->col, &ans, &a, &b);
+}
 void quaternionToR(mat* R, float q1, float q2, float q3, float q4){
     R->row = R->col = 3;
     

@@ -16,5 +16,6 @@ int double2q(double d);
 void setMatVal(mat* m, int i, int j, float value);
 float getMatVal(mat* m, int i, int j);
 void matDestruct(mat* m);
-
+void matScale(mat* ans, mat* a, float alpha);
+void matAdd(mat* ans, mat* a, mat* b);
 #endif
