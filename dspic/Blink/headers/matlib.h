@@ -4,7 +4,8 @@
 
 typedef struct _mat{
     int row, col;
-    fractional* val;
+    fractional** val;
+    fractional* aux;
 } mat;
 
 void matInit(mat* m, int row, int col);
@@ -14,4 +15,6 @@ double q2double(int q);
 int double2q(double d);
 void setMatVal(mat* m, int i, int j, float value);
 float getMatVal(mat* m, int i, int j);
+void matDestruct(mat* m);
+
 #endif
