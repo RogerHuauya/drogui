@@ -15,14 +15,13 @@
 #include "matlib.h"
 
 
-#define PI 3.14159264
 #define G 9.81
 i2c slave;
 serial Serial1;
 sensor acc, gyro, ori, inc;
 double roll, pitch, yaw;
 timer readSensors;
-char buffer[50];
+char buffer[100];
 
 float dt = 0.01, v[3] = {0, 0, 0}, x[3] = {0, 0, 0};
 mat Rq, s, acel;
@@ -39,9 +38,9 @@ void timerInterrupt(2){
 
     matMult(&acel, &Rq, &s); 
     
-    v[0] += getMatVal(&acel, 0, 0)*dt*G;
-    v[1] += getMatVal(&acel, 1, 0)*dt*G;
-    v[2] += getMatVal(&acel, 2, 0)*dt*G;
+    v[0] += getMatVal(&acel, 0, 0)*dt*2*G;
+    v[1] += getMatVal(&acel, 1, 0)*dt*2*G;
+    v[2] += getMatVal(&acel, 2, 0)*dt*2*G;
 
     x[0] += v[0];
     x[1] += v[1];
@@ -53,6 +52,7 @@ void timerInterrupt(2){
 
 int main(){
     initConfig();
+    matInit(&Rq, 3, 3);
     matInit(&acel, 3, 1);
     matInit(&s, 3, 1);
     
@@ -60,13 +60,17 @@ int main(){
     char s[50];
     initMM7150();
     initAccel(&acc, 100, 20);
-    initOrient(&ori, 50, 200);
+    initOrient(&ori, 50, 10);
 
     setTimerFrecuency(&readSensors, 100);
     initTimer(&readSensors, 2, DIV256, 3);
 
     while(1){
-        sprintf(buffer, "X:%.3f\tY:%.3f\tZ:%.3f\n", x[0], x[1], x[2]);
+        sprintf(buffer, "AccX: %.3f\tAccY: %.3f\tAccZ: %.3f\tX:%.3f\tY:%.3f\tZ:%.3f\n", acc.dDataX,\
+                                                                    acc.dDataY, acc.dDataZ,
+                                                                    getMatVal(&acel, 0, 0),
+                                                                    getMatVal(&acel, 1, 0), 
+                                                                    getMatVal(&acel, 2, 0));
         serialWriteString(&Serial1, buffer);
         __delay_ms(20);
     }
