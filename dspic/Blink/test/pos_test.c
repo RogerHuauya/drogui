@@ -53,6 +53,9 @@ void timerInterrupt(2){
 
 int main(){
     initConfig();
+    initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
+    clearI2Cregisters(I2C2);
+    
     matInit(&acel, 3, 1);
     matInit(&s, 3, 1);
     
