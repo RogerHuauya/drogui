@@ -70,8 +70,10 @@ void *gps_data(void *threadid){
     }
     while(1){
         if(sim7600.GPSGet()){
-            rasp_i2c.sendFloat(GPS_X, r*sim7600.Log*cos(sim7600.Lat*pi/180) - offset_x);
-            rasp_i2c.sendFloat(GPS_Y, r*sim7600.Lat - offset_y);
+            sim7600.pos_x = r*sim7600.Log*cos(sim7600.Lat*pi/180) - offset_x;
+            sim7600.pos_y =  r*sim7600.Lat - offset_y;
+            rasp_i2c.sendFloat(GPS_X, sim7600.pos_x);
+            rasp_i2c.sendFloat(GPS_Y, sim7600.pos_y);
             rasp_i2c.sendFloat(GPS_AVAILABLE, 1.0);
         }
         unistd::usleep(100000);

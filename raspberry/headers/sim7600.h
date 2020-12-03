@@ -24,6 +24,7 @@ public:
 
 	// GPS positoning
     float Lat,Log;
+	float pos_x, pos_y;
 	bool GPSPositioning();
 	void GPSStart();
 	bool GPSGet();
