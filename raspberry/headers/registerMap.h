@@ -70,6 +70,8 @@
 
 #define GPS_X 0xD5
 #define GPS_Y 0xD9
+#define GPS_AVAILABLE 0xDD
+
 #define NUM_THREADS 3
 
 #endif

@@ -14,14 +14,14 @@ OBJDMP= xc16-objdump
 TARGET=out
 
 #additional linker flags
-LINKFLAGS=-Map=$(TARGET).map
+LINKFLAGS=-Map=$(TARGET).map,--heap=1024
 
 #if we have specified a linker script add it
 ifdef LINKSCRIPT
 	LINKFLAGS:=--script=$(LINKSCRIPT),$(LINKFLAGS)
 endif
 
-SOURCES := $(wildcard *.c) $(wildcard src/*.c ) $(wildcard test/*.c) $(wildcard venti/*.c)
+SOURCES := $(wildcard *.c) $(wildcard src/*.c ) $(wildcard test/*.c) 
 OBJS := $(patsubst %.c, %.o,$(SOURCES))
 HDRS := $(wildcard headers/*.h)
 CFLAGS=-g -O1 -x c -I headers  -mno-eds-warn
@@ -44,7 +44,7 @@ $(TARGET).hex : $(TARGET).elf
 # Link all the object files into an elf file.
 $(TARGET).elf : $(OBJS)
 	@echo Linking elf file
-	$(CC) -mprocessor=$(PROC) -o $(TARGET).elf $(OBJS) -T p$(PROC).gld -Wl,$(LINKFLAGS)
+	$(CC) -mprocessor=$(PROC) -o $(TARGET).elf $(OBJS) -T p$(PROC).gld -ldsp -Wl,$(LINKFLAGS)
 
 # Create an object file for each C file.
 %.o : %.c $(HDRS)

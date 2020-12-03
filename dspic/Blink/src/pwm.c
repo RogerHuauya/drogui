@@ -136,7 +136,7 @@ void setPwmDutyTime(pwm *p, double percent){
     }
 }
 
-void initOneshot125(pwm *p, int pin){
+void initOneshot125(pwm* p, int pin){
     initPwmPin(p, pin);
     setPwmDutyLimits(p, 125, 250);
     setPwmFrecuency(p, 3500);

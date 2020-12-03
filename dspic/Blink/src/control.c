@@ -1,12 +1,12 @@
 #include "control.h"
 
-extern pid z_control;
-extern pid x_control;
-extern pid y_control;
+pid z_control;
+pid x_control;
+pid y_control;
 
-extern pid roll_control;
-extern pid pitch_control;
-extern pid yaw_control;
+pid roll_control;
+pid pitch_control;
+pid yaw_control;
 
 
 double computeIndexedPid(pid* p, double error, unsigned long long t, double h){
