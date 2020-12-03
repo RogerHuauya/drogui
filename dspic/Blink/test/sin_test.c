@@ -1,4 +1,4 @@
-#define SIN_TEST
+//#define SIN_TEST
 #ifdef SIN_TEST
 
 #include "config.h"
@@ -6,11 +6,11 @@
 #include <stdint.h>
 #include "serial.h"
 #include <math.h>
-
+#define N 1000
 #define LED PRTD, 8
 serial Serial1;
 long long x = 0;
-int N;
+int n;
 double y_ser[N];
 double u_ser[N];
 void initVar(){
@@ -25,7 +25,7 @@ int main(void){
     __delay_ms(1000);
     serialWriteString(&Serial1, "init");
     double Tf=10;
-    N = (tf/T)+1;
+    n = (tf/T)+1;
     long long  t = 0;
     long double  T = 0.01;
     char aux_y[50];
