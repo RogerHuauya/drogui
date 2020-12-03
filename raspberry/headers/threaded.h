@@ -1,5 +1,5 @@
-#ifndef MENU_H
-#define MENU_H
+#ifndef THREADED_H
+#define THREADED_H
 #include <iostream>
 #include "registerMap.h"
 #include "arduPi.h"
@@ -9,11 +9,11 @@
 #include <time.h>
 #include <unistd.h>
 #include <math.h>
+#include <unistd.h> 
 
 #include "utils.h"
-#include "control.h"
 #include <pthread.h>
-
-void handler_stop(int s);
+void *logging(void *threadid);
+void *gps_data(void *threadid);
 
 #endif
