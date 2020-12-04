@@ -9,7 +9,7 @@ int err_aux = 0;
 uint8_t i2c1Reg[I2C_REG_SIZE];
 uint8_t i2c2Reg[I2C_REG_SIZE];
 
-clearI2Cregisters(int n){
+void clearI2Cregisters(int n){
     if(n == I2C1) for(int i = 0; i < I2C_REG_SIZE; i++) i2c1Reg[i] = 0;
     else if(n == I2C2) for(int i = 0; i < I2C_REG_SIZE; i++) i2c2Reg[i] = 0;
      
