@@ -259,7 +259,7 @@ char Sim7600::sendATcommand(const char* ATcommand, unsigned int timeout) {
 			printf("_%c", response[x]);
 			x++;
 		}
-		
+		printf("%d", x);
 	} while ((answer == 0) && ((millis() - previous) < timeout));
 
 	return answer;
