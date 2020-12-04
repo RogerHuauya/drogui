@@ -354,12 +354,17 @@ void Sim7600::GPSStart(){
 
 }
 bool Sim7600::GPSGet(){
-    /*int answer;
+    uint8_t answer = 0;
+    bool RecNull = true;
+	int i = 0;
+	char RecMessage[200];
+    char LatDD[2],LatMM[9],LogDD[3],LogMM[9],DdMmYy[6] ,UTCTime[6];
+    int DayMonthYear;
+    
     answer = sendATcommand("AT+CGPSINFO", "+CGPSINFO: ", 1000);    // start GPS session, standalone mode
     if (answer == 1){
         answer = 0;
         while(Serial.available() == 0);
-        // this loop reads the data of the SMS
         do{
             // if there are data in the UART input buffer, reads it and checks for the asnwer
             if(Serial.available() > 0){    
@@ -374,7 +379,6 @@ bool Sim7600::GPSGet(){
         }while(answer == 0);    // Waits for the asnwer with time out
 
         RecMessage[i] = '\0';
-        printf("%s\n",RecMessage); 
         
         if (strstr(RecMessage, ",,,,,,,,") != NULL) 
         {
@@ -426,7 +430,7 @@ bool Sim7600::GPSGet(){
     UTCTime[6] = '\0';
     printf("UTC time is %s\n",UTCTime);
     
-	return true;*/
+	return true;
 }
 Sim7600 sim7600 = Sim7600();
 
