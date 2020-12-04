@@ -2,11 +2,27 @@
 #define MATLIB_H
 #include <dsp.h>
 
+#define SCALE 64.0
+
+#define CASO 0
+#if CASO == 1
+
 typedef struct _mat{
     int row, col;
     fractional** val;
     fractional* aux;
+    double **vald;
 } mat;
+
+#else
+
+typedef struct _mat{
+    int row, col;
+    double** val;
+    double* aux;
+} mat;
+
+#endif
 
 void matInit(mat* m, int row, int col);
 void matMult(mat* ans, mat* a, mat* b);

@@ -16,13 +16,13 @@
 #include "kalman.h"
 
 #define G 9.81
-i2c slave;
+
 serial Serial1;
 sensor acc, gyro, ori, inc;
 double roll, pitch, yaw;
 timer readSensors;
 char buffer[100];
-
+i2c slave;
 float dt = 0.01;
 mat Rq,p, v, u;
 
@@ -32,9 +32,9 @@ void timerInterrupt(2){
     
     quaternionToR(&Rq, ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
     
-    setMatVal(&u, 0, 0, acc.dDataX/(2 * G));
-    setMatVal(&u, 1, 0, acc.dDataY/(2 * G));
-    setMatVal(&u, 2, 0, acc.dDataZ/(2 * G));
+    setMatVal(&u, 0, 0, acc.dDataX*G);
+    setMatVal(&u, 1, 0, acc.dDataY*G);
+    setMatVal(&u, 2, 0, acc.dDataZ*G);
     
     kynematics(&p, &v, &u, &Rq, dt);
    
@@ -43,8 +43,10 @@ void timerInterrupt(2){
 
 int main(){
     initConfig();
+      
     initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
     clearI2Cregisters(I2C2);
+    
     matInit(&Rq, 3, 3);
     matInit(&u, 3, 1);
     matInit(&p, 3, 1);
@@ -60,8 +62,9 @@ int main(){
     initTimer(&readSensors, 2, DIV256, 3);
 
     while(1){
-        sprintf(buffer, "AccX: %.3f\tAccY: %.3f\tAccZ: %.3f\tX:%.3f\tY:%.3f\tZ:%.3f\n", acc.dDataX,\
-                                                                    acc.dDataY, acc.dDataZ,
+        
+        sprintf(buffer, "Xp: %.3f\tYp: %.3f\tZp: %.3f\tX:%.3f\tY:%.3f\tZ:%.3f\n", getMatVal(&v, 0, 0),
+                                                                    getMatVal(&v, 1, 0), getMatVal(&v, 2, 0),
                                                                     getMatVal(&p, 0, 0),
                                                                     getMatVal(&p, 1, 0), 
                                                                     getMatVal(&p, 2, 0));
