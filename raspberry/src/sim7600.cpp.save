@@ -64,11 +64,11 @@ bool Sim7600::GPSPositioning(){
 
     uint8_t answer = 0;
     bool RecNull = true;
-    int i = 0;
-    char RecMessage[100];
+	int i = 0;
+	char RecMessage[200];
     char LatDD[2],LatMM[9],LogDD[3],LogMM[9],DdMmYy[6] ,UTCTime[6];
     int DayMonthYear;
-    char aux[100]={};  	     
+
 	//printf("Start GPS session...\n");
     sendATcommand("AT+CGPS=1,1", "OK:", 1000, true);    // start GPS session, standalone mode
 
@@ -124,12 +124,7 @@ bool Sim7600::GPSPositioning(){
         delay(1500);
 
     }
-    //data.clear();	
-    //data.append(RecMessage);
-    printf("Data: %s raa\n",RecMessage);
-    //strncpy(aux,RecMessage,80);
-    //printf("Data: %s ra \n",aux);
-    
+
     strncpy(LatDD,RecMessage,2);
     strncpy(LatMM,RecMessage+2,9);
     Lat = atoi(LatDD) + (atof(LatMM)/60);
@@ -186,7 +181,7 @@ char Sim7600::sendATcommand(const char* ATcommand, unsigned int timeout, bool de
 			x++;
 		}
 		if(debug) printf("%d", x);
-	} while ((answer == 0) && ((millis() - previous) < timeout));
+bd	} while ((answer == 0) && ((millis() - previous) < timeout));
 
 	return answer;
 }
@@ -282,12 +277,11 @@ void Sim7600::GPSStart(){
 bool Sim7600::GPSGet(){
     uint8_t answer = 0;
     bool RecNull = true;
-    int i = 0;
-    char RecMessage[200];
+	int i = 0;
+	char RecMessage[200];
     char LatDD[2],LatMM[9],LogDD[3],LogMM[9],DdMmYy[6] ,UTCTime[6];
     int DayMonthYear;
-    memset(RecMessage, '\0', sizeof(RecMessage));    
-
+    
     answer = sendATcommand("AT+CGPSINFO", "+CGPSINFO: ", 1000, false);    // start GPS session, standalone mode
     if (answer == 1){
         answer = 0;
@@ -307,7 +301,6 @@ bool Sim7600::GPSGet(){
 
         RecMessage[i] = '\0';
         
-/*
         if (strstr(RecMessage, ",,,,,,,,") != NULL) 
         {
             memset(RecMessage, '\0', i);    // Initialize the string
@@ -319,7 +312,7 @@ bool Sim7600::GPSGet(){
         else
         {
             RecNull = false;
-        }*/ 
+        } 
             
         
     }
@@ -329,10 +322,6 @@ bool Sim7600::GPSGet(){
     }
     delay(100);
 
-    sscanf(RecMessage, "%f,%*c,%f,%*c,%*lf,%*lf,%f,%f,%f", &Lat, &Log, &Alt, &Vel, &Curso);
-    //strcpy(data, RecMessage);
-    //printf("%s\n",RecMessage);
-    /*
     strncpy(LatDD,RecMessage,2);
     strncpy(LatMM,RecMessage+2,9);
     Lat = atoi(LatDD) + (atof(LatMM)/60);
@@ -344,14 +333,13 @@ bool Sim7600::GPSGet(){
     Log = atoi(LogDD) + (atof(LogMM)/60);
     if(RecMessage[27] != 'E' && RecMessage[27] != 'W')
         return false;
-    
+
     strncpy(DdMmYy,RecMessage+29,6);
     DdMmYy[6] = '\0';
 
     strncpy(UTCTime,RecMessage+36,6);
     UTCTime[6] = '\0';    
-	return true;*/
-    return true;
+	return true;
 }
 Sim7600 sim7600 = Sim7600();
 
