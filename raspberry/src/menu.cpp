@@ -125,16 +125,14 @@ void send_TS(){
 void send_AT_command(){
     cin_thread = true;
     cls();
-    char at_command[100];
-    memset(at_command, '\0', 100);    // Initialize the string
+    std::string at_command;
     delay(100);
     while (Serial.available() > 0) Serial.read();    // Clean the input buffer
     while(1){
         printf("Please input the AT command: \n>>>");
-	    scanf("%s", at_command);
+        std::cin>>at_command;
         if(at_command[0] == '0') break;
-        Serial.println(at_command);
-        sim7600.sendATcommand(at_command, 2000);
+        sim7600.sendATcommand(at_command.c_str(), 2000);
     }
 
     cin_thread = false;
