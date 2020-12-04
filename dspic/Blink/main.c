@@ -1,4 +1,4 @@
-//#define MAIN
+#define MAIN
 #ifdef MAIN
 
 #include <xc.h>
@@ -174,23 +174,33 @@ int main(void){
             setReg(Z_REF, 0);
             H = 0; z_ref = 0;
             M1 = M2 = M3 = M4 = 0;
-            int index = getReg(PID_INDEX);
+            int index = getReg(PID_INDEX), var = getReg(PID_VAR);
             if(index >= 0) {
-                roll_control.kp[index] = getReg(ROLL_KP);
-                roll_control.ki[index] = getReg(ROLL_KI);
-                roll_control.kd[index] = getReg(ROLL_KD);
-                
-                pitch_control.kp[index] = getReg(PITCH_KP);
-                pitch_control.ki[index] = getReg(PITCH_KI);
-                pitch_control.kd[index] = getReg(PITCH_KD);
-                
-                yaw_control.kp[index] = getReg(YAW_KP);
-                yaw_control.ki[index] = getReg(YAW_KI);
-                yaw_control.kd[index] = getReg(YAW_KD);
+                switch(PID_VAR){
+                    case ROLL:
+                        roll_control.kp[index] = getReg(ROLL_KP);
+                        roll_control.ki[index] = getReg(ROLL_KI);
+                        roll_control.kd[index] = getReg(ROLL_KD);
+                    break;
+                    
+                    case PITCH:
+                        pitch_control.kp[index] = getReg(PITCH_KP);
+                        pitch_control.ki[index] = getReg(PITCH_KI);
+                        pitch_control.kd[index] = getReg(PITCH_KD);
+                    break;
 
-                z_control.kp[0] = getReg(Z_KP);
-                z_control.ki[0] = getReg(Z_KI);
-                z_control.kd[0] = getReg(Z_KD);
+                    case YAW:
+                        yaw_control.kp[index] = getReg(YAW_KP);
+                        yaw_control.ki[index] = getReg(YAW_KI);
+                        yaw_control.kd[index] = getReg(YAW_KD);
+                    break;
+                    
+                    case Z:
+                        z_control.kp[0] = getReg(Z_KP);
+                        z_control.ki[0] = getReg(Z_KI);
+                        z_control.kd[0] = getReg(Z_KD);
+                    break;
+                }
             }
             resetPid(&roll_control, time);
             resetPid(&pitch_control, time);
