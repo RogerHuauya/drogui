@@ -1,3 +1,4 @@
+
 #include "threaded.h"
 extern rasp_I2C rasp_i2c;
 
@@ -58,16 +59,22 @@ void *logging(void *threadid){
 
 void *gps_data(void *threadid){
     sim7600.GPSStart();
-    unistd::usleep(1000*1000);
-    float offset_x = 0, offset_y = 0, r = 1;
-    for(int i = 0; i < 10; i++){
-        if(sim7600.GPSGet()){
-            offset_x += r*sim7600.Log*cos(sim7600.Lat*pi/180);
-            offset_y += r*sim7600.Lat;
-        }
-        offset_x /= 10;
-        offset_y /= 10;
-    }
+    unistd::usleep(5000*1000);
+    float offset_x = 0, offset_y = 0, r = 6371;
+    float aux_offx = 0,aux_offy = 0;
+    int cont = 0;
+    while( sim7600.GPSGet() && (sim7600.Log > 0)  && ( sim7600.Lat > 0 ) && (cont<10)   ){
+       aux_offx =  r*sim7600.Log*cos(sim7600.Lat*pi/180);
+       aux_offy = r*sim7600.Lat;
+       offset_x += aux_offx;
+       offset_y += aux_offy;
+       printf("Off_x: %.6lf Off_y: %.6lf it: %d",aux_offx,aux_offy,cont); std::cout << std::endl;
+       cont++;
+    } 	
+    offset_x /= 10;
+    offset_y /= 10;
+    sim7600.offset_x = offset_x;
+    sim7600.offset_y = offset_y;
     while(1){
         if(sim7600.GPSGet()){
             sim7600.pos_x = r*sim7600.Log*cos(sim7600.Lat*pi/180) - offset_x;

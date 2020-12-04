@@ -8,7 +8,7 @@ public:
 	// Pin definition
 	static int powerkey;
 	int userkey;
-
+	
 	Sim7600();
 	~Sim7600();
 
@@ -23,8 +23,9 @@ public:
 	bool ReceivingShortMessage();
 
 	// GPS positoning
-    float Lat,Log;
+	float Lat,Log;
 	float pos_x, pos_y;
+	float offset_x,offset_y;
 	bool GPSPositioning();
 	void GPSStart();
 	bool GPSGet();
