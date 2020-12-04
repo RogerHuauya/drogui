@@ -13,7 +13,7 @@ void Sim7600::PowerOn(int PowerKey = powerkey){
 	Serial.begin(115200);
 
 	// checks if the module is started
-	answer = sendATcommand("AT", "OK", 2000);
+	answer = sendATcommand("AT", "OK", 2000, true);
 	/*if (answer == 0)
 	{
 		printf("Starting up...\n");
@@ -47,7 +47,7 @@ void Sim7600::PhoneCall(const char* PhoneNumber) {
 //	scanf("%s", PhoneNumber);
 
 	sprintf(aux_str, "ATD%s;", PhoneNumber);
-	sendATcommand(aux_str, "OK", 10000);
+	sendATcommand(aux_str, "OK", 10000, true);
 
 	// press the button for hang the call 
 	//while (digitalRead(button) == 1);
@@ -58,85 +58,6 @@ void Sim7600::PhoneCall(const char* PhoneNumber) {
 	printf("Call disconnected\n");
 }
 
-/**************************SMS sending and receiving message **************************/
-//SMS sending short message
-bool Sim7600::SendingShortMessage(const char* PhoneNumber,const char* Message){
-	uint8_t answer = 0;
-	char aux_string[30];
-
-	printf("Setting SMS mode...\n");
-    sendATcommand("AT+CMGF=1", "OK", 1000);    // sets the SMS mode to text
-    printf("Sending Short Message\n");
-    
-    sprintf(aux_string,"AT+CMGS=\"%s\"", PhoneNumber);
-
-   answer = sendATcommand(aux_string, ">", 2000);    // send the SMS number
-    if (answer == 1)
-    {
-        Serial.println(Message);
-        Serial.write(0x1A);
-        answer = sendATcommand("", "OK", 20000);
-        if (answer == 1)
-        {
-            printf("Sent successfully \n"); 
-			return true;   
-        }
-        else
-        {
-            printf("error \n");
-			return false;
-        }
-    }
-    else
-    {
-        printf("error %o\n",answer);
-		return false;
-    }
-}
-
-//SMS receiving short message
-bool Sim7600::ReceivingShortMessage(){
-	uint8_t answer = 0;
-	int i = 0;
-	char RecMessage[200];
-
-	printf("Setting SMS mode...\n");
-    sendATcommand("AT+CMGF=1", "OK", 1000);    // sets the SMS mode to text
-	sendATcommand("AT+CPMS=\"SM\",\"SM\",\"SM\"", "OK", 1000);    // selects the memory
-
-    answer = sendATcommand("AT+CMGR=1", "+CMGR:", 2000);    // reads the first SMS
-
-	if (answer == 1)
-    {
-        answer = 0;
-        while(Serial.available() == 0);
-        // this loop reads the data of the SMS
-        do{
-            // if there are data in the UART input buffer, reads it and checks for the asnwer
-            if(Serial.available() > 0){    
-                RecMessage[i] = Serial.read();
-                i++;
-                // check if the desired answer (OK) is in the response of the module
-                if (strstr(RecMessage, "OK") != NULL)    
-                {
-                    answer = 1;
-                }
-            }
-        }while(answer == 0);    // Waits for the asnwer with time out
-        
-        RecMessage[i] = '\0';
-        
-        printf("%s\n",RecMessage);    
-        
-    }
-    else
-    {
-        printf("error %o\n",answer);
-		return false;
-    }
-
-	return true;
-}
 
 /**************************GPS positoning**************************/
 bool Sim7600::GPSPositioning(){
@@ -149,13 +70,13 @@ bool Sim7600::GPSPositioning(){
     int DayMonthYear;
 
 	//printf("Start GPS session...\n");
-    sendATcommand("AT+CGPS=1,1", "OK:", 1000);    // start GPS session, standalone mode
+    sendATcommand("AT+CGPS=1,1", "OK:", 1000, true);    // start GPS session, standalone mode
 
     delay(2000);
 
     while(RecNull)
     {
-        answer = sendATcommand("AT+CGPSINFO", "+CGPSINFO: ", 1000);    // start GPS session, standalone mode
+        answer = sendATcommand("AT+CGPSINFO", "+CGPSINFO: ", 1000, true);    // start GPS session, standalone mode
         if (answer == 1)
         {
             answer = 0;
@@ -197,7 +118,7 @@ bool Sim7600::GPSPositioning(){
         else
         {
             printf("error %o\n",answer);
-            sendATcommand("AT+CGPS=0", "OK:", 1000);
+            sendATcommand("AT+CGPS=0", "OK:", 1000, true);
             return false;
         }
         delay(1500);
@@ -232,12 +153,12 @@ bool Sim7600::GPSPositioning(){
     UTCTime[6] = '\0';
     printf("UTC time is %s\n",UTCTime);
 
-    sendATcommand("AT+CGPS=0", "OK:", 1000);
+    sendATcommand("AT+CGPS=0", "OK:", 1000, true);
 	return true;
 }
 
 /**************************Other functions**************************/
-char Sim7600::sendATcommand(const char* ATcommand, unsigned int timeout) {
+char Sim7600::sendATcommand(const char* ATcommand, unsigned int timeout, bool debug) {
 	uint8_t x = 0, answer = 0;
 	char response[100];
 	unsigned long previous;
@@ -256,16 +177,16 @@ char Sim7600::sendATcommand(const char* ATcommand, unsigned int timeout) {
 		// if there are data in the UART input buffer, reads it and checks for the asnwer
 		if (Serial.available() != 0) {
 			response[x] = Serial.read();
-			printf("_%c", response[x]);
+			if(debug) printf("_%c", response[x]);
 			x++;
 		}
-		printf("%d", x);
+		if(debug) printf("%d", x);
 	} while ((answer == 0) && ((millis() - previous) < timeout));
 
 	return answer;
 }
 
-char Sim7600::sendATcommand(const char* ATcommand, const char* expected_answer, unsigned int timeout) {
+char Sim7600::sendATcommand(const char* ATcommand, const char* expected_answer, unsigned int timeout, bool debug) {
 
 	char x = 0, answer = 0;
 	char response[100];
@@ -349,8 +270,8 @@ char Sim7600::sendATcommand2(const char* ATcommand, const char* expected_answer1
 }
 
 void Sim7600::GPSStart(){
-    sendATcommand("AT+CGPS=1,1", "OK:", 1000);    // start GPS session, standalone mode
-    delay(2000);
+    sendATcommand("AT+CGPS=1,1", "OK:", 1000, false);    // start GPS session, standalone mode
+    delay(5000);
 
 }
 bool Sim7600::GPSGet(){
@@ -361,7 +282,7 @@ bool Sim7600::GPSGet(){
     char LatDD[2],LatMM[9],LogDD[3],LogMM[9],DdMmYy[6] ,UTCTime[6];
     int DayMonthYear;
     
-    answer = sendATcommand("AT+CGPSINFO", "+CGPSINFO: ", 1000);    // start GPS session, standalone mode
+    answer = sendATcommand("AT+CGPSINFO", "+CGPSINFO: ", 1000, false);    // start GPS session, standalone mode
     if (answer == 1){
         answer = 0;
         while(Serial.available() == 0);
@@ -396,8 +317,7 @@ bool Sim7600::GPSGet(){
         
     }
     else{
-        printf("error %o\n",answer);
-        sendATcommand("AT+CGPS=0", "OK:", 1000);
+        sendATcommand("AT+CGPS=0", "OK:", 1000, false);
         return false;
     }
     delay(100);
@@ -405,31 +325,20 @@ bool Sim7600::GPSGet(){
     strncpy(LatDD,RecMessage,2);
     strncpy(LatMM,RecMessage+2,9);
     Lat = atoi(LatDD) + (atof(LatMM)/60);
-    if(RecMessage[12] == 'N')
-        printf("Latitude is %f N\n",Lat);
-    else if(RecMessage[12] == 'S')
-        printf("Latitude is %f S\n",Lat);
-    else
+    if(RecMessage[12] != 'N' && RecMessage[12] != 'S')
         return false;
 
     strncpy(LogDD,RecMessage+14,3);
     strncpy(LogMM,RecMessage+17,9);
     Log = atoi(LogDD) + (atof(LogMM)/60);
-    if(RecMessage[27] == 'E')
-        printf("Longitude is %f E\n",Log);
-    else if(RecMessage[27] == 'W')
-        printf("Longitude is %f W\n",Log);
-    else
+    if(RecMessage[27] != 'E' && RecMessage[27] != 'W')
         return false;
 
     strncpy(DdMmYy,RecMessage+29,6);
     DdMmYy[6] = '\0';
-    printf("Day Month Year is %s\n",DdMmYy);
 
     strncpy(UTCTime,RecMessage+36,6);
-    UTCTime[6] = '\0';
-    printf("UTC time is %s\n",UTCTime);
-    
+    UTCTime[6] = '\0';    
 	return true;
 }
 Sim7600 sim7600 = Sim7600();

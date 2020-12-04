@@ -133,7 +133,7 @@ void send_AT_command(){
         std::cin >> at_command;
 	std::cout << at_command;
         if(at_command[0] == '0') break;
-        sim7600.sendATcommand(at_command.c_str(), 2000);
+        sim7600.sendATcommand(at_command.c_str(), 2000, true);
     }
 
     cin_thread = false;
