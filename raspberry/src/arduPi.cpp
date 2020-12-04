@@ -329,7 +329,7 @@ int SerialPi::readBytesUntil(char character,char buffer[],int length){
 
 
 bool SerialPi::find(const char *target){
-    findUntil(target,NULL);
+    return findUntil(target,NULL);
 }
 
 /* Reads data from the serial buffer until a target string of given length
@@ -1520,6 +1520,7 @@ pthread_t *getThreadIdFromPin(int pin){
 		case 12: return &idThread12; break;
 		case 13: return &idThread13; break;
 	}
+    
 }
 
 /* This is the function that will be running in a thread if
