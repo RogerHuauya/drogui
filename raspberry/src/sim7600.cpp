@@ -256,7 +256,7 @@ char Sim7600::sendATcommand(const char* ATcommand, unsigned int timeout) {
 		// if there are data in the UART input buffer, reads it and checks for the asnwer
 		if (Serial.available() != 0) {
 			response[x] = Serial.read();
-			printf("%c", response[x]);
+			printf("_%c", response[x]);
 			x++;
 		}
 		
