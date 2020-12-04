@@ -102,7 +102,7 @@ void readRegister(){
                  std::cout << rasp_i2c.readFloat(YAW_REF) << std::endl; break;
     }
 
-    unistd::sleep(3000);
+    unistd::sleep(1);
     cin_thread=false;
     return;
 }
