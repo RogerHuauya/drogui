@@ -209,12 +209,12 @@ char Sim7600::sendATcommand(const char* ATcommand, const char* expected_answer, 
 		if (Serial.available() != 0) {
 			// if there are data in the UART input buffer, reads it and checks for the asnwer
 			response[x] = Serial.read();
-			printf("%c", response[x]);
+			if(debug) printf("%c", response[x]);
 			x++;
 			// check if the desired answer  is in the response of the module
 			if (strstr(response, expected_answer) != NULL)
 			{
-				printf("\n");
+				if(debug) printf("\n");
 				answer = 1;
 			}
 		}
