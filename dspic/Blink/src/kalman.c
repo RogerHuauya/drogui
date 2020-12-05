@@ -1,50 +1,182 @@
 #include "kalman.h"
-#include "serial.h"
 extern  char buffer[100];
 extern serial Serial1;
-void kynematics(mat* p, mat* vel, mat* u, mat* Rq, float Ts){
+extern float Ts;
+mat p, v, Rq, u;
+mat  R, Fm, Gm, Hm, bias_p, bias_v, bias_u,Pm, Q1, Q2, ye, KalmanGain, p_gps, delta;
+void initMatGlobal(){
+    matInit(&Rq, 3, 3);
+    matInit(&R, 3, 3);
+    matInit(&u, 3, 1);
+    matInit(&p, 3, 1);
+    matInit(&v, 3, 1);
+    matInit(&Fm, 9, 9);
+    matInit(&bias_u, 3, 1);
+    matInit(&ye, 3, 1);
+    matInit(&KalmanGain, 12, 3);
+    for(int i = 0; i < 9 ; i++) setMatVal(&Fm, i, i, 1);
+    for(int i = 0; i < 3; i++) setMatVal(&Fm, i, i+3, Ts);
+
+    matInit(&Hm, 3, 9); for(int i = 0; i <3; i++) setMatVal(&Hm, i, i,1);
+
+    matInit(&Gm,9,6);
+    
+    for( int i = 6;  i < 9; i++ ) setMatVal(&Gm,i,i-3,1);
+    
+    for( int i = 3;  i < 6; i++ ){
+        for( int j = 0; j < 3 ; j++) setMatVal(&Gm, i, j, Ts*getMatVal(&Rq, i-3, j));
+    } 
+    
+    matInit(&Pm, 9, 9);
+    matInit(&Q1, 3, 3);
+    matInit(&Q2, 3, 3);
+}
+void kynematics(){
     mat aux1, aux2;
     
-    matInit(&aux1, p->row, p->col);
-    matScale(&aux1, vel, Ts);
+    matInit(&aux1, p.row, p.col);
+    matScale(&aux1, &v, Ts);
 
-    matInit(&aux2, p->row, p->col);
-    matMult(&aux2, Rq, u);
-    /*
-    for(int i = 0 ;i <3 ; i++){
-        for(int j = 0 ;j <1 ; j++){
-            sprintf(buffer, "%.6lf\t", getMatVal(&aux2,i,j)), serialWriteString(&Serial1, buffer);
-        }
-        serialWriteString(&Serial1, "\n");
-    }
-    
-    serialWriteString(&Serial1, "\n");*/
-
-
+    matInit(&aux2, p.row, p.col);
+    matMult(&aux2, &Rq, &u);
 
     setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0)+10.1);
 
 
     matScale(&aux2, &aux2, Ts);    
-    /*
-    for(int i = 0 ;i <3 ; i++){
-        for(int j = 0 ;j <1 ; j++){
-            sprintf(buffer, "%.6lf\t", getMatVal(&aux2,i,j)), serialWriteString(&Serial1, buffer);
-        }
-        serialWriteString(&Serial1, "\n");
-    }
-    
-    serialWriteString(&Serial1, "\n");*/
 
-    matAdd(vel, vel, &aux2);
+    matAdd(&v, &v, &aux2);
    
 
     matScale(&aux2, &aux2, Ts/2);
 
-    matAdd(p, p, &aux1);
-    matAdd(p, p, &aux2);
+    matAdd(&p, &p, &aux1);
+    matAdd(&p, &p, &aux2);
     
    
     matDestruct(&aux1);
     matDestruct(&aux2);
+}
+
+
+void getMatFm(mat* _Fm, mat* _Rq){
+    for(int i = 0; i < 3; i++)
+    for(int j = 0; j < 3; j++)
+        setMatVal(_Fm, i+3,j + 6, Ts*getMatVal(_Rq, i, j));
+}
+
+void getMatGm(mat* _Gm, mat* _Rq){
+    for( int i = 3;  i < 6; i++ ){
+        for( int j = 0; j < 3; j++) setMatVal(_Gm, i, j, Ts*getMatVal(_Rq, i-3,j));
+    } 
+}
+
+void UpdatePm(){
+    
+    mat aux1,aux2,aux3,aux4,aux5,aux6;
+   
+    matInit(&aux1, Pm.row, Pm.col);
+    matInit(&aux2, Gm.row, Gm.col);
+    matInit(&aux3, Pm.row, Pm.col);
+    matInit(&aux4, Fm.col, Fm.row);
+    matInit(&aux5, Gm.col, Gm.row);
+    
+    for( int i = 0; i < 3; i++ ){
+        for( int j = 0; j < 3; j++ ){
+            aux2.val[i][j] = Q1.val[i][j];
+        }
+    }
+
+    for( int i = 3; i < 6; i++ ){
+        for( int j = 3; j < 6; j++ ){
+            aux2.val[i][j] = Q2.val[i-3][j-3];
+        }
+    }
+
+    matTrans(&aux4,&Fm);
+    matTrans(&aux5,&Gm);
+    
+    matMult(&aux1,&Fm,&Pm);
+    matMult(&aux1,&aux1,&aux4);
+    
+    matMult(&aux3,&Gm,&aux2);
+    matMult(&aux4,&aux3,&aux5);
+    matAdd(&Pm,&aux1,&aux4);
+
+    matDestruct(&aux1);
+    matDestruct(&aux2);
+    matDestruct(&aux3);
+    matDestruct(&aux4);
+    matDestruct(&aux5);
+    
+}
+void getKalmanGain(){
+    mat aux1, aux2, aux3;
+
+    matInit(&aux1, 3, 3);
+    matInit(&aux2, 9, 3);   
+    matInit(&aux3, 9, 3);
+
+    matTrans(&aux3, &Hm);
+    matMult(&aux2, &Pm, &aux3);
+
+    matMult(&aux1, &Hm, &aux2);
+    matAdd(&aux1, &aux1, &R);
+    matInv3(&aux3, &aux1);
+    matMult(&KalmanGain, &aux2, &aux3);
+}
+
+void UpdatePmCovGPS(){
+    mat aux1;
+    matInit(&aux1, 9, 9);
+    matMult(&aux1, &KalmanGain, &Hm);
+    for(int i = 0; i < 9; i++) setMatVal(&aux1, i , i, 1 - getMatVal(&aux1, i , i));
+    matMult(&Pm, &aux1, &Pm);
+    matDestruct(&aux1);
+}
+
+void getBias(){
+    matSubs(&ye, &p_gps,  &p);
+    matMult(&delta, &KalmanGain, &ye);
+
+    setMatVal(&delta, 6, 0, getMatVal(&delta, 6, 0) + getMatVal(&bias_u, 0, 0));
+    setMatVal(&delta, 7, 0, getMatVal(&delta, 7, 0) + getMatVal(&bias_u, 1, 0));
+    setMatVal(&delta, 8, 0, getMatVal(&delta, 8, 0) + getMatVal(&bias_u, 2, 0));
+
+    setMatVal(&bias_p, 0, 0, getMatVal(&delta, 0, 0));
+    setMatVal(&bias_p, 1, 0, getMatVal(&delta, 1, 0));
+    setMatVal(&bias_p, 2, 0, getMatVal(&delta, 2, 0));
+
+    setMatVal(&bias_v, 0, 0, getMatVal(&delta, 3, 0));
+    setMatVal(&bias_v, 1, 0, getMatVal(&delta, 4, 0));
+    setMatVal(&bias_v, 2, 0, getMatVal(&delta, 5, 0));
+
+    setMatVal(&bias_u, 0, 0, getMatVal(&delta, 6, 0));
+    setMatVal(&bias_u, 1, 0, getMatVal(&delta, 7, 0));
+    setMatVal(&bias_u, 2, 0, getMatVal(&delta, 8, 0));
+
+}
+int cont = 0;
+void kalmanUpdate(){
+    matAdd(&u, &u, &bias_u);
+    kynematics();
+    UpdatePm();
+    cont++;
+    if (cont>100){
+
+        //setMatVal(&p_gps, 0, 0, getReg(GPS_X));
+        //setMatVal(&p_gps, 1, 0, getReg(GPS_Y));
+
+        setMatVal(&p_gps, 0, 0, 0);
+        setMatVal(&p_gps, 1, 0, 0);
+
+        getKalmanGain();
+
+        getBias();
+        
+        UpdatePmCovGPS();
+
+        matAdd(&p, &p, &bias_p);
+        matAdd(&v, &v, &bias_v);
+    }
 }

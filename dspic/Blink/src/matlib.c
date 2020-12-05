@@ -46,6 +46,7 @@ void quaternionToR(mat* R, float n, float ex, float ey, float ez){
     R->val[2][2] = Float2Fract(2*(n*n + ez*ez) - 1);
 }
 
+
 void eye(mat* m, int n){
     matInit(m, n, n);
     for(int i = 0; i < n; i++)  m->val[i][i] = Float2Fract((1 - 1.0/(1<<15)));
@@ -100,6 +101,47 @@ void matAdd(mat* ans, mat* a, mat* b){
             ans ->val[i][j] = a->val[i][j] + b->val[i][j];
         }
 }
+
+void matSubs(mat* ans, mat* a, mat* b){
+    for(int i = 0 ;i < ans->row; i++)
+        for(int j = 0 ; j< ans->col ; j++){
+            ans ->val[i][j] = a->val[i][j] - b->val[i][j];
+        }
+}
+
+void matTrans(mat* Rt,mat* R){
+    for( int i = 0; i < R->row; i++ ){
+        for( int j = 0; j < R->col; j++ ){
+            Rt->val[i][j] = R->val[j][i];
+        }
+    }
+}
+double det3(mat* R){
+    double det = ((R->val[0][0])*(R->val[1][1])*(R->val[2][2])) +((R->val[0][1])*(R->val[1][2])*(R->val[2][0]))
+     + ((R->val[0][2])*(R->val[1][0])*(R->val[2][1])) - ((R->val[0][2])*(R->val[1][1])*(R->val[2][0])) 
+     - ((R->val[0][1])*(R->val[1][0])*(R->val[2][2])) - ((R->val[0][0])*(R->val[1][2])*(R->val[2][1]));
+    return det;
+}
+void matInv3(mat* Rinv, mat* R){
+    double val_det = 0;
+    mat aux1;
+
+    val_det = det3(R); 
+    
+    matInit(&aux1,3,3);
+    
+    matTrans(&aux1,R);
+    
+    for( int i = 0; i < 3; i++ ){
+        for( int j = 0; j < 3; j++ ){
+            Rinv->val[i][j] = ((aux1.val[(i+1)%3][(j+1)%3])*(aux1.val[(i+2)%3][(j+2)%3]) - (aux1.val[(i+1)%3][(j+2)%3])*(aux1.val[(i+2)%3][(j+1)%3]) );
+            Rinv->val[i][j] = 1.0*(1/val_det)*(Rinv->val[i][j]);
+            //Rinv->val[i][j] = aux1.val[i][j];
+        }
+    }
+    matDestruct(&aux1);
+}
+
 void quaternionToR(mat* R, float n, float ex, float ey, float ez){
     R->row = R->col = 3;
     
