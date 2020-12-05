@@ -1,4 +1,4 @@
-//#define MAIN
+#define MAIN
 #ifdef MAIN
 
 #include <xc.h>
@@ -126,7 +126,7 @@ void timerInterrupt(3){
     clearTimerFlag(&millis);
 }
 
-
+void calibration();
 double  H,R,P,Y, H_ref;
 double M1,M2,M3,M4;
 uint8_t haux = 0;
@@ -168,7 +168,7 @@ int main(void){
         M2 = H - R - P + Y;
         M3 = H - R + P - Y;
         M4 = H + R + P + Y;
-        
+        if(getReg(CALIBRATE) == 1.0){calibration();}
         if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
             
             setReg(Z_REF, 0);
@@ -215,5 +215,19 @@ int main(void){
     }
     return 0;
 }
+void calibration(){
+    setPwmDutyTime(&m1, 100);
+    setPwmDutyTime(&m2, 100);
+    setPwmDutyTime(&m3, 100);
+    setPwmDutyTime(&m4, 100);
 
+    __delay_ms(20000);
+
+    setPwmDutyTime(&m1, 0);
+    setPwmDutyTime(&m2, 0);
+    setPwmDutyTime(&m3, 0);
+    setPwmDutyTime(&m4, 0);
+
+    __delay_ms(20000);
+}
 #endif

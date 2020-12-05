@@ -4,8 +4,7 @@
 
 typedef struct _mat{
     int row, col;
-    fractional** val;
-    fractional* aux;
+    float val[10][10];
 } mat;
 
 void matInit(mat* m, int row, int col);

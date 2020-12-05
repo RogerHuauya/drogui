@@ -71,5 +71,7 @@
 #define GPS_Y 0xD9
 #define GPS_AVAILABLE 0xDD
 
+#define CALIBRATE 0xE1
+
 #endif 		
 

@@ -1,4 +1,4 @@
-#define DSP_CONTROL_TEST
+//#define DSP_CONTROL_TEST
 #ifdef DSP_CONTROL_TEST
 
 #include <xc.h>
