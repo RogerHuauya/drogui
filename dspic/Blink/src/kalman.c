@@ -73,36 +73,45 @@ void getMatGm(){
 void UpdatePm(){
     
     mat aux1,aux2,aux3,aux4,aux5,aux6;
-   
+    printf("v1:\n");
     matInit(&aux1, Pm.row, Pm.col);
     matInit(&aux2, Gm.row, Gm.col);
     matInit(&aux3, Pm.row, Pm.col);
     matInit(&aux4, Fm.col, Fm.row);
     matInit(&aux5, Gm.col, Gm.row);
-    
+    printf("v1:\n");
+
     for( int i = 0; i < 3; i++ ){
         for( int j = 0; j < 3; j++ ){
+            printf("%d %d",i,j);
             aux2.val[i][j] = Q1.val[i][j];
+            printf("%lf ",Q1.val[i][j]);
         }
+        printf("\n");
     }
-
+    printf("v1:\n");
     for( int i = 3; i < 6; i++ ){
         for( int j = 3; j < 6; j++ ){
+            
             aux2.val[i][j] = Q2.val[i-3][j-3];
+            printf("%lf ",Q2.val[i-3][j-3]);
         }
+        printf("\n");
     }
+    printf("v1:\n");
     getMatFm();
     getMatGm();
+    printf("v2:\n");
     matTrans(&aux4,&Fm);
     matTrans(&aux5,&Gm);
     
     matMult(&aux1,&Fm,&Pm);
     matMult(&aux1,&aux1,&aux4);
-    
+    printf("v3:\n");
     matMult(&aux3,&Gm,&aux2);
     matMult(&aux4,&aux3,&aux5);
     matAdd(&Pm,&aux1,&aux4);
-
+    printf("v4:\n");
     matDestruct(&aux1);
     matDestruct(&aux2);
     matDestruct(&aux3);
