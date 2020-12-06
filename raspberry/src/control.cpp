@@ -120,12 +120,12 @@ void send_ref(){
     std::cin>>op;
     float value1,value2;
     printf(green(%s) "\n", ref_op[op]);
-    std::cin>>value1>>value2;
+    std::cin >> value1 >> value2;
     if(std::cin.fail()) throw 505;
     switch(op){
-        case REF_ROLL: rasp_i2c.sendFloat(ROLL_REF, value1); rasp_i2c.sendFloat(ROLL_REF_SIZE, value2); break;
-        case REF_PITCH: rasp_i2c.sendFloat(PITCH_REF, value1); rasp_i2c.sendFloat(PITCH_REF_SIZE, value2); break;
-        case REF_YAW: rasp_i2c.sendFloat(YAW_REF, value1); rasp_i2c.sendFloat(YAW_REF_SIZE, value2); break;
+        case REF_ROLL: rasp_i2c.sendFloat(ROLL_REF, value1*pi/180.0); rasp_i2c.sendFloat(ROLL_REF_SIZE, value2*pi/180.0); break;
+        case REF_PITCH: rasp_i2c.sendFloat(PITCH_REF, value1*pi/180.0); rasp_i2c.sendFloat(PITCH_REF_SIZE, value2*pi/180.0); break;
+        case REF_YAW: rasp_i2c.sendFloat(YAW_REF, value1*pi/180.0); rasp_i2c.sendFloat(YAW_REF_SIZE, value2*pi/180.0); break;
         case REF_X: rasp_i2c.sendFloat(X_REF, value1); rasp_i2c.sendFloat(X_REF_SIZE, value2); break;
         case REF_Y: rasp_i2c.sendFloat(Y_REF, value1); rasp_i2c.sendFloat(Y_REF_SIZE, value2); break;
         case REF_Z: rasp_i2c.sendFloat(Z_REF, value1); rasp_i2c.sendFloat(Z_REF_SIZE, value2); break;
@@ -135,8 +135,9 @@ void send_ref(){
     if(value1 == 0) logging_state = false;
     else logging_state = true;
     sleep(1);
+    cin_thread = false;
     return; 
-    cin_thread = false; 
+     
 }
 void send_comp_mg(){
     cin_thread = true;

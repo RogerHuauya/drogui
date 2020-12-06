@@ -2,6 +2,10 @@
 #define REGISTER_MAP_H
 
 
+enum PIDVAR {ROLL, PITCH, YAW, X, Y, Z};
+
+
+
 #define M1_VAL 		0x01
 #define M2_VAL 		0x05
 #define M3_VAL 		0x09
@@ -63,13 +67,16 @@
 
 #define TS_CONTROL 		0xBD
 #define PID_INDEX 		0xC1
-#define RAW_TEMP 		0xC5
-#define TEMP_ABS 		0xC9
-#define RAW_PRESS 		0xCD
-#define PRESS_ABS 		0xD1
+#define PID_VAR          0xC5
+#define RAW_TEMP 		0xC9
+#define TEMP_ABS 		0xCD
+#define RAW_PRESS 		0xD1
+#define PRESS_ABS 		0xD5
 
-#define GPS_X 0xD5
-#define GPS_Y 0xD9
+#define GPS_X 0xD9
+#define GPS_Y 0xDD
+#define GPS_AVAILABLE 0XE1
+
 #define NUM_THREADS 3
 
 #endif

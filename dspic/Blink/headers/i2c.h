@@ -36,5 +36,6 @@ int i2cSendACK(i2c* c);
 int i2cSendNACK(i2c* c);
 int i2cStartRead(i2c* c);
 int i2cStartWrite(i2c* c);
+void clearI2Cregisters(int n);
 
 #endif
