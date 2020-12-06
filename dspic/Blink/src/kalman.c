@@ -3,7 +3,7 @@ extern  char buffer[150];
 extern serial Serial1;
 extern float Ts;
 mat p, v, Rq, u;
-mat  R, Fm, Gm, Hm, bias_p, bias_v, bias_u,Pm, Q1, Q2, ye, KalmanGain, p_gps, delta;
+mat  R, Fm, Gm, Hm, bias_p, bias_v, bias_u,Pm, Q1, Q2, Q12, ye, KalmanGain, p_gps, delta;
 void initMatGlobal(){
     matInit(&Rq, 3, 3);
     matInit(&R, 3, 3);
@@ -14,6 +14,7 @@ void initMatGlobal(){
     matInit(&bias_u, 3, 1);
     matInit(&ye, 3, 1);
     matInit(&KalmanGain, 12, 3);
+    matInit(&Q12, 6, 6); for(int i = 0; i < 6;  i++) setMatVal(&Q12,i,i,1);
     for(int i = 0; i < 9 ; i++) setMatVal(&Fm, i, i, 1);
     for(int i = 0; i < 3; i++) setMatVal(&Fm, i, i+3, Ts);
 
@@ -82,102 +83,26 @@ void printMat(mat* R){
 
 void UpdatePm(){
     
-    mat aux1,aux2,aux3,aux4;
-    matInit(&aux1, Gm.col, Gm.row);
-    matInit(&aux2, Fm.col, Fm.row);
-    matInit(&aux3, Gm.col, Pm.row);
-    matInit(&aux4, Fm.row, Fm.col);
-    
-    /*printf("GM row %d, Gm col %d\n", Gm.row, Gm.col);
-    for( int i = 0; i < 9; i++ ){
-        for( int j = 0; j < 6; j++ ){
-            printf("%lf\t",aux2.val[i][j]);
-        }
-        printf("\n");
-    }
-    
-    for( int i = 0; i < 3; i++ ){
-        for( int j = 0; j < 3; j++ ){
-            printf("%lf\t",Q1.val[i][j]);
-        }
-        printf("\n");
-    }
-
-    for( int i = 0; i < 3; i++ ){
-        for( int j = 0; j < 3; j++ ){
-            printf("i: %d j:%d ",i,j);
-            aux2.val[i][j] = Q1.val[i][j];
-            printf("%lf \n",Q1.val[i][j]);
-        }
-        printf("\n");
-    }*/
-    //printf("v1:\n");
-    for( int i = 3; i < 6; i++ ){
-        for( int j = 3; j < 6; j++ ){
-            aux1.val[i][j] = Q2.val[i-3][j-3];
-        }
-    }
-    //serialWriteString(&Serial1, "el original aux1 1\n");
-    //printMat(&Pm);
-    
+    mat aux1,aux2,aux3;
+    matInit(&aux1, 9, 9);
+    matInit(&aux2, 6, 9);
+    matInit(&aux3, 9, 9);
     
     getMatFm();
     getMatGm();
     
+    matTrans(&aux1,&Fm);
+    matTrans(&aux2,&Gm);
     
-    //matTrans(&aux4,&Fm);
-    //matTrans(&aux5,&Gm);
-    
-    matTrans(&aux2,&Fm);
-    matTrans(&aux3,&Gm);
-
-    
-    /*matMult(&aux1,&Fm,&Pm);
-    matMult(&aux1,&aux1,&aux4);
-
-    //printf("v3:\n");
-    matMult(&aux3,&Gm,&aux2);
-    matMult(&aux4,&aux3,&aux5);
-    matAdd(&Pm,&aux1,&aux4);*/
-    
-    //serialWriteString(&Serial1, "Op1\n");
     matMult(&Pm,&Fm,&Pm);
-    serialWriteString(&Serial1, "Pm op1 \n");
-    printMat(&Pm);
-    //serialWriteString(&Serial1, "Op2\n");
-    matMult(&Pm,&Pm,&aux2);
-    //serialWriteString(&Serial1, "el Pm1\n");
-    serialWriteString(&Serial1, "Pm op2 \n");
-    printMat(&Pm);
-    serialWriteString(&Serial1, "Pm sin cambio\n");
-    printMat(&Pm);
-    //serialWriteString(&Serial1, "Op3\n");
-    matMult(&Gm,&Gm,&aux1);
-    //serialWriteString(&Serial1, "el aux1\n");
-    //printMat(&aux1);
-    //serialWriteString(&Serial1, "el Gm\n");
-    //printMat(&Gm);
-    //serialWriteString(&Serial1, "el Pm2\n");
-    serialWriteString(&Serial1, "sigo sin cambiar\n");
-    printMat(&Pm);
-    //serialWriteString(&Serial1, "Op4\n");
-    matMult(&aux4,&Gm,&aux3);
-    //serialWriteString(&Serial1, "aux3\n");
-    //printMat(&aux3);
-    //serialWriteString(&Serial1, "aux4\n");
-    //printMat(&aux4);
-    //printMat(&Pm);
-    //serialWriteString(&Serial1, "Op5 raa\n");
-    //printMat(&Pm);
-    matAdd(&Pm,&Pm,&aux4);
-    //printMat(&Pm);
-
-    serialWriteString(&Serial1, "Fin ops\n");
+    matMult(&Pm,&Pm,&aux1);
+    matMult(&Gm,&Gm,&Q12);
+    matMult(&aux3,&Gm,&aux2);
+    matAdd(&Pm,&Pm,&aux3);
+    
     matDestruct(&aux1);
     matDestruct(&aux2);
     matDestruct(&aux3);
-    matDestruct(&aux4);
-    serialWriteString(&Serial1, "Fin UpdatePm\n");
 }
 void getKalmanGain(){
     mat aux1, aux2, aux3;
@@ -228,12 +153,10 @@ void getBias(){
 int cont = 0;
 void kalmanUpdate(){
     matAdd(&u, &u, &bias_u);
-    //printf("1\n");
+    
     kynematics();
-    //printf("2\n");
-
+    
     UpdatePm();
-    //printf("3\n");
     cont++;
     if (cont>100){
 
