@@ -59,7 +59,7 @@ void *logging(void *threadid){
 
 void *gps_data(void *threadid){
     sim7600.GPSStart();
-    unistd::usleep(5000*1000);
+    unistd::usleep(100000ip00);
     float offset_x = 0, offset_y = 0, r = 6371;
     float aux_offx = 0,aux_offy = 0;
     int cont = 0;
