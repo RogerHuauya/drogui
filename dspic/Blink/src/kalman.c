@@ -73,12 +73,11 @@ void getMatGm(){
 
 void UpdatePm(){
     
-    mat aux1,aux2,aux3,aux4,aux5,aux6;
-    matInit(&aux1, Pm.row, Pm.col);
-    matInit(&aux2, 9, 6);
-    matInit(&aux3, Pm.row, Pm.col);
-    matInit(&aux4, Fm.col, Fm.row);
-    matInit(&aux5, Gm.col, Gm.row);
+    mat aux1,aux2,aux3,aux4;
+    matInit(&aux1, Gm.col, Gm.row);
+    matInit(&aux2, Fm.col, Fm.row);
+    matInit(&aux3, Gm.col, Pm.row);
+    matInit(&aux4, Fm.row, Fm.col);
     
     /*printf("GM row %d, Gm col %d\n", Gm.row, Gm.col);
     for( int i = 0; i < 9; i++ ){
@@ -106,32 +105,40 @@ void UpdatePm(){
     //printf("v1:\n");
     for( int i = 3; i < 6; i++ ){
         for( int j = 3; j < 6; j++ ){
-            
-            aux2.val[i][j] = Q2.val[i-3][j-3];
-            //printf("%lf ",Q2.val[i-3][j-3]);
+            aux1.val[i][j] = Q2.val[i-3][j-3];
         }
-        //printf("\n");
     }
-    //printf("v1:\n");
+
     getMatFm();
     getMatGm();
-    //printf("v2:\n");
-    matTrans(&aux4,&Fm);
-    matTrans(&aux5,&Gm);
+
+    //matTrans(&aux4,&Fm);
+    //matTrans(&aux5,&Gm);
     
-    matMult(&aux1,&Fm,&Pm);
+    matTrans(&aux2,&Fm);
+    matTrans(&aux3,&Gm);
+
+
+    /*matMult(&aux1,&Fm,&Pm);
     matMult(&aux1,&aux1,&aux4);
+
     //printf("v3:\n");
+    aux4
     matMult(&aux3,&Gm,&aux2);
     matMult(&aux4,&aux3,&aux5);
-    matAdd(&Pm,&aux1,&aux4);
+    matAdd(&Pm,&aux1,&aux4);*/
+    
+    matMult(&Pm,&Fm,&Pm);
+    matMult(&Pm,&Pm,&aux2);
+    matMult(&Gm,&Gm,&aux1);
+    matMult(&aux4,&Gm,&aux3);
+    matAdd(&Pm,&Pm,&aux4);
+
     //printf("v4:\n");
     matDestruct(&aux1);
     matDestruct(&aux2);
     matDestruct(&aux3);
     matDestruct(&aux4);
-    matDestruct(&aux5);
-    
 }
 void getKalmanGain(){
     mat aux1, aux2, aux3;

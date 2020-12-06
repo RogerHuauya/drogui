@@ -1,4 +1,4 @@
-//#define POS_TEST
+#define POS_TEST
 #ifdef POS_TEST
 
 #include <xc.h>
