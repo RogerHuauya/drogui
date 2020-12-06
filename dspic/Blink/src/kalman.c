@@ -97,7 +97,7 @@ void UpdatePm(){
     matMult(&Pm,&Fm,&Pm);
     matMult(&Pm,&Pm,&aux1);
     matMult(&Gm,&Gm,&Q12);
-    matMult(&aux4,&Gm,&aux2);
+    matMult(&aux3,&Gm,&aux2);
     matAdd(&Pm,&Pm,&aux3);
     
     matDestruct(&aux1);
@@ -153,12 +153,10 @@ void getBias(){
 int cont = 0;
 void kalmanUpdate(){
     matAdd(&u, &u, &bias_u);
-    //printf("1\n");
+    
     kynematics();
-    //printf("2\n");
-
+    
     UpdatePm();
-    //printf("3\n");
     cont++;
     if (cont>100){
 
