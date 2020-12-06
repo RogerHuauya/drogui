@@ -56,7 +56,7 @@ int main(){
     initTimer(&readSensors, 2, DIV256, 3);
 
     while(1){
-        sprintf(buffer, "ax: %.3f\tay: %.3f\taz: %.3f\t bias_x:%.3f\tbias_y:%.3f\tbias_z:%.3f\tX:%.3f\tY:%.3f\tZ:%.3f\n", getMatVal(&u, 0, 0),
+        /*sprintf(buffer, "ax: %.3f\tay: %.3f\taz: %.3f\t bias_x:%.3f\tbias_y:%.3f\tbias_z:%.3f\tX:%.3f\tY:%.3f\tZ:%.3f\n", getMatVal(&u, 0, 0),
                                                                     getMatVal(&u, 1, 0), 
                                                                     getMatVal(&u, 2, 0),
                                                                     getMatVal(&bias_u, 0, 0),
@@ -65,7 +65,7 @@ int main(){
                                                                     getMatVal(&p, 0, 0),
                                                                     getMatVal(&p, 1, 0), 
                                                                     getMatVal(&p, 2, 0));
-        serialWriteString(&Serial1, buffer);
+        /serialWriteString(&Serial1, buffer);*/
         
         __delay_ms(20);
     }

@@ -29,7 +29,7 @@ void initMatGlobal(){
     
     matInit(&Pm, 9, 9);
     matInit(&Q1, 3, 3); for(int i = 0; i < 3; i++) setMatVal(&Q1, i, 0, 1);
-    matInit(&Q2, 3, 3); for(int i = 0; i < 3; i++) setMatVal(&Q1, i, 0, 1);
+    matInit(&Q2, 3, 3); for(int i = 0; i < 3; i++) setMatVal(&Q2, i, 0, 1);
 }
 void kynematics(){
     mat aux1, aux2;
@@ -73,19 +73,32 @@ void getMatGm(){
 void UpdatePm(){
     
     mat aux1,aux2,aux3,aux4,aux5,aux6;
-    printf("v1:\n");
     matInit(&aux1, Pm.row, Pm.col);
-    matInit(&aux2, Gm.row, Gm.col);
+    matInit(&aux2, 9, 6);
     matInit(&aux3, Pm.row, Pm.col);
     matInit(&aux4, Fm.col, Fm.row);
     matInit(&aux5, Gm.col, Gm.row);
-    printf("v1:\n");
+    
+    printf("GM row %d, Gm col %d\n", Gm.row, Gm.col);
+    for( int i = 0; i < 9; i++ ){
+        for( int j = 0; j < 6; j++ ){
+            printf("%lf\t",aux2.val[i][j]);
+        }
+        printf("\n");
+    }
+    
+    for( int i = 0; i < 3; i++ ){
+        for( int j = 0; j < 3; j++ ){
+            printf("%lf\t",Q1.val[i][j]);
+        }
+        printf("\n");
+    }
 
     for( int i = 0; i < 3; i++ ){
         for( int j = 0; j < 3; j++ ){
-            printf("%d %d",i,j);
+            printf("i: %d j:%d ",i,j);
             aux2.val[i][j] = Q1.val[i][j];
-            printf("%lf ",Q1.val[i][j]);
+            printf("%lf \n",Q1.val[i][j]);
         }
         printf("\n");
     }
@@ -169,7 +182,7 @@ int cont = 0;
 void kalmanUpdate(){
     matAdd(&u, &u, &bias_u);
     printf("1\n");
-    kynematics();
+    //kynematics();
     printf("2\n");
     UpdatePm();
     printf("3\n");
