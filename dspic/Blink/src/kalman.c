@@ -1,5 +1,5 @@
 #include "kalman.h"
-extern  char buffer[100];
+extern  char buffer[150];
 extern serial Serial1;
 extern float Ts;
 mat p, v, Rq, u;
@@ -70,15 +70,23 @@ void getMatGm(){
         for( int j = 0; j < 3; j++) setMatVal(&Gm, i, j, Ts*getMatVal(&Rq, i-3,j));
     } 
 }
+void printMat(mat* R){
+    for( int i = 0; i < (R->row); i++ ){
+        for( int j = 0; j < (R->col); j++ ){
+            sprintf(buffer,"%lf\t",R->val[i][j]);
+            serialWriteString(&Serial1, buffer);
+        } 
+        serialWriteString(&Serial1, "\n");
+    }
+}
 
 void UpdatePm(){
     
-    mat aux1,aux2,aux3,aux4,aux5,aux6;
-    matInit(&aux1, Pm.row, Pm.col);
-    matInit(&aux2, 9, 6);
-    matInit(&aux3, Pm.row, Pm.col);
-    matInit(&aux4, Fm.col, Fm.row);
-    matInit(&aux5, Gm.col, Gm.row);
+    mat aux1,aux2,aux3,aux4;
+    matInit(&aux1, Gm.col, Gm.row);
+    matInit(&aux2, Fm.col, Fm.row);
+    matInit(&aux3, Gm.col, Pm.row);
+    matInit(&aux4, Fm.row, Fm.col);
     
     /*printf("GM row %d, Gm col %d\n", Gm.row, Gm.col);
     for( int i = 0; i < 9; i++ ){
@@ -106,32 +114,70 @@ void UpdatePm(){
     //printf("v1:\n");
     for( int i = 3; i < 6; i++ ){
         for( int j = 3; j < 6; j++ ){
-            
-            aux2.val[i][j] = Q2.val[i-3][j-3];
-            //printf("%lf ",Q2.val[i-3][j-3]);
+            aux1.val[i][j] = Q2.val[i-3][j-3];
         }
-        //printf("\n");
     }
-    //printf("v1:\n");
+    //serialWriteString(&Serial1, "el original aux1 1\n");
+    //printMat(&Pm);
+    
+    
     getMatFm();
     getMatGm();
-    //printf("v2:\n");
-    matTrans(&aux4,&Fm);
-    matTrans(&aux5,&Gm);
     
-    matMult(&aux1,&Fm,&Pm);
+    
+    //matTrans(&aux4,&Fm);
+    //matTrans(&aux5,&Gm);
+    
+    matTrans(&aux2,&Fm);
+    matTrans(&aux3,&Gm);
+
+    
+    /*matMult(&aux1,&Fm,&Pm);
     matMult(&aux1,&aux1,&aux4);
+
     //printf("v3:\n");
     matMult(&aux3,&Gm,&aux2);
     matMult(&aux4,&aux3,&aux5);
-    matAdd(&Pm,&aux1,&aux4);
-    //printf("v4:\n");
+    matAdd(&Pm,&aux1,&aux4);*/
+    
+    //serialWriteString(&Serial1, "Op1\n");
+    matMult(&Pm,&Fm,&Pm);
+    serialWriteString(&Serial1, "Pm op1 \n");
+    printMat(&Pm);
+    //serialWriteString(&Serial1, "Op2\n");
+    matMult(&Pm,&Pm,&aux2);
+    //serialWriteString(&Serial1, "el Pm1\n");
+    serialWriteString(&Serial1, "Pm op2 \n");
+    printMat(&Pm);
+    serialWriteString(&Serial1, "Pm sin cambio\n");
+    printMat(&Pm);
+    //serialWriteString(&Serial1, "Op3\n");
+    matMult(&Gm,&Gm,&aux1);
+    //serialWriteString(&Serial1, "el aux1\n");
+    //printMat(&aux1);
+    //serialWriteString(&Serial1, "el Gm\n");
+    //printMat(&Gm);
+    //serialWriteString(&Serial1, "el Pm2\n");
+    serialWriteString(&Serial1, "sigo sin cambiar\n");
+    printMat(&Pm);
+    //serialWriteString(&Serial1, "Op4\n");
+    matMult(&aux4,&Gm,&aux3);
+    //serialWriteString(&Serial1, "aux3\n");
+    //printMat(&aux3);
+    //serialWriteString(&Serial1, "aux4\n");
+    //printMat(&aux4);
+    //printMat(&Pm);
+    //serialWriteString(&Serial1, "Op5 raa\n");
+    //printMat(&Pm);
+    matAdd(&Pm,&Pm,&aux4);
+    //printMat(&Pm);
+
+    serialWriteString(&Serial1, "Fin ops\n");
     matDestruct(&aux1);
     matDestruct(&aux2);
     matDestruct(&aux3);
     matDestruct(&aux4);
-    matDestruct(&aux5);
-    
+    serialWriteString(&Serial1, "Fin UpdatePm\n");
 }
 void getKalmanGain(){
     mat aux1, aux2, aux3;
@@ -185,6 +231,7 @@ void kalmanUpdate(){
     //printf("1\n");
     kynematics();
     //printf("2\n");
+
     UpdatePm();
     //printf("3\n");
     cont++;
@@ -193,20 +240,21 @@ void kalmanUpdate(){
         //setMatVal(&p_gps, 0, 0, getReg(GPS_X));
         //setMatVal(&p_gps, 1, 0, getReg(GPS_Y));
 
-        printf("4\n");
+        //printf("4\n");
         setMatVal(&p_gps, 0, 0, 0);
         setMatVal(&p_gps, 1, 0, 0);
 
         getKalmanGain();
-        printf("5\n");
+        //printf("5\n");
 
         getBias();
-        printf("6\n");
+        //printf("6\n");
         
         UpdatePmCovGPS();
-        printf("7\n");
+        //printf("7\n");
 
         matAdd(&p, &p, &bias_p);
         matAdd(&v, &v, &bias_v);
     }
+
 }
