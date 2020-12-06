@@ -1,4 +1,4 @@
-#define SIN_TEST
+//#define SIN_TEST
 #ifdef SIN_TEST
 
 #include "config.h"
@@ -11,8 +11,9 @@
 serial Serial1;
 long long x = 0;
 int N;
-double y_ser[N];
-double u_ser[N];
+double T=0.01;
+double y_ser[1000];
+double u_ser[1000];
 void initVar(){
     for( int i = 0; i <N; i++){
         u_ser[i] = 5;
@@ -24,7 +25,7 @@ int main(void){
     initSerial(&Serial1, SERIAL1, 115200);
     __delay_ms(1000);
     serialWriteString(&Serial1, "init");
-    double Tf=10;
+    double tf=5;
     N = (tf/T)+1;
     long long  t = 0;
     long double  T = 0.01;
