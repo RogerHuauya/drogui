@@ -39,9 +39,6 @@ void setup() {
 }
 
 
-
-
-
 int main(int argc, char** argv ){
         enable_emergency_stop();
         srand((unsigned) time(NULL));
