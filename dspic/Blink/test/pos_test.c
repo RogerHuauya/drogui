@@ -63,7 +63,8 @@ int main(){
                                                                     getMatVal(&p, 0, 0),
                                                                     getMatVal(&p, 1, 0), 
                                                                     getMatVal(&p, 2, 0));
-        //serialWriteString(&Serial1, buffer);
+        
+        serialWriteString(&Serial1, buffer);
         __delay_ms(20);
     }
     return 0;
