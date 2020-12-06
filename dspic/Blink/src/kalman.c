@@ -28,16 +28,16 @@ void initMatGlobal(){
     } 
     
     matInit(&Pm, 9, 9);
-    matInit(&Q1, 3, 3);
-    matInit(&Q2, 3, 3);
+    matInit(&Q1, 3, 3); for(int i = 0; i < 3; i++) setMatVal(&Q1, i, 0, 1);
+    matInit(&Q2, 3, 3); for(int i = 0; i < 3; i++) setMatVal(&Q1, i, 0, 1);
 }
 void kynematics(){
     mat aux1, aux2;
     
     matInit(&aux1, p.row, p.col);
-    matScale(&aux1, &v, Ts);
-
     matInit(&aux2, p.row, p.col);
+    
+    matScale(&aux1, &v, Ts);
     matMult(&aux2, &Rq, &u);
 
     setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0)+10.1);
@@ -59,15 +59,14 @@ void kynematics(){
 }
 
 
-void getMatFm(mat* _Fm, mat* _Rq){
+void getMatFm(){
     for(int i = 0; i < 3; i++)
-    for(int j = 0; j < 3; j++)
-        setMatVal(_Fm, i+3,j + 6, Ts*getMatVal(_Rq, i, j));
+        for(int j = 0; j < 3; j++)
+            setMatVal(&Fm, i+3,j + 6, Ts*getMatVal(&Rq, i, j));
 }
-
-void getMatGm(mat* _Gm, mat* _Rq){
+void getMatGm(){
     for( int i = 3;  i < 6; i++ ){
-        for( int j = 0; j < 3; j++) setMatVal(_Gm, i, j, Ts*getMatVal(_Rq, i-3,j));
+        for( int j = 0; j < 3; j++) setMatVal(&Gm, i, j, Ts*getMatVal(&Rq, i-3,j));
     } 
 }
 
@@ -92,7 +91,8 @@ void UpdatePm(){
             aux2.val[i][j] = Q2.val[i-3][j-3];
         }
     }
-
+    getMatFm();
+    getMatGm();
     matTrans(&aux4,&Fm);
     matTrans(&aux5,&Gm);
     
@@ -159,24 +159,33 @@ void getBias(){
 int cont = 0;
 void kalmanUpdate(){
     matAdd(&u, &u, &bias_u);
+    printf("1\n");
     kynematics();
+    printf("2\n");
     UpdatePm();
+    printf("3\n");
     cont++;
     if (cont>100){
 
         //setMatVal(&p_gps, 0, 0, getReg(GPS_X));
         //setMatVal(&p_gps, 1, 0, getReg(GPS_Y));
 
+        printf("4\n");
         setMatVal(&p_gps, 0, 0, 0);
         setMatVal(&p_gps, 1, 0, 0);
 
+        printf("5\n");
         getKalmanGain();
+        printf("6\n");
 
         getBias();
+        printf("7\n");
         
         UpdatePmCovGPS();
+        printf("8\n");
 
         matAdd(&p, &p, &bias_p);
         matAdd(&v, &v, &bias_v);
+        cont = 0;
     }
 }
