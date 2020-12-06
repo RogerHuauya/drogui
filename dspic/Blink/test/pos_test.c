@@ -34,9 +34,9 @@ void timerInterrupt(2){
     setMatVal(&u, 0, 0, acc.dDataX*G);
     setMatVal(&u, 1, 0, acc.dDataY*G);
     setMatVal(&u, 2, 0, acc.dDataZ*G);
+    //serialWriteString(&Serial1, "u \n");
+    //printMat(&u, "u\n");
     kalmanUpdate();
-
-    
     clearTimerFlag(&readSensors);
 }
 
@@ -53,7 +53,7 @@ int main(){
     initAccel(&acc, 100, 20);
     initOrient(&ori, 50, 10);
 
-    setTimerFrecuency(&readSensors, 100);
+    setTimerFrecuency(&readSensors, 10);
     initTimer(&readSensors, 2, DIV256, 3);
 
     while(1){

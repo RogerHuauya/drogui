@@ -7,7 +7,14 @@
 #include "i2c.h"
 #include "registerMap.h"
 
-void kynematics();
 extern mat p, v, Rq, u;
-
+void initMatGlobal();
+void kynematics();
+void getMatFm();
+void getMatGm();
+void UpdatePm();
+void getKalmanGain();
+void UpdatePmCovGPS();
+void getBias();
+void kalmanUpdate();
 #endif
