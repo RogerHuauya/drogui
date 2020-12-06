@@ -35,9 +35,9 @@ void kynematics(){
     mat aux1, aux2;
     
     matInit(&aux1, p.row, p.col);
-    matInit(&aux2, p.row, p.col);
-    
     matScale(&aux1, &v, Ts);
+
+    matInit(&aux2, p.row, p.col);
     matMult(&aux2, &Rq, &u);
 
     setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0)+10.1);
@@ -61,9 +61,10 @@ void kynematics(){
 
 void getMatFm(){
     for(int i = 0; i < 3; i++)
-        for(int j = 0; j < 3; j++)
-            setMatVal(&Fm, i+3,j + 6, Ts*getMatVal(&Rq, i, j));
+    for(int j = 0; j < 3; j++)
+        setMatVal(&Fm, i+3,j + 6, Ts*getMatVal(&Rq, i, j));
 }
+
 void getMatGm(){
     for( int i = 3;  i < 6; i++ ){
         for( int j = 0; j < 3; j++) setMatVal(&Gm, i, j, Ts*getMatVal(&Rq, i-3,j));
@@ -79,7 +80,7 @@ void UpdatePm(){
     matInit(&aux4, Fm.col, Fm.row);
     matInit(&aux5, Gm.col, Gm.row);
     
-    printf("GM row %d, Gm col %d\n", Gm.row, Gm.col);
+    /*printf("GM row %d, Gm col %d\n", Gm.row, Gm.col);
     for( int i = 0; i < 9; i++ ){
         for( int j = 0; j < 6; j++ ){
             printf("%lf\t",aux2.val[i][j]);
@@ -101,30 +102,30 @@ void UpdatePm(){
             printf("%lf \n",Q1.val[i][j]);
         }
         printf("\n");
-    }
-    printf("v1:\n");
+    }*/
+    //printf("v1:\n");
     for( int i = 3; i < 6; i++ ){
         for( int j = 3; j < 6; j++ ){
             
             aux2.val[i][j] = Q2.val[i-3][j-3];
-            printf("%lf ",Q2.val[i-3][j-3]);
+            //printf("%lf ",Q2.val[i-3][j-3]);
         }
-        printf("\n");
+        //printf("\n");
     }
-    printf("v1:\n");
+    //printf("v1:\n");
     getMatFm();
     getMatGm();
-    printf("v2:\n");
+    //printf("v2:\n");
     matTrans(&aux4,&Fm);
     matTrans(&aux5,&Gm);
     
     matMult(&aux1,&Fm,&Pm);
     matMult(&aux1,&aux1,&aux4);
-    printf("v3:\n");
+    //printf("v3:\n");
     matMult(&aux3,&Gm,&aux2);
     matMult(&aux4,&aux3,&aux5);
     matAdd(&Pm,&aux1,&aux4);
-    printf("v4:\n");
+    //printf("v4:\n");
     matDestruct(&aux1);
     matDestruct(&aux2);
     matDestruct(&aux3);
@@ -181,11 +182,11 @@ void getBias(){
 int cont = 0;
 void kalmanUpdate(){
     matAdd(&u, &u, &bias_u);
-    printf("1\n");
-    //kynematics();
-    printf("2\n");
+    //printf("1\n");
+    kynematics();
+    //printf("2\n");
     UpdatePm();
-    printf("3\n");
+    //printf("3\n");
     cont++;
     if (cont>100){
 
@@ -196,18 +197,16 @@ void kalmanUpdate(){
         setMatVal(&p_gps, 0, 0, 0);
         setMatVal(&p_gps, 1, 0, 0);
 
-        printf("5\n");
         getKalmanGain();
-        printf("6\n");
+        printf("5\n");
 
         getBias();
-        printf("7\n");
+        printf("6\n");
         
         UpdatePmCovGPS();
-        printf("8\n");
+        printf("7\n");
 
         matAdd(&p, &p, &bias_p);
         matAdd(&v, &v, &bias_v);
-        cont = 0;
     }
 }
