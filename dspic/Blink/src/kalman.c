@@ -2,21 +2,8 @@
 extern  char buffer[150];
 extern serial Serial1;
 extern float Ts;
-mat p, v, Rq,Rc, u;
-mat Fm, Gm, Hm, bias_p, bias_v, bias_u,Pm, Q1, Q2, Q12, ye, KalmanGain, p_gps, delta;
-
-void printMat(mat* R, char* s){    
-    serialWriteString(&Serial1, s);
-    for( int i = 0; i < (R->row); i++ ){
-        for( int j = 0; j < (R->col); j++ ){
-            sprintf(buffer,"%lf\t",R->val[i][j]);
-            serialWriteString(&Serial1, buffer);
-        } 
-        serialWriteString(&Serial1, "\n");
-    }
-    serialWriteString(&Serial1, "\n");
-}
-
+mat p, v, Rq, u;
+mat  R, Fm, Gm, Hm, bias_p, bias_v, bias_u,Pm, Q1, Q2, Q12, ye, KalmanGain, p_gps, delta;
 void initMatGlobal(){
     matInit(&Rq, 3, 3);
     matInit(&u, 3, 1);
