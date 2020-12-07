@@ -36,12 +36,14 @@ void timerInterrupt(2){
     setMatVal(&s, 2, 0, acc.dDataZ*G);
     //serialWriteString(&Serial1, "u \n");
     //printMat(&u, "u\n");
-    //kalmanUpdate();
-    sprintf(buffer, "%.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\n", acc.dDataX,acc.dDataY,acc.dDataZ,
-                                                                    ori.dDataW,ori.dDataX,ori.dDataY,ori.dDataZ); 
+    
+    kalmanUpdate();
+    
+    //sprintf(buffer, "%.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\n", acc.dDataX,acc.dDataY,acc.dDataZ,
+    //                                                                ori.dDataW,ori.dDataX,ori.dDataY,ori.dDataZ); 
                                                                     
         
-    serialWriteString(&Serial1, buffer);
+    //serialWriteString(&Serial1, buffer);
 
     clearTimerFlag(&readSensors);
 }
@@ -64,13 +66,13 @@ int main(){
 
     while(1){
         
-        /*sprintf(buffer, "Vx: %.3f\tVy: %.3f\tVz: %.3f\tX:%.3f\tY:%.3f\tZ:%.3f\n", getMatVal(&v, 0, 0),
+        sprintf(buffer, "Vx: %.3f\tVy: %.3f\tVz: %.3f\tX:%.3f\tY:%.3f\tZ:%.3f\n", getMatVal(&v, 0, 0),
                                                                     getMatVal(&v, 1, 0), getMatVal(&v, 2, 0),
                                                                     getMatVal(&p, 0, 0),
                                                                     getMatVal(&p, 1, 0), 
                                                                     getMatVal(&p, 2, 0));
         
-        serialWriteString(&Serial1, buffer);*/
+        serialWriteString(&Serial1, buffer);
         __delay_ms(20);
     }
     return 0;
