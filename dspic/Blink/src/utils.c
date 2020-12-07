@@ -34,3 +34,35 @@ void setReg(uint8_t reg, float val){
     floattobytes(val, i2c2Reg + reg);
     return;
 }
+
+
+double angle_dif(double angle1, double angle2){
+    if(angle1 > angle2){
+        if((angle1 - angle2) > (2*pi - angle1 + angle2)) return -2*pi + angle1 - angle2;
+        else return angle1 - angle2;
+    }
+    else{
+        if((angle2 - angle1) > (2*pi - angle2 + angle1)) return 2*pi - angle2 + angle1;
+        else return angle1 - angle2;
+    }
+}
+
+void getEuler(double q0, double q1, double q2, double q3, double* roll, double *pitch, double* yaw){
+	
+    // roll (x-axis rotation)
+    double sinr_cosp = 2 * (q0 * q1 + q2 * q3);
+    double cosr_cosp = 1 - 2 * (q1 * q1 + q2 * q2);
+    *roll = atan2(sinr_cosp, cosr_cosp);
+
+    // pitch (y-axis rotation)
+    double sinp = 2 * (q0 * q2 - q3 * q1);
+    if (fabs(sinp) >= 1)
+        *pitch = copysign(pi / 2, sinp); // use 90 degrees if out of range
+    else
+        *pitch = asin(sinp);
+
+    // yaw (z-axis rotation)
+    double siny_cosp = 2 * (q0 * q3 + q1 * q2);
+    double cosy_cosp = 1 - 2 * (q2 * q2 + q3 * q3);
+    *yaw = atan2(siny_cosp, cosy_cosp);
+}

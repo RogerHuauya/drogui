@@ -16,7 +16,7 @@ void initBmp280(){
     spiExchangeByte(0x57);
     
     spiExchangeByte(0x75);
-    spiExchangeByte(0x1C);
+    spiExchangeByte(0x10);
     spiStop();
 
     int16_t lsb, msb;
@@ -78,6 +78,7 @@ int32_t bmpReadPressure(){
     int32_t dat[3];
     spiStart();
     spiExchangeByte(0xF7);
+    
     dat[0] = spiExchangeByte(0) & 0xFF;
     dat[1] = spiExchangeByte(0) & 0xFF;
     dat[2] = spiExchangeByte(0) & 0xFF;

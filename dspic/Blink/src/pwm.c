@@ -135,3 +135,10 @@ void setPwmDutyTime(pwm *p, double percent){
         case PWM6_L: SDC6 = DC; break;
     }
 }
+
+void initOneshot125(pwm* p, int pin){
+    initPwmPin(p, pin);
+    setPwmDutyLimits(p, 125, 250);
+    setPwmFrecuency(p, 3500);
+    setPwmDutyTime(p, 0);
+}

@@ -25,6 +25,7 @@ void setPwmDuty(pwm* p, double percent);
 
 void setPwmDutyLimits(pwm *p, int min_time,int max_time);
 void setPwmDutyTime(pwm *p, double percent);
+void initOneshot125(pwm *p, int pin);
 
 
 #endif

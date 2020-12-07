@@ -8,7 +8,7 @@ public:
 	// Pin definition
 	static int powerkey;
 	int userkey;
-
+	
 	Sim7600();
 	~Sim7600();
 
@@ -23,9 +23,13 @@ public:
 	bool ReceivingShortMessage();
 
 	// GPS positoning
-    float Lat,Log;
+	float Lat, Log, Alt, Vel, Curso;
+	float pos_x, pos_y;
+	float offset_x,offset_y;
+	char data[200];
 	bool GPSPositioning();
-
+	void GPSStart();
+	bool GPSGet();
 	//TCP and UDP communication
 //	bool PDPSetting(const char* APN);
 //	bool TCPClientCM(const char* ServerIP,const char* Port,const char* Message,const char* MessageSize);  //TCP Client Command Mode
@@ -33,8 +37,8 @@ public:
 //	bool TCPServerCM(const char* ServerIP,const char* Port,const char* Message,const char* MessageSize);  //TCP Client Command Mode
 
 	// Other functions.
-	char sendATcommand(const char* ATcommand, unsigned int timeout);
-	char sendATcommand(const char* ATcommand, const char* expected_answer, unsigned int timeout);
+	char sendATcommand(const char* ATcommand, unsigned int timeout, bool debug);
+	char sendATcommand(const char* ATcommand, const char* expected_answer, unsigned int timeout, bool debug);
 	char sendATcommand2(const char* ATcommand, const char* expected_answer1, const char* expected_answer2, unsigned int timeout);
 };
 

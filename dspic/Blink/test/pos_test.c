@@ -1,7 +1,8 @@
-//#define POS_TEST_H
-#ifdef POS_TEST_H
+#define POS_TEST
+#ifdef POS_TEST
 
 #include <xc.h>
+#include <dsp.h>
 #include "config.h"
 #include "MM7150.h"
 #include "serial.h"
@@ -11,105 +12,70 @@
 #include "timer.h"
 #include "registerMap.h"
 #include "utils.h"
+#include "matlib.h"
+#include "kalman.h"
 
-#define PI 3.14159264
-i2c slave;
+#define G 9.81
+
 serial Serial1;
 sensor acc, gyro, ori, inc;
 double roll, pitch, yaw;
 timer readSensors;
-char buffer[50];
-void getEuler(double q0,double q1,double q2, double q3);
-double angle_dif(double angle1, double angle2){
-    if(angle1 > angle2){
-        if((angle1 - angle2) > (2*pi - angle1 + angle2)) return -2*pi + angle1 - angle2;
-        else return angle1 - angle2;
-    }
-    else{
-        if((angle2 - angle1) > (2*pi - angle2 + angle1)) return 2*pi - angle2 + angle1;
-        else return angle1 - angle2;
-    }
-}
-float dt = 0.01, v[3] = {0, 0, 0}, x[3] = {0, 0, 0};
+char buffer[100];
+i2c slave;
+float Ts = 0.01;
 
 void timerInterrupt(2){
     readOrient(&ori);        
     readAccel(&acc);
-    readGyro(&gyro);
-    getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
-    /*
-    v[0] += acc.dDataX*dt;
-    v[1] += acc.dDataY*dt;
-    v[2] += acc.dDataZ*dt;
-
-    x[0] += v[0];
-    x[1] += v[1];
-    x[2] += v[2];
-*/
     
-    /*
-    setReg(ROLL_DEG,(float)(roll));
-    setReg(PITCH_DEG,(float)(pitch));
-    setReg(YAW_DEG,(float)(yaw));
-    */
+    quaternionToR(&Rq, ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
+
+    setMatVal(&s, 0, 0, acc.dDataX*G);
+    setMatVal(&s, 1, 0, acc.dDataY*G);
+    setMatVal(&s, 2, 0, acc.dDataZ*G);
+    //serialWriteString(&Serial1, "u \n");
+    //printMat(&u, "u\n");
+    
+    kalmanUpdate();
+    
+    //sprintf(buffer, "%.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\n", acc.dDataX,acc.dDataY,acc.dDataZ,
+    //                                                                ori.dDataW,ori.dDataX,ori.dDataY,ori.dDataZ); 
+                                                                    
+        
+    //serialWriteString(&Serial1, buffer);
+
     clearTimerFlag(&readSensors);
 }
 
 int main(){
     initConfig();
+      
+    initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
+    clearI2Cregisters(I2C2);
+    initMatGlobal();
 
     initSerial(&Serial1, SERIAL1, 115200);
     char s[50];
     initMM7150();
     initAccel(&acc, 100, 20);
-    initGyro(&gyro, 100, 1);
-    initInclin(&inc, 50, 1);
-    //initOrient(&ori, 50, 200);
+    initOrient(&ori, 50, 10);
 
-    //setTimerFrecuency(&readSensors, 100);
-    //initTimer(&readSensors, 2, DIV256, 3);
+    setTimerFrecuency(&readSensors, 100);
+    initTimer(&readSensors, 2, DIV256, 3);
 
-    double q0, q1, q2, q3, roll, pitch, yaw; 
-    //initTimer(&readSensors, 2, DIV256, 3);
     while(1){
-        //readAccel(&acc);
-        //readGyro(&gyro);
-        readInclin(&inc);
-        //getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
-        /*
-        v[0] += acc.dDataX*dt;
-        v[1] += acc.dDataY*dt;
-        v[2] += acc.dDataZ*dt;
-
-        x[0] += v[0];
-        x[1] += v[1];
-        x[2] += v[2];
-        */
-        //sprintf(buffer, "%.3f %.3f %.3f %.3f %.3f %.3f\n", acc.dDataX, acc.dDataY, acc.dDataZ, gyro.dDataX, gyro.dDataY, gyro.dDataZ);
-        sprintf(buffer, "%.3f %.3f %.3f\n", inc.dDataX, inc.dDataY, inc.dDataZ);
+        
+        sprintf(buffer, "Vx: %.3f\tVy: %.3f\tVz: %.3f\tX:%.3f\tY:%.3f\tZ:%.3f\n", getMatVal(&v, 0, 0),
+                                                                    getMatVal(&v, 1, 0), getMatVal(&v, 2, 0),
+                                                                    getMatVal(&p, 0, 0),
+                                                                    getMatVal(&p, 1, 0), 
+                                                                    getMatVal(&p, 2, 0));
+        
         serialWriteString(&Serial1, buffer);
         __delay_ms(20);
     }
     return 0;
 }
 
-void getEuler(double q0, double q1, double q2, double q3){
-	
-    // roll (x-axis rotation)
-    double sinr_cosp = 2 * (q0 * q1 + q2 * q3);
-    double cosr_cosp = 1 - 2 * (q1 * q1 + q2 * q2);
-    roll = atan2(sinr_cosp, cosr_cosp);
-
-    // pitch (y-axis rotation)
-    double sinp = 2 * (q0 * q2 - q3 * q1);
-    if (abs(sinp) >= 1)
-        pitch = copysign(pi / 2, sinp); // use 90 degrees if out of range
-    else
-        pitch = asin(sinp);
-
-    // yaw (z-axis rotation)
-    double siny_cosp = 2 * (q0 * q3 + q1 * q2);
-    double cosy_cosp = 1 - 2 * (q2 * q2 + q3 * q3);
-    yaw = atan2(siny_cosp, cosy_cosp);
-}
 #endif
