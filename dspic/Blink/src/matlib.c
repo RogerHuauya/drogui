@@ -146,17 +146,17 @@ void matInv3(mat* Rinv, mat* R){
 void quaternionToR(mat* R, float n, float ex, float ey, float ez){
     R->row = R->col = 3;
     
-    R->val[0][0] = 2*(n*n + ex*ex) - 1;
-    R->val[0][1] = 2*(ex*ey - n*ez);
-    R->val[0][2] = 2*(ex*ez + n*ey);
+    Rq(0+1, 0+1) = 2*(n*n + ex*ex) - 1;
+    Rq(0+1, 1+1) = 2*(ex*ey - n*ez);
+    Rq(0+1, 2+1) = 2*(ex*ez + n*ey);
 
-    R->val[1][0] = 2*(ex*ey + n*ez);
-    R->val[1][1] = 2*(n*n + ey*ey) - 1;
-    R->val[1][2] = 2*(ey*ez - n*ex);
+    Rq(1+1, 0+1) = 2*(ex*ey + n*ez);
+    Rq(1+1, 1+1) = 2*(n*n + ey*ey) - 1;
+    Rq(1+1, 2+1) = 2*(ey*ez - n*ex);
     
-    R->val[2][0] = 2*(ex*ez - n*ey);
-    R->val[2][1] = 2*(ey*ez + n*ex);
-    R->val[2][2] = 2*(n*n + ez*ez) - 1;
+    Rq(2+1, 0+1) = 2*(ex*ez - n*ey);
+    Rq(2+1, 1+1) = 2*(ey*ez + n*ex);
+    Rq(2+1, 2+1) = 2*(n*n + ez*ez) - 1;
 }
 
 void eye(mat* m, int n){
