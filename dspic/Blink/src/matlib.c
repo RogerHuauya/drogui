@@ -171,7 +171,11 @@ void setMatVal(mat* m, int i, int j, float value){
 float getMatVal(mat* m, int i, int j){
     return m->val[i][j];
 }
-
+void matCopy(mat* des, mat* src){
+    for(int i = 0 ; i < des->row ; i++)
+        for(int j = 0 ; j < des->col ; j++)
+            des->val[i][j] = src->val[i][j];
+}
 void matDestruct(mat* m){
     free(m->val);
     free(m->aux);

@@ -7,7 +7,7 @@
 #include "i2c.h"
 #include "registerMap.h"
 
-extern mat p, v, Rq, u;
+extern mat p, v, Rq, s;
 void initMatGlobal();
 void kynematics();
 void getMatFm();
