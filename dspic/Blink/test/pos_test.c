@@ -15,7 +15,7 @@
 #include "matlib.h"
 #include "kalman.h"
 
-#define G 9.81
+#define G 0.0981
 
 serial Serial1;
 sensor acc, gyro, ori, inc;
@@ -24,6 +24,8 @@ timer readSensors;
 char buffer[100];
 i2c slave;
 float Ts = 0.01;
+
+extern mat bias_u;
 
 void timerInterrupt(2){
     readOrient(&ori);        
@@ -34,17 +36,9 @@ void timerInterrupt(2){
     setMatVal(&s, 0, 0, acc.dDataX*G);
     setMatVal(&s, 1, 0, acc.dDataY*G);
     setMatVal(&s, 2, 0, acc.dDataZ*G);
-    //serialWriteString(&Serial1, "u \n");
-    //printMat(&u, "u\n");
     
     kalmanUpdate();
     
-    //sprintf(buffer, "%.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\n", acc.dDataX,acc.dDataY,acc.dDataZ,
-    //                                                                ori.dDataW,ori.dDataX,ori.dDataY,ori.dDataZ); 
-                                                                    
-        
-    //serialWriteString(&Serial1, buffer);
-
     clearTimerFlag(&readSensors);
 }
 
@@ -64,15 +58,16 @@ int main(){
     setTimerFrecuency(&readSensors, 100);
     initTimer(&readSensors, 2, DIV256, 3);
 
+
     while(1){
         
-        sprintf(buffer, "Vx: %.3f\tVy: %.3f\tVz: %.3f\tX:%.3f\tY:%.3f\tZ:%.3f\n", getMatVal(&v, 0, 0),
+        /*sprintf(buffer, "Vx: %.3f\tVy: %.3f\tVz: %.3f\tX:%.3f\tY:%.3f\tZ:%.3f\n", getMatVal(&v, 0, 0),
                                                                     getMatVal(&v, 1, 0), getMatVal(&v, 2, 0),
                                                                     getMatVal(&p, 0, 0),
                                                                     getMatVal(&p, 1, 0), 
                                                                     getMatVal(&p, 2, 0));
         
-        serialWriteString(&Serial1, buffer);
+        serialWriteString(&Serial1, buffer);*/
         __delay_ms(20);
     }
     return 0;

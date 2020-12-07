@@ -18,8 +18,8 @@ typedef struct _mat{
 
 typedef struct _mat{
     int row, col;
-    double** val;
-    double* aux;
+    float** val;
+    float* aux;
 } mat;
 
 #endif

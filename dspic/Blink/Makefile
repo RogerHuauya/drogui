@@ -24,7 +24,7 @@ endif
 SOURCES := $(wildcard *.c) $(wildcard src/*.c ) $(wildcard test/*.c) 
 OBJS := $(patsubst %.c, %.o,$(SOURCES))
 HDRS := $(wildcard headers/*.h)
-CFLAGS=-g -O1 -x c -I headers  -mno-eds-warn
+CFLAGS=-g -O0 -x c -I headers  -mno-eds-warn
 
 #if on windows use a different RM
 ifdef ComSpec

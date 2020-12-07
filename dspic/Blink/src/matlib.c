@@ -70,9 +70,9 @@ void matInit(mat* m, int row, int col){
     m->row = row;
     m->col = col;
     
-    m->val = (double**) calloc(row, sizeof(double*));
+    m->val = (float**) calloc(row, sizeof(float*));
 
-	m-> aux = calloc(row*col, sizeof(double));
+	m-> aux = calloc(row*col, sizeof(float));
     for (int i = 0; i < row; i++) {
             m->val[i] = m-> aux + i*col;
     }
@@ -81,7 +81,7 @@ void matInit(mat* m, int row, int col){
 void matMult(mat* ans, mat* a, mat* b){
     for(int i = 0 ;i < a->row; i++)
         for(int j = 0 ; j< b->col ; j++){
-            double aux = 0;
+            float aux = 0;
             for(int k = 0 ; k < a-> col; k++)
                 aux += a->val[i][k]* b->val[k][j];
             ans->val[i][j] = aux;
@@ -117,14 +117,14 @@ void matTrans(mat* Rt,mat* R){
     }
 }
 double det3(mat* R){
-    double det = ((R->val[0][0])*(R->val[1][1])*(R->val[2][2])) +((R->val[0][1])*(R->val[1][2])*(R->val[2][0]))
+    float det = ((R->val[0][0])*(R->val[1][1])*(R->val[2][2])) +((R->val[0][1])*(R->val[1][2])*(R->val[2][0]))
      + ((R->val[0][2])*(R->val[1][0])*(R->val[2][1])) - ((R->val[0][2])*(R->val[1][1])*(R->val[2][0])) 
      - ((R->val[0][1])*(R->val[1][0])*(R->val[2][2])) - ((R->val[0][0])*(R->val[1][2])*(R->val[2][1]));
     
     return det;
 }
 void matInv3(mat* Rinv, mat* R){
-    double val_det = 0;
+    float val_det = 0;
     mat aux1;
 
     val_det = det3(R); 
