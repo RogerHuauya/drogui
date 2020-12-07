@@ -2,11 +2,25 @@
 extern  char buffer[150];
 extern serial Serial1;
 extern float Ts;
-mat p, v, Rq, u;
-mat  R, Fm, Gm, Hm, bias_p, bias_v, bias_u,Pm, Q1, Q2, Q12, ye, KalmanGain, p_gps, delta;
+mat p, v, Rq,Rc, u, s;
+mat Fm, Gm, Hm, bias_p, bias_v, bias_u,Pm, Q1, Q2, Q12, ye, KalmanGain, p_gps, delta;
+
+void printMat(mat* R, char* s){    
+    serialWriteString(&Serial1, s);
+    for( int i = 0; i < (R->row); i++ ){
+        for( int j = 0; j < (R->col); j++ ){
+            sprintf(buffer,"%lf\t",R->val[i][j]);
+            serialWriteString(&Serial1, buffer);
+        } 
+        serialWriteString(&Serial1, "\n");
+    }
+    serialWriteString(&Serial1, "\n");
+}
+
 void initMatGlobal(){
     matInit(&Rq, 3, 3);
     matInit(&u, 3, 1);
+    matInit(&s, 3, 1);
     matInit(&p, 3, 1);
     matInit(&v, 3, 1);
     matInit(&bias_p, 3, 1);
@@ -55,7 +69,7 @@ void kynematics(){
     matInit(&aux2, p.row, p.col);
     matMult(&aux2, &Rq, &u);
 
-    setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0)+10.1);
+    setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0) + 10.1);
 
     matScale(&aux2, &aux2, Ts);    
 
@@ -99,11 +113,11 @@ void UpdatePm(){
     getMatFm();
     getMatGm();
     
-    printMat(&Fm,"Fm\n");
-    printMat(&Gm, "Gm\n");
+    //printMat(&Fm,"Fm\n");
+    //printMat(&Gm, "Gm\n");
 
-    printMat(&Pm, "Pm_ant\n");
-    printMat(&Q12, "Q12\n");
+    //printMat(&Pm, "Pm_ant\n");
+    //printMat(&Q12, "Q12\n");
 
     matTrans(&aux1,&Fm);
     matTrans(&aux2,&Gm);
@@ -115,7 +129,7 @@ void UpdatePm(){
     //matCopy(&Gm, &aux5);
     matAdd(&Pm,&Pm,&aux3);
 
-    printMat(&Pm, "Pm\n");
+    //printMat(&Pm, "Pm\n");
 
     matDestruct(&aux1);
     matDestruct(&aux2);
@@ -221,7 +235,7 @@ void getBias(){
 int cont = 0;
 void kalmanUpdate(){
     
-    matAdd(&u, &u, &bias_u);
+    matAdd(&u, &s, &bias_u);
     //printMat(&u," u\n");
     kynematics();
     
@@ -230,8 +244,8 @@ void kalmanUpdate(){
     //sprintf(buffer, "Contador: %d\n", cont);
     //serialWriteString(&Serial1, buffer);
     if (cont>100){
-        sprintf(buffer, "Contador: %d\n", cont);
-        serialWriteString(&Serial1, buffer);
+        //sprintf(buffer, "Contador: %d\n", cont);
+        //serialWriteString(&Serial1, buffer);
         
         setMatVal(&p_gps, 0, 0, 0);
         setMatVal(&p_gps, 1, 0, 0);

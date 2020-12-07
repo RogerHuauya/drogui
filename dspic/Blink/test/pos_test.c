@@ -31,9 +31,9 @@ void timerInterrupt(2){
     
     quaternionToR(&Rq, ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
 
-    setMatVal(&u, 0, 0, acc.dDataX*G);
-    setMatVal(&u, 1, 0, acc.dDataY*G);
-    setMatVal(&u, 2, 0, acc.dDataZ*G);
+    setMatVal(&s, 0, 0, acc.dDataX*G);
+    setMatVal(&s, 1, 0, acc.dDataY*G);
+    setMatVal(&s, 2, 0, acc.dDataZ*G);
     //serialWriteString(&Serial1, "u \n");
     //printMat(&u, "u\n");
     kalmanUpdate();
