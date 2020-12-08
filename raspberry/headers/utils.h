@@ -9,6 +9,10 @@
 #include <cstdint>
 #include <fstream>
 #include <unistd.h> 
+
+#include <iomanip>
+#include <ctime>
+
 //#include <stdlib.h>
 //#include <stdio.h>
 
@@ -18,6 +22,7 @@
 #define yellow(n)   "\033[1;33m"#n"\033[0m"
 #define blue(n)     "\033[1;34m"#n"\033[0m"
 #define white(n)    "\033[1;37m"#n"\033[0m"
+#define pi 3.141592
 
 
 class rasp_I2C{
@@ -36,5 +41,5 @@ class rasp_I2C{
 };
 
 void cls();
-
+std::string str_datetime();
 #endif
