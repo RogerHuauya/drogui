@@ -14,7 +14,7 @@ OBJDMP= xc32-objdump
 TARGET=out
 
 #additional linker flags
-LINKFLAGS=-Map=$(TARGET).map,--defsym=_min_heap_size=0xF000
+LINKFLAGS=-Map=$(TARGET).map,--defsym=_min_heap_size=0x7DFFF
 
 
 SOURCES := $(wildcard *.c) $(wildcard src/*.c ) $(wildcard test/*.c )

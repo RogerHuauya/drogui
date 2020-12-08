@@ -2,23 +2,21 @@
 #ifdef POS_TEST
 
 #include <xc.h>
-#include <dsp.h>
 #include "config.h"
-#include "MM7150.h"
+//#include "MM7150.h"
 #include "serial.h"
 #include <math.h>
-#include "MahonyAHRS.h"
+//#include "MahonyAHRS.h"
 #include "i2c.h"
 #include "timer.h"
-#include "registerMap.h"
+//#include "registerMap.h"
 #include "utils.h"
 #include "matlib.h"
 #include "kalman.h"
 
 #define G 0.0981
 
-serial Serial1;
-sensor acc, gyro, ori, inc;
+//sensor acc, gyro, ori, inc;
 double roll, pitch, yaw;
 timer readSensors;
 char buffer[100];
@@ -27,36 +25,38 @@ float Ts = 0.01;
 
 extern mat bias_u;
 
-void timerInterrupt(2){
-    readOrient(&ori);        
-    readAccel(&acc);
-    
-    quaternionToR(&Rq, ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
+void timerInterrupt(2, 4){
+       
+    quaternionToR(&Rq, 0.006, 0.077, 0.996, -0.007);
 
-    setMatVal(&s, 0, 0, acc.dDataX*G);
-    setMatVal(&s, 1, 0, acc.dDataY*G);
-    setMatVal(&s, 2, 0, acc.dDataZ*G);
+    setMatVal(&s, 0, 0, 0.004*G);
+    setMatVal(&s, 1, 0, 0.009*G);
+    setMatVal(&s, 2, 0, 1.032*G);
     
+    //serialWriteString("pio\n");
     kalmanUpdate();
-    
+
     clearTimerFlag(&readSensors);
 }
 
 int main(){
-    initConfig();
+    initPBCLK();
       
-    initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
-    clearI2Cregisters(I2C2);
+    //initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
+    //clearI2Cregisters(I2C2);
     initMatGlobal();
 
-    initSerial(&Serial1, SERIAL1, 115200);
+    initSerial(115200, 4);
+    serialWriteString("Init\n");
+    delayMs(3000);
     char s[50];
+    /*
     initMM7150();
     initAccel(&acc, 100, 20);
     initOrient(&ori, 50, 10);
-
-    setTimerFrecuency(&readSensors, 100);
-    initTimer(&readSensors, 2, DIV256, 3);
+    */
+    initTimer(&readSensors, 2, 2, DIV256);
+    setTimerFrecuency(&readSensors,  20);
 
 
     while(1){
@@ -68,7 +68,8 @@ int main(){
                                                                     getMatVal(&p, 2, 0));
         
         serialWriteString(&Serial1, buffer);*/
-        __delay_ms(20);
+        //serialWriteString("pollo\n");
+        delayMs(20);
     }
     return 0;
 }
