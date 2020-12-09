@@ -112,7 +112,7 @@ void matSubs(mat* ans, mat* a, mat* b){
 void matTrans(mat* Rt,mat* R){
     for( int i = 0; i < R->row; i++ ){
         for( int j = 0; j < R->col; j++ ){
-            Rt->val[i][j] = R->val[j][i];
+            Rt->val[j][i] = R->val[i][j];
         }
     }
 }
