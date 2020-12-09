@@ -9,13 +9,9 @@
 
 typedef struct _mat{
     int row, col;
-<<<<<<< HEAD
-    float val[10][10];
-=======
     fractional** val;
     fractional* aux;
     double **vald;
->>>>>>> inglis
 } mat;
 
 #else
