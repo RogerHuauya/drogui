@@ -92,7 +92,7 @@ void initTimer(timer* t, int n, int pre, int priority){
     }
 }
 
-void setTimerFrecuency(timer* t, double freq){
+void setTimerFrecuency(timer* t, unsigned long long freq){
 
     uint16_t PR;
 
