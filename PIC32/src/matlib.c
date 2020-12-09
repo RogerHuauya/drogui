@@ -1,7 +1,6 @@
 #include "matlib.h"
 #include "serial.h"
 extern char s[50];
-extern serial Serial1;
 
 #if CASO == 1
 void matInit(mat* m, int row, int col){
@@ -112,7 +111,7 @@ void matSubs(mat* ans, mat* a, mat* b){
 void matTrans(mat* Rt,mat* R){
     for( int i = 0; i < R->row; i++ ){
         for( int j = 0; j < R->col; j++ ){
-            Rt->val[i][j] = R->val[j][i];
+            Rt->val[j][i] = R->val[i][j];
         }
     }
 }
@@ -146,17 +145,17 @@ void matInv3(mat* Rinv, mat* R){
 void quaternionToR(mat* R, float n, float ex, float ey, float ez){
     R->row = R->col = 3;
     
-    Rq(0+1, 0+1) = 2*(n*n + ex*ex) - 1;
-    Rq(0+1, 1+1) = 2*(ex*ey - n*ez);
-    Rq(0+1, 2+1) = 2*(ex*ez + n*ey);
+    R->val[0][0] = 2*(n*n + ex*ex) - 1;
+    R->val[0][1] = 2*(ex*ey - n*ez);
+    R->val[0][2] = 2*(ex*ez + n*ey);
 
-    Rq(1+1, 0+1) = 2*(ex*ey + n*ez);
-    Rq(1+1, 1+1) = 2*(n*n + ey*ey) - 1;
-    Rq(1+1, 2+1) = 2*(ey*ez - n*ex);
+    R->val[1][0] = 2*(ex*ey + n*ez);
+    R->val[1][1] = 2*(n*n + ey*ey) - 1;
+    R->val[1][2] = 2*(ey*ez - n*ex);
     
-    Rq(2+1, 0+1) = 2*(ex*ez - n*ey);
-    Rq(2+1, 1+1) = 2*(ey*ez + n*ex);
-    Rq(2+1, 2+1) = 2*(n*n + ez*ez) - 1;
+    R->val[2][0] = 2*(ex*ez - n*ey);
+    R->val[2][1] = 2*(ey*ez + n*ex);
+    R->val[2][2] = 2*(n*n + ez*ez) - 1;
 }
 
 void eye(mat* m, int n){
