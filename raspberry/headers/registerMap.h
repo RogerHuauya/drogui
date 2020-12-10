@@ -2,7 +2,7 @@
 #define REGISTER_MAP_H
 
 
-enum PIDVAR {ROLL, PITCH, YAW, X, Y, Z};
+enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 
 
 
