@@ -5,7 +5,6 @@
 enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 
 
-
 #define M1_VAL 		0x01
 #define M2_VAL 		0x05
 #define M3_VAL 		0x09
@@ -77,11 +76,5 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define GPS_Y 0xDD
 #define GPS_AVAILABLE 0XE1
 
-#define ACC_X   0xE5
-#define ACC_Y   0xE9
-#define ACC_Z   0xED
+#endif 		
 
-
-#define NUM_THREADS 3
-
-#endif

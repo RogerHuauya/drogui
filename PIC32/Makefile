@@ -2,7 +2,7 @@
 PROC = 32MZ2048ECH144
 
 #the c compiler
-CC = xc32-gcc
+CC = xc32-gcc -std=gnu99
 
 #the hexfile maker
 HX= xc32-bin2hex
@@ -14,13 +14,13 @@ OBJDMP= xc32-objdump
 TARGET=out
 
 #additional linker flags
-LINKFLAGS=-Map=$(TARGET).map,--defsym=_min_heap_size=0xF000
+LINKFLAGS=-Map=$(TARGET).map,--defsym=_min_heap_size=0x7DFFF
 
 
 SOURCES := $(wildcard *.c) $(wildcard src/*.c ) $(wildcard test/*.c )
 OBJS := $(patsubst %.c, %.o,$(SOURCES))
 HDRS := $(wildcard headers/*.h)
-CFLAGS=-g -O0 -x c -I headers 
+CFLAGS=-g -O1 -x c -I headers 
 
 #if on windows use a different RM
 ifdef ComSpec

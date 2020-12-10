@@ -1,8 +1,8 @@
 #ifndef MATLIB_H
 #define MATLIB_H
-#include <dsp.h>
 
 #define SCALE 64.0
+#include <Arduino.h>
 
 #define CASO 0
 #if CASO == 1

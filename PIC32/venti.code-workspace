@@ -1,25 +1,7 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"C_Cpp.default.includePath": [
-				"C:/Program Files/Microchip/xc32/v2.41/pic32mx/include/xc.h",
-				"${workspaceFolder}/headers"
-				//"C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC32MZ-EC_DFP/1.2.40/include",
-				//"C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC32MZ-EC_DFP/1.2.40/include/proc",
-			],
-			"files.associations": {
-				"utils.h": "c",
-				"xc.h": "c",
-				"i2c.h": "c",
-				"serial.h": "c",
-				"config.h": "c",
-				"stdlib.h": "c",
-				"stdio.h": "c",
-				"random": "c"
-			}
-	}
+    "folders": [
+        {
+            "path": ".."
+        }
+    ]
 }

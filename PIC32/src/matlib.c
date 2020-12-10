@@ -1,7 +1,6 @@
 #include "matlib.h"
 #include "serial.h"
 extern char s[50];
-extern serial Serial1;
 
 #if CASO == 1
 void matInit(mat* m, int row, int col){

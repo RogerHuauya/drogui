@@ -45,11 +45,21 @@ void initSerial(int baudrate, int priority){
 
     pinMode(PRTB, 5, INPUT);
     pinMode(PRTB, 3, OUTPUT);
+
+    pinMode(PRTF, 1, INPUT);
+    pinMode(PRTD, 7, OUTPUT);
+
     TRISBbits.TRISB3 = 0;
     TRISBbits.TRISB5 = 1;
+
+    TRISFbits.TRISF3 = 0;
+    TRISDbits.TRISD5 = 1;
     
-    U1RXRbits.U1RXR = 8; //RB5
-    RPB3Rbits.RPB3R = 1; //RB3
+    //U1RXRbits.U1RXR = 8; //RB5
+    //RPB3Rbits.RPB3R = 1; //RB3
+
+    U1RXRbits.U1RXR = 4; //RF1
+    RPD7Rbits.RPD7R = 1; //RB3
 
     U1MODEbits.UARTEN = 1;
     U1MODEbits.UEN = 0;

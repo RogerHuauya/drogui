@@ -1,4 +1,4 @@
-#define CONTROL_LUNG_TEST
+//#define CONTROL_LUNG_TEST
 #ifdef CONTROL_LUNG_TEST
 
 #include <xc.h>

@@ -328,8 +328,11 @@ bool Sim7600::GPSGet(){
         return false;
     }
     delay(100);
+    int DLat, DLon;
+    sscanf(RecMessage, "%2d%f,%*c,%2d%f,%*c,%*lf,%*lf,%f,%f,%f", &DLat,&Lat,&DLon, &Log, &Alt, &Vel, &Curso);
+    Lat = DLat + Lat/60.0;
+    Log = DLon + Log/60.0;
 
-    sscanf(RecMessage, "%f,%*c,%f,%*c,%*lf,%*lf,%f,%f,%f", &Lat, &Log, &Alt, &Vel, &Curso);
     //strcpy(data, RecMessage);
     //printf("%s\n",RecMessage);
     /*
