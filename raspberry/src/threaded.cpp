@@ -6,7 +6,8 @@ extern rasp_I2C rasp_i2c;
 
 extern bool logging_state;
 void *logging(void *threadid){
-    
+    unsigned long long tim = 0;
+    unistd::sleep(5);
     while(1){
         std::ofstream log_gps;
         //while(!logging_state){}
@@ -22,17 +23,15 @@ void *logging(void *threadid){
         log_file << "PITCH KP KI KD " << rasp_i2c.readFloat(PITCH_KP) << " " <<rasp_i2c.readFloat(PITCH_KI) << " " <<rasp_i2c.readFloat(PITCH_KD)<<std::endl;
         log_file << "YAW KP KI KD " << rasp_i2c.readFloat(YAW_KP) << " " <<rasp_i2c.readFloat(YAW_KI) << " " <<rasp_i2c.readFloat(YAW_KD)<<std::endl;
         */
-        int cont = 0;
         while(1){
-            if(cont >= 100 ){
-                log_gps << sim7600.Lat << ",\t"<< sim7600.Log << ",\t"<< sim7600.Alt << std::endl;
-                cont = 0;
+            if(tim%100==0){
+                log_gps << tim << ",\t" << sim7600.Lat << ",\t"<< sim7600.Log << ",\t"<< sim7600.Alt << std::endl;
             }
-            cont++;
+            
             /*
             log_file<<rasp_i2c.readFloat(H_VAL);
             log_file<<"\t";*/
-
+	    log_imu << tim << ",\t";
             log_imu<<rasp_i2c.readFloat(ROLL_VAL);
             log_imu<<",\t";
             log_imu<<rasp_i2c.readFloat(PITCH_VAL);
@@ -68,6 +67,7 @@ void *logging(void *threadid){
         */
 
             unistd::usleep(10000);
+	    tim++;
         }
     }
 }

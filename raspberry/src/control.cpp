@@ -36,6 +36,8 @@ void send_PID_ROLL(){
     std::cin>>value1;
     if(std::cin.fail()) throw 505;
     rasp_i2c.sendFloat(PID_INDEX, value1);
+    rasp_i2c.sendFloat(PID_VAR, PID_ROLL);
+
     std::cout<<"KP KI KD = "<<std::endl;
     std::cin>>value1>>value2>>value3;
     if(std::cin.fail()) throw 505;
@@ -44,6 +46,8 @@ void send_PID_ROLL(){
     rasp_i2c.sendFloat(ROLL_KD, value3);
     std::cout<<"Values sent : "<<std::endl;
     sleep(1);
+    //rasp_i2c.sendFloat(PID_VAR, -1);
+
     return;
 }
 void send_PID_PITCH(){    
@@ -54,6 +58,7 @@ void send_PID_PITCH(){
     std::cin>>value1;
     if(std::cin.fail()) throw 505;
     rasp_i2c.sendFloat(PID_INDEX, value1);
+    rasp_i2c.sendFloat(PID_VAR, PID_PITCH);
     std::cout<<"KP KI KD = "<<std::endl;
     std::cin>>value1>>value2>>value3;
     if(std::cin.fail()) throw 505;
@@ -62,6 +67,7 @@ void send_PID_PITCH(){
     rasp_i2c.sendFloat(PITCH_KD, value3);
     std::cout<<"Values sent : "<<std::endl;
     sleep(1);
+    //rasp_i2c.sendFloat(PID_VAR, -1);
     return;
 }
 
@@ -74,6 +80,7 @@ void send_PID_YAW(){
     std::cin>>value1;
     if(std::cin.fail()) throw 505;
     rasp_i2c.sendFloat(PID_INDEX, value1);
+    rasp_i2c.sendFloat(PID_VAR, PID_YAW);
     std::cout<<"KP KI KD = "<<std::endl;
     std::cin>>value1>>value2>>value3;
     if(std::cin.fail()) throw 505;
@@ -82,6 +89,7 @@ void send_PID_YAW(){
     rasp_i2c.sendFloat(YAW_KD, value3);
     std::cout<<"Values sent : "<<std::endl;
     sleep(1);
+    //rasp_i2c.sendFloat(PID_VAR, -1);
     return;
 }
 
@@ -91,6 +99,7 @@ void send_PID_Z(){
     printf(green(PID Z) "\n");
 
     rasp_i2c.sendFloat(PID_INDEX, value1);
+    rasp_i2c.sendFloat(PID_VAR, PID_Z);
     printf("KP KI KD = \n");
     std::cin>>value1>>value2>>value3;
 
@@ -100,6 +109,7 @@ void send_PID_Z(){
     rasp_i2c.sendFloat(Z_KD, value3);
     printf("The values have been sent over I2C\n");
     sleep(1);
+    //rasp_i2c.sendFloat(PID_VAR, -1);
     return;
 }
 enum REF_OP {REF_ROLL, REF_PITCH, REF_YAW, REF_X, REF_Y, REF_Z};
