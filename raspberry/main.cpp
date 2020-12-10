@@ -45,7 +45,7 @@ int main(int argc, char** argv ){
         setup();
         printf("Program has started\n");
         pthread_t threads[NUM_THREADS];
-        //id_thread_log  = pthread_create(&threads[0], NULL, logging, (void *)0);
+        id_thread_log  = pthread_create(&threads[0], NULL, logging, (void *)0);
         id_thread_gps = pthread_create(&threads[2], NULL, gps_data, (void *)0);
         printf("Threads created \n");
         menu();

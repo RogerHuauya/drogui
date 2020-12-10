@@ -1,5 +1,4 @@
 #!/usr/bin/python
-
 import RPi.GPIO as GPIO
 import serial
 import time
@@ -36,7 +35,8 @@ try:
     #power_on(power_key)
     while True:
         command_input = raw_input('Please input the AT command:')
-        ser.write((command_input+  '\r\n' ).encode())
+        #command_input = 'AT+CGPSINFO'
+		ser.write((command_input+  '\r\n' ).encode())
         time.sleep(0.1)
         if ser.inWaiting():
             time.sleep(0.01)

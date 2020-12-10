@@ -26,7 +26,8 @@ void dataSensor(){
                     std::cout << rasp_i2c.readFloat(GPS_Y) << std::endl; break;
 
             case 2: printf("Lat: %.6lf,\tLong: %.6lf,\tAlt: %.6lf\tVel: %.6f\tCurso: %.6f\n",
-			sim7600.Lat,sim7600.Log,sim7600.Alt,sim7600.Vel,sim7600.Curso); break;
+			
+            sim7600.Lat,sim7600.Log,sim7600.Alt,sim7600.Vel,sim7600.Curso); break;
             
             case 3: std::cout << rasp_i2c.readFloat(RAW_TEMP) << " ";
                     std::cout << rasp_i2c.readFloat(TEMP_ABS) << " ";
