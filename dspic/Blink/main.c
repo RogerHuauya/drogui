@@ -1,4 +1,4 @@
-#define MAIN
+//#define MAIN
 #ifdef MAIN
 
 #include <xc.h>
@@ -142,6 +142,7 @@ int main(void){
     
     yaw_off = yaw;
     setReg(PID_INDEX, -1);
+    setReg(PID_VAR, -1);
 
     while(1){
         roll_ref = getReg(ROLL_REF) + roll_off;
@@ -176,26 +177,26 @@ int main(void){
             M1 = M2 = M3 = M4 = 0;
             int index = getReg(PID_INDEX), var = getReg(PID_VAR);
             if(index >= 0) {
-                switch(PID_VAR){
-                    case ROLL:
+                switch((int) getReg(PID_VAR)){
+                    case PID_ROLL:
                         roll_control.kp[index] = getReg(ROLL_KP);
                         roll_control.ki[index] = getReg(ROLL_KI);
                         roll_control.kd[index] = getReg(ROLL_KD);
                     break;
                     
-                    case PITCH:
+                    case PID_PITCH:
                         pitch_control.kp[index] = getReg(PITCH_KP);
                         pitch_control.ki[index] = getReg(PITCH_KI);
                         pitch_control.kd[index] = getReg(PITCH_KD);
                     break;
 
-                    case YAW:
+                    case PID_YAW:
                         yaw_control.kp[index] = getReg(YAW_KP);
                         yaw_control.ki[index] = getReg(YAW_KI);
                         yaw_control.kd[index] = getReg(YAW_KD);
                     break;
                     
-                    case Z:
+                    case PID_Z:
                         z_control.kp[0] = getReg(Z_KP);
                         z_control.ki[0] = getReg(Z_KI);
                         z_control.kd[0] = getReg(Z_KD);

@@ -1,4 +1,4 @@
-//#define POS_TEST
+#define POS_TEST
 #ifdef POS_TEST
 
 #include <xc.h>
@@ -23,21 +23,28 @@ double roll, pitch, yaw;
 timer readSensors;
 char buffer[100];
 i2c slave;
-float dt = 0.01;
-mat Rq,p, v, u;
+float Ts = 0.01;
 
 void timerInterrupt(2){
     readOrient(&ori);        
     readAccel(&acc);
     
     quaternionToR(&Rq, ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
+
+    setMatVal(&s, 0, 0, acc.dDataX*G);
+    setMatVal(&s, 1, 0, acc.dDataY*G);
+    setMatVal(&s, 2, 0, acc.dDataZ*G);
+    //serialWriteString(&Serial1, "u \n");
+    //printMat(&u, "u\n");
     
-    setMatVal(&u, 0, 0, acc.dDataX*G);
-    setMatVal(&u, 1, 0, acc.dDataY*G);
-    setMatVal(&u, 2, 0, acc.dDataZ*G);
+    kalmanUpdate();
     
-    kynematics(&p, &v, &u, &Rq, dt);
-   
+    //sprintf(buffer, "%.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\n", acc.dDataX,acc.dDataY,acc.dDataZ,
+    //                                                                ori.dDataW,ori.dDataX,ori.dDataY,ori.dDataZ); 
+                                                                    
+        
+    //serialWriteString(&Serial1, buffer);
+
     clearTimerFlag(&readSensors);
 }
 
@@ -46,12 +53,8 @@ int main(){
       
     initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
     clearI2Cregisters(I2C2);
-    
-    matInit(&Rq, 3, 3);
-    matInit(&u, 3, 1);
-    matInit(&p, 3, 1);
-    matInit(&v, 3, 1);
-    
+    initMatGlobal();
+
     initSerial(&Serial1, SERIAL1, 115200);
     char s[50];
     initMM7150();
@@ -63,11 +66,12 @@ int main(){
 
     while(1){
         
-        sprintf(buffer, "Xp: %.3f\tYp: %.3f\tZp: %.3f\tX:%.3f\tY:%.3f\tZ:%.3f\n", getMatVal(&v, 0, 0),
+        sprintf(buffer, "Vx: %.3f\tVy: %.3f\tVz: %.3f\tX:%.3f\tY:%.3f\tZ:%.3f\n", getMatVal(&v, 0, 0),
                                                                     getMatVal(&v, 1, 0), getMatVal(&v, 2, 0),
                                                                     getMatVal(&p, 0, 0),
                                                                     getMatVal(&p, 1, 0), 
                                                                     getMatVal(&p, 2, 0));
+        
         serialWriteString(&Serial1, buffer);
         __delay_ms(20);
     }

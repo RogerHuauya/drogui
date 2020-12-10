@@ -34,4 +34,9 @@ float getMatVal(mat* m, int i, int j);
 void matDestruct(mat* m);
 void matScale(mat* ans, mat* a, float alpha);
 void matAdd(mat* ans, mat* a, mat* b);
+void matSubs(mat* ans, mat* a, mat* b);
+void matInv3(mat* Rinv, mat* R);
+void matTrans(mat* Rt,mat* R);
+void matCopy(mat* des, mat* src);
+
 #endif

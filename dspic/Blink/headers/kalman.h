@@ -3,8 +3,18 @@
 
 #include "utils.h"
 #include "matlib.h"
+#include "serial.h"
+#include "i2c.h"
+#include "registerMap.h"
 
-void kynematics(mat* p, mat* v, mat* u, mat* Rq,float Ts);
-
-
+extern mat p, v, Rq, s;
+void initMatGlobal();
+void kynematics();
+void getMatFm();
+void getMatGm();
+void UpdatePm();
+void getKalmanGain();
+void UpdatePmCovGPS();
+void getBias();
+void kalmanUpdate();
 #endif
