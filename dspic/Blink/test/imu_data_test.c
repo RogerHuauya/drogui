@@ -18,7 +18,7 @@ timer readSensors;
 char buffer[100];
 i2c slave;
 float Ts = 0.01;
-
+int cont2 = 0;
 
 void timerInterrupt(2){
     readOrient(&ori);        
@@ -34,6 +34,7 @@ void timerInterrupt(2){
     setReg(PITCH_VAL, pitch);
     setReg(YAW_VAL, yaw);
     
+
     clearTimerFlag(&readSensors);
 }
 
@@ -45,16 +46,19 @@ int main(){
     
     char s[50];
     initMM7150();
-    initAccel(&acc, 100, 20);
+    initAccel(&acc, 100, 2);
     initOrient(&ori, 50, 10);
 
-    setTimerFrecuency(&readSensors, 100);
     initTimer(&readSensors, 2, DIV256, 3);
+    setTimerFrecuency(&readSensors, 50);
 
 
     while(1){
-        
-        __delay_ms(20);
+        /*if(cont2 >= 100){
+            cont2 = 0;
+            serialWriteString(&Serial1, "hola\n");
+        }*/
+        __delay_ms(1);
     }
     return 0;
 }

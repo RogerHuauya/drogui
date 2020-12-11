@@ -60,15 +60,14 @@ void initMatGlobal(){
 
 void kynematics(){
     mat aux1, aux2;
-    serialWriteString(&Serial1,"kynematics\n");
+    //serialWriteString(&Serial1,"kynematics\n");
     matInit(&aux1, p.row, p.col);
     matScale(&aux1, &v, Ts);
 
     matInit(&aux2, p.row, p.col);
     matMult(&aux2, &Rq, &u);
-    matScale(&aux2, &aux2, 0.01);
 
-    setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0) + 0.101);
+    setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0) + 10.1);
 
     matScale(&aux2, &aux2, Ts);    
 
@@ -80,7 +79,7 @@ void kynematics(){
     matAdd(&p, &p, &aux2);
     
 
-    printMat(&p, "p\n");
+    //printMat(&p, "p\n");
 
     matDestruct(&aux1);
     matDestruct(&aux2);
@@ -102,7 +101,7 @@ void getMatGm(){
 
 void UpdatePm(){
     
-    serialWriteString(&Serial1,"Update Pm\n");
+    //serialWriteString(&Serial1,"Update Pm\n");
     mat aux1,aux2,aux3,aux4,aux5;
     matInit(&aux1, 9, 9);
     matInit(&aux2, 6, 9);
@@ -130,18 +129,18 @@ void UpdatePm(){
     matMult(&aux5,&Gm,&Q12);
     matMult(&aux3,&aux5,&aux2);
 
-    printMat(&Pm, "Pm\n");
+    //printMat(&Pm, "Pm\n");
 
     matDestruct(&aux1);
     matDestruct(&aux2);
     matDestruct(&aux3);
     matDestruct(&aux4);
     matDestruct(&aux5);
-    serialWriteString(&Serial1, "Sali\n");
+    //serialWriteString(&Serial1, "Sali\n");
 }
 void getKalmanGain(){
     
-    serialWriteString(&Serial1, "Get Kalman Gain\n");
+    //serialWriteString(&Serial1, "Get Kalman Gain\n");
     mat aux1, aux2, aux3,aux4;
 
 
@@ -163,11 +162,11 @@ void getKalmanGain(){
     matInv3(&aux4, &aux1);
     //printMat(&aux1, "aux1\n");
 
-    printMat(&aux4, "inv(PH' + Rc)\n");
+    //printMat(&aux4, "inv(PH' + Rc)\n");
 
     matMult(&KalmanGain, &aux2, &aux4);
     //matScale(&KalmanGain, &KalmanGain, 100);
-    printMat(&KalmanGain, "KalmanGain\n");
+    //printMat(&KalmanGain, "KalmanGain\n");
 
     matDestruct(&aux1);
     matDestruct(&aux2);
@@ -176,19 +175,19 @@ void getKalmanGain(){
 }
 
 void UpdatePmCovGPS(){
-    serialWriteString(&Serial1, "Update Pm Cov GPS\n");
+    //serialWriteString(&Serial1, "Update Pm Cov GPS\n");
     mat aux1,aux2;
     matInit(&aux1, 9, 9);
     matInit(&aux2, 9, 9);
-    ////serialWriteString(&Serial1, "Matriz \n");
-    ////printMat(&aux1);
-    ////serialWriteString(&Serial1, "KG \n");
-    ////printMat(&KalmanGain);
-    ////serialWriteString(&Serial1, "Hm \n");
-    ////printMat(&Hm);
+    //serialWriteString(&Serial1, "Matriz \n");
+    //printMat(&aux1);
+    //serialWriteString(&Serial1, "KG \n");
+    //printMat(&KalmanGain);
+    //serialWriteString(&Serial1, "Hm \n");
+    //printMat(&Hm);
     matMult(&aux1, &KalmanGain, &Hm);
-    ////serialWriteString(&Serial1, "aux1 \n");
-    ////printMat(&aux1);
+    //serialWriteString(&Serial1, "aux1 \n");
+    //printMat(&aux1);
     
     //printMat(&aux1, "aux1\n");
     matScale(&aux1, &aux1, -1);
@@ -200,14 +199,14 @@ void UpdatePmCovGPS(){
     matMult(&aux2, &aux1, &Pm);
     matCopy(&Pm, &aux2);
     
-    printMat(&Pm, "Pm\n");
+    //printMat(&Pm, "Pm\n");
     matDestruct(&aux1);
     matDestruct(&aux2);
 }
 
 void getBias(){
 
-    serialWriteString(&Serial1, "Get Bias\n");
+    //serialWriteString(&Serial1, "Get Bias\n");
     //sprintf(buffer, "hola 3\n");
     ////serialWriteString(&Serial1, buffer);
 
@@ -232,7 +231,7 @@ void getBias(){
     setMatVal(&bias_u, 1, 0, getMatVal(&delta, 7, 0));
     setMatVal(&bias_u, 2, 0, getMatVal(&delta, 8, 0));
 
-    printMat(&delta, "delat\n");
+    //printMat(&delta, "delat\n");
 }
 int cont = 0;
 void kalmanUpdate(){
@@ -243,22 +242,22 @@ void kalmanUpdate(){
     
     UpdatePm();
     cont++;
-    sprintf(buffer, "Contador: %d\n", cont);
-    serialWriteString(&Serial1, buffer);
     //sprintf(buffer, "Contador: %d\n", cont);
-    if (cont >= 100){
+    //serialWriteString(&Serial1, buffer);
+    //sprintf(buffer, "Contador: %d\n", cont);
+    if (cont >= 50){
 
-        serialWriteString(&Serial1, "Kalman Update\n");
+        //serialWriteString(&Serial1, "Kalman Update\n");
         
         setMatVal(&p_gps, 0, 0, 0);
         setMatVal(&p_gps, 1, 0, 0);
         
         getKalmanGain();
 
-        ////serialWriteString(&Serial1, "hola \n");
+        //serialWriteString(&Serial1, "hola \n");
 
         getBias();
-        ////serialWriteString(&Serial1, "hola1\n");
+        //serialWriteString(&Serial1, "hola1\n");
         
         UpdatePmCovGPS();
         //serialWriteString(&Serial1, "hola2\n");

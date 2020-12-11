@@ -15,7 +15,7 @@
 #include "matlib.h"
 #include "kalman.h"
 
-#define G 0.0981
+#define G 9.81
 
 serial Serial1;
 sensor acc, gyro, ori, inc;
@@ -23,7 +23,7 @@ double roll, pitch, yaw;
 timer readSensors;
 char buffer[100];
 i2c slave;
-float Ts = 0.01;
+float Ts = 0.02;
 
 extern mat bias_u;
 
@@ -50,24 +50,23 @@ int main(){
     initMatGlobal();
 
     initSerial(&Serial1, SERIAL1, 115200);
-    char s[50];
     initMM7150();
     initAccel(&acc, 100, 20);
     initOrient(&ori, 50, 10);
 
-    setTimerFrecuency(&readSensors, 100);
     initTimer(&readSensors, 2, DIV256, 3);
+    setTimerFrecuency(&readSensors, 50);
 
 
     while(1){
         
-        /*sprintf(buffer, "Vx: %.3f\tVy: %.3f\tVz: %.3f\tX:%.3f\tY:%.3f\tZ:%.3f\n", getMatVal(&v, 0, 0),
+        sprintf(buffer, "Vx: %.3f\tVy: %.3f\tVz: %.3f\tX:%.3f\tY:%.3f\tZ:%.3f\n", getMatVal(&v, 0, 0),
                                                                     getMatVal(&v, 1, 0), getMatVal(&v, 2, 0),
                                                                     getMatVal(&p, 0, 0),
                                                                     getMatVal(&p, 1, 0), 
                                                                     getMatVal(&p, 2, 0));
         
-        serialWriteString(&Serial1, buffer);*/
+        serialWriteString(&Serial1, buffer);
         __delay_ms(20);
     }
     return 0;
