@@ -118,7 +118,7 @@ void UpdatePm(){
     //printMat(&Pm, "Pm_ant\n");
     //printMat(&Q12, "Q12\n");
     //printMat(&aux2, "Cagada julio\n");
-    delayMs(10);
+    //delayMs(10);
     matTrans(&aux1,&Fm);
     matTrans(&aux2,&Gm);
 
