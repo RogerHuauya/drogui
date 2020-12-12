@@ -7,12 +7,12 @@ p_gps = [x';y';z'.*0];
 p = zeros(3,1);
 v = zeros(3,N);
 g = [0 0 1]'*Gr;
-P = eye(9)*0.01;
+P = eye(9)*0.1;
 H = [eye(3) zeros(3,6)];
-Q12 = eye(6)*0.025;
+Q12 = eye(6)*0.25;
 bias_u = zeros(3,1);
 u = zeros(3,1);
-R = eye(3)*0.025;
+R = eye(3)*0.25;
 ye = zeros(3,1);
 
 j = 1;
@@ -21,11 +21,6 @@ for i= 2:length(t_imu)
     
     Rq = rpy2R(roll(i), pitch(i), yaw(i));
 
-    
-    if det(Rq) < 0.5
-        disp(Rq)
-    end
-    
     arz = [arz bias_u];
     %Rq = inv(Rq);
     
@@ -38,7 +33,7 @@ for i= 2:length(t_imu)
     G = [zeros(3,3) zeros(3,3); Ts*Rq zeros(3,3); zeros(3,3) eye(3)];
        
     P = F*P*F' + G*Q12*G';
-    if (j <= 140 && t_gps(j) == t_imu(i))
+    if (j <= 156 && t_gps(j) == t_imu(i))
         %%disp("timer")
         K = P*H'/(H*P*H' + R);
         ye = p_gps(:,j) - p(:,i);

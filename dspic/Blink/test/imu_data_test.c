@@ -46,11 +46,11 @@ int main(){
     
     char s[50];
     initMM7150();
-    initAccel(&acc, 100, 2);
+    initAccel(&acc, 100, 1);
     initOrient(&ori, 50, 10);
 
     initTimer(&readSensors, 2, DIV256, 3);
-    setTimerFrecuency(&readSensors, 50);
+    setTimerFrecuency(&readSensors, 100);
 
 
     while(1){
