@@ -1,18 +1,18 @@
 close all 
 Gr = 9.81;
-s = [ax';ay';az'];
+s = [ax_f';ay_f';az_f'];
 Ts = 0.02;
 N = 10000;
 p_gps = [x';y';z'.*0];
 p = zeros(3,1);
 v = zeros(3,N);
 g = [0 0 1]'*Gr;
-P = eye(9)*0.00001;
+P = eye(9)*0.01;
 H = [eye(3) zeros(3,6)];
-Q12 = eye(6)*0.0000025;
+Q12 = eye(6)*0.025;
 bias_u = zeros(3,1);
 u = zeros(3,1);
-R = eye(3)*0.0000025;
+R = eye(3)*0.025;
 ye = zeros(3,1);
 
 j = 1;
