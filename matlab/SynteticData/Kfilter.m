@@ -14,8 +14,15 @@ u = zeros(3,1);
 R = eye(3)*0.01;
 
 s = [ax ay az]';
-s_rot = zeros(3,N);
 
+s_rot = zeros(3, N);
+s_norm = zeros(3, N);
+for i= 2:length(t_imu)
+    Rq = rpy2R(roll(i), pitch(i), yaw(i) + pi/2);
+    s_rot(:,i) = Rq*s(:,i);
+    s_norm(:,i) = s_rot(:,i) + g/Gr;
+    %s_rot(:,i) = Rq\s(:,i);
+end
 figure 
 subplot(3, 1, 1);
 scatter(t_imu, ax, 'r');
@@ -115,7 +122,12 @@ else
     plot(p_gps(1,:), p_gps(2,:), 'g');
     hold off
 end
-
+figure
+hold on
+quiver(p(1,:), p(2, :), v(1, :), v(2, :), 'b');
+quiver(p(1,:), p(2, :), s_rot(1, :), s_rot(2, :), 'g');
+plot(p_gps_ext(1,:), p_gps_ext(2, :), 'r');
+hold off
 figure 
 subplot(2, 2, 1);
 scatter(t_imu, p(1,:), 'r');
