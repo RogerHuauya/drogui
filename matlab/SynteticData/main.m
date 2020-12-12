@@ -34,15 +34,15 @@ u = zeros(3,1);
 R = eye(3)*1000;
 
 s = [ax; ay; az];
-w = wgn(3, N, 0)+4;
+w = wgn(3, N, 5)+4;
 s = s + w;
 
 s_rot = zeros(3,N);
 ye = zeros(3,1);
 
-for i=1:N
-    s_rot(:, i) = Rq*s(:,i);
-end
+%for i=1:N
+%    s_rot(:, i) = Rq*s(:,i);
+%end
 
 figure 
 subplot(3, 1, 1);
@@ -57,14 +57,14 @@ scatter(t, az, 'b');
 
 figure 
 subplot(3, 1, 1);
-scatter(t, s_rot(1,:), 'r');
+scatter(t, s(1,:), 'r');
 title("Aceleracion ruidosa");
 
 subplot(3, 1, 2);
-scatter(t, s_rot(2,:), 'g');
+scatter(t, s(2,:), 'g');
 
 subplot(3, 1, 3);
-scatter(t, s_rot(3,:), 'b');
+scatter(t, s(3,:), 'b');
 
 lambda = 0.01;
 s_filtered = zeros(3, N);
@@ -73,10 +73,10 @@ s_filtered(3,1) = 1;
 for i= 2:N
     
 
-    Rq = rpy2R(pi+wgn(1,1,-15),0 + wgn(1,1,-15), pi/3 + wgn(1,1,-15));
+    Rq = rpy2R(pi+wgn(1,1,15)+0.1,0 + wgn(1,1,15)+0.1, pi/3 + wgn(1,1,15)+0.2);
 
     s_filtered(:,i) = s_filtered(:, i-1) + lambda*(s(:, i) - s_filtered(:, i-1));
-    u = s_filtered(:, i)+ bias_u(:,i-1);
+    u = s(:, i)+ bias_u(:,i-1);
     p(:, i) = p(:, i-1) + Ts*v(:, i-1)+ Ts^2/2*(Rq*u);
     v(:, i) = v(:, i-1) + Ts*(Rq*u);
     

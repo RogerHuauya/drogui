@@ -1,19 +1,20 @@
 close all 
-Gr = 1;
+Gr = 9.81;
 Ts = 0.02;
 N = length(ax);
-p_gps = [x';y';z'.*0];
+p_gps = [x';y';z'];
 p = zeros(3,N);
 v = zeros(3,N);
 g = [0 0 1.02]'*Gr;
-P = eye(9)*0.01;
+P = eye(9);
 H = [eye(3) zeros(3,6)];
-Q12 = eye(6)*100;
+Q12 = eye(6)*0.001;
 bias_u = zeros(3,1);
 u = zeros(3,1);
-R = eye(3)*1000;
+R = eye(3)*0.01;
 
 s = [ax ay az]';
+
 s_rot = zeros(3, N);
 s_norm = zeros(3, N);
 for i= 2:length(t_imu)
@@ -46,13 +47,15 @@ subplot(3, 1, 3);
 scatter(t_imu, s_rot(3,:), 'b');
 
 
-lambda = 1;
+lambda = 0.9;
 j = 2;
 s_filtered = zeros(3, length(t_imu));
-s_filtered(3,1) = -1;
+s_filtered(3,1) = 1;
 p_gps_ext = zeros(3, N);
+
+
 for i= 2:length(t_imu)
-    s_filtered(:,i) = s_filtered(:, i-1) + lambda*(s_rot(:, i) - s_filtered(:, i-1));
+    s_filtered(:,i) = s_filtered(:, i-1) + lambda*(s(:, i) - s_filtered(:, i-1));
 end
 
 figure 
@@ -67,14 +70,16 @@ subplot(3, 1, 3);
 scatter(t_imu, s_filtered(3,:), 'b');
 
 
+s_filtered = zeros(3, length(t_imu));
+s_filtered(3,1) = -1;
+
 
 for i= 2:length(t_imu)
     
-    Rq = rpy2R(roll(i), pitch(i), yaw(i));
+    Rq = rpy2R(roll(i), pitch(i), yaw(i) - pi/2 + 0.5);
 
-    
     s_filtered(:,i) = s_filtered(:, i-1) + lambda*(s(:, i) - s_filtered(:, i-1));
-    u = s_filtered(:, i)*Gr+ bias_u;
+    u = s_filtered(:, i)*Gr + bias_u*0.0005;
     p(:, i) = p(:, i-1) + Ts*v(:, i-1) + Ts^2/2*(Rq*u + g);
     v(:, i) = v(:, i-1) + Ts*(Rq*u + g);
     
@@ -84,7 +89,7 @@ for i= 2:length(t_imu)
 
     P = F*P*F' + G*Q12*G';
     
-    if (j <= 140 && t_gps(j) == t_imu(i))
+    if (j <= length(p_gps) && t_gps(j) == t_imu(i))
         K = P*H'/(H*P*H' + R);
         ye = p_gps(:, j) - p(:, i);
         p_gps_ext(:,i)= p_gps(:, j);
