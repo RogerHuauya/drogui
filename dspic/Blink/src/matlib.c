@@ -70,9 +70,9 @@ void matInit(mat* m, int row, int col){
     m->row = row;
     m->col = col;
     
-    m->val = (double**) calloc(row, sizeof(double*));
+    m->val = (float**) calloc(row, sizeof(float*));
 
-	m-> aux = calloc(row*col, sizeof(double));
+	m-> aux = calloc(row*col, sizeof(float));
     for (int i = 0; i < row; i++) {
             m->val[i] = m-> aux + i*col;
     }
@@ -81,7 +81,7 @@ void matInit(mat* m, int row, int col){
 void matMult(mat* ans, mat* a, mat* b){
     for(int i = 0 ;i < a->row; i++)
         for(int j = 0 ; j< b->col ; j++){
-            double aux = 0;
+            float aux = 0;
             for(int k = 0 ; k < a-> col; k++)
                 aux += a->val[i][k]* b->val[k][j];
             ans->val[i][j] = aux;
@@ -112,19 +112,19 @@ void matSubs(mat* ans, mat* a, mat* b){
 void matTrans(mat* Rt,mat* R){
     for( int i = 0; i < R->row; i++ ){
         for( int j = 0; j < R->col; j++ ){
-            Rt->val[i][j] = R->val[j][i];
+            Rt->val[j][i] = R->val[i][j];
         }
     }
 }
 double det3(mat* R){
-    double det = ((R->val[0][0])*(R->val[1][1])*(R->val[2][2])) +((R->val[0][1])*(R->val[1][2])*(R->val[2][0]))
+    float det = ((R->val[0][0])*(R->val[1][1])*(R->val[2][2])) +((R->val[0][1])*(R->val[1][2])*(R->val[2][0]))
      + ((R->val[0][2])*(R->val[1][0])*(R->val[2][1])) - ((R->val[0][2])*(R->val[1][1])*(R->val[2][0])) 
      - ((R->val[0][1])*(R->val[1][0])*(R->val[2][2])) - ((R->val[0][0])*(R->val[1][2])*(R->val[2][1]));
     
     return det;
 }
 void matInv3(mat* Rinv, mat* R){
-    double val_det = 0;
+    float val_det = 0;
     mat aux1;
 
     val_det = det3(R); 
@@ -146,17 +146,17 @@ void matInv3(mat* Rinv, mat* R){
 void quaternionToR(mat* R, float n, float ex, float ey, float ez){
     R->row = R->col = 3;
     
-    Rq(0+1, 0+1) = 2*(n*n + ex*ex) - 1;
-    Rq(0+1, 1+1) = 2*(ex*ey - n*ez);
-    Rq(0+1, 2+1) = 2*(ex*ez + n*ey);
+    R->val[0][0] = 2*(n*n + ex*ex) - 1;
+    R->val[0][1] = 2*(ex*ey - n*ez);
+    R->val[0][2] = 2*(ex*ez + n*ey);
 
-    Rq(1+1, 0+1) = 2*(ex*ey + n*ez);
-    Rq(1+1, 1+1) = 2*(n*n + ey*ey) - 1;
-    Rq(1+1, 2+1) = 2*(ey*ez - n*ex);
+    R->val[1][0] = 2*(ex*ey + n*ez);
+    R->val[1][1] = 2*(n*n + ey*ey) - 1;
+    R->val[1][2] = 2*(ey*ez - n*ex);
     
-    Rq(2+1, 0+1) = 2*(ex*ez - n*ey);
-    Rq(2+1, 1+1) = 2*(ey*ez + n*ex);
-    Rq(2+1, 2+1) = 2*(n*n + ez*ez) - 1;
+    R->val[2][0] = 2*(ex*ez - n*ey);
+    R->val[2][1] = 2*(ey*ez + n*ex);
+    R->val[2][2] = 2*(n*n + ez*ez) - 1;
 }
 
 void eye(mat* m, int n){

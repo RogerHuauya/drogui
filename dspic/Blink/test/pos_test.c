@@ -1,4 +1,4 @@
-#define POS_TEST
+//#define POS_TEST
 #ifdef POS_TEST
 
 #include <xc.h>
@@ -23,7 +23,9 @@ double roll, pitch, yaw;
 timer readSensors;
 char buffer[100];
 i2c slave;
-float Ts = 0.01;
+float Ts = 0.02;
+
+extern mat bias_u;
 
 void timerInterrupt(2){
     readOrient(&ori);        
@@ -34,17 +36,9 @@ void timerInterrupt(2){
     setMatVal(&s, 0, 0, acc.dDataX*G);
     setMatVal(&s, 1, 0, acc.dDataY*G);
     setMatVal(&s, 2, 0, acc.dDataZ*G);
-    //serialWriteString(&Serial1, "u \n");
-    //printMat(&u, "u\n");
     
     kalmanUpdate();
     
-    //sprintf(buffer, "%.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\t %.3lf\n", acc.dDataX,acc.dDataY,acc.dDataZ,
-    //                                                                ori.dDataW,ori.dDataX,ori.dDataY,ori.dDataZ); 
-                                                                    
-        
-    //serialWriteString(&Serial1, buffer);
-
     clearTimerFlag(&readSensors);
 }
 
@@ -56,13 +50,13 @@ int main(){
     initMatGlobal();
 
     initSerial(&Serial1, SERIAL1, 115200);
-    char s[50];
     initMM7150();
     initAccel(&acc, 100, 20);
     initOrient(&ori, 50, 10);
 
-    setTimerFrecuency(&readSensors, 100);
     initTimer(&readSensors, 2, DIV256, 3);
+    setTimerFrecuency(&readSensors, 50);
+
 
     while(1){
         

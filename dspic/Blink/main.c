@@ -121,6 +121,18 @@ void timerInterrupt(4){
     clearTimerFlag(&readPress);
 }
 
+int32_t raw_press, raw_temp;
+float press, temper;
+void timerInterrupt(4){
+    
+    raw_temp = bmpReadTemperature();
+    raw_press = bmpReadPressure();
+    temper = bmp280CompensateTemperature(raw_temp);
+    press = bmp280CompensatePressure(raw_press);
+    setReg(PRESS_ABS, press);
+    clearTimerFlag(&readPress);
+}
+
 void timerInterrupt(3){
     time++;
     clearTimerFlag(&millis);

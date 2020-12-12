@@ -1,15 +1,22 @@
 
 #include "threaded.h"
+#include "sim7600.h"
+#include "registerMap.h"
 extern rasp_I2C rasp_i2c;
 
 extern bool logging_state;
 void *logging(void *threadid){
-    
+    unsigned long long tim = 0;
+    unistd::sleep(5);
     while(1){
-        std::ofstream log_file;
-        while(!logging_state){}
+        std::ofstream log_gps;
+        //while(!logging_state){}
         std::string name_log = str_datetime(); 
-        log_file.open("logs/"+name_log+".txt");
+        log_gps.open("logs/"+name_log+ "_gps"+ ".txt");
+        
+        std::ofstream log_imu; 
+        log_imu.open("logs/"+name_log+ "_imu"+ ".txt");
+        
         /*
         log_file << "H_VAL   H_STEP_SIZE " << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE)<< std::endl;
         log_file << "ROLL KP KI KD " << rasp_i2c.readFloat(ROLL_KP) << " " <<rasp_i2c.readFloat(ROLL_KI) << " " <<rasp_i2c.readFloat(ROLL_KD)<<std::endl;
@@ -17,23 +24,27 @@ void *logging(void *threadid){
         log_file << "YAW KP KI KD " << rasp_i2c.readFloat(YAW_KP) << " " <<rasp_i2c.readFloat(YAW_KI) << " " <<rasp_i2c.readFloat(YAW_KD)<<std::endl;
         */
         while(1){
+            if(tim%100==0){
+                log_gps << tim << ",\t" << sim7600.Lat << ",\t"<< sim7600.Log << ",\t"<< sim7600.Alt << std::endl;
+            }
+            
             /*
             log_file<<rasp_i2c.readFloat(H_VAL);
-            log_file<<"\t";
-            log_file<<rasp_i2c.readFloat(ROLL_DEG)*180.0/pi+180;
-            log_file<<"\t";
-            log_file<<rasp_i2c.readFloat(PITCH_DEG)*180.0/pi+180;
-            log_file<<"\t";
-            log_file<<rasp_i2c.readFloat(YAW_DEG)*180.0/pi+180;
-            log_file<<"\t";
-            log_file<<rasp_i2c.readFloat(ROLL_REF);
-            log_file<<"\t";
-            log_file<<rasp_i2c.readFloat(PITCH_REF);
-            log_file<<"\t";
-            log_file<<rasp_i2c.readFloat(YAW_REF);
-	    log_file<<"\t";
-	    log_file<<rasp_i2c.readFloat(PRESS_ABS) << std::endl;
-        */
+            log_file<<"\t";*/
+	    log_imu << tim << ",\t";
+            log_imu<<rasp_i2c.readFloat(ROLL_VAL);
+            log_imu<<",\t";
+            log_imu<<rasp_i2c.readFloat(PITCH_VAL);
+            log_imu<<",\t";
+            log_imu<<rasp_i2c.readFloat(YAW_VAL);
+            log_imu<<",\t";
+            log_imu<<rasp_i2c.readFloat(ACC_X);
+            log_imu<<",\t";
+            log_imu<<rasp_i2c.readFloat(ACC_Y);
+            log_imu<<",\t";
+            log_imu<<rasp_i2c.readFloat(ACC_Z);
+            log_imu<< std::endl;
+        
        /*
             log_file<<rasp_i2c.readFloat(RAW_TEMP);
             log_file<<"\t";           
@@ -42,7 +53,7 @@ void *logging(void *threadid){
             log_file<<rasp_i2c.readFloat(RAW_PRESS);
             log_file<<"\t";
             log_file<<rasp_i2c.readFloat(PRESS_ABS);
-            */
+            
             log_file<<rasp_i2c.readFloat(Z_REF);
             log_file<<"\t";
             log_file<<rasp_i2c.readFloat(Z_U);
@@ -53,13 +64,17 @@ void *logging(void *threadid){
             //unistd::uunistd::sleep(50000); // takes microseconds
             unistd::sleep(1);
             if(!logging_state) break;
+        */
+
+            unistd::usleep(10000);
+	    tim++;
         }
     }
 }
 
 void *gps_data(void *threadid){
     sim7600.GPSStart();
-    unistd::usleep(100000ip00);
+    unistd::sleep(10);
     float offset_x = 0, offset_y = 0, r = 6371;
     float aux_offx = 0,aux_offy = 0;
     int cont = 0;

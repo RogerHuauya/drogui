@@ -76,5 +76,9 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define GPS_Y 0xDD
 #define GPS_AVAILABLE 0XE1
 
+#define ACC_X   0xE5
+#define ACC_Y   0xE9
+#define ACC_Z   0xED
+
 #endif 		
 

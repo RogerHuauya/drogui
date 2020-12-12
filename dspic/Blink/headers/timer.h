@@ -14,6 +14,6 @@ typedef struct _timer{
 
 void initTimer(timer*, int n, int pre, int priority);
 void clearTimerFlag(timer*);
-void setTimerFrecuency(timer*, double freq);
+void setTimerFrecuency(timer*, unsigned long long freq);
 
 #endif

@@ -2,7 +2,7 @@
 #define REGISTER_MAP_H
 
 
-enum PIDVAR {ROLL, PITCH, YAW, X, Y, Z};
+enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 
 
 
@@ -76,6 +76,11 @@ enum PIDVAR {ROLL, PITCH, YAW, X, Y, Z};
 #define GPS_X 0xD9
 #define GPS_Y 0xDD
 #define GPS_AVAILABLE 0XE1
+
+#define ACC_X   0xE5
+#define ACC_Y   0xE9
+#define ACC_Z   0xED
+
 
 #define NUM_THREADS 3
 
