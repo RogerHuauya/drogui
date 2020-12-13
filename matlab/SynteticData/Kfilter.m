@@ -18,7 +18,7 @@ s = [ax ay az]';
 s_rot = zeros(3, N);
 s_norm = zeros(3, N);
 for i= 2:length(t_imu)
-    Rq = rpy2R(roll(i), pitch(i), yaw(i) + pi/2);
+    Rq = rpy2R(roll(i), pitch(i), yaw(i) - pi/2);
     s_rot(:,i) = Rq*s(:,i);
     s_norm(:,i) = s_rot(:,i) + g/Gr;
     %s_rot(:,i) = Rq\s(:,i);
@@ -76,12 +76,14 @@ s_filtered(3,1) = -1;
 
 for i= 2:length(t_imu)
     
-    Rq = rpy2R(roll(i), pitch(i), yaw(i) - pi/2 + 0.5);
+    Rq = rpy2R(roll(i), pitch(i), yaw(i) - pi/2);
 
     s_filtered(:,i) = s_filtered(:, i-1) + lambda*(s(:, i) - s_filtered(:, i-1));
-    u = s_filtered(:, i)*Gr + bias_u*0.0005;
-    p(:, i) = p(:, i-1) + Ts*v(:, i-1) + Ts^2/2*(Rq*u + g);
-    v(:, i) = v(:, i-1) + Ts*(Rq*u + g);
+    u = s_filtered(:, i)*Gr;%- bias_u*0.0000000000000000000000000000000000000000000000000000000000000000000000000005;
+    s_rot(:,i) = Rq*u + g;
+    
+    p(:, i) = p(:, i-1) + Ts*v(:, i-1) + Ts^2/2*(s_rot(:,i));
+    v(:, i) = v(:, i-1) + Ts*(s_rot(:,i));
     
     F = [eye(3) Ts*eye(3) zeros(3,3); zeros(3,3) eye(3) Ts*Rq; zeros(3,3) zeros(3,3) eye(3)];
     G = [zeros(3,3) zeros(3,3); Ts*Rq zeros(3,3); zeros(3,3) eye(3)];
@@ -99,7 +101,7 @@ for i= 2:length(t_imu)
         P = (eye(9) - K*H)*P;
         p(:, i) = p(:, i) + delta(1:3);
         %plot(p_gps(1,:), p_gps(2,:),'b')
-        v(:, i) = v(:, i) + delta(4:6);
+        v(:, i) = v(:, i) + delta(4:6)/1.3;
     else
         p_gps_ext(:,i) = p_gps_ext(:,i-1);
     end
@@ -126,7 +128,8 @@ figure
 hold on
 quiver(p(1,:), p(2, :), v(1, :), v(2, :), 'b');
 quiver(p(1,:), p(2, :), s_rot(1, :), s_rot(2, :), 'g');
-plot(p_gps_ext(1,:), p_gps_ext(2, :), 'r');
+plot(p(1,:), p(2, :), 'r');
+plot(p_gps_ext(1,:), p_gps_ext(2, :), 'm');
 hold off
 figure 
 subplot(2, 2, 1);
