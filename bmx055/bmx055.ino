@@ -160,7 +160,6 @@ void loop()
     // Read 6 bytes of data
     // xAccl lsb, xAccl msb, yAccl lsb, yAccl msb, zAccl lsb, zAccl msb
     while (Wire.available() == 0){}
-    
       data[i] = Wire.read();
     
   }
@@ -237,9 +236,9 @@ void loop()
 
     // Read 6 bytes of data
     // xMag lsb, xMag msb, yMag lsb, yMag msb, zMag lsb, zMag msb
-    while (Wire.available() == 0){}
+    //while (Wire.available() == 0){}
     
-      data[i] = Wire.read();
+      //data[i] = Wire.read();
   }
 
 
@@ -275,19 +274,19 @@ void loop()
   }
 
   // Output data to serial monitor
-  //Serial.print(" ");
-  /*Serial.print(xAccl);
-  Serial.print(" ");
+  Serial.print(xAccl);
+  Serial.print("\t");
   Serial.print(yAccl);
-  Serial.print(" ");
-  Serial.println(zAccl);
-  Serial.print("X-Axis of rotation : ");
-  Serial.println(xGyro);
-  Serial.print("Y-Axis of rotation : ");
-  Serial.println(yGyro);
-  Serial.print("Z-Axis of rotation : ");
-  Serial.println(zGyro);
-  Serial.print("Magnetic field in X-Axis : ");
+  Serial.print("\t");
+  Serial.print(zAccl);
+  Serial.print("\t");
+  Serial.print(xGyro);
+  Serial.print("\t");
+  Serial.print(yGyro);
+  Serial.print("\t");
+  Serial.print(zGyro);
+  Serial.print("\n");
+  /*Serial.print("Magnetic field in X-Axis : ");
   Serial.println(xMag);
   Serial.print("Magnetic field in Y-Axis : ");
   Serial.println(yMag);
