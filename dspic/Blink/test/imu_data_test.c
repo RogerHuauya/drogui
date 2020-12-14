@@ -1,4 +1,4 @@
-#define IMU_DATA_TEST
+//#define IMU_DATA_TEST
 #ifdef IMU_DATA_TEST
 
 #include <xc.h>

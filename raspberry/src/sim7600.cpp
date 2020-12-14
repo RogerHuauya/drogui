@@ -275,6 +275,7 @@ char Sim7600::sendATcommand2(const char* ATcommand, const char* expected_answer1
 }
 
 void Sim7600::GPSStart(){
+    sendATcommand("AT+CGPS=0,0", "OK:", 1000, false);
     sendATcommand("AT+CGPS=1,1", "OK:", 1000, false);    // start GPS session, standalone mode
     delay(5000);
 
@@ -329,10 +330,11 @@ bool Sim7600::GPSGet(){
     }
     delay(100);
     int DLat, DLon;
-    sscanf(RecMessage, "%2d%f,%*c,%3d%f,%*c,%*lf,%*lf,%f,%f,%f", &DLat,&Lat,&DLon, &Log, &Alt, &Vel, &Curso);
+    sscanf(RecMessage, "%2d%lf,%*c,%3d%lf,%*c,%*lf,%*lf,%lf,%lf,%lf", &DLat,&Lat,&DLon, &Log, &Alt, &Vel, &Curso);
+    printf(RecMessage);
     Lat = DLat + Lat/60.0;
     Log = DLon + Log/60.0;
-
+    printf("%.10lf, %.10lf\n", Lat, Log);
     //strcpy(data, RecMessage);
     //printf("%s\n",RecMessage);
     /*
