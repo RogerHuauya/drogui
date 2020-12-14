@@ -1,70 +1,7 @@
 #include "matlib.h"
 #include "serial.h"
-extern char s[50];
+extern char buffer[50];
 extern serial Serial1;
-
-#if CASO == 1
-void matInit(mat* m, int row, int col){
-    m->row = row;
-    m->col = col;
-    
-    m->val = (fractional**) calloc(row, sizeof(fractional*));
-
-	m-> aux = calloc(row*col, sizeof(fractional));
-    for (int i = 0; i < row; i++) {
-            m->val[i] = m-> aux + i*col;
-    }
-}
-
-void matMult(mat* ans, mat* a, mat* b){
-    if(a->col == b->row){
-        MatrixMultiply(a->row, a->col, b->col, &ans->val[0][0], &a->val[0][0], &b->val[0][0]);
-    }
-    //matScale(ans, ans, SCALE);
-    return;
-}
-void matScale(mat* ans, mat* a, float alpha){
-    MatrixScale(ans->row, ans->col, &ans->val[0][0], &a->val[0][0], Float2Fract(alpha));
-}
-
-void matAdd(mat* ans, mat* a, mat* b){
-    MatrixAdd(ans->row, ans->col, &ans->val[0][0], &a->val[0][0], &b->val[0][0]);
-}
-void quaternionToR(mat* R, float n, float ex, float ey, float ez){
-    R->row = R->col = 3;
-    
-    R->val[0][0] = Float2Fract(2*(n*n + ex*ex) - 1);
-    R->val[0][1] = Float2Fract(2*(ex*ey - n*ez));
-    R->val[0][2] = Float2Fract(2*(ex*ez + n*ey));
-
-    R->val[1][0] = Float2Fract(2*(ex*ey + n*ez));
-    R->val[1][1] = Float2Fract(2*(n*n + ey*ey) - 1);
-    R->val[1][2] = Float2Fract(2*(ey*ez - n*ex));
-    
-    R->val[2][0] = Float2Fract(2*(ex*ez - n*ey));
-    R->val[2][1] = Float2Fract(2*(ey*ez + n*ex));
-    R->val[2][2] = Float2Fract(2*(n*n + ez*ez) - 1);
-}
-
-
-void eye(mat* m, int n){
-    matInit(m, n, n);
-    for(int i = 0; i < n; i++)  m->val[i][i] = Float2Fract((1 - 1.0/(1<<15)));
-}
-
-void setMatVal(mat* m, int i, int j, float value){
-    m->val[i][j] = Float2Fract(value/SCALE);
-}
-
-float getMatVal(mat* m, int i, int j){
-    return Fract2Float(m->val[i][j])*SCALE;
-}
-
-void matDestruct(mat* m){
-    free(m->val);
-    free(m->aux);
-}
-#else
 
 void matInit(mat* m, int row, int col){
     m->row = row;
@@ -146,17 +83,33 @@ void matInv3(mat* Rinv, mat* R){
 void quaternionToR(mat* R, float n, float ex, float ey, float ez){
     R->row = R->col = 3;
     
-    Rq[0][0] = 2*(n*n + ex*ex) - 1;
-    Rq[0][1] = 2*(ex*ey - n*ez);
-    Rq[0][2] = 2*(ex*ez + n*ey);
+    R->val[0][0] = 2*(n*n + ex*ex) - 1;
+    R->val[0][1] = 2*(ex*ey - n*ez);
+    R->val[0][2] = 2*(ex*ez + n*ey);
 
-    Rq[1][0] = 2*(ex*ey + n*ez);
-    Rq[1][1] = 2*(n*n + ey*ey) - 1;
-    Rq[1][2] = 2*(ey*ez - n*ex);
+    R->val[1][0] = 2*(ex*ey + n*ez);
+    R->val[1][1] = 2*(n*n + ey*ey) - 1;
+    R->val[1][2] = 2*(ey*ez - n*ex);
     
-    Rq[2][0] = 2*(ex*ez - n*ey);
-    Rq[2][1] = 2*(ey*ez + n*ex);
-    Rq[2][2] = 2*(n*n + ez*ez) - 1;
+    R->val[2][0] = 2*(ex*ez - n*ey);
+    R->val[2][1] = 2*(ey*ez + n*ex);
+    R->val[2][2] = 2*(n*n + ez*ez) - 1;
+}
+
+void rpyToR(mat* R, float roll, float pitch, float yaw){
+    R->row = R->col = 3;
+    
+    R->val[0][0] = cos(yaw)*cos(pitch);
+    R->val[0][1] = cos(yaw)*sin(pitch)*sin(roll) - sin(yaw)*cos(roll);
+    R->val[0][2] = cos(yaw)*sin(pitch)*cos(roll) + sin(yaw)*sin(roll);
+
+    R->val[1][0] = sin(yaw)*cos(pitch);
+    R->val[1][1] = sin(yaw)*sin(pitch)*sin(roll) + cos(yaw)*cos(roll);
+    R->val[1][2] = sin(yaw)*sin(pitch)*cos(roll) - cos(yaw)*sin(roll);
+    
+    R->val[2][0] = -sin(pitch);
+    R->val[2][1] = cos(pitch)*sin(roll);
+    R->val[2][2] = cos(pitch)*cos(roll);
 }
 
 void eye(mat* m, int n){
@@ -181,4 +134,16 @@ void matDestruct(mat* m){
     free(m->aux);
 }
 
-#endif
+
+
+void printMat(mat* R, char* s){    
+    serialWriteString(&Serial1, s);
+    for( int i = 0; i < (R->row); i++ ){
+        for( int j = 0; j < (R->col); j++ ){
+            sprintf(buffer,"%lf\t",R->val[i][j]);
+            serialWriteString(&Serial1, buffer);
+        } 
+        serialWriteString(&Serial1, "\n");
+    }
+    serialWriteString(&Serial1, "\n");
+}

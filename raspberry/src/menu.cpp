@@ -1,4 +1,5 @@
 #include "menu.h"
+#include <fstream>
 
 void desplazamiento(){}
 
@@ -16,7 +17,7 @@ void dataSensor(){
 
     std::cin >> reg;
     if(std::cin.fail()) throw 505;
-    while(1){
+    for(int i = 0 ; i < 100 ; i++){
         switch(reg){
             case 0: std::cout << rasp_i2c.readFloat(ROLL_VAL) <<" " ;
                     std::cout << rasp_i2c.readFloat(PITCH_VAL) << " ";
@@ -26,8 +27,8 @@ void dataSensor(){
                     std::cout << rasp_i2c.readFloat(GPS_Y) << std::endl; break;
 
             case 2: printf("Lat: %.6lf,\tLong: %.6lf,\tAlt: %.6lf\tVel: %.6f\tCurso: %.6f\n",
-			sim7600.Lat,sim7600.Log,sim7600.Alt,sim7600.Vel,sim7600.Curso); break;
-            
+			sim7600.Lat,sim7600.Log,sim7600.Alt,sim7600.Vel,sim7600.Curso);break;
+
             case 3: std::cout << rasp_i2c.readFloat(RAW_TEMP) << " ";
                     std::cout << rasp_i2c.readFloat(TEMP_ABS) << " ";
                     std::cout << rasp_i2c.readFloat(RAW_PRESS) << " ";
@@ -35,7 +36,7 @@ void dataSensor(){
 
             case 4: std::cout << rasp_i2c.readFloat(Z_VAL) <<std::endl; break;
         }
-        unistd::sleep(1);
+        unistd::usleep(20000);
     }
     cin_thread = false;
     return;
@@ -43,7 +44,6 @@ void dataSensor(){
 
 void zeroPosition(){
     return;
-
 }
 
 void handler_stop(int s){
@@ -144,6 +144,20 @@ void getGPSdata(){
     return;
 }
 
+int start = 0;
+void startSystem(){
+
+    
+    if(sim7600.GPSGet()){
+        sim7600.offset_Log = sim7600.Log;
+        sim7600.offset_Lat = sim7600.Lat;
+    }
+    unistd::sleep(1);
+
+    start = 1 - start;
+    rasp_i2c.sendFloat(START, start);
+}
+
 void menu(){
     while(1){
         if(!cin_thread){
@@ -160,6 +174,8 @@ void menu(){
             printf(green([9]) " " white(Send AT command \n));
             printf(green([10]) " " white(GPS position \n));
             printf(green([11]) " " white(Send setpoint \n));
+            if(start == 1)	printf(green([12]) " " white(Start\n));
+            else		printf(green([12]) " " white(Stop\n));
             printf(white(Enter an option = \n));
             std::cin>>id_choosen;
             cin_thread=true;
@@ -177,6 +193,7 @@ void menu(){
                 case 9: send_AT_command(); break;
                 case 10: getGPSdata(); break;
                 case 11: break;//send_setpoint(); break;
+		        case 12: startSystem(); break;
                 default: printf("%d is not an option, please enter option again\n", id_choosen); break;
             }
         }

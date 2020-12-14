@@ -1,9 +1,9 @@
 import serial
 from time import sleep
 
-ser = serial.Serial("COM11",115200)
+ser = serial.Serial("COM3",115200)
 ser.flushInput()
-print("AccX\tAccY\tAccZ\tOriW\tOriX\tOriY\tOriZ\n");
+print("AccX\tAccY\tAccZ\tGyrX\tGyrY\tGyrZ");
 while True:
     if(ser.inWaiting()):
         try:
