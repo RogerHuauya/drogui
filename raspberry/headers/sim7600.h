@@ -23,7 +23,7 @@ public:
 	bool ReceivingShortMessage();
 
 	// GPS positoning
-	float Lat, Log, Alt, Vel, Curso;
+	double Lat, Log, Alt, Vel, Curso;
 	float pos_x, pos_y;
 	float offset_x,offset_y;
 	char data[200];

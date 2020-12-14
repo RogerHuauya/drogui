@@ -14,8 +14,11 @@ void *logging(void *threadid){
         std::string name_log = str_datetime(); 
         log_gps.open("logs/"+name_log+ "_gps"+ ".txt");
         
+	log_gps.precision(10);
+
         std::ofstream log_imu; 
         log_imu.open("logs/"+name_log+ "_imu"+ ".txt");
+	log_imu.precision(10);
         
         /*
         log_file << "H_VAL   H_STEP_SIZE " << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE)<< std::endl;
@@ -24,7 +27,7 @@ void *logging(void *threadid){
         log_file << "YAW KP KI KD " << rasp_i2c.readFloat(YAW_KP) << " " <<rasp_i2c.readFloat(YAW_KI) << " " <<rasp_i2c.readFloat(YAW_KD)<<std::endl;
         */
         while(1){
-            if(tim%100==0){
+            if(tim%50==0){
                 log_gps << tim << ",\t" << sim7600.Lat << ",\t"<< sim7600.Log << ",\t"<< sim7600.Alt << std::endl;
             }
             
@@ -66,7 +69,7 @@ void *logging(void *threadid){
             if(!logging_state) break;
         */
 
-            unistd::usleep(10000);
+            unistd::usleep(20000);
 	    tim++;
         }
     }

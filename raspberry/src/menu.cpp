@@ -36,7 +36,7 @@ void dataSensor(){
 
             case 4: std::cout << rasp_i2c.readFloat(Z_VAL) <<std::endl; break;
         }
-        unistd::sleep(1);
+        unistd::usleep(20000);
     }
     cin_thread = false;
     return;
