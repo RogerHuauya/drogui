@@ -231,7 +231,5 @@ void clearKalman(){
         setMatVal(&delta, i, 0, 0);
         setMatVal(&Pm,i,i,0.1);
     }
-    matInit(&KalmanGain, 9, 3);    
-    matInit(&delta, 9, 1);
 
 }
