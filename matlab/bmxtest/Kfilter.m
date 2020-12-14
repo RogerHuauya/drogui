@@ -170,21 +170,5 @@ scatter(t_mm, p(2,:), 'r');
 
 subplot(2, 2, 4);
 scatter(t_mm, p_gps_ext(2,:), 'b');
-% figure 
-% subplot(3, 1, 1);
-% scatter(t, s_filtered(1,:), 'r');
-% title("Aceleracion filtrada");
-% 
-% subplot(3, 1, 2);
-% scatter(t, s_filtered(2,:), 'g');
-% 
-% subplot(3, 1, 3);
-% scatter(t, s_filtered(3,:), 'b');
-
-% for i=1:3
-%      plot(p(i,:));
-%      hold on
-%      plot(v(i,:), '-');
-% end
 
 

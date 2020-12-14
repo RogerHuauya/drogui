@@ -31,13 +31,13 @@ void initMatGlobal(){
     matInit(&delta, 9, 1);
 
     matInit(&Rc, 3, 3);
-    for(int i = 0; i < 3;  i++) setMatVal(&Rc,i,i,0.01);
+    for(int i = 0; i < 3;  i++) setMatVal(&Rc,i,i,0.1);
 
     matInit(&Q12, 6, 6); 
     for(int i = 0; i < 6;  i++) setMatVal(&Q12,i,i,0.01);
 
     matInit(&Pm, 9, 9); 
-    for(int i = 0; i < 9;  i++) setMatVal(&Pm,i,i,0.01);
+    for(int i = 0; i < 9;  i++) setMatVal(&Pm,i,i,0.1);
 
     matInit(&Fm, 9, 9);
     for(int i = 0; i < 9 ; i++) setMatVal(&Fm, i, i, 1);
@@ -47,7 +47,7 @@ void initMatGlobal(){
     for(int i = 0; i <3; i++) setMatVal(&Hm, i, i,1);
 
     matInit(&Gm,9,6);
-    for( int i = 6;  i < 9; i++ ) setMatVal(&Gm, i, i -3,1);
+    for( int i = 6;  i < 9; i++ ) setMatVal(&Gm, i, i-3,1);
     
 }
 
@@ -229,7 +229,7 @@ void clearKalman(){
         for(int j = 0; j < 3; j++) setMatVal(&KalmanGain, i, j, 0);
         
         setMatVal(&delta, i, 0, 0);
-        setMatVal(&Pm,i,i,0.01);
+        setMatVal(&Pm,i,i,0.1);
     }
     matInit(&KalmanGain, 9, 3);    
     matInit(&delta, 9, 1);
