@@ -7,18 +7,19 @@ extern rasp_I2C rasp_i2c;
 extern bool logging_state;
 void *logging(void *threadid){
     unsigned long long tim = 0;
-    unistd::sleep(5);
+    unistd::sleep(10);
+    
     while(1){
         std::ofstream log_gps;
         //while(!logging_state){}
         std::string name_log = str_datetime(); 
         log_gps.open("logs/"+name_log+ "_gps"+ ".txt");
         
-	log_gps.precision(10);
+	    log_gps.precision(10);
 
         std::ofstream log_imu; 
         log_imu.open("logs/"+name_log+ "_imu"+ ".txt");
-	log_imu.precision(10);
+	    log_imu.precision(10);
         
         /*
         log_file << "H_VAL   H_STEP_SIZE " << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE)<< std::endl;
@@ -26,25 +27,26 @@ void *logging(void *threadid){
         log_file << "PITCH KP KI KD " << rasp_i2c.readFloat(PITCH_KP) << " " <<rasp_i2c.readFloat(PITCH_KI) << " " <<rasp_i2c.readFloat(PITCH_KD)<<std::endl;
         log_file << "YAW KP KI KD " << rasp_i2c.readFloat(YAW_KP) << " " <<rasp_i2c.readFloat(YAW_KI) << " " <<rasp_i2c.readFloat(YAW_KD)<<std::endl;
         */
+       
         while(1){
             if(tim%50==0){
-                log_gps << tim << ",\t" << sim7600.Lat << ",\t"<< sim7600.Log << ",\t"<< sim7600.Alt << std::endl;
+                log_gps << tim/50 << "\t" << sim7600.pos_x << "\t"<< sim7600.pos_y << std::endl;
             }
             
             /*
             log_file<<rasp_i2c.readFloat(H_VAL);
             log_file<<"\t";*/
-	    log_imu << tim << ",\t";
+	        log_imu << tim/50.0 << ",\t";
             log_imu<<rasp_i2c.readFloat(ROLL_VAL);
-            log_imu<<",\t";
+            log_imu<<"\t";
             log_imu<<rasp_i2c.readFloat(PITCH_VAL);
-            log_imu<<",\t";
+            log_imu<<"\t";
             log_imu<<rasp_i2c.readFloat(YAW_VAL);
-            log_imu<<",\t";
+            log_imu<<"\t";
             log_imu<<rasp_i2c.readFloat(ACC_X);
-            log_imu<<",\t";
+            log_imu<<"\t";
             log_imu<<rasp_i2c.readFloat(ACC_Y);
-            log_imu<<",\t";
+            log_imu<<"\t";
             log_imu<<rasp_i2c.readFloat(ACC_Z);
             log_imu<< std::endl;
         
@@ -78,6 +80,7 @@ void *logging(void *threadid){
 void *gps_data(void *threadid){
     sim7600.GPSStart();
     unistd::sleep(10);
+    /*
     float offset_x = 0, offset_y = 0, r = 6371;
     float aux_offx = 0,aux_offy = 0;
     int cont = 0;
@@ -91,13 +94,17 @@ void *gps_data(void *threadid){
        cont++;
     }
     offset_x /= 10;
-    offset_y /= 10;
-    sim7600.offset_x = offset_x;
-    sim7600.offset_y = offset_y;
+    offset_y /= 10;*/
+    double offset_Log, offset_Lat;
+    if(sim7600.GPSGet()){
+        offset_Log = sim7600.Log;
+        offset_Lat = sim7600.Lat;
+    }
+    
     while(1){
         if(sim7600.GPSGet()){
-            sim7600.pos_x = r*sim7600.Log*cos(sim7600.Lat*pi/180) - offset_x;
-            sim7600.pos_y =  r*sim7600.Lat - offset_y;
+            sim7600.pos_x = (sim7600.Log - offset_Log)/8.99871924359995e-06;
+            sim7600.pos_y = (sim7600.Lat - offset_Lat)/8.99871924359995e-06;
             rasp_i2c.sendFloat(GPS_X, sim7600.pos_x);
             rasp_i2c.sendFloat(GPS_Y, sim7600.pos_y);
             rasp_i2c.sendFloat(GPS_AVAILABLE, 1.0);

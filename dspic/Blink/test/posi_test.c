@@ -33,7 +33,7 @@ void timerInterrupt(2){
 
     kalmanUpdateIMU(acc.dDataX, acc.dDataY, acc.dDataZ, ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
 
-    if(getReg(GPS_AVAILABLE) == 1) kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), 0);
+    if(getReg(GPS_AVAILABLE) == 1) kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), 0), setReg(GPS_AVAILABLE, 0);
     getPosition(&x, &y, &z);
 
     setReg(X_VAL, x);
