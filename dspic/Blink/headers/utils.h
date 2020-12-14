@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include "i2c.h"
+
 #define max(x,y) (((x) > (y)) ? (x) : (y))
 #define min(x,y) (((x) > (y)) ? (y) : (x))
 #define pi acos(-1)

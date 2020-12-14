@@ -1,24 +1,21 @@
-//#define IMU_DATA_TEST
-#ifdef IMU_DATA_TEST
-
-#include <xc.h>
+#define POSI_TEST
+#ifdef POSI_TEST
 #include "config.h"
-#include "MM7150.h"
-#include "serial.h"
-#include <math.h>
+#include "utils.h"
 #include "i2c.h"
+#include "serial.h"
+#include "MM7150.h"
 #include "timer.h"
 #include "registerMap.h"
-#include "utils.h"
+#include "kalman.h"
 
-serial Serial1;
-sensor acc, gyro, ori, inc;
-double roll, pitch, yaw;
+char buffer[50];
 timer readSensors;
-char buffer[100];
 i2c slave;
-float Ts = 0.01;
-int cont2 = 0;
+serial Serial1;
+sensor acc, ori;
+double roll, pitch, yaw;
+float x,y,z;
 
 void timerInterrupt(2){
     readOrient(&ori);        
@@ -33,34 +30,43 @@ void timerInterrupt(2){
     setReg(ROLL_VAL, roll);
     setReg(PITCH_VAL, pitch);
     setReg(YAW_VAL, yaw);
-    
+
+    kalmanUpdateIMU(acc.dDataX, acc.dDataY, acc.dDataZ, ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
+
+    if(getReg(GPS_AVAILABLE) == 1) kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), 0);
+    getPosition(&x, &y, &z);
+
+    setReg(X_VAL, x);
+    setReg(Y_VAL, y);
+    setReg(Z_VAL, z);
 
     clearTimerFlag(&readSensors);
 }
 
+
 int main(){
     initConfig();
     initSerial(&Serial1, SERIAL1, 115200);
+    
     initI2C(&slave, I2C2, 0x60, 400000, SLAVE);
     clearI2Cregisters(I2C2);
     
-    char s[50];
-    initMM7150();
+    initMM7150();    
     initAccel(&acc, 100, 1);
     initOrient(&ori, 50, 10);
 
     initTimer(&readSensors, 2, DIV256, 3);
     setTimerFrecuency(&readSensors, 100);
 
+    setKalmanTsImu(0.02);
+    setKalmanTsGps(1);
 
     while(1){
-        /*if(cont2 >= 100){
-            cont2 = 0;
-            serialWriteString(&Serial1, "hola\n");
-        }*/
-        __delay_ms(1);
+        __delay_ms(20);
     }
+    
     return 0;
 }
+
 
 #endif

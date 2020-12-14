@@ -2,7 +2,7 @@ close all
 Gr = 9.81;
 Ts = 0.02;
 N = length(ax);
-p_gps = [-y';x';z'];
+p_gps = [x';y';z'];
 p = zeros(3,N);
 v = zeros(3,N);
 g = [0 0 1.02]'*Gr;
@@ -12,6 +12,7 @@ Q12 = eye(6)*0.01;
 bias_u = zeros(3,1);
 u = zeros(3,1);
 R = eye(3)*0.1;
+delta = zeros(9,1);
 
 s = [ax ay az]';
 
@@ -77,10 +78,10 @@ aux = zeros(3,1);
 cnt = 0; flag = 0;
 for i= 2:length(t_mm)
     
-    Rq = rpy2R(roll(i), pitch(i), yaw(i));
+    Rq = rpy2R(roll(i), pitch(i), yaw(i) - pi/2);
 
     s_filtered(:,i) = s_filtered(:, i-1) + lambda*(s(:, i) - s_filtered(:, i-1));
-    u = s_filtered(:, i)*Gr;% bias_u*0.005;
+    u = s_filtered(:, i)*Gr;%+ bias_u*0.005;
     s_rot(:,i) = Rq*u + g;
     
     if(flag == 1)
@@ -130,8 +131,8 @@ if animated == 1
     end
 else
     hold on
-    plot(p(2,:), p(1,:), 'r');
-    plot(p_gps(2,:), p_gps(1,:), 'g');
+    plot(p(1,:), p(2,:), 'r');
+    plot(p_gps(1,:), p_gps(2,:), 'g');
     hold off
 end
 figure
