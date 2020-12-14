@@ -20,6 +20,7 @@ void kalmanUpdateGPS(float x_gps, float y_gps, float z_gps);
 void setKalmanTsImu(float ts);
 void getPosition(float *x, float *y, float *z);
 void setKalmanTsGps(float ts);
+void clearKalman();
 
 
 #endif

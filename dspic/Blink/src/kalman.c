@@ -4,7 +4,7 @@ extern char buffer[150];
 extern serial Serial1;
 
 
-float Ts, Ts_Gps;
+float Ts, N;
 mat p, v, Rq,Rc, u, s;
 mat Fm, Gm, Hm, bias_p, bias_v, bias_u,Pm, Q12, ye, KalmanGain, p_gps, delta;
 
@@ -13,7 +13,7 @@ void setKalmanTsImu(float ts){
 }
 
 void setKalmanTsGps(float ts){
-    Ts_Gps = ts;
+    N = Ts/ts;
 }
 
 void initMatGlobal(){
@@ -48,11 +48,6 @@ void initMatGlobal(){
 
     matInit(&Gm,9,6);
     for( int i = 6;  i < 9; i++ ) setMatVal(&Gm, i, i -3,1);
-    
-    for( int i = 3;  i < 6; i++ ){
-        for( int j = 0; j < 3 ; j++) 
-        setMatVal(&Gm, i, j, Ts*getMatVal(&Rq, i-3, j));
-    } 
     
 }
 
@@ -209,10 +204,9 @@ void kalmanUpdateGPS(float x_gps, float y_gps, float z_gps){
     
     UpdatePmCovGPS();
     
-    //matAdd(&p, &p, &bias_p);
     matScale(&bias_v, &bias_v, 1/1.3);
     matAdd(&v, &v, &bias_v);
-    matScale(&bias_p, &bias_p, Ts/Ts_Gps);
+    matScale(&bias_p, &bias_p, N);
 }
 
 
@@ -221,4 +215,23 @@ void getPosition(float *x, float *y, float *z){
     *x = getMatVal(&p, 0, 0);
     *y = getMatVal(&p, 1, 0);
     *z = getMatVal(&p, 2, 0);
+}
+
+void clearKalman(){
+        
+    for(int i = 0 ; i < 3 ; i++){
+        setMatVal(&p, i, 0, 0);
+        setMatVal(&v, i, 0, 0);
+        setMatVal(&bias_p, i, 0, 0);
+    }
+    for(int i = 0; i < 9;  i++){
+        for(int j = 0; j < 9; j++) setMatVal(&Pm, i, j, 0);
+        for(int j = 0; j < 3; j++) setMatVal(&KalmanGain, i, j, 0);
+        
+        setMatVal(&delta, i, 0, 0);
+        setMatVal(&Pm,i,i,0.01);
+    }
+    matInit(&KalmanGain, 9, 3);    
+    matInit(&delta, 9, 1);
+
 }

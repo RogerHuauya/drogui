@@ -31,14 +31,19 @@ void timerInterrupt(2){
     setReg(PITCH_VAL, pitch);
     setReg(YAW_VAL, yaw);
 
-    kalmanUpdateIMU(acc.dDataX, acc.dDataY, acc.dDataZ, ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
+    if(getReg(START) > 0){
+        kalmanUpdateIMU(acc.dDataX, acc.dDataY, acc.dDataZ, ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
 
-    if(getReg(GPS_AVAILABLE) == 1) kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), 0), setReg(GPS_AVAILABLE, 0);
-    getPosition(&x, &y, &z);
+        if(getReg(GPS_AVAILABLE) == 1) kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), 0), setReg(GPS_AVAILABLE, 0);
+        getPosition(&x, &y, &z);
 
-    setReg(X_VAL, x);
-    setReg(Y_VAL, y);
-    setReg(Z_VAL, z);
+        setReg(X_VAL, x);
+        setReg(Y_VAL, y);
+        setReg(Z_VAL, z);
+    }
+    else{
+        clearKalman();
+    }
 
     clearTimerFlag(&readSensors);
 }
@@ -55,11 +60,13 @@ int main(){
     initAccel(&acc, 100, 1);
     initOrient(&ori, 50, 10);
 
-    initTimer(&readSensors, 2, DIV256, 3);
-    setTimerFrecuency(&readSensors, 100);
-
+    
     setKalmanTsImu(0.02);
     setKalmanTsGps(1);
+    initMatGlobal();
+    
+    initTimer(&readSensors, 2, DIV256, 3);
+    setTimerFrecuency(&readSensors, 100);
 
     while(1){
         __delay_ms(20);
