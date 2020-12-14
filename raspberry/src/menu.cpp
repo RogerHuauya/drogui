@@ -1,5 +1,5 @@
 #include "menu.h"
-#include "khbit.h"
+#include "kbhit.h"
 #include <fstream>
 
 
