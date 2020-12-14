@@ -1,9 +1,5 @@
 #include "menu.h"
-#include "khbit.h"
 #include <fstream>
-
-
-keyboard keyb;
 
 void desplazamiento(){}
 
@@ -40,7 +36,6 @@ void dataSensor(){
 
             case 4: std::cout << rasp_i2c.readFloat(Z_VAL) <<std::endl; break;
         }
-        if(keyb.kbhit()) break;
         unistd::usleep(20000);
     }
     cin_thread = false;
