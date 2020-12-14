@@ -1,9 +1,5 @@
 #include "menu.h"
-#include "kbhit.h"
 #include <fstream>
-
-
-keyboard keyb;
 
 void desplazamiento(){}
 
@@ -40,7 +36,6 @@ void dataSensor(){
 
             case 4: std::cout << rasp_i2c.readFloat(Z_VAL) <<std::endl; break;
         }
-        if(keyb.kbhit()) break;
         unistd::usleep(20000);
     }
     cin_thread = false;
@@ -150,6 +145,14 @@ void getGPSdata(){
     return;
 }
 
+int start = 0;
+void startSystem(){
+
+    start = 1 - start;
+    rasp_i2c.sendFloat(START, start);
+
+}
+
 void menu(){
     while(1){
         if(!cin_thread){
@@ -166,6 +169,8 @@ void menu(){
             printf(green([9]) " " white(Send AT command \n));
             printf(green([10]) " " white(GPS position \n));
             printf(green([11]) " " white(Send setpoint \n));
+            if(start == 1)	printf(green([12]) " " white(Start\n));
+            else		printf(green([12]) " " white(Stop\n));
             printf(white(Enter an option = \n));
             std::cin>>id_choosen;
             cin_thread=true;
@@ -183,6 +188,7 @@ void menu(){
                 case 9: send_AT_command(); break;
                 case 10: getGPSdata(); break;
                 case 11: break;//send_setpoint(); break;
+		case 12: startSystem(); break;
                 default: printf("%d is not an option, please enter option again\n", id_choosen); break;
             }
         }

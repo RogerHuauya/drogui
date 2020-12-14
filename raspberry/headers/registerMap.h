@@ -81,6 +81,7 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define ACC_Y   0xE9
 #define ACC_Z   0xED
 
+#define START 0xF1
 
 #define NUM_THREADS 3
 
