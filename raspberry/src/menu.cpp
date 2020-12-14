@@ -17,7 +17,7 @@ void dataSensor(){
 
     std::cin >> reg;
     if(std::cin.fail()) throw 505;
-    while(1){
+    for(int i = 0 ; i < 100 ; i++){
         switch(reg){
             case 0: std::cout << rasp_i2c.readFloat(ROLL_VAL) <<" " ;
                     std::cout << rasp_i2c.readFloat(PITCH_VAL) << " ";
@@ -44,7 +44,6 @@ void dataSensor(){
 
 void zeroPosition(){
     return;
-
 }
 
 void handler_stop(int s){
@@ -148,9 +147,15 @@ void getGPSdata(){
 int start = 0;
 void startSystem(){
 
+    
+    if(sim7600.GPSGet()){
+        sim7600.offset_Log = sim7600.Log;
+        sim7600.offset_Lat = sim7600.Lat;
+    }
+    unistd::sleep(1);
+
     start = 1 - start;
     rasp_i2c.sendFloat(START, start);
-
 }
 
 void menu(){
@@ -188,7 +193,7 @@ void menu(){
                 case 9: send_AT_command(); break;
                 case 10: getGPSdata(); break;
                 case 11: break;//send_setpoint(); break;
-		case 12: startSystem(); break;
+		        case 12: startSystem(); break;
                 default: printf("%d is not an option, please enter option again\n", id_choosen); break;
             }
         }

@@ -25,7 +25,7 @@ public:
 	// GPS positoning
 	double Lat, Log, Alt, Vel, Curso;
 	float pos_x, pos_y;
-	float offset_x,offset_y;
+	double offset_Lat, offset_Log;
 	char data[200];
 	bool GPSPositioning();
 	void GPSStart();

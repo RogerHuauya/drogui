@@ -80,31 +80,16 @@ void *logging(void *threadid){
 void *gps_data(void *threadid){
     sim7600.GPSStart();
     unistd::sleep(10);
-    /*
-    float offset_x = 0, offset_y = 0, r = 6371;
-    float aux_offx = 0,aux_offy = 0;
-    int cont = 0;
-    while( sim7600.GPSGet() && (sim7600.Log > 0)  && ( sim7600.Lat > 0 ) && (cont<10)   ){
-       aux_offx =  r*sim7600.Log*cos(sim7600.Lat*pi/180);
-       aux_offy = r*sim7600.Lat;
-       offset_x += aux_offx;
-       offset_y += aux_offy;
-       
-       //printf("Off_x: %.6lf Off_y: %.6lf it: %d",aux_offx,aux_offy,cont); std::cout << std::endl;
-       cont++;
-    }
-    offset_x /= 10;
-    offset_y /= 10;*/
-    double offset_Log, offset_Lat;
+    
     if(sim7600.GPSGet()){
-        offset_Log = sim7600.Log;
-        offset_Lat = sim7600.Lat;
+        sim7600.offset_Log = sim7600.Log;
+        sim7600.offset_Lat = sim7600.Lat;
     }
     
     while(1){
         if(sim7600.GPSGet()){
-            sim7600.pos_x = (sim7600.Log - offset_Log)/8.99871924359995e-06;
-            sim7600.pos_y = (sim7600.Lat - offset_Lat)/8.99871924359995e-06;
+            sim7600.pos_x = (sim7600.Log - sim7600.offset_Log)/8.99871924359995e-06;
+            sim7600.pos_y = (sim7600.Lat - sim7600.offset_Lat)/8.99871924359995e-06;
             rasp_i2c.sendFloat(GPS_X, sim7600.pos_x);
             rasp_i2c.sendFloat(GPS_Y, sim7600.pos_y);
             rasp_i2c.sendFloat(GPS_AVAILABLE, 1.0);
