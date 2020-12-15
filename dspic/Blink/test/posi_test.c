@@ -1,4 +1,4 @@
-#define POSI_TEST
+//#define POSI_TEST
 #ifdef POSI_TEST
 #include "config.h"
 #include "utils.h"
