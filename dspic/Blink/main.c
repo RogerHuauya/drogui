@@ -1,4 +1,4 @@
-//#define MAIN
+#define MAIN
 #ifdef MAIN
 
 #include <xc.h>
@@ -32,7 +32,8 @@ timer readSensors;
 timer millis;
 timer readPress;
 
-double roll, pitch, yaw, z;
+double roll, pitch, yaw;
+double x, y, z;
 volatile unsigned long long time = 0;
 
 void initializeSystem(){
@@ -56,13 +57,9 @@ void initializeSystem(){
     initAccel(&acc, 100, 20);
     initOrient(&ori, 50, 10);
 
-    initBmp280();
 
     initTimer(&readSensors, 2, DIV256, 4);
-    setTimerFrecuency(&readSensors, 100);
-
-    initTimer(&readPress, 4, DIV256, 3);
-    setTimerFrecuency(&readPress, 20);
+    setTimerFrecuency(&readSensors, 50);
 
     initTimer(&millis, 3, DIV256, 3);
     setTimerFrecuency(&millis, 1000);
@@ -82,6 +79,7 @@ bool caso = true;
 
 long long entrada = 0;
 int dig = 0;
+
 void timerInterrupt(2){
     readOrient(&ori);        
     getEuler(ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ, &roll, &pitch, &yaw);
@@ -89,48 +87,23 @@ void timerInterrupt(2){
     setReg(ROLL_VAL,(float)(roll));
     setReg(PITCH_VAL,(float)(pitch));
     setReg(YAW_VAL,(float)(yaw));
+    /*
+    if(getReg(START) > 0){
+        kalmanUpdateIMU(acc.dDataX, acc.dDataY, acc.dDataZ, ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
 
-    clearTimerFlag(&readSensors);
-}
-
-int32_t raw_press, raw_temp;
-float press, temper, press_ref = 0;
-int med = 0;
-
-void timerInterrupt(4){
-    
-    raw_temp = bmpReadTemperature();
-    raw_press = bmpReadPressure();
-    temper = bmp280CompensateTemperature(raw_temp);
-    press = bmp280CompensatePressure(raw_press);
-    setReg(RAW_TEMP, raw_temp);
-    setReg(TEMP_ABS, temper);
-    setReg(RAW_PRESS, raw_press);
-    setReg(PRESS_ABS, press);
-
-    if(med < 10){
-        press_ref += press/10.0, z = 0;        
-        med++;
+        if(getReg(GPS_AVAILABLE) == 1) setReg(GPS_AVAILABLE, 0), kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), 0);    
     }
-    else z = 44330 *(1-pow(1.0*press/press_ref, 0.1903));
-    
-    if(z < 0) press_ref = press;
+    else{
+        clearKalman();
+    }
 
-    setReg(RAW_TEMP, med);
+    getPosition(&x, &y, &z);
+
+    setReg(X_VAL, x);
+    setReg(Y_VAL, y);
     setReg(Z_VAL, z);
-    clearTimerFlag(&readPress);
-}
-
-int32_t raw_press, raw_temp;
-float press, temper;
-void timerInterrupt(4){
-    
-    raw_temp = bmpReadTemperature();
-    raw_press = bmpReadPressure();
-    temper = bmp280CompensateTemperature(raw_temp);
-    press = bmp280CompensatePressure(raw_press);
-    setReg(PRESS_ABS, press);
-    clearTimerFlag(&readPress);
+    */
+    clearTimerFlag(&readSensors);
 }
 
 void timerInterrupt(3){
@@ -157,6 +130,7 @@ int main(void){
     setReg(PID_VAR, -1);
 
     while(1){
+        
         roll_ref = getReg(ROLL_REF) + roll_off;
         pitch_ref = getReg(PITCH_REF) + pitch_off;
         yaw_ref = getReg(YAW_REF) + yaw_off;

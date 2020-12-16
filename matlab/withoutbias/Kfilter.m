@@ -78,7 +78,7 @@ aux = zeros(3,1);
 cnt = 0; flag = 0;
 for i= 2:length(t_mm)
     
-    Rq = rpy2R(roll(i), pitch(i), yaw(i) - pi/2);
+    Rq = rpy2R(roll(i), pitch(i), yaw(i));
 
     s_filtered(:,i) = s_filtered(:, i-1) + lambda*(s(:, i) - s_filtered(:, i-1));
     u = s_filtered(:, i)*Gr;%+ bias_u*0.005;
