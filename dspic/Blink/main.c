@@ -57,13 +57,9 @@ void initializeSystem(){
     initAccel(&acc, 100, 20);
     initOrient(&ori, 50, 10);
 
-    initBmp280();
 
     initTimer(&readSensors, 2, DIV256, 4);
     setTimerFrecuency(&readSensors, 50);
-
-    initTimer(&readPress, 4, DIV256, 3);
-    setTimerFrecuency(&readPress, 20);
 
     initTimer(&millis, 3, DIV256, 3);
     setTimerFrecuency(&millis, 1000);
@@ -91,7 +87,7 @@ void timerInterrupt(2){
     setReg(ROLL_VAL,(float)(roll));
     setReg(PITCH_VAL,(float)(pitch));
     setReg(YAW_VAL,(float)(yaw));
-
+    /*
     if(getReg(START) > 0){
         kalmanUpdateIMU(acc.dDataX, acc.dDataY, acc.dDataZ, ori.dDataW, ori.dDataX, ori.dDataY, ori.dDataZ);
 
@@ -106,7 +102,7 @@ void timerInterrupt(2){
     setReg(X_VAL, x);
     setReg(Y_VAL, y);
     setReg(Z_VAL, z);
-
+    */
     clearTimerFlag(&readSensors);
 }
 
