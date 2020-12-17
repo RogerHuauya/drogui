@@ -3,7 +3,7 @@
 extern char buffer[150];
 extern serial Serial1;
 
-
+#define GRAVITY 9.81
 float Ts, N;
 mat p, v, Rq,Rc, u, s;
 mat Fm, Gm, Hm, bias_p, bias_v, bias_u,Pm, Q12, ye, KalmanGain, p_gps, delta;
@@ -60,7 +60,7 @@ void kynematics(){
     matInit(&aux2, p.row, p.col);
     matMult(&aux2, &Rq, &u);
 
-    setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0) + 10.1);
+    setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0) + 10.0062);
 
     matScale(&aux2, &aux2, Ts);    
 
@@ -110,7 +110,7 @@ void UpdatePm(){
 
     matMult(&aux5,&Gm,&Q12);
     matMult(&aux3,&aux5,&aux2);
-
+    matAdd(&Pm, &Pm, &aux3);
 
     matDestruct(&aux1);
     matDestruct(&aux2);
@@ -182,9 +182,9 @@ void getBias(){
 void kalmanUpdateIMU(float ax, float ay, float az,float qw, float qx,float qy, float qz){
     
     quaternionToR(&Rq, qw, qx, qy, qz);
-    setMatVal(&u, 0, 0, ax);
-    setMatVal(&u, 1, 0, ay);
-    setMatVal(&u, 2, 0, az);
+    setMatVal(&u, 0, 0, ax*GRAVITY);
+    setMatVal(&u, 1, 0, ay*GRAVITY);
+    setMatVal(&u, 2, 0, az*GRAVITY);
     //matAdd(&u, &s, &bias_u);
     kynematics();
     UpdatePm();
@@ -231,7 +231,5 @@ void clearKalman(){
         setMatVal(&delta, i, 0, 0);
         setMatVal(&Pm,i,i,0.1);
     }
-    matInit(&KalmanGain, 9, 3);    
-    matInit(&delta, 9, 1);
 
 }
