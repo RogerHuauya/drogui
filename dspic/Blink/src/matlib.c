@@ -135,7 +135,6 @@ void matDestruct(mat* m){
 }
 
 
-
 void printMat(mat* R, char* s){    
     serialWriteString(&Serial1, s);
     for( int i = 0; i < (R->row); i++ ){
@@ -147,3 +146,4 @@ void printMat(mat* R, char* s){
     }
     serialWriteString(&Serial1, "\n");
 }
+

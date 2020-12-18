@@ -5,8 +5,8 @@ extern serial Serial1;
 
 #define GRAVITY 9.81
 float Ts, N;
-mat p, v, Rq,Rc, u, s;
-mat Fm, Gm, Hm, bias_p, bias_v, bias_u,Pm, Q12, ye, KalmanGain, p_gps, delta;
+mat p, v, Rq, invRq, Rc, u, s;
+mat Fm, Gm, Hm, bias_p, bias_v, bias_u,Pm, Q12, ye, error_dpos ,KalmanGain, p_gps, delta;
 
 void setKalmanTsImu(float ts){
     Ts = ts;
@@ -29,7 +29,9 @@ void initMatGlobal(){
     matInit(&p_gps,3, 1);
     matInit(&KalmanGain, 9, 3);    
     matInit(&delta, 9, 1);
-
+    matInit(&error_dpos,3,1);
+    
+    matInit(&invRq, 3, 3);
     matInit(&Rc, 3, 3);
     for(int i = 0; i < 3;  i++) setMatVal(&Rc,i,i,0.1);
 
@@ -49,6 +51,22 @@ void initMatGlobal(){
     matInit(&Gm,9,6);
     for( int i = 6;  i < 9; i++ ) setMatVal(&Gm, i, i-3,1);
     
+}
+
+void ground2Drone(double x_ref, double y_ref, double z_ref ){
+    
+    mat error_gpos;
+    
+    matInit(&error_gpos, 3, 1);
+    
+    setMatval(&error_gpos,0,0,x_ref - getMatVal(&p,0,0));
+    setMatval(&error_gpos,1,0,y_ref - getMatVal(&p,1,0) );
+    setMatval(&error_gpos,2,0,z_ref - getMatVal(&p,2,0));
+
+    matInv3(&invRq, &Rq);     
+    matMult(&error_dpos, &invRq, &error_gpos);    
+    
+    matDestruct(&error_gpos);
 }
 
 void kynematics(){
