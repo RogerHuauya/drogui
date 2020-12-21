@@ -17,9 +17,9 @@ double computePid(pid* p, double error, unsigned long long t, double h){
     p->errd = (error - p->e_ant)/p->dt;
     p->e_ant = error;
     //return max(min(p->kp[0]*error + p->ki[0]*p->erri + p->kd[0]*p->errd,p->osat),-p->osat);
-    if(type & P2ID) error *= error; 
+    if(p->type & P2ID) error *= error; 
     
-    if(type & INDEXED){
+    if(p->type & INDEXED){
         if(h <= 60)
             return max(min(p->kp[0]*error + p->ki[0]*p->erri + p->kd[0]*p->errd,p->osat),-p->osat);
         else if(h <= 70)

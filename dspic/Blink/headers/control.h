@@ -11,7 +11,7 @@ typedef struct _pid{
     double erri, errd, e_ant;
     unsigned long long tant;
     double isat, osat, dt;
-    int tipo;
+    int type;
 } pid;
 
 double computePid(pid* p, double error, unsigned long long t, double h);

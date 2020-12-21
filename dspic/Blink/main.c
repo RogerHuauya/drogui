@@ -155,7 +155,7 @@ int main(void){
         M2 = H - R - P + Y;
         M3 = H - R + P - Y;
         M4 = H + R + P + Y;
-        if(getReg(CALIBRATE) == 1.0){calibration();}
+        
         if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
             
             setReg(Z_REF, 0);
