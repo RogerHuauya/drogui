@@ -2,7 +2,7 @@ close all
 Gr = 9.81;
 Ts = 0.02;
 N = length(ax);
-p_gps = [x';y';z'];
+p_gps = [-y';x';z'];
 p = zeros(3,N);
 v = zeros(3,N);
 g = [0 0 1.02]'*Gr;
@@ -79,7 +79,7 @@ cnt = 0; flag = 0;
 for i= 2:length(t_mm)
     
     Rq = rpy2R(roll(i), pitch(i), yaw(i));
-
+    
     s_filtered(:,i) = s_filtered(:, i-1) + lambda*(s(:, i) - s_filtered(:, i-1));
     u = s_filtered(:, i)*Gr;%+ bias_u*0.005;
     s_rot(:,i) = Rq*u + g;
