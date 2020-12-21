@@ -111,7 +111,7 @@ void timerInterrupt(3){
     clearTimerFlag(&millis);
 }
 
-
+void calibration();
 double  H,R,P,Y, H_ref;
 double M1,M2,M3,M4;
 uint8_t haux = 0;
@@ -137,13 +137,13 @@ int main(void){
 
         z_ref += fabs(getReg(Z_REF) - z_ref) >= getReg(Z_REF_SIZE)  ? copysign(getReg(Z_REF_SIZE), getReg(Z_REF) - z_ref) : 0;
         
-        H_ref = computePid(&z_control, z_ref - z, time) + getReg(Z_MG);
+        H_ref = computePid(&z_control, z_ref - z, time,0) + getReg(Z_MG);
 
         H += fabs(H_ref - H) >= 0.1  ? copysign(0.1, H_ref - H) : 0;
 
-        R = computeIndexedPid(&roll_control, angle_dif(roll_ref, roll), time, H);
-        P = computeIndexedPid(&pitch_control, angle_dif(pitch_ref, pitch),time, H);
-        Y = computeIndexedPid(&yaw_control, angle_dif(yaw_ref, yaw),time, H);
+        R = computePid(&roll_control, angle_dif(roll_ref, roll), time, H);
+        P = computePid(&pitch_control, angle_dif(pitch_ref, pitch),time, H);
+        Y = computePid(&yaw_control, angle_dif(yaw_ref, yaw),time, H);
         
         setReg(ROLL_U, R);
         setReg(PITCH_U, P);
@@ -155,7 +155,7 @@ int main(void){
         M2 = H - R - P + Y;
         M3 = H - R + P - Y;
         M4 = H + R + P + Y;
-        
+        if(getReg(CALIBRATE) == 1.0){calibration();}
         if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
             
             setReg(Z_REF, 0);
@@ -212,5 +212,19 @@ int main(void){
     }
     return 0;
 }
+void calibration(){
+    setPwmDutyTime(&m1, 100);
+    setPwmDutyTime(&m2, 100);
+    setPwmDutyTime(&m3, 100);
+    setPwmDutyTime(&m4, 100);
 
+    __delay_ms(20000);
+
+    setPwmDutyTime(&m1, 0);
+    setPwmDutyTime(&m2, 0);
+    setPwmDutyTime(&m3, 0);
+    setPwmDutyTime(&m4, 0);
+
+    __delay_ms(20000);
+}
 #endif
