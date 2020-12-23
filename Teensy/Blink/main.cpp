@@ -103,7 +103,7 @@ int main(void){
     setReg(PID_VAR, -1);
 
     while(1){
-        /*
+        
         roll_ref = getReg(ROLL_REF) + roll_off;
         pitch_ref = getReg(PITCH_REF) + pitch_off;
         yaw_ref = getReg(YAW_REF) + yaw_off;
@@ -179,8 +179,13 @@ int main(void){
         
         delay(max((int) getReg(TS_CONTROL), 5));
 		    //Serial.println((int)time);
-        */
         
+
+
+        
+        /*
+         *  Test Motor Oneshot125
+         * /
         setPwmDutyTime(&m1, min(max(10,0), 100));
         delay(1000);
         setPwmDutyTime(&m2, min(max(10,0), 100));
@@ -198,10 +203,7 @@ int main(void){
         setPwmDutyTime(&m3, min(max(0,0), 100));
         delay(1000);
         setPwmDutyTime(&m4, min(max(0,0), 100));
-        delay(1000);
-
-
-
+        delay(1000);*/
 
         
     }
