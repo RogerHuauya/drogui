@@ -1,4 +1,5 @@
 #include "control.h"
+#include <math.h>
 
 pid z_control;
 pid x_control;
@@ -17,7 +18,7 @@ double computePid(pid* p, double error, unsigned long long t, double h){
     p->errd = (error - p->e_ant)/p->dt;
     p->e_ant = error;
     //return max(min(p->kp[0]*error + p->ki[0]*p->erri + p->kd[0]*p->errd,p->osat),-p->osat);
-    if(p->type & P2ID) error *= error; 
+    if(p->type & P2ID) error *= fabs(error); 
     
     if(p->type & INDEXED){
         if(h <= 60)
@@ -56,8 +57,8 @@ void initPid(pid* p, double kp, double kd, double ki,double ti,double isat,doubl
 }
 
 
-double roll_const[5][3] = {{25, 25, 10}, {25,25, 10}, {20, 25, 15}, {20, 25, 15}, {20, 25, 15}};
-double pitch_const[5][3] = {{25, 25, 10}, {25,25, 10}, {20, 25, 15}, {20, 25, 15}, {20, 25, 15}};
+double roll_const[5][3] = {{10, 25, 10}, {10, 25, 10}, {9, 25, 15}, {9, 25, 15}, {9, 25, 15}};
+double pitch_const[5][3] = {{10, 25, 10}, {10, 25, 10}, {9, 25, 15}, {9, 25, 15}, {9, 25, 15}};
 double yaw_const[5][3] = {{0, 0, 0}, {0,0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 
 void initPidConstants(){
@@ -66,9 +67,9 @@ void initPidConstants(){
     initPid(&x_control, 0, 0, 0, 0, 10 , 100, NORMAL);
     initPid(&y_control, 0, 0, 0, 0, 10 , 100, NORMAL);
     
-    initPid(&roll_control, 0, 0, 0, 0, 1 , 100, INDEXED);
-    initPid(&pitch_control, 0, 0, 0, 0, 1 , 100,  INDEXED);
-    initPid(&yaw_control, 0, 0, 0, 0, 1 , 100, INDEXED);
+    initPid(&roll_control, 0, 0, 0, 0, 1 , 100, P2ID | INDEXED);
+    initPid(&pitch_control, 0, 0, 0, 0, 1 , 100, P2ID | INDEXED);
+    initPid(&yaw_control, 0, 0, 0, 0, 1 , 100, P2ID | INDEXED);
     
     for(int i = 0; i < 5; i ++){
         roll_control.kp[i] = roll_const[i][0];
