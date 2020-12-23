@@ -16,6 +16,15 @@
 				"/opt/microchip/xc16/v1.50/support/generic/h",
 				"/opt/microchip/xc16/v1.50/support/dspic33E/h"
 				
-			]
+			],
+			"files.associations": {
+				"array": "c",
+				"functional": "c",
+				"istream": "c",
+				"ostream": "c",
+				"tuple": "c",
+				"type_traits": "c",
+				"utility": "c"
+			}
 	}
 }

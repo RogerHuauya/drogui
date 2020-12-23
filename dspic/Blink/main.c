@@ -137,13 +137,13 @@ int main(void){
 
         z_ref += fabs(getReg(Z_REF) - z_ref) >= getReg(Z_REF_SIZE)  ? copysign(getReg(Z_REF_SIZE), getReg(Z_REF) - z_ref) : 0;
         
-        H_ref = computePid(&z_control, z_ref - z, time) + getReg(Z_MG);
+        H_ref = computePid(&z_control, z_ref - z, time,0) + getReg(Z_MG);
 
         H += fabs(H_ref - H) >= 0.1  ? copysign(0.1, H_ref - H) : 0;
 
-        R = computeIndexedPid(&roll_control, angle_dif(roll_ref, roll), time, H);
-        P = computeIndexedPid(&pitch_control, angle_dif(pitch_ref, pitch),time, H);
-        Y = computeIndexedPid(&yaw_control, angle_dif(yaw_ref, yaw),time, H);
+        R = computePid(&roll_control, angle_dif(roll_ref, roll), time, H);
+        P = computePid(&pitch_control, angle_dif(pitch_ref, pitch),time, H);
+        Y = computePid(&yaw_control, angle_dif(yaw_ref, yaw),time, H);
         
         setReg(ROLL_U, R);
         setReg(PITCH_U, P);

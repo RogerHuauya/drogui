@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 //#define DSP_CONTROL_TEST
 #ifdef DSP_CONTROL_TEST
 
@@ -69,4 +67,3 @@ int main(void) {
 }
 
 #endif
->>>>>>> JulioDrone
