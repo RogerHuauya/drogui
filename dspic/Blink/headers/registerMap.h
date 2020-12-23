@@ -82,5 +82,7 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 
 #define START 0xF1
 
+#define CALIBRATE 0xE1
+
 #endif 		
 

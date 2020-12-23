@@ -5,8 +5,12 @@
 
 typedef struct _mat{
     int row, col;
+<<<<<<< HEAD
     float** val;
     float* aux;
+=======
+    float val[10][10];
+>>>>>>> JulioDrone
 } mat;
 
 void matInit(mat* m, int row, int col);
