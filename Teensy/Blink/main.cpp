@@ -124,10 +124,10 @@ int main(void){
         setReg(Z_U, H);
 
         
-        M1 = H + R - P - Y;
-        M2 = H - R - P + Y;
-        M3 = H - R + P - Y;
-        M4 = H + R + P + Y;
+        M1 = H + R + P - Y;
+        M2 = H + R - P + Y;
+        M3 = H - R - P - Y;
+        M4 = H - R + P + Y;
         
         if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
             
