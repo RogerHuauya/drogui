@@ -38,11 +38,20 @@ void setup() {
 	sim7600.PowerOn(POWERKEY);
 }
 
+void reset(){
+    rasp_i2c.sendFloat(X_REF, 0);
+    rasp_i2c.sendFloat(Y_REF, 0);
+    rasp_i2c.sendFloat(Z_REF, 0);
+    rasp_i2c.sendFloat(ROLL_REF, 0);
+    rasp_i2c.sendFloat(PITCH_REF, 0);
+    rasp_i2c.sendFloat(YAW_REF, 0);
+}
 
 int main(int argc, char** argv ){
         enable_emergency_stop();
         srand((unsigned) time(NULL));
         setup();
+        reset();
         printf("Program has started\n");
         pthread_t threads[NUM_THREADS];
         id_thread_log  = pthread_create(&threads[0], NULL, logging, (void *)0);

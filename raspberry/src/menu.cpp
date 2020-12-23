@@ -19,21 +19,21 @@ void dataSensor(){
     if(std::cin.fail()) throw 505;
     for(int i = 0 ; i < 100 ; i++){
         switch(reg){
-            case 0: std::cout << rasp_i2c.readFloat(ROLL_VAL) <<" " ;
-                    std::cout << rasp_i2c.readFloat(PITCH_VAL) << " ";
+            case 0: std::cout << rasp_i2c.readFloat(ROLL_VAL) <<"\t" ;
+                    std::cout << rasp_i2c.readFloat(PITCH_VAL) << "\t";
                     std::cout << rasp_i2c.readFloat(YAW_VAL) << std::endl; break;
 
-            case 1: std::cout << rasp_i2c.readFloat(GPS_X) << " ";
-                    std::cout << rasp_i2c.readFloat(GPS_Y) << " ";
-                    std::cout << rasp_i2c.readFloat(X_VAL) << " ";
+            case 1: std::cout << rasp_i2c.readFloat(GPS_X) << "\t";
+                    std::cout << rasp_i2c.readFloat(GPS_Y) << "\t";
+                    std::cout << rasp_i2c.readFloat(X_VAL) << "\t";
                     std::cout << rasp_i2c.readFloat(Y_VAL) << std::endl; break;
 
             case 2: printf("Lat: %.6lf,\tLong: %.6lf,\tAlt: %.6lf\tVel: %.6f\tCurso: %.6f\n",
 			sim7600.Lat,sim7600.Log,sim7600.Alt,sim7600.Vel,sim7600.Curso);break;
 
-            case 3: std::cout << rasp_i2c.readFloat(RAW_TEMP) << " ";
-                    std::cout << rasp_i2c.readFloat(TEMP_ABS) << " ";
-                    std::cout << rasp_i2c.readFloat(RAW_PRESS) << " ";
+            case 3: std::cout << rasp_i2c.readFloat(RAW_TEMP) << "\t";
+                    std::cout << rasp_i2c.readFloat(TEMP_ABS) << "\t";
+                    std::cout << rasp_i2c.readFloat(RAW_PRESS) << "\t";
                     std::cout << rasp_i2c.readFloat(PRESS_ABS) << std::endl; break;
 
             case 4: std::cout << rasp_i2c.readFloat(Z_VAL) <<std::endl; break;
@@ -196,7 +196,7 @@ void menu(){
                 case 10: getGPSdata(); break;
                 case 11: break;//send_setpoint(); break;
 		        case 12: startSystem(); break;
-                default: printf("%d is not an option, please enter option again\n", id_choosen); break;
+                default: printf("%d is not an option, please enter option again\n", id_choosen); cin_thread = false; break;
             }
         }
     }
