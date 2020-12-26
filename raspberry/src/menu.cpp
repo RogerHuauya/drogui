@@ -13,6 +13,7 @@ void dataSensor(){
     printf(green([2]) " " white(GPS - GSM\n));
     printf(green([3]) " " white(BMP280\n));
     printf(green([4]) " " white(Z value\n));
+    printf(green([5]) " " white(IMU CALIBRATION\n));
     
 
     std::cin >> reg;
@@ -37,6 +38,12 @@ void dataSensor(){
                     std::cout << rasp_i2c.readFloat(PRESS_ABS) << std::endl; break;
 
             case 4: std::cout << rasp_i2c.readFloat(Z_VAL) <<std::endl; break;
+
+            case 5: std::cout << rasp_i2c.readFloat(CAL_SYS) <<"\t" ;
+                    std::cout << rasp_i2c.readFloat(CAL_GYR) << "\t";
+                    std::cout << rasp_i2c.readFloat(CAL_ACC) << "\t";
+                    std::cout << rasp_i2c.readFloat(CAL_MAG) << std::endl; break;
+
         }
         unistd::usleep(20000);
     }
