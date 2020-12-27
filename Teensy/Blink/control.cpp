@@ -57,8 +57,8 @@ void initPid(pid* p, double kp, double kd, double ki,double ti,double isat,doubl
 }
 
 
-double roll_const[5][3] = {{100, 25, 10}, {100, 25, 10}, {90, 25, 15}, {90, 25, 15}, {90, 25, 15}};
-double pitch_const[5][3] = {{100, 25, 10}, {100, 25, 10}, {90, 25, 15}, {90, 25, 15}, {90, 25, 15}};
+double roll_const[5][3] = {{25, 25, 10}, {25, 25, 10}, {20, 25, 15}, {20, 25, 15}, {20, 25, 15}};
+double pitch_const[5][3] = {{25, 25, 10}, {25, 25, 10}, {20, 25, 15}, {20, 25, 15}, {20, 25, 15}};
 double yaw_const[5][3] = {{0, 0, 0}, {0,0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 
 void initPidConstants(){
@@ -67,9 +67,9 @@ void initPidConstants(){
     initPid(&x_control, 0, 0, 0, 0, 10 , 100, NORMAL);
     initPid(&y_control, 0, 0, 0, 0, 10 , 100, NORMAL);
     
-    initPid(&roll_control, 0, 0, 0, 0, 1 , 100, P2ID | INDEXED);
-    initPid(&pitch_control, 0, 0, 0, 0, 1 , 100, P2ID | INDEXED);
-    initPid(&yaw_control, 0, 0, 0, 0, 1 , 100, P2ID | INDEXED);
+    initPid(&roll_control, 0, 0, 0, 0, 1 , 100, INDEXED);
+    initPid(&pitch_control, 0, 0, 0, 0, 1 , 100, INDEXED);
+    initPid(&yaw_control, 0, 0, 0, 0, 1 , 100, INDEXED);
     
     for(int i = 0; i < 5; i ++){
         roll_control.kp[i] = roll_const[i][0];
