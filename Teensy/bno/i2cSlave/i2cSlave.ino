@@ -24,16 +24,16 @@ void clearI2Cregisters(int n){
 void requestI2C1(){
   
   Serial.println("request");
-  Wired1.write(i2c1Reg[ptr]);     // respond with message of 6 bytes
+  Wire1.write(i2c1Reg[ptr]);     // respond with message of 6 bytes
   cnt++; i2c1Reg[ptr] = cnt;
 }
 
 void receiveI2C1(int reg){
   
   Serial.println("receive");
-    ptr = Wired1.read();
-    if(Wired1.available()){
-      i2c1Reg[ptr] = Wired1.read();
+    ptr = Wire1.read();
+    if(Wire1.available()){
+      i2c1Reg[ptr] = Wire1.read();
     }
 }
 

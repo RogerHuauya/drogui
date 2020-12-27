@@ -16,14 +16,14 @@ void clearI2Cregisters(int n){
 }
 
 void requestI2C1(){
-    Wired1.write(i2c1Reg[ptr]);  
+    Wire1.write(i2c1Reg[ptr]);  
 }
 
 void receiveI2C1(int reg){
   
-    ptr = Wired1.read();
-    if(Wired1.available()){
-      i2c1Reg[ptr] = Wired1.read();
+    ptr = Wire1.read();
+    if(Wire1.available()){
+      i2c1Reg[ptr] = Wire1.read();
     }
 }
 
@@ -31,8 +31,8 @@ void receiveI2C1(int reg){
 
 void initI2C(int mode,int n, int adress){
     if(n == I2C1){
-        Wired1.begin(adress);
-        Wired1.onRequest(requestI2C1);
-        Wired1.onReceive(receiveI2C1); 
+        Wire1.begin(adress);
+        Wire1.onRequest(requestI2C1);
+        Wire1.onReceive(receiveI2C1); 
     }
 }
