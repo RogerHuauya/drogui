@@ -46,6 +46,8 @@ void timerInterrupt(2){
     setReg(Y_VAL, y);
     setReg(Z_VAL, z);
     
+    ground2Drone( 1, 1, 1 );
+
     clearTimerFlag(&readSensors);
 }
 
@@ -70,6 +72,8 @@ int main(){
     setTimerFrecuency(&readSensors, 100);
 
     while(1){
+        sprintf(buffer, "Vx: %.3f\tVy: %.3f\tVz: %.3f\tX:%.3f\tY:%.3f\tZ:%.3f\n", getMatVal(&error_dpos, 0, 0),
+                                                                    getMatVal(&error_dpos, 1, 0), getMatVal(&error_dpos, 2, 0));
         __delay_ms(20);
     }
     

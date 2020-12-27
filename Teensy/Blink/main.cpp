@@ -25,9 +25,10 @@ bool led_state;
 void timer1Interrupt(){
 	  sensors_event_t event;
     bno.getEvent(&event);
-
-    digitalWrite(LED_BUILTIN, led_state);
+    /*
+    digitalWrite(13, HIGH);
     led_state = !led_state;
+    */
     yaw = (float)event.orientation.x*pi/180 - pi;
     pitch = (float)event.orientation.y*pi/180;
     roll = (float)event.orientation.z*pi/180;
@@ -35,11 +36,21 @@ void timer1Interrupt(){
     setReg(ROLL_VAL,(float)(roll));
     setReg(PITCH_VAL,(float)(pitch));
     setReg(YAW_VAL,(float)(yaw));
+
+    uint8_t sys, gyro, accel, mag = 0;
+    bno.getCalibration(&sys, &gyro, &accel, &mag);
+
+    setReg(CAL_SYS, (float) sys);
+    setReg(CAL_GYR, (float) gyro);
+    setReg(CAL_ACC, (float) accel);
+    setReg(CAL_MAG, (float) mag);
+
+    
     /*Serial.print(roll);
     Serial.print("\t");
     Serial.print(pitch);
     Serial.print("\t");
-    Serial.println(yaw);*/        
+    Serial.println(yaw);*/     
 }
 
 void timer2Interrupt(){
@@ -88,13 +99,14 @@ int dig = 0;
 double  H,R,P,Y, H_ref;
 double M1,M2,M3,M4;
 uint8_t haux = 0;
-double roll_off = -3.09995788 , pitch_off = 0.0170128063, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
+double roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
 double roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
 long long pm = 0;
 
 
 int main(void){
-    
+    digitalWrite(13, HIGH);
+
     initializeSystem();
     delay(1000);
     
@@ -124,10 +136,10 @@ int main(void){
         setReg(Z_U, H);
 
         
-        M1 = H + R - P - Y;
-        M2 = H - R - P + Y;
-        M3 = H - R + P - Y;
-        M4 = H + R + P + Y;
+        M1 = H + R + P - Y;
+        M2 = H + R - P + Y;
+        M3 = H - R - P - Y;
+        M4 = H - R + P + Y;
         
         if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
             

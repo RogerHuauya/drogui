@@ -57,8 +57,8 @@ void initPid(pid* p, double kp, double kd, double ki,double ti,double isat,doubl
 }
 
 
-double roll_const[5][3] = {{10, 25, 10}, {10, 25, 10}, {9, 25, 15}, {9, 25, 15}, {9, 25, 15}};
-double pitch_const[5][3] = {{10, 25, 10}, {10, 25, 10}, {9, 25, 15}, {9, 25, 15}, {9, 25, 15}};
+double roll_const[5][3] = {{100, 25, 10}, {100, 25, 10}, {90, 25, 15}, {90, 25, 15}, {90, 25, 15}};
+double pitch_const[5][3] = {{100, 25, 10}, {100, 25, 10}, {90, 25, 15}, {90, 25, 15}, {90, 25, 15}};
 double yaw_const[5][3] = {{0, 0, 0}, {0,0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 
 void initPidConstants(){

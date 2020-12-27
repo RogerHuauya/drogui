@@ -5,10 +5,10 @@
 enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 
 
-#define M1_VAL 		0x01
-#define M2_VAL 		0x05
-#define M3_VAL 		0x09
-#define M4_VAL 		0x0D
+#define CAL_SYS 		0x01
+#define CAL_GYR 		0x05
+#define CAL_ACC 		0x09
+#define CAL_MAG 		0x0D
 
 #define ROLL_KP 		0x11
 #define ROLL_KI 		0x15
@@ -83,4 +83,3 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define START 0xF1
 
 #endif 		
-

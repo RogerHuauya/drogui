@@ -56,7 +56,7 @@ int main(){
     initOrient(&ori, 50, 10);
     */
     initTimer(&readSensors, 2, 2, DIV256);
-    setTimerFrecuency(&readSensors,  20);
+    setTimerFrecuency(&readSensors,  100);
 
 
     while(1){
