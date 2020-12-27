@@ -138,6 +138,7 @@ figure
 hold on
 quiver(p(1,:), p(2, :), v(1, :), v(2, :), 'b');
 quiver(p(1,:), p(2, :), s_rot(1, :), s_rot(2, :), 'g');
+
 plot(p(1,:), p(2, :), 'r');
 plot(p_gps_ext(1,:), p_gps_ext(2, :), 'm');
 hold off
