@@ -64,8 +64,8 @@ double yaw_const[5][3] = {{0, 0, 0}, {0,0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 void initPidConstants(){
     
     initPid(&z_control, 0, 0, 0, 0, 10 , 100, P2ID);
-    initPid(&x_control, 0, 0, 0, 0, 10 , 100, NORMAL);
-    initPid(&y_control, 0, 0, 0, 0, 10 , 100, NORMAL);
+    initPid(&x_control, 0.25, 0, 0, 0, 10 , 100, NORMAL);
+    initPid(&y_control, 0.25, 0, 0, 0, 10 , 100, NORMAL);
     
     initPid(&roll_control, 0, 0, 0, 0, 1 , 100, INDEXED);
     initPid(&pitch_control, 0, 0, 0, 0, 1 , 100, INDEXED);

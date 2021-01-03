@@ -111,8 +111,8 @@ int main(void){
         X_C = computePid(&x_control,1,time,H);
         Y_C = computePid(&y_control,0,time,H);
 
-        roll_ref = X_C*cos(yaw);
-        pitch_ref = X_C*sin(yaw);
+        roll_ref = X_C*cos(yaw) + Y_C*sin(yaw) ;
+        pitch_ref = X_C*sin(yaw) - Y_C*cos(yaw) ;
         
         z_ref += fabs(getReg(Z_REF) - z_ref) >= getReg(Z_REF_SIZE)  ? copysign(getReg(Z_REF_SIZE), getReg(Z_REF) - z_ref) : 0;
         
@@ -134,9 +134,10 @@ int main(void){
             roll_ref = copysign(R_MAX,roll_ref);
             pitch_ref = roll_ref*1.0*tan(yaw);
           }
-           
+       
         }
 
+       
         roll_ref += roll_off;
         pitch_ref += pitch_off;
         yaw_ref = getReg(YAW_REF) + yaw_off;
@@ -144,12 +145,14 @@ int main(void){
         R = computePid(&roll_control, angle_dif(roll_ref, roll), time, H);
         P = computePid(&pitch_control, angle_dif(pitch_ref, pitch),time, H);
         Y = computePid(&yaw_control, angle_dif(yaw_ref, yaw),time, H);
-        
+
+
         Serial.print(roll_ref);
         Serial.print("\t");
         Serial.print(pitch_ref);
         Serial.print("\t");
         Serial.println(yaw);
+
         setReg(ROLL_U, R);
         setReg(PITCH_U, P);
         setReg(YAW_U, Y);
