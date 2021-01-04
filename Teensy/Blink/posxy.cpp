@@ -88,7 +88,7 @@ int dig = 0;
 
 
 
-double  H,R,P,Y, H_ref, X_C, Y_C, R_MAX = pi/18 , P_MAX = pi/18  ;
+double  H,R,P,Y, H_ref, X_C, Y_C, R_MAX = 10 , Y_MAX = 10  ;
 double M1,M2,M3,M4;
 uint8_t haux = 0;
 double roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
@@ -107,51 +107,38 @@ int main(void){
     setReg(PID_VAR, -1);
 
     while(1){
-
-        X_C = computePid(&x_control,1,time,H);
-        Y_C = computePid(&y_control,0,time,H);
-
-        roll_ref = X_C*cos(yaw) + Y_C*sin(yaw) ;
-        pitch_ref = X_C*sin(yaw) - Y_C*cos(yaw) ;
         
+        roll_ref = getReg(ROLL_REF) + roll_off;
+        pitch_ref = getReg(PITCH_REF) + pitch_off;
+        yaw_ref = getReg(YAW_REF) + yaw_off;
+
         z_ref += fabs(getReg(Z_REF) - z_ref) >= getReg(Z_REF_SIZE)  ? copysign(getReg(Z_REF_SIZE), getReg(Z_REF) - z_ref) : 0;
         
         H_ref = computePid(&z_control, z_ref - z, time,0) + getReg(Z_MG);
 
         H += fabs(H_ref - H) >= 0.1  ? copysign(0.1, H_ref - H) : 0;
 
-        if( fabs(tan(yaw)) > 1  ){
-          
-          if( fabs(pitch_ref) >= P_MAX  ){
-            pitch_ref = copysign(P_MAX,pitch_ref);
-            roll_ref = pitch_ref*1.0*1/(tan(yaw));
-          }
+        X_C = computePid(&x_control,1,time,H);
+        Y_C = computePid(&y_control,1,time,H);
+
+        if( fabs(roll - pi/18) <= 0.01  ){
+            R = R_MAX;
+            Y = R*1.0*tan(yaw);
+        } 
+        else if( fabs(roll - pi/18) <= 0.01 ){
             
+            Y = Y_MAX;
+            R = Y*1.0*1/(tan(yaw));  
         }
-        else{ 
-
-          if( fabs(roll_ref) >= R_MAX  ){
-            roll_ref = copysign(R_MAX,roll_ref);
-            pitch_ref = roll_ref*1.0*tan(yaw);
-          }
-       
-        }
-
-       
-        roll_ref += roll_off;
-        pitch_ref += pitch_off;
-        yaw_ref = getReg(YAW_REF) + yaw_off;
         
-        R = computePid(&roll_control, angle_dif(roll_ref, roll), time, H);
-        P = computePid(&pitch_control, angle_dif(pitch_ref, pitch),time, H);
-        Y = computePid(&yaw_control, angle_dif(yaw_ref, yaw),time, H);
+        else{ 
+            R = X_C*cos(yaw);
+            P = X_C*sin(yaw);
+        }
 
-
-        Serial.print(roll_ref);
+        Serial.print(R);
         Serial.print("\t");
-        Serial.print(pitch_ref);
-        Serial.print("\t");
-        Serial.println(yaw);
+        Serial.println(Y);
 
         setReg(ROLL_U, R);
         setReg(PITCH_U, P);
