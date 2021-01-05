@@ -78,8 +78,8 @@ void timer1Interrupt(){
     setReg(X_VAL, x);
     setReg(Y_VAL, y);
     setReg(Z_VAL, z);
-    Serial.print(x), Serial.print('\t'),
-    Serial.print(y), Serial.print('\n'); 
+    //Serial.print(x), Serial.print('\t'),
+    //Serial.print(y), Serial.print('\n'); 
 }
 
 void timer2Interrupt(){

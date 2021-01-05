@@ -29,7 +29,7 @@ IntervalTimer readSensors;
 IntervalTimer milli;
 
 volatile double roll, pitch, yaw, ax, ay, az;
-double x, y, z;
+float x, y, z;
 volatile unsigned long long time = 0;
 bool led_state;
 
@@ -51,13 +51,6 @@ void timer1Interrupt(){
     ay = linearAccelData.acceleration.y;
     az = linearAccelData.acceleration.z;
 
-    Serial.print(ax);
-    Serial.print('\t');
-    Serial.print(ay);
-    Serial.print('\t');
-    Serial.print(az);
-    Serial.print('\n');
-
     setReg(ACC_X,(float)(ax));
     setReg(ACC_Y,(float)(ay));
     setReg(ACC_Z,(float)(az));
@@ -69,6 +62,21 @@ void timer1Interrupt(){
     setReg(CAL_GYR, (float) gyro);
     setReg(CAL_ACC, (float) accel);
     setReg(CAL_MAG, (float) mag);
+    
+
+    if(getReg(START) > 0){
+        kalmanUpdateIMU(ax, ay, az, roll, pitch, yaw);
+        if(getReg(GPS_AVAILABLE) == 1) setReg(GPS_AVAILABLE, 0), kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), 0);    
+    }
+    else{
+        clearKalman();
+    }
+
+    getPosition(&x, &y, &z);
+    
+    setReg(X_VAL, x);
+    setReg(Y_VAL, y);
+    setReg(Z_VAL, z);
 
 }
 
@@ -135,33 +143,42 @@ int main(void){
 
     while(1){
         
-        roll_ref = getReg(ROLL_REF) + roll_off;
-        pitch_ref = getReg(PITCH_REF) + pitch_off;
-        yaw_ref = getReg(YAW_REF) + yaw_off;
+        X_C = computePid(&x_control,1,time,H);
+        Y_C = computePid(&y_control,0,time,H);
 
+        roll_ref = X_C*cos(yaw);
+        pitch_ref = X_C*sin(yaw);
+        
         z_ref += fabs(getReg(Z_REF) - z_ref) >= getReg(Z_REF_SIZE)  ? copysign(getReg(Z_REF_SIZE), getReg(Z_REF) - z_ref) : 0;
         
         H_ref = computePid(&z_control, z_ref - z, time,0) + getReg(Z_MG);
 
         H += fabs(H_ref - H) >= 0.1  ? copysign(0.1, H_ref - H) : 0;
 
-        X_C = computePid(&x_control,1,time,H);
-        Y_C = computePid(&y_control,1,time,H);
-
-        if( fabs(roll - pi/18) <= 0.01  ){
-            R = R_MAX;
-            Y = R*1.0*tan(yaw);
-        } 
-        else if( fabs(roll - pi/18) <= 0.01 ){
+        if( fabs(tan(yaw)) > 1  ){
+          
+          if( fabs(pitch_ref) >= P_MAX  ){
+            pitch_ref = copysign(P_MAX,pitch_ref);
+            roll_ref = pitch_ref*1.0*1/(tan(yaw));
+          }
             
-            Y = Y_MAX;
-            R = Y*1.0*1/(tan(yaw));  
         }
-        
         else{ 
-            R = X_C*cos(yaw);
-            P = X_C*sin(yaw);
+
+          if( fabs(roll_ref) >= R_MAX  ){
+            roll_ref = copysign(R_MAX,roll_ref);
+            pitch_ref = roll_ref*1.0*tan(yaw);
+          }
+           
         }
+
+        roll_ref += roll_off;
+        pitch_ref += pitch_off;
+        yaw_ref = getReg(YAW_REF) + yaw_off;
+        
+        R = computePid(&roll_control, angle_dif(roll_ref, roll), time, H);
+        P = computePid(&pitch_control, angle_dif(pitch_ref, pitch),time, H);
+        Y = computePid(&yaw_control, angle_dif(yaw_ref, yaw),time, H);
 
 
         setReg(ROLL_U, R);
