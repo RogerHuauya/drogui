@@ -1,10 +1,12 @@
 #include "headers/main.h"
 
 void setup(){
-      digitalWrite(13, HIGH);
+    pinMode(13, OUTPUT);
+    digitalWrite(13, HIGH);
 
 }
 void loop(){
-  
-    main();    
+    delay(20);
+    Serial.println("hola");
+    _main();    
 }

@@ -1,6 +1,8 @@
 #define POSXY
 #ifdef POSXY
 
+#include "..\headers\main.h"
+#include "..\headers\kalman.h"
 #include "..\headers\control.h"
 #include "..\headers\pwm.h"
 #include "..\headers\i2c.h"
@@ -12,8 +14,6 @@
 #include <Arduino.h>
 #include <i2c_driver.h>
 #include <i2c_driver_wire.h>
-#include "..\headers\main.h"
-#include "..\headers\kalman.h"
 
 char buffer[80];
 
@@ -35,7 +35,12 @@ volatile unsigned long long time = 0;
 bool led_state;
 
 void timer1Interrupt(){
-	  sensors_event_t orientationData , linearAccelData;
+	
+    
+    digitalWrite(LED_BUILTIN, led_state);
+    led_state = !led_state;
+    
+    sensors_event_t orientationData , linearAccelData;
     
     bno.getEvent(&orientationData, Adafruit_BNO055::VECTOR_EULER);
     bno.getEvent(&linearAccelData, Adafruit_BNO055::VECTOR_LINEARACCEL);
@@ -129,7 +134,7 @@ int dig = 0;
 
 
 
-double  H,R,P,Y, H_ref, X_C, Y_C, R_MAX = pi/180 , P_MAX = pi/180;
+double  H,R,P,Y, H_ref, X_C, Y_C, R_MAX = pi/9.0 , P_MAX = pi/9.0;
 double M1,M2,M3,M4;
 uint8_t haux = 0;
 double roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
@@ -137,7 +142,7 @@ double roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
 long long pm = 0;
 
 
-int main(void){
+int _main(void){
 
     initializeSystem();
     delay(1000);
@@ -248,6 +253,7 @@ int main(void){
         setPwmDutyTime(&m4, min(max(M4,0), 100));
         
         delay(max((int) getReg(TS_CONTROL), 5));
+        //erial.println("hola");
         
     }
     return 0;
