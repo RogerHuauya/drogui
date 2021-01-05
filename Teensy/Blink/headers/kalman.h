@@ -13,7 +13,7 @@ void UpdatePm();
 void getKalmanGain();
 void UpdatePmCovGPS();
 void getBias();
-void kalmanUpdateIMU(float ax, float ay, float az,float qw, float qx,float qy, float qz);
+void kalmanUpdateIMU(float ax, float ay, float az, float roll, float pitch,float yaw);
 void kalmanUpdateGPS(float x_gps, float y_gps, float z_gps);
 void setKalmanTsImu(float ts);
 void getPosition(float *x, float *y, float *z);

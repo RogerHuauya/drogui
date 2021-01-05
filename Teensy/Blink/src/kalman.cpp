@@ -1,8 +1,8 @@
-#include "kalman.h"
+#include "..\headers\kalman.h"
 
 extern char buffer[150];
 
-#define GRAVITY 9.81
+#define GRAVITY 1
 float Ts, N;
 mat p, v, Rq,Rc, u, s;
 mat Fm, Gm, Hm, bias_p, bias_v, bias_u,Pm, Q12, ye, KalmanGain, p_gps, delta;
@@ -59,7 +59,7 @@ void kynematics(){
     matInit(&aux2, p.row, p.col);
     matMult(&aux2, &Rq, &u);
 
-    setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0) + 10.0062);
+    //setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0) + 10.0062);
 
     matScale(&aux2, &aux2, Ts);    
 
@@ -178,9 +178,10 @@ void getBias(){
     setMatVal(&bias_v, 2, 0, getMatVal(&delta, 5, 0));
 }
 
-void kalmanUpdateIMU(float ax, float ay, float az,float qw, float qx,float qy, float qz){
+void kalmanUpdateIMU(float ax, float ay, float az,float roll, float pitch, float yaw){
     
-    quaternionToR(&Rq, qw, qx, qy, qz);
+    //quaternionToR(&Rq, qw, qx, qy, qz);
+    rpyToR(&Rq, roll, pitch, yaw);
     setMatVal(&u, 0, 0, ax*GRAVITY);
     setMatVal(&u, 1, 0, ay*GRAVITY);
     setMatVal(&u, 2, 0, az*GRAVITY);

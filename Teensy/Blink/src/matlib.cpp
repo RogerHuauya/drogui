@@ -1,4 +1,4 @@
-#include "matlib.h"
+#include "..\headers\matlib.h"
 
 void matInit(mat* m, int row, int col){
     m->row = row;

@@ -1,4 +1,4 @@
-#include "control.h"
+#include "..\headers\control.h"
 #include <math.h>
 
 pid z_control;

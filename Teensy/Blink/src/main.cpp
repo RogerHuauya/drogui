@@ -1,7 +1,7 @@
 //#define MAIN
 #ifdef MAIN
 
-#include "main.h"
+#include "..\..\headers\main.h"
 
 char buffer[80];
 

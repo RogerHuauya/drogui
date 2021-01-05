@@ -2,7 +2,7 @@
 #include <i2c_driver.h>
 #include <i2c_driver_wire.h>
 
-#include "i2c.h"
+#include "..\headers\i2c.h"
 
 uint8_t i2c1Reg[I2C_REG_SIZE];
 uint8_t i2c2Reg[I2C_REG_SIZE];
