@@ -1,18 +1,19 @@
-//#define POSXY
+#define POSXY
 #ifdef POSXY
 
-#include "..\..\headers\control.h"
-#include "..\..\headers\pwm.h"
-#include "..\..\headers\i2c.h"
-#include "..\..\headers\utils.h"
-#include "..\..\headers\registerMap.h"
+#include "..\headers\control.h"
+#include "..\headers\pwm.h"
+#include "..\headers\i2c.h"
+#include "..\headers\utils.h"
+#include "..\headers\registerMap.h"
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
 #include <Arduino.h>
 #include <i2c_driver.h>
 #include <i2c_driver_wire.h>
-#include "..\..\headers\main.h"
+#include "..\headers\main.h"
+#include "..\headers\kalman.h"
 
 char buffer[80];
 
@@ -107,6 +108,11 @@ void initializeSystem(){
     milli.begin(timer2Interrupt, 1000);
     milli.priority(100);
 
+  
+
+    setKalmanTsImu(0.01);
+    setKalmanTsGps(1);
+    initMatGlobal();
 
     initI2C(SLAVE, I2C1, 0x60);
     clearI2Cregisters(I2C1);
@@ -123,7 +129,7 @@ int dig = 0;
 
 
 
-double  H,R,P,Y, H_ref, X_C, Y_C, R_MAX = 10 , Y_MAX = 10  ;
+double  H,R,P,Y, H_ref, X_C, Y_C, R_MAX = pi/180 , P_MAX = pi/180;
 double M1,M2,M3,M4;
 uint8_t haux = 0;
 double roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
@@ -132,7 +138,6 @@ long long pm = 0;
 
 
 int main(void){
-    digitalWrite(13, HIGH);
 
     initializeSystem();
     delay(1000);
@@ -143,11 +148,11 @@ int main(void){
 
     while(1){
         
-        X_C = computePid(&x_control,1,time,H);
-        Y_C = computePid(&y_control,0,time,H);
+        X_C = computePid(&x_control, 1, time, H);
+        Y_C = computePid(&y_control, 0, time, H);
 
-        roll_ref = X_C*cos(yaw);
-        pitch_ref = X_C*sin(yaw);
+        roll_ref = Y_C*cos(yaw) - X_C*sin(yaw);
+        pitch_ref = Y_C*sin(yaw) + X_C*cos(yaw);
         
         z_ref += fabs(getReg(Z_REF) - z_ref) >= getReg(Z_REF_SIZE)  ? copysign(getReg(Z_REF_SIZE), getReg(Z_REF) - z_ref) : 0;
         

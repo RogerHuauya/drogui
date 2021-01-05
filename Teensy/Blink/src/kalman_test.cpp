@@ -1,4 +1,4 @@
-#define KALMAN_TEST
+//#define KALMAN_TEST
 #ifdef KALMAN_TEST
 
 #include "..\headers\main.h"
