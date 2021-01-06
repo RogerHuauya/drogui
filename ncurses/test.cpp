@@ -1,9 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <iostream>
 #include <string>
 #include <ncurses.h>
+#include "scroll_menu.h"
 
-std::string name[] = {  
+std::string name2[] = {  
 "     _____          ___           ___           ___           ___                 ",
 "    /  /::\\        /  /\\         /  /\\         /  /\\         /__/\\        ___     ",
 "   /  /:/\\:\\      /  /::\\       /  /::\\       /  /:/_        \\  \\:\\      /  /\\    ",
@@ -17,9 +19,22 @@ std::string name[] = {
 "                   \\__\\/         \\__\\/         \\__\\/         \\__\\/                "};
 
 
+std::string name[]{
+"    .___                          .__ ",
+"  __| _/______  ____   ____  __ __|__|",
+" / __ |\\_  __ \\/  _ \\ / ___\\|  |  \\  |",
+"/ /_/ | |  | \\(  <_> ) /_/  >  |  /  |",
+"\\____ | |__|   \\____/\\___  /|____/|__|",
+"     \\/             /_____/           "};
+
+
 char bigtext[100][50];
  
 int main(void) {
+    
+    std::cout << "──" << std::endl;
+    getch();
+    setlocale(LC_ALL, "");
  	initscr();
 	cbreak();
 	noecho();
@@ -63,47 +78,65 @@ int main(void) {
     
     
 
-    for(int i = 0 ; i < 50 ; i++)
-	    sprintf(bigtext[i], "Opcion%02d", i);
+    menu arr_menu[6] = {
+        menu("SendPID"),
+        menu("SensorData"),
+        menu("Setpoint"),
+        menu("ReadRegister"),
+        menu("ZeroPosition"),
+        menu("Compensation")
+        //menu("holssssssssssssssssa2"),
+        //menu("hossssssssssssssla3"),
+        //menu("hsssssssssssssssssola4"),
+       /* menu("hossssssssssssssla3")*/};
 
+    scrollMenu scm = scrollMenu(mainwin, arr_menu, 6, max_x - 2*padd_x, max_y-2*padd_y);
 
-	int ini = 0, fin = max_y-2*padd_y - 2, selected = 0, len = fin - ini;
+    scm.draw();
 
-    int n = 5, pos = 1;
+    
+
     while(1){
-        pos = 1;
-        for(int i = 0; i < n; i++, pos += 11){
-            
-            if(i == selected){
-                wattron(mainwin, A_REVERSE | COLOR_PAIR(1));
-                mvwprintw(mainwin, 0, pos, bigtext[i]);
-                wattroff(mainwin, A_REVERSE | COLOR_PAIR(1));
-            }
-            else mvwprintw(mainwin, 0, pos, bigtext[i]);
-        }
-        //printw(name[0].c_str());
-        for(int i = 0 ; i < 11; i++){
-            mvwprintw(mainwin, max_y/2 - padd_y + i - 6, max_x/2 - name[i].length()/2 - padd_x, name[i].c_str());
+        
+        for(int i = 0 ; i < 6; i++){
+            mvwprintw(mainwin, max_y/2 - padd_y + i - 3, max_x/2 - name[i].length()/2 - padd_x, name[i].c_str());
         }
         
         wrefresh(mainwin);
-
+    
         int c = getch();
-        switch(c){
-            case KEY_LEFT:
-                selected --;
-                break;
-            case KEY_RIGHT:
-                selected ++;
-                break;
-        }
+        scm.keyHandling(c);
+    
 
-        selected = (selected + 5)%5;
-
-        if(selected < ini) ini = selected, fin = ini + len;
-        if(selected >= fin) fin = selected + 1, ini = fin - len;
 
         if(c == 'q') break;
+
+        if(c == 's'){
+            attron(COLOR_PAIR(2));
+            attron(A_REVERSE);
+            mvprintw(max_y - padd_y + 1, padd_x + 5, "[S] Start");
+            attroff(A_REVERSE);
+            mvprintw(max_y - padd_y + 1, max_x - padd_x - 5 - 13, "[E] Emergency");
+            attroff(COLOR_PAIR(2));
+        }
+        else if(c == 'e'){
+        
+            attron(COLOR_PAIR(2));
+            mvprintw(max_y - padd_y + 1, padd_x + 5, "[S] Start");
+            attron(A_REVERSE);
+            mvprintw(max_y - padd_y + 1, max_x - padd_x - 5 - 13, "[E] Emergency");
+            attroff(A_REVERSE);
+            attroff(COLOR_PAIR(2));
+        }
+        else{
+            
+            attron(COLOR_PAIR(2));
+            mvprintw(max_y - padd_y + 1, padd_x + 5, "[S] Start");
+            mvprintw(max_y - padd_y + 1, max_x - padd_x - 5 - 13, "[E] Emergency");
+            attroff(COLOR_PAIR(2));
+        }
+        
+
 
     }
 
