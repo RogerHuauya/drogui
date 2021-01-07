@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <curses.h>
+#include <panel.h>
 using namespace std;
 #ifndef SCROLL_MENU_H
 #define SCROLL_MENU_H
@@ -9,16 +10,65 @@ using namespace std;
 class menu{
     public:
         string name;
-        int ini, fin;
+        int ini, fin, pan_x, pan_y;
+        WINDOW * win;
+        PANEL * pan;
+        int sz_lista = 5;
+        string *lista;
+        int selected = 0;
         menu(){}    
-        menu(string name){ this->name = name;};
+        menu(string name, string* opciones, int sz_lista){
+            this->sz_lista = sz_lista;
+            this->lista = opciones; 
+            this->name = name;
+            pan_x = 20;
+            pan_y = sz_lista + 2;
+            win = newwin(pan_y, pan_x, 0, 0);
+            wattron(win, COLOR_PAIR(2));
+            box(win, 0, 0);
+            wattroff(win, COLOR_PAIR(2));
+
+            draw();
+            pan = new_panel(win);
+            hide_panel(pan);
+            update_panels();
+	        doupdate();
+        };
+
+        void draw(){
+            wattron(win, COLOR_PAIR(2));
+            
+            for(int i = 0 ; i < sz_lista ; i++){
+                if(i == selected) wattron(win, A_REVERSE | COLOR_PAIR(1));
+                mvwprintw(win, 1 + i, 1, lista[i].c_str());
+                if(i == selected) wattroff(win, A_REVERSE| COLOR_PAIR(1)), wattron(win, COLOR_PAIR(2));;
+            }
+
+            wattroff(win, COLOR_PAIR(2));
+        }
+
+        bool keyHandling(int c){
+            bool ans = true;
+            switch(c){
+                case KEY_UP: 
+                    if(selected == 0) ans = false;
+                    else selected --; 
+                    break;
+                case KEY_DOWN: 
+                    selected ++;
+                    if(selected == sz_lista) selected --;
+                    break;
+            }
+            draw();
+            return ans;
+        }
 };
 
 
 class scrollMenu{
     public:
         int ini, fin;
-        int sz_x, sz_y, sz_menu, selected = 0;
+        int sz_x, sz_y, sz_menu, selected = 0, pad_x, pad_y;
         string full_name = "";
         string pattern = "-";
         menu* arr_menu;
@@ -32,10 +82,10 @@ class scrollMenu{
             
             wattron(win, COLOR_PAIR(2));
             if(ini > 0) mvwprintw(win, 0, 1, "<");
-            else mvwprintw(win, 0, 1, "─");
+            else mvwprintw(win, 0, 1, "-");
 
             if(fin < full_name.length()) mvwprintw(win, 0, sz_x + 2, ">");
-            else mvwprintw(win, 0, sz_x + 2, "─");
+            else mvwprintw(win, 0, sz_x + 2, "-");
             wattroff(win, COLOR_PAIR(2));
 
 
@@ -72,7 +122,7 @@ class scrollMenu{
                 
                 wattron(win, COLOR_PAIR(1));
                 mvwprintw(win, 0, ini + pos, patt.c_str());
-                wattron(win, COLOR_PAIR(1));
+                wattroff(win, COLOR_PAIR(1));
                 
                 found += patt.length(), pos += 1;
                 found_ant = found;
@@ -87,23 +137,48 @@ class scrollMenu{
         }
 
 
+        bool open = false;
 
         void keyHandling(int c){
-            switch(c){
-                case KEY_RIGHT: ind_sel++; break;
-                case KEY_LEFT: ind_sel--; break;
+
+            if(open){
+                if(!sel.keyHandling(c)){
+                    open = false;
+                    hide_panel(sel.pan);
+                }
+            } 
+            else{
+                switch(c){
+                    case KEY_RIGHT: if(!open) ind_sel++; break;
+                    case KEY_LEFT: if(!open) ind_sel--; break;
+                    case KEY_DOWN: 
+                        open = true;
+                        int pan_ini = (2 + sel.ini - ini);
+                        if( pan_ini + sel.pan_x > sz_x ) pan_ini = (2 + sel.fin - ini - sel.pan_x );
+                        move_panel(sel.pan, 1 + pad_y, pan_ini + pad_x);
+                        show_panel(sel.pan); 
+                        break;
+                        
+                    
+                           
+                }
+                ind_sel = (ind_sel + sz_menu) % sz_menu;
+                sel = arr_menu[ind_sel]; 
             }
-            ind_sel = (ind_sel + sz_menu) % sz_menu;
-            sel = arr_menu[ind_sel];
+            
             draw();
+            update_panels();
+            doupdate();
         }
         
-        scrollMenu(WINDOW* win, menu* arr_menu, int sz_menu,  int sz_x,  int sz_y){
+        scrollMenu(WINDOW* win, menu* arr_menu, int sz_menu,  int sz_x,  int sz_y, int pad_x, int pad_y){
             this->win = win;
             this->arr_menu = arr_menu;
             this->sz_menu = sz_menu;
             this->sz_x = sz_x - 4;
             this->sz_y = sz_y;
+            this->pad_x = pad_x;
+            this->pad_y = pad_y;
             ini = 0, fin = this->sz_x;
             
             ind_sel = 0;
@@ -115,6 +190,8 @@ class scrollMenu{
                 arr_menu[i].fin = full_name.length();
             }
             sel = arr_menu[0];
+
+            
         }
 
 };

@@ -5,7 +5,7 @@
 #include <ncurses.h>
 #include "scroll_menu.h"
 
-std::string name2[] = {  
+std::string name[] = {  
 "     _____          ___           ___           ___           ___                 ",
 "    /  /::\\        /  /\\         /  /\\         /  /\\         /__/\\        ___     ",
 "   /  /:/\\:\\      /  /::\\       /  /::\\       /  /:/_        \\  \\:\\      /  /\\    ",
@@ -19,7 +19,7 @@ std::string name2[] = {
 "                   \\__\\/         \\__\\/         \\__\\/         \\__\\/                "};
 
 
-std::string name[]{
+std::string name2[]{
 "    .___                          .__ ",
 "  __| _/______  ____   ____  __ __|__|",
 " / __ |\\_  __ \\/  _ \\ / ___\\|  |  \\  |",
@@ -53,9 +53,7 @@ int main(void) {
 	getmaxyx(stdscr, max_y, max_x);
 
 	WINDOW * mainwin = newwin(max_y-2*padd_y, max_x - 2*padd_x, padd_y, padd_x);
-	refresh();
-    wrefresh(mainwin);
-    PANEL * mainpanel = new_panel(mainwin); 
+	PANEL * mainpanel = new_panel(mainwin); 
     
     keypad(stdscr, true);
     keypad(mainwin, true);
@@ -65,7 +63,7 @@ int main(void) {
 	box(mainwin, 0, 0);
     wattroff(mainwin, COLOR_PAIR(1));
 
-    std::string title = "Mi primer menu";
+    std::string title = "Menu Principal";
     
     
     attron(COLOR_PAIR(2));
@@ -75,33 +73,33 @@ int main(void) {
 
     attroff(COLOR_PAIR(2));
     
-    
+    update_panels();
+	doupdate();
+    string PID_Op[] = {"PID ROLL", "PID PITCH", "PID YAW" ,"PID X" ,"PID Y" , "PID Z"};
+    string sData_Op[] = {"IMU", "GPS", "IMU CAL", "HEIGHT"};
+    string Setpoint_Op[] = {"ROLL", "PITCH", "YAW", "X", "Y", "Z"};
+    string various_Op[] = {"Read Register", "Write Register", "Zero Pos", "Compenstation"}; 
+    menu arr_menu[] = {
+        menu("SendPID", PID_Op, 6),
+        menu("SensorData", sData_Op, 4),
+        menu("Setpoint", Setpoint_Op, 6),
+        menu("Various", various_Op, 4)
+        };
 
-    menu arr_menu[6] = {
-        menu("SendPID"),
-        menu("SensorData"),
-        menu("Setpoint"),
-        menu("ReadRegister"),
-        menu("ZeroPosition"),
-        menu("Compensation")
-        //menu("holssssssssssssssssa2"),
-        //menu("hossssssssssssssla3"),
-        //menu("hsssssssssssssssssola4"),
-       /* menu("hossssssssssssssla3")*/};
-
-    scrollMenu scm = scrollMenu(mainwin, arr_menu, 6, max_x - 2*padd_x, max_y-2*padd_y);
+    scrollMenu scm = scrollMenu(mainwin, arr_menu, 4, max_x - 2*padd_x, max_y-2*padd_y, padd_x, padd_y);
 
     scm.draw();
 
+    for(int i = 0 ; i < 11; i++){
+            mvwprintw(mainwin, max_y/2 - padd_y + i - 6, max_x/2 - name[i].length()/2 - padd_x, name[i].c_str());
+        }
+        
+        wrefresh(mainwin);
     
 
     while(1){
         
-        for(int i = 0 ; i < 6; i++){
-            mvwprintw(mainwin, max_y/2 - padd_y + i - 3, max_x/2 - name[i].length()/2 - padd_x, name[i].c_str());
-        }
         
-        wrefresh(mainwin);
     
         int c = getch();
         scm.keyHandling(c);
