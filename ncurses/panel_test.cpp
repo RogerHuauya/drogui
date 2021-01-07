@@ -60,7 +60,7 @@ int main(void) {
     
     
     wattron(mainwin, COLOR_PAIR(1));
-	box(mainwin, 0, 0);
+	wborder(mainwin, '|', '|', '-', '-', '+', '+', '+', '+');
     wattroff(mainwin, COLOR_PAIR(1));
 
     std::string title = "Menu Principal";

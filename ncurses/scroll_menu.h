@@ -25,7 +25,7 @@ class menu{
             pan_y = sz_lista + 2;
             win = newwin(pan_y, pan_x, 0, 0);
             wattron(win, COLOR_PAIR(2));
-            box(win, 0, 0);
+            wborder(win, '|', '|', '-', '-', '+', '+', '+', '+');
             wattroff(win, COLOR_PAIR(2));
 
             draw();
