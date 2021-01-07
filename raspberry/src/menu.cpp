@@ -1,6 +1,6 @@
 #include "menu.h"
 #include <fstream>
-
+bool logging_state = false;
 void desplazamiento(){}
 
 void dataSensor(){
@@ -8,38 +8,40 @@ void dataSensor(){
     int reg;
     cls();
     printf("\t\t\t\t\t\t\t\t" blue(Sensors) "\n");
-    printf(green([0]) " " white(IMU\n));
-    printf(green([1]) " " white(GPS - DSPIC\n));
-    printf(green([2]) " " white(GPS - GSM\n));
-    printf(green([3]) " " white(BMP280\n));
-    printf(green([4]) " " white(Z value\n));
-    printf(green([5]) " " white(IMU CALIBRATION\n));
+    printf(green([0]) " " white(Main menu\n));
+    printf(green([1]) " " white(IMU\n));
+    printf(green([2]) " " white(GPS - DSPIC\n));
+    printf(green([3]) " " white(GPS - GSM\n));
+    printf(green([4]) " " white(BMP280\n));
+    printf(green([5]) " " white(Z value\n));
+    printf(green([6]) " " white(IMU CALIBRATION\n));
     
 
     std::cin >> reg;
     if(std::cin.fail()) throw 505;
+    if(reg == 0) {cin_thread = false; return;}
     for(int i = 0 ; i < 100 ; i++){
         switch(reg){
-            case 0: std::cout << rasp_i2c.readFloat(ROLL_VAL) <<"\t" ;
+            case 1: std::cout << rasp_i2c.readFloat(ROLL_VAL) <<"\t" ;
                     std::cout << rasp_i2c.readFloat(PITCH_VAL) << "\t";
                     std::cout << rasp_i2c.readFloat(YAW_VAL) << std::endl; break;
 
-            case 1: std::cout << rasp_i2c.readFloat(GPS_X) << "\t";
+            case 2: std::cout << rasp_i2c.readFloat(GPS_X) << "\t";
                     std::cout << rasp_i2c.readFloat(GPS_Y) << "\t";
                     std::cout << rasp_i2c.readFloat(X_VAL) << "\t";
                     std::cout << rasp_i2c.readFloat(Y_VAL) << std::endl; break;
 
-            case 2: printf("Lat: %.6lf,\tLong: %.6lf,\tAlt: %.6lf\tVel: %.6f\tCurso: %.6f\n",
+            case 3: printf("Lat: %.6lf,\tLong: %.6lf,\tAlt: %.6lf\tVel: %.6f\tCurso: %.6f\n",
 			sim7600.Lat,sim7600.Log,sim7600.Alt,sim7600.Vel,sim7600.Curso);break;
 
-            case 3: std::cout << rasp_i2c.readFloat(RAW_TEMP) << "\t";
+            case 4: std::cout << rasp_i2c.readFloat(RAW_TEMP) << "\t";
                     std::cout << rasp_i2c.readFloat(TEMP_ABS) << "\t";
                     std::cout << rasp_i2c.readFloat(RAW_PRESS) << "\t";
                     std::cout << rasp_i2c.readFloat(PRESS_ABS) << std::endl; break;
 
-            case 4: std::cout << rasp_i2c.readFloat(Z_VAL) <<std::endl; break;
+            case 5: std::cout << rasp_i2c.readFloat(Z_VAL) <<std::endl; break;
 
-            case 5: std::cout << rasp_i2c.readFloat(CAL_SYS) <<"\t" ;
+            case 6: std::cout << rasp_i2c.readFloat(CAL_SYS) <<"\t" ;
                     std::cout << rasp_i2c.readFloat(CAL_GYR) << "\t";
                     std::cout << rasp_i2c.readFloat(CAL_ACC) << "\t";
                     std::cout << rasp_i2c.readFloat(CAL_MAG) << std::endl; break;
@@ -83,30 +85,32 @@ void readRegister(){
     cls(); 
     int reg;
     
-    printf("\t\t\t\t\t\t\t\t" blue(Principal menu) "\n");
-    printf(green([0]) " " white(H_dH\n));
-    printf(green([1]) " " white(PID_ROLL\n));
-    printf(green([2]) " " white(PID_PITCH\n));
-    printf(green([3]) " " white(PID_YAW\n));
-    printf(green([4]) " " white(SETPOINTS\n));
+    printf("\t\t\t\t\t\t\t\t" blue(Read register) "\n");
+    printf(green([0]) " " white(Main menu\n));
+    printf(green([1]) " " white(H_dH\n));
+    printf(green([2]) " " white(PID_ROLL\n));
+    printf(green([3]) " " white(PID_PITCH\n));
+    printf(green([4]) " " white(PID_YAW\n));
+    printf(green([5]) " " white(SETPOINTS\n));
 
     std::cin >> reg;
     if(std::cin.fail()) throw 505;
+    if(reg == 0) {cin_thread = false; return;}
     switch(reg){
-        case 0: std::cout << rasp_i2c.readFloat(Z_REF) << " " << rasp_i2c.readFloat(Z_REF_SIZE) << std::endl; break;
-        case 1: std::cout << rasp_i2c.readFloat(ROLL_KP) << " ";
+        case 1: std::cout << rasp_i2c.readFloat(Z_REF) << " " << rasp_i2c.readFloat(Z_REF_SIZE) << std::endl; break;
+        case 2: std::cout << rasp_i2c.readFloat(ROLL_KP) << " ";
                  std::cout << rasp_i2c.readFloat(ROLL_KI) << " ";
                  std::cout << rasp_i2c.readFloat(ROLL_KD) << std::endl; break;
         
-        case 2: std::cout << rasp_i2c.readFloat(PITCH_KP) << " ";
+        case 3: std::cout << rasp_i2c.readFloat(PITCH_KP) << " ";
                  std::cout << rasp_i2c.readFloat(PITCH_KI) << " ";
                  std::cout << rasp_i2c.readFloat(PITCH_KD) << std::endl; break;
         
-        case 3:std::cout << rasp_i2c.readFloat(YAW_KP) << " ";
+        case 4:std::cout << rasp_i2c.readFloat(YAW_KP) << " ";
                  std::cout << rasp_i2c.readFloat(YAW_KI) << " ";
                  std::cout << rasp_i2c.readFloat(YAW_KD) << std::endl; break;
 
-        case 4:std::cout << rasp_i2c.readFloat(ROLL_REF) << " ";
+        case 5:std::cout << rasp_i2c.readFloat(ROLL_REF) << " ";
                  std::cout << rasp_i2c.readFloat(PITCH_REF) << " ";
                  std::cout << rasp_i2c.readFloat(YAW_REF) << std::endl; break;
     }
@@ -165,29 +169,38 @@ void startSystem(){
 
     start = 1 - start;
     rasp_i2c.sendFloat(START, start);
+    cin_thread = false;
 }
 
+void startLogging(){
+    logging_state = true;
+    cin_thread=false;
+
+}
 void menu(){
     while(1){
         if(!cin_thread){
-            cls();    
+            cls(); 
+            cls();   
             printf("\t\t\t\t\t\t\t\t" blue(Principal menu) "\n");
             printf(green([1]) " " white(Desplazamiento\n));
             printf(green([2]) " " white(Show data sensor\n));
             printf(green([3]) " " white(Send PID\n));
             printf(green([4]) " " white(Zero position \n));
             printf(green([5]) " " white(Send reference \n));
-            printf(green([6]) " " white(Sample period (ms) PID TS \n));
+            printf(green([6]) " " white(Send Compensation\n));
             printf(green([7]) " " white(Write register \n));
             printf(green([8]) " " white(Read register \n));
             printf(green([9]) " " white(Send AT command \n));
             printf(green([10]) " " white(GPS position \n));
             printf(green([11]) " " white(Send setpoint \n));
-            if(start == 1)	printf(green([12]) " " white(Start\n));
-            else		printf(green([12]) " " white(Stop\n));
+            printf(green([12]) " " white(Start Logging \n));
+            if(start == 1)	printf(green([13]) " " white(Start\n));
+            else		printf(green([13]) " " white(Stop\n));
+
             printf(white(Enter an option = \n));
             std::cin>>id_choosen;
-            cin_thread=true;
+            cin_thread = true;
             std::cout << "menu : "<<id_choosen<<std::endl;
             //unistd::sleep(1);
             switch(id_choosen){
@@ -202,7 +215,8 @@ void menu(){
                 case 9: send_AT_command(); break;
                 case 10: getGPSdata(); break;
                 case 11: break;//send_setpoint(); break;
-		        case 12: startSystem(); break;
+                case 12: startLogging(); break;//send_setpoint(); break;
+		case 13: startSystem(); break;
                 default: printf("%d is not an option, please enter option again\n", id_choosen); cin_thread = false; break;
             }
         }

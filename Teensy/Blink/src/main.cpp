@@ -22,13 +22,14 @@ double x, y, z;
 volatile unsigned long long time = 0;
 bool led_state;
 
+adafruit_bno055_offsets_t off_imu;
 void timer1Interrupt(){
 	  sensors_event_t event;
     bno.getEvent(&event);
-    /*
-    digitalWrite(13, HIGH);
+    
+    digitalWrite(13, led_state);
     led_state = !led_state;
-    */
+    
     yaw = (float)event.orientation.x*pi/180 - pi;
     pitch = (float)event.orientation.y*pi/180;
     roll = (float)event.orientation.z*pi/180;
@@ -39,18 +40,20 @@ void timer1Interrupt(){
 
     uint8_t sys, gyro, accel, mag = 0;
     bno.getCalibration(&sys, &gyro, &accel, &mag);
-
+    
     setReg(CAL_SYS, (float) sys);
     setReg(CAL_GYR, (float) gyro);
     setReg(CAL_ACC, (float) accel);
     setReg(CAL_MAG, (float) mag);
 
     
-    /*Serial.print(roll);
+    Serial.print(sys);
     Serial.print("\t");
-    Serial.print(pitch);
+    Serial.print(gyro);
     Serial.print("\t");
-    Serial.println(yaw);*/     
+    Serial.print(accel);
+    Serial.print("\t");
+    Serial.println(mag);     
 }
 
 void timer2Interrupt(){
@@ -74,6 +77,22 @@ void initializeSystem(){
     delay(1000);
 
     bno.setExtCrystalUse(true);
+
+    off_imu.accel_offset_x = -29;
+    off_imu.accel_offset_y = -18;
+    off_imu.accel_offset_z = 22;
+    off_imu.gyro_offset_x = -2;
+    off_imu.gyro_offset_y = 0;
+    off_imu.gyro_offset_z = 0;
+    off_imu.mag_offset_x = 27;
+    off_imu.mag_offset_y = 70;
+    off_imu.mag_offset_z = 305;
+    off_imu.accel_radius = 1000;
+    off_imu.mag_radius = 353;
+
+
+
+    bno.setSensorOffsets(off_imu);
 
     readSensors.begin(timer1Interrupt, 10000);
     readSensors.priority(0);
@@ -105,7 +124,6 @@ long long pm = 0;
 
 
 int main(void){
-    digitalWrite(13, HIGH);
 
     initializeSystem();
     delay(1000);
