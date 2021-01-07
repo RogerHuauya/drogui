@@ -21,7 +21,7 @@
 rasp_I2C rasp_i2c(DSPIC_ADDRESS);
 #define POWERKEY 6
 
-bool inputReceived = false, logging_state = false;
+bool inputReceived = false;
 bool cin_thread = false;
 int id_choosen, value; 
 int id_thread_menu, id_thread_log, id_thread_gps;

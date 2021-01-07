@@ -24,28 +24,28 @@ for i= 2:length(t_mm)
     s_norm(:,i) = s_rot(:,i) + g/Gr;
     %s_rot(:,i) = Rq\s(:,i);
 end
-figure 
-subplot(3, 1, 1);
-scatter(t_mm, ax, 'r');
-title("Aceleracion cruda");
+% figure 
+% subplot(3, 1, 1);
+% scatter(t_mm, ax, 'r');
+% title("Aceleracion cruda");
+% 
+% subplot(3, 1, 2);
+% scatter(t_mm, ay, 'g');
+% 
+% subplot(3, 1, 3);
+% scatter(t_mm, az, 'b');
 
-subplot(3, 1, 2);
-scatter(t_mm, ay, 'g');
 
-subplot(3, 1, 3);
-scatter(t_mm, az, 'b');
-
-
-figure 
-subplot(3, 1, 1);
-scatter(t_mm, s_rot(1,:), 'r');
-title("Aceleracion rotada");
-
-subplot(3, 1, 2);
-scatter(t_mm, s_rot(2,:), 'g');
-
-subplot(3, 1, 3);
-scatter(t_mm, s_rot(3,:), 'b');
+% figure 
+% subplot(3, 1, 1);
+% scatter(t_mm, s_rot(1,:), 'r');
+% title("Aceleracion rotada");
+% 
+% subplot(3, 1, 2);
+% scatter(t_mm, s_rot(2,:), 'g');
+% 
+% subplot(3, 1, 3);
+% scatter(t_mm, s_rot(3,:), 'b');
 
 
 lambda = 0.9;
@@ -59,16 +59,16 @@ for i= 2:length(t_mm)
     s_filtered(:,i) = s_filtered(:, i-1) + lambda*(s(:, i) - s_filtered(:, i-1));
 end
 
-figure 
-subplot(3, 1, 1);
-scatter(t_mm, s_filtered(1,:), 'r');
-title("Aceleracion filtrada");
-
-subplot(3, 1, 2);
-scatter(t_mm, s_filtered(2,:), 'g');
-
-subplot(3, 1, 3);
-scatter(t_mm, s_filtered(3,:), 'b');
+% figure 
+% subplot(3, 1, 1);
+% scatter(t_mm, s_filtered(1,:), 'r');
+% title("Aceleracion filtrada");
+% 
+% subplot(3, 1, 2);
+% scatter(t_mm, s_filtered(2,:), 'g');
+% 
+% subplot(3, 1, 3);
+% scatter(t_mm, s_filtered(3,:), 'b');
 
 
 s_filtered = zeros(3, length(t_mm));
@@ -133,6 +133,7 @@ else
     hold on
     plot(p(1,:), p(2,:), 'r');
     plot(p_gps(1,:), p_gps(2,:), 'g');
+    legend('Sensor Fusion', 'GPS');
     hold off
 end
 figure
@@ -141,36 +142,42 @@ quiver(p(1,:), p(2, :), v(1, :), v(2, :), 'b');
 quiver(p(1,:), p(2, :), s_rot(1, :), s_rot(2, :), 'g');
 plot(p(1,:), p(2, :), 'r');
 plot(p_gps_ext(1,:), p_gps_ext(2, :), 'm');
+legend('Velocidad', 'Aceleracion','Sesor Fusion','GPS');
 hold off
-figure 
-subplot(2, 2, 1);
-scatter(t_mm, p(1,:), 'r');
-title("Posicion vs. Velocidad");
+% Unshowed Plot
+% figure 
+% subplot(2, 2, 1);
+% scatter(t_mm, p(1,:), 'r');
+% title("Posicion vs. Velocidad");
+% 
+% subplot(2, 2, 2);
+% scatter(t_mm, v(1,:), 'b');
+% 
+% subplot(2, 2, 3);
+% scatter(t_mm, p(2,:), 'r');
+% 
+% subplot(2, 2, 4);
+% scatter(t_mm, v(2,:), 'b');
+% 
+% 
+% figure 
+% subplot(2, 2, 1);
+% scatter(t_mm, p(1,:), 'r');
+% title("Posicion estimada");
+% 
+% subplot(2, 2, 2);
+% scatter(t_mm, p_gps_ext(1,:), 'b');
+% title("Posicion gps");
+% 
+% subplot(2, 2, 3);
+% scatter(t_mm, p(2,:), 'r');
+% 
+% subplot(2, 2, 4);
+% scatter(t_mm, p_gps_ext(2,:), 'b');
+% 
 
-subplot(2, 2, 2);
-scatter(t_mm, v(1,:), 'b');
+%
 
-subplot(2, 2, 3);
-scatter(t_mm, p(2,:), 'r');
-
-subplot(2, 2, 4);
-scatter(t_mm, v(2,:), 'b');
-
-
-figure 
-subplot(2, 2, 1);
-scatter(t_mm, p(1,:), 'r');
-title("Posicion estimada");
-
-subplot(2, 2, 2);
-scatter(t_mm, p_gps_ext(1,:), 'b');
-title("Posicion gps");
-
-subplot(2, 2, 3);
-scatter(t_mm, p(2,:), 'r');
-
-subplot(2, 2, 4);
-scatter(t_mm, p_gps_ext(2,:), 'b');
 % figure 
 % subplot(3, 1, 1);
 % scatter(t, s_filtered(1,:), 'r');

@@ -345,6 +345,7 @@ void Adafruit_BNO055::getCalibration(uint8_t *sys, uint8_t *gyro,
   uint8_t calData = read8(BNO055_CALIB_STAT_ADDR);
   if (sys != NULL) {
     *sys = (calData >> 6) & 0x03;
+    
   }
   if (gyro != NULL) {
     *gyro = (calData >> 4) & 0x03;

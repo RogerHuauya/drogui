@@ -22,12 +22,14 @@ double x, y, z;
 volatile unsigned long long time = 0;
 bool led_state;
 
+adafruit_bno055_offsets_t off_imu;
 void timer1Interrupt(){
 	  sensors_event_t event;
     bno.getEvent(&event);
-
-    digitalWrite(LED_BUILTIN, led_state);
+    
+    digitalWrite(13, led_state);
     led_state = !led_state;
+    
     yaw = (float)event.orientation.x*pi/180 - pi;
     pitch = (float)event.orientation.y*pi/180;
     roll = (float)event.orientation.z*pi/180;
@@ -35,11 +37,23 @@ void timer1Interrupt(){
     setReg(ROLL_VAL,(float)(roll));
     setReg(PITCH_VAL,(float)(pitch));
     setReg(YAW_VAL,(float)(yaw));
-    /*Serial.print(roll);
+
+    uint8_t sys, gyro, accel, mag = 0;
+    bno.getCalibration(&sys, &gyro, &accel, &mag);
+    
+    setReg(CAL_SYS, (float) sys);
+    setReg(CAL_GYR, (float) gyro);
+    setReg(CAL_ACC, (float) accel);
+    setReg(CAL_MAG, (float) mag);
+
+    
+    Serial.print(sys);
     Serial.print("\t");
-    Serial.print(pitch);
+    Serial.print(gyro);
     Serial.print("\t");
-    Serial.println(yaw);*/        
+    Serial.print(accel);
+    Serial.print("\t");
+    Serial.println(mag);     
 }
 
 void timer2Interrupt(){
@@ -63,6 +77,22 @@ void initializeSystem(){
     delay(1000);
 
     bno.setExtCrystalUse(true);
+
+    off_imu.accel_offset_x = -29;
+    off_imu.accel_offset_y = -18;
+    off_imu.accel_offset_z = 22;
+    off_imu.gyro_offset_x = -2;
+    off_imu.gyro_offset_y = 0;
+    off_imu.gyro_offset_z = 0;
+    off_imu.mag_offset_x = 27;
+    off_imu.mag_offset_y = 70;
+    off_imu.mag_offset_z = 305;
+    off_imu.accel_radius = 1000;
+    off_imu.mag_radius = 353;
+
+
+
+    bno.setSensorOffsets(off_imu);
 
     readSensors.begin(timer1Interrupt, 10000);
     readSensors.priority(0);
@@ -88,13 +118,13 @@ int dig = 0;
 double  H,R,P,Y, H_ref;
 double M1,M2,M3,M4;
 uint8_t haux = 0;
-double roll_off = -3.09995788 , pitch_off = 0.0170128063, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
+double roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
 double roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
 long long pm = 0;
 
 
 int main(void){
-    
+
     initializeSystem();
     delay(1000);
     

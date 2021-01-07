@@ -8,7 +8,7 @@ extern bool logging_state;
 void *logging(void *threadid){
     unsigned long long tim = 0;
     unistd::sleep(10);
-    
+    while(!logging_state){};
     while(1){
         std::ofstream log_gps;
         //while(!logging_state){}
