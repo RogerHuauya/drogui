@@ -8,7 +8,7 @@ extern bool logging_state;
 void *logging(void *threadid){
     unsigned long long tim = 0;
     unistd::sleep(10);
-    
+    while(!logging_state){};
     while(1){
         std::ofstream log_gps;
         //while(!logging_state){}
@@ -42,6 +42,12 @@ void *logging(void *threadid){
             log_imu<<rasp_i2c.readFloat(PITCH_VAL);
             log_imu<<"\t";
             log_imu<<rasp_i2c.readFloat(YAW_VAL);
+            log_imu<<"\t";
+            log_imu<<rasp_i2c.readFloat(ACC_X);
+            log_imu<<"\t";
+            log_imu<<rasp_i2c.readFloat(ACC_Y);
+            log_imu<<"\t";
+            log_imu<<rasp_i2c.readFloat(ACC_Z);
             log_imu<<"\t";
             log_imu<<rasp_i2c.readFloat(X_VAL);
             log_imu<<"\t";
@@ -78,6 +84,7 @@ void *logging(void *threadid){
 }
 
 void *gps_data(void *threadid){
+    
     sim7600.GPSStart();
     unistd::sleep(10);
     
