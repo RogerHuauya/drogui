@@ -1,7 +1,19 @@
 //#define MAIN
 #ifdef MAIN
 
-#include "..\..\headers\main.h"
+#include "..\headers\main.h"
+#include "..\headers\kalman.h"
+#include "..\headers\control.h"
+#include "..\headers\pwm.h"
+#include "..\headers\i2c.h"
+#include "..\headers\utils.h"
+#include "..\headers\registerMap.h"
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BNO055.h>
+#include <utility/imumaths.h>
+#include <Arduino.h>
+#include <i2c_driver.h>
+#include <i2c_driver_wire.h>
 
 char buffer[80];
 
@@ -104,7 +116,7 @@ double roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
 long long pm = 0;
 
 
-int main(void){
+int _main(void){
     digitalWrite(13, HIGH);
 
     initializeSystem();
@@ -113,6 +125,8 @@ int main(void){
     yaw_off = yaw;
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
+
+    Serial.println("Holav:");
 
     while(1){
         
