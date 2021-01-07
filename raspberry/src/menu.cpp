@@ -39,10 +39,10 @@ void dataSensor(){
 
             case 4: std::cout << rasp_i2c.readFloat(Z_VAL) <<std::endl; break;
 
-            case 5: std::cout << rasp_i2c.readFloat(CAL_SYS) <<"\t" ;
-                    std::cout << rasp_i2c.readFloat(CAL_GYR) << "\t";
-                    std::cout << rasp_i2c.readFloat(CAL_ACC) << "\t";
-                    std::cout << rasp_i2c.readFloat(CAL_MAG) << std::endl; break;
+            case 5: std::cout << (int) rasp_i2c.readFloat(CAL_SYS) <<"\t" ;
+                    std::cout << (int) rasp_i2c.readFloat(CAL_GYR) << "\t";
+                    std::cout << (int) rasp_i2c.readFloat(CAL_ACC) << "\t";
+                    std::cout << (int) rasp_i2c.readFloat(CAL_MAG) << std::endl; break;
 
         }
         unistd::usleep(20000);
@@ -165,6 +165,7 @@ void startSystem(){
 
     start = 1 - start;
     rasp_i2c.sendFloat(START, start);
+    cin_thread = false;
 }
 
 void menu(){
@@ -177,17 +178,17 @@ void menu(){
             printf(green([3]) " " white(Send PID\n));
             printf(green([4]) " " white(Zero position \n));
             printf(green([5]) " " white(Send reference \n));
-            printf(green([6]) " " white(Sample period (ms) PID TS \n));
+            printf(green([6]) " " white(Set compensation \n));
             printf(green([7]) " " white(Write register \n));
             printf(green([8]) " " white(Read register \n));
             printf(green([9]) " " white(Send AT command \n));
             printf(green([10]) " " white(GPS position \n));
             printf(green([11]) " " white(Send setpoint \n));
-            if(start == 1)	printf(green([12]) " " white(Start\n));
-            else		printf(green([12]) " " white(Stop\n));
+            if(start == 1)	printf(green([12]) " " white(Stop\n));
+            else		printf(green([12]) " " white(Start\n));
             printf(white(Enter an option = \n));
             std::cin>>id_choosen;
-            cin_thread=true;
+            cin_thread = true;
             std::cout << "menu : "<<id_choosen<<std::endl;
             //unistd::sleep(1);
             switch(id_choosen){
@@ -202,7 +203,7 @@ void menu(){
                 case 9: send_AT_command(); break;
                 case 10: getGPSdata(); break;
                 case 11: break;//send_setpoint(); break;
-		        case 12: startSystem(); break;
+		case 12: startSystem(); break;
                 default: printf("%d is not an option, please enter option again\n", id_choosen); cin_thread = false; break;
             }
         }

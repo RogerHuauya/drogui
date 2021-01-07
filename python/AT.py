@@ -34,7 +34,7 @@ def power_down(power_key):
 	print('Good bye')
 
 try:
-    #power_on(power_key)
+    power_on(power_key)
 	
     while True:
         x = raw_input('Read?')
@@ -48,7 +48,7 @@ try:
             time.sleep(0.01)
             rec_buff = ser.read(ser.inWaiting())	
 	if rec_buff != '':
-            file.write(rec_buff.decode())
+            print(rec_buff.decode())
             rec_buff = ''
 except :
     ser.close()

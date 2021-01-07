@@ -43,6 +43,12 @@ void *logging(void *threadid){
             log_imu<<"\t";
             log_imu<<rasp_i2c.readFloat(YAW_VAL);
             log_imu<<"\t";
+            log_imu<<rasp_i2c.readFloat(ACC_X);
+            log_imu<<"\t";
+            log_imu<<rasp_i2c.readFloat(ACC_Y);
+            log_imu<<"\t";
+            log_imu<<rasp_i2c.readFloat(ACC_Z);
+            log_imu<<"\t";
             log_imu<<rasp_i2c.readFloat(X_VAL);
             log_imu<<"\t";
             log_imu<<rasp_i2c.readFloat(Y_VAL);
@@ -78,6 +84,7 @@ void *logging(void *threadid){
 }
 
 void *gps_data(void *threadid){
+    
     sim7600.GPSStart();
     unistd::sleep(10);
     
