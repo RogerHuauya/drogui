@@ -92,6 +92,7 @@ void readRegister(){
     printf(green([3]) " " white(PID_PITCH\n));
     printf(green([4]) " " white(PID_YAW\n));
     printf(green([5]) " " white(SETPOINTS\n));
+    printf(green([6]) " " white(START_SYSTEM\n));
 
     std::cin >> reg;
     if(std::cin.fail()) throw 505;
@@ -113,6 +114,8 @@ void readRegister(){
         case 5:std::cout << rasp_i2c.readFloat(ROLL_REF) << " ";
                  std::cout << rasp_i2c.readFloat(PITCH_REF) << " ";
                  std::cout << rasp_i2c.readFloat(YAW_REF) << std::endl; break;
+        
+        case 6:std::cout << rasp_i2c.readFloat(START) << std::endl; break;
     }
 
     unistd::sleep(1);

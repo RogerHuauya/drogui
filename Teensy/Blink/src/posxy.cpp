@@ -134,7 +134,7 @@ int dig = 0;
 
 
 
-double  H,R,P,Y, H_ref, X_C, Y_C, R_MAX = pi/18.0 , P_MAX = pi/18.0;
+double  H,R,P,Y, H_ref, X_C, Y_C, R_MAX = pi/22.0 , P_MAX = pi/22.0;
 double M1,M2,M3,M4;
 uint8_t haux = 0;
 double roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
@@ -165,7 +165,7 @@ int _main(void){
 
         H += fabs(H_ref - H) >= 0.1  ? copysign(0.1, H_ref - H) : 0;
         
-        double rel = roll_ref/pitch_ref;
+        double rel = roll_ref/(pitch_ref + 0.0000001);
         
         if( fabs(rel) < 1  ){
           
@@ -187,14 +187,14 @@ int _main(void){
         roll_ref += roll_off;
         pitch_ref += pitch_off;
         yaw_ref = getReg(YAW_REF) + yaw_off;
-        /*
+        
         Serial.print(roll_ref);
         Serial.print("\t");
         Serial.print(pitch_ref);
         Serial.print("\t");
         Serial.print(x);
         Serial.print("\t");
-        Serial.println(y);*/
+        Serial.println(y);
 
 
         R = computePid(&roll_control, angle_dif(roll_ref, roll), time, H);
