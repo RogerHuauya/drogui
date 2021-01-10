@@ -195,8 +195,8 @@ void menu(){
             printf(green([10]) " " white(GPS position \n));
             printf(green([11]) " " white(Send setpoint \n));
             printf(green([12]) " " white(Start Logging \n));
-            if(start == 1)	printf(green([13]) " " white(Start\n));
-            else		printf(green([13]) " " white(Stop\n));
+            if(start == 1)	printf(green([13]) " " white(Stop\n));
+            else		printf(green([13]) " " white(Start\n));
 
             printf(white(Enter an option = \n));
             std::cin>>id_choosen;
