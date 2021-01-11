@@ -92,7 +92,6 @@ void readRegister(){
     printf(green([3]) " " white(PID_PITCH\n));
     printf(green([4]) " " white(PID_YAW\n));
     printf(green([5]) " " white(SETPOINTS\n));
-    printf(green([6]) " " white(START_SYSTEM\n));
 
     std::cin >> reg;
     if(std::cin.fail()) throw 505;
@@ -115,7 +114,6 @@ void readRegister(){
                  std::cout << rasp_i2c.readFloat(PITCH_REF) << " ";
                  std::cout << rasp_i2c.readFloat(YAW_REF) << std::endl; break;
         
-        case 6:std::cout << rasp_i2c.readFloat(START) << std::endl; break;
     }
 
     unistd::sleep(1);
@@ -181,6 +179,8 @@ void startLogging(){
 
 }
 void menu(){
+    rasp_i2c.sendFloat(START, 0);
+
     while(1){
         if(!cin_thread){
             cls(); 
@@ -198,8 +198,8 @@ void menu(){
             printf(green([10]) " " white(GPS position \n));
             printf(green([11]) " " white(Send setpoint \n));
             printf(green([12]) " " white(Start Logging \n));
-            if(start == 1)	printf(green([13]) " " white(Start\n));
-            else		printf(green([13]) " " white(Stop\n));
+            if(start == 1)	printf(green([13]) " " white(Stop\n));
+            else		printf(green([13]) " " white(Start\n));
 
             printf(white(Enter an option = \n));
             std::cin>>id_choosen;
@@ -219,7 +219,7 @@ void menu(){
                 case 10: getGPSdata(); break;
                 case 11: break;//send_setpoint(); break;
                 case 12: startLogging(); break;//send_setpoint(); break;
-		case 13: startSystem(); break;
+		        case 13: startSystem(); break;
                 default: printf("%d is not an option, please enter option again\n", id_choosen); cin_thread = false; break;
             }
         }
