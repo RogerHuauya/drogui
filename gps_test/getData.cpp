@@ -30,8 +30,10 @@ int main(){
     while(cin >> t){
         for(int i = 0 ; i< 6 ; i++) cin >> x;
         cin >> x >> y;
-        cin >> z;               
+        cin >> z;
+        //cout << t << " " << x << " " << y << " " << z << endl;           
         if(IsClean(x) && IsClean(y)){
+            //cout << "En" << endl;
             if(abs(x - x_ant) > 0.5) x = x_ant;
             if(abs(y - y_ant) > 0.5) y = y_ant;
             cout << t << '\t' << x << '\t'<< y << endl;
