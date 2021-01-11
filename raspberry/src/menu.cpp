@@ -145,7 +145,7 @@ void send_AT_command(){
     while(1){
         printf("Please input the AT command: \n>>>");
         std::cin >> at_command;
-	std::cout << at_command;
+	    std::cout << at_command;
         if(at_command[0] == '0') break;
         sim7600.sendATcommand(at_command.c_str(), 2000, true);
     }
