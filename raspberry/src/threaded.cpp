@@ -30,7 +30,7 @@ void *logging(void *threadid){
        
         while(1){
             if(tim%50==0){
-                log_gps << tim/50 << "\t" << sim7600.pos_x << "\t"<< sim7600.pos_y << std::endl;
+                log_gps << tim/50 << "\t" << sim7600.pos_x << "\t"<< sim7600.pos_y << "\t" << sim7600.Lat << "\t" << sim7600.Log <<std::endl;
             }
             
             /*
