@@ -97,7 +97,8 @@ void *gps_data(void *threadid){
         if(sim7600.GPSGet()){
             sim7600.pos_x = (sim7600.Log - sim7600.offset_Log)/8.99871924359995e-06;
             sim7600.pos_y = (sim7600.Lat - sim7600.offset_Lat)/8.99871924359995e-06;
-            rasp_i2c.sendFloat(GPS_X, sim7600.pos_x);
+            sim7600.pos_x = sim7600.pos_x-(sim7600.pos_y/5.658034);
+	    rasp_i2c.sendFloat(GPS_X, sim7600.pos_x);
             rasp_i2c.sendFloat(GPS_Y, sim7600.pos_y);
             rasp_i2c.sendFloat(GPS_AVAILABLE, 1.0);
         }
