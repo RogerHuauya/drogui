@@ -64,7 +64,7 @@ void zeroPosition(){
     printf("Emergency exit CTRL+C - Caught signal %d ... turning off motors\n",s);
     exit(1); 
 }*/
-
+/*
 
 void writeRegister(){
     cin_thread=true;

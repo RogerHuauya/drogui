@@ -225,7 +225,7 @@ int curmenu(void) {
         menu("SendPID", pid_op, 6, &pidOp),
         menu("SensorData", sensor_data_op, 4, &sensorDataOp),
         menu("Setpoint", setpoint_op, 6, &setpointOp),
-        menu("Various", various_op, 4, &variousOp)
+        menu("Various", various_op, 5, &variousOp)
     };
 
     scrollMenu scm = scrollMenu(mainpanel, workpanel, arr_menu, 4);
