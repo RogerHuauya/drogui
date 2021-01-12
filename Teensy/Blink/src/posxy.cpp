@@ -188,13 +188,13 @@ int _main(void){
         pitch_ref += pitch_off;
         yaw_ref = getReg(YAW_REF) + yaw_off;
         
-        Serial.print(roll_ref);
+        /*Serial.print(roll_ref);
         Serial.print("\t");
         Serial.print(pitch_ref);
         Serial.print("\t");
         Serial.print(x);
         Serial.print("\t");
-        Serial.println(y);
+        Serial.println(y);*/
 
 
         R = computePid(&roll_control, angle_dif(roll_ref, roll), time, H);
@@ -221,6 +221,7 @@ int _main(void){
             int index = getReg(PID_INDEX), var = getReg(PID_VAR);
             if(index >= 0) {
                 switch(var){
+        
                     case PID_ROLL:
                         roll_control.kp[index] = getReg(ROLL_KP);
                         roll_control.ki[index] = getReg(ROLL_KI);

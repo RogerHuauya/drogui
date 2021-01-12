@@ -1,5 +1,6 @@
 #include "menu.h"
 #include <fstream>
+#include <string>
 bool logging_state = false;
 void desplazamiento(){}
 
@@ -143,7 +144,7 @@ void send_AT_command(){
     while(1){
         printf("Please input the AT command: \n>>>");
         std::cin >> at_command;
-	std::cout << at_command;
+	    std::cout << at_command;
         if(at_command[0] == '0') break;
         sim7600.sendATcommand(at_command.c_str(), 2000, true);
     }
@@ -202,7 +203,16 @@ void menu(){
             else		printf(green([13]) " " white(Start\n));
 
             printf(white(Enter an option = \n));
-            std::cin>>id_choosen;
+            std::string aux; bool flag_aux = false;
+            std::cin >> aux;
+
+            for(int i = 0; i < aux.size() ; i++){
+                if(aux[i] < '0' || aux[i] > '9') flag_aux = true;
+            }
+
+            if(flag_aux) id_choosen = 0;
+            else id_choosen = std::stoi(aux);
+
             cin_thread = true;
             std::cout << "menu : "<<id_choosen<<std::endl;
             //unistd::sleep(1);
