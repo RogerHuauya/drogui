@@ -99,7 +99,7 @@ bool pidOp(PANEL* pan, int index){
 }
 
 
-string sensor_data_op[] = {"IMU", "GPS", "IMU CAL", "HEIGHT"};
+string sensor_data_op[] = {"IMU", "GPS", "KALMAN", "IMU CAL", "HEIGHT"};
 bool sensorDataOp(PANEL* pan, int index){
     if(index == 0){    
         string names[] = {"roll", "pitch", "yaw"};
@@ -107,16 +107,21 @@ bool sensorDataOp(PANEL* pan, int index){
         writeData(pan, sensor_data_op[index], names, arr, 3);
     }
     else if(index == 1){
+        string names[] = {"latitud", "longitud"};
+        float arr[] = {sim7600.Lat, sim7600.Log}; 
+        writeData(pan, sensor_data_op[index], names, arr, 2);
+    }
+    else if(index == 2){
         string names[] = {"GSM_X", "GSM_Y", "X", "Y"};
         float arr[] = {rasp_i2c.readFloat(GPS_X), rasp_i2c.readFloat(GPS_X), rasp_i2c.readFloat(X_VAL), rasp_i2c.readFloat(Y_VAL)}; 
         writeData(pan, sensor_data_op[index], names, arr, 4);
     }
-    else if(index == 2){
+    else if(index == 3){
         string names[] = {"SYS", "GYR", "ACC", "MAG"};
         float arr[] = {rasp_i2c.readFloat(CAL_SYS), rasp_i2c.readFloat(CAL_GYR), rasp_i2c.readFloat(CAL_ACC), rasp_i2c.readFloat(CAL_MAG)}; 
         writeData(pan, sensor_data_op[index], names, arr, 4);
     }
-    else if(index == 3){
+    else if(index == 4){
         string names[] = {"Z"};
         float arr[] = {0.012}; 
         writeData(pan, sensor_data_op[index], names, arr, 1);
@@ -223,7 +228,7 @@ int curmenu(void) {
     
     menu arr_menu[] = {
         menu("SendPID", pid_op, 6, &pidOp),
-        menu("SensorData", sensor_data_op, 4, &sensorDataOp),
+        menu("SensorData", sensor_data_op, 5, &sensorDataOp),
         menu("Setpoint", setpoint_op, 6, &setpointOp),
         menu("Various", various_op, 5, &variousOp)
     };
