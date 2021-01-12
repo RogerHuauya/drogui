@@ -12,6 +12,4 @@ class scroll_menu{
 
 }
 
-
-
 #endif

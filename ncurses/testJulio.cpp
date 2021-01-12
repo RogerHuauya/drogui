@@ -85,6 +85,7 @@ int main(void) {
             else mvwprintw(mainwin, 0, pos, bigtext[i]);
         }
         //printw(name[0].c_str());
+
         for(int i = 0 ; i < 11; i++){
             mvwprintw(mainwin, max_y/2 - padd_y + i - 6, max_x/2 - name[i].length()/2 - padd_x, name[i].c_str());
         }
@@ -106,8 +107,7 @@ int main(void) {
         if(selected < ini) ini = selected, fin = ini + len;
         if(selected >= fin) fin = selected + 1, ini = fin - len;
 
-        if(c == 'q') break;
-
+        if( c == 'q' ) break;
     }
 
 	endwin();
