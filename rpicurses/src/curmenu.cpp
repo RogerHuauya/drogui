@@ -10,7 +10,7 @@
 
 bool logging_state = false;
 
-std::string name[] = {  
+std::string name2[] = {  
 "     _____          ___           ___           ___           ___                 ",
 "    /  /::\\        /  /\\         /  /\\         /  /\\         /__/\\        ___     ",
 "   /  /:/\\:\\      /  /::\\       /  /::\\       /  /:/_        \\  \\:\\      /  /\\    ",
@@ -24,7 +24,7 @@ std::string name[] = {
 "                   \\__\\/         \\__\\/         \\__\\/         \\__\\/                "};
 
 
-std::string name2[]{
+std::string name[]{
 "    .___                          .__ ",
 "  __| _/______  ____   ____  __ __|__|",
 " / __ |\\_  __ \\/  _ \\ / ___\\|  |  \\  |",
@@ -108,7 +108,7 @@ bool sensorDataOp(PANEL* pan, int index){
     }
     else if(index == 1){
         string names[] = {"latitud", "longitud"};
-        float arr[] = {sim7600.Lat, sim7600.Log}; 
+        float arr[] = {(float)sim7600.Lat,(float) sim7600.Log}; 
         writeData(pan, sensor_data_op[index], names, arr, 2);
     }
     else if(index == 2){
@@ -237,8 +237,8 @@ int curmenu(void) {
 
     scm.draw();
     
-    for(int i = 0 ; i < 11; i++){
-        mvwprintw(mainwin, max_y/2 - padd_y + i - 6, max_x/2 - name[i].length()/2 - padd_x, name[i].c_str());
+    for(int i = 0 ; i < 6; i++){
+        mvwprintw(mainwin, max_y/2 - padd_y + i - 3, max_x/2 - name[i].length()/2 - padd_x, name[i].c_str());
     }
 
     refresh();
