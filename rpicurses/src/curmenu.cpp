@@ -5,6 +5,7 @@
 #include "scroll_menu.h"
 #include <unistd.h>
 #include "read_write.h"
+#include "curmenu.h"
 
 
 std::string name[] = {  

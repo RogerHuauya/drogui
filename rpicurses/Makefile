@@ -1,6 +1,6 @@
 CXX = g++
 INC = 
-PCFG = -lz -lrt -lpthread -lwiringPi
+PCFG = -lz -lrt -lpthread -lwiringPi -lncurses -lpanel
 
 SOURCES :=  $(wildcard src/*.cpp)
 OBJS := $(patsubst %.cpp, %.o,$(SOURCES))
