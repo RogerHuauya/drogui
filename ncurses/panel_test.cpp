@@ -2,8 +2,10 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-#include <ncurses.h>
 #include "scroll_menu.h"
+#include <unistd.h>
+#include "read_write.h"
+
 
 std::string name[] = {  
 "     _____          ___           ___           ___           ___                 ",
@@ -29,6 +31,80 @@ std::string name2[]{
 
 
 char bigtext[100][50];
+
+
+
+string pid_op[] = {"PID ROLL", "PID PITCH", "PID YAW" ,"PID X" ,"PID Y" , "PID Z"};
+bool pidOp(PANEL* pan, int index){
+    if(index < 3){    
+        string names[] = {"index", "KP", "KD", "KI"};
+        float arr[4]; 
+        if(readData(pan, pid_op[index], names, arr, 4)){
+
+        }
+    }
+    else{
+        string names[] = {"KP", "KD", "KI"};
+        float arr[3]; 
+        if(readData(pan, pid_op[index], names, arr, 3)){
+
+        }
+    }
+    return true;
+}
+
+
+string sensor_data_op[] = {"IMU", "GPS", "IMU CAL", "HEIGHT"};
+bool sensorDataOp(PANEL* pan, int index){
+    if(index == 0){    
+        string names[] = {"roll", "pitch", "yaw"};
+        float arr[] = {0.012, 0.015, -3.1415}; 
+        writeData(pan, sensor_data_op[index], names, arr, 3);
+    }
+    else if(index == 1){
+        string names[] = {"GSM_X", "GSM_Y", "X", "Y"};
+        float arr[] = {0.012, 0.015, 0.002, 0.013}; 
+        writeData(pan, sensor_data_op[index], names, arr, 4);
+    }
+    else if(index == 2){
+        string names[] = {"SYS", "GYR", "ACC", "MAG"};
+        float arr[] = {3, 3, 3, 2}; 
+        writeData(pan, sensor_data_op[index], names, arr, 4);
+    }
+    else if(index == 3){
+        string names[] = {"Z"};
+        float arr[] = {0.012}; 
+        writeData(pan, sensor_data_op[index], names, arr, 1);
+    }
+
+    return true;
+}
+string setpoint_op[] = {"ROLL", "PITCH", "YAW", "X", "Y", "Z"};
+bool setpointOp(PANEL* pan, int index){
+    if(index < 3){    
+        string names[] = {"degrees"};
+        float arr[1]; 
+        if(readData(pan, pid_op[index], names, arr, 1)){
+
+        }
+    }
+    else{
+        string names[] = {"meters"};
+        float arr[1]; 
+        if(readData(pan, pid_op[index], names, arr, 1)){
+
+        }
+    }
+    return true;
+}
+string various_op[] = {"Read Register", "Write Register", "Zero Pos", "Compenstation"}; 
+bool variousOp(PANEL* pan, int index){
+    //wmove(win, 5, 5);
+    //wprintw(win, "kha3");
+
+    return true;
+}
+
  
 int main(void) {
     
@@ -52,12 +128,15 @@ int main(void) {
 
 	getmaxyx(stdscr, max_y, max_x);
 
-	WINDOW * mainwin = newwin(max_y-2*padd_y, max_x - 2*padd_x, padd_y, padd_x);
-	PANEL * mainpanel = new_panel(mainwin); 
+	//WINDOW * mainwin = newwin(max_y-2*padd_y, max_x - 2*padd_x, padd_y, padd_x);
+	PANEL * mainpanel = new_panel(newwin(max_y-2*padd_y, max_x - 2*padd_x, padd_y, padd_x)); 
+    WINDOW * mainwin = panel_window(mainpanel);
+
+    WINDOW * workwin = newwin(max_y-2*padd_y -2, max_x - 2*padd_x - 2, padd_y + 1, padd_x + 1);
+	PANEL * workpanel = new_panel(workwin); 
+    hide_panel(workpanel);
     
     keypad(stdscr, true);
-    keypad(mainwin, true);
-    
     
     wattron(mainwin, COLOR_PAIR(1));
 	wborder(mainwin, '|', '|', '-', '-', '+', '+', '+', '+');
@@ -73,29 +152,29 @@ int main(void) {
 
     attroff(COLOR_PAIR(2));
     
-    update_panels();
-	doupdate();
-    string PID_Op[] = {"PID ROLL", "PID PITCH", "PID YAW" ,"PID X" ,"PID Y" , "PID Z"};
-    string sData_Op[] = {"IMU", "GPS", "IMU CAL", "HEIGHT"};
-    string Setpoint_Op[] = {"ROLL", "PITCH", "YAW", "X", "Y", "Z"};
-    string various_Op[] = {"Read Register", "Write Register", "Zero Pos", "Compenstation"}; 
+    
+    
     menu arr_menu[] = {
-        menu("SendPID", PID_Op, 6),
-        menu("SensorData", sData_Op, 4),
-        menu("Setpoint", Setpoint_Op, 6),
-        menu("Various", various_Op, 4)
-        };
+        menu("SendPID", pid_op, 6, &pidOp),
+        menu("SensorData", sensor_data_op, 4, &sensorDataOp),
+        menu("Setpoint", setpoint_op, 6, &setpointOp),
+        menu("Various", various_op, 4, &variousOp)
+    };
 
-    scrollMenu scm = scrollMenu(mainwin, arr_menu, 4, max_x - 2*padd_x, max_y-2*padd_y, padd_x, padd_y);
+    scrollMenu scm = scrollMenu(mainpanel, workpanel, arr_menu, 4);
 
     scm.draw();
-
-    for(int i = 0 ; i < 11; i++){
-            mvwprintw(mainwin, max_y/2 - padd_y + i - 6, max_x/2 - name[i].length()/2 - padd_x, name[i].c_str());
-        }
-        
-        wrefresh(mainwin);
     
+    for(int i = 0 ; i < 11; i++){
+        mvwprintw(mainwin, max_y/2 - padd_y + i - 6, max_x/2 - name[i].length()/2 - padd_x, name[i].c_str());
+    }
+
+    refresh();
+    wrefresh(mainwin);
+    update_panels();
+	doupdate();
+    
+
 
     while(1){
         
@@ -104,7 +183,6 @@ int main(void) {
         int c = getch();
         scm.keyHandling(c);
     
-
 
         if(c == 'q') break;
 

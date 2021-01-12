@@ -13,14 +13,19 @@ class menu{
         int ini, fin, pan_x, pan_y;
         WINDOW * win;
         PANEL * pan;
+        PANEL * workpanel;
+
         int sz_lista = 5;
         string *lista;
         int selected = 0;
+        bool (*function)(PANEL*,int);
+        
         menu(){}    
-        menu(string name, string* opciones, int sz_lista){
+        menu(string name, string* opciones, int sz_lista, bool (*function)(PANEL*,int)){
             this->sz_lista = sz_lista;
             this->lista = opciones; 
             this->name = name;
+            this->function = function;
             pan_x = 20;
             pan_y = sz_lista + 2;
             win = newwin(pan_y, pan_x, 0, 0);
@@ -45,6 +50,7 @@ class menu{
             }
 
             wattroff(win, COLOR_PAIR(2));
+            wrefresh(win);
         }
 
         bool keyHandling(int c){
@@ -58,8 +64,20 @@ class menu{
                     selected ++;
                     if(selected == sz_lista) selected --;
                     break;
+                case 10:
+                    hide_panel(pan);
+                    show_panel(workpanel);
+                    top_panel(workpanel);
+                    update_panels();
+	                doupdate();
+                    function(workpanel, selected);
+                    hide_panel(workpanel);
+                    show_panel(pan);
+                    break;
             }
             draw();
+            update_panels();
+	        doupdate();
             return ans;
         }
 };
@@ -73,6 +91,7 @@ class scrollMenu{
         string pattern = "-";
         menu* arr_menu;
         WINDOW* win;
+        PANEL* pan; PANEL* work_pan;
         menu sel;
         int ind_sel;
 
@@ -89,9 +108,6 @@ class scrollMenu{
             wattroff(win, COLOR_PAIR(2));
 
 
-            //wattron(win, COLOR_PAIR(2));
-            //mvwprintw(win, 0, 2, full_name.substr(ini, sel.ini - ini).c_str());
-            //wattroff(win, COLOR_PAIR(2));
             
             printSpecialColors(full_name.substr(ini, sel.ini - ini), 2, pattern);
 
@@ -102,6 +118,8 @@ class scrollMenu{
             printSpecialColors(full_name.substr(sel.fin, fin - sel.fin), 2 + sel.ini - ini + sel.name.length(), pattern);
 
             wrefresh(win);
+            update_panels();
+            doupdate();
         }
 
         void printSpecialColors(string s, int ini, string patt){
@@ -140,7 +158,7 @@ class scrollMenu{
         bool open = false;
 
         void keyHandling(int c){
-
+            
             if(open){
                 if(!sel.keyHandling(c)){
                     open = false;
@@ -157,33 +175,34 @@ class scrollMenu{
                         if( pan_ini + sel.pan_x > sz_x ) pan_ini = (2 + sel.fin - ini - sel.pan_x );
                         move_panel(sel.pan, 1 + pad_y, pan_ini + pad_x);
                         show_panel(sel.pan); 
-                        break;
-                        
-                    
-                           
+                        break;       
                 }
                 ind_sel = (ind_sel + sz_menu) % sz_menu;
                 sel = arr_menu[ind_sel]; 
             }
             
             draw();
-            update_panels();
-            doupdate();
+            //update_panels();
+            //doupdate();
         }
         
-        scrollMenu(WINDOW* win, menu* arr_menu, int sz_menu,  int sz_x,  int sz_y, int pad_x, int pad_y){
-            this->win = win;
+        scrollMenu(PANEL* pan, PANEL* work_pan, menu* arr_menu, int sz_menu){
+            this->pan = pan;
+            this->work_pan  = work_pan;
+            this->win = panel_window(pan);
             this->arr_menu = arr_menu;
             this->sz_menu = sz_menu;
-            this->sz_x = sz_x - 4;
-            this->sz_y = sz_y;
-            this->pad_x = pad_x;
-            this->pad_y = pad_y;
+            
+            getmaxyx(this->win, this->sz_y, this->sz_x);
+            this->sz_x -= 4;
+            getbegyx(this->win, this->pad_y, this->pad_x);
+            
             ini = 0, fin = this->sz_x;
             
             ind_sel = 0;
             full_name = "";
             for(int i = 0; i < sz_menu; i++){
+                arr_menu[i].workpanel = work_pan;
                 if(i > 0) full_name += pattern;
                 arr_menu[i].ini = full_name.length();
                 full_name += arr_menu[i].name; 
