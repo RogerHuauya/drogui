@@ -7,6 +7,8 @@
 #include "read_write.h"
 #include "curmenu.h"
 
+#define pi acos(-1)
+
 
 bool logging_state = false;
 
@@ -137,6 +139,16 @@ bool setpointOp(PANEL* pan, int index){
         string names[] = {"degrees"};
         float arr[1]; 
         if(readData(pan, setpoint_op[index], names, arr, 1)){
+            arr[0] *= pi/180;
+            switch(index){
+                
+                case 0:
+                    rasp_i2c.sendFloat(ROLL_REF,arr[0]); break;
+                case 1: 
+                    rasp_i2c.sendFloat(PITCH_REF,arr[0]); break;
+                case 2:
+                    rasp_i2c.sendFloat(YAW_REF,arr[0]); break;
+            }
 
         }
     }
@@ -144,7 +156,15 @@ bool setpointOp(PANEL* pan, int index){
         string names[] = {"meters"};
         float arr[1]; 
         if(readData(pan, setpoint_op[index], names, arr, 1)){
-
+            switch(index){
+           
+                case 3:
+                    rasp_i2c.sendFloat(X_REF,arr[0]); break;    
+                case 4:
+                    rasp_i2c.sendFloat(Y_REF,arr[0]); break;
+                case 5:
+                    rasp_i2c.sendFloat(Z_REF,arr[0]); break;
+            }
         }
     }
     return true;
