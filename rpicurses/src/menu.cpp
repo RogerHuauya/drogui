@@ -1,7 +1,7 @@
 #include "menu.h"
 #include <fstream>
 #include <string>
-
+/*
 bool logging_state = false;
 void desplazamiento(){}
 
@@ -236,3 +236,4 @@ void menu(){
         }
     }
 }
+*/

@@ -8,6 +8,8 @@
 #include "curmenu.h"
 
 
+bool logging_state = false;
+
 std::string name[] = {  
 "     _____          ___           ___           ___           ___                 ",
 "    /  /::\\        /  /\\         /  /\\         /  /\\         /__/\\        ___     ",
@@ -129,27 +131,46 @@ bool setpointOp(PANEL* pan, int index){
     if(index < 3){    
         string names[] = {"degrees"};
         float arr[1]; 
-        if(readData(pan, pid_op[index], names, arr, 1)){
+        if(readData(pan, setpoint_op[index], names, arr, 1)){
 
         }
     }
     else{
         string names[] = {"meters"};
         float arr[1]; 
-        if(readData(pan, pid_op[index], names, arr, 1)){
+        if(readData(pan, setpoint_op[index], names, arr, 1)){
 
         }
     }
     return true;
 }
 
-string various_op[] = {"Read Register", "Write Register", "Zero Pos", "Compenstation"}; 
+string various_op[] = {"Read Register", "Write Register", "Start kalman", "Compensation", "Start logging"}; 
 bool variousOp(PANEL* pan, int index){
     //wmove(win, 5, 5);
     //wprintw(win, "kha3");
+    if(index == 4) logging_state = true;
+    else if(index == 3){
+        string names[] = {"0 - 100 %"};
+        float arr[1]; 
+        if(readData(pan, various_op[index], names, arr, 1)){
+            rasp_i2c.sendFloat(Z_MG, arr[0]);
+        }
+    }
+    else{
+        if(sim7600.GPSGet()){
+            sim7600.offset_Log = sim7600.Log;
+            sim7600.offset_Lat = sim7600.Lat;
+        }
+        rasp_i2c.sendFloat(START, 0);
+        sleep(1);
+        rasp_i2c.sendFloat(START, 1);
+    }
+
 
     return true;
 }
+
 
  
 int curmenu(void) {
