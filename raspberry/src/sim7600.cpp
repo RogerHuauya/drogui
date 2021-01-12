@@ -14,25 +14,27 @@ void Sim7600::PowerOn(int PowerKey = powerkey){
 
 	// checks if the module is started
 	answer = sendATcommand("AT", "OK", 2000, true);
-	/*if (answer == 0)
+	if (answer == 0)
 	{
 		printf("Starting up...\n");
 
 		
 		pinMode(PowerKey, OUTPUT);
+		delay(100);
 		// power on pulse
-		digitalWrite(PowerKey, HIGH);
-		delay(600);
-		digitalWrite(PowerKey, LOW);
 		
+		digitalWrite(PowerKey, HIGH);
+		delay(2000);
+		digitalWrite(PowerKey, LOW);
+		delay(20000);
 		// waits for an answer from the module
 		while (answer == 0) {     // Send AT every two seconds and wait for the answer
-			answer = sendATcommand("AT", "OK", 2000);
+			answer = sendATcommand("AT", "OK", 2000, false);
 		}
 
-	}*/
-
-	//delay(5000);
+	}
+	printf("GPS Ready\n");
+	delay(5000);
 
 	//while ((sendATcommand("AT+CREG?", "+CREG: 0,1", 500) || sendATcommand("AT+CREG?", "+CREG: 0,5", 500)) == 0)
 	//	delay(500);
@@ -331,10 +333,10 @@ bool Sim7600::GPSGet(){
     delay(100);
     int DLat, DLon;
     sscanf(RecMessage, "%2d%lf,%*c,%3d%lf,%*c,%*lf,%*lf,%lf,%lf,%lf", &DLat,&Lat,&DLon, &Log, &Alt, &Vel, &Curso);
-    printf(RecMessage);
+    //printf(RecMessage);
     Lat = DLat + Lat/60.0;
     Log = DLon + Log/60.0;
-    printf("%.10lf, %.10lf\n", Lat, Log);
+    //printf("%.10lf, %.10lf\n", Lat, Log);
     //strcpy(data, RecMessage);
     //printf("%s\n",RecMessage);
     /*

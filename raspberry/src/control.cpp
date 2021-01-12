@@ -1,6 +1,7 @@
 #include "control.h"
 #include "registerMap.h"
 #include <iostream>
+#include <math.h>
 #include "utils.h"
 
 extern bool cin_thread;
@@ -151,9 +152,10 @@ void send_ref(){
 }
 void send_comp_mg(){
     cin_thread = true;
-    printf("Enter Compensation:\n");
+    printf("Enter Compensation (enter -1 to cancel):\n");
     float mg;
     std::cin>>mg;
-    rasp_i2c.sendFloat(Z_MG, mg);
+    if(fabs(mg + 1) > 1e-8) rasp_i2c.sendFloat(Z_MG, mg);
     cin_thread = false;
+    return;
 }

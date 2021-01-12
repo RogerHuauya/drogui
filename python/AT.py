@@ -1,4 +1,5 @@
 
+
 #!/usr/bin/python
 import RPi.GPIO as GPIO
 import serial
@@ -34,21 +35,21 @@ def power_down(power_key):
 	print('Good bye')
 
 try:
-    #power_on(power_key)
+    power_on(power_key)
 	
     while True:
         x = raw_input('Read?')
-        if x == 's':
-		command_input = 'AT+CGPS=1,1'
-	else:
-		command_input = 'AT+CGPSINFO'
-	ser.write((command_input+  '\r\n' ).encode())
+        #if x == 's':
+	#	command_input = 'AT+CGPS=1,1'
+	#else:
+	#	command_input = 'AT+CGPSINFO'
+	ser.write((x +  '\r\n' ).encode())
         time.sleep(0.1)
         if ser.inWaiting():
             time.sleep(0.01)
             rec_buff = ser.read(ser.inWaiting())	
 	if rec_buff != '':
-            file.write(rec_buff.decode())
+            print(rec_buff.decode())
             rec_buff = ''
 except :
     ser.close()
