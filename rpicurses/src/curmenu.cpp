@@ -32,6 +32,11 @@ std::string name2[]{
 
 char bigtext[100][50];
 
+void handler_stop(int s){
+    rasp_i2c.sendFloat(Z_REF, 0);
+    //printf("Emergency exit CTRL+C - Caught signal %d ... turning off motors\n",s);
+    exit(1); 
+}
 
 
 string pid_op[] = {"PID ROLL", "PID PITCH", "PID YAW" ,"PID X" ,"PID Y" , "PID Z"};

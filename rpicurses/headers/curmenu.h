@@ -15,5 +15,7 @@
 #include "control.h"
 #include <pthread.h>
 
+
+void handler_stop(int s);
 int curmenu(); 
 #endif
