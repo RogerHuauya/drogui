@@ -2,8 +2,6 @@
 #define UTILS_H
 
 #include <iostream>
-//#include <wiringPiI2C.h>
-#include "arduPi.h"
 #include <stdint.h>
 #include <string.h>
 #include <cstdlib>
@@ -14,8 +12,9 @@
 #include <iomanip>
 #include <ctime>
 
-//#include <stdlib.h>
-//#include <stdio.h>
+#include <fcntl.h>				//Needed for I2C port
+#include <sys/ioctl.h>			//Needed for I2C port
+#include <linux/i2c-dev.h>	
 
 
 #define red(n)      "\033[1;31m"#n"\033[0m"
@@ -27,7 +26,7 @@
 
 
 class rasp_I2C{
-    int adress;
+    int adress, file_id;
     public:
         rasp_I2C(int ADDRESS);
         int32_t bytestoint32(uint8_t *bytesint32);
