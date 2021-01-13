@@ -10,6 +10,7 @@ std::string str_datetime(){
 
 rasp_I2C::rasp_I2C(const int ADDRESS){
     rasp_I2C::adress = ADDRESS;
+    printf("%X", rasp_I2C::adress);
 }
 
 int32_t rasp_I2C::bytestoint32(uint8_t *bytesint32){
@@ -59,6 +60,7 @@ void rasp_I2C::print4bytes(uint8_t *data){
 
 void rasp_I2C::setup(){
     Wire.begin();
+    printf("initialized\n");
 } 
 
 void rasp_I2C::writeMCU(uint8_t reg, uint8_t* val){
@@ -69,6 +71,7 @@ void rasp_I2C::writeMCU(uint8_t reg, uint8_t* val){
 }
 
 void rasp_I2C::readMCU(uint8_t reg, uint8_t * val){
+    printf("hola read\n");
 
     Wire.beginTransmission(rasp_I2C::adress);
     Wire.write(reg);
