@@ -1,4 +1,5 @@
 
+
 #!/usr/bin/python
 import RPi.GPIO as GPIO
 import serial
@@ -38,11 +39,11 @@ try:
 	
     while True:
         x = raw_input('Read?')
-        if x == 's':
-		command_input = 'AT+CGPS=1,1'
-	else:
-		command_input = 'AT+CGPSINFO'
-	ser.write((command_input+  '\r\n' ).encode())
+        #if x == 's':
+	#	command_input = 'AT+CGPS=1,1'
+	#else:
+	#	command_input = 'AT+CGPSINFO'
+	ser.write((x +  '\r\n' ).encode())
         time.sleep(0.1)
         if ser.inWaiting():
             time.sleep(0.01)

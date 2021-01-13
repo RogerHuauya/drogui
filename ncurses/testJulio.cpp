@@ -1,11 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <iostream>
 #include <string>
 #include <ncurses.h>
-#include "scroll_menu.h"
 
-std::string name2[] = {  
+std::string name[] = {  
 "     _____          ___           ___           ___           ___                 ",
 "    /  /::\\        /  /\\         /  /\\         /  /\\         /__/\\        ___     ",
 "   /  /:/\\:\\      /  /::\\       /  /::\\       /  /:/_        \\  \\:\\      /  /\\    ",
@@ -19,21 +17,11 @@ std::string name2[] = {
 "                   \\__\\/         \\__\\/         \\__\\/         \\__\\/                "};
 
 
-std::string name[]{
-"    .___                          .__ ",
-"  __| _/______  ____   ____  __ __|__|",
-" / __ |\\_  __ \\/  _ \\ / ___\\|  |  \\  |",
-"/ /_/ | |  | \\(  <_> ) /_/  >  |  /  |",
-"\\____ | |__|   \\____/\\___  /|____/|__|",
-"     \\/             /_____/           "};
-
-
 char bigtext[100][50];
  
 int main(void) {
-    
-    setlocale(LC_ALL, "");
- 	initscr();
+ 	
+    initscr();
 	cbreak();
 	noecho();
     curs_set(0);
@@ -57,7 +45,6 @@ int main(void) {
 	WINDOW * mainwin = newwin(max_y-2*padd_y, max_x - 2*padd_x, padd_y, padd_x);
 	refresh();
     wrefresh(mainwin);
-    PANEL * mainpanel = new_panel(mainwin); 
     
     keypad(stdscr, true);
     keypad(mainwin, true);
@@ -79,66 +66,48 @@ int main(void) {
     
     
 
-    menu arr_menu[6] = {
-        menu("SendPID"),
-        menu("SensorData"),
-        menu("Setpoint"),
-        menu("ReadRegister"),
-        menu("ZeroPosition"),
-        menu("Compensation")
-        //menu("holssssssssssssssssa2"),
-        //menu("hossssssssssssssla3"),
-        //menu("hsssssssssssssssssola4"),
-       /* menu("hossssssssssssssla3")*/};
+    for(int i = 0 ; i < 50 ; i++)
+	    sprintf(bigtext[i], "Opcion%02d", i);
 
-    scrollMenu scm = scrollMenu(mainwin, arr_menu, 6, max_x - 2*padd_x, max_y-2*padd_y);
 
-    scm.draw();
+	int ini = 0, fin = max_y-2*padd_y - 2, selected = 0, len = fin - ini;
 
-    
-
+    int n = 5, pos = 1;
     while(1){
-        
-        for(int i = 0 ; i < 6; i++){
-            mvwprintw(mainwin, max_y/2 - padd_y + i - 3, max_x/2 - name[i].length()/2 - padd_x, name[i].c_str());
+        pos = 1;
+        for(int i = 0; i < n; i++, pos += 11){
+            
+            if(i == selected){
+                wattron(mainwin, A_REVERSE | COLOR_PAIR(1));
+                mvwprintw(mainwin, 0, pos, bigtext[i]);
+                wattroff(mainwin, A_REVERSE | COLOR_PAIR(1));
+            }
+            else mvwprintw(mainwin, 0, pos, bigtext[i]);
+        }
+        //printw(name[0].c_str());
+
+        for(int i = 0 ; i < 11; i++){
+            mvwprintw(mainwin, max_y/2 - padd_y + i - 6, max_x/2 - name[i].length()/2 - padd_x, name[i].c_str());
         }
         
         wrefresh(mainwin);
-    
+
         int c = getch();
-        scm.keyHandling(c);
-    
-
-
-        if(c == 'q') break;
-
-        if(c == 's'){
-            attron(COLOR_PAIR(2));
-            attron(A_REVERSE);
-            mvprintw(max_y - padd_y + 1, padd_x + 5, "[S] Start");
-            attroff(A_REVERSE);
-            mvprintw(max_y - padd_y + 1, max_x - padd_x - 5 - 13, "[E] Emergency");
-            attroff(COLOR_PAIR(2));
+        switch(c){
+            case KEY_LEFT:
+                selected --;
+                break;
+            case KEY_RIGHT:
+                selected ++;
+                break;
         }
-        else if(c == 'e'){
-        
-            attron(COLOR_PAIR(2));
-            mvprintw(max_y - padd_y + 1, padd_x + 5, "[S] Start");
-            attron(A_REVERSE);
-            mvprintw(max_y - padd_y + 1, max_x - padd_x - 5 - 13, "[E] Emergency");
-            attroff(A_REVERSE);
-            attroff(COLOR_PAIR(2));
-        }
-        else{
-            
-            attron(COLOR_PAIR(2));
-            mvprintw(max_y - padd_y + 1, padd_x + 5, "[S] Start");
-            mvprintw(max_y - padd_y + 1, max_x - padd_x - 5 - 13, "[E] Emergency");
-            attroff(COLOR_PAIR(2));
-        }
-        
 
+        selected = (selected + 5)%5;
 
+        if(selected < ini) ini = selected, fin = ini + len;
+        if(selected >= fin) fin = selected + 1, ini = fin - len;
+
+        if( c == 'q' ) break;
     }
 
 	endwin();
