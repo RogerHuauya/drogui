@@ -45,7 +45,8 @@ void rasp_I2C::sendFloat(uint8_t reg, float val){
 }
 float rasp_I2C::readFloat(uint8_t reg){
     uint8_t buff[4];
-    for (uint8_t i=0;i<4;i++)  buff[i] = rasp_I2C::readMCU(reg+i);
+    for (uint8_t i=0;i<4;i++)  buff[i] = rasp_I2C::readMCU(reg+i), printf("%d, ", buff[i]);
+    printf("\n");
     return bytestofloat(buff);
 }
 
