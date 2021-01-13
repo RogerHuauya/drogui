@@ -73,14 +73,17 @@ void rasp_I2C::setup(){
     printf("initialized\n");
 } 
 
+void rasp_I2C::finish(){
+	close(file_id);
+}
+
 
 void rasp_I2C::writeMCU(uint8_t reg, uint8_t* val){
     
     unsigned char buff[10];
     buff[0] = reg | 1;
-    write(file_id, buff, 1);
-    buff[0] = 1, buff[1] = 2, buff[2] = 3, buff[3] = 4;
-    write(file_id, buff, 4);
+    for(int i = 0; i < 4; i++) buff[i+1] = val[i];
+    write(file_id, buff, 5);
 }
 
 void rasp_I2C::readMCU(uint8_t reg, uint8_t * val){

@@ -56,7 +56,7 @@ bool readData(PANEL* pan, string title, string* names, float* arr, int sz){
             case KEY_RIGHT: selected = (selected + 1 + sz) % sz; break;
 
             case '0': case '1': case '2': case '3': case '4': case '5':
-            case '6': case '7': case '8': case '9': case '.':
+            case '6': case '7': case '8': case '9': case '.': case '-':
 
                 values[selected] += char(c);
             break;

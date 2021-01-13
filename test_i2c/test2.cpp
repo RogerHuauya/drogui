@@ -3,6 +3,7 @@
 #include <sys/ioctl.h>			//Needed for I2C port
 #include <iostream>
 #include <wiringPi.h>
+#include <string.h>
 
 
 #define I2C_SLAVE	0x0703
@@ -104,11 +105,11 @@ int wiringPiI2CSetup (const int devId)
 
 
 
-void writeI2C(int fd, int reg, uint8_t * buff, int sz){
+int writeI2C(int fd, int reg, uint8_t * buff, int sz){
     union i2c_smbus_data data ;
     data.block[0] = sz;
     for(int i = 1; i <= sz; i++) data.block[i] = buff[i - 1];
-    return i2c_smbus_access (fd, I2C_SMBUS_WRITE, reg, I2C_SMBUS_BLOCK_DATA, &data) ;
+    return i2c_smbus_access (fd, I2C_SMBUS_WRITE, reg, 5, &data) ;
 }
 
 uint8_t buffer[50];
@@ -116,12 +117,12 @@ uint8_t buffer[50];
 int main(){
 
     buffer[0] = 0x01;
-    buffer[1] = 0x02;
-    buffer[2] = 0x03;
-    buffer[3] = 0x04;
+    buffer[2] = 0x02;
+    buffer[4] = 0x03;
+    buffer[6] = 0x04;
     int fd;
     fd = wiringPiI2CSetup(0x60);
-    writeI2C(fd, 0x0A+1, buffer, 4);
+    writeI2C(fd, 0x0A+1, buffer, 7);
     
 	return 0;
 }
