@@ -13,7 +13,7 @@ void *logging(void *threadid){
         std::ofstream log_gps;
         //while(!logging_state){}
         std::string name_log = str_datetime(); 
-        log_gps.open("logs/"+name_log+ "_gps"+ ".txt");
+        log_gps.open("logs/"+name_log+ "_control"+ ".txt");
         
 	    log_gps.precision(10);
 
@@ -29,9 +29,13 @@ void *logging(void *threadid){
         */
        
         while(1){
-            if(tim%50==0){
+            /*if(tim%50 == 0){
                 log_gps << tim/50 << "\t" << sim7600.pos_x << "\t"<< sim7600.pos_y << "\t" << sim7600.Lat << "\t" << sim7600.Log <<std::endl;
-            }
+            }*/
+            
+            log_gps << tim/50.0 << "\t" << rasp_i2c.readFloat(ROLL_REF) << "\t"<< rasp_i2c.readFloat(ROLL_VAL) << "\t" \
+                                        << rasp_i2c.readFloat(PITCH_REF) << "\t"<< rasp_i2c.readFloat(PITCH_VAL) << std::endl;
+            
             
             /*
             log_file<<rasp_i2c.readFloat(H_VAL);
@@ -55,27 +59,6 @@ void *logging(void *threadid){
             log_imu<<"\t";
             log_imu<<rasp_i2c.readFloat(Z_VAL);
             log_imu<< std::endl;
-        
-       /*
-            log_file<<rasp_i2c.readFloat(RAW_TEMP);
-            log_file<<"\t";           
-            log_file<<rasp_i2c.readFloat(TEMP_ABS);
-            log_file<<"\t";
-            log_file<<rasp_i2c.readFloat(RAW_PRESS);
-            log_file<<"\t";
-            log_file<<rasp_i2c.readFloat(PRESS_ABS);
-            
-            log_file<<rasp_i2c.readFloat(Z_REF);
-            log_file<<"\t";
-            log_file<<rasp_i2c.readFloat(Z_U);
-            log_file<<"\t";
-            log_file<<rasp_i2c.readFloat(Z_VAL);
-            log_file<<"\t";
-            log_file<<std::endl;
-            //unistd::uunistd::sleep(50000); // takes microseconds
-            unistd::sleep(1);
-            if(!logging_state) break;
-        */
 
             unistd::usleep(20000);
 	    tim++;

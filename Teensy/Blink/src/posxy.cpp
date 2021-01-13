@@ -164,6 +164,8 @@ int _main(void){
         H_ref = computePid(&z_control, z_ref - z, time,0) + getReg(Z_MG);
 
         H += fabs(H_ref - H) >= 0.1  ? copysign(0.1, H_ref - H) : 0;
+
+        H /= cos(roll)*cos(pitch);
         
         double rel = roll_ref/(pitch_ref + 0.0000001);
         
@@ -184,8 +186,9 @@ int _main(void){
            
         }
 
-        roll_ref += roll_off;
-        pitch_ref += pitch_off;
+        roll_ref += getReg(ROLL_REF) + roll_off;
+        pitch_ref += getReg(PITCH_REF) + pitch_off;
+
         yaw_ref = getReg(YAW_REF) + yaw_off;
         
         /*Serial.print(roll_ref);
