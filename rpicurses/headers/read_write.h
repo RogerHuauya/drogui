@@ -87,10 +87,10 @@ bool readData(PANEL* pan, string title, string* names, float* arr, int sz){
 
             case 10:
                 if(acc){
-                    ans = 0; for(int i = 0 ; i < sz ; i++) arr[i] = stof(values[i]);
+                    ans = 1; for(int i = 0 ; i < sz ; i++) arr[i] = stof(values[i]);
                 }
                 else if(canc){
-                    ans = 1; for(int i = 0 ; i < sz ; i++) arr[i] = 0;
+                    ans = 0; for(int i = 0 ; i < sz ; i++) arr[i] = 0;
                 }
 
 
@@ -141,7 +141,7 @@ bool writeData(PANEL* pan, string title, string* names, float* arr, int sz){
     for(int i = 1 ; i < sz; i++) pos[i] = pos[i-1] + 9;
 
     string values[sz];
-    char buff[8];
+    char buff[50];
     
     
     mvwprintw(win, 8, sz_x/2 - title.size()/2, title.c_str());

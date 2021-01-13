@@ -7,8 +7,6 @@
 #include "read_write.h"
 #include "curmenu.h"
 
-#define pi acos(-1)
-
 
 bool logging_state = false;
 
@@ -40,6 +38,7 @@ char bigtext[100][50];
 void handler_stop(int s){
     rasp_i2c.sendFloat(Z_REF, 0);
     //printf("Emergency exit CTRL+C - Caught signal %d ... turning off motors\n",s);
+    endwin();
     exit(1); 
 }
 
@@ -115,8 +114,10 @@ bool sensorDataOp(PANEL* pan, int index){
     }
     else if(index == 2){
         string names[] = {"GSM_X", "GSM_Y", "X", "Y"};
-        float arr[] = {rasp_i2c.readFloat(GPS_X), rasp_i2c.readFloat(GPS_X), rasp_i2c.readFloat(X_VAL), rasp_i2c.readFloat(Y_VAL)}; 
-        writeData(pan, sensor_data_op[index], names, arr, 4);
+        float arr[] = {rasp_i2c.readFloat(GPS_X), rasp_i2c.readFloat(GPS_Y), rasp_i2c.readFloat(X_VAL), rasp_i2c.readFloat(Y_VAL)}; 
+        //printw("%f %f %f %f\n", arr[0], arr[1], arr[2], arr[3]);
+	//refresh();
+	writeData(pan, sensor_data_op[index], names, arr, 4);
     }
     else if(index == 3){
         string names[] = {"SYS", "GYR", "ACC", "MAG"};
@@ -180,7 +181,7 @@ bool variousOp(PANEL* pan, int index){
         float arr[1]; 
         if(readData(pan, various_op[index], names, arr, 1)){
             rasp_i2c.sendFloat(Z_MG, arr[0]);
-        }
+	}
     }
     else{
         if(sim7600.GPSGet()){
@@ -200,11 +201,12 @@ bool variousOp(PANEL* pan, int index){
  
 int curmenu(void) {
     
+        rasp_i2c.sendFloat(START, 0);
     setlocale(LC_ALL, "");
  	initscr();
-	cbreak();
+	//cbreak();
 	noecho();
-    curs_set(0);
+    	curs_set(0);
 	if(!has_colors()){
 		
 		getch();
@@ -306,7 +308,7 @@ int curmenu(void) {
 
 
     }
-
+	rasp_i2c.sendFloat(Z_REF, 0);
 	endwin();
 	return 0;
 
