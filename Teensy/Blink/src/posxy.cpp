@@ -107,6 +107,9 @@ void initializeSystem(){
     delay(1000);
 
     bno.setExtCrystalUse(true);
+    
+    initI2C(SLAVE, I2C1, 0x60);
+    clearI2Cregisters(I2C1);
 
     readSensors.begin(timer1Interrupt, 10000);
     readSensors.priority(0);
@@ -118,9 +121,7 @@ void initializeSystem(){
     setKalmanTsImu(0.01);
     setKalmanTsGps(1);
     initMatGlobal();
-
-    initI2C(SLAVE, I2C1, 0x60);
-    clearI2Cregisters(I2C1);
+    
 
     delay(500);
     
