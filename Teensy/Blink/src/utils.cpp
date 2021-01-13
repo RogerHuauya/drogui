@@ -27,10 +27,15 @@ float bytestofloat(uint8_t *bytesfloat){
 }
 
 float getReg(uint8_t reg){
+    
     double val;
     uint8_t arr[4];
-    for(int i = 0; i < 4 ; i++) arr[i] = i2c1Reg[reg][i];
+    for(int i = 0; i < 4 ; i++){
+     arr[i] = i2c1Reg[reg][i];
+     //if(reg == 72) Serial.print(arr[i]);
+    }
     val = bytestofloat(arr); 
+     //if(reg == 72)Serial.println("");
     return val; 
 }
 

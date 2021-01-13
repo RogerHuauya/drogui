@@ -196,8 +196,12 @@ int _main(void){
         Serial.print("\t");
         Serial.print(pitch);
         Serial.print("\t");
-        Serial.println(yaw);
-        */
+        Serial.println(yaw);*/
+
+        Serial.print(roll_ref);
+        Serial.print("\t");
+        Serial.println(pitch_ref);
+    
 
         R = computePid(&roll_control, angle_dif(roll_ref, roll), time, H);
         P = computePid(&pitch_control, angle_dif(pitch_ref, pitch),time, H);
