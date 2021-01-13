@@ -36,10 +36,11 @@ float getReg(uint8_t reg){
 
 void setReg(uint8_t reg, float val){
     uint8_t arr[4];
+    //Serial.print(reg),Serial.print("\t");
     floattobytes(val, arr);
 
-    for(int i = 0; i < 4 ; i++) i2c1Reg[reg][i] = arr[i];
-    
+    for(int i = 0; i < 4 ; i++) i2c1Reg[reg][i] = arr[i]/*,Serial.print(arr[i]),Serial.print("\t")*/;
+    //Serial.println("");
     return;
 }
 

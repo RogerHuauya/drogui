@@ -145,9 +145,9 @@ long long pm = 0;
 
 int _main(void){
 
+
     initializeSystem();
     delay(1000);
-    
     yaw_off = yaw;
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
@@ -192,14 +192,12 @@ int _main(void){
 
         yaw_ref = getReg(YAW_REF) + yaw_off;
         
-        Serial.print(roll_ref);
+        /*Serial.print(roll);
         Serial.print("\t");
-        Serial.print(pitch_ref);
+        Serial.print(pitch);
         Serial.print("\t");
-        Serial.print(x);
-        Serial.print("\t");
-        Serial.println(y);
-
+        Serial.println(yaw);
+        */
 
         R = computePid(&roll_control, angle_dif(roll_ref, roll), time, H);
         P = computePid(&pitch_control, angle_dif(pitch_ref, pitch),time, H);
@@ -268,7 +266,7 @@ int _main(void){
         setPwmDutyTime(&m3, min(max(M3,0), 100));
         setPwmDutyTime(&m4, min(max(M4,0), 100));
         
-        delay(max((int) getReg(TS_CONTROL), 5));
+        delay(max((int) getReg(TS_CONTROL), 5) + 500);
         //erial.println("hola");
         
     }
