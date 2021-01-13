@@ -58,6 +58,6 @@ int main(){
     printf("\n");
 
 */
-    
+    	close(file_i2c);
 	return 0;
 }
