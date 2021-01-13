@@ -7,7 +7,7 @@
 #include "read_write.h"
 #include "curmenu.h"
 
-
+extern rasp_I2C rasp_i2c;
 bool logging_state = false;
 
 std::string name2[] = {  

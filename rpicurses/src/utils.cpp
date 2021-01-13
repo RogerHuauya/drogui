@@ -9,7 +9,8 @@ std::string str_datetime(){
 }
 
 rasp_I2C::rasp_I2C(const int ADDRESS){
-    rasp_I2C::adress = ADDRESS;
+    adress = ADDRESS;
+    printf("%X", adress);
 }
 
 int32_t rasp_I2C::bytestoint32(uint8_t *bytesint32){
@@ -37,14 +38,14 @@ float rasp_I2C::bytestofloat(uint8_t *bytesfloat){
     memcpy(&val, bytesfloat, sizeof(val));
     return val;
 }
-void rasp_I2C::sendFloat(uint16_t reg, float val){
-    uint8_t buff[4];
+void rasp_I2C::sendFloat(uint8_t reg, float val){
+    uint8_t buff[5];
     rasp_I2C::floattobytes(val, buff);
     rasp_I2C::writeMCU(reg, buff);
     return;
 }
-float rasp_I2C::readFloat(uint16_t reg){
-    uint8_t buff[4];
+float rasp_I2C::readFloat(uint8_t reg){
+    uint8_t buff[5];
     rasp_I2C::readMCU(reg, buff);
     return bytestofloat(buff);
 }
@@ -58,23 +59,35 @@ void rasp_I2C::print4bytes(uint8_t *data){
 
 
 void rasp_I2C::setup(){
-    Wire.begin();
+    char *filename = (char*)"/dev/i2c-1";
+    if ((file_id = open(filename, O_RDWR)) < 0){
+
+        printf("Failed to open the i2c bus");
+        return;
+    }
+    if (ioctl(file_id, I2C_SLAVE, adress) < 0){
+
+        printf("Failed to acquire bus access and/or talk to slave.\n");
+        return;
+    }
+    printf("initialized\n");
 } 
 
+
 void rasp_I2C::writeMCU(uint8_t reg, uint8_t* val){
-    Wire.beginTransmission(rasp_I2C::adress);
-    Wire.write(reg | 1);
-    for(int i = 0; i < 4 ; i++) Wire.write(val[i]);
-    Wire.endTransmission();
+    
+    unsigned char buff[10];
+    buff[0] = reg | 1;
+    write(file_id, buff, 1);
+    buff[0] = 1, buff[1] = 2, buff[2] = 3, buff[3] = 4;
+    write(file_id, buff, 4);
 }
 
-void rasp_I2C::readMCU(uint16_t reg, uint8_t * val){
-
-    Wire.beginTransmission(rasp_I2C::adress);
-    Wire.write(reg);
-    Wire.endTransmission();
-    Wire.requestFrom(adress, 4);
-    for(int i = 0; i < 4 ; i++) val[i] = Wire.read();
+void rasp_I2C::readMCU(uint8_t reg, uint8_t * val){
+    unsigned char buff[10];
+    buff[0] = reg;
+    write(file_id, buff, 1);
+    read(file_id, val, 4);
 }
 
 void cls(){
