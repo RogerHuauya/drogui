@@ -13,7 +13,6 @@
 #include <unistd.h> 
 
 #include "utils.h"
-#include "control.h"
 #include "curmenu.h"
 #include "threaded.h"
 #include <pthread.h>
@@ -34,7 +33,9 @@ void enable_emergency_stop(){
     sigaction(SIGINT, &sigIntHandler, NULL);
     return;
 }
+
 void setup() {
+    rasp_i2c.setup();
 	sim7600.PowerOn(POWERKEY);
 }
 

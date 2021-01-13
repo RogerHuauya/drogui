@@ -107,6 +107,9 @@ void initializeSystem(){
     delay(1000);
 
     bno.setExtCrystalUse(true);
+    
+    initI2C(SLAVE, I2C1, 0x60);
+    clearI2Cregisters(I2C1);
 
     readSensors.begin(timer1Interrupt, 10000);
     readSensors.priority(0);
@@ -118,9 +121,7 @@ void initializeSystem(){
     setKalmanTsImu(0.01);
     setKalmanTsGps(1);
     initMatGlobal();
-
-    initI2C(SLAVE, I2C1, 0x60);
-    clearI2Cregisters(I2C1);
+    
 
     delay(500);
     
@@ -191,13 +192,13 @@ int _main(void){
 
         yaw_ref = getReg(YAW_REF) + yaw_off;
         
-        /*Serial.print(roll_ref);
+        Serial.print(roll_ref);
         Serial.print("\t");
         Serial.print(pitch_ref);
         Serial.print("\t");
         Serial.print(x);
         Serial.print("\t");
-        Serial.println(y);*/
+        Serial.println(y);
 
 
         R = computePid(&roll_control, angle_dif(roll_ref, roll), time, H);

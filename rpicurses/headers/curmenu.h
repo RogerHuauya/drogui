@@ -12,7 +12,6 @@
 #include <math.h>
 
 #include "utils.h"
-#include "control.h"
 #include <pthread.h>
 
 

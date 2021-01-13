@@ -2,7 +2,8 @@
 #define UTILS_H
 
 #include <iostream>
-#include <wiringPiI2C.h>
+//#include <wiringPiI2C.h>
+#include "arduPi.h"
 #include <stdint.h>
 #include <string.h>
 #include <cstdlib>
@@ -26,7 +27,7 @@
 
 
 class rasp_I2C{
-    int fd;
+    int adress;
     public:
         rasp_I2C(int ADDRESS);
         int32_t bytestoint32(uint8_t *bytesint32);
@@ -38,6 +39,7 @@ class rasp_I2C{
         void print4bytes(uint8_t *data);
         void writeMCU(uint8_t reg, uint8_t val);
         uint8_t readMCU(uint8_t reg);
+        void setup();
 };
 
 void cls();
