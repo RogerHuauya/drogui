@@ -60,7 +60,7 @@ void *logging(void *threadid){
             log_imu<<rasp_i2c.readFloat(Z_VAL);
             log_imu<< std::endl;
 
-            unistd::usleep(20000);
+            unistd::usleep(2000000);
 	    tim++;
         }
     }

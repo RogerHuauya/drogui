@@ -7,7 +7,7 @@
 extern bool cin_thread;
 extern bool logging_state;
 
-void send_PID_ROLL();
+/*void send_PID_ROLL();
 void send_PID_PITCH();    
 void send_PID_YAW();
 void send_PID_Z();
@@ -160,4 +160,4 @@ void send_comp_mg(){
     if(fabs(mg + 1) > 1e-8) rasp_i2c.sendFloat(Z_MG, mg);
     cin_thread = false;
     return;
-}
+}*/
