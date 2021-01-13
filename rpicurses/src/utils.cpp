@@ -39,13 +39,13 @@ float rasp_I2C::bytestofloat(uint8_t *bytesfloat){
     return val;
 }
 void rasp_I2C::sendFloat(uint8_t reg, float val){
-    uint8_t buff[4];
+    uint8_t buff[5];
     rasp_I2C::floattobytes(val, buff);
     rasp_I2C::writeMCU(reg, buff);
     return;
 }
 float rasp_I2C::readFloat(uint8_t reg){
-    uint8_t buff[4];
+    uint8_t buff[5];
     rasp_I2C::readMCU(reg, buff);
     return bytestofloat(buff);
 }
@@ -76,17 +76,18 @@ void rasp_I2C::setup(){
 
 void rasp_I2C::writeMCU(uint8_t reg, uint8_t* val){
     
-    unsigned char buff[1];
+    unsigned char buff[10];
     buff[0] = reg | 1;
     write(file_id, buff, 1);
-    write(file_id, val, 4);
+    buff[0] = 1, buff[1] = 2, buff[2] = 3, buff[3] = 4;
+    write(file_id, buff, 4);
 }
 
 void rasp_I2C::readMCU(uint8_t reg, uint8_t * val){
-    unsigned char buff[1];
+    unsigned char buff[10];
     buff[0] = reg;
     write(file_id, buff, 1);
-    read(file_id, val, 4)
+    read(file_id, val, 4);
 }
 
 void cls(){

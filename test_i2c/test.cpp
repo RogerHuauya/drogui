@@ -29,16 +29,20 @@ int main(){
 	
 
     //----- WRITE BYTES -----
-    buffer[0] = 0x0A;
-    buffer[1] = 0x02;
-    length = 1;			//<<< Number of bytes to write
+    buffer[0] = 0x0A + 1;
+    buffer[1] = 0x01;
+    buffer[2] = 0x02;
+    buffer[3] = 0x03;
+    buffer[4] = 0x04;
+    
+    length = 5;			//<<< Number of bytes to write
     if (write(file_i2c, buffer, length) != length)		//write() returns the number of bytes actually written, if it doesn't match then an error occurred (e.g. no response from the device)
     {
         /* ERROR HANDLING: i2c transaction failed */
         printf("Failed to write to the i2c bus.\n");
     }
 
-
+/*
 
     //----- READ BYTES -----
     length = 4;			//<<< Number of bytes to read
@@ -53,7 +57,7 @@ int main(){
     }
     printf("\n");
 
-
+*/
     
 	return 0;
 }
