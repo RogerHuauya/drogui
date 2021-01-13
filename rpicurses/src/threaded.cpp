@@ -5,6 +5,7 @@
 extern rasp_I2C rasp_i2c;
 
 extern bool logging_state;
+
 void *logging(void *threadid){
     unsigned long long tim = 0;
     unistd::sleep(10);

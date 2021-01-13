@@ -28,12 +28,18 @@ float bytestofloat(uint8_t *bytesfloat){
 
 float getReg(uint8_t reg){
     double val;
-    val = bytestofloat(i2c1Reg + reg); 
+    uint8_t arr[4];
+    for(int i = 0; i < 4 ; i++) arr[i] = i2c1Reg[reg][i];
+    val = bytestofloat(arr); 
     return val; 
 }
 
 void setReg(uint8_t reg, float val){
-    floattobytes(val, i2c1Reg + reg);
+    uint8_t arr[4];
+    floattobytes(val, arr);
+
+    for(int i = 0; i < 4 ; i++) i2c1Reg[reg][i] = arr[i];
+    
     return;
 }
 

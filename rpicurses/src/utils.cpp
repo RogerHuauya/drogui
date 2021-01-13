@@ -9,7 +9,7 @@ std::string str_datetime(){
 }
 
 rasp_I2C::rasp_I2C(const int ADDRESS){
-    rasp_I2C::fd = wiringPiI2CSetup(ADDRESS);
+    rasp_I2C::adress = ADDRESS;
 }
 
 int32_t rasp_I2C::bytestoint32(uint8_t *bytesint32){
@@ -37,16 +37,15 @@ float rasp_I2C::bytestofloat(uint8_t *bytesfloat){
     memcpy(&val, bytesfloat, sizeof(val));
     return val;
 }
-void rasp_I2C::sendFloat(uint8_t reg, float val){
+void rasp_I2C::sendFloat(uint16_t reg, float val){
     uint8_t buff[4];
     rasp_I2C::floattobytes(val, buff);
-    for(uint8_t i = 0; i < 4; i++) rasp_I2C::writeMCU(reg+i, buff[i]);
+    rasp_I2C::writeMCU(reg, buff);
     return;
 }
-float rasp_I2C::readFloat(uint8_t reg){
+float rasp_I2C::readFloat(uint16_t reg){
     uint8_t buff[4];
-    for (uint8_t i=0;i<4;i++)  buff[i] = rasp_I2C::readMCU(reg+i), printf("%d, ", buff[i]);
-    printf("\n");
+    rasp_I2C::readMCU(reg, buff);
     return bytestofloat(buff);
 }
 
@@ -57,15 +56,25 @@ void rasp_I2C::print4bytes(uint8_t *data){
     std::cout<<std::endl;
 };
 
-void rasp_I2C::writeMCU(uint8_t reg, uint8_t val){
-	wiringPiI2CWriteReg8 (rasp_I2C::fd, reg, val);
-    //cout<<"Register "<<reg<<" has been written with "<<val<<endl;
+
+void rasp_I2C::setup(){
+    Wire.begin();
+} 
+
+void rasp_I2C::writeMCU(uint8_t reg, uint8_t* val){
+    Wire.beginTransmission(rasp_I2C::adress);
+    Wire.write(reg | 1);
+    for(int i = 0; i < 4 ; i++) Wire.write(val[i]);
+    Wire.endTransmission();
 }
-uint8_t rasp_I2C::readMCU(uint8_t reg){
-    uint8_t val;
-	val = wiringPiI2CReadReg8(rasp_I2C::fd, reg);
-    //cout<<"Register "<<reg<<" has been written with "<<val<<endl;
-    return val;
+
+void rasp_I2C::readMCU(uint16_t reg, uint8_t * val){
+
+	Wire.beginTransmission(rasp_I2C::adress);
+    Wire.write(reg);
+    Wire.endTransmission();
+    Wire.requestFrom(adress, 4);
+    for(int i = 0; i < 4 ; i++) val[i] = Wire.read();
 }
 
 void cls(){

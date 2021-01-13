@@ -16,8 +16,8 @@ int main(){
         in >> aux; out += aux + "\t\t";
 
         cout << out;
-        printf("0x%04X", reg);
-        reg += 8;
+        printf("0x%02X", reg);
+        reg += 2;
         cout << endl;
         
     }
