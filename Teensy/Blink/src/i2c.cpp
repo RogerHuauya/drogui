@@ -6,8 +6,8 @@
 
 uint8_t i2c1Reg[I2C_REG_SIZE];
 uint8_t i2c2Reg[I2C_REG_SIZE];
-
-int ptr;
+int ptr[20], ptr_i = 0, ptr_j = 0;
+//int ptr;
 
 void clearI2Cregisters(int n){
     if(n == I2C1) for(int i = 0; i < I2C_REG_SIZE; i++) i2c1Reg[i] = 0;     
@@ -16,18 +16,24 @@ void clearI2Cregisters(int n){
 }
 
 void requestI2C1(){
-    Wired1.write(i2c1Reg[ptr]);  
+    Wired1.write(i2c1Reg[ptr_j++]);
+    ptr_j %= 20;  
 }
 
 void receiveI2C1(int reg){
   
-    ptr = Wired1.read();
+    int x = Wired1.read();
     if(Wired1.available()){
-      i2c1Reg[ptr] = Wired1.read();
+      i2c1Reg[x] = Wired1.read();
+      Serial.print("WReg: ");
+      Serial.println(reg);
+    }
+    else{
+        ptr[ptr_i++] = x, ptr_i %= 20;
+        Serial.print("Reg: ");
+        Serial.println(reg);
     }
 }
-
-
 
 void initI2C(int mode,int n, int adress){
     if(n == I2C1){
