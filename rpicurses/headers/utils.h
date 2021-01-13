@@ -37,8 +37,8 @@ class rasp_I2C{
         void sendFloat(uint8_t reg, float val);
         float readFloat(uint8_t reg);
         void print4bytes(uint8_t *data);
-        void writeMCU(uint8_t reg, uint8_t val);
-        uint8_t readMCU(uint8_t reg);
+        void writeMCU(uint8_t reg, uint8_t* val);
+        void readMCU(uint8_t reg, uint8_t* val);
         void setup();
 };
 

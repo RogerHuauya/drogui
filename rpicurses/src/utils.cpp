@@ -37,13 +37,13 @@ float rasp_I2C::bytestofloat(uint8_t *bytesfloat){
     memcpy(&val, bytesfloat, sizeof(val));
     return val;
 }
-void rasp_I2C::sendFloat(uint16_t reg, float val){
+void rasp_I2C::sendFloat(uint8_t reg, float val){
     uint8_t buff[4];
     rasp_I2C::floattobytes(val, buff);
     rasp_I2C::writeMCU(reg, buff);
     return;
 }
-float rasp_I2C::readFloat(uint16_t reg){
+float rasp_I2C::readFloat(uint8_t reg){
     uint8_t buff[4];
     rasp_I2C::readMCU(reg, buff);
     return bytestofloat(buff);
@@ -68,7 +68,7 @@ void rasp_I2C::writeMCU(uint8_t reg, uint8_t* val){
     Wire.endTransmission();
 }
 
-void rasp_I2C::readMCU(uint16_t reg, uint8_t * val){
+void rasp_I2C::readMCU(uint8_t reg, uint8_t * val){
 
     Wire.beginTransmission(rasp_I2C::adress);
     Wire.write(reg);
