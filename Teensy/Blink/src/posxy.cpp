@@ -92,10 +92,10 @@ void timer2Interrupt(){
 
 void initializeSystem(){
 
-    initOneshot125(&m1, 2);
-    initOneshot125(&m2, 3);
-    initOneshot125(&m3, 4);
-    initOneshot125(&m4, 5);
+    initOneshot125(&m1, 5);
+    initOneshot125(&m2, 4);
+    initOneshot125(&m3, 3);
+    initOneshot125(&m4, 2);
 
     initPidConstants();
     if(!bno.begin()){
