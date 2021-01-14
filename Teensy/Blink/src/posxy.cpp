@@ -198,9 +198,9 @@ int _main(void){
         Serial.print("\t");
         Serial.println(yaw);*/
 
-        Serial.print(roll_ref);
+        /*Serial.print(roll_ref);
         Serial.print("\t");
-        Serial.println(pitch_ref);
+        Serial.println(pitch_ref);*/
     
 
         R = computePid(&roll_control, angle_dif(roll_ref, roll), time, H);
@@ -270,7 +270,7 @@ int _main(void){
         setPwmDutyTime(&m3, min(max(M3,0), 100));
         setPwmDutyTime(&m4, min(max(M4,0), 100));
         
-        delay(max((int) getReg(TS_CONTROL), 5) + 500);
+        delay(max((int) getReg(TS_CONTROL), 5) );
         //erial.println("hola");
         
     }
