@@ -6,7 +6,7 @@
 
 uint8_t i2c1Reg[I2C_REG_SIZE][4];
 
-#define I2C_BUFF_SIZE 20
+#define I2C_BUFF_SIZE 200
 int ptr[I2C_BUFF_SIZE], ptr_head = 0, ptr_tail = 0;
 //int ptr;
 
