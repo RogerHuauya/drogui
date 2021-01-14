@@ -16,8 +16,7 @@ void dataSensor(){
     printf(green([4]) " " white(BMP280\n));
     printf(green([5]) " " white(Z value\n));
     printf(green([6]) " " white(IMU CALIBRATION\n));
-    printf("");
-
+    
     std::cin >> reg;
     if(std::cin.fail()) throw 505;
     if(reg == 0) {cin_thread = false; return;}
