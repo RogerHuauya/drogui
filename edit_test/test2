@@ -1,0 +1,8 @@
+var1="bc" 
+var2="bcd"
+ if [[ "$var2" =~ "$var1" ]]; 
+    then 
+        echo "pass" 
+    else 
+        echo "fail" 
+    fi
