@@ -34,14 +34,14 @@ void *logging(void *threadid){
                 log_gps << tim/50 << "\t" << sim7600.pos_x << "\t"<< sim7600.pos_y << "\t" << sim7600.Lat << "\t" << sim7600.Log <<std::endl;
             }*/
             
-            log_gps << tim/50.0 << "\t" << rasp_i2c.readFloat(ROLL_REF) << "\t"<< rasp_i2c.readFloat(ROLL_VAL) << "\t" \
+            log_gps << tim/5.0 << "\t" << rasp_i2c.readFloat(ROLL_REF) << "\t"<< rasp_i2c.readFloat(ROLL_VAL) << "\t" \
                                         << rasp_i2c.readFloat(PITCH_REF) << "\t"<< rasp_i2c.readFloat(PITCH_VAL) << std::endl;
             
             
             /*
             log_file<<rasp_i2c.readFloat(H_VAL);
             log_file<<"\t";*/
-	        log_imu << tim/50.0 << ",\t";
+	        log_imu << tim/5.0 << ",\t";
             log_imu<<rasp_i2c.readFloat(ROLL_VAL);
             log_imu<<"\t";
             log_imu<<rasp_i2c.readFloat(PITCH_VAL);
@@ -61,7 +61,7 @@ void *logging(void *threadid){
             log_imu<<rasp_i2c.readFloat(Z_VAL);
             log_imu<< std::endl;
 
-            unistd::usleep(2000000);
+            unistd::usleep(200000);
 	    tim++;
         }
     }

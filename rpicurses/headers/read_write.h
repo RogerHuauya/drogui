@@ -126,7 +126,7 @@ bool readData(PANEL* pan, string title, string* names, float* arr, int sz){
     }
 
     curs_set(0);
-    wclear(win);
+    werase(win);
     return ans;
 }
 
@@ -201,7 +201,7 @@ bool writeData(PANEL* pan, string title, string* names, float* arr, int sz){
     }
 
     
-    wclear(win);
+    werase(win);
     return ans;
 }
 
