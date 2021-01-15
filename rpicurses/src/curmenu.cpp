@@ -180,7 +180,7 @@ bool variousOp(PANEL* pan, int index){
     //wprintw(win, "kha3");
     if(index == 4){
         logging_state = !logging_state;
-        various_op[index] = (logging_state ? "Stop logging":"Start logging");
+        various_op[index] = (logging_state ? "Stop  logging":"Start logging");
     }
     else if(index == 3){
         string names[] = {"0 - 100 %"};
@@ -196,7 +196,7 @@ bool variousOp(PANEL* pan, int index){
         }
         start = !start;
         rasp_i2c.sendFloat(START, start);
-        various_op[index] = (start ? "Stop Kalman":"Start Kalman");
+        various_op[index] = (start ? "Stop  Kalman":"Start Kalman");
     }
     else{
 	string names[] = {"register"};
