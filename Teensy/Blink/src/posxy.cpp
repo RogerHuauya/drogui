@@ -1,4 +1,4 @@
-#define POSXY
+//#define POSXY
 #ifdef POSXY
 
 #include "..\headers\main.h"

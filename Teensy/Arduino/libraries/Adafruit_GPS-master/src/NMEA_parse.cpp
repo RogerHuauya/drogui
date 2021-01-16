@@ -69,20 +69,33 @@ bool Adafruit_GPS::parse(char *nmea) {
   // strcmp()! Put the GPS sentences from Adafruit_GPS at the top to make
   // pruning excess code easier. Otherwise, keep them alphabetical for ease of
   // reading.
+
   if (!strcmp(thisSentence, "GGA")) { //************************************GGA
     // Adafruit from Actisense NGW-1 from SH CP150C
     parseTime(p);
     p = strchr(p, ',') + 1; // parse time with specialized function
     // parse out both latitude and direction, then go to next field, or fail
+
+
     if (parseCoord(p, &latitudeDegrees, &latitude, &latitude_fixed, &lat))
       newDataValue(NMEA_LAT, latitudeDegrees);
     p = strchr(p, ',') + 1;
     p = strchr(p, ',') + 1;
+
+
     // parse out both longitude and direction, then go to next field, or fail
     if (parseCoord(p, &longitudeDegrees, &longitude, &longitude_fixed, &lon))
       newDataValue(NMEA_LON, longitudeDegrees);
     p = strchr(p, ',') + 1;
     p = strchr(p, ',') + 1;
+
+    /*Serial.print("L");
+    Serial.print(latitude);
+    Serial.print("\t");
+    Serial.println(longitude);
+    */
+
+
     if (!isEmpty(p)) { // if it's a , (or a * at end of sentence) the value is
                        // not included
       fixquality = atoi(p); // needs additional processing
@@ -676,22 +689,35 @@ bool Adafruit_GPS::onList(char *nmea, const char **list) {
     @return true if successful, false if failed or no value
 */
 /**************************************************************************/
+
+
+
 bool Adafruit_GPS::parseCoord(char *pStart, nmea_float_t *angleDegrees,
                               nmea_float_t *angle, int32_t *angle_fixed,
                               char *dir) {
   char *p = pStart;
   if (!isEmpty(p)) {
     // get the number in DDDMM.mmmm format and break into components
-    char degreebuff[10] = {0}; // Ensure string is terminated after strncpy
+    char degreebuff[11] = {0}; // Ensure string is terminated after strncpy
     char *e = strchr(p, '.');
     if (e == NULL || e - p > 6)
       return false;                // no decimal point in range
     strncpy(degreebuff, p, e - p); // get DDDMM
+    
+    
     long dddmm = atol(degreebuff);
     long degrees = (dddmm / 100);         // truncate the minutes
     long minutes = dddmm - degrees * 100; // remove the degrees
-    p = e;                                // start from the decimal point
-    nmea_float_t decminutes = atof(e); // the fraction after the decimal point
+    
+    /*Serial.print(dddmm);
+    Serial.print("\t");
+    Serial.print(degrees);
+    Serial.print("\t");
+    Serial.println(minutes);*/
+
+    
+    p = e;             
+    nmea_float_t decminutes = atof(e); 
     p = strchr(p, ',') + 1;            // go to the next field
 
     // get the NSEW direction as a character
@@ -706,6 +732,9 @@ bool Adafruit_GPS::parseCoord(char *pStart, nmea_float_t *angleDegrees,
                  (decminutes * 10000000) / 60;
     nmea_float_t ang = degrees * 100 + minutes + decminutes;
     nmea_float_t deg = fixed / (nmea_float_t)10000000.;
+  
+
+    
     if (nsew == 'S' ||
         nsew == 'W') { // fixed and deg are signed, but DDDMM.mmmm is not
       fixed = -fixed;

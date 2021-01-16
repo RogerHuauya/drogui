@@ -112,7 +112,7 @@ char *Adafruit_GPS::build(char *nmea, const char *thisSource,
     //    type 1 or 9 update, null field when DGPS is not used
     // 14) Differential reference station ID, 0000-1023
     // 15) Checksum
-    sprintf(p, "%09.2f,%09.8f,%c,%010.8f,%c,%d,%02d,%.6f,%f,M,%f,M,,",
+    sprintf(p, "%09.2f,%09.4f,%c,%010.4f,%c,%d,%02d,%f,%f,M,%f,M,,",
             (double)hour * 10000L + minute * 100L + seconds +
                 milliseconds / 1000.,
             (double)latitude, lat, (double)longitude, lon, fixquality,
@@ -130,7 +130,7 @@ char *Adafruit_GPS::build(char *nmea, const char *thisSource,
     // 5) Time (UTC)
     // 6) Status A - Data Valid, V - Data Invalid
     // 7) Checksum
-    sprintf(p, "%09.8f,%c,%010.8f,%c,%09.2f,A", (double)latitude, lat,
+    sprintf(p, "%09.4f,%c,%010.4f,%c,%09.2f,A", (double)latitude, lat,
             (double)longitude, lon,
             (double)hour * 10000L + minute * 100L + seconds +
                 milliseconds / 1000.);
@@ -170,7 +170,7 @@ char *Adafruit_GPS::build(char *nmea, const char *thisSource,
     // 10) Magnetic Variation, degrees
     // 11) E or W
     // 12) Checksum
-    sprintf(p, "%09.2f,A,%09.8f,%c,%010.8f,%c,%f,%f,%06d,%f,%c",
+    sprintf(p, "%09.2f,A,%09.4f,%c,%010.4f,%c,%f,%f,%06d,%f,%c",
             (double)hour * 10000L + minute * 100L + seconds +
                 milliseconds / 1000.,
             (double)latitude, lat, (double)longitude, lon, (double)speed,

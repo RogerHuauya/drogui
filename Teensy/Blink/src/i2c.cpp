@@ -7,7 +7,8 @@
 uint8_t i2c1Reg[I2C_REG_SIZE][4];
 
 #define I2C_BUFF_SIZE 200
-int ptr[I2C_BUFF_SIZE], ptr_head = 0, ptr_tail = 0;
+//int ptr[I2C_BUFF_SIZE], ptr_head = 0, ptr_tail = 0;
+int ptr,ptr_head = 0, ptr_tail = 0;
 //int ptr;
 
 void clearI2Cregisters(int n){
@@ -20,8 +21,9 @@ void clearI2Cregisters(int n){
 }
 
 void requestI2C1(){
-    int x = ptr[ptr_tail++];
-    ptr_tail %= I2C_BUFF_SIZE;
+    //int x = ptr[ptr_tail++];
+    //ptr_tail %= I2C_BUFF_SIZE;
+    int x = ptr;
     /*Serial.print("Requested x: ");
     Serial.println(x);*/
 	for(int i = 0; i < 4 ; i++)	Wired1.write(i2c1Reg[x][i]);
@@ -41,7 +43,7 @@ void receiveI2C1(int reg){
     }
     else{
         //Serial.println("Is writing: ");
-        ptr[ptr_head++] = x, ptr_head %= I2C_BUFF_SIZE;
+        ptr = x;
     }
     //Serial.println("");
 }
