@@ -47,7 +47,7 @@ void handler_stop(int s){
 string pid_op[] = {"PID ROLL", "PID PITCH", "PID YAW" ,"PID X" ,"PID Y" , "PID Z"};
 bool pidOp(PANEL* pan, int index){
     if(index < 3){    
-        string names[] = {"index", "KP", "KD", "KI"};
+        string names[] = {"index", "KP", "KI", "KD"};
         float arr[4]; 
         if(readData(pan, pid_op[index], names, arr, 4)){
             switch (index){
@@ -74,7 +74,7 @@ bool pidOp(PANEL* pan, int index){
         }
     }
     else{
-        string names[] = {"KP", "KD", "KI"};
+        string names[] = {"KP", "KI", "KD"};
         float arr[3]; 
         if(readData(pan, pid_op[index], names, arr, 3)){
             switch (index){
@@ -172,11 +172,16 @@ bool setpointOp(PANEL* pan, int index){
     return true;
 }
 
+bool start = false;
+
 string various_op[] = {"Read Register", "Write Register", "Start kalman", "Compensation", "Start logging"}; 
 bool variousOp(PANEL* pan, int index){
     //wmove(win, 5, 5);
     //wprintw(win, "kha3");
-    if(index == 4) logging_state = true;
+    if(index == 4){
+        logging_state = !logging_state;
+        various_op[index] = (logging_state ? "Stop  logging":"Start logging");
+    }
     else if(index == 3){
         string names[] = {"0 - 100 %"};
         float arr[1]; 
@@ -184,14 +189,23 @@ bool variousOp(PANEL* pan, int index){
             rasp_i2c.sendFloat(Z_MG, arr[0]);
 	}
     }
-    else{
+    else if (index == 2){
         if(sim7600.GPSGet()){
             sim7600.offset_Log = sim7600.Log;
             sim7600.offset_Lat = sim7600.Lat;
         }
-        rasp_i2c.sendFloat(START, 0);
-        sleep(1);
-        rasp_i2c.sendFloat(START, 1);
+        start = !start;
+        rasp_i2c.sendFloat(START, start);
+        various_op[index] = (start ? "Stop  Kalman":"Start Kalman");
+    }
+    else{
+	string names[] = {"register"};
+	float arr[1];
+	if(readData(pan, various_op[index], names, arr, 1)){
+		arr[0] = rasp_i2c.readFloat((uint8_t) arr[0]);
+		names[0] = "--value--";
+		writeData(pan, various_op[index], names, arr, 1);
+	}
     }
 
 
@@ -202,7 +216,7 @@ bool variousOp(PANEL* pan, int index){
  
 int curmenu(void) {
     
-        rasp_i2c.sendFloat(START, 0);
+    rasp_i2c.sendFloat(START, 0);
     setlocale(LC_ALL, "");
  	initscr();
 	//cbreak();
