@@ -351,7 +351,7 @@ bool Adafruit_BMP3XX::performReading(void) {
   if (rslt != BMP3_OK)
     return false;
 
-  delay(5);
+  delay(3);
 
   /* Variable used to store the compensated data */
   struct bmp3_data data;

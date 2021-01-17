@@ -127,7 +127,7 @@ bool sensorDataOp(PANEL* pan, int index){
     }
     else if(index == 4){
         string names[] = {"Z"};
-        float arr[] = {0.012}; 
+        float arr[] = {rasp_i2c.readFloat(Z_VAL)}; 
         writeData(pan, sensor_data_op[index], names, arr, 1);
     }
 

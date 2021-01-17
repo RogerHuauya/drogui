@@ -31,6 +31,7 @@ char buffer[80];
 
 i2c slave;
 
+pwm m1, m2, m3, m4;
 Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28);
 Adafruit_BMP3XX bmp;
 
@@ -49,6 +50,35 @@ volatile double roll, pitch, yaw, ax, ay, az;
 float x, y, z;
 volatile unsigned long long time = 0;
 bool led_state;
+
+bool caso = true;
+
+long long entrada = 0;
+int dig = 0;
+
+double  H, H_comp,R,P,Y, H_ref, X_C, Y_C, R_MAX = pi/22.0 , P_MAX = pi/22.0;
+double M1,M2,M3,M4;
+uint8_t haux = 0;
+
+double roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
+double roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
+long long pm = 0;
+
+void saturateM(double H){
+    double f_max = 1;
+    double arr_M[] = {M1, M2, M3, M4};
+    for(int i = 0; i < 4 ; i++){
+        double delta = max(max(arr_M[i] + H - 100, -arr_M[i]-H), 0);
+        f_max = max(f_max, abs(arr_M[i] / (abs(arr_M[i]) - delta + 0.0000001)) );
+    }
+
+    M1 = M1 / f_max + H;
+    M2 = M2 / f_max + H;
+    M3 = M3 / f_max + H;
+    M4 = M4 / f_max + H;
+}
+
+
 
 void sensorsInterrupt(){
 	
@@ -106,7 +136,7 @@ void sensorsInterrupt(){
     Serial.print("\t");
     Serial.print(yaw);
     Serial.print("\t");
-    Serial.println(alt_slow - alt_offs);*/  
+    Serial.println(alt_slow - alt_offs);*/
 
     if(getReg(START) > 0){
         kalmanUpdateIMU(ax, ay, az, roll, pitch, yaw);
@@ -118,14 +148,18 @@ void sensorsInterrupt(){
 
     getPosition(&x, &y, &z);
     
+    z = alt_slow - alt_offs;
+
     setReg(X_VAL, x);
     setReg(Y_VAL, y);
-    setReg(Z_VAL, z);
+    setReg(Z_VAL, z);  
 
 }
 
 void mainInterrupt(){
     
+    time += timer_main.period/1000;
+
     X_C = computePid(&x_control, -x, time, H);
     Y_C = computePid(&y_control, -y, time, H);
 
@@ -138,7 +172,7 @@ void mainInterrupt(){
 
     H += fabs(H_ref - H) >= 0.1  ? copysign(0.1, H_ref - H) : 0;
 
-    H /= cos(roll)*cos(pitch);
+    H_comp = H / (cos(roll)*cos(pitch));
     
     double rel = roll_ref/(pitch_ref + 0.0000001);
     
@@ -159,31 +193,27 @@ void mainInterrupt(){
         
     }
 
-    roll_ref += getReg(ROLL_REF) + roll_off;
-    pitch_ref += getReg(PITCH_REF) + pitch_off;
+    roll_ref = getReg(ROLL_REF) + roll_off;
+    pitch_ref = getReg(PITCH_REF) + pitch_off;
     yaw_ref = getReg(YAW_REF) + yaw_off;
     
 
-    Serial.print(roll_ref);
-    Serial.print("\t");
-    Serial.println(pitch_ref);
-
-
-    R = computePid(&roll_control, angle_dif(roll_ref, roll), time, H);
-    P = computePid(&pitch_control, angle_dif(pitch_ref, pitch),time, H);
-    Y = computePid(&yaw_control, angle_dif(yaw_ref, yaw),time, H);
+    R = computePid(&roll_control, angle_dif(roll_ref, roll), time, H_comp);
+    P = computePid(&pitch_control, angle_dif(pitch_ref, pitch),time, H_comp);
+    Y = computePid(&yaw_control, angle_dif(yaw_ref, yaw),time, H_comp);
 
 
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
     setReg(YAW_U, Y);
-    setReg(Z_U, H);
+    setReg(Z_U, H_comp);
 
+    M1 = R + P - Y;
+    M2 = R - P + Y;
+    M3 = - R - P - Y;
+    M4 = - R + P + Y;
     
-    M1 = H + R + P - Y;
-    M2 = H + R - P + Y;
-    M3 = H - R - P - Y;
-    M4 = H - R + P + Y;
+    saturateM(H_comp);
     
     if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
         
@@ -236,8 +266,6 @@ void mainInterrupt(){
     setPwmDutyTime(&m3, min(max(M3,0), 100));
     setPwmDutyTime(&m4, min(max(M4,0), 100));
     
-    delay(max((int) getReg(TS_CONTROL), 5) );
-    
 }
 
 void initializeSystem(){
@@ -246,6 +274,8 @@ void initializeSystem(){
     initOneshot125(&m2, 4);
     initOneshot125(&m3, 3);
     initOneshot125(&m4, 2);
+
+    initPidConstants();
 
     if(!bno.begin()){
         Serial.println("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
@@ -277,7 +307,7 @@ void initializeSystem(){
     alt_offs = alt_slow ;
 
     initTimer(&timer_sensors, &sensorsInterrupt, 50);
-    initTimer(&timer_main, &mainInterrupt, 100);
+    initTimer(&timer_main, &mainInterrupt, 200);
 
     setKalmanTsImu(0.01);
     setKalmanTsGps(1);
@@ -288,24 +318,10 @@ void initializeSystem(){
 }
 
 
-bool caso = true;
-
-long long entrada = 0;
-int dig = 0;
-
-double  H,R,P,Y, H_ref, X_C, Y_C, R_MAX = pi/22.0 , P_MAX = pi/22.0;
-double M1,M2,M3,M4;
-uint8_t haux = 0;
-
-double roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
-double roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
-long long pm = 0;
-
 
 int _main(void){
 
     initializeSystem();
-    delay(1000);
     
     yaw_off = yaw;
     setReg(PID_INDEX, -1);
@@ -313,7 +329,6 @@ int _main(void){
 
     while(1){
         if(timerReady(&timer_sensors)) executeTimer(&timer_sensors);
-
         if(timerReady(&timer_main)) executeTimer(&timer_main);
     }
     return 0;
