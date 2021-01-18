@@ -78,6 +78,10 @@ void saturateM(double H){
     M4 = M4 / f_max + H;
 }
 
+void rampValue(double *var, double desired, double step){
+
+    (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*var));
+}    
 
 
 void sensorsInterrupt(){
@@ -163,17 +167,16 @@ void mainInterrupt(){
     X_C = computePid(&x_control, -x, time, H);
     Y_C = computePid(&y_control, -y, time, H);
 
-    roll_ref = Y_C*cos(yaw) + X_C*sin(yaw);
-    pitch_ref = Y_C*sin(yaw) - X_C*cos(yaw);
+    //roll_ref = Y_C*cos(yaw) + X_C*sin(yaw);
+    //pitch_ref = Y_C*sin(yaw) - X_C*cos(yaw);
 
-    z_ref += fabs(getReg(Z_REF) - z_ref) >= getReg(Z_REF_SIZE)  ? copysign(getReg(Z_REF_SIZE), getReg(Z_REF) - z_ref) : 0;
-    
+    rampValue(&z_ref, getReg(Z_REF), getReg(Z_REF_SIZE));
+
     H_ref = computePid(&z_control, z_ref - z, time,0) + getReg(Z_MG);
-
-    H += fabs(H_ref - H) >= 0.1  ? copysign(0.1, H_ref - H) : 0;
+    rampValue(&H, H_ref, 0.1);
 
     H_comp = H / (cos(roll)*cos(pitch));
-    
+    /*
     double rel = roll_ref/(pitch_ref + 0.0000001);
     
     if( fabs(rel) < 1  ){
@@ -191,12 +194,12 @@ void mainInterrupt(){
         pitch_ref = roll_ref/rel;
         }
         
-    }
+    }*/
 
-    roll_ref = getReg(ROLL_REF) + roll_off;
-    pitch_ref = getReg(PITCH_REF) + pitch_off;
+    rampValue(&roll_ref, getReg(ROLL_REF) + roll_off, 0.0015);
+    rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.0015);
     yaw_ref = getReg(YAW_REF) + yaw_off;
-    
+
 
     R = computePid(&roll_control, angle_dif(roll_ref, roll), time, H_comp);
     P = computePid(&pitch_control, angle_dif(pitch_ref, pitch),time, H_comp);
