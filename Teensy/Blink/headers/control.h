@@ -5,7 +5,7 @@
 #include <Arduino.h>
 
 
-enum TYPES_PID {NORMAL = 0, P2ID = 1,INDEXED = 2};
+enum TYPES_PID {NORMAL = 0, P2ID = 1, INDEXED = 2, PIDABS = 4};
 typedef struct _pid{
     double kp[5], kd[5], ki[5];
     double threshold[5];

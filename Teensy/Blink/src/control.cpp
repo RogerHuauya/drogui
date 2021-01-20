@@ -11,30 +11,36 @@ pid yaw_control;
 
 
 double computePid(pid* p, double error, unsigned long long t, double h){
+    double kp = 1, kd = 1, ki = 1;
+
+
     p->dt = (t - p->tant)/1000.0;
     p->tant = t;
     p->erri = max(min(p->erri + error*p->dt,p->isat),-p->isat);
     //p->errd = errord;
     p->errd = (error - p->e_ant)/p->dt;
     p->e_ant = error;
+
     //return max(min(p->kp[0]*error + p->ki[0]*p->erri + p->kd[0]*p->errd,p->osat),-p->osat);
     if(p->type & P2ID) error *= fabs(error); 
     
     if(p->type & INDEXED){
-        if(h <= 60)
-            return max(min(p->kp[0]*error + p->ki[0]*p->erri + p->kd[0]*p->errd,p->osat),-p->osat);
-        else if(h <= 70)
-            return max(min(p->kp[1]*error + p->ki[1]*p->erri + p->kd[1]*p->errd,p->osat),-p->osat);
-        else if(h <= 80)
-            return max(min(p->kp[2]*error + p->ki[2]*p->erri + p->kd[2]*p->errd,p->osat),-p->osat);
-        else if(h <= 90)
-            return max(min(p->kp[3]*error + p->ki[3]*p->erri + p->kd[3]*p->errd,p->osat),-p->osat);
-        else if(h <= 100)
-            return max(min(p->kp[4]*error + p->ki[4]*p->erri + p->kd[4]*p->errd,p->osat),-p->osat);
+        if(h <= 60)         kp = p->kp[0], kd = p->kd[0], ki = p->ki[0];
+        else if(h <= 70)    kp = p->kp[1], kd = p->kd[1], ki = p->ki[1];
+        else if(h <= 80)    kp = p->kp[2], kd = p->kd[2], ki = p->ki[2];
+        else if(h <= 90)    kp = p->kp[3], kd = p->kd[3], ki = p->ki[3];
+        else if(h <= 100)   kp = p->kp[4], kd = p->kd[4], ki = p->ki[4];
+    }
+    else{kp = p->kp[0], kd = p->kd[0], ki = p->ki[0];}
+
+    if(p->type & PIDABS){
+        double newd = -copysign(min( abs(kp*error), abs(kd*p->errd) ), error);
+        return max(min(kp*error + ki*p->erri + newd, p->osat), -p->osat);
     }
     else{
-        return max(min(p->kp[0]*error + p->ki[0]*p->erri + p->kd[0]*p->errd,p->osat),-p->osat);    
+        return max(min(kp*error + ki*p->erri + kd*p->errd, p->osat), -p->osat);
     }
+
     return 0;
 }
 
@@ -69,9 +75,9 @@ void initPidConstants(){
     initPid(&x_control, 0.25, 0, 0, 0, 10 , 100, NORMAL);
     initPid(&y_control, 0.25, 0, 0, 0, 10 , 100, NORMAL);
     
-    initPid(&roll_control, 0, 0, 0, 0, 1 , 100, INDEXED);
-    initPid(&pitch_control, 0, 0, 0, 0, 1 , 100, INDEXED);
-    initPid(&yaw_control, 0, 0, 0, 0, 1 , 100, INDEXED);
+    initPid(&roll_control, 0, 0, 0, 0, 1 , 100, PIDABS);
+    initPid(&pitch_control, 0, 0, 0, 0, 1 , 100, PIDABS);
+    initPid(&yaw_control, 0, 0, 0, 0, 1 , 100, NORMAL);
     
     for(int i = 0; i < 5; i ++){
         roll_control.kp[i] = roll_const[i][0];
