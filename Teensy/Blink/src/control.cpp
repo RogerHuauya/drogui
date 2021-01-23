@@ -75,8 +75,8 @@ void initPidConstants(){
     initPid(&x_control, 0.25, 0, 0, 0, 10 , 100, NORMAL);
     initPid(&y_control, 0.25, 0, 0, 0, 10 , 100, NORMAL);
     
-    initPid(&roll_control, 0, 0, 0, 0, 1 , 100, PIDABS);
-    initPid(&pitch_control, 0, 0, 0, 0, 1 , 100, PIDABS);
+    initPid(&roll_control, 0, 0, 0, 0, 1 , 100, P2ID);
+    initPid(&pitch_control, 0, 0, 0, 0, 1 , 100, P2ID);
     initPid(&yaw_control, 0, 0, 0, 0, 1 , 100, NORMAL);
     
     for(int i = 0; i < 5; i ++){

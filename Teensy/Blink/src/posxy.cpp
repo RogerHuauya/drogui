@@ -173,7 +173,7 @@ void mainInterrupt(){
     rampValue(&z_ref, getReg(Z_REF), getReg(Z_REF_SIZE));
 
     H_ref = computePid(&z_control, z_ref - z, time,0) + getReg(Z_MG);
-    rampValue(&H, H_ref, 0.1);
+    rampValue(&H, H_ref, 0.2);
 
     H_comp = H / (cos(roll)*cos(pitch));
     /*
@@ -219,7 +219,7 @@ void mainInterrupt(){
     saturateM(H_comp);
     
     if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
-        
+        alt_offs = alt_slow;
         setReg(Z_REF, 0);
         H = 0; z_ref = 0;
         M1 = M2 = M3 = M4 = 0;
@@ -307,10 +307,10 @@ void initializeSystem(){
     for ( int i = 0; i < N; i++ ) alt_memo[i] = bmp.readAltitude(sealevel), sum += alt_memo[i] / N, delay(5);
 
     alt_slow = sum / N;
-    alt_offs = alt_slow ;
+    alt_offs = alt_slow;
 
-    initTimer(&timer_sensors, &sensorsInterrupt, 50);
-    initTimer(&timer_main, &mainInterrupt, 200);
+    initTimer(&timer_sensors, &sensorsInterrupt, 100);
+    initTimer(&timer_main, &mainInterrupt, 100);
 
     setKalmanTsImu(0.01);
     setKalmanTsGps(1);
