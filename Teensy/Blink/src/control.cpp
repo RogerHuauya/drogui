@@ -18,8 +18,11 @@ double computePid(pid* p, double error, unsigned long long t, double h){
     p->tant = t;
     p->erri = max(min(p->erri + error*p->dt,p->isat),-p->isat);
     //p->errd = errord;
-    p->errd = (error - p->e_ant)/p->dt;
-    p->e_ant = error;
+    p->errd = (error - p->err_ant2)/(2*p->dt);
+    
+    p->err_ant2 = p->err_ant1;
+    p->err_ant1 = error;
+    
 
     //return max(min(p->kp[0]*error + p->ki[0]*p->erri + p->kd[0]*p->errd,p->osat),-p->osat);
     if(p->type & P2ID) error *= fabs(error); 
@@ -48,7 +51,7 @@ double computePid(pid* p, double error, unsigned long long t, double h){
 void resetPid(pid* p, double ti){
     p->tant = ti;
     p->erri = 0;
-    p->e_ant = 0;
+    p->err_ant1 = p->err_ant2 = 0;
 }
 
 void initPid(pid* p, double kp, double kd, double ki,double ti,double isat,double osat, int type){
@@ -75,8 +78,8 @@ void initPidConstants(){
     initPid(&x_control, 0.25, 0, 0, 0, 10 , 100, NORMAL);
     initPid(&y_control, 0.25, 0, 0, 0, 10 , 100, NORMAL);
     
-    initPid(&roll_control, 0, 0, 0, 0, 1 , 100, P2ID);
-    initPid(&pitch_control, 0, 0, 0, 0, 1 , 100, P2ID);
+    initPid(&roll_control, 0, 0, 0, 0, 1 , 100, NORMAL);
+    initPid(&pitch_control, 0, 0, 0, 0, 1 , 100, NORMAL);
     initPid(&yaw_control, 0, 0, 0, 0, 1 , 100, NORMAL);
     
     for(int i = 0; i < 5; i ++){
