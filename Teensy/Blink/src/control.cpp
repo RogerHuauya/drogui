@@ -74,13 +74,13 @@ double yaw_const[5][3] = {{0, 0, 0}, {0,0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 
 void initPidConstants(){
     
-    initPid(&z_control, 0, 0, 0, 0, 10 , 100, P2ID);
-    initPid(&x_control, 0.25, 0, 0, 0, 10 , 100, NORMAL);
-    initPid(&y_control, 0.25, 0, 0, 0, 10 , 100, NORMAL);
+    initPid(&z_control, 0, 0, 0, 0, 10 , 10000, P2ID);
+    initPid(&x_control, 0.25, 0, 0, 0, 10 , 10000, NORMAL);
+    initPid(&y_control, 0.25, 0, 0, 0, 10 , 10000, NORMAL);
     
-    initPid(&roll_control, 0, 0, 0, 0, 1 , 100, NORMAL);
-    initPid(&pitch_control, 0, 0, 0, 0, 1 , 100, NORMAL);
-    initPid(&yaw_control, 0, 0, 0, 0, 1 , 100, NORMAL);
+    initPid(&roll_control, 0, 0, 0, 0, 1 , 10000, NORMAL);
+    initPid(&pitch_control, 0, 0, 0, 0, 1 , 10000, NORMAL);
+    initPid(&yaw_control, 0, 0, 0, 0, 1 , 10000, NORMAL);
     
     for(int i = 0; i < 5; i ++){
         roll_control.kp[i] = roll_const[i][0];
