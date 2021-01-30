@@ -175,8 +175,8 @@ void mainInterrupt(){
     H_ref = computePid(&z_control, z_ref - z, time,0) + getReg(Z_MG);
     rampValue(&H, H_ref, 0.2);
 
-    H_comp = H / (cos(roll)*cos(pitch));
-    /*
+    //H_comp = H / (cos(roll)*cos(pitch));
+    H_comp = H;/*
     double rel = roll_ref/(pitch_ref + 0.0000001);
     
     if( fabs(rel) < 1  ){
@@ -216,6 +216,11 @@ void mainInterrupt(){
     M3 = - R - P - Y;
     M4 = - R + P + Y;
     
+    setReg(RAW_TEMP,(float) M1);
+    setReg(TEMP_ABS,(float) M2);
+    setReg(RAW_PRESS,(float) M3);
+    setReg(PRESS_ABS,(float) M4);
+
     saturateM(H_comp);
     
     if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
