@@ -44,7 +44,7 @@ float alt_memo[N], alt_fast, alt_slow = 0, alt_diff, sum = 0,alt_offs;
 int alt_pointer = 0;
 float sealevel;
 
-timer timer_sensors, timer_main;
+timer timer_sensors,    	timer_main;
 
 volatile double roll, pitch, yaw, ax, ay, az;
 float x, y, z;
@@ -68,14 +68,14 @@ void saturateM(double H){
     double f_max = 1;
     double arr_M[] = {M1, M2, M3, M4};
     for(int i = 0; i < 4 ; i++){
-        double delta = max(max(arr_M[i] + H - 100, -arr_M[i]-H), 0);
+        double delta = max(max(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
         f_max = max(f_max, abs(arr_M[i] / (abs(arr_M[i]) - delta + 0.0000001)) );
     }
 
-    M1 = M1 / f_max + H;
-    M2 = M2 / f_max + H;
-    M3 = M3 / f_max + H;
-    M4 = M4 / f_max + H;
+    M1 = sqrt(M1 / f_max + H);
+    M2 = sqrt(M2 / f_max + H);
+    M3 = sqrt(M3 / f_max + H);
+    M4 = sqrt(M4 / f_max + H);
 }
 
 void rampValue(double *var, double desired, double step){
@@ -205,23 +205,18 @@ void mainInterrupt(){
     P = computePid(&pitch_control, angle_dif(pitch_ref, pitch),time, H_comp);
     Y = computePid(&yaw_control, angle_dif(yaw_ref, yaw),time, H_comp);
 
-
+    
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
     setReg(YAW_U, Y);
     setReg(Z_U, H_comp);
 
-    M1 = R + P - Y;
-    M2 = R - P + Y;
-    M3 = - R - P - Y;
-    M4 = - R + P + Y;
-    
-    setReg(RAW_TEMP,(float) M1);
-    setReg(TEMP_ABS,(float) M2);
-    setReg(RAW_PRESS,(float) M3);
-    setReg(PRESS_ABS,(float) M4);
+    M1 =  -R - P - Y;
+    M2 = -R + P  + Y;
+    M3 =   R + P - Y;
+    M4 = R - P + Y;
 
-    saturateM(H_comp);
+    saturateM(H_comp*H_comp);
     
     if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
         alt_offs = alt_slow;
