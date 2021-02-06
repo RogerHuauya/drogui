@@ -1,6 +1,6 @@
 import serial
 
-serialPort = serial.Serial(port = "COM7", baudrate=115200,
+serialPort = serial.Serial(port = "COM6", baudrate=115200,
                            bytesize=8, timeout=2, stopbits=serial.STOPBITS_ONE)
 serialString = ""                           # Used to hold data coming over UART
 while(1):

@@ -18,7 +18,7 @@ double computePid(pid* p, double error, unsigned long long t, double h){
     p->tant = t;
     p->erri = max(min(p->erri + error*p->dt,p->isat),-p->isat);
     //p->errd = errord;
-    p->errd = (error - p->err_ant2)/(2*p->dt);
+    p->errd = (error - p->err_ant2)/(2*p->dt+0.00000000001);
     
     p->err_ant2 = p->err_ant1;
     p->err_ant1 = error;
@@ -65,8 +65,8 @@ void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti,doubl
     p->type = type;
 }
 
-double roll_const[5][3] = {{30, 0, 15}, {30, 300, 15}, {30, 300, 15}, {30, 300, 15}, {30, 300, 15}};
-double pitch_const[5][3] = {{30, 0, 15}, {30, 300, 15}, {30, 300, 15}, {30, 300, 15}, {30, 300, 15}};
+double roll_const[5][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+double pitch_const[5][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 
 //double roll_const[5][3] = {{10, 10, 4}, {10, 10, 4}, {10, 10, 5}, {20, 25, 15}, {20, 25, 15}};
 //double pitch_const[5][3] = {{10, 10, 4}, {10, 10, 4}, {10, 10, 5}, {20, 25, 15}, {20, 25, 15}};
@@ -78,8 +78,8 @@ void initPidConstants(){
     initPid(&x_control, 0.25, 0, 0, 0, 1 , 0.09, NORMAL);
     initPid(&y_control, 0.25, 0, 0, 0, 1 , 0.09, NORMAL);
     
-    initPid(&roll_control, 0, 0, 0, 0, 1 , 10000, NORMAL);
-    initPid(&pitch_control, 0, 0, 0, 0, 1 , 10000, NORMAL);
+    initPid(&roll_control, 0, 0, 0, 0, 1 , 10000, P2ID);
+    initPid(&pitch_control, 0, 0, 0, 0, 1 , 10000, P2ID);
     initPid(&yaw_control, 0, 0, 0, 0, 1 , 10000, NORMAL);
     
     for(int i = 0; i < 5; i ++){
