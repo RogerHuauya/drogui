@@ -16,8 +16,8 @@ typedef struct _pid{
 } pid;
 
 double computePid(pid* p, double error, unsigned long long t, double h);
-void resetPid(pid* p, double ti);
-void initPid(pid* p, double kp, double kd, double ki,double ti,double isat,double osat, int tipo);
+void resetPid(pid* p, unsigned long long ti);
+void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti,double isat,double osat, int tipo);
 void initPidConstants();
 
 #endif

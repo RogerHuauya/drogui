@@ -86,10 +86,10 @@ void rampValue(double *var, double desired, double step){
 
 void sensorsInterrupt(){
 	
-    
     digitalWrite(LED_BUILTIN, led_state);
-    led_state = !led_state;
 
+    led_state = !led_state;
+    
     sensors_event_t orientationData , linearAccelData;
     
     bno.getEvent(&orientationData, Adafruit_BNO055::VECTOR_EULER);
@@ -118,8 +118,7 @@ void sensorsInterrupt(){
     setReg(CAL_GYR, (float) gyro);
     setReg(CAL_ACC, (float) accel);
     setReg(CAL_MAG, (float) mag);
-
-
+    
     alt_pointer %= N;
     sum -= alt_memo[alt_pointer];
     alt_memo[alt_pointer] = bmp.readAltitude(sealevel);
@@ -132,7 +131,7 @@ void sensorsInterrupt(){
     alt_diff = max(min(alt_diff, 1), -1);
 
     if (abs(alt_diff) >  0.20) alt_slow += alt_diff / 6.0;
-    
+    //delay(2);
     /*Serial.println("Sensors");
     Serial.print(roll);
     Serial.print("\t");
@@ -140,7 +139,7 @@ void sensorsInterrupt(){
     Serial.print("\t");
     Serial.print(yaw);
     Serial.print("\t");
-    Serial.println(alt_slow - alt_offs);*/
+    Serial.println(alt_slow - alt_offs);
 
     if(getReg(START) > 0){
         kalmanUpdateIMU(ax, ay, az, roll, pitch, yaw);
@@ -156,12 +155,11 @@ void sensorsInterrupt(){
 
     setReg(X_VAL, x);
     setReg(Y_VAL, y);
-    setReg(Z_VAL, z);  
+    setReg(Z_VAL, z);  */
 
 }
 
 void mainInterrupt(){
-    
     time += timer_main.period/1000;
 
     X_C = computePid(&x_control, -x, time, H);
@@ -175,8 +173,8 @@ void mainInterrupt(){
     H_ref = computePid(&z_control, z_ref - z, time,0) + getReg(Z_MG);
     rampValue(&H, H_ref, 0.2);
 
-    H_comp = H / (cos(roll)*cos(pitch));
-    /*
+    //H_comp = H / (cos(roll)*cos(pitch));
+    H_comp = H;/*
     double rel = roll_ref/(pitch_ref + 0.0000001);
     
     if( fabs(rel) < 1  ){
@@ -211,11 +209,11 @@ void mainInterrupt(){
     setReg(YAW_U, Y);
     setReg(Z_U, H_comp);
 
-    M1 =  R + P - Y;
-    M2 = R - P  + Y;
-    M3 =  - R - P - Y;
-    M4 = - R + P + Y;
-    
+    M1 =  -R - P - Y;
+    M2 = -R + P  + Y;
+    M3 =   R + P - Y;
+    M4 = R - P + Y;
+
     saturateM(H_comp*H_comp);
     
     if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
@@ -333,6 +331,7 @@ int _main(void){
     while(1){
         if(timerReady(&timer_sensors)) executeTimer(&timer_sensors);
         if(timerReady(&timer_main)) executeTimer(&timer_main);
+
     }
     return 0;
 }
