@@ -18,7 +18,7 @@ double computePid(pid* p, double error, unsigned long long t, double h){
     p->tant = t;
     p->erri = max(min(p->erri + error*p->dt,p->isat),-p->isat);
     //p->errd = errord;
-    p->errd = (error - p->err_ant2)/(2*p->dt+0.00000000001);
+    p->errd = (error - p->err_ant2)/(2*p->dt + 0.00000000001);
     
     p->err_ant2 = p->err_ant1;
     p->err_ant1 = error;

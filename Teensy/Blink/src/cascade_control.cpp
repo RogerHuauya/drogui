@@ -188,6 +188,10 @@ void mainInterrupt(){
     rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.0015);
     yaw_ref = getReg(YAW_REF) + yaw_off;
 
+    Serial.print(roll);
+    Serial.print('\t');
+    Serial.println(gx);
+
 
     double wroll = computePid(&roll2w, angle_dif(roll_ref, roll), time, 0);
     double wpitch = computePid(&pitch2w, angle_dif(pitch_ref, pitch),time, 0);
