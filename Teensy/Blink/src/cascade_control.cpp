@@ -1,5 +1,5 @@
-//#define POSXY
-#ifdef POSXY
+#define CASCADE_CONTROL
+#ifdef CASCADE_CONTROL
 
 #include "..\headers\main.h"
 #include "..\headers\kalman.h"
@@ -37,7 +37,6 @@ Adafruit_BMP3XX bmp;
 
 extern pid z_control, x_control, y_control;
 
-extern pid roll_control, pitch_control, yaw_control;
 
 
 float alt_memo[N], alt_fast, alt_slow = 0, alt_diff, sum = 0,alt_offs;
@@ -46,7 +45,7 @@ float sealevel;
 
 timer timer_sensors,    	timer_main;
 
-volatile double roll, pitch, yaw, ax, ay, az;
+volatile double roll, pitch, yaw, ax, ay, az, gx, gy, gz;
 float x, y, z;
 volatile unsigned long long time = 0;
 bool led_state;
@@ -63,6 +62,10 @@ uint8_t haux = 0;
 double roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
 double roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
 long long pm = 0;
+
+pid roll2w, pitch2w, yaw2w; 
+pid wroll_control, wpitch_control, wyaw_control;
+
 
 void saturateM(double H){
     double f_max = 1;
@@ -90,10 +93,11 @@ void sensorsInterrupt(){
     digitalWrite(LED_BUILTIN, led_state);
     led_state = !led_state;
 
-    sensors_event_t orientationData , linearAccelData;
+    sensors_event_t orientationData , linearAccelData, gyroscopeData;
     
     bno.getEvent(&orientationData, Adafruit_BNO055::VECTOR_EULER);
     bno.getEvent(&linearAccelData, Adafruit_BNO055::VECTOR_LINEARACCEL);
+    bno.getEvent(&gyroscopeData, Adafruit_BNO055::VECTOR_GYROSCOPE);
     
     yaw = (float)orientationData.orientation.x*pi/180 - pi;
     pitch = (float)orientationData.orientation.y*pi/180;
@@ -110,6 +114,11 @@ void sensorsInterrupt(){
     setReg(ACC_X,(float)(ax));
     setReg(ACC_Y,(float)(ay));
     setReg(ACC_Z,(float)(az));
+
+    gx = gyroscopeData.gyro.x;
+    gy = gyroscopeData.gyro.y;
+    gz = gyroscopeData.gyro.z;
+
 
     uint8_t sys, gyro, accel, mag = 0;
     bno.getCalibration(&sys, &gyro, &accel, &mag);
@@ -167,44 +176,26 @@ void mainInterrupt(){
     X_C = computePid(&x_control, -x, time, H);
     Y_C = computePid(&y_control, -y, time, H);
 
-    //roll_ref = Y_C*cos(yaw) + X_C*sin(yaw);
-    //pitch_ref = Y_C*sin(yaw) - X_C*cos(yaw);
-
     rampValue(&z_ref, getReg(Z_REF), getReg(Z_REF_SIZE));
 
     H_ref = computePid(&z_control, z_ref - z, time,0) + getReg(Z_MG);
     rampValue(&H, H_ref, 0.2);
 
     //H_comp = H / (cos(roll)*cos(pitch));
-    H_comp = H;/*
-    double rel = roll_ref/(pitch_ref + 0.0000001);
-    
-    if( fabs(rel) < 1  ){
-        
-        if( fabs(pitch_ref) >= P_MAX  ){
-        pitch_ref = copysign(P_MAX, pitch_ref);
-        roll_ref = pitch_ref * rel;
-        }
-        
-    }
-    else{ 
-
-        if( fabs(roll_ref) >= R_MAX  ){
-        roll_ref = copysign(R_MAX, roll_ref);
-        pitch_ref = roll_ref/rel;
-        }
-        
-    }*/
+    H_comp = H;
 
     rampValue(&roll_ref, getReg(ROLL_REF) + roll_off, 0.0015);
     rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.0015);
     yaw_ref = getReg(YAW_REF) + yaw_off;
 
 
-    R = computePid(&roll_control, angle_dif(roll_ref, roll), time, H_comp);
-    P = computePid(&pitch_control, angle_dif(pitch_ref, pitch),time, H_comp);
-    Y = computePid(&yaw_control, angle_dif(yaw_ref, yaw),time, H_comp);
+    double wroll = computePid(&roll2w, angle_dif(roll_ref, roll), time, 0);
+    double wpitch = computePid(&pitch2w, angle_dif(pitch_ref, pitch),time, 0);
+    double wyaw = computePid(&yaw2w, angle_dif(yaw_ref, yaw),time, 0);
 
+    R = computePid(&wroll_control, wroll - gx, time, 0);
+    P = computePid(&wpitch_control, wpitch - gy, time, 0);
+    Y = computePid(&wyaw_control, wyaw - gz, time, 0);
     
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
@@ -228,21 +219,27 @@ void mainInterrupt(){
             switch(var){
     
                 case PID_ROLL:
-                    roll_control.kp[index] = getReg(ROLL_KP);
-                    roll_control.ki[index] = getReg(ROLL_KI);
-                    roll_control.kd[index] = getReg(ROLL_KD);
+                    if(index == 0)
+                        roll2w.kp[0] = getReg(ROLL_KP),  roll2w.ki[0] = getReg(ROLL_KI),  roll2w.kd[0] = getReg(ROLL_KD);
+                    else
+                        wroll_control.kp[0] = getReg(ROLL_KP),  wroll_control.ki[0] = getReg(ROLL_KI),  wroll_control.kd[0] = getReg(ROLL_KD);
+
                 break;
                 
                 case PID_PITCH:
-                    pitch_control.kp[index] = getReg(PITCH_KP);
-                    pitch_control.ki[index] = getReg(PITCH_KI);
-                    pitch_control.kd[index] = getReg(PITCH_KD);
+                    if(index == 0)
+                        pitch2w.kp[0] = getReg(PITCH_KP),  pitch2w.ki[0] = getReg(PITCH_KI),  pitch2w.kd[0] = getReg(PITCH_KD);
+                    else
+                        wpitch_control.kp[0] = getReg(PITCH_KP),  wpitch_control.ki[0] = getReg(PITCH_KI),  wpitch_control.kd[0] = getReg(PITCH_KD);
+
                 break;
 
                 case PID_YAW:
-                    yaw_control.kp[index] = getReg(YAW_KP);
-                    yaw_control.ki[index] = getReg(YAW_KI);
-                    yaw_control.kd[index] = getReg(YAW_KD);
+                    if(index == 0)
+                        yaw2w.kp[0] = getReg(YAW_KP),  yaw2w.ki[0] = getReg(YAW_KI),  yaw2w.kd[0] = getReg(YAW_KD);
+                    else
+                        wyaw_control.kp[0] = getReg(YAW_KP),  wyaw_control.ki[0] = getReg(YAW_KI),  wyaw_control.kd[0] = getReg(YAW_KD);
+
                 break;
                 
                 case PID_Z:
@@ -252,9 +249,12 @@ void mainInterrupt(){
                 break;
             }
         }
-        resetPid(&roll_control, time);
-        resetPid(&pitch_control, time);
-        resetPid(&yaw_control, time);
+        resetPid(&roll2w, time);
+        resetPid(&pitch2w, time);
+        resetPid(&yaw2w, time);
+        resetPid(&wroll_control, time);
+        resetPid(&wpitch_control, time);
+        resetPid(&wyaw_control, time);
         resetPid(&x_control, time);
         resetPid(&y_control, time);
         resetPid(&z_control, time);
@@ -279,6 +279,15 @@ void initializeSystem(){
     initOneshot125(&m4, 2);
 
     initPidConstants();
+
+    initPid(&roll2w,2,1,2, time,10, 10, NORMAL);
+    initPid(&pitch2w,2,1,2, time,10, 10, NORMAL);
+    initPid(&yaw2w,0,0,0, time,10, 10, NORMAL);
+
+    initPid(&wroll_control, 0, 0, 0, time, 10, 10000, NORMAL);
+    initPid(&wpitch_control, 0, 0, 0, time, 10, 10000, NORMAL);
+    initPid(&wyaw_control, 0, 0, 0, time, 10, 10000, NORMAL);
+
 
     if(!bno.begin()){
         Serial.println("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");

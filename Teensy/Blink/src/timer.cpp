@@ -11,6 +11,6 @@ bool timerReady(timer* t){
 }
 
 void executeTimer(timer* t){
-    t -> function();
     t -> time = 0;
+    t -> function();
 }

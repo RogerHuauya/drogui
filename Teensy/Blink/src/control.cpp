@@ -48,13 +48,13 @@ double computePid(pid* p, double error, unsigned long long t, double h){
 }
 
 
-void resetPid(pid* p, double ti){
+void resetPid(pid* p, unsigned long long ti){
     p->tant = ti;
     p->erri = 0;
     p->err_ant1 = p->err_ant2 = 0;
 }
 
-void initPid(pid* p, double kp, double kd, double ki,double ti,double isat,double osat, int type){
+void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti,double isat,double osat, int type){
     for(int i = 0; i < 5; i++){
         p->kp[i] = kp;
         p->kd[i] = kd;
