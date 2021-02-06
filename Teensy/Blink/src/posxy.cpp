@@ -61,7 +61,8 @@ double M1,M2,M3,M4;
 uint8_t haux = 0;
 
 double roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
-double roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
+double roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref, z_ref_des, z_ref_init;
+double t0, T = 5;
 long long pm = 0;
 
 void saturateM(double H){
@@ -78,11 +79,22 @@ void saturateM(double H){
     M4 = sqrt(M4 / f_max + H);
 }
 
+ double s(double t){
+    return 10*(t/T)*(t/T)*(t/T) - 15*(t/T)*(t/T)*(t/T)*(t/T) + 6*(t/T)*(t/T)*(t/T)*(t/T)*(t/T);
+ }
+
+ double sp(double t){
+    return 30*(t/T)*(t/T)/T - 60*(t/T)*(t/T)*(t/T)/T + 30*(t/T)*(t/T)*(t/T)*(t/T)/T;
+ }
+ 
 void rampValue(double *var, double desired, double step){
 
     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*var));
 }    
 
+void rampValueR(double *var, double time){
+    (*var) =  (z_ref_des - z_ref_init)*s(time) + z_ref_init;
+}    
 
 void sensorsInterrupt(){
 	
@@ -167,8 +179,12 @@ void mainInterrupt(){
 
     //roll_ref = Y_C*cos(yaw) + X_C*sin(yaw);
     //pitch_ref = Y_C*sin(yaw) - X_C*cos(yaw);
-
-    rampValue(&z_ref, getReg(Z_REF), getReg(Z_REF_SIZE));
+    if(z_ref_des != getReg(Z_REF)){
+        z_ref_des = getReg(Z_REF);
+        z_ref_init = z_ref;
+        t0 = time;
+    }
+    if(time <= t0 + T && time > t0) rampValueR(&z_ref, time - t0);
 
     H_ref = computePid(&z_control, z_ref - z, time,0) + getReg(Z_MG);
     rampValue(&H, H_ref, 0.2);
@@ -327,7 +343,8 @@ int _main(void){
     yaw_off = yaw;
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
-
+    z_ref_des = getReg(Z_REF);
+    z_ref_init = getReg(Z_REF);
     while(1){
         if(timerReady(&timer_sensors)) executeTimer(&timer_sensors);
         if(timerReady(&timer_main)) executeTimer(&timer_main);
