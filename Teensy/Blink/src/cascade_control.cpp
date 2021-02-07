@@ -9,6 +9,7 @@
 #include "..\headers\utils.h"
 #include "..\headers\timer.h"
 #include "..\headers\registerMap.h"
+#include "..\headers\filter.h"
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
@@ -18,16 +19,7 @@
 #include <Adafruit_BMP3XX.h>
 
 
-#define BMP_SCK 13
-#define BMP_MISO 12
-#define BMP_MOSI 11
-#define BMP_CS 10
-
 #define N 25
-
-#define SEALEVELPRESSURE_HPA (1013.25)
-
-char buffer[80];
 
 i2c slave;
 
@@ -37,31 +29,25 @@ Adafruit_BMP3XX bmp;
 
 extern pid z_control, x_control, y_control;
 
-
-
 float alt_memo[N], alt_fast, alt_slow = 0, alt_diff, sum = 0,alt_offs;
 int alt_pointer = 0;
 float sealevel;
 
-timer timer_sensors,    	timer_main;
+timer timer_sensors, timer_main;
 
 volatile double roll, pitch, yaw, ax, ay, az, gx, gy, gz;
+double roll_ant,pitch_ant,yaw_ant;
+filter filter_gx, filter_gy, filter_gz;
+
 float x, y, z;
 volatile unsigned long long time = 0;
 bool led_state;
 
-bool caso = true;
-
-long long entrada = 0;
-int dig = 0;
-
 double  H, H_comp,R,P,Y, H_ref, X_C, Y_C, R_MAX = pi/22.0 , P_MAX = pi/22.0;
 double M1,M2,M3,M4;
-uint8_t haux = 0;
 
 double roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
 double roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
-long long pm = 0;
 
 pid roll2w, pitch2w, yaw2w; 
 pid wroll_control, wpitch_control, wyaw_control;
@@ -115,9 +101,17 @@ void sensorsInterrupt(){
     setReg(ACC_Y,(float)(ay));
     setReg(ACC_Z,(float)(az));
 
-    gx = gyroscopeData.gyro.x;
-    gy = gyroscopeData.gyro.y;
-    gz = gyroscopeData.gyro.z;
+    gx = computeFilter(&filter_gx, gyroscopeData.gyro.x);
+    gy = computeFilter(&filter_gy, gyroscopeData.gyro.y);
+    gz = computeFilter(&filter_gz, gyroscopeData.gyro.z);
+/**/
+    Serial.print(gx);
+    Serial.print("\t");
+    Serial.println(gy);
+
+    setReg(GYRO_X, -gx);
+    setReg(GYRO_Y, -gy);
+    setReg(GYRO_Z, gz);
 
 
     uint8_t sys, gyro, accel, mag = 0;
@@ -188,17 +182,25 @@ void mainInterrupt(){
     rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.0015);
     yaw_ref = getReg(YAW_REF) + yaw_off;
 
-    Serial.print(roll);
-    Serial.print('\t');
-    Serial.println(gx);
+    
+    /*Serial.print('\t');
+    Serial.println(roll);*/
 
 
     double wroll = computePid(&roll2w, angle_dif(roll_ref, roll), time, 0);
     double wpitch = computePid(&pitch2w, angle_dif(pitch_ref, pitch),time, 0);
     double wyaw = computePid(&yaw2w, angle_dif(yaw_ref, yaw),time, 0);
 
-    R = computePid(&wroll_control, wroll - gx, time, 0);
-    P = computePid(&wpitch_control, wpitch - gy, time, 0);
+    setReg(GYRO_X_REF,wroll);
+    setReg(GYRO_Y_REF,wpitch);
+    setReg(GYRO_Z_REF,wyaw);
+
+    /*if( fabs(wroll + gx) < 5 ) wroll = -gx;
+    if( fabs(wpitch + gy) < 5 ) wpitch = -gy;
+    if( fabs(wyaw - gz) < 5 ) wyaw = gz;*/
+
+    R = computePid(&wroll_control, wroll + gx, time, 0);
+    P = computePid(&wpitch_control, wpitch + gy, time, 0);
     Y = computePid(&wyaw_control, wyaw - gz, time, 0);
     
     setReg(ROLL_U, R);
@@ -272,7 +274,6 @@ void mainInterrupt(){
     setPwmDutyTime(&m2, min(max(M2,0), 100));
     setPwmDutyTime(&m3, min(max(M3,0), 100));
     setPwmDutyTime(&m4, min(max(M4,0), 100));
-    
 }
 
 void initializeSystem(){
@@ -284,9 +285,9 @@ void initializeSystem(){
 
     initPidConstants();
 
-    initPid(&roll2w,2,1,2, time,10, 10, NORMAL);
-    initPid(&pitch2w,2,1,2, time,10, 10, NORMAL);
-    initPid(&yaw2w,0,0,0, time,10, 10, NORMAL);
+    initPid(&roll2w, 200, 100, 20, time, 1, 40, NORMAL);
+    initPid(&pitch2w, 200, 100, 20, time, 1, 40, NORMAL);
+    initPid(&yaw2w, 0, 0, 0, time, 1, 40, NORMAL);
 
     initPid(&wroll_control, 0, 0, 0, time, 10, 10000, NORMAL);
     initPid(&wpitch_control, 0, 0, 0, time, 10, 10000, NORMAL);
@@ -328,6 +329,11 @@ void initializeSystem(){
     setKalmanTsImu(0.01);
     setKalmanTsGps(1);
     initMatGlobal();
+
+
+    initFilter(&filter_gx, 5, 0.8, 0.2);
+    initFilter(&filter_gy, 5, 0.8, 0.2);
+    initFilter(&filter_gz, 5, 0.7, 0.3);
 
     delay(500);
     
