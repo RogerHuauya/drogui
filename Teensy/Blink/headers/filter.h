@@ -1,14 +1,23 @@
 #ifndef FILTER_H
 #define FILTER_H
 
-struct filter{
-    double* arr;
+
+struct arrCoeff{
     int n, head;
-    double a, b, value, value_prom;
+    double *values, *coeff;
 };
 
-void initFilter(filter* f, int n, double a, double b);
+struct filter{
+    int n;
+    arrCoeff arr_u, arr_y;
+};
+
+void initFilter(filter* f, int n, double* a, double* b);
 double computeFilter(filter *f, double x);
+
+void initArrCoeff(arrCoeff* a, int n, double * coeff);
+double computeArrCoeff(arrCoeff* a);
+void addArrCoeff(arrCoeff* a, double x);
 
 
 #endif

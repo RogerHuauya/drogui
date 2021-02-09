@@ -18,11 +18,14 @@ double computePid(pid* p, double error, unsigned long long t, double h){
     p->tant = t;
     p->erri = max(min(p->erri + error*p->dt,p->isat),-p->isat);
     //p->errd = errord;
-    p->errd = (error - p->err_ant2)/(2*p->dt + 0.00000000001);
+    p->errd = (error - p->err_ant1)/(p->dt + 0.00000000001);
     
     p->err_ant2 = p->err_ant1;
     p->err_ant1 = error;
-    
+
+    if(p->type & D_FILTER){
+        p->errd = computeFilter(p->f, p->errd);
+    }    
 
     //return max(min(p->kp[0]*error + p->ki[0]*p->erri + p->kd[0]*p->errd,p->osat),-p->osat);
     if(p->type & P2ID) error *= fabs(error); 
@@ -54,7 +57,7 @@ void resetPid(pid* p, unsigned long long ti){
     p->err_ant1 = p->err_ant2 = 0;
 }
 
-void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti,double isat,double osat, int type){
+void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti,double isat,double osat, int type, int n, double* a , double*b ){
     for(int i = 0; i < 5; i++){
         p->kp[i] = kp;
         p->kd[i] = kd;
@@ -63,6 +66,9 @@ void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti,doubl
     p->tant = ti;
     p->isat = isat, p->osat = osat;
     p->type = type;
+    if(p->type & D_FILTER){
+        initFilter(p->f, n, a, b);
+    }
 }
 
 double roll_const[5][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};

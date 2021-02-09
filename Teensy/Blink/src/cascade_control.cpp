@@ -37,7 +37,21 @@ timer timer_sensors, timer_main;
 
 volatile double roll, pitch, yaw, ax, ay, az, gx, gy, gz;
 double roll_ant,pitch_ant,yaw_ant;
+
+double err_act_x = 0,err_ant_x = 0, der_err_x = 0;
+double err_act_y = 0,err_ant_y = 0, der_err_y = 0;
+double err_act_z = 0,err_ant_z = 0, der_err_z = 0;
+
+
+//Lowpass freq = 10Hz
+double coeffA_10Hz[] = {-6.1252,17.2079,-28.7647,31.1789,-22.3898,10.3890,-2.8462,0.3526};
+double coeffB_10Hz[] = {0.0027,-0.0085,0.0164,-0.0210,0.0231,-0.0210,0.0164,-0.0085,0.0027};
+
+
+
 filter filter_gx, filter_gy, filter_gz;
+filter filter_R, filter_P, filter_Y;
+
 
 float x, y, z;
 volatile unsigned long long time = 0;
@@ -104,11 +118,15 @@ void sensorsInterrupt(){
     gx = computeFilter(&filter_gx, gyroscopeData.gyro.x);
     gy = computeFilter(&filter_gy, gyroscopeData.gyro.y);
     gz = computeFilter(&filter_gz, gyroscopeData.gyro.z);
-/**/
-    Serial.print(gx);
-    Serial.print("\t");
-    Serial.println(gy);
+/*
+    gx = gyroscopeData.gyro.x;
+    gy = gyroscopeData.gyro.y;
+    gz = gyroscopeData.gyro.z;
 
+    Serial.print(gx);
+    Serial.print(" ");
+    Serial.println(gy);
+*/
     setReg(GYRO_X, -gx);
     setReg(GYRO_Y, -gy);
     setReg(GYRO_Z, gz);
@@ -203,6 +221,18 @@ void mainInterrupt(){
     P = computePid(&wpitch_control, wpitch + gy, time, 0);
     Y = computePid(&wyaw_control, wyaw - gz, time, 0);
     
+    setReg(DER_GYRO_X, wroll_control.errd);
+    setReg(DER_GYRO_X, wpitch_control.errd);
+
+    Serial.print(wroll_control.errd);
+    Serial.print("\t");
+    Serial.println(wpitch_control.errd);
+    
+    err_act_x = wroll + gx;
+    err_act_y =  wpitch + gy;
+
+
+
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
     setReg(YAW_U, Y);
@@ -289,9 +319,9 @@ void initializeSystem(){
     initPid(&pitch2w, 200, 100, 20, time, 1, 40, NORMAL);
     initPid(&yaw2w, 0, 0, 0, time, 1, 40, NORMAL);
 
-    initPid(&wroll_control, 0, 0, 0, time, 10, 10000, NORMAL);
-    initPid(&wpitch_control, 0, 0, 0, time, 10, 10000, NORMAL);
-    initPid(&wyaw_control, 0, 0, 0, time, 10, 10000, NORMAL);
+    initPid(&wroll_control, 0, 0, 0, time, 10, 10000, D_FILTER, 9 , coeffA_10Hz, coeffB_10Hz);
+    initPid(&wpitch_control, 0, 0, 0, time, 10, 10000, D_FILTER, 9 , coeffA_10Hz, coeffB_10Hz);
+    initPid(&wyaw_control, 0, 0, 0, time, 10, 10000, D_FILTER, 9 , coeffA_10Hz, coeffB_10Hz);
 
 
     if(!bno.begin()){
@@ -330,10 +360,10 @@ void initializeSystem(){
     setKalmanTsGps(1);
     initMatGlobal();
 
+    initFilter(&filter_gx, 9 , coeffA_10Hz, coeffB_10Hz);
+    initFilter(&filter_gy, 9 , coeffA_10Hz, coeffB_10Hz);
+    initFilter(&filter_gz, 9 , coeffA_10Hz, coeffB_10Hz);
 
-    initFilter(&filter_gx, 5, 0.8, 0.2);
-    initFilter(&filter_gy, 5, 0.8, 0.2);
-    initFilter(&filter_gz, 5, 0.7, 0.3);
 
     delay(500);
     
