@@ -222,7 +222,7 @@ void mainInterrupt(){
     Y = computePid(&wyaw_control, wyaw - gz, time, 0);
     
     setReg(DER_GYRO_X, wroll_control.errd);
-    setReg(DER_GYRO_X, wpitch_control.errd);
+    setReg(DER_GYRO_Y, wpitch_control.errd);
 
     Serial.print(wroll_control.errd);
     Serial.print("\t");
@@ -230,8 +230,6 @@ void mainInterrupt(){
     
     err_act_x = wroll + gx;
     err_act_y =  wpitch + gy;
-
-
 
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
@@ -315,13 +313,13 @@ void initializeSystem(){
 
     initPidConstants();
 
-    initPid(&roll2w, 200, 100, 20, time, 1, 40, NORMAL);
-    initPid(&pitch2w, 200, 100, 20, time, 1, 40, NORMAL);
+    initPid(&roll2w, 0, 0, 0, time, 1, 40, NORMAL);
+    initPid(&pitch2w, 0, 0, 0, time, 1, 40, NORMAL);
     initPid(&yaw2w, 0, 0, 0, time, 1, 40, NORMAL);
 
-    initPid(&wroll_control, 0, 0, 0, time, 10, 10000, D_FILTER, 9 , coeffA_10Hz, coeffB_10Hz);
-    initPid(&wpitch_control, 0, 0, 0, time, 10, 10000, D_FILTER, 9 , coeffA_10Hz, coeffB_10Hz);
-    initPid(&wyaw_control, 0, 0, 0, time, 10, 10000, D_FILTER, 9 , coeffA_10Hz, coeffB_10Hz);
+    initPid(&wroll_control, 0, 0, 0, time, 10, 10000, (D_FILTER & P2ID ), 9 , coeffA_10Hz, coeffB_10Hz);
+    initPid(&wpitch_control, 0, 0, 0, time, 10, 10000, (D_FILTER & P2ID), 9 , coeffA_10Hz, coeffB_10Hz);
+    initPid(&wyaw_control, 0, 0, 0, time, 10, 10000, (D_FILTER & P2ID), 9 , coeffA_10Hz, coeffB_10Hz);
 
 
     if(!bno.begin()){
