@@ -14,12 +14,15 @@ typedef struct _pid{
     unsigned long long tant;
     double isat, osat, dt;
     int type;
-    filter *f;
+    filter f;
 } pid;
 
 double computePid(pid* p, double error, unsigned long long t, double h);
 void resetPid(pid* p, unsigned long long ti);
-void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti,double isat,double osat, int tipo, int n = 0, double*a = NULL, double*b = NULL);
+
+void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti,double isat,double osat, int tipo);
+void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti,double isat,double osat, int tipo, int n, double*a, double*b);
+
 void initPidConstants();
 
 #endif

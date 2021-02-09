@@ -24,7 +24,7 @@ double computePid(pid* p, double error, unsigned long long t, double h){
     p->err_ant1 = error;
 
     if(p->type & D_FILTER){
-        p->errd = computeFilter(p->f, p->errd);
+        p->errd = computeFilter(&(p->f), p->errd);
     }    
 
     //return max(min(p->kp[0]*error + p->ki[0]*p->erri + p->kd[0]*p->errd,p->osat),-p->osat);
@@ -57,6 +57,17 @@ void resetPid(pid* p, unsigned long long ti){
     p->err_ant1 = p->err_ant2 = 0;
 }
 
+void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti,double isat,double osat, int type){
+    for(int i = 0; i < 5; i++){
+        p->kp[i] = kp;
+        p->kd[i] = kd;
+        p->ki[i] = ki;
+    }
+    p->tant = ti;
+    p->isat = isat, p->osat = osat;
+    p->type = type;
+}
+
 void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti,double isat,double osat, int type, int n, double* a , double*b ){
     for(int i = 0; i < 5; i++){
         p->kp[i] = kp;
@@ -66,8 +77,10 @@ void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti,doubl
     p->tant = ti;
     p->isat = isat, p->osat = osat;
     p->type = type;
+
+    
     if(p->type & D_FILTER){
-        initFilter(p->f, n, a, b);
+        initFilter(&(p->f), n, a, b);
     }
 }
 
