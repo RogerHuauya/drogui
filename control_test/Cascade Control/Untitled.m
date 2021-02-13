@@ -1,6 +1,6 @@
-L=3334;
+L=4278;
 Fs = 100;
-Gx = fft(der_x);
+Gx = fft(derx);
 P2 = abs(Gx/L);
 P1 = P2(1:L/2+1);
 P1(2:end-1) = 2*P1(2:end-1);
