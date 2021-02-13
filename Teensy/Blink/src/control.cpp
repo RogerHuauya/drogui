@@ -16,12 +16,19 @@ double computePid(pid* p, double error, unsigned long long t, double h){
 
     p->dt = (t - p->tant)/1000.0;
     p->tant = t;
-    p->erri = max(min(p->erri + error*p->dt,p->isat),-p->isat);
+    //p->erri = max(min(p->erri + 0.5*(error+p->err_ant1)*p->dt,p->isat),-p->isat);
+    if( !( (error*p->u_ant > 0)  && abs(p->u_ant) == p-> osat)  ) 
+        p->erri += 0.5*(error+p->err_ant1)*p->dt;
     //p->errd = errord;
     p->errd = (error - p->err_ant1)/(p->dt + 0.00000000001);
     
     p->err_ant2 = p->err_ant1;
     p->err_ant1 = error;
+
+    if( p->type & D_INT ){
+        p->errd = p->N_filt*(error - p->errd_acum);
+        p->errd_acum += 0.5*(p->errd+p->errd_ant)*p->dt;
+    }
 
     if(p->type & D_FILTER){
         p->errd = computeFilter(&(p->f), p->errd);
@@ -41,13 +48,13 @@ double computePid(pid* p, double error, unsigned long long t, double h){
 
     if(p->type & PIDABS){
         double newd = copysign(min( abs(kp*error), abs(kd*p->errd) ), p->errd);
-        return max(min(kp*error + ki*p->erri + newd, p->osat), -p->osat);
+        p->u = max(min(kp*error + ki*p->erri + newd, p->osat), -p->osat);
     }
     else{
-        return max(min(kp*error + ki*p->erri + kd*p->errd, p->osat), -p->osat);
+        p->u = max(min(kp*error + ki*p->erri + kd*p->errd, p->osat), -p->osat);
     }
-
-    return 0;
+    p->u_ant = p->u;
+    return p->u;
 }
 
 
@@ -57,25 +64,33 @@ void resetPid(pid* p, unsigned long long ti){
     p->err_ant1 = p->err_ant2 = 0;
 }
 
-void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti,double isat,double osat, int type){
+void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti, double N,double osat, int type){
     for(int i = 0; i < 5; i++){
         p->kp[i] = kp;
         p->kd[i] = kd;
         p->ki[i] = ki;
     }
+    p->N_filt = N;
+    p->errd_acum = 0;
+    p->errd_ant = 0;
+    p->u_ant = 0;
     p->tant = ti;
-    p->isat = isat, p->osat = osat;
+    /*p->isat = isat,*/ p->osat = osat;
     p->type = type;
 }
 
-void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti,double isat,double osat, int type, int n, double* a , double*b ){
+void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti, double N,double osat, int type,int n, double* a , double*b ){
     for(int i = 0; i < 5; i++){
         p->kp[i] = kp;
         p->kd[i] = kd;
         p->ki[i] = ki;
     }
+    p->N_filt = N;
+    p->errd_acum = 0;
+    p->errd_ant = 0;
+    p->u_ant = 0;
     p->tant = ti;
-    p->isat = isat, p->osat = osat;
+    /*p->isat = isat,*/ p->osat = osat;
     p->type = type;
 
     

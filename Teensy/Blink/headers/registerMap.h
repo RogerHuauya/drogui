@@ -97,4 +97,6 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define MOTOR_3 0X90
 #define MOTOR_4 0X92
 
+#define N_FILTER 0x94
+
 #endif 		

@@ -290,6 +290,7 @@ void mainInterrupt(){
                     z_control.kd[0] = getReg(Z_KD);
                 break;
             }
+            roll2w.N_filt = pitch2w.N_filt = yaw2w.N_filt = wroll_control.N_filt = wpitch_control.N_filt = wyaw_control.N_filt = getReg(N_FILTER);
         }
         resetPid(&roll2w, time);
         resetPid(&pitch2w, time);
@@ -321,13 +322,13 @@ void initializeSystem(){
 
     initPidConstants();
 
-    initPid(&roll2w, 0, 0, 0, time, 1, 40, NORMAL);
-    initPid(&pitch2w, 0, 0, 0, time, 1, 40, NORMAL);
-    initPid(&yaw2w, 0, 0, 0, time, 1, 40, NORMAL);
+    initPid(&roll2w, 0, 0, 0, time, 50, 40, NORMAL);
+    initPid(&pitch2w, 0, 0, 0, time, 50, 40, NORMAL);
+    initPid(&yaw2w, 0, 0, 0, time, 50, 40, NORMAL);
 
-    initPid(&wroll_control, 0, 0, 0, time, 10, 10000, (D_FILTER & P2ID & PIDABS), 13 , coeffA_2Hz, coeffB_2Hz);
-    initPid(&wpitch_control, 0, 0, 0, time, 10, 10000, (D_FILTER & P2ID & PIDABS), 13 , coeffA_2Hz, coeffB_2Hz);
-    initPid(&wyaw_control, 0, 0, 0, time, 10, 10000, (D_FILTER & P2ID & PIDABS), 13 , coeffA_2Hz, coeffB_2Hz);
+    initPid(&wroll_control, 0, 0, 0, time, 50, 10000, (D_FILTER & P2ID & D_INT), 13 , coeffA_10Hz, coeffB_10Hz);
+    initPid(&wpitch_control, 0, 0, 0, time, 50, 10000, (D_FILTER & P2ID & D_INT), 13 , coeffA_10Hz, coeffB_10Hz);
+    initPid(&wyaw_control, 0, 0, 0, time, 50, 10000, (D_FILTER & P2ID & D_INT), 13 , coeffA_10Hz, coeffB_10Hz);
 
 
     if(!bno.begin()){
@@ -384,6 +385,7 @@ int _main(void){
     yaw_off = yaw;
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
+    setReg(N_FILTER, 50);
 
     while(1){
         if(timerReady(&timer_sensors)) executeTimer(&timer_sensors);
