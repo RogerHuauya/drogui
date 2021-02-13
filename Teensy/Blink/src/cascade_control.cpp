@@ -47,6 +47,9 @@ double err_act_z = 0,err_ant_z = 0, der_err_z = 0;
 double coeffA_10Hz[] = {-6.1252,17.2079,-28.7647,31.1789,-22.3898,10.3890,-2.8462,0.3526};
 double coeffB_10Hz[] = {0.0027,-0.0085,0.0164,-0.0210,0.0231,-0.0210,0.0164,-0.0085,0.0027};
 
+//Lowpass freq = 2Hz
+double coeffB_2Hz[] = {0.0001, -0.0012, 0.0064, -0.0209, 0.0462, -0.0731, 0.0850, -0.0731, 0.0462, -0.0209, 0.0064, -0.0012, 0.0001};
+double coeffA_2Hz[] = {-11.8247, 64.1475, -211.1035, 469.3812, -742.8519, 858.0511, -728.8477, 451.8482, -199.3839, 59.4422, -10.7503, 0.8919};
 
 
 filter filter_gx, filter_gy, filter_gz;
@@ -242,6 +245,11 @@ void mainInterrupt(){
     M4 = R - P + Y;
 
     saturateM(H_comp*H_comp);
+
+    setReg(MOTOR_1, M1);
+    setReg(MOTOR_2, M2);
+    setReg(MOTOR_3, M3);
+    setReg(MOTOR_4, M4);
     
     if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
         alt_offs = alt_slow;
@@ -317,9 +325,9 @@ void initializeSystem(){
     initPid(&pitch2w, 0, 0, 0, time, 1, 40, NORMAL);
     initPid(&yaw2w, 0, 0, 0, time, 1, 40, NORMAL);
 
-    initPid(&wroll_control, 0, 0, 0, time, 10, 10000, (D_FILTER & P2ID ), 9 , coeffA_10Hz, coeffB_10Hz);
-    initPid(&wpitch_control, 0, 0, 0, time, 10, 10000, (D_FILTER & P2ID), 9 , coeffA_10Hz, coeffB_10Hz);
-    initPid(&wyaw_control, 0, 0, 0, time, 10, 10000, (D_FILTER & P2ID), 9 , coeffA_10Hz, coeffB_10Hz);
+    initPid(&wroll_control, 0, 0, 0, time, 10, 10000, (D_FILTER & P2ID & PIDABS), 13 , coeffA_2Hz, coeffB_2Hz);
+    initPid(&wpitch_control, 0, 0, 0, time, 10, 10000, (D_FILTER & P2ID & PIDABS), 13 , coeffA_2Hz, coeffB_2Hz);
+    initPid(&wyaw_control, 0, 0, 0, time, 10, 10000, (D_FILTER & P2ID & PIDABS), 13 , coeffA_2Hz, coeffB_2Hz);
 
 
     if(!bno.begin()){

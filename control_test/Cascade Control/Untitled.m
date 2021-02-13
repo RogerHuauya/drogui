@@ -1,6 +1,6 @@
-L=3334;
+L=4511;
 Fs = 100;
-Gx = fft(der_x);
+Gx = fft(gx_filt);
 P2 = abs(Gx/L);
 P1 = P2(1:L/2+1);
 P1(2:end-1) = 2*P1(2:end-1);
@@ -10,7 +10,7 @@ plot(f,P1)
 title('Single-Sided Amplitude Spectrum of X(t)')
 xlabel('f (Hz)')
 %%
-Gy = fft(der_y);
+Gy = fft(gy);
 P2 = abs(Gy/L);
 P1 = P2(1:L/2+1);
 P1(2:end-1) = 2*P1(2:end-1);

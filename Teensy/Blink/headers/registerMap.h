@@ -92,4 +92,9 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define DER_GYRO_X 0x88
 #define DER_GYRO_Y 0x8A
 
+#define MOTOR_1 0X8C
+#define MOTOR_2 0X8E
+#define MOTOR_3 0X90
+#define MOTOR_4 0X92
+
 #endif 		

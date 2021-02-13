@@ -40,7 +40,7 @@ double computePid(pid* p, double error, unsigned long long t, double h){
     else{kp = p->kp[0], kd = p->kd[0], ki = p->ki[0];}
 
     if(p->type & PIDABS){
-        double newd = -copysign(min( abs(kp*error), abs(kd*p->errd) ), error);
+        double newd = copysign(min( abs(kp*error), abs(kd*p->errd) ), p->errd);
         return max(min(kp*error + ki*p->erri + newd, p->osat), -p->osat);
     }
     else{
