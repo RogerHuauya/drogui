@@ -1,5 +1,5 @@
-//#define CASCADE_CONTROL
-#ifdef CASCADE_CONTROL
+#define CASCADE_CONTROL_ASYNC
+#ifdef CASCADE_CONTROL_ASYNC
 
 #include "..\headers\main.h"
 #include "..\headers\kalman.h"
@@ -20,7 +20,12 @@
 
 
 #define N 25
-
+struct imustruct{
+    float acc[3] = {0, 0, 0};
+    float gyro[3] = {0, 0, 0};
+    float mag[3] = {0, 0, 0};
+};
+imustruct bno_struct;
 i2c slave;
 
 pwm m1, m2, m3, m4;
@@ -33,7 +38,7 @@ float alt_memo[N], alt_fast, alt_slow = 0, alt_diff, sum = 0,alt_offs;
 int alt_pointer = 0;
 float sealevel;
 
-timer timer_sensors, timer_main, timer_attitude;
+timer timer_accel, timer_gyro, timer_mag, timer_main, timer_attitude;
 
 volatile double roll, pitch, yaw, ax, ay, az, gx, gy, gz;
 double roll_ant,pitch_ant,yaw_ant;
@@ -89,7 +94,31 @@ void rampValue(double *var, double desired, double step){
     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*var));
 }    
 
+imu::Vector<3> aux;
+void accelInterrupt(){
+    aux = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
+    bno_struct.acc[0] = aux.x();
+    bno_struct.acc[1] = aux.y();
+    bno_struct.acc[2] = aux.z();
+}
 
+void gyroInterrupt(){
+    aux = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
+    bno_struct.gyro[0] = aux.x();
+    bno_struct.gyro[1] = aux.y();
+    bno_struct.gyro[2] = aux.z();
+}
+
+void magInterrupt(){
+    aux = bno.getVector(Adafruit_BNO055::VECTOR_MAGNETOMETER);
+    bno_struct.mag[0] = aux.x();
+    bno_struct.mag[1] = aux.y();
+    bno_struct.mag[2] = aux.z();
+}
+
+void attitudeInterrupt(){
+    
+}
 void sensorsInterrupt(){
 	
     
@@ -121,16 +150,15 @@ void sensorsInterrupt(){
     gx = computeFilter(&filter_gx, gyroscopeData.gyro.x);
     gy = computeFilter(&filter_gy, gyroscopeData.gyro.y);
     gz = computeFilter(&filter_gz, gyroscopeData.gyro.z);
-    
-    /*Serial.print(gx);
-    Serial.print(" ");
-    Serial.println(gy);
+/*
     gx = gyroscopeData.gyro.x;
     gy = gyroscopeData.gyro.y;
-    gz = gyroscopeData.gyro.z;*/
+    gz = gyroscopeData.gyro.z;
 
-    
-
+    Serial.print(gx);
+    Serial.print(" ");
+    Serial.println(gy);
+*/
     setReg(GYRO_X, -gx);
     setReg(GYRO_Y, -gy);
     setReg(GYRO_Z, gz);
@@ -200,8 +228,8 @@ void mainInterrupt(){
     //H_comp = H / (cos(roll)*cos(pitch));
     H_comp = H;
 
-    rampValue(&roll_ref, getReg(ROLL_REF) + roll_off, 0.015);
-    rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.015);
+    rampValue(&roll_ref, getReg(ROLL_REF) + roll_off, 0.0015);
+    rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.0015);
     yaw_ref = getReg(YAW_REF) + yaw_off;
 
     
@@ -213,25 +241,28 @@ void mainInterrupt(){
     double wpitch = computePid(&pitch2w, angle_dif(pitch_ref, pitch),time, 0);
     double wyaw = computePid(&yaw2w, angle_dif(yaw_ref, yaw),time, 0);
 
-    setReg(GYRO_X_REF,roll_ref);
-    setReg(GYRO_Y_REF,pitch_ref);
-    setReg(GYRO_Z_REF,yaw_ref);
+    setReg(GYRO_X_REF,wroll);
+    setReg(GYRO_Y_REF,wpitch);
+    setReg(GYRO_Z_REF,wyaw);
 
     /*if( fabs(wroll + gx) < 5 ) wroll = -gx;
     if( fabs(wpitch + gy) < 5 ) wpitch = -gy;
     if( fabs(wyaw - gz) < 5 ) wyaw = gz;*/
 
-    R = computePid(&wroll_control, roll_ref + gx, time, 0);
-    P = computePid(&wpitch_control, pitch_ref + gy, time, 0);
-    Y = computePid(&wyaw_control, yaw_ref - gz, time, 0);
+    R = computePid(&wroll_control, wroll + gx, time, 0);
+    P = computePid(&wpitch_control, wpitch + gy, time, 0);
+    Y = computePid(&wyaw_control, wyaw - gz, time, 0);
     
     setReg(DER_GYRO_X, wroll_control.errd);
     setReg(DER_GYRO_Y, wpitch_control.errd);
 
-    /*R = getReg(ROLL_REF);
-    P = getReg(PITCH_REF);
-    Y = getReg(YAW_REF);*/
+    Serial.print(wroll_control.errd);
+    Serial.print("\t");
+    Serial.println(wpitch_control.errd);
     
+    err_act_x = wroll + gx;
+    err_act_y =  wpitch + gy;
+
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
     setReg(YAW_U, Y);
@@ -249,7 +280,7 @@ void mainInterrupt(){
     setReg(MOTOR_3, M3);
     setReg(MOTOR_4, M4);
     
-    if(getReg(Z_REF) == 0 /*|| (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)*/){
+    if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
         alt_offs = alt_slow;
         setReg(Z_REF, 0);
         H = 0; z_ref = 0;
@@ -329,7 +360,7 @@ void initializeSystem(){
     initPid(&wyaw_control, 0, 0, 0, time, 50, 10000, (D_FILTER & P2ID & D_INT), 13 , coeffA_10Hz, coeffB_10Hz);
 
 
-    if(!bno.begin(OPERATION_MODE_AMG)){
+    if(!bno.begin()){
         Serial.println("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
         while(1){Serial.println("Bno");delay(10);}
     }
@@ -358,8 +389,12 @@ void initializeSystem(){
     alt_slow = sum / N;
     alt_offs = alt_slow;
 
-    initTimer(&timer_sensors, &sensorsInterrupt, 100);
-    initTimer(&timer_main, &mainInterrupt, 100);
+    initTimer(&timer_accel, &accelInterrupt, 1000);
+    initTimer(&timer_gyro, &gyroInterrupt, 500);
+    initTimer(&timer_mag, &magInterrupt, 30);
+    initTimer(&timer_attitude, &magInterrupt, 30);
+
+    initTimer(&timer_main, &mainInterrupt, 500);
 
     setKalmanTsImu(0.01);
     setKalmanTsGps(1);
@@ -386,7 +421,7 @@ int _main(void){
     setReg(N_FILTER, 50);
 
     while(1){
-        if(timerReady(&timer_sensors)) executeTimer(&timer_sensors);
+        if(timerReady(&timer_accel)) executeTimer(&timer_accel);
         if(timerReady(&timer_main)) executeTimer(&timer_main);
     }
     return 0;
