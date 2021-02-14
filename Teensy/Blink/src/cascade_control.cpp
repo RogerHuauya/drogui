@@ -117,19 +117,21 @@ void sensorsInterrupt(){
     setReg(ACC_X,(float)(ax));
     setReg(ACC_Y,(float)(ay));
     setReg(ACC_Z,(float)(az));
-
+/*
     gx = computeFilter(&filter_gx, gyroscopeData.gyro.x);
     gy = computeFilter(&filter_gy, gyroscopeData.gyro.y);
     gz = computeFilter(&filter_gz, gyroscopeData.gyro.z);
-/*
-    gx = gyroscopeData.gyro.x;
-    gy = gyroscopeData.gyro.y;
-    gz = gyroscopeData.gyro.z;
-
+    
     Serial.print(gx);
     Serial.print(" ");
     Serial.println(gy);
 */
+    gx = gyroscopeData.gyro.x;
+    gy = gyroscopeData.gyro.y;
+    gz = gyroscopeData.gyro.z;
+
+    
+
     setReg(GYRO_X, -gx);
     setReg(GYRO_Y, -gy);
     setReg(GYRO_Z, gz);
@@ -227,13 +229,10 @@ void mainInterrupt(){
     setReg(DER_GYRO_X, wroll_control.errd);
     setReg(DER_GYRO_Y, wpitch_control.errd);
 
-    Serial.print(wroll_control.errd);
-    Serial.print("\t");
-    Serial.println(wpitch_control.errd);
+    R = getReg(ROLL_REF);
+    P = getReg(PITCH_REF);
+    Y = getReg(YAW_REF);
     
-    err_act_x = wroll + gx;
-    err_act_y =  wpitch + gy;
-
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
     setReg(YAW_U, Y);
