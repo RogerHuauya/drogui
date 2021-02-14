@@ -210,7 +210,14 @@ public:
     ACCEL_RADIUS_LSB_ADDR = 0X67,
     ACCEL_RADIUS_MSB_ADDR = 0X68,
     MAG_RADIUS_LSB_ADDR = 0X69,
-    MAG_RADIUS_MSB_ADDR = 0X6A
+    MAG_RADIUS_MSB_ADDR = 0X6A,
+
+    /* Page 1 registers */
+    BNO055_ACCEL_CONFIG = 0x08,
+    BNO055_MAG_CONFIG = 0x09,
+    BNO055_GYRO_CONFIG_0 = 0x0A,
+    BNO055_GYRO_CONFIG_1 = 0x0B
+
   } adafruit_bno055_reg_t;
 
   /** BNO055 power settings */
@@ -279,6 +286,85 @@ public:
     VECTOR_LINEARACCEL = BNO055_LINEAR_ACCEL_DATA_X_LSB_ADDR,
     VECTOR_GRAVITY = BNO055_GRAVITY_DATA_X_LSB_ADDR
   } adafruit_vector_type_t;
+
+  typedef enum{
+    ACCEL_CONFIG_2G = 0,
+    ACCEL_CONFIG_4G = 1,
+    ACCEL_CONFIG_8G = 2,
+    ACCEL_CONFIG_16G = 3
+  } adafruit_bno055_accel_config_g_t;
+
+  typedef enum{
+    ACCEL_CONFIG_7_81 = 0,
+    ACCEL_CONFIG_15_63 = 1,
+    ACCEL_CONFIG_31_25 = 2,
+    ACCEL_CONFIG_62_5 = 3,
+    ACCEL_CONFIG_125 = 4,
+    ACCEL_CONFIG_250 = 5,
+    ACCEL_CONFIG_500 = 6,
+    ACCEL_CONFIG_1000 = 7
+  } adafruit_bno055_accel_config_bw_t;
+
+  typedef enum{
+    ACCEL_CONFIG_NORMAL = 0,
+    ACCEL_CONFIG_SUSPEND = 1,
+    ACCEL_CONFIG_LP1 = 2,
+    ACCEL_CONFIG_STANDBY = 3,
+    ACCEL_CONFIG_LP2 = 4,
+    ACCEL_CONFIG_DEEPSUSPEND = 5
+  } adafruit_bno055_accel_config_op_t; 
+
+  typedef enum{
+    GYRO_CONFIG_2000DPS = 0,
+    GYRO_CONFIG_1000DPS = 1,
+    GYRO_CONFIG_500DPS = 2,
+    GYRO_CONFIG_250DPS = 3,
+    GYRO_CONFIG_125DPS = 4
+  } adafruit_bno055_gyro_config_dps_t;
+
+  typedef enum{
+    GYRO_CONFIG_523 = 0,
+    GYRO_CONFIG_230 = 1,
+    GYRO_CONFIG_116 = 2,
+    GYRO_CONFIG_47 = 3,
+    GYRO_CONFIG_23 = 4,
+    GYRO_CONFIG_12 = 5,
+    GYRO_CONFIG_64= 6,
+    GYRO_CONFIG_32 = 7
+  } adafruit_bno055_gyro_config_bw_t; 
+
+  typedef enum{
+    GYRO_CONFIG_NORMAL = 0,
+    GYRO_CONFIG_FAST_PU = 1,
+    GYRO_CONFIG_DEEPSUSPEND = 2,
+    GYRO_CONFIG_SUSPEND = 3,
+    GYRO_CONFIG_ADANCED_POWERSAVE = 4
+  } adafruit_bno055_gyro_config_op_t;
+
+  typedef enum{
+    MAG_CONFIG_2 = 0,
+    MAG_CONFIG_6 = 1,
+    MAG_CONFIG_8 = 2,
+    MAG_CONFIG_10 = 3,
+    MAG_CONFIG_15 = 4,
+    MAG_CONFIG_20 = 5,
+    MAG_CONFIG_25= 6,
+    MAG_CONFIG_30 = 7
+  } adafruit_bno055_mag_config_dr_t; 
+
+  typedef enum{
+    MAG_CONFIG_LP = 0,
+    MAG_CONFIG_REGULAR = 1,
+    MAG_CONFIG_ENHANCED_REGULAR = 2,
+    MAG_CONFIG_HIGH_ACCURACY = 3,
+  } adafruit_bno055_mag_config_op_t; 
+
+  typedef enum{
+    MAG_CONFIG_NORMAL = 0,
+    MAG_CONFIG_SLEEP = 1,
+    MAG_CONFIG_SUSPEND = 2,
+    MAG_CONFIG_FORCE_MODE = 3,
+  } adafruit_bno055_mag_config_pm_t; 
 
   Adafruit_BNO055(int32_t sensorID = -1, uint8_t address = BNO055_ADDRESS_A,
                   TwoWire *theWire = &Wire);

@@ -1,4 +1,4 @@
-//#define SENSORS
+#define SENSORS
 #ifdef SENSORS
 
 #include "..\headers\main.h"
@@ -53,8 +53,15 @@ void sensorsInterrupt(){
 
     sensors_event_t orientationData , linearAccelData;
     
+    imu::Vector<3> accel = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
+    Serial.print(accel.x());
+    Serial.print("\t");
+    Serial.print(accel.y());
+    Serial.print("\t");
+    Serial.print(accel.z());
+    Serial.print("\n");
+    /*
     bno.getEvent(&orientationData, Adafruit_BNO055::VECTOR_EULER);
-    bno.getEvent(&linearAccelData, Adafruit_BNO055::VECTOR_LINEARACCEL);
     
     yaw = (float)orientationData.orientation.x*pi/180 - pi;
     pitch = (float)orientationData.orientation.y*pi/180;
@@ -86,7 +93,7 @@ void sensorsInterrupt(){
     Serial.print("\t");
     
     Serial.println(alt_slow - alt_offs);    
-
+    */
 }
 
 void mainInterrupt(){
@@ -128,7 +135,7 @@ void initializeSystem(){
     alt_slow = sum / N;
     alt_offs = alt_slow ;
 
-    initTimer(&timer_sensors, &sensorsInterrupt, 100);
+    initTimer(&timer_sensors, &sensorsInterrupt, 1000);
     initTimer(&timer_main, &mainInterrupt, 1);
 
     delay(500);

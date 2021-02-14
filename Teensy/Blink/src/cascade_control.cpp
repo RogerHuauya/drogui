@@ -1,4 +1,4 @@
-#define CASCADE_CONTROL
+//#define CASCADE_CONTROL
 #ifdef CASCADE_CONTROL
 
 #include "..\headers\main.h"
@@ -33,7 +33,7 @@ float alt_memo[N], alt_fast, alt_slow = 0, alt_diff, sum = 0,alt_offs;
 int alt_pointer = 0;
 float sealevel;
 
-timer timer_sensors, timer_main;
+timer timer_sensors, timer_main, timer_attitude;
 
 volatile double roll, pitch, yaw, ax, ay, az, gx, gy, gz;
 double roll_ant,pitch_ant,yaw_ant;
@@ -331,7 +331,7 @@ void initializeSystem(){
     initPid(&wyaw_control, 0, 0, 0, time, 50, 10000, (D_FILTER & P2ID & D_INT), 13 , coeffA_10Hz, coeffB_10Hz);
 
 
-    if(!bno.begin()){
+    if(!bno.begin(OPERATION_MODE_AMG)){
         Serial.println("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
         while(1){Serial.println("Bno");delay(10);}
     }

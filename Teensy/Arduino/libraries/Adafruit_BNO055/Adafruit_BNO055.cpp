@@ -135,7 +135,17 @@ bool Adafruit_BNO055::begin(adafruit_bno055_opmode_t mode) {
   /* Set the requested operating mode (see section 3.3) */
   setMode(mode);
   delay(20);
-
+  /* Page1 added by Roger*/
+  write8(BNO055_PAGE_ID_ADDR, 1);
+  delay(10);
+  write8(BNO055_ACCEL_CONFIG, (ACCEL_CONFIG_NORMAL << 5) | (ACCEL_CONFIG_1000 << 2) | ACCEL_CONFIG_4G);
+  delay(10);
+  write8(BNO055_GYRO_CONFIG_0, (GYRO_CONFIG_523 << 3) | GYRO_CONFIG_1000DPS);
+  delay(10);
+  write8(BNO055_GYRO_CONFIG_1, GYRO_CONFIG_NORMAL);
+  delay(10);
+  write8(BNO055_PAGE_ID_ADDR, 0);
+  delay(10);
   return true;
 }
 
