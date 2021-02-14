@@ -117,18 +117,17 @@ void sensorsInterrupt(){
     setReg(ACC_X,(float)(ax));
     setReg(ACC_Y,(float)(ay));
     setReg(ACC_Z,(float)(az));
-/*
+
     gx = computeFilter(&filter_gx, gyroscopeData.gyro.x);
     gy = computeFilter(&filter_gy, gyroscopeData.gyro.y);
     gz = computeFilter(&filter_gz, gyroscopeData.gyro.z);
     
-    Serial.print(gx);
+    /*Serial.print(gx);
     Serial.print(" ");
     Serial.println(gy);
-*/
     gx = gyroscopeData.gyro.x;
     gy = gyroscopeData.gyro.y;
-    gz = gyroscopeData.gyro.z;
+    gz = gyroscopeData.gyro.z;*/
 
     
 
@@ -201,8 +200,8 @@ void mainInterrupt(){
     //H_comp = H / (cos(roll)*cos(pitch));
     H_comp = H;
 
-    rampValue(&roll_ref, getReg(ROLL_REF) + roll_off, 0.0015);
-    rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.0015);
+    rampValue(&roll_ref, getReg(ROLL_REF) + roll_off, 0.015);
+    rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.015);
     yaw_ref = getReg(YAW_REF) + yaw_off;
 
     
@@ -214,24 +213,24 @@ void mainInterrupt(){
     double wpitch = computePid(&pitch2w, angle_dif(pitch_ref, pitch),time, 0);
     double wyaw = computePid(&yaw2w, angle_dif(yaw_ref, yaw),time, 0);
 
-    setReg(GYRO_X_REF,wroll);
-    setReg(GYRO_Y_REF,wpitch);
-    setReg(GYRO_Z_REF,wyaw);
+    setReg(GYRO_X_REF,roll_ref);
+    setReg(GYRO_Y_REF,pitch_ref);
+    setReg(GYRO_Z_REF,yaw_ref);
 
     /*if( fabs(wroll + gx) < 5 ) wroll = -gx;
     if( fabs(wpitch + gy) < 5 ) wpitch = -gy;
     if( fabs(wyaw - gz) < 5 ) wyaw = gz;*/
 
-    R = computePid(&wroll_control, wroll + gx, time, 0);
-    P = computePid(&wpitch_control, wpitch + gy, time, 0);
-    Y = computePid(&wyaw_control, wyaw - gz, time, 0);
+    R = computePid(&wroll_control, roll_ref + gx, time, 0);
+    P = computePid(&wpitch_control, pitch_ref + gy, time, 0);
+    Y = computePid(&wyaw_control, yaw_ref - gz, time, 0);
     
     setReg(DER_GYRO_X, wroll_control.errd);
     setReg(DER_GYRO_Y, wpitch_control.errd);
 
-    R = getReg(ROLL_REF);
+    /*R = getReg(ROLL_REF);
     P = getReg(PITCH_REF);
-    Y = getReg(YAW_REF);
+    Y = getReg(YAW_REF);*/
     
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
@@ -250,7 +249,7 @@ void mainInterrupt(){
     setReg(MOTOR_3, M3);
     setReg(MOTOR_4, M4);
     
-    if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
+    if(getReg(Z_REF) == 0 /*|| (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)*/){
         alt_offs = alt_slow;
         setReg(Z_REF, 0);
         H = 0; z_ref = 0;
