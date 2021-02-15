@@ -1,4 +1,4 @@
-#define SENSORS
+//#define SENSORS
 #ifdef SENSORS
 
 #include "..\headers\timer.h"
