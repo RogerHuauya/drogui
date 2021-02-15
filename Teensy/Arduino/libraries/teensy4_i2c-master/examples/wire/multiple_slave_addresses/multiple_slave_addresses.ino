@@ -9,8 +9,7 @@
 // The Teensy echoes the I2C address back to the master.
 
 #include <Arduino.h>
-#include <i2c_driver.h>
-#include <i2c_driver_wire.h>
+#include <Wire.h>
 
 // Blink the LED to make sure the Teensy hasn't hung
 IntervalTimer blink_timer;

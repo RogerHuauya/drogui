@@ -1,4 +1,4 @@
-#define CASCADE_CONTROL_ASYNC
+//#define CASCADE_CONTROL_ASYNC
 #ifdef CASCADE_CONTROL_ASYNC
 
 #include "..\headers\main.h"

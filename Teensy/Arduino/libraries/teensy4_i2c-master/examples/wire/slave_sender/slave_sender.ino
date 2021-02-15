@@ -15,8 +15,7 @@
 // This example code is in the public domain.
 
 #include <Arduino.h>
-#include <i2c_driver.h>
-#include <i2c_driver_wire.h>
+#include <Wire.h>
 
 void requestEvent();
 

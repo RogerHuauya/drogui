@@ -1,7 +1,7 @@
 #define SENSORS
 #ifdef SENSORS
 
-#include "..\headres\timer.h"
+#include "..\headers\timer.h"
 #include "..\headers\main.h"
 #include "..\headers\i2c.h"
 #include <Adafruit_Sensor.h>
@@ -15,22 +15,20 @@ Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28);
 timer timer_sensors, timer_main;
 
 volatile unsigned long long time = 0;
-
+bool led_state = false;
 void sensorsInterrupt(){
-	
-    
     digitalWrite(LED_BUILTIN, led_state);
     led_state = !led_state;
-
-    sensors_event_t orientationData , linearAccelData;
     
     imu::Vector<3> accel = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
+    return;
+    /*Serial.print("\t");
     Serial.print(accel.x());
     Serial.print("\t");
     Serial.print(accel.y());
     Serial.print("\t");
-    Serial.print(accel.z());
-    Serial.print("\n");
+    Serial.print(accel.z());*/
+    //Serial.print("\n");
 }
 
 void mainInterrupt(){
@@ -61,7 +59,7 @@ int _main(void){
     initializeSystem();
     delay(1000);
     while(1){
-        if(timerReady(&timer_sensors)) executeTimer(&timer_sensors);
+        if(timerReady(&timer_sensors)) Serial.println(timer_sensors.time), executeTimer(&timer_sensors);
 
         //if(timerReady(&timer_main)) executeTimer(&timer_main);
     }
