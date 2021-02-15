@@ -13,8 +13,7 @@
 
 
 #include <Arduino.h>
-#include <i2c_driver.h>
-#include <i2c_driver_wire.h>
+#include <Wire.h>
 
 int led = LED_BUILTIN;
 
