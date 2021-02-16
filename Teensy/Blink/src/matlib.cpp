@@ -131,3 +131,15 @@ void matDestruct(mat* m){
     free(m->aux);
 }
 
+void gaussElimination3x3(mat* a, mat* b, mat* ans){
+    float c;
+    for(int j = 0; j < 3; j++)
+        for(int i = 0; i < 3; i++){
+            if(i!=j){
+                c = getMatVal(a, i, j)/getMatVal(a, j, j);
+                for(int k = 0; k < 3; k++) a->val[i][k] = a->val[i][k] - c*a->val[j][k];
+                b->val[i][0] = b->val[i][0] - c*b->val[j][0];
+            }
+        }
+    for(int i = 0; i < 3; i++) ans->val[i][0] = b->val[i][0]/a->val[i][i];
+}
