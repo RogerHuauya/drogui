@@ -4,7 +4,7 @@
 
 struct arrCoeff{
     int n, head;
-    double *values, *coeff;
+    float *values, *coeff;
 };
 
 struct filter{
@@ -12,12 +12,12 @@ struct filter{
     arrCoeff arr_u, arr_y;
 };
 
-void initFilter(filter* f, int n, double* a, double* b);
-double computeFilter(filter *f, double x);
+void initFilter(filter* f, int n, float* a, float* b);
+double computeFilter(filter *f, float x);
 
-void initArrCoeff(arrCoeff* a, int n, double * coeff);
-double computeArrCoeff(arrCoeff* a);
-void addArrCoeff(arrCoeff* a, double x);
+void initArrCoeff(arrCoeff* a, int n, float * coeff);
+float computeArrCoeff(arrCoeff* a);
+void addArrCoeff(arrCoeff* a, float x);
 
 
 #endif
