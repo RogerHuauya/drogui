@@ -1,0 +1,204 @@
+void UpdatePID(){
+    int index = getReg(PID_INDEX), var = getReg(PID_VAR);
+    if(index >= 0) {
+        switch(var){
+
+            case PID_ROLL:
+                if(index == 0)
+                    roll2w.kp[0] = getReg(ROLL_KP),  roll2w.ki[0] = getReg(ROLL_KI),  roll2w.kd[0] = getReg(ROLL_KD);
+                else
+                    wroll_control.kp[0] = getReg(ROLL_KP),  wroll_control.ki[0] = getReg(ROLL_KI),  wroll_control.kd[0] = getReg(ROLL_KD);
+
+            break;
+            
+            case PID_PITCH:
+                if(index == 0)
+                    pitch2w.kp[0] = getReg(PITCH_KP),  pitch2w.ki[0] = getReg(PITCH_KI),  pitch2w.kd[0] = getReg(PITCH_KD);
+                else
+                    wpitch_control.kp[0] = getReg(PITCH_KP),  wpitch_control.ki[0] = getReg(PITCH_KI),  wpitch_control.kd[0] = getReg(PITCH_KD);
+
+            break;
+
+            case PID_YAW:
+                if(index == 0)
+                    yaw2w.kp[0] = getReg(YAW_KP),  yaw2w.ki[0] = getReg(YAW_KI),  yaw2w.kd[0] = getReg(YAW_KD);
+                else
+                    wyaw_control.kp[0] = getReg(YAW_KP),  wyaw_control.ki[0] = getReg(YAW_KI),  wyaw_control.kd[0] = getReg(YAW_KD);
+
+            break;
+            
+            case PID_Z:
+                z_control.kp[0] = getReg(Z_KP);
+                z_control.ki[0] = getReg(Z_KI);
+                z_control.kd[0] = getReg(Z_KD);
+            break;
+        }
+        roll2w.N_filt = pitch2w.N_filt = yaw2w.N_filt = wroll_control.N_filt = wpitch_control.N_filt = wyaw_control.N_filt = getReg(N_FILTER);
+    }
+}
+
+void wControlInterrupt(){
+    
+    time += timer_wcontrol.period/1000;
+    
+    R = computePid(&wroll_control, roll_ref - gx, time, 0);
+    P = computePid(&wpitch_control, pitch_ref - gy, time, 0);
+    Y = computePid(&wyaw_control, yaw_ref - gz, time, 0);
+    
+    setReg(DER_GYRO_X, wroll_control.errd);
+    setReg(DER_GYRO_Y, wpitch_control.errd);
+
+    R = getReg(ROLL_REF);
+    P = getReg(PITCH_REF);
+    Y = getReg(YAW_REF);
+    
+    setReg(ROLL_U, R);
+    setReg(PITCH_U, P);
+    setReg(YAW_U, Y);
+    setReg(Z_U, H_comp);
+
+    M1 = R - P + Y;
+    M2 = R + P - Y;
+    M3 = -R + P + Y;
+    M4 = -R - P - Y;
+
+    saturateM(H_comp*H_comp);
+
+    setReg(MOTOR_1, M1);
+    setReg(MOTOR_2, M2);
+    setReg(MOTOR_3, M3);
+    setReg(MOTOR_4, M4);
+
+    if(security){
+        M1 = M2 = M3 = M4 = 0;
+        resetPid(&wroll_control, time);
+        resetPid(&wpitch_control, time);
+        resetPid(&wyaw_control, time);
+        return;
+    }
+    else{
+        setPwmDutyTime(&m1, min(max(M1,0), 100));
+        setPwmDutyTime(&m2, min(max(M2,0), 100));
+        setPwmDutyTime(&m3, min(max(M3,0), 100));
+        setPwmDutyTime(&m4, min(max(M4,0), 100));
+    }
+
+}
+
+void controlInterrupt(){
+    
+    time += timer_wcontrol.period/1000;
+
+    X_C = computePid(&x_control, -x, time, H);
+    Y_C = computePid(&y_control, -y, time, H);
+
+    rampValue(&z_ref, getReg(Z_REF), getReg(Z_REF_SIZE));
+
+    H_ref = computePid(&z_control, z_ref - z, time,0) + getReg(Z_MG);
+    rampValue(&H, H_ref, 0.2);
+
+    H_comp = H;
+
+    rampValue(&roll_ref, getReg(ROLL_REF) + roll_off, 0.015);
+    rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.015);
+    yaw_ref = getReg(YAW_REF) + yaw_off;
+
+
+    double wroll = computePid(&roll2w, angle_dif(roll_ref, roll), time, 0);
+    double wpitch = computePid(&pitch2w, angle_dif(pitch_ref, pitch),time, 0);
+    double wyaw = computePid(&yaw2w, angle_dif(yaw_ref, yaw),time, 0);
+
+    setReg(GYRO_X_REF,roll_ref);
+    setReg(GYRO_Y_REF,pitch_ref);
+    setReg(GYRO_Z_REF,yaw_ref);
+
+    /*if( fabs(wroll + gx) < 5 ) wroll = -gx;
+    if( fabs(wpitch + gy) < 5 ) wpitch = -gy;
+    if( fabs(wyaw - gz) < 5 ) wyaw = gz;*/
+
+    R = computePid(&wroll_control, roll_ref - gx, time, 0);
+    P = computePid(&wpitch_control, pitch_ref - gy, time, 0);
+    Y = computePid(&wyaw_control, yaw_ref - gz, time, 0);
+    
+    setReg(DER_GYRO_X, wroll_control.errd);
+    setReg(DER_GYRO_Y, wpitch_control.errd);
+
+    R = getReg(ROLL_REF);
+    P = getReg(PITCH_REF);
+    Y = getReg(YAW_REF);
+    
+    setReg(ROLL_U, R);
+    setReg(PITCH_U, P);
+    setReg(YAW_U, Y);
+    setReg(Z_U, H_comp);
+
+    M1 =  R - P + Y;
+    M2 = R + P  - Y;
+    M3 =   -R + P + Y;
+    M4 = -R - P - Y;
+
+    saturateM(H_comp*H_comp);
+
+    setReg(MOTOR_1, M1);
+    setReg(MOTOR_2, M2);
+    setReg(MOTOR_3, M3);
+    setReg(MOTOR_4, M4);
+    
+    if(getReg(Z_REF) == 0 /*|| (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)*/){
+        alt_offs = alt_slow;
+        setReg(Z_REF, 0);
+        H = 0; z_ref = 0;
+        M1 = M2 = M3 = M4 = 0;
+        int index = getReg(PID_INDEX), var = getReg(PID_VAR);
+        if(index >= 0) {
+            switch(var){
+    
+                case PID_ROLL:
+                    if(index == 0)
+                        roll2w.kp[0] = getReg(ROLL_KP),  roll2w.ki[0] = getReg(ROLL_KI),  roll2w.kd[0] = getReg(ROLL_KD);
+                    else
+                        wroll_control.kp[0] = getReg(ROLL_KP),  wroll_control.ki[0] = getReg(ROLL_KI),  wroll_control.kd[0] = getReg(ROLL_KD);
+
+                break;
+                
+                case PID_PITCH:
+                    if(index == 0)
+                        pitch2w.kp[0] = getReg(PITCH_KP),  pitch2w.ki[0] = getReg(PITCH_KI),  pitch2w.kd[0] = getReg(PITCH_KD);
+                    else
+                        wpitch_control.kp[0] = getReg(PITCH_KP),  wpitch_control.ki[0] = getReg(PITCH_KI),  wpitch_control.kd[0] = getReg(PITCH_KD);
+
+                break;
+
+                case PID_YAW:
+                    if(index == 0)
+                        yaw2w.kp[0] = getReg(YAW_KP),  yaw2w.ki[0] = getReg(YAW_KI),  yaw2w.kd[0] = getReg(YAW_KD);
+                    else
+                        wyaw_control.kp[0] = getReg(YAW_KP),  wyaw_control.ki[0] = getReg(YAW_KI),  wyaw_control.kd[0] = getReg(YAW_KD);
+
+                break;
+                
+                case PID_Z:
+                    z_control.kp[0] = getReg(Z_KP);
+                    z_control.ki[0] = getReg(Z_KI);
+                    z_control.kd[0] = getReg(Z_KD);
+                break;
+            }
+            roll2w.N_filt = pitch2w.N_filt = yaw2w.N_filt = wroll_control.N_filt = wpitch_control.N_filt = wyaw_control.N_filt = getReg(N_FILTER);
+        }
+        resetPid(&roll2w, time);
+        resetPid(&pitch2w, time);
+        resetPid(&yaw2w, time);
+        resetPid(&wroll_control, time);
+        resetPid(&wpitch_control, time);
+        resetPid(&wyaw_control, time);
+        resetPid(&x_control, time);
+        resetPid(&y_control, time);
+        resetPid(&z_control, time);
+    }
+
+    setPwmDutyTime(&m1, min(max(M1,0), 100));
+    setPwmDutyTime(&m2, min(max(M2,0), 100));
+    setPwmDutyTime(&m3, min(max(M3,0), 100));
+    setPwmDutyTime(&m4, min(max(M4,0), 100));
+}
+

@@ -31,17 +31,20 @@ struct mpu9250{
     float raw_ax, raw_ay, raw_az;
     float gx, gy, gz, off_gx, off_gy, off_gz;
     float mx, my, mz, off_mx, off_my, off_mz, scl_mag;
+    float raw_mx, raw_my, raw_mz;
     int accScale, gyroScale, magScale;
     bool isGyroCalibrated;
     bool isAccelCalibrated;
+    bool isMagCalibrated;
 };
 
 void initMpu(mpu9250* m);
 void readAcc(mpu9250* m);
 void readGyro(mpu9250* m);
 void readMag(mpu9250* m);
+void readRawMag(mpu9250* m);
 void calibrateGyro(mpu9250* m);
 void calibrateAccel(mpu9250* m);
-
+void calibrateMag(mpu9250* m);
 
 #endif

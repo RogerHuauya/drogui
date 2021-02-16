@@ -1,4 +1,4 @@
-//#define CASCADE_CONTROL_MPU_TEST
+#define CASCADE_CONTROL_MPU_TEST
 #ifdef CASCADE_CONTROL_MPU_TEST
 
 #include "..\headers\timer.h"
@@ -42,12 +42,17 @@ double coeffB_10Hz[] = {0.0027,-0.0085,0.0164,-0.0210,0.0231,-0.0210,0.0164,-0.0
 double coeffB_2Hz[] = {0.0001, -0.0012, 0.0064, -0.0209, 0.0462, -0.0731, 0.0850, -0.0731, 0.0462, -0.0209, 0.0064, -0.0012, 0.0001};
 double coeffA_2Hz[] = {-11.8247, 64.1475, -211.1035, 469.3812, -742.8519, 858.0511, -728.8477, 451.8482, -199.3839, 59.4422, -10.7503, 0.8919};
 
+//lowpass freq = 100Hz
+ 
+double coeffB_150Hz[] = { 0.0056, -0.0070, 0.0170, -0.0072, 0.0100, 0.0100, -0.0072, 0.0170 , -0.0070, 0.0056};
+double coeffA_150Hz[] = { -5.3336, 14.3803, -24.7331, 29.5687, -25.2823, 15.4142, -6.4538, 1.6872, -0.2108};
 
 filter filter_gx, filter_gy, filter_gz;
 
 float x, y, z;
 volatile unsigned long long time = 0;
 bool led_state;
+bool security;
 
 double  H, H_comp, R, P, Y, H_ref, X_C, Y_C, R_MAX = pi/22.0 , P_MAX = pi/22.0;
 double M1,M2,M3,M4;
@@ -59,7 +64,8 @@ pid roll2w, pitch2w, yaw2w;
 pid wroll_control, wpitch_control, wyaw_control;
 
 mpu9250 myIMU;
-timer timer_accel, timer_gyro, timer_control, timer_blink;
+timer timer_accel, timer_gyro, timer_blink, timer_debug, timer_security;
+timer timer_wcontrol;
 
 
 void saturateM(double H){
@@ -99,11 +105,23 @@ void gyroInterrupt(){
     setReg(GYRO_X, myIMU.gx);
     setReg(GYRO_Y, myIMU.gy);
     setReg(GYRO_Z, myIMU.gz);
+    gx = computeFilter(&filter_gx, myIMU.gx)/100.0;
+    gy = computeFilter(&filter_gy, myIMU.gy)/100.0;
+    gz = computeFilter(&filter_gz, myIMU.gz)/100.0;
 }
 
 void blinkInterrupt(){
     digitalWrite(LED_BUILTIN, led_state);
     led_state = !led_state;
+}
+
+void debugInterrupt(){
+    Serial.print(gx);
+    Serial.print("\t");
+    Serial.print(gy);
+    Serial.print("\t");
+    Serial.print(gz);
+    Serial.print("\n");
 }
 
 void positionInterrupt(){
@@ -145,10 +163,104 @@ void bmpInterrupt(){
 
 }
 
+void securityInterrupt(){
+    if(getReg(Z_REF) == 0 /*|| (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)*/){
+        security = true;
+    }
+    else security = false;
+}
+
+void UpdatePID(){
+
+    int index = getReg(PID_INDEX), var = getReg(PID_VAR);
+    if(index >= 0) {
+        switch(var){
+
+            case PID_ROLL:
+                if(index == 0)
+                    roll2w.kp[0] = getReg(ROLL_KP),  roll2w.ki[0] = getReg(ROLL_KI),  roll2w.kd[0] = getReg(ROLL_KD);
+                else
+                    wroll_control.kp[0] = getReg(ROLL_KP),  wroll_control.ki[0] = getReg(ROLL_KI),  wroll_control.kd[0] = getReg(ROLL_KD);
+
+            break;
+            
+            case PID_PITCH:
+                if(index == 0)
+                    pitch2w.kp[0] = getReg(PITCH_KP),  pitch2w.ki[0] = getReg(PITCH_KI),  pitch2w.kd[0] = getReg(PITCH_KD);
+                else
+                    wpitch_control.kp[0] = getReg(PITCH_KP),  wpitch_control.ki[0] = getReg(PITCH_KI),  wpitch_control.kd[0] = getReg(PITCH_KD);
+
+            break;
+
+            case PID_YAW:
+                if(index == 0)
+                    yaw2w.kp[0] = getReg(YAW_KP),  yaw2w.ki[0] = getReg(YAW_KI),  yaw2w.kd[0] = getReg(YAW_KD);
+                else
+                    wyaw_control.kp[0] = getReg(YAW_KP),  wyaw_control.ki[0] = getReg(YAW_KI),  wyaw_control.kd[0] = getReg(YAW_KD);
+
+            break;
+            
+            case PID_Z:
+                z_control.kp[0] = getReg(Z_KP);
+                z_control.ki[0] = getReg(Z_KI);
+                z_control.kd[0] = getReg(Z_KD);
+            break;
+        }
+        roll2w.N_filt = pitch2w.N_filt = yaw2w.N_filt = wroll_control.N_filt = wpitch_control.N_filt = wyaw_control.N_filt = getReg(N_FILTER);
+    }
+}
+
+void wControlInterrupt(){
+    
+    time += timer_wcontrol.period/1000;
+    
+    R = computePid(&wroll_control, roll_ref - gx, time, 0);
+    P = computePid(&wpitch_control, pitch_ref - gy, time, 0);
+    Y = computePid(&wyaw_control, yaw_ref - gz, time, 0);
+    
+    setReg(DER_GYRO_X, wroll_control.errd);
+    setReg(DER_GYRO_Y, wpitch_control.errd);
+
+    R = getReg(ROLL_REF);
+    P = getReg(PITCH_REF);
+    Y = getReg(YAW_REF);
+    
+    setReg(ROLL_U, R);
+    setReg(PITCH_U, P);
+    setReg(YAW_U, Y);
+    setReg(Z_U, H_comp);
+
+    M1 = R - P + Y;
+    M2 = R + P - Y;
+    M3 = -R + P + Y;
+    M4 = -R - P - Y;
+
+    saturateM(H_comp*H_comp);
+
+    setReg(MOTOR_1, M1);
+    setReg(MOTOR_2, M2);
+    setReg(MOTOR_3, M3);
+    setReg(MOTOR_4, M4);
+
+    if(security){
+        M1 = M2 = M3 = M4 = 0;
+        resetPid(&wroll_control, time);
+        resetPid(&wpitch_control, time);
+        resetPid(&wyaw_control, time);
+        return;
+    }
+    else{
+        setPwmDutyTime(&m1, min(max(M1,0), 100));
+        setPwmDutyTime(&m2, min(max(M2,0), 100));
+        setPwmDutyTime(&m3, min(max(M3,0), 100));
+        setPwmDutyTime(&m4, min(max(M4,0), 100));
+    }
+
+}
 
 void controlInterrupt(){
     
-    time += timer_control.period/1000;
+    time += timer_wcontrol.period/1000;
 
     X_C = computePid(&x_control, -x, time, H);
     Y_C = computePid(&y_control, -y, time, H);
@@ -177,8 +289,8 @@ void controlInterrupt(){
     if( fabs(wpitch + gy) < 5 ) wpitch = -gy;
     if( fabs(wyaw - gz) < 5 ) wyaw = gz;*/
 
-    R = computePid(&wroll_control, roll_ref + gx, time, 0);
-    P = computePid(&wpitch_control, pitch_ref + gy, time, 0);
+    R = computePid(&wroll_control, roll_ref - gx, time, 0);
+    P = computePid(&wpitch_control, pitch_ref - gy, time, 0);
     Y = computePid(&wyaw_control, yaw_ref - gz, time, 0);
     
     setReg(DER_GYRO_X, wroll_control.errd);
@@ -193,10 +305,10 @@ void controlInterrupt(){
     setReg(YAW_U, Y);
     setReg(Z_U, H_comp);
 
-    M1 =  -R - P - Y;
-    M2 = -R + P  + Y;
-    M3 =   R + P - Y;
-    M4 = R - P + Y;
+    M1 =  R - P + Y;
+    M2 = R + P  - Y;
+    M3 =   -R + P + Y;
+    M4 = -R - P - Y;
 
     saturateM(H_comp*H_comp);
 
@@ -308,15 +420,18 @@ void initializeSystem(){
     setKalmanTsGps(1);
     initMatGlobal();
 
-    initFilter(&filter_gx, 9 , coeffA_10Hz, coeffB_10Hz);
-    initFilter(&filter_gy, 9 , coeffA_10Hz, coeffB_10Hz);
-    initFilter(&filter_gz, 9 , coeffA_10Hz, coeffB_10Hz);
+    initFilter(&filter_gx, 10 , coeffA_150Hz, coeffB_150Hz);
+    initFilter(&filter_gy, 10 , coeffA_150Hz, coeffB_150Hz);
+    initFilter(&filter_gz, 10 , coeffA_150Hz, coeffB_150Hz);
 
     
     initTimer(&timer_accel, &accelInterrupt, 1000);
     initTimer(&timer_gyro, &gyroInterrupt, 1000);
-    initTimer(&timer_control, &controlInterrupt, 1000);
+    //initTimer(&timer_control, &controlInterrupt, 1000);
+    initTimer(&timer_security, &securityInterrupt, 100);
+    initTimer(&timer_debug, &debugInterrupt, 1000);
     initTimer(&timer_blink, &blinkInterrupt, 10);
+    initTimer(&timer_wcontrol, &wControlInterrupt, 1000);
 
 
     delay(500);
@@ -333,10 +448,13 @@ int _main(void){
 
     delay(1000);
     while(1){
-        if(timerReady(&timer_accel)) executeTimer(&timer_accel);
+        //if(timerReady(&timer_accel)) executeTimer(&timer_accel);
         if(timerReady(&timer_gyro)) executeTimer(&timer_gyro);
-        if(timerReady(&timer_control))executeTimer(&timer_control);
+        //if(timerReady(&timer_control))executeTimer(&timer_control);
         if(timerReady(&timer_blink)) executeTimer(&timer_blink);
+        if(timerReady(&timer_debug)) executeTimer(&timer_debug);
+        if(timerReady(&timer_wcontrol)) executeTimer(&timer_wcontrol);
+        if(timerReady(&timer_security)) executeTimer(&timer_security);        
         //if(timerReady(&timer_main)) executeTimer(&timer_main);
     }
     return 0;
