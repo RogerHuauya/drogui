@@ -6,31 +6,31 @@
 #include "..\headers\MPU9250.h"
 #include <Arduino.h>
 
-mpu9250 myIMU;
-timer timer_accel, timer_gyro, timer_mag;
+mpu9250 _myIMU;
+timer _timer_accel, _timer_gyro, _timer_mag;
 
-void accelInterrupt(){
-    readAcc(&myIMU);
+void _accelInterrupt(){
+    readAcc(&_myIMU);/*
     Serial.print(myIMU.ax);
     Serial.print(" ");
     Serial.print(myIMU.ay);
     Serial.print(" ");
     Serial.print(myIMU.az);
-    Serial.print(" ");
+    Serial.print(" ");*/
 }
 
-void gyroInterrupt(){
-    readGyro(&myIMU);
+void _gyroInterrupt(){
+    readGyro(&_myIMU);/*
     Serial.print(myIMU.gx);
     Serial.print(" ");
     Serial.print(myIMU.gy);
     Serial.print(" ");
     Serial.print(myIMU.gz);
-    Serial.print("\n");
+    Serial.print("\n");*/
 }
 
-void magInterrupt(){
-    readRawMag(&myIMU);
+void _magInterrupt(){
+    readRawMag(&_myIMU);/*
     Serial.print(myIMU.raw_mx);
     Serial.print(" ");
     Serial.print(myIMU.raw_my);
@@ -38,18 +38,18 @@ void magInterrupt(){
     Serial.print(myIMU.raw_mz);
 
 
-    Serial.print("\n");
+    Serial.print("\n");*/
 }
 
-void mainInterrupt(){
+void _mainInterrupt(){
     Serial.println("main was here");
 }
 
 void initializeSystem(){
 
-    initMpu(&myIMU);
+    initMpu(&_myIMU);
     
-    calibrateGyro(&myIMU);
+    calibrateGyro(&_myIMU);
     Serial.println("Gyro calibrated ...!!");
     
     /*calibrateAccel(&myIMU);
@@ -58,9 +58,9 @@ void initializeSystem(){
     /*calibrateMag(&myIMU);
     Serial.println("Mag calibrated ...!!");
     */
-    initTimer(&timer_accel, &accelInterrupt, 1000);
-    initTimer(&timer_gyro, &gyroInterrupt, 1000);
-    initTimer(&timer_mag, &magInterrupt, 10);
+    initTimer(&_timer_accel, &_accelInterrupt, 1000);
+    initTimer(&_timer_gyro, &_gyroInterrupt, 1000);
+    //initTimer(&_timer_mag, &_magInterrupt, 10);
     delay(500);
 }
 
@@ -70,9 +70,9 @@ int _main(void){
     initializeSystem();
     delay(1000);
     while(1){
-        //if(timerReady(&timer_accel)) executeTimer(&timer_accel);
-        //if(timerReady(&timer_gyro))  executeTimer(&timer_gyro);
-        if(timerReady(&timer_mag)) executeTimer(&timer_mag);
+        if(timerReady(&_timer_accel))  Serial.print("Accel: "), Serial.println(_timer_accel.time), executeTimer(&_timer_accel);
+        if(timerReady(&_timer_gyro))   Serial.print("Gyro: "), Serial.println(_timer_gyro.time),executeTimer(&_timer_gyro);
+        //if(timerReady(&_timer_mag))  Serial.print("Mag: "), Serial.println(_timer_mag.time),executeTimer(&_timer_mag);
     }
     
     return 0;

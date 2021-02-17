@@ -13,7 +13,7 @@ struct filter{
 };
 
 void initFilter(filter* f, int n, float* a, float* b);
-double computeFilter(filter *f, float x);
+float computeFilter(filter *f, float x);
 
 void initArrCoeff(arrCoeff* a, int n, float * coeff);
 float computeArrCoeff(arrCoeff* a);

@@ -28,7 +28,7 @@ void I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data){
 
 void initMpu(mpu9250* m){
     Wire.begin();
-    Wire.setClock(100000);
+    Wire.setClock(400000);
     delay(10);
     I2CwriteByte(MPU9250_ADDRESS, MASTER_CONFIG, 0x06);
     delay(10);
