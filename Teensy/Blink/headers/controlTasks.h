@@ -8,6 +8,7 @@
 #include "utils.h"
 #include "registerMap.h"
 
+extern double M1,M2,M3,M4;
 
 
 void initControlTasks();

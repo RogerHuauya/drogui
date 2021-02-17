@@ -1,6 +1,8 @@
 #include "../headers/MPU9250.h"
 #include <Wire.h>
 #include "../headers/matlib.h"
+#include "../headers/registerMap.h"
+#include "../headers/utils.h"
 #define G 9.81
 int16_t _ax, _ay, _az, _gx, _gy, _gz, _mx, _my, _mz;
 
@@ -154,6 +156,7 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal = false){
 }
 void calibrateGyro(mpu9250* m){
     while(!quiet(m,100,0, true));
+    setReg(CAL_GYR, 7);
 }
 
 float dis3d(float x,float y,float z, float a, float b, float c){
@@ -192,14 +195,13 @@ void calibrateAccel(mpu9250* m){
         }
 
         if(valid){
-            Serial.println("muestra válida");
             acc[head][0] = m->raw_ax, acc[head][1] = m->raw_ay, acc[head][2] = m->raw_az;
             head++, cnt++, head%= tot; 
         }
-        
+        setReg(CAL_ACC, min(cnt,6) );
 
         if(cnt >= tot && valid){
-            Serial.println("six");
+
             for(int i = 1 ; i <= neq-1; i++){
                 aux = 0;
                 for(int j = 0; j < 3; j++){
@@ -224,7 +226,7 @@ void calibrateAccel(mpu9250* m){
                     aux += (acc[(head+i)%tot][j] + getMatVal(&ans, j, 0))*(acc[(head+i)%tot][j] + getMatVal(&ans, j, 0));
                 }
                 if(fabs(sqrt(aux/scale/scale) - G) > 0.3){
-                    Serial.println(sqrt(aux/scale/scale));
+                    //Serial.println(sqrt(aux/scale/scale));
                     valid = false;
                     break;
                 }
@@ -238,6 +240,7 @@ void calibrateAccel(mpu9250* m){
     m -> off_ay = getMatVal(&ans, 1, 0);
     m -> off_az = getMatVal(&ans, 2, 0);
     m -> scl_acc = scale;
+    setReg(CAL_ACC, 7);
 
     matDestruct(&A);
     matDestruct(&b);

@@ -23,18 +23,20 @@ void blinkInterrupt(){
     led_state = !led_state;
 }
 
+bool isDebugOn = false;
 void debugInterrupt(){
-    Serial.print(ax);
+
+    if(Serial.available()) isDebugOn = true;
+
+    if(!isDebugOn) return;
+
+    Serial.print(M1);
     Serial.print("\t");
-    Serial.print(ay);
+    Serial.print(M2);
     Serial.print("\t");
-    Serial.print(az);
+    Serial.print(M3);
     Serial.print("\t");
-    Serial.print(gx);
-    Serial.print("\t");
-    Serial.print(gy);
-    Serial.print("\t");
-    Serial.print(gz);
+    Serial.print(M4);
     Serial.print("\n");
 }
 

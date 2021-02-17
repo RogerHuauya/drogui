@@ -89,10 +89,10 @@ void wControlInterrupt(){
     setReg(YAW_U, Y);
     setReg(Z_U, H_comp);
 
-    M1 = R - P + Y;
-    M2 = R + P - Y;
-    M3 = -R + P + Y;
-    M4 = -R - P - Y;
+    M1 = R + P + Y;
+    M2 = R - P - Y;
+    M3 = -R - P + Y;
+    M4 = -R + P - Y;
 
     saturateM(H_comp*H_comp);
 
@@ -107,13 +107,11 @@ void wControlInterrupt(){
         resetPid(&wpitch_control, time);
         resetPid(&wyaw_control, time);
     }
-    else{
-        setPwmDutyTime(&m1, min(max(M1,0), 100));
-        setPwmDutyTime(&m2, min(max(M2,0), 100));
-        setPwmDutyTime(&m3, min(max(M3,0), 100));
-        setPwmDutyTime(&m4, min(max(M4,0), 100));
-    }
-
+    
+    setPwmDutyTime(&m1, min(max(M1,0), 100));
+    setPwmDutyTime(&m2, min(max(M2,0), 100));
+    setPwmDutyTime(&m3, min(max(M3,0), 100));
+    setPwmDutyTime(&m4, min(max(M4,0), 100));
 }
 
 void rpyControlInterrupt(){
@@ -151,7 +149,6 @@ void xyzControlInterrupt(){
     yaw_ref = getReg(YAW_REF) + yaw_off;
 
     if(security){
-        setReg(Z_REF, 0);
         H = 0; z_ref = 0;
         resetPid(&x_control, time);
         resetPid(&y_control, time);
@@ -167,8 +164,8 @@ void initControlTasks(){
     initOneshot125(&m4, 2);
 
     initPid(&z_control, 0, 0, 0, 0, 1 , 15, NORMAL);
-    initPid(&x_control, 0.25, 0, 0, 0, 1 , 0.09, NORMAL);
-    initPid(&y_control, 0.25, 0, 0, 0, 1 , 0.09, NORMAL);
+    initPid(&x_control, 0, 0, 0, 0, 1 , 0.09, NORMAL);
+    initPid(&y_control, 0, 0, 0, 0, 1 , 0.09, NORMAL);
 
     initPid(&roll2w, 0, 0, 0, time, 50, 40, NORMAL);
     initPid(&pitch2w, 0, 0, 0, time, 50, 40, NORMAL);

@@ -19,22 +19,22 @@ float roll, pitch, yaw, ax, ay, az, gx, gy, gz, x, y, z;
 
 void accelInterrupt(){
     readAcc(&myIMU);
-    setReg(ACC_X,(float)(myIMU.ax));
-    setReg(ACC_Y,(float)(myIMU.ay));
-    setReg(ACC_Z,(float)(myIMU.az));
     ax = (myIMU.ax);
     ay = (myIMU.ay);
     az = (myIMU.az);
+    setReg(ACC_X,(float)(ax));
+    setReg(ACC_Y,(float)(ay));
+    setReg(ACC_Z,(float)(az));
 }
 
 void gyroInterrupt(){
     readGyro(&myIMU);
-    setReg(GYRO_X, myIMU.gx);
-    setReg(GYRO_Y, myIMU.gy);
-    setReg(GYRO_Z, myIMU.gz);
     gx = computeFilter(&filter_gx, myIMU.gx)/100.0;
     gy = computeFilter(&filter_gy, myIMU.gy)/100.0;
     gz = computeFilter(&filter_gz, myIMU.gz)/100.0;
+    setReg(GYRO_X, gx);
+    setReg(GYRO_Y, gy);
+    setReg(GYRO_Z, gz);
 }
 
 void magInterrupt(){
@@ -94,10 +94,7 @@ void initSensorsTasks(){
     initFilter(&filter_gz, 10 , coeffA_150Hz, coeffB_150Hz);
 
     calibrateGyro(&myIMU);
-    Serial.println("Gyro calibrated ...!!");
-    
     calibrateAccel(&myIMU);
-    Serial.println("Accel calibrated ...!!");
     /*
     calibrateMag(&myIMU);
     Serial.println("Mag calibrated ...!!");*/
