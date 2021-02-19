@@ -80,9 +80,9 @@ void wControlInterrupt(){
     setReg(DER_GYRO_X, wroll_control.errd);
     setReg(DER_GYRO_Y, wpitch_control.errd);
 
-    R = getReg(ROLL_REF);
+    /*R = getReg(ROLL_REF);
     P = getReg(PITCH_REF);
-    Y = getReg(YAW_REF);
+    Y = getReg(YAW_REF);*/
     
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
@@ -121,9 +121,9 @@ void rpyControlInterrupt(){
     wyaw_ref = computePid(&yaw2w, angle_dif(yaw_ref, yaw),time, 0);
     
 
-    setReg(GYRO_X_REF,wroll_ref);
-    setReg(GYRO_Y_REF,wpitch_ref);
-    setReg(GYRO_Z_REF,wyaw_ref);
+    setReg(GYRO_X_REF,roll_ref);
+    setReg(GYRO_Y_REF,pitch_ref);
+    setReg(GYRO_Z_REF,yaw_ref);
     
     if(security){
         resetPid(&roll2w, time);
@@ -144,8 +144,8 @@ void xyzControlInterrupt(){
 
     H_comp = H;
 
-    rampValue(&roll_ref, getReg(ROLL_REF) + roll_off, 0.015);
-    rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.015);
+    rampValue(&roll_ref, getReg(ROLL_REF) + roll_off, 0.1);
+    rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.1);
     yaw_ref = getReg(YAW_REF) + yaw_off;
 
     if(security){
@@ -188,7 +188,7 @@ void initControlTasks(){
 void executeControlTasks(){
     
     if(timerReady(&timer_wcontrol))  executeTimer(&timer_wcontrol);
-    if(timerReady(&timer_rpycontrol))  executeTimer(&timer_rpycontrol);
+    if(timerReady(&timer_rpycontrol)) Serial.println(timer_rpycontrol.time), executeTimer(&timer_rpycontrol);
     if(timerReady(&timer_xyzcontrol))  executeTimer(&timer_xyzcontrol);
 
 }

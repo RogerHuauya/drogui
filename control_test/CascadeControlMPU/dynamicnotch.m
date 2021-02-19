@@ -6,7 +6,7 @@ function [y_filt,y_ant,x_ant] = dynamicnotch(y_act,Fs,zeta,a,x_ant,y_ant,samples
     x = (50*L/Fs);
     x = int64(x);
     for j = x:length(ffty) 
-        if ffty(j) < 1 && ffty(j)> max_fft
+        if  ffty(j)> max_fft
             max_fft = ffty(j);
             index = j;
         end

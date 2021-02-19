@@ -142,11 +142,12 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal = false){
         Serial.print(max_gyro[i] -min_gyro[i]);
         Serial.print("\t");
     }
-    Serial.println();*/
-    //120 260 380
-    if((max_gyro[0]-min_gyro[0] < (treshold+180)) && (max_gyro[1]-min_gyro[1] < (treshold+180)) && (max_gyro[2]-min_gyro[2] < (treshold+250))){
+    Serial.println();
+    */
+   //120 260 380
+    if((max_gyro[0]-min_gyro[0] < (treshold+250)) && (max_gyro[1]-min_gyro[1] < (treshold+250)) && (max_gyro[2]-min_gyro[2] < (treshold+400))){
         if(cal){
-
+            //Serial.print("Ra");
             m->off_gx = -(max_gyro[0] + min_gyro[0])/2;
             m->off_gy = -(max_gyro[1] + min_gyro[1])/2;
             m->off_gz = -(max_gyro[2] + min_gyro[2])/2;
@@ -156,7 +157,7 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal = false){
     return false;
 }
 void calibrateGyro(mpu9250* m){
-    while(!quiet(m,100,0, true));
+    while(!quiet(m,200,0, true));
     setReg(CAL_GYR, 7);
 }
 

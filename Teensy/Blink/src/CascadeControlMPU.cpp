@@ -1,4 +1,4 @@
-//#define CASCADE_CONTROL_MPU_TEST
+#define CASCADE_CONTROL_MPU_TEST
 #ifdef CASCADE_CONTROL_MPU_TEST
 
 #include "..\headers\timer.h"

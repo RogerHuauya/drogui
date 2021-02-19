@@ -13,8 +13,8 @@ float sealevel;
 
 filter filter_gx, filter_gy, filter_gz;
 filter filter_gx2, filter_gy2, filter_gz2;
+dNotchFilter dnotch_gx, dnotch_gy, dnotch_gz, dnotch_gx_2, dnotch_gy_2, dnotch_gz_2 ;
 timer timer_accel, timer_gyro, timer_mag;
-
 float roll, pitch, yaw, ax, ay, az, gx, gy, gz, x, y, z;
 
 
@@ -31,20 +31,31 @@ void accelInterrupt(){
 void gyroInterrupt(){
     readGyro(&myIMU);
     
-    int quanti = 10;
+    int quanti = 1;
 
-    gx = computeFilter(&filter_gx2, myIMU.gx);
-    gy = computeFilter(&filter_gy2, myIMU.gy);
-    gz = computeFilter(&filter_gz2, myIMU.gz);
+    gx = computeFilter(&filter_gx, myIMU.gx);
+    gy = computeFilter(&filter_gy, myIMU.gy);
+    gz = computeFilter(&filter_gz, myIMU.gz);
+
+    
+    gx = computeFilter(&filter_gx, gx);
+    gy = computeFilter(&filter_gy, gy);
+    gz = computeFilter(&filter_gz, gz);
+    
+
+    gx = computeDNotch(&dnotch_gx, gx);
+    gy = computeDNotch(&dnotch_gy, gy);
+    gz = computeDNotch(&dnotch_gz, gz);
+
+    gx = computeDNotch(&dnotch_gx_2, gx);
+    gy = computeDNotch(&dnotch_gy_2, gy);
+    gz = computeDNotch(&dnotch_gz_2, gz);
+
 
     gx = quanti*((int) gx/(5*quanti));
     gy = quanti*((int) gy/(5*quanti));
     gz = quanti*((int) gz/(5*quanti));
 
-    gx = computeFilter(&filter_gx, gx);
-    gy = computeFilter(&filter_gy, gy);
-    gz = computeFilter(&filter_gz, gz);
-    
 
     setReg(GYRO_X, gx);
     setReg(GYRO_Y, gy);
@@ -110,7 +121,16 @@ void initSensorsTasks(){
     initFilter(&filter_gx2, 11 , coeffA_300Hz, coeffB_300Hz);
     initFilter(&filter_gy2, 11 , coeffA_300Hz, coeffB_300Hz);
     initFilter(&filter_gz2, 11 , coeffA_300Hz, coeffB_300Hz);
-    
+
+
+    initDNotchFilter(&dnotch_gx, 64, 50, 1000, 1, 5);
+    initDNotchFilter(&dnotch_gy, 64, 50, 1000, 1, 5);
+    initDNotchFilter(&dnotch_gz, 64, 50, 1000, 1, 5);
+
+    initDNotchFilter(&dnotch_gx_2, 64, 50, 1000, 1, 10);
+    initDNotchFilter(&dnotch_gy_2, 64, 50, 1000, 1, 10);
+    initDNotchFilter(&dnotch_gz_2, 64, 50, 1000, 1, 10);
+
     calibrateGyro(&myIMU);
     //calibrateAccel(&myIMU);
     /*
