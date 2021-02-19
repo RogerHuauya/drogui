@@ -3,6 +3,7 @@
 
 
 void initFilter(filter* f, int n, float* a, float* b){
+    
     initArrCoeff(&(f->arr_y),n-1, a);
     initArrCoeff(&(f->arr_u),n, b);
     f -> n = n;

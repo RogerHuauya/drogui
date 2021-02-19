@@ -30,14 +30,23 @@ void debugInterrupt(){
 
     if(!isDebugOn) return;
 
-    Serial.print(M1);
+    /*Serial.print(M1);
     Serial.print("\t");
     Serial.print(M2);
     Serial.print("\t");
     Serial.print(M3);
     Serial.print("\t");
     Serial.print(M4);
+    Serial.print("\n");*/
+
+    Serial.print((int) gx);
+    Serial.print("\t");
+    Serial.print((int) gy);
+    Serial.print("\t");
+    Serial.print((int)gz);
     Serial.print("\n");
+
+    
 }
 
 

@@ -137,13 +137,14 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal = false){
         }
         delay(2);
     }
-    /*
-    for(int i = 0 ; i < 3; i++){
+    
+    /*for(int i = 0 ; i < 3; i++){
         Serial.print(max_gyro[i] -min_gyro[i]);
         Serial.print("\t");
     }
     Serial.println();*/
-    if((max_gyro[0]-min_gyro[0] < (treshold+120)) && (max_gyro[1]-min_gyro[1] < (treshold+260)) && (max_gyro[2]-min_gyro[2] < (treshold+380))){
+    //120 260 380
+    if((max_gyro[0]-min_gyro[0] < (treshold+180)) && (max_gyro[1]-min_gyro[1] < (treshold+180)) && (max_gyro[2]-min_gyro[2] < (treshold+250))){
         if(cal){
 
             m->off_gx = -(max_gyro[0] + min_gyro[0])/2;
