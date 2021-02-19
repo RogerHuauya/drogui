@@ -61,12 +61,12 @@
 #define sixPi 18.84955593
 
 #ifdef __AVR__
-	static const double _c1[]PROGMEM = {0.0000000000, 0.7071067812, 0.9238795325, 0.9807852804,
+	static const float _c1[]PROGMEM = {0.0000000000, 0.7071067812, 0.9238795325, 0.9807852804,
 																0.9951847267, 0.9987954562, 0.9996988187, 0.9999247018,
 																0.9999811753, 0.9999952938, 0.9999988235, 0.9999997059,
 																0.9999999265, 0.9999999816, 0.9999999954, 0.9999999989,
 																0.9999999997};
-	static const double _c2[]PROGMEM = {1.0000000000, 0.7071067812, 0.3826834324, 0.1950903220,
+	static const float _c2[]PROGMEM = {1.0000000000, 0.7071067812, 0.3826834324, 0.1950903220,
 																0.0980171403, 0.0490676743, 0.0245412285, 0.0122715383,
 																0.0061358846, 0.0030679568, 0.0015339802, 0.0007669903,
 																0.0003834952, 0.0001917476, 0.0000958738, 0.0000479369,
@@ -76,37 +76,37 @@ class arduinoFFT {
 public:
 	/* Constructor */
 	arduinoFFT(void);
-	arduinoFFT(double *vReal, double *vImag, uint16_t samples, double samplingFrequency);
+	arduinoFFT(float *vReal, float *vImag, uint16_t samples, float samplingFrequency);
 	/* Destructor */
 	~arduinoFFT(void);
 	/* Functions */
 	uint8_t Revision(void);
 	uint8_t Exponent(uint16_t value);
 
-	void ComplexToMagnitude(double *vReal, double *vImag, uint16_t samples);
-	void Compute(double *vReal, double *vImag, uint16_t samples, uint8_t dir);
-	void Compute(double *vReal, double *vImag, uint16_t samples, uint8_t power, uint8_t dir);
-	void DCRemoval(double *vData, uint16_t samples);
-	double MajorPeak(double *vD, uint16_t samples, double samplingFrequency);
-	void MajorPeak(double *vD, uint16_t samples, double samplingFrequency, double *f, double *v);
-	void Windowing(double *vData, uint16_t samples, uint8_t windowType, uint8_t dir);
+	void ComplexToMagnitude(float *vReal, float *vImag, uint16_t samples);
+	void Compute(float *vReal, float *vImag, uint16_t samples, uint8_t dir);
+	void Compute(float *vReal, float *vImag, uint16_t samples, uint8_t power, uint8_t dir);
+	void DCRemoval(float *vData, uint16_t samples);
+	float MajorPeak(float *vD, uint16_t samples, float samplingFrequency);
+	void MajorPeak(float *vD, uint16_t samples, float samplingFrequency, float *f, float *v);
+	void Windowing(float *vData, uint16_t samples, uint8_t windowType, uint8_t dir);
 
 	void ComplexToMagnitude();
 	void Compute(uint8_t dir);
 	void DCRemoval();
-	double MajorPeak();
-	void MajorPeak(double *f, double *v);
+	float MajorPeak();
+	void MajorPeak(float *f, float *v);
 	void Windowing(uint8_t windowType, uint8_t dir);
 
 private:
 	/* Variables */
 	uint16_t _samples;
-	double _samplingFrequency;
-	double *_vReal;
-	double *_vImag;
+	float _samplingFrequency;
+	float *_vReal;
+	float *_vImag;
 	uint8_t _power;
 	/* Functions */
-	void Swap(double *x, double *y);
+	void Swap(float *x, float *y);
 };
 
 #endif

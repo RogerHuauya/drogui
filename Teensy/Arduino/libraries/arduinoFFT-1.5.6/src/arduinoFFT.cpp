@@ -26,7 +26,7 @@ arduinoFFT::arduinoFFT(void)
 	#warning("This method is deprecated and may be removed on future revisions.")
 }
 
-arduinoFFT::arduinoFFT(double *vReal, double *vImag, uint16_t samples, double samplingFrequency)
+arduinoFFT::arduinoFFT(float *vReal, float *vImag, uint16_t samples, float samplingFrequency)
 {// Constructor
 	this->_vReal = vReal;
 	this->_vImag = vImag;
@@ -45,7 +45,7 @@ uint8_t arduinoFFT::Revision(void)
 	return(FFT_LIB_REV);
 }
 
-void arduinoFFT::Compute(double *vReal, double *vImag, uint16_t samples, uint8_t dir)
+void arduinoFFT::Compute(float *vReal, float *vImag, uint16_t samples, uint8_t dir)
 {
 	#warning("This method is deprecated and may be removed on future revisions.")
 	Compute(vReal, vImag, samples, Exponent(samples), dir);
@@ -72,25 +72,25 @@ void arduinoFFT::Compute(uint8_t dir)
 #ifdef __AVR__
 	uint8_t index = 0;
 #endif
-	double c1 = -1.0;
-	double c2 = 0.0;
+	float c1 = -1.0;
+	float c2 = 0.0;
 	uint16_t l2 = 1;
 	for (uint8_t l = 0; (l < this->_power); l++) {
 		uint16_t l1 = l2;
 		l2 <<= 1;
-		double u1 = 1.0;
-		double u2 = 0.0;
+		float u1 = 1.0;
+		float u2 = 0.0;
 		for (j = 0; j < l1; j++) {
 			 for (uint16_t i = j; i < this->_samples; i += l2) {
 					uint16_t i1 = i + l1;
-					double t1 = u1 * this->_vReal[i1] - u2 * this->_vImag[i1];
-					double t2 = u1 * this->_vImag[i1] + u2 * this->_vReal[i1];
+					float t1 = u1 * this->_vReal[i1] - u2 * this->_vImag[i1];
+					float t2 = u1 * this->_vImag[i1] + u2 * this->_vReal[i1];
 					this->_vReal[i1] = this->_vReal[i] - t1;
 					this->_vImag[i1] = this->_vImag[i] - t2;
 					this->_vReal[i] += t1;
 					this->_vImag[i] += t2;
 			 }
-			 double z = ((u1 * c1) - (u2 * c2));
+			 float z = ((u1 * c1) - (u2 * c2));
 			 u2 = ((u1 * c2) + (u2 * c1));
 			 u1 = z;
 		}
@@ -115,7 +115,7 @@ void arduinoFFT::Compute(uint8_t dir)
 	}
 }
 
-void arduinoFFT::Compute(double *vReal, double *vImag, uint16_t samples, uint8_t power, uint8_t dir)
+void arduinoFFT::Compute(float *vReal, float *vImag, uint16_t samples, uint8_t power, uint8_t dir)
 {	// Computes in-place complex-to-complex FFT
 	// Reverse bits
 	#warning("This method is deprecated and may be removed on future revisions.")
@@ -137,25 +137,25 @@ void arduinoFFT::Compute(double *vReal, double *vImag, uint16_t samples, uint8_t
 #ifdef __AVR__
 	uint8_t index = 0;
 #endif
-	double c1 = -1.0;
-	double c2 = 0.0;
+	float c1 = -1.0;
+	float c2 = 0.0;
 	uint16_t l2 = 1;
 	for (uint8_t l = 0; (l < power); l++) {
 		uint16_t l1 = l2;
 		l2 <<= 1;
-		double u1 = 1.0;
-		double u2 = 0.0;
+		float u1 = 1.0;
+		float u2 = 0.0;
 		for (j = 0; j < l1; j++) {
 			 for (uint16_t i = j; i < samples; i += l2) {
 					uint16_t i1 = i + l1;
-					double t1 = u1 * vReal[i1] - u2 * vImag[i1];
-					double t2 = u1 * vImag[i1] + u2 * vReal[i1];
+					float t1 = u1 * vReal[i1] - u2 * vImag[i1];
+					float t2 = u1 * vImag[i1] + u2 * vReal[i1];
 					vReal[i1] = vReal[i] - t1;
 					vImag[i1] = vImag[i] - t2;
 					vReal[i] += t1;
 					vImag[i] += t2;
 			 }
-			 double z = ((u1 * c1) - (u2 * c2));
+			 float z = ((u1 * c1) - (u2 * c2));
 			 u2 = ((u1 * c2) + (u2 * c1));
 			 u1 = z;
 		}
@@ -187,7 +187,7 @@ void arduinoFFT::ComplexToMagnitude()
 	}
 }
 
-void arduinoFFT::ComplexToMagnitude(double *vReal, double *vImag, uint16_t samples)
+void arduinoFFT::ComplexToMagnitude(float *vReal, float *vImag, uint16_t samples)
 {	// vM is half the size of vReal and vImag
 	#warning("This method is deprecated and may be removed on future revisions.")
 	for (uint16_t i = 0; i < samples; i++) {
@@ -198,7 +198,7 @@ void arduinoFFT::ComplexToMagnitude(double *vReal, double *vImag, uint16_t sampl
 void arduinoFFT::DCRemoval()
 {
 	// calculate the mean of vData
-	double mean = 0;
+	float mean = 0;
 	for (uint16_t i = 0; i < this->_samples; i++)
 	{
 		mean += this->_vReal[i];
@@ -211,11 +211,11 @@ void arduinoFFT::DCRemoval()
 	}
 }
 
-void arduinoFFT::DCRemoval(double *vData, uint16_t samples)
+void arduinoFFT::DCRemoval(float *vData, uint16_t samples)
 {
 	// calculate the mean of vData
 	#warning("This method is deprecated and may be removed on future revisions.")
-	double mean = 0;
+	float mean = 0;
 	for (uint16_t i = 0; i < samples; i++)
 	{
 		mean += vData[i];
@@ -231,11 +231,11 @@ void arduinoFFT::DCRemoval(double *vData, uint16_t samples)
 void arduinoFFT::Windowing(uint8_t windowType, uint8_t dir)
 {// Weighing factors are computed once before multiple use of FFT
 // The weighing function is symetric; half the weighs are recorded
-	double samplesMinusOne = (double(this->_samples) - 1.0);
+	float samplesMinusOne = (float(this->_samples) - 1.0);
 	for (uint16_t i = 0; i < (this->_samples >> 1); i++) {
-		double indexMinusOne = double(i);
-		double ratio = (indexMinusOne / samplesMinusOne);
-		double weighingFactor = 1.0;
+		float indexMinusOne = float(i);
+		float ratio = (indexMinusOne / samplesMinusOne);
+		float weighingFactor = 1.0;
 		// Compute and record weighting factor
 		switch (windowType) {
 		case FFT_WIN_TYP_RECTANGLE: // rectangle (box car)
@@ -285,15 +285,15 @@ void arduinoFFT::Windowing(uint8_t windowType, uint8_t dir)
 }
 
 
-void arduinoFFT::Windowing(double *vData, uint16_t samples, uint8_t windowType, uint8_t dir)
+void arduinoFFT::Windowing(float *vData, uint16_t samples, uint8_t windowType, uint8_t dir)
 {// Weighing factors are computed once before multiple use of FFT
 // The weighing function is symetric; half the weighs are recorded
 	#warning("This method is deprecated and may be removed on future revisions.")
-	double samplesMinusOne = (double(samples) - 1.0);
+	float samplesMinusOne = (float(samples) - 1.0);
 	for (uint16_t i = 0; i < (samples >> 1); i++) {
-		double indexMinusOne = double(i);
-		double ratio = (indexMinusOne / samplesMinusOne);
-		double weighingFactor = 1.0;
+		float indexMinusOne = float(i);
+		float ratio = (indexMinusOne / samplesMinusOne);
+		float weighingFactor = 1.0;
 		// Compute and record weighting factor
 		switch (windowType) {
 		case FFT_WIN_TYP_RECTANGLE: // rectangle (box car)
@@ -342,9 +342,9 @@ void arduinoFFT::Windowing(double *vData, uint16_t samples, uint8_t windowType, 
 	}
 }
 
-double arduinoFFT::MajorPeak()
+float arduinoFFT::MajorPeak()
 {
-	double maxY = 0;
+	float maxY = 0;
 	uint16_t IndexOfMaxY = 0;
 	//If sampling_frequency = 2 * max_frequency in signal,
 	//value would be stored at position samples/2
@@ -356,17 +356,17 @@ double arduinoFFT::MajorPeak()
 			}
 		}
 	}
-	double delta = 0.5 * ((this->_vReal[IndexOfMaxY-1] - this->_vReal[IndexOfMaxY+1]) / (this->_vReal[IndexOfMaxY-1] - (2.0 * this->_vReal[IndexOfMaxY]) + this->_vReal[IndexOfMaxY+1]));
-	double interpolatedX = ((IndexOfMaxY + delta)  * this->_samplingFrequency) / (this->_samples-1);
+	float delta = 0.5 * ((this->_vReal[IndexOfMaxY-1] - this->_vReal[IndexOfMaxY+1]) / (this->_vReal[IndexOfMaxY-1] - (2.0 * this->_vReal[IndexOfMaxY]) + this->_vReal[IndexOfMaxY+1]));
+	float interpolatedX = ((IndexOfMaxY + delta)  * this->_samplingFrequency) / (this->_samples-1);
 	if(IndexOfMaxY==(this->_samples >> 1)) //To improve calculation on edge values
 		interpolatedX = ((IndexOfMaxY + delta)  * this->_samplingFrequency) / (this->_samples);
 	// returned value: interpolated frequency peak apex
 	return(interpolatedX);
 }
 
-void arduinoFFT::MajorPeak(double *f, double *v)
+void arduinoFFT::MajorPeak(float *f, float *v)
 {
-	double maxY = 0;
+	float maxY = 0;
 	uint16_t IndexOfMaxY = 0;
 	//If sampling_frequency = 2 * max_frequency in signal,
 	//value would be stored at position samples/2
@@ -378,8 +378,8 @@ void arduinoFFT::MajorPeak(double *f, double *v)
 			}
 		}
 	}
-	double delta = 0.5 * ((this->_vReal[IndexOfMaxY - 1] - this->_vReal[IndexOfMaxY + 1]) / (this->_vReal[IndexOfMaxY - 1] - (2.0 * this->_vReal[IndexOfMaxY]) + this->_vReal[IndexOfMaxY + 1]));
-	double interpolatedX = ((IndexOfMaxY + delta)  * this->_samplingFrequency) / (this->_samples - 1);
+	float delta = 0.5 * ((this->_vReal[IndexOfMaxY - 1] - this->_vReal[IndexOfMaxY + 1]) / (this->_vReal[IndexOfMaxY - 1] - (2.0 * this->_vReal[IndexOfMaxY]) + this->_vReal[IndexOfMaxY + 1]));
+	float interpolatedX = ((IndexOfMaxY + delta)  * this->_samplingFrequency) / (this->_samples - 1);
 	if (IndexOfMaxY == (this->_samples >> 1)) //To improve calculation on edge values
 		interpolatedX = ((IndexOfMaxY + delta)  * this->_samplingFrequency) / (this->_samples);
 	// returned value: interpolated frequency peak apex
@@ -391,10 +391,10 @@ void arduinoFFT::MajorPeak(double *f, double *v)
 	#endif
 }
 
-double arduinoFFT::MajorPeak(double *vD, uint16_t samples, double samplingFrequency)
+float arduinoFFT::MajorPeak(float *vD, uint16_t samples, float samplingFrequency)
 {
 	#warning("This method is deprecated and may be removed on future revisions.")
-	double maxY = 0;
+	float maxY = 0;
 	uint16_t IndexOfMaxY = 0;
 	//If sampling_frequency = 2 * max_frequency in signal,
 	//value would be stored at position samples/2
@@ -406,18 +406,18 @@ double arduinoFFT::MajorPeak(double *vD, uint16_t samples, double samplingFreque
 			}
 		}
 	}
-	double delta = 0.5 * ((vD[IndexOfMaxY-1] - vD[IndexOfMaxY+1]) / (vD[IndexOfMaxY-1] - (2.0 * vD[IndexOfMaxY]) + vD[IndexOfMaxY+1]));
-	double interpolatedX = ((IndexOfMaxY + delta)  * samplingFrequency) / (samples-1);
+	float delta = 0.5 * ((vD[IndexOfMaxY-1] - vD[IndexOfMaxY+1]) / (vD[IndexOfMaxY-1] - (2.0 * vD[IndexOfMaxY]) + vD[IndexOfMaxY+1]));
+	float interpolatedX = ((IndexOfMaxY + delta)  * samplingFrequency) / (samples-1);
 	if(IndexOfMaxY==(samples >> 1)) //To improve calculation on edge values
 		interpolatedX = ((IndexOfMaxY + delta)  * samplingFrequency) / (samples);
 	// returned value: interpolated frequency peak apex
 	return(interpolatedX);
 }
 
-void arduinoFFT::MajorPeak(double *vD, uint16_t samples, double samplingFrequency, double *f, double *v)
+void arduinoFFT::MajorPeak(float *vD, uint16_t samples, float samplingFrequency, float *f, float *v)
 {
 	#warning("This method is deprecated and may be removed on future revisions.")
-	double maxY = 0;
+	float maxY = 0;
 	uint16_t IndexOfMaxY = 0;
 	//If sampling_frequency = 2 * max_frequency in signal,
 	//value would be stored at position samples/2
@@ -429,9 +429,9 @@ void arduinoFFT::MajorPeak(double *vD, uint16_t samples, double samplingFrequenc
 			}
 		}
 	}
-	double delta = 0.5 * ((vD[IndexOfMaxY - 1] - vD[IndexOfMaxY + 1]) / (vD[IndexOfMaxY - 1] - (2.0 * vD[IndexOfMaxY]) + vD[IndexOfMaxY + 1]));
-	double interpolatedX = ((IndexOfMaxY + delta)  * samplingFrequency) / (samples - 1);
-	//double popo =
+	float delta = 0.5 * ((vD[IndexOfMaxY - 1] - vD[IndexOfMaxY + 1]) / (vD[IndexOfMaxY - 1] - (2.0 * vD[IndexOfMaxY]) + vD[IndexOfMaxY + 1]));
+	float interpolatedX = ((IndexOfMaxY + delta)  * samplingFrequency) / (samples - 1);
+	//float popo =
 	if (IndexOfMaxY == (samples >> 1)) //To improve calculation on edge values
 		interpolatedX = ((IndexOfMaxY + delta)  * samplingFrequency) / (samples);
 	// returned value: interpolated frequency peak apex
@@ -454,9 +454,9 @@ uint8_t arduinoFFT::Exponent(uint16_t value)
 
 // Private functions
 
-void arduinoFFT::Swap(double *x, double *y)
+void arduinoFFT::Swap(float *x, float *y)
 {
-	double temp = *x;
+	float temp = *x;
 	*x = *y;
 	*y = temp;
 }
