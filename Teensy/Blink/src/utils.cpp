@@ -1,6 +1,30 @@
 #include "..\headers\utils.h"
 #include "..\headers\i2c.h"
 
+
+
+elapsedMicros time = 0;
+bool security;
+//Lowpass freq = 10Hz
+float coeffA_10Hz[] = {-6.1252,17.2079,-28.7647,31.1789,-22.3898,10.3890,-2.8462,0.3526};
+float coeffB_10Hz[] = {0.0027,-0.0085,0.0164,-0.0210,0.0231,-0.0210,0.0164,-0.0085,0.0027};
+
+//Lowpass freq = 2Hz
+float coeffB_2Hz[] = {0.0001, -0.0012, 0.0064, -0.0209, 0.0462, -0.0731, 0.0850, -0.0731, 0.0462, -0.0209, 0.0064, -0.0012, 0.0001};
+float coeffA_2Hz[] = {-11.8247, 64.1475, -211.1035, 469.3812, -742.8519, 858.0511, -728.8477, 451.8482, -199.3839, 59.4422, -10.7503, 0.8919};
+
+//lowpass freq = 150Hz
+float coeffB_150Hz[] = { 0.0056, -0.0070, 0.0170, -0.0072, 0.0100, 0.0100, -0.0072, 0.0170 , -0.0070, 0.0056};
+float coeffA_150Hz[] = { -5.3336, 14.3803, -24.7331, 29.5687, -25.2823, 15.4142, -6.4538, 1.6872, -0.2108};
+
+//Lowpass freq  = 100 Hz
+float coeffB_100Hz[] = { 0.0027, -0.0085, 0.0164, -0.0210, 0.0231, -0.0210, 0.0164, -0.0085, 0.0027}; 
+float coeffA_100Hz[] = { -6.1252, 17.2079, -28.7647, 31.1789, -22.3898, 10.3890, -2.8462, 0.3526 };
+
+//Lowpass freq = 300 Hz
+float coeffB_300Hz[] = { 0.0523, 0.3005, 0.9285, 1.9192, 2.8985, 3.3135, 2.8985, 1.9192, 0.9285, 0.3005, 0.0523 }; 
+float coeffA_300Hz[] = { 1.2129, 3.5334, 2.4263, 3.9286, 1.3120, 1.8104, 0.0802, 0.3968, -0.0573, 0.0478 }; 
+
 int32_t bytestoint32(uint8_t *bytesint32){
     int32_t val = (int32_t) (int32_t)(bytesint32[0]) << 24 |
             (int32_t)(bytesint32[1]) << 16 |
@@ -80,3 +104,9 @@ void getEuler(double q0, double q1, double q2, double q3, double* roll, double *
     double cosy_cosp = 1 - 2 * (q2 * q2 + q3 * q3);
     *yaw = atan2(siny_cosp, cosy_cosp);
 }
+
+
+void rampValue(double *var, double desired, double step){
+
+    (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*var));
+}  

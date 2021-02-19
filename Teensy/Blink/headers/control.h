@@ -24,8 +24,7 @@ double computePid(pid* p, double error, unsigned long long t, double h);
 void resetPid(pid* p, unsigned long long ti);
 
 void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti, double N,double osat, int tipo );
-void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti, double N,double osat,int tipo, int n, double*a, double*b);
+void initPid(pid* p, double kp, double kd, double ki,unsigned long long ti, double N,double osat,int tipo, int n, float*a, float*b);
 
-void initPidConstants();
 
 #endif
