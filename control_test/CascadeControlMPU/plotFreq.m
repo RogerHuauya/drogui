@@ -1,5 +1,6 @@
 function plotFreq(a, Fs)
     L=length(a);
+%     n = 2^nextpow2(L);
     Gx = fft(a);
     P2 = abs(Gx/L);
     P1 = P2(1:cast(L/2,'int64')+mod(L+1,2));
