@@ -1,5 +1,5 @@
 #include "..\headers\matlib.h"
-
+void getCofactor(mat* A, mat* temp, int p, int q);
 void matInit(mat* m, int row, int col){
     m->row = row;
     m->col = col;
@@ -143,3 +143,84 @@ void gaussElimination3x3(mat* a, mat* b, mat* ans){
         }
     for(int i = 0; i < 3; i++) ans->val[i][0] = b->val[i][0]/a->val[i][i];
 }
+
+double determinant(mat* A) 
+{ 
+    double D = 0; 
+    int n;
+    if(A->row == A->col) n= A->row;
+    if (A->row == 1) 
+        return getMatVal(A, 0, 0); 
+  
+    mat temp; // To store cofactors 
+    matInit(&temp, A->row-1, A->row -1 );
+    int sign = 1;  // To store sign multiplier 
+  
+     // Iterate for each element of first row 
+    for (int f = 0; f < n; f++) 
+    { 
+        // Getting Cofactor of A[0][f] 
+        getCofactor(A, &temp, 0, f); 
+        D += sign * getMatVal(A, 0, f)*determinant(&temp); 
+  
+        // terms are to be added with alternate sign 
+        sign = -sign; 
+    } 
+    matDestruct(&temp);
+    return D; 
+} 
+
+void getCofactor(mat* A, mat* temp, int p, int q) 
+{ 
+    int i = 0, j = 0; 
+  
+    for (int row = 0; row < A->row; row++) { 
+        for (int col = 0; col < A->col; col++) { 
+            if (row != p && col != q) { 
+                setMatVal(temp, i, j++, getMatVal(A, row, col));
+                if (j == A->row - 1) { 
+                    j = 0; 
+                    i++; 
+                } 
+            } 
+        } 
+    } 
+}
+
+void adjoint(mat* A, mat* adj) {   
+    int N;
+    if(A->row == A->col){N = A->row;}
+    if (N == 1) { 
+        setMatVal(adj, 0, 0, 1); 
+        return; 
+    } 
+  
+    int sign = 1;
+    mat temp;
+    matInit(&temp, N-1 , N-1); 
+  
+    for (int i=0; i<N; i++) { 
+        for (int j=0; j<N; j++) { 
+            getCofactor(A, &temp, i, j); 
+            sign = ((i+j)%2==0)? 1: -1; 
+            setMatVal(adj, j, i, (sign)*(determinant(&temp)));
+        } 
+    } 
+    matDestruct(&temp);
+} 
+  
+bool matInverse(mat* inverse, mat* A) { 
+    double det = determinant(A); 
+    if (det == 0) return false; 
+     
+  
+    mat adj; 
+    matInit(&adj, A->row, A->col);
+    adjoint(A, &adj); 
+  
+    for (int i=0; i < A->row; i++) 
+        for (int j=0; j< A->col; j++) 
+            setMatVal(inverse, i, j, getMatVal(&adj, i, j)/det);
+    matDestruct(&adj);
+    return true; 
+} 

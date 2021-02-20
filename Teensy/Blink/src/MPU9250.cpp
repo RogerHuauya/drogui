@@ -250,8 +250,10 @@ void calibrateAccel(mpu9250* m){
 }
 
 void calibrateMag(mpu9250* m){
-    int neq = 4, nval = 6;
-    int tot = neq + nval;
+    int head = 0, cnt = 0;
+    bool done = false;
+    const int n = 100;
+    float scaleGlobal = 0.01, magX, magY, magZ;
 
     float mag[tot][3], scale, aux;
     for(int i = 0; i < tot; i++){
@@ -259,81 +261,67 @@ void calibrateMag(mpu9250* m){
             mag[i][j] = 0;
         }    
     }
-
-    mat A, b, ans;
-    matInit(&A,3,3);
-    matInit(&b,3,1);
-    matInit(&ans,3,1);
-
-    int head = 0, cnt = 0;
-    bool done = false, valid;
-    
-    while(!done){
-
+    while (!done){
         readRawMag(m);
+        magX = m->raw_mx*scaleGlobal;
+        magY = m->raw_my*scaleGlobal;
+        magZ = m->raw_mz*scaleGlobal;
+
         valid = true;
-        for(int i = 1 ; i <= tot-1 ; i++){
-            int j = (head - i + tot) % tot;
-            float d = dis3d(m->raw_mx, m->raw_my, m->raw_mz, mag[j][0], mag[j][1], mag[j][2]);
-            //Serial.println(d);
-            if(d < 80){
+        for(int i = 1 ; i <= n-1 ; i++){
+            int j = (head - i + n) % n;
+            if(dis3d(magX, magY, magZ, mag[j][0], mag[j][1], mag[j][2]) < 1000){
                 valid = false; break;
             } 
         }
-
-        
-
         if(valid){
-            Serial.println("muestra válida");
-            mag[head][0] = m->raw_mx, mag[head][1] = m->raw_my, mag[head][2] = m->raw_mz;
-            head++, cnt++, head%= tot; 
+            mag[head][0] = magX, mag[head][1] = magY, mag[head][2] = magZ;
+            head++, cnt++, head%= n; 
         }
-        
-
-        if(cnt >= tot && valid){
-            Serial.println("six");
-            for(int i = 1 ; i <= neq-1; i++){
-                aux = 0;
-                for(int j = 0; j < 3; j++){
-                    setMatVal(&A, i-1, j, 2*(mag[(head + i-1)%6][j] - mag[(head + i)%tot][j]));
-                    //x2*x2-x1*x1+y2*y2-y1*y1+z2*z2-z1*z1 = 2*c1*(x1-x2)+2*c2*(y1-y2)+2*c3*(z1-z2)
-                    aux += mag[(head + i)%tot][j]*mag[(head + i)%tot][j] - mag[(head + i-1)%tot][j]*mag[(head + i-1)%tot][j]; 
-                }
-                setMatVal(&b, i-1, 0, aux);
-            }
-
-            gaussElimination3x3(&A, &b, &ans);
-            aux = 0;
-            for(int i = 0; i < 3; i++){
-                aux += (mag[head][i] + getMatVal(&ans, i, 0))*(mag[head][i] + getMatVal(&ans, i, 0));
-            }
-            
-            scale = sqrt(aux);
-
-            valid = true;
-            
-            for(int i = neq ; i <= tot-1; i++){
-                aux = 0;
-                for(int j= 0; j < 3; j++){
-                    aux += (mag[(head+i)%tot][j] + getMatVal(&ans, j, 0))*(mag[(head+i)%tot][j] + getMatVal(&ans, j, 0));
-                }
-                if(fabs(sqrt(aux/scale/scale) - 1) > 0.2){
-                    Serial.println(sqrt(aux/scale/scale));
-                    valid = false;
-                    break;
-                }
-            }
-            if(valid) done = true;
-
-        }
-        delay(10);
-        
+        if(cnt == n){done = true;}
     }
+    mat H, Ht, w, prod, prod2, X, inverse;
+    matInit(&H, n, 6);
+    matInit(&Ht, 6, n);
+    matInit(&prod, 6, 6);
+    matInit(&prod2, 6, n);
+    matInit(&inverse, 6, 6);
+    matInit(&w, n, 1);
+    matInit(&X, 6, 1);
+    for(int i = 0; i < n; i++){
+        setMatVal(&H, i, 0, mag[i][0]);
+        setMatVal(&H, i, 1, mag[i][1]);
+        setMatVal(&H, i, 2, mag[i][2]);
+        setMatVal(&H, i, 3, -mag[i][1]*mag[i][1]);
+        setMatVal(&H, i, 4, -mag[i][2]*mag[i][2]);
+        setMatVal(&H, i, 5, 1);
 
-    m -> off_mx = getMatVal(&ans, 0, 0);
-    m -> off_my = getMatVal(&ans, 1, 0);
-    m -> off_mz = getMatVal(&ans, 2, 0);
-    m -> scl_mag = scale;
+        setMatVal(&w, i, 0, -mag[i][0]*mag[i][0]);
+    }
+    matTrans(&Ht, &H);
+    matMult(&prod, &Ht, &H);
+    /*
+    for(int i = 0; i < prod.row; i++){
+        for(int j = 0; j < prod.col; j++){
+            Serial.print(getMatVal(&prod, i, j));
+            Serial.print(" ");
+        }
+        Serial.println();
+    }*/
+    matInverse(&inverse, &prod);
+    matMult(&prod2, &inverse, &Ht);
+    matMult(&X, &prod2, &w);
+    /*
+    for(int i = 0; i < 6; i++)
+        Serial.println(getMatVal(&X, i, 0));
+    */
+    m -> off_mx = getMatVal(&X, 0, 0)/(2*scaleGlobal);
+    m -> off_my = getMatVal(&X, 1, 0)/(2*getMatVal(&X, 3, 0)*scaleGlobal);
+    m -> off_mz = getMatVal(&X, 2, 0)/(2*getMatVal(&X, 4, 0)*scaleGlobal);
+    float temp = getMatVal(&X, 5, 0) + m -> off_mx * m -> off_mx + m -> off_my * m -> off_my + m -> off_mz * m -> off_mz;
+    m -> scl_magx = sqrt(temp);
+    m -> scl_magy = sqrt(temp / getMatVal(&X, 3, 0));
+    m -> scl_magz = sqrt(temp / getMatVal(&X, 4, 0));
 
     Serial.print(m -> off_mx);
     Serial.print("\t");

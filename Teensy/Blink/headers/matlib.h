@@ -26,5 +26,6 @@ void matTrans(mat* Rt,mat* R);
 void matCopy(mat* des, mat* src);
 void rpyToR(mat* R, float roll, float pitch, float yaw);
 void gaussElimination3x3(mat* a, mat* b, mat* ans);
+bool matInverse(mat* inverse, mat* A);
 
 #endif
