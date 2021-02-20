@@ -319,9 +319,9 @@ void calibrateMag(mpu9250* m){
     m -> off_my = getMatVal(&X, 1, 0)/(2*getMatVal(&X, 3, 0)*scaleGlobal);
     m -> off_mz = getMatVal(&X, 2, 0)/(2*getMatVal(&X, 4, 0)*scaleGlobal);
     float temp = getMatVal(&X, 5, 0) + m -> off_mx * m -> off_mx + m -> off_my * m -> off_my + m -> off_mz * m -> off_mz;
-    m -> scl_magx = sqrt(temp);
-    m -> scl_magy = sqrt(temp / getMatVal(&X, 3, 0));
-    m -> scl_magz = sqrt(temp / getMatVal(&X, 4, 0));
+    m -> scl_magx = sqrt(temp)/ (scaleGlobal);
+    m -> scl_magy = sqrt(temp / (scaleGlobal * getMatVal(&X, 3, 0));
+    m -> scl_magz = sqrt(temp / (scaleGlobal * getMatVal(&X, 4, 0));
 
     Serial.print(m -> off_mx);
     Serial.print("\t");
@@ -329,9 +329,18 @@ void calibrateMag(mpu9250* m){
     Serial.print("\t");
     Serial.print(m -> off_mz);
     Serial.print("\t");
-    Serial.println(m -> scl_mag);
+    Serial.println(m -> scl_magx);
+    Serial.print("\t");
+    Serial.println(m -> scl_magy);
+    Serial.print("\t");
+    Serial.println(m -> scl_magz);
     
-    matDestruct(&A);
-    matDestruct(&b);
-    matDestruct(&ans);    
+    matDestruct(&H);
+    matDestruct(&Ht);
+    matDestruct(&prod);    
+    matDestruct(&prod2); 
+    matDestruct(&inverse); 
+    matDestruct(&w); 
+    matDestruct(&X); 
+       
 }
