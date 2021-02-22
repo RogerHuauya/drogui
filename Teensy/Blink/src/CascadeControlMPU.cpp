@@ -1,4 +1,4 @@
-//#define CASCADE_CONTROL_MPU_TEST
+#define CASCADE_CONTROL_MPU_TEST
 #ifdef CASCADE_CONTROL_MPU_TEST
 
 #include "..\headers\timer.h"
@@ -39,14 +39,12 @@ void debugInterrupt(){
     Serial.print(M4);
     Serial.print("\n");*/
 
-    Serial.print((int) gx);
+    Serial.print(wroll_ref);
     Serial.print("\t");
-    Serial.print((int) gy);
+    Serial.print(wpitch_ref);
     Serial.print("\t");
-    Serial.print((int)gz);
-    Serial.print("\n");
-
-    
+    Serial.print(wyaw_ref);
+    Serial.print(";\n");
 }
 
 
@@ -64,7 +62,7 @@ void initializeSystem(){
     initI2C(SLAVE, I2C1, 0x60);
     clearI2Cregisters(I2C1);
     initTimer(&timer_security, &securityInterrupt, 100);
-    initTimer(&timer_debug, &debugInterrupt, 1000);
+    initTimer(&timer_debug, &debugInterrupt, 100);
     initTimer(&timer_blink, &blinkInterrupt, 10);
 
 

@@ -10,7 +10,7 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BMP3XX.h>
 
-extern float roll, pitch, yaw, ax, ay, az, gx, gy, gz, x, y, z;
+extern float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
 
 void initSensorsTasks();
 void executeSensorsTasks();

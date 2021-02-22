@@ -46,7 +46,7 @@ float sealevel;
 
 timer timer_sensors,    	timer_main;
 
-volatile double roll, pitch, yaw, ax, ay, az;
+volatile float roll, pitch, yaw, ax, ay, az;
 float x, y, z;
 volatile unsigned long long time = 0;
 bool led_state;
@@ -56,20 +56,20 @@ bool caso = true;
 long long entrada = 0;
 int dig = 0;
 
-double  H, H_comp,R,P,Y, H_ref, X_C, Y_C, R_MAX = pi/22.0 , P_MAX = pi/22.0;
-double M1,M2,M3,M4;
+float  H, H_comp,R,P,Y, H_ref, X_C, Y_C, R_MAX = pi/22.0 , P_MAX = pi/22.0;
+float M1,M2,M3,M4;
 uint8_t haux = 0;
 
-double roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
-double roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref, z_ref_des, z_ref_init;
-double t0, T = 5;
+float roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
+float roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref, z_ref_des, z_ref_init;
+float t0, T = 5;
 long long pm = 0;
 
-void saturateM(double H){
-    double f_max = 1;
-    double arr_M[] = {M1, M2, M3, M4};
+void saturateM(float H){
+    float f_max = 1;
+    float arr_M[] = {M1, M2, M3, M4};
     for(int i = 0; i < 4 ; i++){
-        double delta = max(max(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
+        float delta = max(max(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
         f_max = max(f_max, abs(arr_M[i] / (abs(arr_M[i]) - delta + 0.0000001)) );
     }
 
@@ -79,20 +79,20 @@ void saturateM(double H){
     M4 = sqrt(M4 / f_max + H);
 }
 
- double s(double t){
+ float s(float t){
     return 10*(t/T)*(t/T)*(t/T) - 15*(t/T)*(t/T)*(t/T)*(t/T) + 6*(t/T)*(t/T)*(t/T)*(t/T)*(t/T);
  }
 
- double sp(double t){
+ float sp(float t){
     return 30*(t/T)*(t/T)/T - 60*(t/T)*(t/T)*(t/T)/T + 30*(t/T)*(t/T)*(t/T)*(t/T)/T;
  }
  
-void rampValue(double *var, double desired, double step){
+void rampValue(float *var, float desired, float step){
 
     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*var));
 }    
 
-void rampValueR(double *var, double time){
+void rampValueR(float *var, float time){
     (*var) =  (z_ref_des - z_ref_init)*s(time) + z_ref_init;
 }    
 
@@ -191,7 +191,7 @@ void mainInterrupt(){
 
     //H_comp = H / (cos(roll)*cos(pitch));
     H_comp = H;/*
-    double rel = roll_ref/(pitch_ref + 0.0000001);
+    float rel = roll_ref/(pitch_ref + 0.0000001);
     
     if( fabs(rel) < 1  ){
         

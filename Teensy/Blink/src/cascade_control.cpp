@@ -35,21 +35,21 @@ float sealevel;
 
 timer timer_sensors, timer_main, timer_attitude;
 
-volatile double roll, pitch, yaw, ax, ay, az, gx, gy, gz;
-double roll_ant,pitch_ant,yaw_ant;
+volatile float roll, pitch, yaw, ax, ay, az, gx, gy, gz;
+float roll_ant,pitch_ant,yaw_ant;
 
-double err_act_x = 0,err_ant_x = 0, der_err_x = 0;
-double err_act_y = 0,err_ant_y = 0, der_err_y = 0;
-double err_act_z = 0,err_ant_z = 0, der_err_z = 0;
+float err_act_x = 0,err_ant_x = 0, der_err_x = 0;
+float err_act_y = 0,err_ant_y = 0, der_err_y = 0;
+float err_act_z = 0,err_ant_z = 0, der_err_z = 0;
 
 
 //Lowpass freq = 10Hz
-double coeffA_10Hz[] = {-6.1252,17.2079,-28.7647,31.1789,-22.3898,10.3890,-2.8462,0.3526};
-double coeffB_10Hz[] = {0.0027,-0.0085,0.0164,-0.0210,0.0231,-0.0210,0.0164,-0.0085,0.0027};
+float coeffA_10Hz[] = {-6.1252,17.2079,-28.7647,31.1789,-22.3898,10.3890,-2.8462,0.3526};
+float coeffB_10Hz[] = {0.0027,-0.0085,0.0164,-0.0210,0.0231,-0.0210,0.0164,-0.0085,0.0027};
 
 //Lowpass freq = 2Hz
-double coeffB_2Hz[] = {0.0001, -0.0012, 0.0064, -0.0209, 0.0462, -0.0731, 0.0850, -0.0731, 0.0462, -0.0209, 0.0064, -0.0012, 0.0001};
-double coeffA_2Hz[] = {-11.8247, 64.1475, -211.1035, 469.3812, -742.8519, 858.0511, -728.8477, 451.8482, -199.3839, 59.4422, -10.7503, 0.8919};
+float coeffB_2Hz[] = {0.0001, -0.0012, 0.0064, -0.0209, 0.0462, -0.0731, 0.0850, -0.0731, 0.0462, -0.0209, 0.0064, -0.0012, 0.0001};
+float coeffA_2Hz[] = {-11.8247, 64.1475, -211.1035, 469.3812, -742.8519, 858.0511, -728.8477, 451.8482, -199.3839, 59.4422, -10.7503, 0.8919};
 
 
 filter filter_gx, filter_gy, filter_gz;
@@ -60,21 +60,21 @@ float x, y, z;
 volatile unsigned long long time = 0;
 bool led_state;
 
-double  H, H_comp,R,P,Y, H_ref, X_C, Y_C, R_MAX = pi/22.0 , P_MAX = pi/22.0;
-double M1,M2,M3,M4;
+float  H, H_comp,R,P,Y, H_ref, X_C, Y_C, R_MAX = pi/22.0 , P_MAX = pi/22.0;
+float M1,M2,M3,M4;
 
-double roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
-double roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
+float roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
+float roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
 
 pid roll2w, pitch2w, yaw2w; 
 pid wroll_control, wpitch_control, wyaw_control;
 
 
-void saturateM(double H){
-    double f_max = 1;
-    double arr_M[] = {M1, M2, M3, M4};
+void saturateM(float H){
+    float f_max = 1;
+    float arr_M[] = {M1, M2, M3, M4};
     for(int i = 0; i < 4 ; i++){
-        double delta = max(max(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
+        float delta = max(max(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
         f_max = max(f_max, abs(arr_M[i] / (abs(arr_M[i]) - delta + 0.0000001)) );
     }
 
@@ -84,7 +84,7 @@ void saturateM(double H){
     M4 = sqrt(M4 / f_max + H);
 }
 
-void rampValue(double *var, double desired, double step){
+void rampValue(float *var, float desired, float step){
 
     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*var));
 }    
@@ -209,9 +209,9 @@ void mainInterrupt(){
     Serial.println(roll);*/
 
 
-    double wroll = computePid(&roll2w, angle_dif(roll_ref, roll), time, 0);
-    double wpitch = computePid(&pitch2w, angle_dif(pitch_ref, pitch),time, 0);
-    double wyaw = computePid(&yaw2w, angle_dif(yaw_ref, yaw),time, 0);
+    float wroll = computePid(&roll2w, angle_dif(roll_ref, roll), time, 0);
+    float wpitch = computePid(&pitch2w, angle_dif(pitch_ref, pitch),time, 0);
+    float wyaw = computePid(&yaw2w, angle_dif(yaw_ref, yaw),time, 0);
 
     setReg(GYRO_X_REF,roll_ref);
     setReg(GYRO_Y_REF,pitch_ref);

@@ -1,4 +1,5 @@
 #include "headers/main.h"
+#include <float.h>
 void setup(){
     pinMode(13, OUTPUT);
     digitalWrite(13, HIGH);
@@ -7,6 +8,6 @@ void setup(){
 }
 void loop(){
     delay(20);
-    Serial.println("hola");
+    
     _main();    
 }

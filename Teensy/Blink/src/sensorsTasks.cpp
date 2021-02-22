@@ -1,4 +1,5 @@
 #include "..\headers\sensorsTasks.h"
+#include "..\headers\mahony.h"
 
 #define N_BMP 25
 
@@ -13,9 +14,9 @@ float sealevel;
 
 filter filter_gx, filter_gy, filter_gz;
 filter filter_gx2, filter_gy2, filter_gz2;
-dNotchFilter dnotch_gx, dnotch_gy, dnotch_gz, dnotch_gx_2, dnotch_gy_2, dnotch_gz_2 ;
-timer timer_accel, timer_gyro, timer_mag;
-float roll, pitch, yaw, ax, ay, az, gx, gy, gz, x, y, z;
+dNotchFilter dnotch_gx, dnotch_gy, dnotch_gz, dnotch_gx2, dnotch_gy2, dnotch_gz2 ;
+timer timer_accel, timer_gyro, timer_mag, timer_rpy;
+float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
 
 
 void accelInterrupt(){
@@ -38,18 +39,18 @@ void gyroInterrupt(){
     gz = computeFilter(&filter_gz, myIMU.gz);
 
     
-    gx = computeFilter(&filter_gx, gx);
-    gy = computeFilter(&filter_gy, gy);
-    gz = computeFilter(&filter_gz, gz);
+    gx = computeFilter(&filter_gx2, gx);
+    gy = computeFilter(&filter_gy2, gy);
+    gz = computeFilter(&filter_gz2, gz);
     
 
     gx = computeDNotch(&dnotch_gx, gx);
     gy = computeDNotch(&dnotch_gy, gy);
     gz = computeDNotch(&dnotch_gz, gz);
 
-    gx = computeDNotch(&dnotch_gx_2, gx);
-    gy = computeDNotch(&dnotch_gy_2, gy);
-    gz = computeDNotch(&dnotch_gz_2, gz);
+    gx = computeDNotch(&dnotch_gx2, gx);
+    gy = computeDNotch(&dnotch_gy2, gy);
+    gz = computeDNotch(&dnotch_gz2, gz);
 
 
     gx = quanti*((int) gx/(5*quanti));
@@ -64,11 +65,24 @@ void gyroInterrupt(){
 
 void magInterrupt(){
     readMag(&myIMU);
+    mx = myIMU.mx;
+    my = myIMU.my;
+    mz = myIMU.mz;
+}
+
+void rpyInterrupt(){
+    float rpy[3];
+    
+    mahonyUpdate(gx*PI/180.0f, gy*PI/180.0f, gz*PI/180.0f, ax, ay, az, my, mx, mz);
+    getMahonyEuler(rpy);
+    roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
+    setReg(ROLL_VAL, roll);
+    setReg(PITCH_VAL, pitch);
+    setReg(YAW_VAL, yaw);
 }
 
 void positionInterrupt(){
     
-
     if(getReg(START) > 0){
         kalmanUpdateIMU(ax, ay, az, roll, pitch, yaw);
         if(getReg(GPS_AVAILABLE) == 1) setReg(GPS_AVAILABLE, 0), kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), 0);    
@@ -123,28 +137,29 @@ void initSensorsTasks(){
     initFilter(&filter_gz2, 11 , coeffA_300Hz, coeffB_300Hz);
 
 
-    initDNotchFilter(&dnotch_gx, 64, 50, 1000, 1, 5);
-    initDNotchFilter(&dnotch_gy, 64, 50, 1000, 1, 5);
-    initDNotchFilter(&dnotch_gz, 64, 50, 1000, 1, 5);
+    initDNotchFilter(&dnotch_gx, 64, 50, 1000, 1, 10);
+    initDNotchFilter(&dnotch_gy, 64, 50, 1000, 1, 10);
+    initDNotchFilter(&dnotch_gz, 64, 50, 1000, 1, 10);
 
-    initDNotchFilter(&dnotch_gx_2, 64, 50, 1000, 1, 10);
-    initDNotchFilter(&dnotch_gy_2, 64, 50, 1000, 1, 10);
-    initDNotchFilter(&dnotch_gz_2, 64, 50, 1000, 1, 10);
+    initDNotchFilter(&dnotch_gx2, 64, 50, 1000, 1, 5);
+    initDNotchFilter(&dnotch_gy2, 64, 50, 1000, 1, 5);
+    initDNotchFilter(&dnotch_gz2, 64, 50, 1000, 1, 5);
 
     calibrateGyro(&myIMU);
-    //calibrateAccel(&myIMU);
-    /*
+    calibrateAccel(&myIMU);
     calibrateMag(&myIMU);
-    Serial.println("Mag calibrated ...!!");*/
     
 
-    //initTimer(&timer_accel, &accelInterrupt, 1000);
+    initTimer(&timer_accel, &accelInterrupt, 1000);
     initTimer(&timer_gyro, &gyroInterrupt, 1000);
     initTimer(&timer_mag, &magInterrupt, 10);
+    initTimer(&timer_rpy, &rpyInterrupt, 100);
 }
 
 void executeSensorsTasks(){
-    //if(timerReady(&timer_accel))  executeTimer(&timer_accel);
+    
+    if(timerReady(&timer_rpy))  executeTimer(&timer_rpy);
+    if(timerReady(&timer_accel))  executeTimer(&timer_accel);
     if(timerReady(&timer_gyro))  executeTimer(&timer_gyro);  
     if(timerReady(&timer_mag))  executeTimer(&timer_mag);  
 }

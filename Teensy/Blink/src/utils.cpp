@@ -5,13 +5,18 @@
 
 elapsedMicros time = 0;
 bool security;
+
 //Lowpass freq = 10Hz
 float coeffA_10Hz[] = {-6.1252,17.2079,-28.7647,31.1789,-22.3898,10.3890,-2.8462,0.3526};
 float coeffB_10Hz[] = {0.0027,-0.0085,0.0164,-0.0210,0.0231,-0.0210,0.0164,-0.0085,0.0027};
 
+//Lowpass freq = 8Hz
+float coeffA_8Hz[] = {-5.709477e+00,1.442617e+01,-2.083473e+01,1.853513e+01,-1.014308e+01,3.158832e+00,-4.317046e-01};
+float coeffB_8Hz[] = {2.052007e-03,-5.805565e-03,7.962321e-03,-3.642807e-03,-3.642807e-03,7.962321e-03,-5.805565e-03,2.052007e-03};
+
 //Lowpass freq = 2Hz
-float coeffB_2Hz[] = {0.0001, -0.0012, 0.0064, -0.0209, 0.0462, -0.0731, 0.0850, -0.0731, 0.0462, -0.0209, 0.0064, -0.0012, 0.0001};
-float coeffA_2Hz[] = {-11.8247, 64.1475, -211.1035, 469.3812, -742.8519, 858.0511, -728.8477, 451.8482, -199.3839, 59.4422, -10.7503, 0.8919};
+float coeffB_2Hz[] = {5.703936e-04,-1.574753e-03,1.011169e-03,1.011169e-03,-1.574753e-03,5.703936e-04};
+float coeffA_2Hz[] = {-4.763156e+00,9.099046e+00,-8.713129e+00,4.182120e+00,-8.048677e-01};
 
 //lowpass freq = 150Hz
 float coeffB_150Hz[] = { 0.0056, -0.0070, 0.0170, -0.0072, 0.0100, 0.0100, -0.0072, 0.0170 , -0.0070, 0.0056};
@@ -52,7 +57,7 @@ float bytestofloat(uint8_t *bytesfloat){
 
 float getReg(uint8_t reg){
     
-    double val;
+    float val;
     uint8_t arr[4];
     for(int i = 0; i < 4 ; i++){
      arr[i] = i2c1Reg[reg][i];
@@ -74,7 +79,7 @@ void setReg(uint8_t reg, float val){
 }
 
 
-double angle_dif(double angle1, double angle2){
+float angle_dif(float angle1, float angle2){
     if(angle1 > angle2){
         if((angle1 - angle2) > (2*pi - angle1 + angle2)) return -2*pi + angle1 - angle2;
         else return angle1 - angle2;
@@ -85,28 +90,28 @@ double angle_dif(double angle1, double angle2){
     }
 }
 
-void getEuler(double q0, double q1, double q2, double q3, double* roll, double *pitch, double* yaw){
+void getEuler(float q0, float q1, float q2, float q3, float* roll, float *pitch, float* yaw){
 	
     // roll (x-axis rotation)
-    double sinr_cosp = 2 * (q0 * q1 + q2 * q3);
-    double cosr_cosp = 1 - 2 * (q1 * q1 + q2 * q2);
+    float sinr_cosp = 2 * (q0 * q1 + q2 * q3);
+    float cosr_cosp = 1 - 2 * (q1 * q1 + q2 * q2);
     *roll = atan2(sinr_cosp, cosr_cosp);
 
     // pitch (y-axis rotation)
-    double sinp = 2 * (q0 * q2 - q3 * q1);
+    float sinp = 2 * (q0 * q2 - q3 * q1);
     if (fabs(sinp) >= 1)
         *pitch = copysign(pi / 2, sinp); // use 90 degrees if out of range
     else
         *pitch = asin(sinp);
 
     // yaw (z-axis rotation)
-    double siny_cosp = 2 * (q0 * q3 + q1 * q2);
-    double cosy_cosp = 1 - 2 * (q2 * q2 + q3 * q3);
+    float siny_cosp = 2 * (q0 * q3 + q1 * q2);
+    float cosy_cosp = 1 - 2 * (q2 * q2 + q3 * q3);
     *yaw = atan2(siny_cosp, cosy_cosp);
 }
 
 
-void rampValue(double *var, double desired, double step){
+void rampValue(float *var, float desired, float step){
 
     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*var));
 }  

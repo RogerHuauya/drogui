@@ -1,4 +1,4 @@
-#define MAGCALIB_TEST
+//#define MAGCALIB_TEST
 #ifdef MAGCALIB_TEST
 
 #include "..\headers\main.h"

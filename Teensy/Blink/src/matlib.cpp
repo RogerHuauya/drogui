@@ -50,7 +50,7 @@ void matTrans(mat* Rt,mat* R){
         }
     }
 }
-double det3(mat* R){
+float det3(mat* R){
     float det = ((R->val[0][0])*(R->val[1][1])*(R->val[2][2])) +((R->val[0][1])*(R->val[1][2])*(R->val[2][0]))
      + ((R->val[0][2])*(R->val[1][0])*(R->val[2][1])) - ((R->val[0][2])*(R->val[1][1])*(R->val[2][0])) 
      - ((R->val[0][1])*(R->val[1][0])*(R->val[2][2])) - ((R->val[0][0])*(R->val[1][2])*(R->val[2][1]));
@@ -144,9 +144,9 @@ void gaussElimination3x3(mat* a, mat* b, mat* ans){
     for(int i = 0; i < 3; i++) ans->val[i][0] = b->val[i][0]/a->val[i][i];
 }
 
-double determinant(mat* A) 
-{ 
-    double D = 0; 
+float matDet(mat* A){
+
+    float D = 0; 
     int n;
     if(A->row == A->col) n= A->row;
     if (A->row == 1) 
@@ -161,7 +161,7 @@ double determinant(mat* A)
     { 
         // Getting Cofactor of A[0][f] 
         getCofactor(A, &temp, 0, f); 
-        D += sign * getMatVal(A, 0, f)*determinant(&temp); 
+        D += sign * getMatVal(A, 0, f)*matDet(&temp); 
   
         // terms are to be added with alternate sign 
         sign = -sign; 
@@ -203,14 +203,14 @@ void adjoint(mat* A, mat* adj) {
         for (int j=0; j<N; j++) { 
             getCofactor(A, &temp, i, j); 
             sign = ((i+j)%2==0)? 1: -1; 
-            setMatVal(adj, j, i, (sign)*(determinant(&temp)));
+            setMatVal(adj, j, i, (sign)*(matDet(&temp)));
         } 
     } 
     matDestruct(&temp);
 } 
   
 bool matInverse(mat* inverse, mat* A) { 
-    double det = determinant(A); 
+    float det = matDet(A); 
     if (det == 0) return false; 
      
   
@@ -220,7 +220,7 @@ bool matInverse(mat* inverse, mat* A) {
   
     for (int i=0; i < A->row; i++) 
         for (int j=0; j< A->col; j++) 
-            setMatVal(inverse, i, j, getMatVal(&adj, i, j)/det);
+            setMatVal(inverse, i, j, getMatVal(&adj, i, j)/(det));
     matDestruct(&adj);
     return true; 
 } 
