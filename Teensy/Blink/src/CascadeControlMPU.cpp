@@ -39,18 +39,21 @@ void debugInterrupt(){
     Serial.print(M4);
     Serial.print("\n");*/
 
-    Serial.print(wroll_ref);
+    Serial.print(roll);
     Serial.print("\t");
-    Serial.print(wpitch_ref);
+    Serial.print(pitch);
     Serial.print("\t");
-    Serial.print(wyaw_ref);
+    Serial.print(yaw);
     Serial.print(";\n");
 }
 
 
 void securityInterrupt(){
-    if(getReg(Z_REF) == 0 /*|| (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)*/){
+    if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
         updatePID();
+        if(getReg(CAL_GYR_TRG) == 1) calibrateGyro(&myIMU), setReg(CAL_GYR_TRG, 0);
+        if(getReg(CAL_ACC_TRG) == 1) calibrateAccel(&myIMU), setReg(CAL_ACC_TRG, 0);
+        if(getReg(CAL_MAG_TRG) == 1) calibrateMag(&myIMU), setReg(CAL_MAG_TRG, 0);
         security = true;
     }
     else security = false;
@@ -62,7 +65,7 @@ void initializeSystem(){
     initI2C(SLAVE, I2C1, 0x60);
     clearI2Cregisters(I2C1);
     initTimer(&timer_security, &securityInterrupt, 100);
-    initTimer(&timer_debug, &debugInterrupt, 100);
+    initTimer(&timer_debug, &debugInterrupt, 500);
     initTimer(&timer_blink, &blinkInterrupt, 10);
 
 

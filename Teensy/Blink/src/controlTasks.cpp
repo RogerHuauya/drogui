@@ -7,7 +7,6 @@ pid roll2w, pitch2w, yaw2w;
 pid wroll_control, wpitch_control, wyaw_control;
 pid z_control, x_control, y_control;
 
-filter filter_wroll, filter_wpitch, filter_wyaw;
 
 float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, R_MAX = pi/22.0 , P_MAX = pi/22.0;
 float M1,M2,M3,M4;
@@ -120,11 +119,6 @@ void rpyControlInterrupt(){
     wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),time, 0);
     wyaw_ref = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),time, 0);
 
-    
-    
-    wroll_ref = computeFilter(&filter_wroll, wroll_ref);
-    wpitch_ref = computeFilter(&filter_wpitch, wpitch_ref);
-    wyaw_ref = computeFilter(&filter_wyaw, wyaw_ref);
 /*
     Serial.print("\nu values: ");
     for(int i = 0 ; i < 13; i++) Serial.print(filter_wroll.arr_u.values[i]), Serial.print('\t');
@@ -182,25 +176,20 @@ void initControlTasks(){
     initPid(&x_control, 0, 0, 0, 0, 1 , 0.09, NORMAL);
     initPid(&y_control, 0, 0, 0, 0, 1 , 0.09, NORMAL);
 
-    initPid(&roll2w, 0, 0, 0, time, 50, 40, D_INT);
-    initPid(&pitch2w, 0, 0, 0, time, 50, 40, D_INT);
-    initPid(&yaw2w, 0, 0, 0, time, 50, 40, D_INT);
+    initPid(&roll2w, 0, 0, 0, time, 50, 80, (P2ID & D_INT));
+    initPid(&pitch2w, 0, 0, 0, time, 50, 80, (P2ID & D_INT));
+    initPid(&yaw2w, 0, 0, 0, time, 50, 80, (P2ID & D_INT));
 
     initPid(&wroll_control, 0, 0, 0, time, 50, 2000, (P2ID & D_INT));
     initPid(&wpitch_control, 0, 0, 0, time, 50, 2000, (P2ID & D_INT));
     initPid(&wyaw_control, 0, 0, 0, time, 50, 2000, (P2ID & D_INT));
-
-
-    initFilter(&filter_wroll, 6, coeffA_2Hz, coeffB_2Hz);
-    initFilter(&filter_wpitch, 6, coeffA_2Hz, coeffB_2Hz);
-    initFilter(&filter_wyaw, 8, coeffA_8Hz, coeffB_8Hz);
     
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
     setReg(N_FILTER, 50);
     
     initTimer(&timer_wcontrol, &wControlInterrupt, 1000);
-    initTimer(&timer_rpycontrol, &rpyControlInterrupt, 100);
+    initTimer(&timer_rpycontrol, &rpyControlInterrupt, 500);
     initTimer(&timer_xyzcontrol, &xyzControlInterrupt, 100);
 }
 

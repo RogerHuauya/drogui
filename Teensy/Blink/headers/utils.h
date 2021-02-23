@@ -22,6 +22,9 @@ float angle_dif(float angle1, float angle2);
 
 extern elapsedMicros time;
 extern bool security;
+
+// Fs = 100
+
 //Lowpass freq = 10Hz
 extern float coeffA_10Hz[];
 extern float coeffB_10Hz[];
@@ -33,6 +36,12 @@ extern float coeffB_8Hz[];
 //Lowpass freq = 2Hz
 extern float coeffB_2Hz[];
 extern float coeffA_2Hz[];
+
+//Lowpass freq = 5Hz
+extern float coeffB_5Hz[];
+extern float coeffA_5Hz[];
+
+// Fs = 1000
 
 //lowpass freq = 100Hz
 extern float coeffB_150Hz[];

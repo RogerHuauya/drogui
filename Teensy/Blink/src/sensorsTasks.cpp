@@ -14,6 +14,10 @@ float sealevel;
 
 filter filter_gx, filter_gy, filter_gz;
 filter filter_gx2, filter_gy2, filter_gz2;
+filter filter_roll, filter_pitch, filter_yaw;
+
+filter filter_ax, filter_ay, filter_az;
+
 dNotchFilter dnotch_gx, dnotch_gy, dnotch_gz, dnotch_gx2, dnotch_gy2, dnotch_gz2 ;
 timer timer_accel, timer_gyro, timer_mag, timer_rpy;
 float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
@@ -21,9 +25,11 @@ float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
 
 void accelInterrupt(){
     readAcc(&myIMU);
-    ax = (myIMU.ax);
-    ay = (myIMU.ay);
-    az = (myIMU.az);
+    
+    ax = computeFilter(&filter_ax, myIMU.ax);
+    ay = computeFilter(&filter_ay, myIMU.ay);
+    az = computeFilter(&filter_az, myIMU.az);
+
     setReg(ACC_X,(float)(ax));
     setReg(ACC_Y,(float)(ay));
     setReg(ACC_Z,(float)(az));
@@ -73,9 +79,14 @@ void magInterrupt(){
 void rpyInterrupt(){
     float rpy[3];
     
-    mahonyUpdate(gx*PI/180.0f, gy*PI/180.0f, gz*PI/180.0f, ax, ay, az, my, mx, mz);
+    mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, my, mx, mz);
     getMahonyEuler(rpy);
     roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
+/*
+    roll = computeFilter(&filter_roll, roll);
+    pitch = computeFilter(&filter_pitch, pitch);
+    yaw = computeFilter(&filter_yaw, yaw);*/
+
     setReg(ROLL_VAL, roll);
     setReg(PITCH_VAL, pitch);
     setReg(YAW_VAL, yaw);
@@ -128,9 +139,18 @@ void initSensorsTasks(){
     setKalmanTsGps(1);
     initMatGlobal();
 
+    initFilter(&filter_roll, 8 , coeffA_5Hz, coeffB_5Hz);
+    initFilter(&filter_pitch, 8 , coeffA_5Hz, coeffB_5Hz);
+    initFilter(&filter_yaw, 8 , coeffA_5Hz, coeffB_5Hz);
+
+
     initFilter(&filter_gx, 9 , coeffA_100Hz, coeffB_100Hz);
     initFilter(&filter_gy, 9 , coeffA_100Hz, coeffB_100Hz);
     initFilter(&filter_gz, 9 , coeffA_100Hz, coeffB_100Hz);
+
+    initFilter(&filter_ax, 9 , coeffA_100Hz, coeffB_100Hz);
+    initFilter(&filter_ay, 9 , coeffA_100Hz, coeffB_100Hz);
+    initFilter(&filter_az, 9 , coeffA_100Hz, coeffB_100Hz);
 
     initFilter(&filter_gx2, 11 , coeffA_300Hz, coeffB_300Hz);
     initFilter(&filter_gy2, 11 , coeffA_300Hz, coeffB_300Hz);
@@ -153,7 +173,7 @@ void initSensorsTasks(){
     initTimer(&timer_accel, &accelInterrupt, 1000);
     initTimer(&timer_gyro, &gyroInterrupt, 1000);
     initTimer(&timer_mag, &magInterrupt, 10);
-    initTimer(&timer_rpy, &rpyInterrupt, 100);
+    initTimer(&timer_rpy, &rpyInterrupt, 500);
 }
 
 void executeSensorsTasks(){
