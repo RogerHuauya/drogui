@@ -41,7 +41,7 @@ extern float coeffA_2Hz[];
 extern float coeffB_5Hz[];
 extern float coeffA_5Hz[];
 
-// Fs = 1000
+// Fs = 1000 Hz
 
 //lowpass freq = 100Hz
 extern float coeffB_150Hz[];
@@ -52,6 +52,11 @@ extern float coeffA_100Hz[];
 
 extern float coeffB_300Hz[];
 extern float coeffA_300Hz[];
+
+// Fs = 500Hz
+
+extern float coeffB_50Hz[];
+extern float coeffA_50Hz[];
 
 
 void rampValue(float *var, float desired, float step);

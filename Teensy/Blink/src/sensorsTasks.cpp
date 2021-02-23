@@ -82,10 +82,10 @@ void rpyInterrupt(){
     mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, my, mx, mz);
     getMahonyEuler(rpy);
     roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
-/*
+
     roll = computeFilter(&filter_roll, roll);
     pitch = computeFilter(&filter_pitch, pitch);
-    yaw = computeFilter(&filter_yaw, yaw);*/
+    yaw = computeFilter(&filter_yaw, yaw);
 
     setReg(ROLL_VAL, roll);
     setReg(PITCH_VAL, pitch);
@@ -139,9 +139,9 @@ void initSensorsTasks(){
     setKalmanTsGps(1);
     initMatGlobal();
 
-    initFilter(&filter_roll, 8 , coeffA_5Hz, coeffB_5Hz);
-    initFilter(&filter_pitch, 8 , coeffA_5Hz, coeffB_5Hz);
-    initFilter(&filter_yaw, 8 , coeffA_5Hz, coeffB_5Hz);
+    initFilter(&filter_roll, 9 , coeffA_50Hz, coeffB_50Hz);
+    initFilter(&filter_pitch, 9 , coeffA_50Hz, coeffB_50Hz);
+    initFilter(&filter_yaw, 9 , coeffA_50Hz, coeffB_50Hz);
 
 
     initFilter(&filter_gx, 9 , coeffA_100Hz, coeffB_100Hz);
