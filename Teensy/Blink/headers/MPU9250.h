@@ -27,10 +27,12 @@ enum ACCEL_SCALE{
 };
 
 struct mpu9250{  
-    float ax, ay, az, off_ax, off_ay, off_az, scl_acc=1;
-    float raw_ax, raw_ay, raw_az;
+    float ax, ay, az, off_ax, off_ay, off_az, scl_acc = 1;
     float gx, gy, gz, off_gx, off_gy, off_gz;
-    float mx, my, mz, off_mx, off_my, off_mz, scl_magx=1, scl_magy=1, scl_magz;
+    float mx, my, mz, off_mx, off_my, off_mz, scl_magx = 1, scl_magy = 1, scl_magz;
+    
+    float raw_ax, raw_ay, raw_az;
+    float raw_gx, raw_gy, raw_gz;
     float raw_mx, raw_my, raw_mz;
     int accScale, gyroScale, magScale;
     bool isGyroCalibrated;
