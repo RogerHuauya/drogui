@@ -173,6 +173,8 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal = false){
     return false;
 }
 void calibrateGyro(mpu9250* m){
+    
+    setReg(CAL_GYR,0);
     while(!quiet(m,200,0, true));
     setReg(CAL_GYR, 100);
     digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
@@ -183,6 +185,8 @@ float dis3d(float x,float y,float z, float a, float b, float c){
 }
 void calibrateAccel(mpu9250* m){
     
+    setReg(CAL_ACC,0);
+
     int neq = 4, nval = 2;
     int tot = neq + nval;
 
@@ -268,6 +272,9 @@ void calibrateAccel(mpu9250* m){
 }
 
 void calibrateMag(mpu9250* m){
+    
+    setReg(CAL_MAG,0);
+
     int head = 0, cnt = 0;
     bool done = false, valid;
     const int n = 100;

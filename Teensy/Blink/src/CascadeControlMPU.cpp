@@ -26,7 +26,13 @@ void blinkInterrupt(){
 bool isDebugOn = false;
 void debugInterrupt(){
 
-    if(Serial.available()) isDebugOn = true;
+    char c;
+
+    if(Serial.available()){
+        isDebugOn = true;
+        c = Serial.read();
+    }
+
 
     if(!isDebugOn) return;
 
@@ -45,6 +51,9 @@ void debugInterrupt(){
     Serial.print("\t");
     Serial.print(yaw);
     Serial.print(";\n");*/
+    if( c == 'a' ) setReg(CAL_GYR_TRG,1);
+    if( c == 'b' ) setReg(CAL_ACC_TRG,1);
+    if( c == 'c' ) setReg(CAL_MAG_TRG,1);
 
     Serial.print(gx);
     Serial.print("\t");
