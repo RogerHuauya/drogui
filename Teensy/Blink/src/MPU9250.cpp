@@ -58,6 +58,19 @@ void readRawAcc(mpu9250* m){ // m/s^2
     m -> raw_az = _az; 
 }
 
+void readRawGyro(mpu9250* m){ // degrees/sec
+    
+    uint8_t Buf[6];
+    I2Cread(MPU9250_ADDRESS, 0x43, 6, Buf);
+    _gx = -((Buf[0] << 8) | Buf[1]);
+    _gy = -((Buf[2] << 8) | Buf[3]);
+    _gz =   (Buf[4] << 8) | Buf[5];
+    
+    m -> raw_gx = _gx;
+    m -> raw_gy = _gy;
+    m -> raw_gz = _gz; 
+}
+
 void readRawMag(mpu9250* m){ // m/s^2
     uint8_t Buf[7];
     I2Cread(MAG_ADDRESS, 0x03, 7, Buf);
@@ -117,25 +130,26 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal = false){
     
     for(int i = 0; i < n; i++){
         
-        readGyro(m);   /*
+        readRawGyro(m);   /*
         Serial.print(m->gx);
         Serial.print("\t");
         Serial.print(m->gy);
         Serial.print("\t");
         Serial.print(m->gz);
         Serial.print("\n");*/
+
         if(i == 0){
-            max_gyro[0] = m->gx, max_gyro[1] = m->gy, max_gyro[2] = m->gz;
-            min_gyro[0] = m->gx, min_gyro[1] = m->gy, min_gyro[2] = m->gz;
+            max_gyro[0] = m->raw_gx, max_gyro[1] = m->raw_gy, max_gyro[2] = m->raw_gz;
+            min_gyro[0] = m->raw_gx, min_gyro[1] = m->raw_gy, min_gyro[2] = m->raw_gz;
         }
         else{
-                max_gyro[0] = max(max_gyro[0], m->gx);
-                max_gyro[1] = max(max_gyro[1], m->gy);
-                max_gyro[2] = max(max_gyro[2], m->gz);
+                max_gyro[0] = max(max_gyro[0], m->raw_gx);
+                max_gyro[1] = max(max_gyro[1], m->raw_gy);
+                max_gyro[2] = max(max_gyro[2], m->raw_gz);
                 
-                min_gyro[0] = min(min_gyro[0], m->gx);
-                min_gyro[1] = min(min_gyro[1], m->gy);
-                min_gyro[2] = min(min_gyro[2], m->gz);
+                min_gyro[0] = min(min_gyro[0], m->raw_gx);
+                min_gyro[1] = min(min_gyro[1], m->raw_gy);
+                min_gyro[2] = min(min_gyro[2], m->raw_gz);
         }
         delay(2);
     }
@@ -160,7 +174,7 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal = false){
 }
 void calibrateGyro(mpu9250* m){
     while(!quiet(m,200,0, true));
-    setReg(CAL_GYR, 7);
+    setReg(CAL_GYR, 100);
     digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 }
 
@@ -204,7 +218,7 @@ void calibrateAccel(mpu9250* m){
             acc[head][0] = m->raw_ax, acc[head][1] = m->raw_ay, acc[head][2] = m->raw_az;
             head++, cnt++, head%= tot; 
         }
-        setReg(CAL_ACC, min(cnt,6) );
+        setReg(CAL_ACC, 100*min(cnt,6)/7 );
 
         if(cnt >= tot && valid){
 
@@ -246,7 +260,7 @@ void calibrateAccel(mpu9250* m){
     m -> off_ay = getMatVal(&ans, 1, 0);
     m -> off_az = getMatVal(&ans, 2, 0);
     m -> scl_acc = scale;
-    setReg(CAL_ACC, 7);
+    setReg(CAL_ACC, 100);
 
     matDestruct(&A);
     matDestruct(&b);
@@ -285,6 +299,7 @@ void calibrateMag(mpu9250* m){
             mag[head][0] = magX, mag[head][1] = magY, mag[head][2] = magZ;
             head++, cnt++, head%= n; 
         }
+        setReg(CAL_MAG, cnt);
         if(cnt == n){done = true;}
     }
 

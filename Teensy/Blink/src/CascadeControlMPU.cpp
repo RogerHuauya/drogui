@@ -39,12 +39,20 @@ void debugInterrupt(){
     Serial.print(M4);
     Serial.print("\n");*/
 
-    Serial.print(roll);
+    /*Serial.print(roll);
     Serial.print("\t");
     Serial.print(pitch);
     Serial.print("\t");
     Serial.print(yaw);
-    Serial.print(";\n");
+    Serial.print(";\n");*/
+
+    Serial.print(gx);
+    Serial.print("\t");
+    Serial.print(gy);
+    Serial.print("\t");
+    Serial.print(gz);
+    Serial.print("\n");
+
 }
 
 
@@ -65,7 +73,7 @@ void initializeSystem(){
     initI2C(SLAVE, I2C1, 0x60);
     clearI2Cregisters(I2C1);
     initTimer(&timer_security, &securityInterrupt, 100);
-    initTimer(&timer_debug, &debugInterrupt, 500);
+    initTimer(&timer_debug, &debugInterrupt, 1000);
     initTimer(&timer_blink, &blinkInterrupt, 10);
 
 

@@ -13,6 +13,7 @@ float M1,M2,M3,M4;
 
 float roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
 float wroll_ref, wpitch_ref, wyaw_ref, roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
+float wroll_err,wpitch_err,wyaw_err; 
 
 timer timer_wcontrol, timer_rpycontrol, timer_xyzcontrol;
 
@@ -71,10 +72,16 @@ void updatePID(){
 }
 
 void wControlInterrupt(){
+
     
-    R = computePid(&wroll_control, wroll_ref - gx, time, 0);
-    P = computePid(&wpitch_control, wpitch_ref - gy, time, 0);
-    Y = computePid(&wyaw_control, wyaw_ref - gz, time, 0);
+    wroll_err = max( min( wroll_ref - gx , 100), -100);
+    wpitch_err = max( min( wpitch_ref - gy , 100), -100);
+    wyaw_err = max( min( wyaw_ref - gz , 100), -100);
+
+
+    R = computePid(&wroll_control, wroll_err, time, 0);
+    P = computePid(&wpitch_control, wpitch_err, time, 0);
+    Y = computePid(&wyaw_control, wyaw_err, time, 0);
     
     setReg(DER_GYRO_X, wroll_control.errd);
     setReg(DER_GYRO_Y, wpitch_control.errd);
