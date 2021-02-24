@@ -10,8 +10,7 @@
 // Consider using the I2CDevice class instead of Wire to read a sensor.
 
 #include <Arduino.h>
-#include <i2c_driver.h>
-#include <i2c_driver_wire.h>
+#include <Wire.h>
 
 int sensor_address = 0x40;
 

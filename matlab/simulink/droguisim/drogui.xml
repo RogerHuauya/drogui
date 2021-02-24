@@ -1,0 +1,990 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<SimscapeMultibodyImportXML version="2.0" xmlns="urn:mathworks:SimscapeMultibody:import" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Created by="" on="01/20/21||18:26:07" using="Simscape Multibody Link Version 7.0" from="SolidWorks 28.2.0"/>
+<ModelUnits mass="kilogram" length="millimeter"/>
+<DataUnits mass="kilogram" length="meter"/>
+<RootAssembly name="drogui" uid="drogui" version="515">
+<AssemblyFile name="drogui.SLDASM" type="SolidWorks Assembly"/>
+<InstanceTree>
+<Instance name="elp camera-1" uid="elp camera-1" entityUid="elp camera*:*Défaut">
+<Transform>
+<Rotation>1.4693121103113703e-16 1.024593528306989e-16 0.99999999999999978 -2.7755575615628914e-16 -1 1.0245935283069893e-16 1 -1.6653345369377348e-16 -1.4693121103113698e-16</Rotation>
+<Translation>0.1069999999999999 0.012000000000000021 0</Translation>
+</Transform>
+</Instance>
+<Instance name="adaptador_elp-2" uid="adaptador_elp-2" entityUid="adaptador_elp*:*Défaut">
+<Transform>
+<Rotation>0 1.4483762038394207e-16 -1 -1 -3.3306690738754696e-16 0 -3.3306690738754696e-16 1 1.4483762038394202e-16</Rotation>
+<Translation>0.11999999999999991 0.01200000000000003 -0.031999999999999869</Translation>
+</Transform>
+</Instance>
+<Instance name="arm-4" uid="arm-4" entityUid="arm" rigid="true">
+<Transform>
+<Rotation>-0.7699078109327816 0 -0.63815512429556809 0 1 0 0.63815512429556809 0 -0.7699078109327816</Rotation>
+<Translation>0.070635983653408826 -0.15487346341250008 0.014176055090984702</Translation>
+</Transform>
+<Instance name="soporte_protector-1" uid="soporte_protector-1" entityUid="soporte_protector*:*Défaut">
+<Transform>
+<Rotation>-0.70710678118654391 1.3540237704595151e-16 -0.7071067811865509 0 1 1.9819434782278224e-16 0.7071067811865509 1.4488675763071777e-16 -0.70710678118654391</Rotation>
+<Translation>0.069586212403739578 0.12607346341250017 0.35299972884497316</Translation>
+</Transform>
+</Instance>
+<Instance name="protector-1" uid="protector-1" entityUid="protector*:*Défaut">
+<Transform>
+<Rotation>-1.4155343563970746e-14 2.4633073358870774e-16 -0.99999999999999978 -2.4980018054066027e-16 1 2.4633073358871144e-16 0.99999999999999978 2.4980018054066367e-16 -1.4155343563970746e-14</Rotation>
+<Translation>0.069586212403734193 0.1560734634125002 0.35299972884497388</Translation>
+</Transform>
+</Instance>
+<Instance name="T-Motor MN3110-1" uid="T-Motor MN3110-1" entityUid="T-Motor MN3110" rigid="true">
+<Transform>
+<Rotation>0 0.7071067811865428 -0.70710678118655212 1 0 0 0 -0.70710678118655212 -0.7071067811865428</Rotation>
+<Translation>0.058979610527886833 0.14972346311298679 0.36360633072082221</Translation>
+</Transform>
+<Instance name="T-Motor MN3110.step-1" uid="T-Motor MN3110.step-1" grounded="true" entityUid="T-Motor MN3110.step" rigid="true">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+<Instance name="MN3110.step-1" uid="MN3110.step-1" grounded="true" entityUid="MN3110.step*:*Défaut">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</Instance>
+</Instance>
+</Instance>
+<Instance name="APC 12x6 EP Prop-1" uid="APC 12x6 EP Prop-1" entityUid="APC 12x6 EP Prop*:*Default">
+<Transform>
+<Rotation>-0.70710678118653847 0 -0.70710678118655645 1.6442524452031502e-16 -1 0 -0.70710678118655645 -1.4053192921392662e-16 0.70710678118653847</Rotation>
+<Translation>0.069586212403731668 0.17647734328631659 0.35299972884497371</Translation>
+</Transform>
+</Instance>
+<Instance name="soporte_protector-2" uid="soporte_protector-2" entityUid="soporte_protector*:*Défaut">
+<Transform>
+<Rotation>0.70710678118653858 0 -0.70710678118655612 -3.351254390707266e-16 1 -3.9269922950615586e-16 0.70710678118655612 5.1464975866556441e-16 0.70710678118653858</Rotation>
+<Translation>0.069586212403733722 0.12607346341250017 0.35299972884497349</Translation>
+</Transform>
+</Instance>
+<Instance name="arm1-1" uid="arm1-1" grounded="true" entityUid="arm1*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0.069586212403732792 0.13647346341250008 0.10799972884497397</Translation>
+</Transform>
+</Instance>
+<Instance name="arm2-1" uid="arm2-1" entityUid="arm2*:*Default">
+<Transform>
+<Rotation>-0.99999999999999978 0 -4.163336342344337e-15 0 1 0 4.163336342344337e-15 0 -0.99999999999999978</Rotation>
+<Translation>0.069586212403735068 0.1363234634125001 0.26799972884497331</Translation>
+</Transform>
+</Instance>
+</Instance>
+<Instance name="arm-3" uid="arm-3" entityUid="arm" rigid="true">
+<Transform>
+<Rotation>-0.76990781093278138 0 0.63815512429556842 0 1 0 -0.63815512429556842 0 -0.76990781093278138</Rotation>
+<Translation>0.046513953272314015 -0.15487346341250008 0.10298965114250863</Translation>
+</Transform>
+<Instance name="soporte_protector-1" uid="soporte_protector-1" entityUid="soporte_protector*:*Défaut">
+<Transform>
+<Rotation>-0.70710678118654402 1.3540237704595149e-16 -0.70710678118655079 0 1 1.9819434782278224e-16 0.70710678118655079 1.4488675763071774e-16 -0.70710678118654402</Rotation>
+<Translation>0.069586212403739633 0.12607346341250017 0.35299972884497316</Translation>
+</Transform>
+</Instance>
+<Instance name="protector-1" uid="protector-1" entityUid="protector*:*Défaut">
+<Transform>
+<Rotation>-1.4210854715202004e-14 2.4633073358870779e-16 -0.99999999999999978 -2.4980018054066027e-16 1 2.4633073358871144e-16 0.99999999999999978 2.4980018054066377e-16 -1.4210854715202004e-14</Rotation>
+<Translation>0.069586212403734249 0.1560734634125002 0.35299972884497388</Translation>
+</Transform>
+</Instance>
+<Instance name="T-Motor MN3110-1" uid="T-Motor MN3110-1" entityUid="T-Motor MN3110" rigid="true">
+<Transform>
+<Rotation>0 0.70710678118654291 -0.70710678118655212 1 0 0 0 -0.70710678118655212 -0.70710678118654291</Rotation>
+<Translation>0.058979610527886805 0.14972346311298679 0.36360633072082221</Translation>
+</Transform>
+<Instance name="T-Motor MN3110.step-1" uid="T-Motor MN3110.step-1" grounded="true" entityUid="T-Motor MN3110.step" rigid="true">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+<Instance name="MN3110.step-1" uid="MN3110.step-1" grounded="true" entityUid="MN3110.step*:*Défaut">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</Instance>
+</Instance>
+</Instance>
+<Instance name="APC 12x6 EP Prop-1" uid="APC 12x6 EP Prop-1" entityUid="APC 12x6 EP Prop*:*Default">
+<Transform>
+<Rotation>-0.70710678118653836 0 -0.70710678118655645 1.6442524452031504e-16 -1 0 -0.70710678118655645 -1.4053192921392659e-16 0.70710678118653836</Rotation>
+<Translation>0.06958621240373164 0.17647734328631659 0.35299972884497371</Translation>
+</Transform>
+</Instance>
+<Instance name="soporte_protector-2" uid="soporte_protector-2" entityUid="soporte_protector*:*Défaut">
+<Transform>
+<Rotation>0.70710678118653869 0 -0.70710678118655623 -3.351254390707266e-16 1 -3.9269922950615586e-16 0.70710678118655623 5.146497586655645e-16 0.70710678118653869</Rotation>
+<Translation>0.069586212403733722 0.12607346341250017 0.35299972884497349</Translation>
+</Transform>
+</Instance>
+<Instance name="arm1-1" uid="arm1-1" grounded="true" entityUid="arm1*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0.069586212403732792 0.13647346341250008 0.10799972884497397</Translation>
+</Transform>
+</Instance>
+<Instance name="arm2-1" uid="arm2-1" entityUid="arm2*:*Default">
+<Transform>
+<Rotation>-0.99999999999999978 0 -4.163336342344337e-15 0 1 0 4.163336342344337e-15 0 -0.99999999999999978</Rotation>
+<Translation>0.069586212403735054 0.1363234634125001 0.26799972884497336</Translation>
+</Transform>
+</Instance>
+</Instance>
+<Instance name="motherboard-1" uid="motherboard-1" entityUid="motherboard*:*Défaut">
+<Transform>
+<Rotation>1.2620113287731272e-16 -1.2128469891771423e-16 -1 -1.5232764698908113e-16 0.99999999999999989 -1.2128469891771423e-16 1.0000000000000002 1.5232764698908115e-16 1.2620113287731272e-16</Rotation>
+<Translation>0.027000000000000031 0.010000000000000019 0</Translation>
+</Transform>
+</Instance>
+<Instance name="core-1" uid="core-1" entityUid="core" rigid="true">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+<Instance name="core_top-1" uid="core_top-1" entityUid="core_top*:*Défaut">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</Instance>
+<Instance name="core_bottom-1" uid="core_bottom-1" entityUid="core_bottom*:*Défaut">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</Instance>
+</Instance>
+<Instance name="lipo baterry-1" uid="lipo baterry-1" entityUid="lipo baterry*:*Défaut">
+<Transform>
+<Rotation>0 0 -1 0 1 0 1 0 0</Rotation>
+<Translation>0.0049999999999999212 -0.038000000000000006 0</Translation>
+</Transform>
+</Instance>
+<Instance name="adaptador_elp-1" uid="adaptador_elp-1" entityUid="adaptador_elp*:*Défaut">
+<Transform>
+<Rotation>0 -1.5879710060587546e-16 -1 1.0000000000000002 3.3306690738754696e-16 0 3.3306690738754696e-16 -1.0000000000000002 1.5879710060587541e-16</Rotation>
+<Translation>0.11999999999999991 0.012000000000000002 0.032000000000000126</Translation>
+</Transform>
+</Instance>
+<Instance name="arm-2" uid="arm-2" entityUid="arm" rigid="true">
+<Transform>
+<Rotation>0.76990781093278138 0 -0.63815512429556853 0 1 0 0.63815512429556853 0 0.76990781093278138</Rotation>
+<Translation>-0.036513953272314201 -0.15487346341250008 -0.10298965114250838</Translation>
+</Transform>
+<Instance name="soporte_protector-1" uid="soporte_protector-1" entityUid="soporte_protector*:*Défaut">
+<Transform>
+<Rotation>-0.70710678118654413 1.3540237704595154e-16 -0.70710678118655101 0 1 1.9819434782278226e-16 0.70710678118655101 1.4488675763071777e-16 -0.70710678118654413</Rotation>
+<Translation>0.069586212403739633 0.12607346341250017 0.35299972884497333</Translation>
+</Transform>
+</Instance>
+<Instance name="protector-1" uid="protector-1" entityUid="protector*:*Défaut">
+<Transform>
+<Rotation>-1.4210854715202004e-14 2.4633073358870779e-16 -0.99999999999999989 -2.4980018054066022e-16 1 2.4633073358871139e-16 0.99999999999999989 2.4980018054066377e-16 -1.4210854715202004e-14</Rotation>
+<Translation>0.069586212403734221 0.1560734634125002 0.35299972884497399</Translation>
+</Transform>
+</Instance>
+<Instance name="T-Motor MN3110-1" uid="T-Motor MN3110-1" entityUid="T-Motor MN3110" rigid="true">
+<Transform>
+<Rotation>0 0.70710678118654302 -0.70710678118655235 1 0 0 0 -0.70710678118655235 -0.70710678118654302</Rotation>
+<Translation>0.058979610527886861 0.14972346311298679 0.36360633072082227</Translation>
+</Transform>
+<Instance name="T-Motor MN3110.step-1" uid="T-Motor MN3110.step-1" grounded="true" entityUid="T-Motor MN3110.step" rigid="true">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+<Instance name="MN3110.step-1" uid="MN3110.step-1" grounded="true" entityUid="MN3110.step*:*Défaut">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</Instance>
+</Instance>
+</Instance>
+<Instance name="APC 12x6 EP Prop-1" uid="APC 12x6 EP Prop-1" entityUid="APC 12x6 EP Prop*:*Default">
+<Transform>
+<Rotation>-0.70710678118653858 0 -0.70710678118655657 1.6442524452031499e-16 -1 0 -0.70710678118655657 -1.4053192921392662e-16 0.70710678118653858</Rotation>
+<Translation>0.06958621240373164 0.17647734328631659 0.35299972884497388</Translation>
+</Transform>
+</Instance>
+<Instance name="soporte_protector-2" uid="soporte_protector-2" entityUid="soporte_protector*:*Défaut">
+<Transform>
+<Rotation>0.7071067811865388 0 -0.70710678118655634 -3.351254390707266e-16 1 -3.9269922950615586e-16 0.70710678118655634 5.146497586655645e-16 0.7071067811865388</Rotation>
+<Translation>0.069586212403733749 0.12607346341250017 0.3529997288449736</Translation>
+</Transform>
+</Instance>
+<Instance name="arm1-1" uid="arm1-1" grounded="true" entityUid="arm1*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0.069586212403732819 0.13647346341250008 0.107999728844974</Translation>
+</Transform>
+</Instance>
+<Instance name="arm2-1" uid="arm2-1" entityUid="arm2*:*Default">
+<Transform>
+<Rotation>-1 0 -4.2188474935755949e-15 0 1 0 4.2188474935755949e-15 0 -1</Rotation>
+<Translation>0.069586212403735095 0.1363234634125001 0.26799972884497342</Translation>
+</Transform>
+</Instance>
+</Instance>
+<Instance name="arm-1" uid="arm-1" entityUid="arm" rigid="true">
+<Transform>
+<Rotation>0.76990781093278093 0 0.63815512429556909 0 1 0 -0.63815512429556909 0 0.76990781093278093</Rotation>
+<Translation>-0.060635983653408873 -0.15487346341250008 -0.014176055090984565</Translation>
+</Transform>
+<Instance name="soporte_protector-1" uid="soporte_protector-1" entityUid="soporte_protector*:*Défaut">
+<Transform>
+<Rotation>-0.70710678118654413 1.3540237704595151e-16 -0.70710678118655101 0 1 1.9819434782278226e-16 0.70710678118655101 1.4488675763071777e-16 -0.70710678118654413</Rotation>
+<Translation>0.069586212403739661 0.12607346341250017 0.35299972884497322</Translation>
+</Transform>
+</Instance>
+<Instance name="protector-1" uid="protector-1" entityUid="protector*:*Défaut">
+<Transform>
+<Rotation>-1.4155343563970746e-14 2.4633073358870784e-16 -1 -2.4980018054066022e-16 1 2.4633073358871139e-16 1 2.4980018054066372e-16 -1.4155343563970746e-14</Rotation>
+<Translation>0.069586212403734277 0.1560734634125002 0.35299972884497388</Translation>
+</Transform>
+</Instance>
+<Instance name="T-Motor MN3110-1" uid="T-Motor MN3110-1" entityUid="T-Motor MN3110" rigid="true">
+<Transform>
+<Rotation>0 0.70710678118654291 -0.70710678118655235 1 0 0 0 -0.70710678118655235 -0.70710678118654291</Rotation>
+<Translation>0.058979610527886882 0.14972346311298679 0.36360633072082227</Translation>
+</Transform>
+<Instance name="T-Motor MN3110.step-1" uid="T-Motor MN3110.step-1" grounded="true" entityUid="T-Motor MN3110.step" rigid="true">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+<Instance name="MN3110.step-1" uid="MN3110.step-1" grounded="true" entityUid="MN3110.step*:*Défaut">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</Instance>
+</Instance>
+</Instance>
+<Instance name="APC 12x6 EP Prop-1" uid="APC 12x6 EP Prop-1" entityUid="APC 12x6 EP Prop*:*Default">
+<Transform>
+<Rotation>-0.70710678118653869 0 -0.70710678118655657 1.6442524452031499e-16 -1 0 -0.70710678118655657 -1.4053192921392662e-16 0.70710678118653869</Rotation>
+<Translation>0.069586212403731668 0.17647734328631659 0.35299972884497377</Translation>
+</Transform>
+</Instance>
+<Instance name="soporte_protector-2" uid="soporte_protector-2" entityUid="soporte_protector*:*Défaut">
+<Transform>
+<Rotation>0.7071067811865388 0 -0.70710678118655634 -3.351254390707266e-16 1 -3.9269922950615586e-16 0.70710678118655634 5.146497586655645e-16 0.7071067811865388</Rotation>
+<Translation>0.069586212403733722 0.12607346341250017 0.35299972884497355</Translation>
+</Transform>
+</Instance>
+<Instance name="arm1-1" uid="arm1-1" grounded="true" entityUid="arm1*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0.069586212403732792 0.13647346341250008 0.107999728844974</Translation>
+</Transform>
+</Instance>
+<Instance name="arm2-1" uid="arm2-1" entityUid="arm2*:*Default">
+<Transform>
+<Rotation>-1 0 -4.163336342344337e-15 0 1 0 4.163336342344337e-15 0 -1</Rotation>
+<Translation>0.069586212403735137 0.1363234634125001 0.26799972884497336</Translation>
+</Transform>
+</Instance>
+</Instance>
+</InstanceTree>
+<Constraints>
+<Coincident name="Coïncidente4">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>0 0.043794357701670783 -0.077499999999999999</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>lipo baterry-1</Uid>
+</InstancePath>
+<Position>-0.077499999999999986 0.042000000000000003 0.029999999999999999</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coïncidente5">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>lipo baterry-1</Uid>
+</InstancePath>
+<Position>-0.077499999999999986 0.042000000000000003 -0.030000000000000002</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>0.034999999999999996 0.043794357701670783 0</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coïncidente7">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>0 -0.037999999999999999 0</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>lipo baterry-1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Coaxiale3">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>arm-2</Uid>
+<Uid>arm1-1</Uid>
+</InstancePath>
+<Position>-0.0065000000000000058 -0.014999999999999999 0.014999999999999993</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>-0.066436292829901308 0.0030000000000000001 0.031967590555691837</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coïncidente8">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>-0.12205662886691715 -0.033399999999999999 0.10925684090222734</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>arm-2</Uid>
+<Uid>arm1-1</Uid>
+</InstancePath>
+<Position>0 -0.014999999999999999 0.17999999999999997</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Coaxiale6">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>arm-2</Uid>
+<Uid>arm1-1</Uid>
+</InstancePath>
+<Position>0.0064999999999999988 -0.014999999999999999 0.015000000000000006</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>-0.056427491287775154 0.0030000000000000001 0.040263607171534238</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Coaxiale7">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>arm-4</Uid>
+<Uid>arm1-1</Uid>
+</InstancePath>
+<Position>-0.0064999999999999954 -0.014999999999999999 0.014999999999999999</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>-0.056427491287775154 0.0030000000000000001 -0.040263607171534238</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Coaxiale8">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>arm-4</Uid>
+<Uid>arm1-1</Uid>
+</InstancePath>
+<Position>0.0064999999999999954 -0.014999999999999999 0.014999999999999986</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>-0.066436292829901308 0.0030000000000000001 -0.031967590555691837</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coïncidente9">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>-0.12205662886691715 -0.033399999999999999 -0.10925684090222734</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>arm-4</Uid>
+<Uid>arm1-1</Uid>
+</InstancePath>
+<Position>0 -0.014999999999999999 0.17999999999999994</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coïncidente10">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>0.13205662886691716 -0.033399999999999999 0.10925684090222734</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>arm-1</Uid>
+<Uid>arm1-1</Uid>
+</InstancePath>
+<Position>0 -0.014999999999999999 0.17999999999999999</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Coaxiale9">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>0.06642749128777517 0.0030000000000000001 0.040263607171534217</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>arm-1</Uid>
+<Uid>arm1-1</Uid>
+</InstancePath>
+<Position>-0.0064999999999999954 -0.014999999999999999 0.014999999999999999</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Coaxiale10">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>0.076436292829901317 0.0030000000000000001 0.031967590555691809</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>arm-1</Uid>
+<Uid>arm1-1</Uid>
+</InstancePath>
+<Position>0.0065000000000000058 -0.014999999999999999 0.014999999999999986</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Coaxiale11">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>0.066427491287775142 0.0030000000000000001 -0.040263607171534259</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>arm-3</Uid>
+<Uid>arm1-1</Uid>
+</InstancePath>
+<Position>0.0064999999999999954 -0.015000000000000003 0.014999999999999999</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Coaxiale12">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>0.076436292829901289 0.0030000000000000001 -0.031967590555691865</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>arm-3</Uid>
+<Uid>arm1-1</Uid>
+</InstancePath>
+<Position>-0.0064999999999999919 -0.015000000000000003 0.014999999999999999</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coïncidente11">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>0.13205662886691716 -0.033399999999999999 -0.10925684090222734</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>arm-3</Uid>
+<Uid>arm1-1</Uid>
+</InstancePath>
+<Position>0 -0.015000000000000003 0.17999999999999999</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Coaxiale13">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>elp camera-1</Uid>
+</InstancePath>
+<Position>0.029999999999999995 0 0.01999999999999999</Position>
+<Axis>0 0 -0.99999999999999978</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>adaptador_elp-1</Uid>
+</InstancePath>
+<Position>0 0.0019999999999999983 0</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Parallel name="Parallèle2">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>elp camera-1</Uid>
+</InstancePath>
+<Position>-0.040000000000000022 -0.0082500000000000039 0.0049999999999999906</Position>
+<Axis>-1.1102230246251565e-16 -1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>adaptador_elp-1</Uid>
+</InstancePath>
+<Position>0.0085000000000000041 0 0.0080000000000000071</Position>
+<Axis>1.0000000000000002 0 0</Axis>
+</ConstraintGeometry>
+</Parallel>
+<Coincident name="Coïncidente13">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>elp camera-1</Uid>
+</InstancePath>
+<Position>0 0 0.0050000000000000044</Position>
+<Axis>0 0 0.99999999999999978</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>adaptador_elp-1</Uid>
+</InstancePath>
+<Position>0 0 0.0080000000000000071</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Coaxiale16">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>elp camera-1</Uid>
+</InstancePath>
+<Position>-0.030000000000000002 0 0.01999999999999999</Position>
+<Axis>0 0 -0.99999999999999978</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>adaptador_elp-2</Uid>
+</InstancePath>
+<Position>0 0.0019999999999999983 0</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Parallel name="Parallèle3">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>elp camera-1</Uid>
+</InstancePath>
+<Position>-0.040000000000000022 -0.0082500000000000039 0.0049999999999999906</Position>
+<Axis>-1.1102230246251565e-16 -1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>adaptador_elp-2</Uid>
+</InstancePath>
+<Position>-0.0085000000000000041 0 0.0080000000000000071</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+</Parallel>
+<Coincident name="Coïncidente15">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>elp camera-1</Uid>
+</InstancePath>
+<Position>0 0 0.0050000000000000044</Position>
+<Axis>0 0 0.99999999999999978</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>adaptador_elp-2</Uid>
+</InstancePath>
+<Position>0 0 0.0080000000000000071</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coïncidente16">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>0.11999999999999998 0.029999999999999999 -0.067499999999999977</Position>
+<Axis>-1 0 1.02798428206033e-16</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>adaptador_elp-1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Coaxiale18">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>adaptador_elp-1</Uid>
+</InstancePath>
+<Position>0 -0.013000000000000005 0.0080000000000000071</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>0.12199999999999998 0.012 0.044999999999999984</Position>
+<Axis>-1 0 1.02798428206033e-16</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Coaxiale19">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>adaptador_elp-2</Uid>
+</InstancePath>
+<Position>0 -0.012999999999999998 0.0080000000000000071</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>0.12199999999999998 0.012 -0.045000000000000012</Position>
+<Axis>-1 0 1.02798428206033e-16</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Coaxiale20">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>0.086499999999999994 -0.0068000000000000005 -0.056999999999999995</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>motherboard-1</Uid>
+</InstancePath>
+<Position>-0.057000000000000044 0.0030000000000000009 -0.059500000000000004</Position>
+<Axis>0 -0.99999999999999989 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Coaxiale23">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>-0.032500000000000001 -0.0068000000000000005 0.057000000000000009</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>motherboard-1</Uid>
+</InstancePath>
+<Position>0.057000000000000009 0.0029999999999999992 0.059500000000000039</Position>
+<Axis>0 -0.99999999999999989 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coïncidente17">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>core-1</Uid>
+<Uid>core_bottom-1</Uid>
+</InstancePath>
+<Position>-0.032500000000000001 0.01 0.057000000000000009</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>motherboard-1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 -0.99999999999999989 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+</Constraints>
+</RootAssembly>
+<Assemblies>
+<Assembly name="arm" uid="arm" version="528">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<AssemblyFile name="arm.SLDASM" type="SolidWorks Assembly"/>
+</Assembly>
+<Assembly name="T-Motor MN3110" uid="T-Motor MN3110" version="488">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<AssemblyFile name="T-Motor MN3110.SLDASM" type="SolidWorks Assembly"/>
+</Assembly>
+<Assembly name="T-Motor MN3110.step" uid="T-Motor MN3110.step" version="455">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<AssemblyFile name="T-Motor MN3110.step.SLDASM" type="SolidWorks Assembly"/>
+</Assembly>
+<Assembly name="core" uid="core" version="410">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<AssemblyFile name="core.SLDASM" type="SolidWorks Assembly"/>
+</Assembly>
+</Assemblies>
+<Parts>
+<Part name="APC 12x6 EP Prop" uid="APC 12x6 EP Prop*:*Default" version="412">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="APC 12x6 EP Prop.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.019999994024100264</Mass>
+<CenterOfMass>0 0.0057150000000000005 0</CenterOfMass>
+<Inertia>7.7044970880991032e-07 1.1378925110075977e-06 7.7044970880991064e-07 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="APC 12x6 EP Prop_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.69803921568627447" g="0.69803921568627447" b="0.69803921568627447" a="1"/>
+<Diffuse r="0.69803921568627447" g="0.69803921568627447" b="0.69803921568627447" a="1"/>
+<Specular r="0.69803921568627447" g="0.69803921568627447" b="0.69803921568627447" a="1"/>
+<Emissive r="0.20941176470588233" g="0.20941176470588233" b="0.20941176470588233" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="MN3110.step" uid="MN3110.step*:*Défaut" version="105">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="MN3110.step.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.11299998759815642</Mass>
+<CenterOfMass>-0.00064753469710644132 0.015016265474391549 1.6526629369163953e-05</CenterOfMass>
+<Inertia>1.917505532555576e-05 1.5495005242041034e-05 1.5450570826956107e-05 -1.9957990935759449e-08 1.7553998896734821e-08 1.6919586454464823e-08</Inertia>
+</MassProperties>
+<GeometryFile name="MN3110.step_Défaut_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.8666666666666667" g="0.90980392156862744" b="1" a="1"/>
+<Diffuse r="0.8666666666666667" g="0.90980392156862744" b="1" a="1"/>
+<Specular r="0.43333333333333335" g="0.45490196078431372" b="0.5" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="adaptador_elp" uid="adaptador_elp*:*Défaut" version="214">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="adaptador_elp.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.0019060911298856298</Mass>
+<CenterOfMass>0 -0.0066916364830294905 0.0037344609210174435</CenterOfMass>
+<Inertia>1.0155953383314087e-07 6.4096291477029253e-08 1.4559298738411311e-07 4.3991995182978805e-09 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="adaptador_elp_Défaut_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+<Part name="arm1" uid="arm1*:*Default" version="551">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="arm1.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.16888448656541868</Mass>
+<CenterOfMass>-1.3960783564546972e-08 -0.00033721519268800198 0.078556662339034383</CenterOfMass>
+<Inertia>0.00037337588978775645 0.00038202444596778219 3.7614663674650788e-05 -4.0001294734773809e-07 1.2398599223033394e-10 -4.4069136606522967e-13</Inertia>
+</MassProperties>
+<GeometryFile name="arm1_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="1" g="1" b="1" a="1"/>
+<Diffuse r="1" g="1" b="1" a="1"/>
+<Specular r="0.5" g="0.5" b="0.5" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+<Part name="arm2" uid="arm2*:*Default" version="689">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="arm2.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.045999997809722928</Mass>
+<CenterOfMass>-9.6917232159290953e-08 -0.001286822045483142 -0.049711907480997353</CenterOfMass>
+<Inertia>7.2078859261815844e-05 8.0599847793588782e-05 1.1432276623733939e-05 -1.0314643890459211e-06 -6.9168759305013729e-09 1.1446798282535406e-11</Inertia>
+</MassProperties>
+<GeometryFile name="arm2_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="1" g="1" b="1" a="1"/>
+<Diffuse r="1" g="1" b="1" a="1"/>
+<Specular r="1" g="1" b="1" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="core_bottom" uid="core_bottom*:*Défaut" version="5469">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="core_bottom.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>1.4022719405490862</Mass>
+<CenterOfMass>-0.01158069102976775 -0.015363921810393923 2.7204832778582107e-06</CenterOfMass>
+<Inertia>0.0046418829713320738 0.010806462642658053 0.0073583095837918052 8.7730094731857062e-09 2.0292591063019851e-07 0.00019851426325605452</Inertia>
+</MassProperties>
+<GeometryFile name="core_bottom_Défaut_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.25098039215686274" g="0.25098039215686274" b="0.25098039215686274" a="1"/>
+<Diffuse r="0.25098039215686274" g="0.25098039215686274" b="0.25098039215686274" a="1"/>
+<Specular r="0.12549019607843137" g="0.12549019607843137" b="0.12549019607843137" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+<Part name="core_top" uid="core_top*:*Défaut" version="2828">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="core_top.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.2999999981239318</Mass>
+<CenterOfMass>0.040438236557543673 0.047871794549464212 -9.309056512501958e-05</CenterOfMass>
+<Inertia>0.0014547010726706829 0.0020131939683178494 0.00077571926057906323 1.8562487824455483e-06 2.3361366058881048e-06 -5.3060064972647234e-05</Inertia>
+</MassProperties>
+<GeometryFile name="core_top_Défaut_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="1" g="1" b="1" a="1"/>
+<Diffuse r="1" g="1" b="1" a="1"/>
+<Specular r="0.5" g="0.5" b="0.5" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+<Part name="elp camera" uid="elp camera*:*Défaut" version="150">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="elp camera.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.011909824940189526</Mass>
+<CenterOfMass>0 -0.003064696599933327 0.0053488412574626684</CenterOfMass>
+<Inertia>1.123093072868819e-06 6.8871061533069159e-06 7.3622114202258486e-06 -1.039827058973874e-07 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="elp camera_Défaut_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+<Part name="lipo baterry" uid="lipo baterry*:*Défaut" version="121">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="lipo baterry.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.40800000000059999</Mass>
+<CenterOfMass>0 0.021000000000000005 0</CenterOfMass>
+<Inertia>0.00018237600000026809 0.00093925000000138093 0.00087682600000128915 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="lipo baterry_Défaut_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.90980392156862744" g="0.44313725490196076" b="0.031372549019607843" a="1"/>
+<Diffuse r="0.90980392156862744" g="0.44313725490196076" b="0.031372549019607843" a="1"/>
+<Specular r="0.6368627450980392" g="0.31019607843137254" b="0.021960784313725487" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="motherboard" uid="motherboard*:*Défaut" version="166">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="motherboard.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.29599999685733769</Mass>
+<CenterOfMass>0.010892516112129038 0.016425417872728203 -0.014014018185597461</CenterOfMass>
+<Inertia>0.00040449353334313817 0.0006396269068935246 0.00033069239666079801 5.0371372995672295e-05 0.00014919840544263697 -3.8090983752211185e-05</Inertia>
+</MassProperties>
+<GeometryFile name="motherboard_Défaut_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0" g="0.50196078431372548" b="0" a="1"/>
+<Diffuse r="0" g="0.50196078431372548" b="0" a="1"/>
+<Specular r="0" g="0.35137254901960779" b="0" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="protector" uid="protector*:*Défaut" version="633">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="protector.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.066999999696297052</Mass>
+<CenterOfMass>0.14275643733485724 0.010000001797447068 -3.9707032703800672e-06</CenterOfMass>
+<Inertia>0.00054063148006672278 0.00058376301687955618 4.7206947746159833e-05 -5.2386356158893274e-13 -5.360339714983397e-09 1.4001334492087512e-12</Inertia>
+</MassProperties>
+<GeometryFile name="protector_Défaut_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.10980392156862745" g="0.10980392156862745" b="0.10980392156862745" a="1"/>
+<Diffuse r="0.10980392156862745" g="0.10980392156862745" b="0.10980392156862745" a="1"/>
+<Specular r="0.076862745098039212" g="0.076862745098039212" b="0.076862745098039212" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="soporte_protector" uid="soporte_protector*:*Défaut" version="787">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="soporte_protector.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.02300000134526212</Mass>
+<CenterOfMass>0.1084539137114881 0.013638443733927114 3.0015237732450426e-09</CenterOfMass>
+<Inertia>2.9822418152289998e-06 3.9221513549258284e-05 4.0720779068802624e-05 -3.3783113561752457e-12 -3.7043141716397952e-12 -4.4301230654963319e-06</Inertia>
+</MassProperties>
+<GeometryFile name="soporte_protector_Défaut_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.10980392156862745" g="0.10980392156862745" b="0.10980392156862745" a="1"/>
+<Diffuse r="0.10980392156862745" g="0.10980392156862745" b="0.10980392156862745" a="1"/>
+<Specular r="0.076862745098039212" g="0.076862745098039212" b="0.076862745098039212" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+</Parts>
+</SimscapeMultibodyImportXML>

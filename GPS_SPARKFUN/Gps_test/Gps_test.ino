@@ -24,7 +24,7 @@ char buff[150], lati[50], longi[50], alti[50];
 
 // you can change the pin numbers to match your wiring:
 SoftwareSerial mySerial(8, 7);  
-Adafruit_GPS GPS(&Serial1);
+Adafruit_GPS GPS(&mySerial);
 
 // Set GPSECHO to 'false' to turn off echoing the GPS data to the Serial console
 // Set to 'true' if you want to debug and listen to the raw GPS sentences
@@ -35,7 +35,7 @@ void setup()
 
   // connect at 115200 so we can read the GPS fast enough and echo without dropping chars
   // also spit it out
-  Serial.begin(115200);
+  Serial.begin(9600);
   delay(50);
   //Serial.println("Adafruit GPS library basic test!");
 
@@ -84,13 +84,16 @@ void loop()                     // run over and over again
   
   if (millis() - timer > 100) {
     timer = millis();
+     Serial.println("hola");
     if (GPS.fix) {
+          Serial.println("hola");
           if( millis() > 5000){
               if( !flag ){
               offset_alt = GPS.altitude;
               flag=true;
              }
              else{
+
                 //Serial.println(GPS.altitude-offset_alt, 4);  
                 /* send_data = String((double)GPS.latitude) + "," + String((double)GPS.longitude) + "," +String((double)GPS.altitude);
                 sprintf(buff, "%.3f,%.3f,%.3f\n", GPS.latitude,GPS.longitude,GPS.altitude );

@@ -25,7 +25,7 @@ Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28);
 IntervalTimer readSensors;
 IntervalTimer milli;
 
-volatile double roll, pitch, yaw, ax, ay, az;
+volatile float roll, pitch, yaw, ax, ay, az;
 float x, y, z;
 volatile unsigned long long time = 0;
 bool led_state;

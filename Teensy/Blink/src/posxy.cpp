@@ -1,4 +1,4 @@
-#define POSXY
+//#define POSXY
 #ifdef POSXY
 
 #include "..\headers\main.h"
@@ -44,9 +44,9 @@ float alt_memo[N], alt_fast, alt_slow = 0, alt_diff, sum = 0,alt_offs;
 int alt_pointer = 0;
 float sealevel;
 
-timer timer_sensors, timer_main;
+timer timer_sensors,    	timer_main;
 
-volatile double roll, pitch, yaw, ax, ay, az;
+volatile float roll, pitch, yaw, ax, ay, az;
 float x, y, z;
 volatile unsigned long long time = 0;
 bool led_state;
@@ -56,40 +56,52 @@ bool caso = true;
 long long entrada = 0;
 int dig = 0;
 
-double  H, H_comp,R,P,Y, H_ref, X_C, Y_C, R_MAX = pi/22.0 , P_MAX = pi/22.0;
-double M1,M2,M3,M4;
+float  H, H_comp,R,P,Y, H_ref, X_C, Y_C, R_MAX = pi/22.0 , P_MAX = pi/22.0;
+float M1,M2,M3,M4;
 uint8_t haux = 0;
 
-double roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
-double roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
+float roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
+float roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref, z_ref_des, z_ref_init;
+float t0, T = 5;
 long long pm = 0;
 
-void saturateM(double H){
-    double f_max = 1;
-    double arr_M[] = {M1, M2, M3, M4};
+void saturateM(float H){
+    float f_max = 1;
+    float arr_M[] = {M1, M2, M3, M4};
     for(int i = 0; i < 4 ; i++){
-        double delta = max(max(arr_M[i] + H - 100, -arr_M[i]-H), 0);
+        float delta = max(max(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
         f_max = max(f_max, abs(arr_M[i] / (abs(arr_M[i]) - delta + 0.0000001)) );
     }
 
-    M1 = M1 / f_max + H;
-    M2 = M2 / f_max + H;
-    M3 = M3 / f_max + H;
-    M4 = M4 / f_max + H;
+    M1 = sqrt(M1 / f_max + H);
+    M2 = sqrt(M2 / f_max + H);
+    M3 = sqrt(M3 / f_max + H);
+    M4 = sqrt(M4 / f_max + H);
 }
 
-void rampValue(double *var, double desired, double step){
+ float s(float t){
+    return 10*(t/T)*(t/T)*(t/T) - 15*(t/T)*(t/T)*(t/T)*(t/T) + 6*(t/T)*(t/T)*(t/T)*(t/T)*(t/T);
+ }
+
+ float sp(float t){
+    return 30*(t/T)*(t/T)/T - 60*(t/T)*(t/T)*(t/T)/T + 30*(t/T)*(t/T)*(t/T)*(t/T)/T;
+ }
+ 
+void rampValue(float *var, float desired, float step){
 
     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*var));
 }    
 
+void rampValueR(float *var, float time){
+    (*var) =  (z_ref_des - z_ref_init)*s(time) + z_ref_init;
+}    
 
 void sensorsInterrupt(){
 	
-    
     digitalWrite(LED_BUILTIN, led_state);
-    led_state = !led_state;
 
+    led_state = !led_state;
+    
     sensors_event_t orientationData , linearAccelData;
     
     bno.getEvent(&orientationData, Adafruit_BNO055::VECTOR_EULER);
@@ -118,8 +130,7 @@ void sensorsInterrupt(){
     setReg(CAL_GYR, (float) gyro);
     setReg(CAL_ACC, (float) accel);
     setReg(CAL_MAG, (float) mag);
-
-
+    
     alt_pointer %= N;
     sum -= alt_memo[alt_pointer];
     alt_memo[alt_pointer] = bmp.readAltitude(sealevel);
@@ -132,7 +143,7 @@ void sensorsInterrupt(){
     alt_diff = max(min(alt_diff, 1), -1);
 
     if (abs(alt_diff) >  0.20) alt_slow += alt_diff / 6.0;
-    
+    //delay(2);
     /*Serial.println("Sensors");
     Serial.print(roll);
     Serial.print("\t");
@@ -140,7 +151,7 @@ void sensorsInterrupt(){
     Serial.print("\t");
     Serial.print(yaw);
     Serial.print("\t");
-    Serial.println(alt_slow - alt_offs);*/
+    Serial.println(alt_slow - alt_offs);
 
     if(getReg(START) > 0){
         kalmanUpdateIMU(ax, ay, az, roll, pitch, yaw);
@@ -156,12 +167,11 @@ void sensorsInterrupt(){
 
     setReg(X_VAL, x);
     setReg(Y_VAL, y);
-    setReg(Z_VAL, z);  
+    setReg(Z_VAL, z);  */
 
 }
 
 void mainInterrupt(){
-    
     time += timer_main.period/1000;
 
     X_C = computePid(&x_control, -x, time, H);
@@ -169,15 +179,19 @@ void mainInterrupt(){
 
     //roll_ref = Y_C*cos(yaw) + X_C*sin(yaw);
     //pitch_ref = Y_C*sin(yaw) - X_C*cos(yaw);
-
-    rampValue(&z_ref, getReg(Z_REF), getReg(Z_REF_SIZE));
+    if(z_ref_des != getReg(Z_REF)){
+        z_ref_des = getReg(Z_REF);
+        z_ref_init = z_ref;
+        t0 = time;
+    }
+    if(time <= t0 + T && time > t0) rampValueR(&z_ref, time - t0);
 
     H_ref = computePid(&z_control, z_ref - z, time,0) + getReg(Z_MG);
-    rampValue(&H, H_ref, 0.1);
+    rampValue(&H, H_ref, 0.2);
 
-    H_comp = H / (cos(roll)*cos(pitch));
-    /*
-    double rel = roll_ref/(pitch_ref + 0.0000001);
+    //H_comp = H / (cos(roll)*cos(pitch));
+    H_comp = H;/*
+    float rel = roll_ref/(pitch_ref + 0.0000001);
     
     if( fabs(rel) < 1  ){
         
@@ -205,21 +219,21 @@ void mainInterrupt(){
     P = computePid(&pitch_control, angle_dif(pitch_ref, pitch),time, H_comp);
     Y = computePid(&yaw_control, angle_dif(yaw_ref, yaw),time, H_comp);
 
-
+    
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
     setReg(YAW_U, Y);
     setReg(Z_U, H_comp);
 
-    M1 = R + P - Y;
-    M2 = R - P + Y;
-    M3 = - R - P - Y;
-    M4 = - R + P + Y;
-    
-    saturateM(H_comp);
+    M1 =  -R - P - Y;
+    M2 = -R + P  + Y;
+    M3 =   R + P - Y;
+    M4 = R - P + Y;
+
+    saturateM(H_comp*H_comp);
     
     if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
-        
+        alt_offs = alt_slow;
         setReg(Z_REF, 0);
         H = 0; z_ref = 0;
         M1 = M2 = M3 = M4 = 0;
@@ -307,10 +321,10 @@ void initializeSystem(){
     for ( int i = 0; i < N; i++ ) alt_memo[i] = bmp.readAltitude(sealevel), sum += alt_memo[i] / N, delay(5);
 
     alt_slow = sum / N;
-    alt_offs = alt_slow ;
+    alt_offs = alt_slow;
 
-    initTimer(&timer_sensors, &sensorsInterrupt, 50);
-    initTimer(&timer_main, &mainInterrupt, 200);
+    initTimer(&timer_sensors, &sensorsInterrupt, 100);
+    initTimer(&timer_main, &mainInterrupt, 100);
 
     setKalmanTsImu(0.01);
     setKalmanTsGps(1);
@@ -329,10 +343,12 @@ int _main(void){
     yaw_off = yaw;
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
-
+    z_ref_des = getReg(Z_REF);
+    z_ref_init = getReg(Z_REF);
     while(1){
         if(timerReady(&timer_sensors)) executeTimer(&timer_sensors);
         if(timerReady(&timer_main)) executeTimer(&timer_main);
+
     }
     return 0;
 }

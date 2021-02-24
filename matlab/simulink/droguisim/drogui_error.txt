@@ -1,0 +1,40 @@
+Constrained Instances: 'elp camera-1', 'adaptador_elp-1'
+Constraint Name: Coaxiale13
+Error Details: Constrained components are not resolved. Resolve components and try again. The constraint has been ignored.
+---------------------------------------------------------------------------------
+Constrained Instances: 'elp camera-1', 'adaptador_elp-1'
+Constraint Name: Parallèle2
+Error Details: Constrained components are not resolved. Resolve components and try again. The constraint has been ignored.
+---------------------------------------------------------------------------------
+Constrained Instances: 'elp camera-1', 'adaptador_elp-1'
+Constraint Name: Coïncidente13
+Error Details: Constrained components are not resolved. Resolve components and try again. The constraint has been ignored.
+---------------------------------------------------------------------------------
+Constrained Instances: 'elp camera-1', 'adaptador_elp-2'
+Constraint Name: Coaxiale16
+Error Details: Constrained components are not resolved. Resolve components and try again. The constraint has been ignored.
+---------------------------------------------------------------------------------
+Constrained Instances: 'elp camera-1', 'adaptador_elp-2'
+Constraint Name: Parallèle3
+Error Details: Constrained components are not resolved. Resolve components and try again. The constraint has been ignored.
+---------------------------------------------------------------------------------
+Constrained Instances: 'elp camera-1', 'adaptador_elp-2'
+Constraint Name: Coïncidente15
+Error Details: Constrained components are not resolved. Resolve components and try again. The constraint has been ignored.
+---------------------------------------------------------------------------------
+Constrained Instances: 'core-1/core_bottom-1', 'adaptador_elp-1'
+Constraint Name: Coïncidente16
+Error Details: Constrained components are not resolved. Resolve components and try again. The constraint has been ignored.
+---------------------------------------------------------------------------------
+Constrained Instances: 'adaptador_elp-1', 'core-1/core_bottom-1'
+Constraint Name: Coaxiale18
+Error Details: Constrained components are not resolved. Resolve components and try again. The constraint has been ignored.
+---------------------------------------------------------------------------------
+Constrained Instances: 'adaptador_elp-2', 'core-1/core_bottom-1'
+Constraint Name: Coaxiale19
+Error Details: Constrained components are not resolved. Resolve components and try again. The constraint has been ignored.
+---------------------------------------------------------------------------------
+Constrained Instances: 'core-1', 'drogui'
+Constraint Name: Coïncidente19
+Error Details: Constraint is not supported. The constraint has been exported as unknown constraint.
+---------------------------------------------------------------------------------

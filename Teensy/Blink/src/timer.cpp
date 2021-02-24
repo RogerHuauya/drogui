@@ -11,6 +11,7 @@ bool timerReady(timer* t){
 }
 
 void executeTimer(timer* t){
-    t -> function();
+    //Serial.println(t->time);
     t -> time = 0;
+    t -> function();
 }
