@@ -14,6 +14,7 @@
 #include "utils.h"
 #include <pthread.h>
 void *logging(void *threadid);
+void *wifiCheck(void *threadid);
 void *gps_data(void *threadid);
 
 #endif
