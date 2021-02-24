@@ -1,4 +1,5 @@
 
+
 #include "threaded.h"
 #include "sim7600.h"
 #include "registerMap.h"
@@ -14,13 +15,14 @@ void *logging(void *threadid){
         std::ofstream log_gps;
         //while(!logging_state){}
         std::string name_log = str_datetime(); 
-        log_gps.open("logs/"+name_log+ "_control"+ ".txt");
+        //std::string name_log = std::to_string(rasp_i2c.readFloat(ROLL_KP)) + "_" + std::to_string(rasp_i2c.readFloat(ROLL_KI)) + "_" + std::to_string(rasp_i2c.readFloat(ROLL_KD));
+	log_gps.open("logs/"+name_log+ "_control"+ ".txt");
         
 	    log_gps.precision(10);
-
-        std::ofstream log_imu; 
+	
+        /*std::ofstream log_imu; 
         log_imu.open("logs/"+name_log+ "_imu"+ ".txt");
-	    log_imu.precision(10);
+	    log_imu.precision(10);*/
         
         /*
         log_file << "H_VAL   H_STEP_SIZE " << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE)<< std::endl;
@@ -35,13 +37,28 @@ void *logging(void *threadid){
             }*/
 
             if(logging_state){
-                log_gps << tim/5.0 << "\t" << rasp_i2c.readFloat(ROLL_REF) << "\t"<< rasp_i2c.readFloat(ROLL_VAL) << "\t" \
-                                            << rasp_i2c.readFloat(PITCH_REF) << "\t"<< rasp_i2c.readFloat(PITCH_VAL) << std::endl;
-                
-                
-                /*
+                /*log_gps << tim/100.0 << "\t" << rasp_i2c.readFloat(MOTOR_1) << "\t" << rasp_i2c.readFloat(MOTOR_2) << "\t"\
+				     << rasp_i2c.readFloat(MOTOR_3) << "\t" << rasp_i2c.readFloat(MOTOR_4) <<std::endl;*/
+		/*log_gps << tim/100.0 << "\t" << rasp_i2c.readFloat(GYRO_X_REF) << "\t" << rasp_i2c.readFloat(GYRO_X) << "\t"\
+				     << rasp_i2c.readFloat(DER_GYRO_X) << std::endl;// "\t" << rasp_i2c.readFloat(GYRO_Y) <<std::endl;*/
+		
+		// GYRO CONTROL
+		/*log_gps << tim/50.0 << "\t" << rasp_i2c.readFloat(GYRO_X_REF) << "\t" << rasp_i2c.readFloat(GYRO_Y_REF) << "\t"\
+                                     << rasp_i2c.readFloat(GYRO_X) << "\t" << rasp_i2c.readFloat(GYRO_Y) << "\t"\
+				     << rasp_i2c.readFloat(ROLL_U) << "\t" << rasp_i2c.readFloat(PITCH_U) << std::endl;// "\t" << rasp_i2c.readFloat(GYRO_Y) <<std::endl;
+                */
+		
+		//RPY CONTROL
+		
+		log_gps << tim/50.0 << "\t" << rasp_i2c.readFloat(ROLL_REF) 	<< "\t" << rasp_i2c.readFloat(PITCH_REF) 	<< "\t"\
+                                    	    << rasp_i2c.readFloat(ROLL_VAL) 	<< "\t" << rasp_i2c.readFloat(PITCH_VAL) 	<< "\t"\
+				     	    << rasp_i2c.readFloat(GYRO_X_REF) 	<< "\t"	<< rasp_i2c.readFloat(GYRO_Y_REF) 	<< "\t"\
+                                    	    << rasp_i2c.readFloat(GYRO_X) 	<< "\t" << rasp_i2c.readFloat(GYRO_Y) 		<< std::endl;
+		
+		/*log_gps << tim/50.0 << "\t" << rasp_i2c.readFloat(GYRO_X) << "\t" << rasp_i2c.readFloat(GYRO_Y) << "\t"\
+					    << rasp_i2c.readFloat(GYRO_Z) << std::endl;
                 log_file<<rasp_i2c.readFloat(H_VAL);
-                log_file<<"\t";*/
+                log_file<<"\t";
                 log_imu << tim/5.0 << ",\t";
                 log_imu<<rasp_i2c.readFloat(ROLL_VAL);
                 log_imu<<"\t";
@@ -60,9 +77,9 @@ void *logging(void *threadid){
                 log_imu<<rasp_i2c.readFloat(Y_VAL);
                 log_imu<<"\t";
                 log_imu<<rasp_i2c.readFloat(Z_VAL);
-                log_imu<< std::endl;
+                log_imu<< std::endl;*/
             }
-            unistd::usleep(200000);
+            unistd::usleep(20000);
 	    tim++;
 
         }

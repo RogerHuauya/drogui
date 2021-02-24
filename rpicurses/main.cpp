@@ -36,7 +36,7 @@ void enable_emergency_stop(){
 
 void setup() {
     rasp_i2c.setup();
-	sim7600.PowerOn(POWERKEY);
+    //sim7600.PowerOn(POWERKEY);
 }
 
 void reset(){

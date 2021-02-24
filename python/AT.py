@@ -35,7 +35,7 @@ def power_down(power_key):
 	print('Good bye')
 
 try:
-    power_on(power_key)
+    #power_on(power_key)
 	
     while True:
         x = raw_input('Read?')
