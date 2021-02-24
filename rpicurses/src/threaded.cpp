@@ -6,66 +6,95 @@ extern rasp_I2C rasp_i2c;
 
 extern bool logging_state;
 
+
+
+string do_console_command_get_result (char* command)
+{
+	FILE* pipe = popen(command, "r");
+	if (!pipe)
+		return "ERROR";
+	
+	char buffer[128];
+	std::string result = "";
+	while(!feof(pipe))
+	{
+		if(fgets(buffer, 128, pipe) != NULL)
+			result += buffer;
+	}
+	pclose(pipe);
+	return(result);
+}
+
+
+
+
 void *logging(void *threadid){
     unsigned long long tim = 0;
-    unistd::sleep(10);
-    while(!logging_state){};
+    //unistd::sleep(10);
+    int cnt = 0;
+    std::ofstream log_gps;
+    //while(!logging_state){}
+    std::string name_log = str_datetime(); 
+    log_gps.open("logs/"+name_log+ "_control"+ ".txt");
+    
+    log_gps.precision(10);
+
+    std::ofstream log_imu; 
+    log_imu.open("logs/"+name_log+ "_imu"+ ".txt");
+    log_imu.precision(10);
+    
+    /*
+    log_file << "H_VAL   H_STEP_SIZE " << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE)<< std::endl;
+    log_file << "ROLL KP KI KD " << rasp_i2c.readFloat(ROLL_KP) << " " <<rasp_i2c.readFloat(ROLL_KI) << " " <<rasp_i2c.readFloat(ROLL_KD)<<std::endl;
+    log_file << "PITCH KP KI KD " << rasp_i2c.readFloat(PITCH_KP) << " " <<rasp_i2c.readFloat(PITCH_KI) << " " <<rasp_i2c.readFloat(PITCH_KD)<<std::endl;
+    log_file << "YAW KP KI KD " << rasp_i2c.readFloat(YAW_KP) << " " <<rasp_i2c.readFloat(YAW_KI) << " " <<rasp_i2c.readFloat(YAW_KD)<<std::endl;
+    */
+    
     while(1){
-        std::ofstream log_gps;
-        //while(!logging_state){}
-        std::string name_log = str_datetime(); 
-        log_gps.open("logs/"+name_log+ "_control"+ ".txt");
-        
-	    log_gps.precision(10);
+        /*if(tim%50 == 0){
+            log_gps << tim/50 << "\t" << sim7600.pos_x << "\t"<< sim7600.pos_y << "\t" << sim7600.Lat << "\t" << sim7600.Log <<std::endl;
+        }*/
 
-        std::ofstream log_imu; 
-        log_imu.open("logs/"+name_log+ "_imu"+ ".txt");
-	    log_imu.precision(10);
-        
-        /*
-        log_file << "H_VAL   H_STEP_SIZE " << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE)<< std::endl;
-        log_file << "ROLL KP KI KD " << rasp_i2c.readFloat(ROLL_KP) << " " <<rasp_i2c.readFloat(ROLL_KI) << " " <<rasp_i2c.readFloat(ROLL_KD)<<std::endl;
-        log_file << "PITCH KP KI KD " << rasp_i2c.readFloat(PITCH_KP) << " " <<rasp_i2c.readFloat(PITCH_KI) << " " <<rasp_i2c.readFloat(PITCH_KD)<<std::endl;
-        log_file << "YAW KP KI KD " << rasp_i2c.readFloat(YAW_KP) << " " <<rasp_i2c.readFloat(YAW_KI) << " " <<rasp_i2c.readFloat(YAW_KD)<<std::endl;
-        */
-       
-        while(1){
-            /*if(tim%50 == 0){
-                log_gps << tim/50 << "\t" << sim7600.pos_x << "\t"<< sim7600.pos_y << "\t" << sim7600.Lat << "\t" << sim7600.Log <<std::endl;
-            }*/
-
-            if(logging_state){
-                log_gps << tim/5.0 << "\t" << rasp_i2c.readFloat(ROLL_REF) << "\t"<< rasp_i2c.readFloat(ROLL_VAL) << "\t" \
-                                            << rasp_i2c.readFloat(PITCH_REF) << "\t"<< rasp_i2c.readFloat(PITCH_VAL) << std::endl;
-                
-                
-                /*
-                log_file<<rasp_i2c.readFloat(H_VAL);
-                log_file<<"\t";*/
-                log_imu << tim/5.0 << ",\t";
-                log_imu<<rasp_i2c.readFloat(ROLL_VAL);
-                log_imu<<"\t";
-                log_imu<<rasp_i2c.readFloat(PITCH_VAL);
-                log_imu<<"\t";
-                log_imu<<rasp_i2c.readFloat(YAW_VAL);
-                log_imu<<"\t";
-                log_imu<<rasp_i2c.readFloat(ACC_X);
-                log_imu<<"\t";
-                log_imu<<rasp_i2c.readFloat(ACC_Y);
-                log_imu<<"\t";
-                log_imu<<rasp_i2c.readFloat(ACC_Z);
-                log_imu<<"\t";
-                log_imu<<rasp_i2c.readFloat(X_VAL);
-                log_imu<<"\t";
-                log_imu<<rasp_i2c.readFloat(Y_VAL);
-                log_imu<<"\t";
-                log_imu<<rasp_i2c.readFloat(Z_VAL);
-                log_imu<< std::endl;
-            }
-            unistd::usleep(200000);
-	    tim++;
-
+        if(logging_state){
+            log_gps << tim/5.0 << "\t" << rasp_i2c.readFloat(ROLL_REF) << "\t"<< rasp_i2c.readFloat(ROLL_VAL) << "\t" \
+                                        << rasp_i2c.readFloat(PITCH_REF) << "\t"<< rasp_i2c.readFloat(PITCH_VAL) << std::endl;
+            
+            /*
+            log_file<<rasp_i2c.readFloat(H_VAL);
+            log_file<<"\t";*/
+            log_imu << tim/5.0 << ",\t";
+            log_imu<<rasp_i2c.readFloat(ROLL_VAL);
+            log_imu<<"\t";
+            log_imu<<rasp_i2c.readFloat(PITCH_VAL);
+            log_imu<<"\t";
+            log_imu<<rasp_i2c.readFloat(YAW_VAL);
+            log_imu<<"\t";
+            log_imu<<rasp_i2c.readFloat(ACC_X);
+            log_imu<<"\t";
+            log_imu<<rasp_i2c.readFloat(ACC_Y);
+            log_imu<<"\t";
+            log_imu<<rasp_i2c.readFloat(ACC_Z);
+            log_imu<<"\t";
+            log_imu<<rasp_i2c.readFloat(X_VAL);
+            log_imu<<"\t";
+            log_imu<<rasp_i2c.readFloat(Y_VAL);
+            log_imu<<"\t";
+            log_imu<<rasp_i2c.readFloat(Z_VAL);
+            log_imu<< std::endl;
         }
+        unistd::usleep(200000);
+        tim++;
+        
+        std::string CommandResult = do_console_command_get_result((char*)"cat /sys/class/net/wlan0/operstate");
+		if (CommandResult.find("up") != 0){
+            rasp_i2c.sendFloat(Z_MG, 55);
+            cnt++;
+		}
+        else cnt = 0;
+
+        if(cnt >=  25) rasp_i2c.sendFloat(Z_REF, 0);
+
+
     }
 }
 
