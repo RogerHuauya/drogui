@@ -9,7 +9,7 @@ extern bool logging_state;
 
 
 
-string do_console_command_get_result (char* command)
+std::string do_console_command_get_result (char* command)
 {
 	FILE* pipe = popen(command, "r");
 	if (!pipe)
@@ -68,7 +68,8 @@ void *logging(void *threadid){
         
         std::string CommandResult = do_console_command_get_result((char*)"cat /sys/class/net/wlan0/operstate");
 	if (CommandResult.find("up") != 0){
-            rasp_i2c.sendFloat(Z_MG, 55);
+           //std::cout<< "No connected"  << std::endl;
+	    rasp_i2c.sendFloat(Z_MG, 55);
             cnt++;
 	}
         else cnt = 0;
