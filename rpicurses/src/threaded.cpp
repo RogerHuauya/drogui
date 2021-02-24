@@ -32,7 +32,6 @@ string do_console_command_get_result (char* command)
 void *logging(void *threadid){
     unsigned long long tim = 0;
     //unistd::sleep(10);
-    int cnt = 0;
     std::ofstream log_gps;
     //while(!logging_state){}
     std::string name_log = str_datetime(); 
@@ -65,6 +64,16 @@ void *logging(void *threadid){
         }
         unistd::usleep(20000);
         tim++;
+    }
+}
+
+
+void *wifiCheck(void *threadid){
+    
+    int cnt = 0;
+    
+    while(1){
+        unistd::usleep(10000);
         
         std::string CommandResult = do_console_command_get_result((char*)"cat /sys/class/net/wlan0/operstate");
 	if (CommandResult.find("up") != 0){
@@ -74,9 +83,9 @@ void *logging(void *threadid){
         else cnt = 0;
 
         if(cnt >=  250) rasp_i2c.sendFloat(Z_REF, 0);
-
     }
 }
+
 
 void *gps_data(void *threadid){
     
