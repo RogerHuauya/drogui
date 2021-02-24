@@ -23,8 +23,8 @@ typedef struct _pid{
 float computePid(pid* p, float error, unsigned long t, float h);
 void resetPid(pid* p, unsigned long ti);
 
-void initPid(pid* p, float kp, float kd, float ki,unsigned long ti, float N,float osat, int tipo );
-void initPid(pid* p, float kp, float kd, float ki,unsigned long ti, float N,float osat,int tipo, int n, float*a, float*b);
+void initPid(pid* p, float kp, float kd, float ki,unsigned long ti, float N, float isat,float osat, int tipo );
+void initPid(pid* p, float kp, float kd, float ki,unsigned long ti, float N, float isat,float osat,int tipo, int n, float*a, float*b);
 
 
 #endif

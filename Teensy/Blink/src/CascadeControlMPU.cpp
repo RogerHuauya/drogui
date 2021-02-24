@@ -45,22 +45,23 @@ void debugInterrupt(){
     Serial.print(M4);
     Serial.print("\n");*/
 
-    /*Serial.print(roll);
-    Serial.print("\t");
-    Serial.print(pitch);
-    Serial.print("\t");
-    Serial.print(yaw);
-    Serial.print(";\n");*/
     if( c == 'a' ) setReg(CAL_GYR_TRG,1);
     if( c == 'b' ) setReg(CAL_ACC_TRG,1);
     if( c == 'c' ) setReg(CAL_MAG_TRG,1);
 
-    Serial.print(gx);
+    /*Serial.print(gx,DEC);
     Serial.print("\t");
-    Serial.print(gy);
+    Serial.print(gy,DEC);
     Serial.print("\t");
-    Serial.print(gz);
-    Serial.print("\n");
+    Serial.print(gz,DEC);
+    Serial.print("\n");*/
+
+    Serial.print(roll,DEC);
+    Serial.print("\t");
+    Serial.print(pitch,DEC);
+    Serial.print("\t");
+    Serial.print(yaw,DEC);
+    Serial.print(";\n");
 
 }
 

@@ -59,9 +59,9 @@ void gyroInterrupt(){
     gz = computeDNotch(&dnotch_gz2, gz);
 
 
-    gx = quanti*((int) gx/(5*quanti));
-    gy = quanti*((int) gy/(5*quanti));
-    gz = quanti*((int) gz/(5*quanti));
+    gx /= 5;
+    gy /= 5;
+    gz /= 5; 
 
 
     setReg(GYRO_X, gx);
@@ -75,17 +75,20 @@ void magInterrupt(){
     my = myIMU.my;
     mz = myIMU.mz;
 }
-
+float Kdfilt = 0.0005;
 void rpyInterrupt(){
     float rpy[3];
     
     mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, my, mx, mz);
     getMahonyEuler(rpy);
-    roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
+    //roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
+    roll += max(min(Kdfilt, (rpy[0] - roll)),-Kdfilt);
+    pitch += max(min(Kdfilt, (rpy[1] - pitch)),-Kdfilt);
+    yaw += max(min(Kdfilt,(rpy[2] - yaw)),-Kdfilt);
 
-    roll = computeFilter(&filter_roll, roll);
+    /*roll = computeFilter(&filter_roll, roll);
     pitch = computeFilter(&filter_pitch, pitch);
-    yaw = computeFilter(&filter_yaw, yaw);
+    yaw = computeFilter(&filter_yaw, yaw);*/
 
     setReg(ROLL_VAL, roll);
     setReg(PITCH_VAL, pitch);
