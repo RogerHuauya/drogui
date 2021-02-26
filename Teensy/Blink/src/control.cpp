@@ -55,6 +55,8 @@ void resetPid(pid* p, unsigned long ti){
     p->tant = ti;
     p->erri = 0;
     p->err_ant1 = p->err_ant2 = 0;
+    p->errd_acum = 0;
+    p->u_ant = 0;
 }
 
 void initPid(pid* p, float kp, float kd, float ki,unsigned long ti, float N, float isat, float osat, int type){

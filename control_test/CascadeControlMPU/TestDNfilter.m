@@ -18,7 +18,7 @@ for i=samples:dim
     y_act = aux(i-samples+1:i);
     [y,y_ant,x_ant] = dynamicnotch(y_act,Fs,zeta,a,x_ant,y_ant,samples);
     aux(i) = y;
-%     y_act_dn = aux(i-samples+1:i);
-%     [y_dn, y_ant_dn, x_ant_dn] = dynamicnotch(y_act_dn,Fs,zeta_dn,a_dn,x_ant_dn,y_ant_dn,samples);
-%     aux_dn(i) = y_dn;  
+    y_act_dn = aux(i-samples+1:i);
+    [y_dn, y_ant_dn, x_ant_dn] = dynamicnotch(y_act_dn,Fs,zeta_dn,a_dn,x_ant_dn,y_ant_dn,samples);
+    aux_dn(i) = y_dn;  
 end
