@@ -183,13 +183,13 @@ void initControlTasks(){
     initPid(&x_control, 0, 0, 0, 0, 1 , 100000, 0.09, NORMAL);
     initPid(&y_control, 0, 0, 0, 0, 1 , 100000,0.09, NORMAL);
 
-    initPid(&roll2w, 0, 0, 0, time, 50, 100000,80, (P2ID & D_INT));
-    initPid(&pitch2w, 0, 0, 0, time, 50, 100000,80, (P2ID & D_INT));
-    initPid(&yaw2w, 0, 0, 0, time, 50, 100000,80, (P2ID & D_INT));
+    initPid(&roll2w, 0, 0, 0, time, 50, 1.57*0.5,80, (P2ID & D_INT));
+    initPid(&pitch2w, 0, 0, 0, time, 50, 1.57*0.5,80, (P2ID & D_INT));
+    initPid(&yaw2w, 0, 0, 0, time, 50, 1.57*0.5,80, (P2ID & D_INT));
 
-    initPid(&wroll_control, 0, 0, 0, time, 50,  80, 2000, (P2ID & D_INT));
-    initPid(&wpitch_control, 0, 0, 0, time, 50, 80, 2000, (P2ID & D_INT));
-    initPid(&wyaw_control, 0, 0, 0, time, 50, 80, 2000, (P2ID & D_INT));
+    initPid(&wroll_control, 0, 0, 0, time, 50,  80, 3000, (P2ID & D_INT));
+    initPid(&wpitch_control, 0, 0, 0, time, 50, 80, 3000, (P2ID & D_INT));
+    initPid(&wyaw_control, 0, 0, 0, time, 50, 80, 3000, (P2ID & D_INT));
     
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
