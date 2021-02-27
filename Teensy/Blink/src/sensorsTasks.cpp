@@ -26,9 +26,13 @@ float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
 void accelInterrupt(){
     readAcc(&myIMU);
     
-    ax = computeFilter(&filter_ax, myIMU.ax);
+    /*ax = computeFilter(&filter_ax, myIMU.ax);
     ay = computeFilter(&filter_ay, myIMU.ay);
-    az = computeFilter(&filter_az, myIMU.az);
+    az = computeFilter(&filter_az, myIMU.az);*/
+
+    ax = myIMU.ax;
+    ay = myIMU.ay;
+    az = myIMU.az;
 
     setReg(ACC_X,(float)(ax));
     setReg(ACC_Y,(float)(ay));
@@ -40,7 +44,7 @@ void gyroInterrupt(){
     
     int quanti = 1;
 
-    gx = computeFilter(&filter_gx, myIMU.gx);
+    /*gx = computeFilter(&filter_gx, myIMU.gx);
     gy = computeFilter(&filter_gy, myIMU.gy);
     gz = computeFilter(&filter_gz, myIMU.gz);
 
@@ -56,8 +60,11 @@ void gyroInterrupt(){
 
     gx = computeDNotch(&dnotch_gx2, gx);
     gy = computeDNotch(&dnotch_gy2, gy);
-    gz = computeDNotch(&dnotch_gz2, gz);
+    gz = computeDNotch(&dnotch_gz2, gz);*/
 
+    gx = myIMU.gx;
+    gy = myIMU.gy;
+    gz = myIMU.gz;
 
     gx /= 5;
     gy /= 5;
