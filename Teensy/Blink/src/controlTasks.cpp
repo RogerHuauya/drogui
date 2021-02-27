@@ -188,9 +188,9 @@ void initControlTasks(){
     initPid(&pitch2w, 0, 0, 0, time, 50, 1.57*0.5,80, (P2ID & D_INT));
     initPid(&yaw2w, 0, 0, 0, time, 50, 1.57*0.5,80, (P2ID & D_INT));
 
-    initPid(&wroll_control, 0, 0, 0, time, 50,  80, 3000, (P2ID & D_INT));
-    initPid(&wpitch_control, 0, 0, 0, time, 50, 80, 3000, (P2ID & D_INT));
-    initPid(&wyaw_control, 0, 0, 0, time, 50, 80, 3000, (P2ID & D_INT));
+    initPid(&wroll_control, 0, 0, 0, time, 50,  80, 3000, (P2ID & D_INT & D_FILTER), );
+    initPid(&wpitch_control, 0, 0, 0, time, 50, 80, 3000, (P2ID & D_INT & D_FILTER), );
+    initPid(&wyaw_control, 0, 0, 0, time, 50, 80, 3000, (P2ID & D_INT & D_FILTER), );
     
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
