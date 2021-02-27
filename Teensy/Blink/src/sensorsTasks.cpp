@@ -14,11 +14,15 @@ float sealevel;
 
 filter filter_gx, filter_gy, filter_gz;
 filter filter_gx2, filter_gy2, filter_gz2;
+dNotchFilter dnotch_gx, dnotch_gy, dnotch_gz; 
+dNotchFilter dnotch_gx2, dnotch_gy2, dnotch_gz2;
+
 filter filter_roll, filter_pitch, filter_yaw;
 
 filter filter_ax, filter_ay, filter_az;
+dNotchFilter dnotch_ax, dnotch_ay, dnotch_az; 
 
-dNotchFilter dnotch_gx, dnotch_gy, dnotch_gz, dnotch_gx2, dnotch_gy2, dnotch_gz2 ;
+
 timer timer_accel, timer_gyro, timer_mag, timer_rpy;
 float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
 
@@ -26,13 +30,16 @@ float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
 void accelInterrupt(){
     readAcc(&myIMU);
     
-    /*ax = computeFilter(&filter_ax, myIMU.ax);
+    ax = computeFilter(&filter_ax, myIMU.ax);
     ay = computeFilter(&filter_ay, myIMU.ay);
-    az = computeFilter(&filter_az, myIMU.az);*/
-
+    az = computeFilter(&filter_az, myIMU.az);
+    /*
     ax = myIMU.ax;
     ay = myIMU.ay;
-    az = myIMU.az;
+    az = myIMU.az;*/
+    ax = computeDNotch(&dnotch_ax, ax);
+    ay = computeDNotch(&dnotch_ay, ay);
+    az = computeDNotch(&dnotch_az, az);
 
     setReg(ACC_X,(float)(ax));
     setReg(ACC_Y,(float)(ay));
@@ -44,7 +51,7 @@ void gyroInterrupt(){
     
     int quanti = 1;
 
-    /*gx = computeFilter(&filter_gx, myIMU.gx);
+    gx = computeFilter(&filter_gx, myIMU.gx);
     gy = computeFilter(&filter_gy, myIMU.gy);
     gz = computeFilter(&filter_gz, myIMU.gz);
 
@@ -60,11 +67,11 @@ void gyroInterrupt(){
 
     gx = computeDNotch(&dnotch_gx2, gx);
     gy = computeDNotch(&dnotch_gy2, gy);
-    gz = computeDNotch(&dnotch_gz2, gz);*/
-
+    gz = computeDNotch(&dnotch_gz2, gz);
+    /*
     gx = myIMU.gx;
     gy = myIMU.gy;
-    gz = myIMU.gz;
+    gz = myIMU.gz;*/
 
     gx /= 5;
     gy /= 5;
@@ -174,6 +181,10 @@ void initSensorsTasks(){
     initDNotchFilter(&dnotch_gx2, 64, 50, 1000, 1, 5);
     initDNotchFilter(&dnotch_gy2, 64, 50, 1000, 1, 5);
     initDNotchFilter(&dnotch_gz2, 64, 50, 1000, 1, 5);
+    
+    initDNotchFilter(&dnotch_ax, 64, 40, 1000, 1, 10);
+    initDNotchFilter(&dnotch_ay, 64, 40, 1000, 1, 10);
+    initDNotchFilter(&dnotch_az, 64, 40, 1000, 1, 10);
 
     calibrateGyro(&myIMU);
     calibrateAccel(&myIMU);
