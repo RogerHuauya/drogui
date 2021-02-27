@@ -49,19 +49,28 @@ void debugInterrupt(){
     if( c == 'b' ) setReg(CAL_ACC_TRG,1);
     if( c == 'c' ) setReg(CAL_MAG_TRG,1);
 
-    /*Serial.print(gx,DEC);
+    Serial.print(gx,DEC);
     Serial.print("\t");
     Serial.print(gy,DEC);
     Serial.print("\t");
     Serial.print(gz,DEC);
-    Serial.print("\n");*/
-
-    Serial.print(roll,DEC);
+    Serial.print("\t");
+    Serial.print(ax,DEC);
+    Serial.print("\t");
+    Serial.print(ay,DEC);
+    Serial.print("\t");
+    Serial.print(az,DEC);
+    Serial.print("\t");
+    Serial.print(wroll_control.errd,DEC);
+    Serial.print("\t");
+    Serial.print(wpitch_control.errd,DEC);
+    Serial.print("\n");
+    /*Serial.print(roll,DEC);
     Serial.print("\t");
     Serial.print(pitch,DEC);
     Serial.print("\t");
     Serial.print(yaw,DEC);
-    Serial.print(";\n");
+    Serial.print(";\n");*/
 
 }
 

@@ -85,6 +85,7 @@ void wControlInterrupt(){
     
     setReg(DER_GYRO_X, wroll_control.errd);
     setReg(DER_GYRO_Y, wpitch_control.errd);
+    
 
     /*R = getReg(ROLL_REF);
     P = getReg(PITCH_REF);
