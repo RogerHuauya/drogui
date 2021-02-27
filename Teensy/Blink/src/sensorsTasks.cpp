@@ -188,7 +188,7 @@ void initSensorsTasks(){
 
     calibrateGyro(&myIMU);
     calibrateAccel(&myIMU);
-    calibrateMag(&myIMU);
+    //calibrateMag(&myIMU);
     
 
     initTimer(&timer_accel, &accelInterrupt, 1000);
