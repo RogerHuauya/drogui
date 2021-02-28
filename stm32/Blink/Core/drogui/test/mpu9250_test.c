@@ -15,7 +15,7 @@ char buff[50] = "Hola\n";
 
 void _main(){
     initMpu(&myImu);
-    calibrateGyro(&myImu);
+    calibrateGyro(&myImu); 
     calibrateAccel(&myImu);
     //arm_iir_lattice_init_f32(&my_filter, )
     while(1){
