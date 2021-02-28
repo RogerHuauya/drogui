@@ -1,0 +1,60 @@
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAGFlQU.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"mylib.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.suma,"ax",%progbits
+  18              		.align	1
+  19              		.global	suma
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv5-sp-d16
+  26              	suma:
+  27              	.LVL0:
+  28              	.LFB0:
+  29              		.file 1 "Core/Src/mylib.c"
+   1:Core/Src/mylib.c **** #include "mylib.h"
+   2:Core/Src/mylib.c **** 
+   3:Core/Src/mylib.c **** int suma(int a, int b){
+  30              		.loc 1 3 23 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+   4:Core/Src/mylib.c ****     return a + b;
+  35              		.loc 1 4 5 view .LVU1
+   5:Core/Src/mylib.c **** }...
+  36              		.loc 1 5 1 is_stmt 0 view .LVU2
+  37 0000 0844     		add	r0, r0, r1
+  38              	.LVL1:
+  39              		.loc 1 5 1 view .LVU3
+  40 0002 7047     		bx	lr
+  41              		.cfi_endproc
+  42              	.LFE0:
+  44              		.text
+  45              	.Letext0:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAGFlQU.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 mylib.c
+C:\Users\GUILLE~1\AppData\Local\Temp\ccAGFlQU.s:18     .text.suma:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccAGFlQU.s:26     .text.suma:00000000 suma
+
+NO UNDEFINED SYMBOLS

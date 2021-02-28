@@ -1,0 +1,1133 @@
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"utils.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.bytestoint32,"ax",%progbits
+  18              		.align	1
+  19              		.global	bytestoint32
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv5-sp-d16
+  26              	bytestoint32:
+  27              	.LVL0:
+  28              	.LFB141:
+  29              		.file 1 "Core/drogui/src/utils.c"
+   1:Core/drogui/src/utils.c **** #include "utils.h"
+   2:Core/drogui/src/utils.c **** 
+   3:Core/drogui/src/utils.c **** 
+   4:Core/drogui/src/utils.c **** 
+   5:Core/drogui/src/utils.c **** bool security;
+   6:Core/drogui/src/utils.c **** 
+   7:Core/drogui/src/utils.c **** // Fs = 100Hz
+   8:Core/drogui/src/utils.c **** 
+   9:Core/drogui/src/utils.c **** 
+  10:Core/drogui/src/utils.c **** //Lowpass freq = 10Hz
+  11:Core/drogui/src/utils.c **** float coeffA_10Hz[] = {-6.1252,17.2079,-28.7647,31.1789,-22.3898,10.3890,-2.8462,0.3526};
+  12:Core/drogui/src/utils.c **** float coeffB_10Hz[] = {0.0027,-0.0085,0.0164,-0.0210,0.0231,-0.0210,0.0164,-0.0085,0.0027};
+  13:Core/drogui/src/utils.c **** 
+  14:Core/drogui/src/utils.c **** //Lowpass freq = 8Hz
+  15:Core/drogui/src/utils.c **** float coeffA_8Hz[] = {-5.709477e+00,1.442617e+01,-2.083473e+01,1.853513e+01,-1.014308e+01,3.158832e
+  16:Core/drogui/src/utils.c **** float coeffB_8Hz[] = {2.052007e-03,-5.805565e-03,7.962321e-03,-3.642807e-03,-3.642807e-03,7.962321e
+  17:Core/drogui/src/utils.c **** 
+  18:Core/drogui/src/utils.c **** //Lowpass freq = 2Hz
+  19:Core/drogui/src/utils.c **** float coeffB_2Hz[] = {5.703936e-04,-1.574753e-03,1.011169e-03,1.011169e-03,-1.574753e-03,5.703936e-
+  20:Core/drogui/src/utils.c **** float coeffA_2Hz[] = {-4.763156e+00,9.099046e+00,-8.713129e+00,4.182120e+00,-8.048677e-01};
+  21:Core/drogui/src/utils.c **** 
+  22:Core/drogui/src/utils.c **** //Lowpass freq = 5Hz
+  23:Core/drogui/src/utils.c **** float coeffB_5Hz[] = {1.113479e-03,-4.496681e-03,7.102010e-03,-3.694502e-03,-3.694502e-03,7.102010e
+  24:Core/drogui/src/utils.c **** float coeffA_5Hz[] = {-6.292710e+00,1.716382e+01,-2.628801e+01,2.440554e+01,-1.372942e+01,4.332229e
+  25:Core/drogui/src/utils.c **** 
+  26:Core/drogui/src/utils.c **** 
+  27:Core/drogui/src/utils.c **** // Fs = 1000Hz
+  28:Core/drogui/src/utils.c **** 
+  29:Core/drogui/src/utils.c **** //lowpass freq = 150Hz
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 2
+
+
+  30:Core/drogui/src/utils.c **** float coeffB_150Hz[] = { 0.0056, -0.0070, 0.0170, -0.0072, 0.0100, 0.0100, -0.0072, 0.0170 , -0.007
+  31:Core/drogui/src/utils.c **** float coeffA_150Hz[] = { -5.3336, 14.3803, -24.7331, 29.5687, -25.2823, 15.4142, -6.4538, 1.6872, -
+  32:Core/drogui/src/utils.c **** 
+  33:Core/drogui/src/utils.c **** //Lowpass freq  = 100 Hz
+  34:Core/drogui/src/utils.c **** float coeffB_100Hz[] = { 0.0027, -0.0085, 0.0164, -0.0210, 0.0231, -0.0210, 0.0164, -0.0085, 0.0027
+  35:Core/drogui/src/utils.c **** float coeffA_100Hz[] = { -6.1252, 17.2079, -28.7647, 31.1789, -22.3898, 10.3890, -2.8462, 0.3526 };
+  36:Core/drogui/src/utils.c **** 
+  37:Core/drogui/src/utils.c **** //Lowpass freq = 300 Hz
+  38:Core/drogui/src/utils.c **** float coeffB_300Hz[] = { 0.0523, 0.3005, 0.9285, 1.9192, 2.8985, 3.3135, 2.8985, 1.9192, 0.9285, 0.
+  39:Core/drogui/src/utils.c **** float coeffA_300Hz[] = { 1.2129, 3.5334, 2.4263, 3.9286, 1.3120, 1.8104, 0.0802, 0.3968, -0.0573, 0
+  40:Core/drogui/src/utils.c **** 
+  41:Core/drogui/src/utils.c **** 
+  42:Core/drogui/src/utils.c **** // Fs = 500Hz
+  43:Core/drogui/src/utils.c **** 
+  44:Core/drogui/src/utils.c **** float coeffB_50Hz[] = {2.712427e-03,-8.492766e-03,1.639262e-02,-2.098534e-02,2.308792e-02,-2.098534
+  45:Core/drogui/src/utils.c **** float coeffA_50Hz[] = {-6.125230e+00,1.720786e+01,-2.876469e+01,3.117890e+01,-2.238977e+01,1.038896
+  46:Core/drogui/src/utils.c **** 
+  47:Core/drogui/src/utils.c **** 
+  48:Core/drogui/src/utils.c **** 
+  49:Core/drogui/src/utils.c **** int32_t bytestoint32(uint8_t *bytesint32){
+  30              		.loc 1 49 42 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  50:Core/drogui/src/utils.c ****     int32_t val = (int32_t) (int32_t)(bytesint32[0]) << 24 |
+  35              		.loc 1 50 5 view .LVU1
+  36              		.loc 1 50 49 is_stmt 0 view .LVU2
+  37 0000 0278     		ldrb	r2, [r0]	@ zero_extendqisi2
+  51:Core/drogui/src/utils.c ****             (int32_t)(bytesint32[1]) << 16 |
+  38              		.loc 1 51 33 view .LVU3
+  39 0002 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+  40              		.loc 1 51 38 view .LVU4
+  41 0004 1B04     		lsls	r3, r3, #16
+  50:Core/drogui/src/utils.c ****     int32_t val = (int32_t) (int32_t)(bytesint32[0]) << 24 |
+  42              		.loc 1 50 60 view .LVU5
+  43 0006 43EA0263 		orr	r3, r3, r2, lsl #24
+  52:Core/drogui/src/utils.c ****             (int32_t)(bytesint32[2]) << 8 |
+  44              		.loc 1 52 33 view .LVU6
+  45 000a 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
+  51:Core/drogui/src/utils.c ****             (int32_t)(bytesint32[1]) << 16 |
+  46              		.loc 1 51 44 view .LVU7
+  47 000c 43EA0223 		orr	r3, r3, r2, lsl #8
+  53:Core/drogui/src/utils.c ****             (int32_t)(bytesint32[3]);
+  48              		.loc 1 53 33 view .LVU8
+  49 0010 C078     		ldrb	r0, [r0, #3]	@ zero_extendqisi2
+  50              	.LVL1:
+  54:Core/drogui/src/utils.c ****     return val;
+  51              		.loc 1 54 5 is_stmt 1 view .LVU9
+  55:Core/drogui/src/utils.c **** }
+  52              		.loc 1 55 1 is_stmt 0 view .LVU10
+  53 0012 1843     		orrs	r0, r0, r3
+  54              	.LVL2:
+  55              		.loc 1 55 1 view .LVU11
+  56 0014 7047     		bx	lr
+  57              		.cfi_endproc
+  58              	.LFE141:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 3
+
+
+  60              		.section	.text.int32tobytes,"ax",%progbits
+  61              		.align	1
+  62              		.global	int32tobytes
+  63              		.syntax unified
+  64              		.thumb
+  65              		.thumb_func
+  66              		.fpu fpv5-sp-d16
+  68              	int32tobytes:
+  69              	.LVL3:
+  70              	.LFB142:
+  56:Core/drogui/src/utils.c **** 
+  57:Core/drogui/src/utils.c **** void int32tobytes(int32_t n,uint8_t *bytesint32){
+  71              		.loc 1 57 49 is_stmt 1 view -0
+  72              		.cfi_startproc
+  73              		@ args = 0, pretend = 0, frame = 0
+  74              		@ frame_needed = 0, uses_anonymous_args = 0
+  75              		@ link register save eliminated.
+  58:Core/drogui/src/utils.c ****     bytesint32[0] =(uint8_t) (n >> 24) & 0xFF;
+  76              		.loc 1 58 5 view .LVU13
+  77              		.loc 1 58 20 is_stmt 0 view .LVU14
+  78 0000 030E     		lsrs	r3, r0, #24
+  79              		.loc 1 58 19 view .LVU15
+  80 0002 0B70     		strb	r3, [r1]
+  59:Core/drogui/src/utils.c ****     bytesint32[1] =(uint8_t) (n >> 16) & 0xFF;
+  81              		.loc 1 59 5 is_stmt 1 view .LVU16
+  82              		.loc 1 59 20 is_stmt 0 view .LVU17
+  83 0004 C0F30743 		ubfx	r3, r0, #16, #8
+  84              		.loc 1 59 19 view .LVU18
+  85 0008 4B70     		strb	r3, [r1, #1]
+  60:Core/drogui/src/utils.c ****     bytesint32[2] =(uint8_t) (n >> 8) & 0xFF;
+  86              		.loc 1 60 5 is_stmt 1 view .LVU19
+  87              		.loc 1 60 20 is_stmt 0 view .LVU20
+  88 000a C0F30723 		ubfx	r3, r0, #8, #8
+  89              		.loc 1 60 19 view .LVU21
+  90 000e 8B70     		strb	r3, [r1, #2]
+  61:Core/drogui/src/utils.c ****     bytesint32[3] =(uint8_t)  n & 0xFF;
+  91              		.loc 1 61 5 is_stmt 1 view .LVU22
+  92              		.loc 1 61 19 is_stmt 0 view .LVU23
+  93 0010 C870     		strb	r0, [r1, #3]
+  62:Core/drogui/src/utils.c **** }
+  94              		.loc 1 62 1 view .LVU24
+  95 0012 7047     		bx	lr
+  96              		.cfi_endproc
+  97              	.LFE142:
+  99              		.section	.text.floattobytes,"ax",%progbits
+ 100              		.align	1
+ 101              		.global	floattobytes
+ 102              		.syntax unified
+ 103              		.thumb
+ 104              		.thumb_func
+ 105              		.fpu fpv5-sp-d16
+ 107              	floattobytes:
+ 108              	.LVL4:
+ 109              	.LFB143:
+  63:Core/drogui/src/utils.c **** 
+  64:Core/drogui/src/utils.c **** void floattobytes(float n, uint8_t* bytesfloat){
+ 110              		.loc 1 64 48 is_stmt 1 view -0
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 4
+
+
+ 111              		.cfi_startproc
+ 112              		@ args = 0, pretend = 0, frame = 0
+ 113              		@ frame_needed = 0, uses_anonymous_args = 0
+ 114              		@ link register save eliminated.
+  65:Core/drogui/src/utils.c ****     memcpy(bytesfloat, &n, sizeof n);
+ 115              		.loc 1 65 5 view .LVU26
+ 116 0000 10EE103A 		vmov	r3, s0	@ int
+ 117 0004 0360     		str	r3, [r0]	@ unaligned
+  66:Core/drogui/src/utils.c **** }
+ 118              		.loc 1 66 1 is_stmt 0 view .LVU27
+ 119 0006 7047     		bx	lr
+ 120              		.cfi_endproc
+ 121              	.LFE143:
+ 123              		.section	.text.bytestofloat,"ax",%progbits
+ 124              		.align	1
+ 125              		.global	bytestofloat
+ 126              		.syntax unified
+ 127              		.thumb
+ 128              		.thumb_func
+ 129              		.fpu fpv5-sp-d16
+ 131              	bytestofloat:
+ 132              	.LVL5:
+ 133              	.LFB144:
+  67:Core/drogui/src/utils.c **** 
+  68:Core/drogui/src/utils.c **** float bytestofloat(uint8_t *bytesfloat){
+ 134              		.loc 1 68 40 is_stmt 1 view -0
+ 135              		.cfi_startproc
+ 136              		@ args = 0, pretend = 0, frame = 8
+ 137              		@ frame_needed = 0, uses_anonymous_args = 0
+ 138              		@ link register save eliminated.
+ 139              		.loc 1 68 40 is_stmt 0 view .LVU29
+ 140 0000 82B0     		sub	sp, sp, #8
+ 141              	.LCFI0:
+ 142              		.cfi_def_cfa_offset 8
+  69:Core/drogui/src/utils.c ****     float val;
+ 143              		.loc 1 69 5 is_stmt 1 view .LVU30
+  70:Core/drogui/src/utils.c ****     memcpy(&val, bytesfloat, sizeof(val));
+ 144              		.loc 1 70 5 view .LVU31
+ 145 0002 0368     		ldr	r3, [r0]	@ unaligned
+ 146 0004 0193     		str	r3, [sp, #4]
+  71:Core/drogui/src/utils.c ****     return val;
+ 147              		.loc 1 71 5 view .LVU32
+ 148              		.loc 1 71 12 is_stmt 0 view .LVU33
+ 149 0006 00EE103A 		vmov	s0, r3
+  72:Core/drogui/src/utils.c **** }
+ 150              		.loc 1 72 1 view .LVU34
+ 151 000a 02B0     		add	sp, sp, #8
+ 152              	.LCFI1:
+ 153              		.cfi_def_cfa_offset 0
+ 154              		@ sp needed
+ 155 000c 7047     		bx	lr
+ 156              		.cfi_endproc
+ 157              	.LFE144:
+ 159              		.section	.text.getReg,"ax",%progbits
+ 160              		.align	1
+ 161              		.global	getReg
+ 162              		.syntax unified
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 5
+
+
+ 163              		.thumb
+ 164              		.thumb_func
+ 165              		.fpu fpv5-sp-d16
+ 167              	getReg:
+ 168              	.LVL6:
+ 169              	.LFB145:
+  73:Core/drogui/src/utils.c **** 
+  74:Core/drogui/src/utils.c **** float getReg(uint8_t reg){
+ 170              		.loc 1 74 26 is_stmt 1 view -0
+ 171              		.cfi_startproc
+ 172              		@ args = 0, pretend = 0, frame = 0
+ 173              		@ frame_needed = 0, uses_anonymous_args = 0
+ 174              		@ link register save eliminated.
+  75:Core/drogui/src/utils.c ****     /*
+  76:Core/drogui/src/utils.c ****     float val;
+  77:Core/drogui/src/utils.c ****     uint8_t arr[4];
+  78:Core/drogui/src/utils.c ****     for(int i = 0; i < 4 ; i++){
+  79:Core/drogui/src/utils.c ****      arr[i] = i2c1Reg[reg][i];
+  80:Core/drogui/src/utils.c ****     }
+  81:Core/drogui/src/utils.c ****     val = bytestofloat(arr); */
+  82:Core/drogui/src/utils.c ****     return 0; 
+ 175              		.loc 1 82 5 view .LVU36
+  83:Core/drogui/src/utils.c **** }
+ 176              		.loc 1 83 1 is_stmt 0 view .LVU37
+ 177 0000 9FED010A 		vldr.32	s0, .L7
+ 178 0004 7047     		bx	lr
+ 179              	.L8:
+ 180 0006 00BF     		.align	2
+ 181              	.L7:
+ 182 0008 00000000 		.word	0
+ 183              		.cfi_endproc
+ 184              	.LFE145:
+ 186              		.section	.text.setReg,"ax",%progbits
+ 187              		.align	1
+ 188              		.global	setReg
+ 189              		.syntax unified
+ 190              		.thumb
+ 191              		.thumb_func
+ 192              		.fpu fpv5-sp-d16
+ 194              	setReg:
+ 195              	.LVL7:
+ 196              	.LFB146:
+  84:Core/drogui/src/utils.c **** 
+  85:Core/drogui/src/utils.c **** void setReg(uint8_t reg, float val){
+ 197              		.loc 1 85 36 is_stmt 1 view -0
+ 198              		.cfi_startproc
+ 199              		@ args = 0, pretend = 0, frame = 0
+ 200              		@ frame_needed = 0, uses_anonymous_args = 0
+ 201              		@ link register save eliminated.
+  86:Core/drogui/src/utils.c ****     /*
+  87:Core/drogui/src/utils.c ****     uint8_t arr[4];
+  88:Core/drogui/src/utils.c ****     floattobytes(val, arr);
+  89:Core/drogui/src/utils.c **** 
+  90:Core/drogui/src/utils.c ****     for(int i = 0; i < 4 ; i++) i2c1Reg[reg][i] = arr[i];*/
+  91:Core/drogui/src/utils.c ****     return;
+ 202              		.loc 1 91 5 view .LVU39
+  92:Core/drogui/src/utils.c **** }
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 6
+
+
+ 203              		.loc 1 92 1 is_stmt 0 view .LVU40
+ 204 0000 7047     		bx	lr
+ 205              		.cfi_endproc
+ 206              	.LFE146:
+ 208              		.global	__aeabi_f2d
+ 209              		.global	__aeabi_dsub
+ 210              		.global	__aeabi_dadd
+ 211              		.global	__aeabi_dcmpgt
+ 212              		.global	__aeabi_d2f
+ 213              		.section	.text.angle_dif,"ax",%progbits
+ 214              		.align	1
+ 215              		.global	angle_dif
+ 216              		.syntax unified
+ 217              		.thumb
+ 218              		.thumb_func
+ 219              		.fpu fpv5-sp-d16
+ 221              	angle_dif:
+ 222              	.LVL8:
+ 223              	.LFB147:
+  93:Core/drogui/src/utils.c **** 
+  94:Core/drogui/src/utils.c **** 
+  95:Core/drogui/src/utils.c **** float angle_dif(float angle1, float angle2){
+ 224              		.loc 1 95 44 is_stmt 1 view -0
+ 225              		.cfi_startproc
+ 226              		@ args = 0, pretend = 0, frame = 0
+ 227              		@ frame_needed = 0, uses_anonymous_args = 0
+ 228              		.loc 1 95 44 is_stmt 0 view .LVU42
+ 229 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 230              	.LCFI2:
+ 231              		.cfi_def_cfa_offset 40
+ 232              		.cfi_offset 3, -40
+ 233              		.cfi_offset 4, -36
+ 234              		.cfi_offset 5, -32
+ 235              		.cfi_offset 6, -28
+ 236              		.cfi_offset 7, -24
+ 237              		.cfi_offset 8, -20
+ 238              		.cfi_offset 9, -16
+ 239              		.cfi_offset 10, -12
+ 240              		.cfi_offset 11, -8
+ 241              		.cfi_offset 14, -4
+ 242 0004 2DED048B 		vpush.64	{d8, d9}
+ 243              	.LCFI3:
+ 244              		.cfi_def_cfa_offset 56
+ 245              		.cfi_offset 80, -56
+ 246              		.cfi_offset 81, -52
+ 247              		.cfi_offset 82, -48
+ 248              		.cfi_offset 83, -44
+ 249 0008 F0EE408A 		vmov.f32	s17, s0
+ 250 000c B0EE608A 		vmov.f32	s16, s1
+  96:Core/drogui/src/utils.c ****     if(angle1 > angle2){
+ 251              		.loc 1 96 5 is_stmt 1 view .LVU43
+ 252              		.loc 1 96 7 is_stmt 0 view .LVU44
+ 253 0010 B4EEE00A 		vcmpe.f32	s0, s1
+ 254 0014 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 255 0018 3EDD     		ble	.L20
+  97:Core/drogui/src/utils.c ****         if((angle1 - angle2) > (2*pi - angle1 + angle2)) return -2*pi + angle1 - angle2;
+ 256              		.loc 1 97 9 is_stmt 1 view .LVU45
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 7
+
+
+ 257              		.loc 1 97 20 is_stmt 0 view .LVU46
+ 258 001a 30EE609A 		vsub.f32	s18, s0, s1
+ 259 001e 19EE100A 		vmov	r0, s18
+ 260 0022 FFF7FEFF 		bl	__aeabi_f2d
+ 261              	.LVL9:
+ 262              		.loc 1 97 20 view .LVU47
+ 263 0026 8246     		mov	r10, r0
+ 264 0028 8B46     		mov	fp, r1
+ 265              		.loc 1 97 38 view .LVU48
+ 266 002a 18EE900A 		vmov	r0, s17
+ 267 002e FFF7FEFF 		bl	__aeabi_f2d
+ 268              	.LVL10:
+ 269 0032 0646     		mov	r6, r0
+ 270 0034 0F46     		mov	r7, r1
+ 271 0036 0246     		mov	r2, r0
+ 272 0038 0B46     		mov	r3, r1
+ 273 003a 2FA1     		adr	r1, .L23
+ 274 003c D1E90001 		ldrd	r0, [r1]
+ 275 0040 FFF7FEFF 		bl	__aeabi_dsub
+ 276              	.LVL11:
+ 277 0044 8046     		mov	r8, r0
+ 278 0046 8946     		mov	r9, r1
+ 279              		.loc 1 97 47 view .LVU49
+ 280 0048 18EE100A 		vmov	r0, s16
+ 281 004c FFF7FEFF 		bl	__aeabi_f2d
+ 282              	.LVL12:
+ 283 0050 0446     		mov	r4, r0
+ 284 0052 0D46     		mov	r5, r1
+ 285 0054 0246     		mov	r2, r0
+ 286 0056 0B46     		mov	r3, r1
+ 287 0058 4046     		mov	r0, r8
+ 288 005a 4946     		mov	r1, r9
+ 289 005c FFF7FEFF 		bl	__aeabi_dadd
+ 290              	.LVL13:
+ 291 0060 0246     		mov	r2, r0
+ 292 0062 0B46     		mov	r3, r1
+ 293              		.loc 1 97 11 view .LVU50
+ 294 0064 5046     		mov	r0, r10
+ 295 0066 5946     		mov	r1, fp
+ 296 0068 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 297              	.LVL14:
+ 298 006c 70B1     		cbz	r0, .L10
+ 299              		.loc 1 97 58 is_stmt 1 discriminator 1 view .LVU51
+ 300              		.loc 1 97 71 is_stmt 0 discriminator 1 view .LVU52
+ 301 006e 22A3     		adr	r3, .L23
+ 302 0070 D3E90023 		ldrd	r2, [r3]
+ 303 0074 3046     		mov	r0, r6
+ 304 0076 3946     		mov	r1, r7
+ 305 0078 FFF7FEFF 		bl	__aeabi_dsub
+ 306              	.LVL15:
+ 307              		.loc 1 97 80 discriminator 1 view .LVU53
+ 308 007c 2246     		mov	r2, r4
+ 309 007e 2B46     		mov	r3, r5
+ 310 0080 FFF7FEFF 		bl	__aeabi_dsub
+ 311              	.LVL16:
+ 312 0084 FFF7FEFF 		bl	__aeabi_d2f
+ 313              	.LVL17:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 8
+
+
+ 314 0088 09EE100A 		vmov	s18, r0
+ 315              	.L10:
+  98:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+  99:Core/drogui/src/utils.c ****     }
+ 100:Core/drogui/src/utils.c ****     else{
+ 101:Core/drogui/src/utils.c ****         if((angle2 - angle1) > (2*pi - angle2 + angle1)) return 2*pi - angle2 + angle1;
+ 102:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 103:Core/drogui/src/utils.c ****     }
+ 104:Core/drogui/src/utils.c **** }
+ 316              		.loc 1 104 1 view .LVU54
+ 317 008c B0EE490A 		vmov.f32	s0, s18
+ 318 0090 BDEC048B 		vldm	sp!, {d8-d9}
+ 319              	.LCFI4:
+ 320              		.cfi_remember_state
+ 321              		.cfi_restore 82
+ 322              		.cfi_restore 83
+ 323              		.cfi_restore 80
+ 324              		.cfi_restore 81
+ 325              		.cfi_def_cfa_offset 40
+ 326              	.LVL18:
+ 327              		.loc 1 104 1 view .LVU55
+ 328 0094 BDE8F88F 		pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 329              	.LVL19:
+ 330              	.L20:
+ 331              	.LCFI5:
+ 332              		.cfi_restore_state
+ 101:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 333              		.loc 1 101 9 is_stmt 1 view .LVU56
+ 101:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 334              		.loc 1 101 20 is_stmt 0 view .LVU57
+ 335 0098 70EEC07A 		vsub.f32	s15, s1, s0
+ 336 009c 17EE900A 		vmov	r0, s15
+ 337 00a0 FFF7FEFF 		bl	__aeabi_f2d
+ 338              	.LVL20:
+ 101:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 339              		.loc 1 101 20 view .LVU58
+ 340 00a4 0646     		mov	r6, r0
+ 341 00a6 0F46     		mov	r7, r1
+ 101:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 342              		.loc 1 101 38 view .LVU59
+ 343 00a8 18EE100A 		vmov	r0, s16
+ 344 00ac FFF7FEFF 		bl	__aeabi_f2d
+ 345              	.LVL21:
+ 346 00b0 0246     		mov	r2, r0
+ 347 00b2 0B46     		mov	r3, r1
+ 348 00b4 10A1     		adr	r1, .L23
+ 349 00b6 D1E90001 		ldrd	r0, [r1]
+ 350 00ba FFF7FEFF 		bl	__aeabi_dsub
+ 351              	.LVL22:
+ 352 00be 0446     		mov	r4, r0
+ 353 00c0 0D46     		mov	r5, r1
+ 101:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 354              		.loc 1 101 47 view .LVU60
+ 355 00c2 18EE900A 		vmov	r0, s17
+ 356 00c6 FFF7FEFF 		bl	__aeabi_f2d
+ 357              	.LVL23:
+ 358 00ca 2246     		mov	r2, r4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 9
+
+
+ 359 00cc 2B46     		mov	r3, r5
+ 360 00ce FFF7FEFF 		bl	__aeabi_dadd
+ 361              	.LVL24:
+ 362 00d2 0446     		mov	r4, r0
+ 363 00d4 0D46     		mov	r5, r1
+ 101:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 364              		.loc 1 101 11 view .LVU61
+ 365 00d6 0246     		mov	r2, r0
+ 366 00d8 0B46     		mov	r3, r1
+ 367 00da 3046     		mov	r0, r6
+ 368 00dc 3946     		mov	r1, r7
+ 369 00de FFF7FEFF 		bl	__aeabi_dcmpgt
+ 370              	.LVL25:
+ 371 00e2 30B1     		cbz	r0, .L21
+ 101:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 372              		.loc 1 101 58 is_stmt 1 discriminator 1 view .LVU62
+ 101:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 373              		.loc 1 101 79 is_stmt 0 discriminator 1 view .LVU63
+ 374 00e4 2046     		mov	r0, r4
+ 375 00e6 2946     		mov	r1, r5
+ 376 00e8 FFF7FEFF 		bl	__aeabi_d2f
+ 377              	.LVL26:
+ 378 00ec 09EE100A 		vmov	s18, r0
+ 379 00f0 CCE7     		b	.L10
+ 380              	.L21:
+ 102:Core/drogui/src/utils.c ****     }
+ 381              		.loc 1 102 14 is_stmt 1 view .LVU64
+ 102:Core/drogui/src/utils.c ****     }
+ 382              		.loc 1 102 28 is_stmt 0 view .LVU65
+ 383 00f2 38EEC89A 		vsub.f32	s18, s17, s16
+ 384 00f6 C9E7     		b	.L10
+ 385              	.L24:
+ 386              		.align	3
+ 387              	.L23:
+ 388 00f8 182D4454 		.word	1413754136
+ 389 00fc FB211940 		.word	1075388923
+ 390              		.cfi_endproc
+ 391              	.LFE147:
+ 393              		.section	.text.getEuler,"ax",%progbits
+ 394              		.align	1
+ 395              		.global	getEuler
+ 396              		.syntax unified
+ 397              		.thumb
+ 398              		.thumb_func
+ 399              		.fpu fpv5-sp-d16
+ 401              	getEuler:
+ 402              	.LVL27:
+ 403              	.LFB148:
+ 105:Core/drogui/src/utils.c **** 
+ 106:Core/drogui/src/utils.c **** void getEuler(float q0, float q1, float q2, float q3, float* roll, float *pitch, float* yaw){
+ 404              		.loc 1 106 93 is_stmt 1 view -0
+ 405              		.cfi_startproc
+ 406              		@ args = 0, pretend = 0, frame = 0
+ 407              		@ frame_needed = 0, uses_anonymous_args = 0
+ 408              		.loc 1 106 93 is_stmt 0 view .LVU67
+ 409 0000 70B5     		push	{r4, r5, r6, lr}
+ 410              	.LCFI6:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 10
+
+
+ 411              		.cfi_def_cfa_offset 16
+ 412              		.cfi_offset 4, -16
+ 413              		.cfi_offset 5, -12
+ 414              		.cfi_offset 6, -8
+ 415              		.cfi_offset 14, -4
+ 416 0002 2DED0A8B 		vpush.64	{d8, d9, d10, d11, d12}
+ 417              	.LCFI7:
+ 418              		.cfi_def_cfa_offset 56
+ 419              		.cfi_offset 80, -56
+ 420              		.cfi_offset 81, -52
+ 421              		.cfi_offset 82, -48
+ 422              		.cfi_offset 83, -44
+ 423              		.cfi_offset 84, -40
+ 424              		.cfi_offset 85, -36
+ 425              		.cfi_offset 86, -32
+ 426              		.cfi_offset 87, -28
+ 427              		.cfi_offset 88, -24
+ 428              		.cfi_offset 89, -20
+ 429 0006 B0EE408A 		vmov.f32	s16, s0
+ 430 000a B0EE609A 		vmov.f32	s18, s1
+ 431 000e B0EE41AA 		vmov.f32	s20, s2
+ 432 0012 F0EE618A 		vmov.f32	s17, s3
+ 433 0016 0646     		mov	r6, r0
+ 434 0018 0D46     		mov	r5, r1
+ 435 001a 1446     		mov	r4, r2
+ 107:Core/drogui/src/utils.c **** 	
+ 108:Core/drogui/src/utils.c ****     // roll (x-axis rotation)
+ 109:Core/drogui/src/utils.c ****     float sinr_cosp = 2 * (q0 * q1 + q2 * q3);
+ 436              		.loc 1 109 5 is_stmt 1 view .LVU68
+ 437              		.loc 1 109 31 is_stmt 0 view .LVU69
+ 438 001c 60EE207A 		vmul.f32	s15, s0, s1
+ 439              		.loc 1 109 41 view .LVU70
+ 440 0020 21EE217A 		vmul.f32	s14, s2, s3
+ 441              		.loc 1 109 36 view .LVU71
+ 442 0024 77EE877A 		vadd.f32	s15, s15, s14
+ 443              		.loc 1 109 11 view .LVU72
+ 444 0028 77EEA7AA 		vadd.f32	s21, s15, s15
+ 445              	.LVL28:
+ 110:Core/drogui/src/utils.c ****     float cosr_cosp = 1 - 2 * (q1 * q1 + q2 * q2);
+ 446              		.loc 1 110 5 is_stmt 1 view .LVU73
+ 447              		.loc 1 110 35 is_stmt 0 view .LVU74
+ 448 002c 60EEA07A 		vmul.f32	s15, s1, s1
+ 449              		.loc 1 110 45 view .LVU75
+ 450 0030 61EE019A 		vmul.f32	s19, s2, s2
+ 451              		.loc 1 110 40 view .LVU76
+ 452 0034 77EEA97A 		vadd.f32	s15, s15, s19
+ 453              		.loc 1 110 29 view .LVU77
+ 454 0038 77EEA77A 		vadd.f32	s15, s15, s15
+ 455              		.loc 1 110 11 view .LVU78
+ 456 003c B7EE00CA 		vmov.f32	s24, #1.0e+0
+ 457              	.LVL29:
+ 111:Core/drogui/src/utils.c ****     *roll = atan2(sinr_cosp, cosr_cosp);
+ 458              		.loc 1 111 5 is_stmt 1 view .LVU79
+ 459              		.loc 1 111 13 is_stmt 0 view .LVU80
+ 460 0040 7CEE677A 		vsub.f32	s15, s24, s15
+ 461              	.LVL30:
+ 462              		.loc 1 111 13 view .LVU81
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 11
+
+
+ 463 0044 17EE900A 		vmov	r0, s15
+ 464              	.LVL31:
+ 465              		.loc 1 111 13 view .LVU82
+ 466 0048 FFF7FEFF 		bl	__aeabi_f2d
+ 467              	.LVL32:
+ 468              		.loc 1 111 13 view .LVU83
+ 469 004c 41EC1B0B 		vmov	d11, r0, r1
+ 470 0050 1AEE900A 		vmov	r0, s21
+ 471 0054 FFF7FEFF 		bl	__aeabi_f2d
+ 472              	.LVL33:
+ 473 0058 B0EE4B1A 		vmov.f32	s2, s22
+ 474 005c F0EE6B1A 		vmov.f32	s3, s23
+ 475 0060 41EC100B 		vmov	d0, r0, r1
+ 476 0064 FFF7FEFF 		bl	atan2
+ 477              	.LVL34:
+ 478 0068 51EC100B 		vmov	r0, r1, d0
+ 479 006c FFF7FEFF 		bl	__aeabi_d2f
+ 480              	.LVL35:
+ 481              		.loc 1 111 11 view .LVU84
+ 482 0070 3060     		str	r0, [r6]	@ float
+ 112:Core/drogui/src/utils.c **** 
+ 113:Core/drogui/src/utils.c ****     // pitch (y-axis rotation)
+ 114:Core/drogui/src/utils.c ****     float sinp = 2 * (q0 * q2 - q3 * q1);
+ 483              		.loc 1 114 5 is_stmt 1 view .LVU85
+ 484              		.loc 1 114 26 is_stmt 0 view .LVU86
+ 485 0072 68EE0A7A 		vmul.f32	s15, s16, s20
+ 486              		.loc 1 114 36 view .LVU87
+ 487 0076 29EE287A 		vmul.f32	s14, s18, s17
+ 488              		.loc 1 114 31 view .LVU88
+ 489 007a 77EEC77A 		vsub.f32	s15, s15, s14
+ 490              		.loc 1 114 11 view .LVU89
+ 491 007e 77EEA77A 		vadd.f32	s15, s15, s15
+ 492              	.LVL36:
+ 115:Core/drogui/src/utils.c ****     if (fabs(sinp) >= 1)
+ 493              		.loc 1 115 5 is_stmt 1 view .LVU90
+ 494              		.loc 1 115 9 is_stmt 0 view .LVU91
+ 495 0082 B0EEE77A 		vabs.f32	s14, s15
+ 496              		.loc 1 115 8 view .LVU92
+ 497 0086 B4EECC7A 		vcmpe.f32	s14, s24
+ 498 008a F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 499 008e 34DB     		blt	.L34
+ 116:Core/drogui/src/utils.c ****         *pitch = copysign(pi / 2, sinp); // use 90 degrees if out of range
+ 500              		.loc 1 116 9 is_stmt 1 view .LVU93
+ 501              		.loc 1 116 18 is_stmt 0 view .LVU94
+ 502 0090 F5EEC07A 		vcmpe.f32	s15, #0
+ 503 0094 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 504 0098 2DD4     		bmi	.L37
+ 505 009a 1F4B     		ldr	r3, .L38
+ 506              	.L28:
+ 507              		.loc 1 116 16 discriminator 4 view .LVU95
+ 508 009c 2B60     		str	r3, [r5]	@ float
+ 509              	.LVL37:
+ 510              	.L30:
+ 117:Core/drogui/src/utils.c ****     else
+ 118:Core/drogui/src/utils.c ****         *pitch = asin(sinp);
+ 119:Core/drogui/src/utils.c **** 
+ 120:Core/drogui/src/utils.c ****     // yaw (z-axis rotation)
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 12
+
+
+ 121:Core/drogui/src/utils.c ****     float siny_cosp = 2 * (q0 * q3 + q1 * q2);
+ 511              		.loc 1 121 5 is_stmt 1 view .LVU96
+ 512              		.loc 1 121 31 is_stmt 0 view .LVU97
+ 513 009e 28EE288A 		vmul.f32	s16, s16, s17
+ 514              	.LVL38:
+ 515              		.loc 1 121 41 view .LVU98
+ 516 00a2 29EE0A9A 		vmul.f32	s18, s18, s20
+ 517              	.LVL39:
+ 518              		.loc 1 121 36 view .LVU99
+ 519 00a6 38EE098A 		vadd.f32	s16, s16, s18
+ 520              		.loc 1 121 11 view .LVU100
+ 521 00aa 38EE088A 		vadd.f32	s16, s16, s16
+ 522              	.LVL40:
+ 122:Core/drogui/src/utils.c ****     float cosy_cosp = 1 - 2 * (q2 * q2 + q3 * q3);
+ 523              		.loc 1 122 5 is_stmt 1 view .LVU101
+ 524              		.loc 1 122 45 is_stmt 0 view .LVU102
+ 525 00ae 68EEA88A 		vmul.f32	s17, s17, s17
+ 526              	.LVL41:
+ 527              		.loc 1 122 40 view .LVU103
+ 528 00b2 79EEA88A 		vadd.f32	s17, s19, s17
+ 529              		.loc 1 122 29 view .LVU104
+ 530 00b6 78EEA88A 		vadd.f32	s17, s17, s17
+ 531              	.LVL42:
+ 123:Core/drogui/src/utils.c ****     *yaw = atan2(siny_cosp, cosy_cosp);
+ 532              		.loc 1 123 5 is_stmt 1 view .LVU105
+ 533              		.loc 1 123 12 is_stmt 0 view .LVU106
+ 534 00ba F7EE007A 		vmov.f32	s15, #1.0e+0
+ 535 00be 77EEE87A 		vsub.f32	s15, s15, s17
+ 536              	.LVL43:
+ 537              		.loc 1 123 12 view .LVU107
+ 538 00c2 17EE900A 		vmov	r0, s15
+ 539 00c6 FFF7FEFF 		bl	__aeabi_f2d
+ 540              	.LVL44:
+ 541              		.loc 1 123 12 view .LVU108
+ 542 00ca 41EC190B 		vmov	d9, r0, r1
+ 543 00ce 18EE100A 		vmov	r0, s16
+ 544 00d2 FFF7FEFF 		bl	__aeabi_f2d
+ 545              	.LVL45:
+ 546 00d6 B0EE491A 		vmov.f32	s2, s18
+ 547 00da F0EE691A 		vmov.f32	s3, s19
+ 548 00de 41EC100B 		vmov	d0, r0, r1
+ 549 00e2 FFF7FEFF 		bl	atan2
+ 550              	.LVL46:
+ 551 00e6 51EC100B 		vmov	r0, r1, d0
+ 552 00ea FFF7FEFF 		bl	__aeabi_d2f
+ 553              	.LVL47:
+ 554              		.loc 1 123 10 view .LVU109
+ 555 00ee 2060     		str	r0, [r4]	@ float
+ 124:Core/drogui/src/utils.c **** }
+ 556              		.loc 1 124 1 view .LVU110
+ 557 00f0 BDEC0A8B 		vldm	sp!, {d8-d12}
+ 558              	.LCFI8:
+ 559              		.cfi_remember_state
+ 560              		.cfi_restore 88
+ 561              		.cfi_restore 89
+ 562              		.cfi_restore 86
+ 563              		.cfi_restore 87
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 13
+
+
+ 564              		.cfi_restore 84
+ 565              		.cfi_restore 85
+ 566              		.cfi_restore 82
+ 567              		.cfi_restore 83
+ 568              		.cfi_restore 80
+ 569              		.cfi_restore 81
+ 570              		.cfi_def_cfa_offset 16
+ 571              	.LVL48:
+ 572              		.loc 1 124 1 view .LVU111
+ 573 00f4 70BD     		pop	{r4, r5, r6, pc}
+ 574              	.LVL49:
+ 575              	.L37:
+ 576              	.LCFI9:
+ 577              		.cfi_restore_state
+ 116:Core/drogui/src/utils.c ****     else
+ 578              		.loc 1 116 18 view .LVU112
+ 579 00f6 094B     		ldr	r3, .L38+4
+ 580 00f8 D0E7     		b	.L28
+ 581              	.L34:
+ 118:Core/drogui/src/utils.c **** 
+ 582              		.loc 1 118 9 is_stmt 1 view .LVU113
+ 118:Core/drogui/src/utils.c **** 
+ 583              		.loc 1 118 18 is_stmt 0 view .LVU114
+ 584 00fa 17EE900A 		vmov	r0, s15
+ 585 00fe FFF7FEFF 		bl	__aeabi_f2d
+ 586              	.LVL50:
+ 118:Core/drogui/src/utils.c **** 
+ 587              		.loc 1 118 18 view .LVU115
+ 588 0102 41EC100B 		vmov	d0, r0, r1
+ 589 0106 FFF7FEFF 		bl	asin
+ 590              	.LVL51:
+ 591 010a 51EC100B 		vmov	r0, r1, d0
+ 592 010e FFF7FEFF 		bl	__aeabi_d2f
+ 593              	.LVL52:
+ 118:Core/drogui/src/utils.c **** 
+ 594              		.loc 1 118 16 view .LVU116
+ 595 0112 2860     		str	r0, [r5]	@ float
+ 596 0114 C3E7     		b	.L30
+ 597              	.L39:
+ 598 0116 00BF     		.align	2
+ 599              	.L38:
+ 600 0118 DB0FC93F 		.word	1070141403
+ 601 011c DB0FC9BF 		.word	-1077342245
+ 602              		.cfi_endproc
+ 603              	.LFE148:
+ 605              		.section	.text.rampValue,"ax",%progbits
+ 606              		.align	1
+ 607              		.global	rampValue
+ 608              		.syntax unified
+ 609              		.thumb
+ 610              		.thumb_func
+ 611              		.fpu fpv5-sp-d16
+ 613              	rampValue:
+ 614              	.LVL53:
+ 615              	.LFB149:
+ 125:Core/drogui/src/utils.c **** 
+ 126:Core/drogui/src/utils.c **** 
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 14
+
+
+ 127:Core/drogui/src/utils.c **** void rampValue(float *var, float desired, float step){
+ 616              		.loc 1 127 54 is_stmt 1 view -0
+ 617              		.cfi_startproc
+ 618              		@ args = 0, pretend = 0, frame = 0
+ 619              		@ frame_needed = 0, uses_anonymous_args = 0
+ 620              		@ link register save eliminated.
+ 128:Core/drogui/src/utils.c **** 
+ 129:Core/drogui/src/utils.c ****     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*va
+ 621              		.loc 1 129 5 view .LVU118
+ 622              		.loc 1 129 12 is_stmt 0 view .LVU119
+ 623 0000 D0ED007A 		vldr.32	s15, [r0]
+ 624              		.loc 1 129 28 view .LVU120
+ 625 0004 30EE670A 		vsub.f32	s0, s0, s15
+ 626              	.LVL54:
+ 627              		.loc 1 129 15 view .LVU121
+ 628 0008 B0EEC07A 		vabs.f32	s14, s0
+ 629              		.loc 1 129 83 view .LVU122
+ 630 000c B4EEE07A 		vcmpe.f32	s14, s1
+ 631 0010 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 632 0014 10DB     		blt	.L41
+ 633              		.loc 1 129 50 discriminator 1 view .LVU123
+ 634 0016 F5EEC00A 		vcmpe.f32	s1, #0
+ 635 001a F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 636 001e 04DD     		ble	.L43
+ 637              		.loc 1 129 50 discriminator 3 view .LVU124
+ 638 0020 B5EEC00A 		vcmpe.f32	s0, #0
+ 639 0024 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 640 0028 10D4     		bmi	.L45
+ 641              	.L43:
+ 642              		.loc 1 129 50 discriminator 6 view .LVU125
+ 643 002a F5EEC00A 		vcmpe.f32	s1, #0
+ 644 002e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 645 0032 06D4     		bmi	.L55
+ 646              		.loc 1 129 50 view .LVU126
+ 647 0034 B0EE600A 		vmov.f32	s0, s1
+ 648              	.L41:
+ 649              		.loc 1 129 12 discriminator 14 view .LVU127
+ 650 0038 37EE800A 		vadd.f32	s0, s15, s0
+ 651 003c 80ED000A 		vstr.32	s0, [r0]
+ 130:Core/drogui/src/utils.c **** }  ...
+ 652              		.loc 1 130 1 discriminator 14 view .LVU128
+ 653 0040 7047     		bx	lr
+ 654              	.L55:
+ 129:Core/drogui/src/utils.c ****     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*va
+ 655              		.loc 1 129 50 discriminator 7 view .LVU129
+ 656 0042 B5EEC00A 		vcmpe.f32	s0, #0
+ 657 0046 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 658 004a 02DD     		ble	.L54
+ 659              	.L45:
+ 129:Core/drogui/src/utils.c ****     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*va
+ 660              		.loc 1 129 50 discriminator 9 view .LVU130
+ 661 004c B1EE600A 		vneg.f32	s0, s1
+ 662 0050 F2E7     		b	.L41
+ 663              	.L54:
+ 129:Core/drogui/src/utils.c ****     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*va
+ 664              		.loc 1 129 50 view .LVU131
+ 665 0052 B0EE600A 		vmov.f32	s0, s1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 15
+
+
+ 666 0056 EFE7     		b	.L41
+ 667              		.cfi_endproc
+ 668              	.LFE149:
+ 670              		.global	coeffA_50Hz
+ 671              		.global	coeffB_50Hz
+ 672              		.global	coeffA_300Hz
+ 673              		.global	coeffB_300Hz
+ 674              		.global	coeffA_100Hz
+ 675              		.global	coeffB_100Hz
+ 676              		.global	coeffA_150Hz
+ 677              		.global	coeffB_150Hz
+ 678              		.global	coeffA_5Hz
+ 679              		.global	coeffB_5Hz
+ 680              		.global	coeffA_2Hz
+ 681              		.global	coeffB_2Hz
+ 682              		.global	coeffB_8Hz
+ 683              		.global	coeffA_8Hz
+ 684              		.global	coeffB_10Hz
+ 685              		.global	coeffA_10Hz
+ 686              		.global	security
+ 687              		.section	.bss.security,"aw",%nobits
+ 690              	security:
+ 691 0000 00       		.space	1
+ 692              		.section	.data.coeffA_100Hz,"aw"
+ 693              		.align	2
+ 696              	coeffA_100Hz:
+ 697 0000 A301C4C0 		.word	-1060896349
+ 698 0004 C7A98941 		.word	1099540935
+ 699 0008 1B1EE6C1 		.word	-1041883621
+ 700 000c 636EF941 		.word	1106865763
+ 701 0010 4F1EB3C1 		.word	-1045225905
+ 702 0014 58392641 		.word	1093024088
+ 703 0018 242836C0 		.word	-1070192604
+ 704 001c FD87B43E 		.word	1052018685
+ 705              		.section	.data.coeffA_10Hz,"aw"
+ 706              		.align	2
+ 709              	coeffA_10Hz:
+ 710 0000 A301C4C0 		.word	-1060896349
+ 711 0004 C7A98941 		.word	1099540935
+ 712 0008 1B1EE6C1 		.word	-1041883621
+ 713 000c 636EF941 		.word	1106865763
+ 714 0010 4F1EB3C1 		.word	-1045225905
+ 715 0014 58392641 		.word	1093024088
+ 716 0018 242836C0 		.word	-1070192604
+ 717 001c FD87B43E 		.word	1052018685
+ 718              		.section	.data.coeffA_150Hz,"aw"
+ 719              		.align	2
+ 722              	coeffA_150Hz:
+ 723 0000 DAACAAC0 		.word	-1062556454
+ 724 0004 B5156641 		.word	1097209269
+ 725 0008 64DDC5C1 		.word	-1043997340
+ 726 000c B38CEC41 		.word	1106021555
+ 727 0010 2742CAC1 		.word	-1043709401
+ 728 0014 90A07641 		.word	1098293392
+ 729 0018 8885CEC0 		.word	-1060207224
+ 730 001c 2BF6D73F 		.word	1071117867
+ 731 0020 F5DB57BE 		.word	-1101538315
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 16
+
+
+ 732              		.section	.data.coeffA_2Hz,"aw"
+ 733              		.align	2
+ 736              	coeffA_2Hz:
+ 737 0000 C66B98C0 		.word	-1063752762
+ 738 0004 B1951141 		.word	1091671473
+ 739 0008 FA680BC1 		.word	-1056216838
+ 740 000c EDD38540 		.word	1082512365
+ 741 0010 CF0B4EBF 		.word	-1085404209
+ 742              		.section	.data.coeffA_300Hz,"aw"
+ 743              		.align	2
+ 746              	coeffA_300Hz:
+ 747 0000 4F409B3F 		.word	1067139151
+ 748 0004 3A236240 		.word	1080173370
+ 749 0008 80481B40 		.word	1075529856
+ 750 000c 2F6E7B40 		.word	1081830959
+ 751 0010 9EEFA73F 		.word	1067970462
+ 752 0014 30BBE73F 		.word	1072151344
+ 753 0018 E63FA43D 		.word	1034174438
+ 754 001c 5F29CB3E 		.word	1053501791
+ 755 0020 68B36ABD 		.word	-1117080728
+ 756 0024 EFC9433D 		.word	1027852783
+ 757              		.section	.data.coeffA_50Hz,"aw"
+ 758              		.align	2
+ 761              	coeffA_50Hz:
+ 762 0000 E201C4C0 		.word	-1060896286
+ 763 0004 B3A98941 		.word	1099540915
+ 764 0008 161EE6C1 		.word	-1041883626
+ 765 000c 636EF941 		.word	1106865763
+ 766 0010 401EB3C1 		.word	-1045225920
+ 767 0014 2E392641 		.word	1093024046
+ 768 0018 F62836C0 		.word	-1070192394
+ 769 001c 2185B43E 		.word	1052017953
+ 770              		.section	.data.coeffA_5Hz,"aw"
+ 771              		.align	2
+ 774              	coeffA_5Hz:
+ 775 0000 E15DC9C0 		.word	-1060545055
+ 776 0004 814F8941 		.word	1099517825
+ 777 0008 D84DD2C1 		.word	-1043182120
+ 778 000c 8C3EC341 		.word	1103314572
+ 779 0010 B4AB5BC1 		.word	-1050956876
+ 780 0014 9FA18A40 		.word	1082827167
+ 781 0018 F06517BF 		.word	-1088985616
+ 782              		.section	.data.coeffA_8Hz,"aw"
+ 783              		.align	2
+ 786              	coeffA_8Hz:
+ 787 0000 09B4B6C0 		.word	-1061768183
+ 788 0004 98D16641 		.word	1097257368
+ 789 0008 87ADA6C1 		.word	-1046041209
+ 790 000c F2479441 		.word	1100236786
+ 791 0010 0E4A22C1 		.word	-1054717426
+ 792 0014 4E2A4A40 		.word	1078602318
+ 793 0018 6308DDBE 		.word	-1092810653
+ 794              		.section	.data.coeffB_100Hz,"aw"
+ 795              		.align	2
+ 798              	coeffB_100Hz:
+ 799 0000 7CF2303B 		.word	993063548
+ 800 0004 96430BBC 		.word	-1140112490
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 17
+
+
+ 801 0008 4B59863C 		.word	1015437643
+ 802 000c 3108ACBC 		.word	-1129576399
+ 803 0010 363CBD3C 		.word	1019034678
+ 804 0014 3108ACBC 		.word	-1129576399
+ 805 0018 4B59863C 		.word	1015437643
+ 806 001c 96430BBC 		.word	-1140112490
+ 807 0020 7CF2303B 		.word	993063548
+ 808              		.section	.data.coeffB_10Hz,"aw"
+ 809              		.align	2
+ 812              	coeffB_10Hz:
+ 813 0000 7CF2303B 		.word	993063548
+ 814 0004 96430BBC 		.word	-1140112490
+ 815 0008 4B59863C 		.word	1015437643
+ 816 000c 3108ACBC 		.word	-1129576399
+ 817 0010 363CBD3C 		.word	1019034678
+ 818 0014 3108ACBC 		.word	-1129576399
+ 819 0018 4B59863C 		.word	1015437643
+ 820 001c 96430BBC 		.word	-1140112490
+ 821 0020 7CF2303B 		.word	993063548
+ 822              		.section	.data.coeffB_150Hz,"aw"
+ 823              		.align	2
+ 826              	coeffB_150Hz:
+ 827 0000 3480B73B 		.word	1001881652
+ 828 0004 4260E5BB 		.word	-1142595518
+ 829 0008 96438B3C 		.word	1015759766
+ 830 000c FAEDEBBB 		.word	-1142166022
+ 831 0010 0AD7233C 		.word	1008981770
+ 832 0014 0AD7233C 		.word	1008981770
+ 833 0018 FAEDEBBB 		.word	-1142166022
+ 834 001c 96438B3C 		.word	1015759766
+ 835 0020 4260E5BB 		.word	-1142595518
+ 836 0024 3480B73B 		.word	1001881652
+ 837              		.section	.data.coeffB_2Hz,"aw"
+ 838              		.align	2
+ 841              	coeffB_2Hz:
+ 842 0000 7786153A 		.word	974489207
+ 843 0004 F167CEBA 		.word	-1160878095
+ 844 0008 3489843A 		.word	981764404
+ 845 000c 3489843A 		.word	981764404
+ 846 0010 F167CEBA 		.word	-1160878095
+ 847 0014 7786153A 		.word	974489207
+ 848              		.section	.data.coeffB_300Hz,"aw"
+ 849              		.align	2
+ 852              	coeffB_300Hz:
+ 853 0000 8638563D 		.word	1029060742
+ 854 0004 23DB993E 		.word	1050270499
+ 855 0008 2DB26D3F 		.word	1064153645
+ 856 000c 58A8F53F 		.word	1073064024
+ 857 0010 06813940 		.word	1077510406
+ 858 0014 62105440 		.word	1079251042
+ 859 0018 06813940 		.word	1077510406
+ 860 001c 58A8F53F 		.word	1073064024
+ 861 0020 2DB26D3F 		.word	1064153645
+ 862 0024 23DB993E 		.word	1050270499
+ 863 0028 8638563D 		.word	1029060742
+ 864              		.section	.data.coeffB_50Hz,"aw"
+ 865              		.align	2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 18
+
+
+ 868              	coeffB_50Hz:
+ 869 0000 F9C2313B 		.word	993116921
+ 870 0004 3E250BBC 		.word	-1140120258
+ 871 0008 D149863C 		.word	1015433681
+ 872 000c 73E9ABBC 		.word	-1129584269
+ 873 0010 E122BD3C 		.word	1019028193
+ 874 0014 73E9ABBC 		.word	-1129584269
+ 875 0018 D149863C 		.word	1015433681
+ 876 001c 3E250BBC 		.word	-1140120258
+ 877 0020 F9C2313B 		.word	993116921
+ 878              		.section	.data.coeffB_5Hz,"aw"
+ 879              		.align	2
+ 882              	coeffB_5Hz:
+ 883 0000 28F2913A 		.word	982643240
+ 884 0004 E55893BB 		.word	-1147971355
+ 885 0008 FAB7E83B 		.word	1005107194
+ 886 000c 751F72BB 		.word	-1150148747
+ 887 0010 751F72BB 		.word	-1150148747
+ 888 0014 FAB7E83B 		.word	1005107194
+ 889 0018 E55893BB 		.word	-1147971355
+ 890 001c 28F2913A 		.word	982643240
+ 891              		.section	.data.coeffB_8Hz,"aw"
+ 892              		.align	2
+ 895              	coeffB_8Hz:
+ 896 0000 F77A063B 		.word	990280439
+ 897 0004 9C3CBEBB 		.word	-1145160548
+ 898 0008 6574023C 		.word	1006793829
+ 899 000c 29BC6EBB 		.word	-1150370775
+ 900 0010 29BC6EBB 		.word	-1150370775
+ 901 0014 6574023C 		.word	1006793829
+ 902 0018 9C3CBEBB 		.word	-1145160548
+ 903 001c F77A063B 		.word	990280439
+ 904              		.text
+ 905              	.Letext0:
+ 906              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 907              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 908              		.file 4 "Core/drogui/include/utils.h"
+ 909              		.file 5 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 19
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 utils.c
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:18     .text.bytestoint32:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:26     .text.bytestoint32:00000000 bytestoint32
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:61     .text.int32tobytes:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:68     .text.int32tobytes:00000000 int32tobytes
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:100    .text.floattobytes:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:107    .text.floattobytes:00000000 floattobytes
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:124    .text.bytestofloat:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:131    .text.bytestofloat:00000000 bytestofloat
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:160    .text.getReg:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:167    .text.getReg:00000000 getReg
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:182    .text.getReg:00000008 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:187    .text.setReg:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:194    .text.setReg:00000000 setReg
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:214    .text.angle_dif:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:221    .text.angle_dif:00000000 angle_dif
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:388    .text.angle_dif:000000f8 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:394    .text.getEuler:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:401    .text.getEuler:00000000 getEuler
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:600    .text.getEuler:00000118 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:606    .text.rampValue:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:613    .text.rampValue:00000000 rampValue
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:761    .data.coeffA_50Hz:00000000 coeffA_50Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:868    .data.coeffB_50Hz:00000000 coeffB_50Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:746    .data.coeffA_300Hz:00000000 coeffA_300Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:852    .data.coeffB_300Hz:00000000 coeffB_300Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:696    .data.coeffA_100Hz:00000000 coeffA_100Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:798    .data.coeffB_100Hz:00000000 coeffB_100Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:722    .data.coeffA_150Hz:00000000 coeffA_150Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:826    .data.coeffB_150Hz:00000000 coeffB_150Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:774    .data.coeffA_5Hz:00000000 coeffA_5Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:882    .data.coeffB_5Hz:00000000 coeffB_5Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:736    .data.coeffA_2Hz:00000000 coeffA_2Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:841    .data.coeffB_2Hz:00000000 coeffB_2Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:895    .data.coeffB_8Hz:00000000 coeffB_8Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:786    .data.coeffA_8Hz:00000000 coeffA_8Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:812    .data.coeffB_10Hz:00000000 coeffB_10Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:709    .data.coeffA_10Hz:00000000 coeffA_10Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:690    .bss.security:00000000 security
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:691    .bss.security:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:693    .data.coeffA_100Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:706    .data.coeffA_10Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:719    .data.coeffA_150Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:733    .data.coeffA_2Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:743    .data.coeffA_300Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:758    .data.coeffA_50Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:771    .data.coeffA_5Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:783    .data.coeffA_8Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:795    .data.coeffB_100Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:809    .data.coeffB_10Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:823    .data.coeffB_150Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:838    .data.coeffB_2Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:849    .data.coeffB_300Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:865    .data.coeffB_50Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:879    .data.coeffB_5Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s:892    .data.coeffB_8Hz:00000000 $d
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIz5kJg.s 			page 20
+
+
+
+UNDEFINED SYMBOLS
+__aeabi_f2d
+__aeabi_dsub
+__aeabi_dadd
+__aeabi_dcmpgt
+__aeabi_d2f
+atan2
+asin
