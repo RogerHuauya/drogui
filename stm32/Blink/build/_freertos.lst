@@ -1,0 +1,70 @@
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc4FPoBr.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"_freertos.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.initGlobal,"ax",%progbits
+  18              		.align	1
+  19              		.global	initGlobal
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv5-sp-d16
+  26              	initGlobal:
+  27              	.LFB178:
+  28              		.file 1 "Core/drogui/src/_freertos.c"
+   1:Core/drogui/src/_freertos.c **** #include "_freertos.h"
+   2:Core/drogui/src/_freertos.c **** 
+   3:Core/drogui/src/_freertos.c **** void initGlobal(){
+  29              		.loc 1 3 18 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+   4:Core/drogui/src/_freertos.c ****     initSystem();
+  38              		.loc 1 4 5 view .LVU1
+  39 0002 FFF7FEFF 		bl	initSystem
+  40              	.LVL0:
+   5:Core/drogui/src/_freertos.c ****     initSensorsTasks();
+  41              		.loc 1 5 5 view .LVU2
+  42 0006 FFF7FEFF 		bl	initSensorsTasks
+  43              	.LVL1:
+   6:Core/drogui/src/_freertos.c **** }
+  44              		.loc 1 6 1 is_stmt 0 view .LVU3
+  45 000a 08BD     		pop	{r3, pc}
+  46              		.cfi_endproc
+  47              	.LFE178:
+  49              		.text
+  50              	.Letext0:
+  51              		.file 2 "Core/drogui/include/_main.h"
+  52              		.file 3 "Core/drogui/include/sensorsTasks.h"
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc4FPoBr.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 _freertos.c
+C:\Users\GUILLE~1\AppData\Local\Temp\cc4FPoBr.s:18     .text.initGlobal:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cc4FPoBr.s:26     .text.initGlobal:00000000 initGlobal
+
+UNDEFINED SYMBOLS
+initSystem
+initSensorsTasks

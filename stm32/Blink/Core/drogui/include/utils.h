@@ -58,6 +58,16 @@ extern float coeffA_300Hz[];
 extern float coeffB_50Hz[];
 extern float coeffA_50Hz[];
 
+// Fc/Fs = 1/10
+extern int sz_1_10;
+extern float k_1_10[];
+extern float v_1_10[];
+
+
+// Fc/Fs = 3/10
+extern int sz_3_10;
+extern float k_3_10[];
+extern float v_3_10[];
 
 void rampValue(float *var, float desired, float step);
 

@@ -29,7 +29,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f7xx_hal.h"
-
+#define ARM_MATH_CM7
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -56,7 +56,7 @@ void Error_Handler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
-#define ARM_MATH_CM7
+
 /* Private defines -----------------------------------------------------------*/
 #define LED_Pin GPIO_PIN_1
 #define LED_GPIO_Port GPIOE

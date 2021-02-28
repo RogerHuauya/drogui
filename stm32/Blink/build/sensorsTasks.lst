@@ -1,0 +1,987 @@
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"sensorsTasks.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.accelTask,"ax",%progbits
+  18              		.align	1
+  19              		.global	accelTask
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv5-sp-d16
+  26              	accelTask:
+  27              	.LFB178:
+  28              		.file 1 "Core/drogui/src/sensorsTasks.c"
+   1:Core/drogui/src/sensorsTasks.c **** #include "sensorsTasks.h"
+   2:Core/drogui/src/sensorsTasks.c **** #include "_freertos.h"
+   3:Core/drogui/src/sensorsTasks.c **** 
+   4:Core/drogui/src/sensorsTasks.c **** 
+   5:Core/drogui/src/sensorsTasks.c **** mpu9250 myIMU;
+   6:Core/drogui/src/sensorsTasks.c **** 
+   7:Core/drogui/src/sensorsTasks.c **** filter filter_gx, filter_gy, filter_gz;
+   8:Core/drogui/src/sensorsTasks.c **** filter filter_gx2, filter_gy2, filter_gz2;
+   9:Core/drogui/src/sensorsTasks.c **** filter filter_ax, filter_ay, filter_az;
+  10:Core/drogui/src/sensorsTasks.c **** 
+  11:Core/drogui/src/sensorsTasks.c **** float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
+  12:Core/drogui/src/sensorsTasks.c **** 
+  13:Core/drogui/src/sensorsTasks.c **** void accelTask(){
+  29              		.loc 1 13 17 view -0
+  30              		.cfi_startproc
+  31              		@ Volatile: function does not return.
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34 0000 08B5     		push	{r3, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 3, -8
+  38              		.cfi_offset 14, -4
+  39              	.L2:
+  14:Core/drogui/src/sensorsTasks.c ****     for(;;){
+  40              		.loc 1 14 5 discriminator 1 view .LVU1
+  15:Core/drogui/src/sensorsTasks.c ****         readAcc(&myIMU);
+  41              		.loc 1 15 9 discriminator 1 view .LVU2
+  42 0002 174C     		ldr	r4, .L4
+  43 0004 2046     		mov	r0, r4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 2
+
+
+  44 0006 FFF7FEFF 		bl	readAcc
+  45              	.LVL0:
+  16:Core/drogui/src/sensorsTasks.c ****         
+  17:Core/drogui/src/sensorsTasks.c ****         ax = computeFilter(&filter_ax, myIMU.ax);
+  46              		.loc 1 17 9 discriminator 1 view .LVU3
+  47              		.loc 1 17 14 is_stmt 0 discriminator 1 view .LVU4
+  48 000a 94ED000A 		vldr.32	s0, [r4]
+  49 000e 1548     		ldr	r0, .L4+4
+  50 0010 FFF7FEFF 		bl	computeFilter
+  51              	.LVL1:
+  52              		.loc 1 17 12 discriminator 1 view .LVU5
+  53 0014 144E     		ldr	r6, .L4+8
+  54 0016 86ED000A 		vstr.32	s0, [r6]
+  18:Core/drogui/src/sensorsTasks.c ****         ay = computeFilter(&filter_ay, myIMU.ay);
+  55              		.loc 1 18 9 is_stmt 1 discriminator 1 view .LVU6
+  56              		.loc 1 18 14 is_stmt 0 discriminator 1 view .LVU7
+  57 001a 94ED010A 		vldr.32	s0, [r4, #4]
+  58 001e 1348     		ldr	r0, .L4+12
+  59 0020 FFF7FEFF 		bl	computeFilter
+  60              	.LVL2:
+  61              		.loc 1 18 12 discriminator 1 view .LVU8
+  62 0024 124D     		ldr	r5, .L4+16
+  63 0026 85ED000A 		vstr.32	s0, [r5]
+  19:Core/drogui/src/sensorsTasks.c ****         az = computeFilter(&filter_az, myIMU.az);
+  64              		.loc 1 19 9 is_stmt 1 discriminator 1 view .LVU9
+  65              		.loc 1 19 14 is_stmt 0 discriminator 1 view .LVU10
+  66 002a 94ED020A 		vldr.32	s0, [r4, #8]
+  67 002e 1148     		ldr	r0, .L4+20
+  68 0030 FFF7FEFF 		bl	computeFilter
+  69              	.LVL3:
+  70              		.loc 1 19 12 discriminator 1 view .LVU11
+  71 0034 104C     		ldr	r4, .L4+24
+  72 0036 84ED000A 		vstr.32	s0, [r4]
+  20:Core/drogui/src/sensorsTasks.c ****         
+  21:Core/drogui/src/sensorsTasks.c **** 
+  22:Core/drogui/src/sensorsTasks.c ****         setReg(ACC_X,(float)(ax));
+  73              		.loc 1 22 9 is_stmt 1 discriminator 1 view .LVU12
+  74 003a 96ED000A 		vldr.32	s0, [r6]
+  75 003e 7420     		movs	r0, #116
+  76 0040 FFF7FEFF 		bl	setReg
+  77              	.LVL4:
+  23:Core/drogui/src/sensorsTasks.c ****         setReg(ACC_Y,(float)(ay));
+  78              		.loc 1 23 9 discriminator 1 view .LVU13
+  79 0044 95ED000A 		vldr.32	s0, [r5]
+  80 0048 7620     		movs	r0, #118
+  81 004a FFF7FEFF 		bl	setReg
+  82              	.LVL5:
+  24:Core/drogui/src/sensorsTasks.c ****         setReg(ACC_Z,(float)(az));
+  83              		.loc 1 24 9 discriminator 1 view .LVU14
+  84 004e 94ED000A 		vldr.32	s0, [r4]
+  85 0052 7820     		movs	r0, #120
+  86 0054 FFF7FEFF 		bl	setReg
+  87              	.LVL6:
+  25:Core/drogui/src/sensorsTasks.c ****         osDelay(1);
+  88              		.loc 1 25 9 discriminator 1 view .LVU15
+  89 0058 0120     		movs	r0, #1
+  90 005a FFF7FEFF 		bl	osDelay
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 3
+
+
+  91              	.LVL7:
+  14:Core/drogui/src/sensorsTasks.c ****         readAcc(&myIMU);
+  92              		.loc 1 14 10 discriminator 1 view .LVU16
+  93 005e D0E7     		b	.L2
+  94              	.L5:
+  95              		.align	2
+  96              	.L4:
+  97 0060 00000000 		.word	.LANCHOR0
+  98 0064 00000000 		.word	.LANCHOR1
+  99 0068 00000000 		.word	.LANCHOR2
+ 100 006c 00000000 		.word	.LANCHOR3
+ 101 0070 00000000 		.word	.LANCHOR4
+ 102 0074 00000000 		.word	.LANCHOR5
+ 103 0078 00000000 		.word	.LANCHOR6
+ 104              		.cfi_endproc
+ 105              	.LFE178:
+ 107              		.section	.text.gyroTask,"ax",%progbits
+ 108              		.align	1
+ 109              		.global	gyroTask
+ 110              		.syntax unified
+ 111              		.thumb
+ 112              		.thumb_func
+ 113              		.fpu fpv5-sp-d16
+ 115              	gyroTask:
+ 116              	.LFB179:
+  26:Core/drogui/src/sensorsTasks.c ****     }
+  27:Core/drogui/src/sensorsTasks.c **** }
+  28:Core/drogui/src/sensorsTasks.c **** 
+  29:Core/drogui/src/sensorsTasks.c **** void gyroTask(){
+ 117              		.loc 1 29 16 view -0
+ 118              		.cfi_startproc
+ 119              		@ Volatile: function does not return.
+ 120              		@ args = 0, pretend = 0, frame = 0
+ 121              		@ frame_needed = 0, uses_anonymous_args = 0
+ 122 0000 08B5     		push	{r3, lr}
+ 123              	.LCFI1:
+ 124              		.cfi_def_cfa_offset 8
+ 125              		.cfi_offset 3, -8
+ 126              		.cfi_offset 14, -4
+ 127              	.L7:
+  30:Core/drogui/src/sensorsTasks.c ****     for(;;){
+ 128              		.loc 1 30 5 discriminator 1 view .LVU18
+  31:Core/drogui/src/sensorsTasks.c ****         readGyro(&myIMU);
+ 129              		.loc 1 31 9 discriminator 1 view .LVU19
+ 130 0002 2B4D     		ldr	r5, .L9
+ 131 0004 2846     		mov	r0, r5
+ 132 0006 FFF7FEFF 		bl	readGyro
+ 133              	.LVL8:
+  32:Core/drogui/src/sensorsTasks.c **** 
+  33:Core/drogui/src/sensorsTasks.c ****         gx = computeFilter(&filter_gx, myIMU.gx);
+ 134              		.loc 1 33 9 discriminator 1 view .LVU20
+ 135              		.loc 1 33 14 is_stmt 0 discriminator 1 view .LVU21
+ 136 000a 95ED070A 		vldr.32	s0, [r5, #28]
+ 137 000e 2948     		ldr	r0, .L9+4
+ 138 0010 FFF7FEFF 		bl	computeFilter
+ 139              	.LVL9:
+ 140              		.loc 1 33 12 discriminator 1 view .LVU22
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 4
+
+
+ 141 0014 284E     		ldr	r6, .L9+8
+ 142 0016 86ED000A 		vstr.32	s0, [r6]
+  34:Core/drogui/src/sensorsTasks.c ****         gy = computeFilter(&filter_gy, myIMU.gy);
+ 143              		.loc 1 34 9 is_stmt 1 discriminator 1 view .LVU23
+ 144              		.loc 1 34 14 is_stmt 0 discriminator 1 view .LVU24
+ 145 001a 95ED080A 		vldr.32	s0, [r5, #32]
+ 146 001e 2748     		ldr	r0, .L9+12
+ 147 0020 FFF7FEFF 		bl	computeFilter
+ 148              	.LVL10:
+ 149              		.loc 1 34 12 discriminator 1 view .LVU25
+ 150 0024 264C     		ldr	r4, .L9+16
+ 151 0026 84ED000A 		vstr.32	s0, [r4]
+  35:Core/drogui/src/sensorsTasks.c ****         gz = computeFilter(&filter_gz, myIMU.gz);
+ 152              		.loc 1 35 9 is_stmt 1 discriminator 1 view .LVU26
+ 153              		.loc 1 35 14 is_stmt 0 discriminator 1 view .LVU27
+ 154 002a 95ED090A 		vldr.32	s0, [r5, #36]
+ 155 002e 2548     		ldr	r0, .L9+20
+ 156 0030 FFF7FEFF 		bl	computeFilter
+ 157              	.LVL11:
+ 158              		.loc 1 35 12 discriminator 1 view .LVU28
+ 159 0034 244D     		ldr	r5, .L9+24
+ 160 0036 85ED000A 		vstr.32	s0, [r5]
+  36:Core/drogui/src/sensorsTasks.c **** 
+  37:Core/drogui/src/sensorsTasks.c ****         
+  38:Core/drogui/src/sensorsTasks.c ****         gx = computeFilter(&filter_gx2, gx);
+ 161              		.loc 1 38 9 is_stmt 1 discriminator 1 view .LVU29
+ 162              		.loc 1 38 14 is_stmt 0 discriminator 1 view .LVU30
+ 163 003a 96ED000A 		vldr.32	s0, [r6]
+ 164 003e 2348     		ldr	r0, .L9+28
+ 165 0040 FFF7FEFF 		bl	computeFilter
+ 166              	.LVL12:
+ 167              		.loc 1 38 12 discriminator 1 view .LVU31
+ 168 0044 86ED000A 		vstr.32	s0, [r6]
+  39:Core/drogui/src/sensorsTasks.c ****         gy = computeFilter(&filter_gy2, gy);
+ 169              		.loc 1 39 9 is_stmt 1 discriminator 1 view .LVU32
+ 170              		.loc 1 39 14 is_stmt 0 discriminator 1 view .LVU33
+ 171 0048 94ED000A 		vldr.32	s0, [r4]
+ 172 004c 2048     		ldr	r0, .L9+32
+ 173 004e FFF7FEFF 		bl	computeFilter
+ 174              	.LVL13:
+ 175              		.loc 1 39 12 discriminator 1 view .LVU34
+ 176 0052 84ED000A 		vstr.32	s0, [r4]
+  40:Core/drogui/src/sensorsTasks.c ****         gz = computeFilter(&filter_gz2, gz);
+ 177              		.loc 1 40 9 is_stmt 1 discriminator 1 view .LVU35
+ 178              		.loc 1 40 14 is_stmt 0 discriminator 1 view .LVU36
+ 179 0056 95ED000A 		vldr.32	s0, [r5]
+ 180 005a 1E48     		ldr	r0, .L9+36
+ 181 005c FFF7FEFF 		bl	computeFilter
+ 182              	.LVL14:
+ 183 0060 F0EE407A 		vmov.f32	s15, s0
+ 184              		.loc 1 40 12 discriminator 1 view .LVU37
+ 185 0064 85ED000A 		vstr.32	s0, [r5]
+  41:Core/drogui/src/sensorsTasks.c ****         
+  42:Core/drogui/src/sensorsTasks.c ****         gx /= 5;
+ 186              		.loc 1 42 9 is_stmt 1 discriminator 1 view .LVU38
+ 187              		.loc 1 42 12 is_stmt 0 discriminator 1 view .LVU39
+ 188 0068 D6ED006A 		vldr.32	s13, [r6]
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 5
+
+
+ 189 006c B1EE047A 		vmov.f32	s14, #5.0e+0
+ 190 0070 86EE870A 		vdiv.f32	s0, s13, s14
+ 191 0074 86ED000A 		vstr.32	s0, [r6]
+  43:Core/drogui/src/sensorsTasks.c ****         gy /= 5;
+ 192              		.loc 1 43 9 is_stmt 1 discriminator 1 view .LVU40
+ 193              		.loc 1 43 12 is_stmt 0 discriminator 1 view .LVU41
+ 194 0078 94ED006A 		vldr.32	s12, [r4]
+ 195 007c C6EE076A 		vdiv.f32	s13, s12, s14
+ 196 0080 C4ED006A 		vstr.32	s13, [r4]
+  44:Core/drogui/src/sensorsTasks.c ****         gz /= 5; 
+ 197              		.loc 1 44 9 is_stmt 1 discriminator 1 view .LVU42
+ 198              		.loc 1 44 12 is_stmt 0 discriminator 1 view .LVU43
+ 199 0084 C7EE876A 		vdiv.f32	s13, s15, s14
+ 200 0088 C5ED006A 		vstr.32	s13, [r5]
+  45:Core/drogui/src/sensorsTasks.c **** 
+  46:Core/drogui/src/sensorsTasks.c **** 
+  47:Core/drogui/src/sensorsTasks.c ****         setReg(GYRO_X, gx);
+ 201              		.loc 1 47 9 is_stmt 1 discriminator 1 view .LVU44
+ 202 008c 7C20     		movs	r0, #124
+ 203 008e FFF7FEFF 		bl	setReg
+ 204              	.LVL15:
+  48:Core/drogui/src/sensorsTasks.c ****         setReg(GYRO_Y, gy);
+ 205              		.loc 1 48 9 discriminator 1 view .LVU45
+ 206 0092 94ED000A 		vldr.32	s0, [r4]
+ 207 0096 7E20     		movs	r0, #126
+ 208 0098 FFF7FEFF 		bl	setReg
+ 209              	.LVL16:
+  49:Core/drogui/src/sensorsTasks.c ****         setReg(GYRO_Z, gz);
+ 210              		.loc 1 49 9 discriminator 1 view .LVU46
+ 211 009c 95ED000A 		vldr.32	s0, [r5]
+ 212 00a0 8020     		movs	r0, #128
+ 213 00a2 FFF7FEFF 		bl	setReg
+ 214              	.LVL17:
+  50:Core/drogui/src/sensorsTasks.c ****         osDelay(1);
+ 215              		.loc 1 50 9 discriminator 1 view .LVU47
+ 216 00a6 0120     		movs	r0, #1
+ 217 00a8 FFF7FEFF 		bl	osDelay
+ 218              	.LVL18:
+  30:Core/drogui/src/sensorsTasks.c ****         readGyro(&myIMU);
+ 219              		.loc 1 30 10 discriminator 1 view .LVU48
+ 220 00ac A9E7     		b	.L7
+ 221              	.L10:
+ 222 00ae 00BF     		.align	2
+ 223              	.L9:
+ 224 00b0 00000000 		.word	.LANCHOR0
+ 225 00b4 00000000 		.word	.LANCHOR7
+ 226 00b8 00000000 		.word	.LANCHOR8
+ 227 00bc 00000000 		.word	.LANCHOR9
+ 228 00c0 00000000 		.word	.LANCHOR10
+ 229 00c4 00000000 		.word	.LANCHOR11
+ 230 00c8 00000000 		.word	.LANCHOR12
+ 231 00cc 00000000 		.word	.LANCHOR13
+ 232 00d0 00000000 		.word	.LANCHOR14
+ 233 00d4 00000000 		.word	.LANCHOR15
+ 234              		.cfi_endproc
+ 235              	.LFE179:
+ 237              		.section	.text.magTask,"ax",%progbits
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 6
+
+
+ 238              		.align	1
+ 239              		.global	magTask
+ 240              		.syntax unified
+ 241              		.thumb
+ 242              		.thumb_func
+ 243              		.fpu fpv5-sp-d16
+ 245              	magTask:
+ 246              	.LFB180:
+  51:Core/drogui/src/sensorsTasks.c ****     }
+  52:Core/drogui/src/sensorsTasks.c **** }
+  53:Core/drogui/src/sensorsTasks.c **** 
+  54:Core/drogui/src/sensorsTasks.c **** void magTask(){
+ 247              		.loc 1 54 15 view -0
+ 248              		.cfi_startproc
+ 249              		@ Volatile: function does not return.
+ 250              		@ args = 0, pretend = 0, frame = 0
+ 251              		@ frame_needed = 0, uses_anonymous_args = 0
+ 252 0000 08B5     		push	{r3, lr}
+ 253              	.LCFI2:
+ 254              		.cfi_def_cfa_offset 8
+ 255              		.cfi_offset 3, -8
+ 256              		.cfi_offset 14, -4
+ 257              	.L12:
+  55:Core/drogui/src/sensorsTasks.c ****     for(;;){
+ 258              		.loc 1 55 5 discriminator 1 view .LVU50
+  56:Core/drogui/src/sensorsTasks.c ****         readMag(&myIMU);
+ 259              		.loc 1 56 9 discriminator 1 view .LVU51
+ 260 0002 084C     		ldr	r4, .L14
+ 261 0004 2046     		mov	r0, r4
+ 262 0006 FFF7FEFF 		bl	readMag
+ 263              	.LVL19:
+  57:Core/drogui/src/sensorsTasks.c ****         mx = myIMU.mx;
+ 264              		.loc 1 57 9 discriminator 1 view .LVU52
+ 265              		.loc 1 57 19 is_stmt 0 discriminator 1 view .LVU53
+ 266 000a 626B     		ldr	r2, [r4, #52]	@ float
+ 267              		.loc 1 57 12 discriminator 1 view .LVU54
+ 268 000c 064B     		ldr	r3, .L14+4
+ 269 000e 1A60     		str	r2, [r3]	@ float
+  58:Core/drogui/src/sensorsTasks.c ****         my = myIMU.my;
+ 270              		.loc 1 58 9 is_stmt 1 discriminator 1 view .LVU55
+ 271              		.loc 1 58 19 is_stmt 0 discriminator 1 view .LVU56
+ 272 0010 A26B     		ldr	r2, [r4, #56]	@ float
+ 273              		.loc 1 58 12 discriminator 1 view .LVU57
+ 274 0012 064B     		ldr	r3, .L14+8
+ 275 0014 1A60     		str	r2, [r3]	@ float
+  59:Core/drogui/src/sensorsTasks.c ****         mz = myIMU.mz;
+ 276              		.loc 1 59 9 is_stmt 1 discriminator 1 view .LVU58
+ 277              		.loc 1 59 19 is_stmt 0 discriminator 1 view .LVU59
+ 278 0016 E26B     		ldr	r2, [r4, #60]	@ float
+ 279              		.loc 1 59 12 discriminator 1 view .LVU60
+ 280 0018 054B     		ldr	r3, .L14+12
+ 281 001a 1A60     		str	r2, [r3]	@ float
+  60:Core/drogui/src/sensorsTasks.c ****         osDelay(100);
+ 282              		.loc 1 60 9 is_stmt 1 discriminator 1 view .LVU61
+ 283 001c 6420     		movs	r0, #100
+ 284 001e FFF7FEFF 		bl	osDelay
+ 285              	.LVL20:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 7
+
+
+  55:Core/drogui/src/sensorsTasks.c ****         readMag(&myIMU);
+ 286              		.loc 1 55 10 discriminator 1 view .LVU62
+ 287 0022 EEE7     		b	.L12
+ 288              	.L15:
+ 289              		.align	2
+ 290              	.L14:
+ 291 0024 00000000 		.word	.LANCHOR0
+ 292 0028 00000000 		.word	.LANCHOR16
+ 293 002c 00000000 		.word	.LANCHOR17
+ 294 0030 00000000 		.word	.LANCHOR18
+ 295              		.cfi_endproc
+ 296              	.LFE180:
+ 298              		.section	.text.initSensorsTasks,"ax",%progbits
+ 299              		.align	1
+ 300              		.global	initSensorsTasks
+ 301              		.syntax unified
+ 302              		.thumb
+ 303              		.thumb_func
+ 304              		.fpu fpv5-sp-d16
+ 306              	initSensorsTasks:
+ 307              	.LFB181:
+  61:Core/drogui/src/sensorsTasks.c ****     }
+  62:Core/drogui/src/sensorsTasks.c **** }
+  63:Core/drogui/src/sensorsTasks.c **** 
+  64:Core/drogui/src/sensorsTasks.c **** 
+  65:Core/drogui/src/sensorsTasks.c **** 
+  66:Core/drogui/src/sensorsTasks.c **** 
+  67:Core/drogui/src/sensorsTasks.c **** 
+  68:Core/drogui/src/sensorsTasks.c **** osThreadId_t accelHandle;
+  69:Core/drogui/src/sensorsTasks.c **** const osThreadAttr_t accelAttributes = {    .name = "accelTask", \
+  70:Core/drogui/src/sensorsTasks.c ****                                             .stack_size = 128 * 4, \
+  71:Core/drogui/src/sensorsTasks.c ****                                             .priority = (osPriority_t) osPriorityHigh1};
+  72:Core/drogui/src/sensorsTasks.c **** 
+  73:Core/drogui/src/sensorsTasks.c **** 
+  74:Core/drogui/src/sensorsTasks.c **** osThreadId_t gyroHandle;
+  75:Core/drogui/src/sensorsTasks.c **** const osThreadAttr_t gyroAttributes = {    .name = "gyroTask",\
+  76:Core/drogui/src/sensorsTasks.c ****                                             .stack_size = 128 * 4,\
+  77:Core/drogui/src/sensorsTasks.c ****                                             .priority = (osPriority_t) osPriorityHigh1};
+  78:Core/drogui/src/sensorsTasks.c **** 
+  79:Core/drogui/src/sensorsTasks.c **** 
+  80:Core/drogui/src/sensorsTasks.c **** osThreadId_t magHandle;
+  81:Core/drogui/src/sensorsTasks.c **** const osThreadAttr_t magAttributes = {    .name = "magTask",\
+  82:Core/drogui/src/sensorsTasks.c ****                                             .stack_size = 128 * 4,\
+  83:Core/drogui/src/sensorsTasks.c ****                                             .priority = (osPriority_t) osPriorityHigh1};
+  84:Core/drogui/src/sensorsTasks.c **** 
+  85:Core/drogui/src/sensorsTasks.c **** 
+  86:Core/drogui/src/sensorsTasks.c **** 
+  87:Core/drogui/src/sensorsTasks.c **** void initSensorsTasks(){
+ 308              		.loc 1 87 24 view -0
+ 309              		.cfi_startproc
+ 310              		@ args = 0, pretend = 0, frame = 0
+ 311              		@ frame_needed = 0, uses_anonymous_args = 0
+ 312 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 313              	.LCFI3:
+ 314              		.cfi_def_cfa_offset 24
+ 315              		.cfi_offset 3, -24
+ 316              		.cfi_offset 4, -20
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 8
+
+
+ 317              		.cfi_offset 5, -16
+ 318              		.cfi_offset 6, -12
+ 319              		.cfi_offset 7, -8
+ 320              		.cfi_offset 14, -4
+  88:Core/drogui/src/sensorsTasks.c ****     
+  89:Core/drogui/src/sensorsTasks.c ****     initMpu(&myIMU);
+ 321              		.loc 1 89 5 view .LVU64
+ 322 0002 2C4F     		ldr	r7, .L18
+ 323 0004 3846     		mov	r0, r7
+ 324 0006 FFF7FEFF 		bl	initMpu
+ 325              	.LVL21:
+  90:Core/drogui/src/sensorsTasks.c **** 
+  91:Core/drogui/src/sensorsTasks.c **** 
+  92:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gx, sz_1_10 , k_1_10, v_1_10);
+ 326              		.loc 1 92 5 view .LVU65
+ 327 000a 2B4E     		ldr	r6, .L18+4
+ 328 000c 2B4D     		ldr	r5, .L18+8
+ 329 000e 2C4C     		ldr	r4, .L18+12
+ 330 0010 3346     		mov	r3, r6
+ 331 0012 2A46     		mov	r2, r5
+ 332 0014 2168     		ldr	r1, [r4]
+ 333 0016 2B48     		ldr	r0, .L18+16
+ 334 0018 FFF7FEFF 		bl	initFilter
+ 335              	.LVL22:
+  93:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gy, sz_1_10 , k_1_10, v_1_10);
+ 336              		.loc 1 93 5 view .LVU66
+ 337 001c 3346     		mov	r3, r6
+ 338 001e 2A46     		mov	r2, r5
+ 339 0020 2168     		ldr	r1, [r4]
+ 340 0022 2948     		ldr	r0, .L18+20
+ 341 0024 FFF7FEFF 		bl	initFilter
+ 342              	.LVL23:
+  94:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gz, sz_1_10 , k_1_10, v_1_10);
+ 343              		.loc 1 94 5 view .LVU67
+ 344 0028 3346     		mov	r3, r6
+ 345 002a 2A46     		mov	r2, r5
+ 346 002c 2168     		ldr	r1, [r4]
+ 347 002e 2748     		ldr	r0, .L18+24
+ 348 0030 FFF7FEFF 		bl	initFilter
+ 349              	.LVL24:
+  95:Core/drogui/src/sensorsTasks.c **** 
+  96:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_ax, sz_1_10 , k_1_10, v_1_10);
+ 350              		.loc 1 96 5 view .LVU68
+ 351 0034 3346     		mov	r3, r6
+ 352 0036 2A46     		mov	r2, r5
+ 353 0038 2168     		ldr	r1, [r4]
+ 354 003a 2548     		ldr	r0, .L18+28
+ 355 003c FFF7FEFF 		bl	initFilter
+ 356              	.LVL25:
+  97:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_ay, sz_1_10 , k_1_10, v_1_10);
+ 357              		.loc 1 97 5 view .LVU69
+ 358 0040 3346     		mov	r3, r6
+ 359 0042 2A46     		mov	r2, r5
+ 360 0044 2168     		ldr	r1, [r4]
+ 361 0046 2348     		ldr	r0, .L18+32
+ 362 0048 FFF7FEFF 		bl	initFilter
+ 363              	.LVL26:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 9
+
+
+  98:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_az, sz_1_10 , k_1_10, v_1_10);
+ 364              		.loc 1 98 5 view .LVU70
+ 365 004c 3346     		mov	r3, r6
+ 366 004e 2A46     		mov	r2, r5
+ 367 0050 2168     		ldr	r1, [r4]
+ 368 0052 2148     		ldr	r0, .L18+36
+ 369 0054 FFF7FEFF 		bl	initFilter
+ 370              	.LVL27:
+  99:Core/drogui/src/sensorsTasks.c **** 
+ 100:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gx2, sz_3_10 , k_3_10, v_3_10);
+ 371              		.loc 1 100 5 view .LVU71
+ 372 0058 204E     		ldr	r6, .L18+40
+ 373 005a 214D     		ldr	r5, .L18+44
+ 374 005c 214C     		ldr	r4, .L18+48
+ 375 005e 3346     		mov	r3, r6
+ 376 0060 2A46     		mov	r2, r5
+ 377 0062 2168     		ldr	r1, [r4]
+ 378 0064 2048     		ldr	r0, .L18+52
+ 379 0066 FFF7FEFF 		bl	initFilter
+ 380              	.LVL28:
+ 101:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gy2, sz_3_10 , k_3_10, v_3_10);
+ 381              		.loc 1 101 5 view .LVU72
+ 382 006a 3346     		mov	r3, r6
+ 383 006c 2A46     		mov	r2, r5
+ 384 006e 2168     		ldr	r1, [r4]
+ 385 0070 1E48     		ldr	r0, .L18+56
+ 386 0072 FFF7FEFF 		bl	initFilter
+ 387              	.LVL29:
+ 102:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gz2, sz_3_10 , k_3_10, v_3_10);
+ 388              		.loc 1 102 5 view .LVU73
+ 389 0076 3346     		mov	r3, r6
+ 390 0078 2A46     		mov	r2, r5
+ 391 007a 2168     		ldr	r1, [r4]
+ 392 007c 1C48     		ldr	r0, .L18+60
+ 393 007e FFF7FEFF 		bl	initFilter
+ 394              	.LVL30:
+ 103:Core/drogui/src/sensorsTasks.c **** 
+ 104:Core/drogui/src/sensorsTasks.c **** 
+ 105:Core/drogui/src/sensorsTasks.c ****     calibrateGyro(&myIMU);
+ 395              		.loc 1 105 5 view .LVU74
+ 396 0082 3846     		mov	r0, r7
+ 397 0084 FFF7FEFF 		bl	calibrateGyro
+ 398              	.LVL31:
+ 106:Core/drogui/src/sensorsTasks.c ****     //calibrateAccel(&myIMU);
+ 107:Core/drogui/src/sensorsTasks.c ****     //calibrateMag(&myIMU);
+ 108:Core/drogui/src/sensorsTasks.c ****     
+ 109:Core/drogui/src/sensorsTasks.c ****     accelHandle = osThreadNew(accelTask, NULL, &accelAttributes);
+ 399              		.loc 1 109 5 view .LVU75
+ 400              		.loc 1 109 19 is_stmt 0 view .LVU76
+ 401 0088 1A4A     		ldr	r2, .L18+64
+ 402 008a 0021     		movs	r1, #0
+ 403 008c 1A48     		ldr	r0, .L18+68
+ 404 008e FFF7FEFF 		bl	osThreadNew
+ 405              	.LVL32:
+ 406              		.loc 1 109 17 view .LVU77
+ 407 0092 1A4B     		ldr	r3, .L18+72
+ 408 0094 1860     		str	r0, [r3]
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 10
+
+
+ 110:Core/drogui/src/sensorsTasks.c ****     gyroHandle = osThreadNew(gyroTask, NULL, &gyroAttributes);
+ 409              		.loc 1 110 5 is_stmt 1 view .LVU78
+ 410              		.loc 1 110 18 is_stmt 0 view .LVU79
+ 411 0096 1A4A     		ldr	r2, .L18+76
+ 412 0098 0021     		movs	r1, #0
+ 413 009a 1A48     		ldr	r0, .L18+80
+ 414 009c FFF7FEFF 		bl	osThreadNew
+ 415              	.LVL33:
+ 416              		.loc 1 110 16 view .LVU80
+ 417 00a0 194B     		ldr	r3, .L18+84
+ 418 00a2 1860     		str	r0, [r3]
+ 111:Core/drogui/src/sensorsTasks.c ****     magHandle = osThreadNew(magTask, NULL, &magAttributes);
+ 419              		.loc 1 111 5 is_stmt 1 view .LVU81
+ 420              		.loc 1 111 17 is_stmt 0 view .LVU82
+ 421 00a4 194A     		ldr	r2, .L18+88
+ 422 00a6 0021     		movs	r1, #0
+ 423 00a8 1948     		ldr	r0, .L18+92
+ 424 00aa FFF7FEFF 		bl	osThreadNew
+ 425              	.LVL34:
+ 426              		.loc 1 111 15 view .LVU83
+ 427 00ae 194B     		ldr	r3, .L18+96
+ 428 00b0 1860     		str	r0, [r3]
+ 112:Core/drogui/src/sensorsTasks.c ****     /*initTimer(&timer_accel, &accelInterrupt, 1000);
+ 113:Core/drogui/src/sensorsTasks.c ****     initTimer(&timer_gyro, &gyroInterrupt, 1000);
+ 114:Core/drogui/src/sensorsTasks.c ****     initTimer(&timer_mag, &magInterrupt, 10);
+ 115:Core/drogui/src/sensorsTasks.c ****     initTimer(&timer_rpy, &rpyInterrupt, 500);*/
+ 116:Core/drogui/src/sensorsTasks.c **** }...
+ 429              		.loc 1 116 1 view .LVU84
+ 430 00b2 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 431              	.L19:
+ 432              		.align	2
+ 433              	.L18:
+ 434 00b4 00000000 		.word	.LANCHOR0
+ 435 00b8 00000000 		.word	v_1_10
+ 436 00bc 00000000 		.word	k_1_10
+ 437 00c0 00000000 		.word	sz_1_10
+ 438 00c4 00000000 		.word	.LANCHOR7
+ 439 00c8 00000000 		.word	.LANCHOR9
+ 440 00cc 00000000 		.word	.LANCHOR11
+ 441 00d0 00000000 		.word	.LANCHOR1
+ 442 00d4 00000000 		.word	.LANCHOR3
+ 443 00d8 00000000 		.word	.LANCHOR5
+ 444 00dc 00000000 		.word	v_3_10
+ 445 00e0 00000000 		.word	k_3_10
+ 446 00e4 00000000 		.word	sz_3_10
+ 447 00e8 00000000 		.word	.LANCHOR13
+ 448 00ec 00000000 		.word	.LANCHOR14
+ 449 00f0 00000000 		.word	.LANCHOR15
+ 450 00f4 00000000 		.word	.LANCHOR19
+ 451 00f8 00000000 		.word	accelTask
+ 452 00fc 00000000 		.word	.LANCHOR20
+ 453 0100 00000000 		.word	.LANCHOR21
+ 454 0104 00000000 		.word	gyroTask
+ 455 0108 00000000 		.word	.LANCHOR22
+ 456 010c 00000000 		.word	.LANCHOR23
+ 457 0110 00000000 		.word	magTask
+ 458 0114 00000000 		.word	.LANCHOR24
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 11
+
+
+ 459              		.cfi_endproc
+ 460              	.LFE181:
+ 462              		.global	magAttributes
+ 463              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 464              		.align	2
+ 465              	.LC0:
+ 466 0000 6D616754 		.ascii	"magTask\000"
+ 466      61736B00 
+ 467              		.global	magHandle
+ 468              		.global	gyroAttributes
+ 469              		.align	2
+ 470              	.LC1:
+ 471 0008 6779726F 		.ascii	"gyroTask\000"
+ 471      5461736B 
+ 471      00
+ 472              		.global	gyroHandle
+ 473              		.global	accelAttributes
+ 474 0011 000000   		.align	2
+ 475              	.LC2:
+ 476 0014 61636365 		.ascii	"accelTask\000"
+ 476      6C546173 
+ 476      6B00
+ 477              		.global	accelHandle
+ 478              		.global	z
+ 479              		.global	y
+ 480              		.global	x
+ 481              		.global	mz
+ 482              		.global	my
+ 483              		.global	mx
+ 484              		.global	gz
+ 485              		.global	gy
+ 486              		.global	gx
+ 487              		.global	az
+ 488              		.global	ay
+ 489              		.global	ax
+ 490              		.global	yaw
+ 491              		.global	pitch
+ 492              		.global	roll
+ 493              		.global	filter_az
+ 494              		.global	filter_ay
+ 495              		.global	filter_ax
+ 496              		.global	filter_gz2
+ 497              		.global	filter_gy2
+ 498              		.global	filter_gx2
+ 499              		.global	filter_gz
+ 500              		.global	filter_gy
+ 501              		.global	filter_gx
+ 502              		.global	myIMU
+ 503              		.section	.bss.accelHandle,"aw",%nobits
+ 504              		.align	2
+ 505              		.set	.LANCHOR20,. + 0
+ 508              	accelHandle:
+ 509 0000 00000000 		.space	4
+ 510              		.section	.bss.ax,"aw",%nobits
+ 511              		.align	2
+ 512              		.set	.LANCHOR2,. + 0
+ 515              	ax:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 12
+
+
+ 516 0000 00000000 		.space	4
+ 517              		.section	.bss.ay,"aw",%nobits
+ 518              		.align	2
+ 519              		.set	.LANCHOR4,. + 0
+ 522              	ay:
+ 523 0000 00000000 		.space	4
+ 524              		.section	.bss.az,"aw",%nobits
+ 525              		.align	2
+ 526              		.set	.LANCHOR6,. + 0
+ 529              	az:
+ 530 0000 00000000 		.space	4
+ 531              		.section	.bss.filter_ax,"aw",%nobits
+ 532              		.align	2
+ 533              		.set	.LANCHOR1,. + 0
+ 536              	filter_ax:
+ 537 0000 00000000 		.space	20
+ 537      00000000 
+ 537      00000000 
+ 537      00000000 
+ 537      00000000 
+ 538              		.section	.bss.filter_ay,"aw",%nobits
+ 539              		.align	2
+ 540              		.set	.LANCHOR3,. + 0
+ 543              	filter_ay:
+ 544 0000 00000000 		.space	20
+ 544      00000000 
+ 544      00000000 
+ 544      00000000 
+ 544      00000000 
+ 545              		.section	.bss.filter_az,"aw",%nobits
+ 546              		.align	2
+ 547              		.set	.LANCHOR5,. + 0
+ 550              	filter_az:
+ 551 0000 00000000 		.space	20
+ 551      00000000 
+ 551      00000000 
+ 551      00000000 
+ 551      00000000 
+ 552              		.section	.bss.filter_gx,"aw",%nobits
+ 553              		.align	2
+ 554              		.set	.LANCHOR7,. + 0
+ 557              	filter_gx:
+ 558 0000 00000000 		.space	20
+ 558      00000000 
+ 558      00000000 
+ 558      00000000 
+ 558      00000000 
+ 559              		.section	.bss.filter_gx2,"aw",%nobits
+ 560              		.align	2
+ 561              		.set	.LANCHOR13,. + 0
+ 564              	filter_gx2:
+ 565 0000 00000000 		.space	20
+ 565      00000000 
+ 565      00000000 
+ 565      00000000 
+ 565      00000000 
+ 566              		.section	.bss.filter_gy,"aw",%nobits
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 13
+
+
+ 567              		.align	2
+ 568              		.set	.LANCHOR9,. + 0
+ 571              	filter_gy:
+ 572 0000 00000000 		.space	20
+ 572      00000000 
+ 572      00000000 
+ 572      00000000 
+ 572      00000000 
+ 573              		.section	.bss.filter_gy2,"aw",%nobits
+ 574              		.align	2
+ 575              		.set	.LANCHOR14,. + 0
+ 578              	filter_gy2:
+ 579 0000 00000000 		.space	20
+ 579      00000000 
+ 579      00000000 
+ 579      00000000 
+ 579      00000000 
+ 580              		.section	.bss.filter_gz,"aw",%nobits
+ 581              		.align	2
+ 582              		.set	.LANCHOR11,. + 0
+ 585              	filter_gz:
+ 586 0000 00000000 		.space	20
+ 586      00000000 
+ 586      00000000 
+ 586      00000000 
+ 586      00000000 
+ 587              		.section	.bss.filter_gz2,"aw",%nobits
+ 588              		.align	2
+ 589              		.set	.LANCHOR15,. + 0
+ 592              	filter_gz2:
+ 593 0000 00000000 		.space	20
+ 593      00000000 
+ 593      00000000 
+ 593      00000000 
+ 593      00000000 
+ 594              		.section	.bss.gx,"aw",%nobits
+ 595              		.align	2
+ 596              		.set	.LANCHOR8,. + 0
+ 599              	gx:
+ 600 0000 00000000 		.space	4
+ 601              		.section	.bss.gy,"aw",%nobits
+ 602              		.align	2
+ 603              		.set	.LANCHOR10,. + 0
+ 606              	gy:
+ 607 0000 00000000 		.space	4
+ 608              		.section	.bss.gyroHandle,"aw",%nobits
+ 609              		.align	2
+ 610              		.set	.LANCHOR22,. + 0
+ 613              	gyroHandle:
+ 614 0000 00000000 		.space	4
+ 615              		.section	.bss.gz,"aw",%nobits
+ 616              		.align	2
+ 617              		.set	.LANCHOR12,. + 0
+ 620              	gz:
+ 621 0000 00000000 		.space	4
+ 622              		.section	.bss.magHandle,"aw",%nobits
+ 623              		.align	2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 14
+
+
+ 624              		.set	.LANCHOR24,. + 0
+ 627              	magHandle:
+ 628 0000 00000000 		.space	4
+ 629              		.section	.bss.mx,"aw",%nobits
+ 630              		.align	2
+ 631              		.set	.LANCHOR16,. + 0
+ 634              	mx:
+ 635 0000 00000000 		.space	4
+ 636              		.section	.bss.my,"aw",%nobits
+ 637              		.align	2
+ 638              		.set	.LANCHOR17,. + 0
+ 641              	my:
+ 642 0000 00000000 		.space	4
+ 643              		.section	.bss.myIMU,"aw",%nobits
+ 644              		.align	2
+ 645              		.set	.LANCHOR0,. + 0
+ 648              	myIMU:
+ 649 0000 00000000 		.space	140
+ 649      00000000 
+ 649      00000000 
+ 649      00000000 
+ 649      00000000 
+ 650              		.section	.bss.mz,"aw",%nobits
+ 651              		.align	2
+ 652              		.set	.LANCHOR18,. + 0
+ 655              	mz:
+ 656 0000 00000000 		.space	4
+ 657              		.section	.bss.pitch,"aw",%nobits
+ 658              		.align	2
+ 661              	pitch:
+ 662 0000 00000000 		.space	4
+ 663              		.section	.bss.roll,"aw",%nobits
+ 664              		.align	2
+ 667              	roll:
+ 668 0000 00000000 		.space	4
+ 669              		.section	.bss.x,"aw",%nobits
+ 670              		.align	2
+ 673              	x:
+ 674 0000 00000000 		.space	4
+ 675              		.section	.bss.y,"aw",%nobits
+ 676              		.align	2
+ 679              	y:
+ 680 0000 00000000 		.space	4
+ 681              		.section	.bss.yaw,"aw",%nobits
+ 682              		.align	2
+ 685              	yaw:
+ 686 0000 00000000 		.space	4
+ 687              		.section	.bss.z,"aw",%nobits
+ 688              		.align	2
+ 691              	z:
+ 692 0000 00000000 		.space	4
+ 693              		.section	.rodata.accelAttributes,"a"
+ 694              		.align	2
+ 695              		.set	.LANCHOR19,. + 0
+ 698              	accelAttributes:
+ 699 0000 14000000 		.word	.LC2
+ 700 0004 00000000 		.space	16
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 15
+
+
+ 700      00000000 
+ 700      00000000 
+ 700      00000000 
+ 701 0014 00020000 		.word	512
+ 702 0018 29000000 		.word	41
+ 703 001c 00000000 		.space	8
+ 703      00000000 
+ 704              		.section	.rodata.gyroAttributes,"a"
+ 705              		.align	2
+ 706              		.set	.LANCHOR21,. + 0
+ 709              	gyroAttributes:
+ 710 0000 08000000 		.word	.LC1
+ 711 0004 00000000 		.space	16
+ 711      00000000 
+ 711      00000000 
+ 711      00000000 
+ 712 0014 00020000 		.word	512
+ 713 0018 29000000 		.word	41
+ 714 001c 00000000 		.space	8
+ 714      00000000 
+ 715              		.section	.rodata.magAttributes,"a"
+ 716              		.align	2
+ 717              		.set	.LANCHOR23,. + 0
+ 720              	magAttributes:
+ 721 0000 00000000 		.word	.LC0
+ 722 0004 00000000 		.space	16
+ 722      00000000 
+ 722      00000000 
+ 722      00000000 
+ 723 0014 00020000 		.word	512
+ 724 0018 29000000 		.word	41
+ 725 001c 00000000 		.space	8
+ 725      00000000 
+ 726              		.text
+ 727              	.Letext0:
+ 728              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 729              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 730              		.file 4 "Drivers/CMSIS/DSP/Include/arm_math.h"
+ 731              		.file 5 "Core/drogui/include/filter.h"
+ 732              		.file 6 "Core/drogui/include/MPU9250.h"
+ 733              		.file 7 "Core/drogui/include/utils.h"
+ 734              		.file 8 "Core/drogui/include/sensorsTasks.h"
+ 735              		.file 9 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 16
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 sensorsTasks.c
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:18     .text.accelTask:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:26     .text.accelTask:00000000 accelTask
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:97     .text.accelTask:00000060 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:108    .text.gyroTask:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:115    .text.gyroTask:00000000 gyroTask
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:224    .text.gyroTask:000000b0 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:238    .text.magTask:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:245    .text.magTask:00000000 magTask
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:291    .text.magTask:00000024 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:299    .text.initSensorsTasks:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:306    .text.initSensorsTasks:00000000 initSensorsTasks
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:434    .text.initSensorsTasks:000000b4 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:720    .rodata.magAttributes:00000000 magAttributes
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:464    .rodata.str1.4:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:627    .bss.magHandle:00000000 magHandle
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:709    .rodata.gyroAttributes:00000000 gyroAttributes
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:613    .bss.gyroHandle:00000000 gyroHandle
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:698    .rodata.accelAttributes:00000000 accelAttributes
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:508    .bss.accelHandle:00000000 accelHandle
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:691    .bss.z:00000000 z
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:679    .bss.y:00000000 y
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:673    .bss.x:00000000 x
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:655    .bss.mz:00000000 mz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:641    .bss.my:00000000 my
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:634    .bss.mx:00000000 mx
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:620    .bss.gz:00000000 gz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:606    .bss.gy:00000000 gy
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:599    .bss.gx:00000000 gx
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:529    .bss.az:00000000 az
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:522    .bss.ay:00000000 ay
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:515    .bss.ax:00000000 ax
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:685    .bss.yaw:00000000 yaw
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:661    .bss.pitch:00000000 pitch
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:667    .bss.roll:00000000 roll
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:550    .bss.filter_az:00000000 filter_az
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:543    .bss.filter_ay:00000000 filter_ay
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:536    .bss.filter_ax:00000000 filter_ax
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:592    .bss.filter_gz2:00000000 filter_gz2
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:578    .bss.filter_gy2:00000000 filter_gy2
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:564    .bss.filter_gx2:00000000 filter_gx2
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:585    .bss.filter_gz:00000000 filter_gz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:571    .bss.filter_gy:00000000 filter_gy
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:557    .bss.filter_gx:00000000 filter_gx
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:648    .bss.myIMU:00000000 myIMU
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:504    .bss.accelHandle:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:511    .bss.ax:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:518    .bss.ay:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:525    .bss.az:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:532    .bss.filter_ax:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:539    .bss.filter_ay:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:546    .bss.filter_az:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:553    .bss.filter_gx:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:560    .bss.filter_gx2:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:567    .bss.filter_gy:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:574    .bss.filter_gy2:00000000 $d
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s 			page 17
+
+
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:581    .bss.filter_gz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:588    .bss.filter_gz2:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:595    .bss.gx:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:602    .bss.gy:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:609    .bss.gyroHandle:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:616    .bss.gz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:623    .bss.magHandle:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:630    .bss.mx:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:637    .bss.my:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:644    .bss.myIMU:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:651    .bss.mz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:658    .bss.pitch:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:664    .bss.roll:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:670    .bss.x:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:676    .bss.y:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:682    .bss.yaw:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:688    .bss.z:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:694    .rodata.accelAttributes:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:705    .rodata.gyroAttributes:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccZpul2X.s:716    .rodata.magAttributes:00000000 $d
+
+UNDEFINED SYMBOLS
+readAcc
+computeFilter
+setReg
+osDelay
+readGyro
+readMag
+initMpu
+initFilter
+calibrateGyro
+osThreadNew
+v_1_10
+k_1_10
+sz_1_10
+v_3_10
+k_3_10
+sz_3_10

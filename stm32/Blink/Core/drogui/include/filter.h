@@ -2,15 +2,12 @@
 #define FILTER_H
 
 #include "main.h"
+#include "arm_math.h"
 
-typedef struct _arrCoeff{
-    int n, head;
-    float *values, *coeff;
-}arrCoeff;
 
 typedef struct _filter{
-    int n;
-    arrCoeff arr_u, arr_y;
+    arm_iir_lattice_instance_f32 f;
+    float *state;
 }filter ;
 
 typedef struct _dNotchFilter{
@@ -27,9 +24,6 @@ typedef struct _dNotchFilter{
 void initFilter(filter* f, int n, float* a, float* b);
 float computeFilter(filter *f, float x);
 
-void initArrCoeff(arrCoeff* a, int n, float * coeff);
-float computeArrCoeff(arrCoeff* a);
-void addArrCoeff(arrCoeff* a, float x);
 
 void initDNotchFilter(dNotchFilter* df, int n, float threshold, float fs, float a, float zeta);
 float computeDNotch(dNotchFilter *df, float val);

@@ -1,4 +1,4 @@
-#define MPU9250_TEST
+//#define MPU9250_TEST
 #ifdef MPU9250_TEST
 
 #include "_main.h"
@@ -6,24 +6,29 @@
 #include <string.h>
 #include <stdio.h>
 #include "usart.h"
-#include "arm_math.h"
+#include "filter.h"
+#include "utils.h"
 
-arm_iir_lattice_instance_f32 my_filter;
-
+filter my_filter;
 mpu9250 myImu;
-char buff[50] = "Hola\n";
+char buff[50];
+
+float ax_filt;
 
 void _main(){
     initMpu(&myImu);
     calibrateGyro(&myImu); 
     calibrateAccel(&myImu);
-    //arm_iir_lattice_init_f32(&my_filter, )
+    initFilter(&my_filter, sz_1_10, k_1_10, v_1_10);
+    
     while(1){
-        
+        HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
         readAcc(&myImu);
-        sprintf(buff, "%f \t %f \t %f \n", myImu.ax, myImu.ay, myImu.az);
+        ax_filt = computeFilter(&my_filter, myImu.ax);
+        sprintf(buff, "%f \t %f;\n", myImu.ax, ax_filt);
+        
         HAL_UART_Transmit(&huart1, (uint8_t *)buff, strlen(buff), 100);
-        HAL_Delay(100);
+        HAL_Delay(1);
     }
 }
 

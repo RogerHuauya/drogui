@@ -1,43 +1,20 @@
 #include "filter.h"
 #include "utils.h"
 #include <stdlib.h>
-void initFilter(filter* f, int n, float* a, float* b){
-    
-    initArrCoeff(&(f->arr_y),n-1, a);
-    initArrCoeff(&(f->arr_u),n, b);
-    f -> n = n;
+void initFilter(filter* f, int n, float* k, float* v){
+    f->state = (float*) calloc(n+1, sizeof(float));
+    arm_iir_lattice_init_f32(&(f->f), n, k, v, f->state, 1);
 }
 
 
 float computeFilter(filter *f, float x){
-    addArrCoeff(&(f->arr_u), x);
-    float y = computeArrCoeff(&(f->arr_u)) - computeArrCoeff(&(f->arr_y));
-    addArrCoeff(&(f->arr_y), y);
-    return y;
-}
-
-
-void initArrCoeff(arrCoeff* a,int n,float * coeff){
-    a->coeff = coeff;
-    a->n = n;
-    a->values = (float*) calloc(n, sizeof(float));
-    a->head = 0;
-}
-
-
-float computeArrCoeff(arrCoeff* a){
-    float ans = 0;
-    for(int aux = (a->head-1+a->n)%(a->n), i = 0 ; i < (a->n) ; i++){
-        ans += (a->coeff)[i] * (a->values[aux]);
-        aux = (aux - 1 + a->n )%(a->n);
-    }
+    float ans;
+    arm_iir_lattice_f32(&(f->f), &x, &ans, 1);
     return ans;
 }
 
-void addArrCoeff(arrCoeff* a, float x){
-    (a->values)[a->head++] = x;
-    a->head %= a->n;
-}
+
+
 
 void initDNotchFilter(dNotchFilter* df, int n, float threshold, float fs, float a, float zeta){
     df -> n = n;

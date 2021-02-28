@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -39,10 +39,10 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 1
    9:Core/Src/i2c.c ****   * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
   10:Core/Src/i2c.c ****   * All rights reserved.</center></h2>
   11:Core/Src/i2c.c ****   *
-  12:Core/Src/i2c.c ****   * This software component is licensed by ST under BSD 3-Clause license,
-  13:Core/Src/i2c.c ****   * the "License"; You may not use this file except in compliance with the
-  14:Core/Src/i2c.c ****   * License. You may obtain a copy of the License at:
-  15:Core/Src/i2c.c ****   *                        opensource.org/licenses/BSD-3-Clause
+  12:Core/Src/i2c.c ****   * This software component is licensed by ST under Ultimate Liberty license
+  13:Core/Src/i2c.c ****   * SLA0044, the "License"; You may not use this file except in compliance with
+  14:Core/Src/i2c.c ****   * the License. You may obtain a copy of the License at:
+  15:Core/Src/i2c.c ****   *                             www.st.com/SLA0044
   16:Core/Src/i2c.c ****   *
   17:Core/Src/i2c.c ****   ******************************************************************************
   18:Core/Src/i2c.c ****   */
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 1
   28:Core/Src/i2c.c **** 
   29:Core/Src/i2c.c **** /* I2C1 init function */
   30:Core/Src/i2c.c **** void MX_I2C1_Init(void)
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s 			page 2
 
 
   31:Core/Src/i2c.c **** {
@@ -85,7 +85,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 1
   40 0002 1248     		ldr	r0, .L9
   41 0004 124B     		ldr	r3, .L9+4
   42 0006 0360     		str	r3, [r0]
-  41:Core/Src/i2c.c ****   hi2c1.Init.Timing = 0x0010061A;
+  41:Core/Src/i2c.c ****   hi2c1.Init.Timing = 0x00401959;
   43              		.loc 1 41 3 is_stmt 1 view .LVU3
   44              		.loc 1 41 21 is_stmt 0 view .LVU4
   45 0008 124B     		ldr	r3, .L9+8
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 1
   66 001a C361     		str	r3, [r0, #28]
   48:Core/Src/i2c.c ****   hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
   67              		.loc 1 48 3 is_stmt 1 view .LVU17
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 3
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s 			page 3
 
 
   68              		.loc 1 48 28 is_stmt 0 view .LVU18
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 1
  100              	.LVL3:
  101 003e F1E7     		b	.L2
  102              	.L7:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s 			page 4
 
 
   57:Core/Src/i2c.c ****   }
@@ -198,7 +198,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 1
  115              	.L9:
  116 004c 00000000 		.word	.LANCHOR0
  117 0050 00540040 		.word	1073763328
- 118 0054 1A061000 		.word	1050138
+ 118 0054 59194000 		.word	4200793
  119              		.cfi_endproc
  120              	.LFE141:
  122              		.section	.text.HAL_I2C_MspInit,"ax",%progbits
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 1
  152 000c 0693     		str	r3, [sp, #24]
  153 000e 0793     		str	r3, [sp, #28]
   75:Core/Src/i2c.c ****   if(i2cHandle->Instance==I2C1)
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 5
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s 			page 5
 
 
  154              		.loc 1 75 3 is_stmt 1 view .LVU37
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 1
  181 0024 2363     		str	r3, [r4, #48]
   81:Core/Src/i2c.c ****     /**I2C1 GPIO Configuration
  182              		.loc 1 81 5 view .LVU44
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 6
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s 			page 6
 
 
  183 0026 236B     		ldr	r3, [r4, #48]
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 1
  220              		.loc 1 94 5 view .LVU61
  221 004c 236C     		ldr	r3, [r4, #64]
  222 004e 43F40013 		orr	r3, r3, #2097152
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 7
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s 			page 7
 
 
  223 0052 2364     		str	r3, [r4, #64]
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 1
  270              		.cfi_def_cfa_offset 8
  271              		.cfi_offset 4, -8
  272              		.cfi_offset 14, -4
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 8
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s 			page 8
 
 
  105:Core/Src/i2c.c ****   {
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 1
  309      00000000 
  309      00000000 
  309      00000000 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 9
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s 			page 9
 
 
  309      00000000 
@@ -494,22 +494,22 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 1
  319              		.file 9 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_i2c_ex.h"
  320              		.file 10 "Core/Inc/main.h"
  321              		.file 11 "Core/Inc/i2c.h"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s 			page 10
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s 			page 10
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 i2c.c
-C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s:18     .text.MX_I2C1_Init:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s:26     .text.MX_I2C1_Init:00000000 MX_I2C1_Init
-C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s:116    .text.MX_I2C1_Init:0000004c $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s:123    .text.HAL_I2C_MspInit:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s:130    .text.HAL_I2C_MspInit:00000000 HAL_I2C_MspInit
-C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s:237    .text.HAL_I2C_MspInit:00000060 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s:244    .text.HAL_I2C_MspDeInit:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s:251    .text.HAL_I2C_MspDeInit:00000000 HAL_I2C_MspDeInit
-C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s:296    .text.HAL_I2C_MspDeInit:0000002c $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s:308    .bss.hi2c1:00000000 hi2c1
-C:\Users\GUILLE~1\AppData\Local\Temp\ccXXk3qA.s:304    .bss.hi2c1:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s:18     .text.MX_I2C1_Init:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s:26     .text.MX_I2C1_Init:00000000 MX_I2C1_Init
+C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s:116    .text.MX_I2C1_Init:0000004c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s:123    .text.HAL_I2C_MspInit:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s:130    .text.HAL_I2C_MspInit:00000000 HAL_I2C_MspInit
+C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s:237    .text.HAL_I2C_MspInit:00000060 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s:244    .text.HAL_I2C_MspDeInit:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s:251    .text.HAL_I2C_MspDeInit:00000000 HAL_I2C_MspDeInit
+C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s:296    .text.HAL_I2C_MspDeInit:0000002c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s:308    .bss.hi2c1:00000000 hi2c1
+C:\Users\GUILLE~1\AppData\Local\Temp\ccw4DU54.s:304    .bss.hi2c1:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_I2C_Init
