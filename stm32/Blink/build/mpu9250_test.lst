@@ -1,0 +1,230 @@
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccPwQgak.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"mpu9250_test.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	__aeabi_f2d
+  18              		.section	.rodata._main.str1.4,"aMS",%progbits,1
+  19              		.align	2
+  20              	.LC0:
+  21 0000 25662009 		.ascii	"%f \011 %f \011 %f \012\000"
+  21      20256620 
+  21      09202566 
+  21      200A00
+  22              		.section	.text._main,"ax",%progbits
+  23              		.align	1
+  24              		.global	_main
+  25              		.arch armv7e-m
+  26              		.syntax unified
+  27              		.thumb
+  28              		.thumb_func
+  29              		.fpu fpv5-sp-d16
+  31              	_main:
+  32              	.LFB177:
+  33              		.file 1 "Core/drogui/test/mpu9250_test.c"
+   1:Core/drogui/test/mpu9250_test.c **** #define MPU9250_TEST
+   2:Core/drogui/test/mpu9250_test.c **** #ifdef MPU9250_TEST
+   3:Core/drogui/test/mpu9250_test.c **** 
+   4:Core/drogui/test/mpu9250_test.c **** #include "_main.h"
+   5:Core/drogui/test/mpu9250_test.c **** #include "MPU9250.h"
+   6:Core/drogui/test/mpu9250_test.c **** #include <string.h>
+   7:Core/drogui/test/mpu9250_test.c **** #include <stdio.h>
+   8:Core/drogui/test/mpu9250_test.c **** #include "usart.h"
+   9:Core/drogui/test/mpu9250_test.c **** #include "arm_math.h"
+  10:Core/drogui/test/mpu9250_test.c **** 
+  11:Core/drogui/test/mpu9250_test.c **** arm_iir_lattice_instance_f32 my_filter;
+  12:Core/drogui/test/mpu9250_test.c **** 
+  13:Core/drogui/test/mpu9250_test.c **** mpu9250 myImu;
+  14:Core/drogui/test/mpu9250_test.c **** char buff[50] = "Hola\n";
+  15:Core/drogui/test/mpu9250_test.c **** 
+  16:Core/drogui/test/mpu9250_test.c **** void _main(){
+  34              		.loc 1 16 13 view -0
+  35              		.cfi_startproc
+  36              		@ Volatile: function does not return.
+  37              		@ args = 0, pretend = 0, frame = 0
+  38              		@ frame_needed = 0, uses_anonymous_args = 0
+  39 0000 80B5     		push	{r7, lr}
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccPwQgak.s 			page 2
+
+
+  40              	.LCFI0:
+  41              		.cfi_def_cfa_offset 8
+  42              		.cfi_offset 7, -8
+  43              		.cfi_offset 14, -4
+  44 0002 84B0     		sub	sp, sp, #16
+  45              	.LCFI1:
+  46              		.cfi_def_cfa_offset 24
+  17:Core/drogui/test/mpu9250_test.c ****     initMpu(&myImu);
+  47              		.loc 1 17 5 view .LVU1
+  48 0004 194C     		ldr	r4, .L4
+  49 0006 2046     		mov	r0, r4
+  50 0008 FFF7FEFF 		bl	initMpu
+  51              	.LVL0:
+  18:Core/drogui/test/mpu9250_test.c ****     calibrateGyro(&myImu);
+  52              		.loc 1 18 5 view .LVU2
+  53 000c 2046     		mov	r0, r4
+  54 000e FFF7FEFF 		bl	calibrateGyro
+  55              	.LVL1:
+  19:Core/drogui/test/mpu9250_test.c ****     calibrateAccel(&myImu);
+  56              		.loc 1 19 5 view .LVU3
+  57 0012 2046     		mov	r0, r4
+  58 0014 FFF7FEFF 		bl	calibrateAccel
+  59              	.LVL2:
+  60              	.L2:
+  20:Core/drogui/test/mpu9250_test.c ****     while(1){
+  61              		.loc 1 20 5 discriminator 1 view .LVU4
+  21:Core/drogui/test/mpu9250_test.c ****         
+  22:Core/drogui/test/mpu9250_test.c ****         readAcc(&myImu);
+  62              		.loc 1 22 9 discriminator 1 view .LVU5
+  63 0018 144C     		ldr	r4, .L4
+  64 001a 2046     		mov	r0, r4
+  65 001c FFF7FEFF 		bl	readAcc
+  66              	.LVL3:
+  23:Core/drogui/test/mpu9250_test.c ****         sprintf(buff, "%f \t %f \t %f \n", myImu.ax, myImu.ay, myImu.az);
+  67              		.loc 1 23 9 discriminator 1 view .LVU6
+  68              		.loc 1 23 59 is_stmt 0 discriminator 1 view .LVU7
+  69 0020 6568     		ldr	r5, [r4, #4]	@ float
+  70              		.loc 1 23 69 discriminator 1 view .LVU8
+  71 0022 D4F80880 		ldr	r8, [r4, #8]	@ float
+  72              		.loc 1 23 9 discriminator 1 view .LVU9
+  73 0026 2068     		ldr	r0, [r4]	@ float
+  74 0028 FFF7FEFF 		bl	__aeabi_f2d
+  75              	.LVL4:
+  76 002c 0646     		mov	r6, r0
+  77 002e 0F46     		mov	r7, r1
+  78 0030 0F4C     		ldr	r4, .L4+4
+  79 0032 4046     		mov	r0, r8	@ float
+  80 0034 FFF7FEFF 		bl	__aeabi_f2d
+  81              	.LVL5:
+  82 0038 CDE90201 		strd	r0, [sp, #8]
+  83 003c 2846     		mov	r0, r5	@ float
+  84 003e FFF7FEFF 		bl	__aeabi_f2d
+  85              	.LVL6:
+  86 0042 CDE90001 		strd	r0, [sp]
+  87 0046 3246     		mov	r2, r6
+  88 0048 3B46     		mov	r3, r7
+  89 004a 0A49     		ldr	r1, .L4+8
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccPwQgak.s 			page 3
+
+
+  90 004c 2046     		mov	r0, r4
+  91 004e FFF7FEFF 		bl	sprintf
+  92              	.LVL7:
+  24:Core/drogui/test/mpu9250_test.c ****         HAL_UART_Transmit(&huart1, (uint8_t *)buff, strlen(buff), 100);
+  93              		.loc 1 24 9 is_stmt 1 discriminator 1 view .LVU10
+  94              		.loc 1 24 53 is_stmt 0 discriminator 1 view .LVU11
+  95 0052 2046     		mov	r0, r4
+  96 0054 FFF7FEFF 		bl	strlen
+  97              	.LVL8:
+  98              		.loc 1 24 9 discriminator 1 view .LVU12
+  99 0058 6423     		movs	r3, #100
+ 100 005a 82B2     		uxth	r2, r0
+ 101 005c 2146     		mov	r1, r4
+ 102 005e 0648     		ldr	r0, .L4+12
+ 103 0060 FFF7FEFF 		bl	HAL_UART_Transmit
+ 104              	.LVL9:
+  25:Core/drogui/test/mpu9250_test.c ****         HAL_Delay(100);
+ 105              		.loc 1 25 9 is_stmt 1 discriminator 1 view .LVU13
+ 106 0064 6420     		movs	r0, #100
+ 107 0066 FFF7FEFF 		bl	HAL_Delay
+ 108              	.LVL10:
+  20:Core/drogui/test/mpu9250_test.c ****         
+ 109              		.loc 1 20 10 discriminator 1 view .LVU14
+ 110 006a D5E7     		b	.L2
+ 111              	.L5:
+ 112              		.align	2
+ 113              	.L4:
+ 114 006c 00000000 		.word	.LANCHOR0
+ 115 0070 00000000 		.word	.LANCHOR1
+ 116 0074 00000000 		.word	.LC0
+ 117 0078 00000000 		.word	huart1
+ 118              		.cfi_endproc
+ 119              	.LFE177:
+ 121              		.global	buff
+ 122              		.global	myImu
+ 123              		.global	my_filter
+ 124              		.section	.bss.myImu,"aw",%nobits
+ 125              		.align	2
+ 126              		.set	.LANCHOR0,. + 0
+ 129              	myImu:
+ 130 0000 00000000 		.space	140
+ 130      00000000 
+ 130      00000000 
+ 130      00000000 
+ 130      00000000 
+ 131              		.section	.bss.my_filter,"aw",%nobits
+ 132              		.align	2
+ 135              	my_filter:
+ 136 0000 00000000 		.space	16
+ 136      00000000 
+ 136      00000000 
+ 136      00000000 
+ 137              		.section	.data.buff,"aw"
+ 138              		.align	2
+ 139              		.set	.LANCHOR1,. + 0
+ 142              	buff:
+ 143 0000 486F6C61 		.ascii	"Hola\012\000"
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccPwQgak.s 			page 4
+
+
+ 143      0A00
+ 144 0006 00000000 		.space	44
+ 144      00000000 
+ 144      00000000 
+ 144      00000000 
+ 144      00000000 
+ 145              		.text
+ 146              	.Letext0:
+ 147              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 148              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 149              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
+ 150              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
+ 151              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
+ 152              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h"
+ 153              		.file 8 "Core/drogui/include/MPU9250.h"
+ 154              		.file 9 "Drivers/CMSIS/DSP/Include/arm_math.h"
+ 155              		.file 10 "Core/Inc/usart.h"
+ 156              		.file 11 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ 157              		.file 12 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ 158              		.file 13 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h"
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccPwQgak.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 mpu9250_test.c
+C:\Users\GUILLE~1\AppData\Local\Temp\ccPwQgak.s:19     .rodata._main.str1.4:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccPwQgak.s:23     .text._main:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccPwQgak.s:31     .text._main:00000000 _main
+C:\Users\GUILLE~1\AppData\Local\Temp\ccPwQgak.s:114    .text._main:0000006c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccPwQgak.s:142    .data.buff:00000000 buff
+C:\Users\GUILLE~1\AppData\Local\Temp\ccPwQgak.s:129    .bss.myImu:00000000 myImu
+C:\Users\GUILLE~1\AppData\Local\Temp\ccPwQgak.s:135    .bss.my_filter:00000000 my_filter
+C:\Users\GUILLE~1\AppData\Local\Temp\ccPwQgak.s:125    .bss.myImu:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccPwQgak.s:132    .bss.my_filter:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccPwQgak.s:138    .data.buff:00000000 $d
+
+UNDEFINED SYMBOLS
+__aeabi_f2d
+initMpu
+calibrateGyro
+calibrateAccel
+readAcc
+sprintf
+strlen
+HAL_UART_Transmit
+HAL_Delay
+huart1

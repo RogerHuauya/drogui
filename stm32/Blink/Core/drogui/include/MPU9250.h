@@ -41,7 +41,9 @@ typedef struct _mpu9250{
 } mpu9250;
 
 void initMpu(mpu9250* m);
+void readRawAcc(mpu9250* m);
 void readAcc(mpu9250* m);
+void readRawGyro(mpu9250* m);
 void readGyro(mpu9250* m);
 void readMag(mpu9250* m);
 void readRawMag(mpu9250* m);

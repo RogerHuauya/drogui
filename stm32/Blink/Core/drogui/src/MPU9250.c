@@ -1,7 +1,10 @@
 #include "MPU9250.h"
-#include "main.h"
+#include "i2c.h"
 #include "matlib.h"
 #include "registerMap.h"
+#include "utils.h"
+#include <stdio.h>
+#include <string.h>
 
 #define G 9.81
 int16_t _ax, _ay, _az, _gx, _gy, _gz, _mx, _my, _mz;
@@ -22,20 +25,13 @@ void I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data){
 
 void initMpu(mpu9250* m){
 
-    HAL_Delay(10);
     I2CwriteByte(MPU9250_ADDRESS, MASTER_CONFIG, 0x06);
-    HAL_Delay(10);
     I2CwriteByte(MPU9250_ADDRESS, GYRO_CONFIG, GYRO_FULL_SCALE_2000_DPS | 3);
-    HAL_Delay(10);
     I2CwriteByte(MPU9250_ADDRESS, ACCEL_CONFIG1, ACC_FULL_SCALE_8_G);
-    HAL_Delay(10);
     I2CwriteByte(MPU9250_ADDRESS, ACCEL_CONFIG2, 4);
-    HAL_Delay(10);
     I2CwriteByte(MPU9250_ADDRESS, 0x37, 0x02);
-    HAL_Delay(10);
     I2CwriteByte(MAG_ADDRESS, 0x0A, 0x16);
-    HAL_Delay(10);
-    m->scl_acc = m->scl_magx = m-> scl_magy = m-> scl_magz = 0;
+    m->scl_acc = m->scl_magx = m-> scl_magy = m-> scl_magz = 1;
     
 }
 
@@ -45,6 +41,17 @@ void readRawAcc(mpu9250* m){ // m/s^2
     _ax = -((Buf[0]<<8) | Buf[1]);
     _ay = -((Buf[2]<<8) | Buf[3]);
     _az =   (Buf[4]<<8) | Buf[5];
+    /*
+    char buff[50];
+
+    for(int i = 0; i < 6 ; i++){
+
+        sprintf(buff, "%x\t", Buf[i]);
+        HAL_UART_Transmit(&huart1, (uint8_t *)buff, strlen(buff), 100);
+    }
+
+    sprintf(buff, "\n");
+    HAL_UART_Transmit(&huart1, (uint8_t *)buff, strlen(buff), 100);*/
     m -> raw_ax = _ax;
     m -> raw_ay = _ay;
     m -> raw_az = _az; 
@@ -57,7 +64,6 @@ void readRawGyro(mpu9250* m){ // degrees/sec
     _gx = -((Buf[0] << 8) | Buf[1]);
     _gy = -((Buf[2] << 8) | Buf[3]);
     _gz =   (Buf[4] << 8) | Buf[5];
-    
     m -> raw_gx = _gx;
     m -> raw_gy = _gy;
     m -> raw_gz = _gz; 
@@ -256,7 +262,11 @@ void calibrateAccel(mpu9250* m){
     m -> off_ay = getMatVal(&ans, 1, 0);
     m -> off_az = getMatVal(&ans, 2, 0);
     m -> scl_acc = scale;
-    setReg(CAL_ACC, 100);
+/*
+    char buff[50];
+
+    sprintf(buff, "%f %f %f %f\n", m->off_ax, m->off_ay, m->off_az, m->scl_acc);
+    HAL_UART_Transmit(&huart1, (uint8_t *)buff, strlen(buff), 100);*/
 
     matDestruct(&A);
     matDestruct(&b);

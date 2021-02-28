@@ -1,0 +1,2348 @@
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"kalman.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.setKalmanTsImu,"ax",%progbits
+  18              		.align	1
+  19              		.global	setKalmanTsImu
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv5-sp-d16
+  26              	setKalmanTsImu:
+  27              	.LVL0:
+  28              	.LFB141:
+  29              		.file 1 "Core/drogui/src/kalman.c"
+   1:Core/drogui/src/kalman.c **** #include "kalman.h"
+   2:Core/drogui/src/kalman.c **** 
+   3:Core/drogui/src/kalman.c **** extern char buffer[150];
+   4:Core/drogui/src/kalman.c **** 
+   5:Core/drogui/src/kalman.c **** #define GRAVITY 1
+   6:Core/drogui/src/kalman.c **** float Ts, N;
+   7:Core/drogui/src/kalman.c **** mat p, v, Rq,Rc, u, s;
+   8:Core/drogui/src/kalman.c **** mat Fm, Gm, Hm, bias_p, bias_v, bias_u,Pm, Q12, ye, KalmanGain, p_gps, delta;
+   9:Core/drogui/src/kalman.c **** 
+  10:Core/drogui/src/kalman.c **** void setKalmanTsImu(float ts){
+  30              		.loc 1 10 30 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  11:Core/drogui/src/kalman.c ****     Ts = ts;
+  35              		.loc 1 11 5 view .LVU1
+  36              		.loc 1 11 8 is_stmt 0 view .LVU2
+  37 0000 014B     		ldr	r3, .L2
+  38 0002 83ED000A 		vstr.32	s0, [r3]
+  12:Core/drogui/src/kalman.c **** }
+  39              		.loc 1 12 1 view .LVU3
+  40 0006 7047     		bx	lr
+  41              	.L3:
+  42              		.align	2
+  43              	.L2:
+  44 0008 00000000 		.word	.LANCHOR0
+  45              		.cfi_endproc
+  46              	.LFE141:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 2
+
+
+  48              		.section	.text.setKalmanTsGps,"ax",%progbits
+  49              		.align	1
+  50              		.global	setKalmanTsGps
+  51              		.syntax unified
+  52              		.thumb
+  53              		.thumb_func
+  54              		.fpu fpv5-sp-d16
+  56              	setKalmanTsGps:
+  57              	.LVL1:
+  58              	.LFB142:
+  13:Core/drogui/src/kalman.c **** 
+  14:Core/drogui/src/kalman.c **** void setKalmanTsGps(float ts){
+  59              		.loc 1 14 30 is_stmt 1 view -0
+  60              		.cfi_startproc
+  61              		@ args = 0, pretend = 0, frame = 0
+  62              		@ frame_needed = 0, uses_anonymous_args = 0
+  63              		@ link register save eliminated.
+  15:Core/drogui/src/kalman.c ****     N = Ts/ts;
+  64              		.loc 1 15 5 view .LVU5
+  65              		.loc 1 15 11 is_stmt 0 view .LVU6
+  66 0000 044B     		ldr	r3, .L5
+  67 0002 93ED007A 		vldr.32	s14, [r3]
+  68 0006 C7EE007A 		vdiv.f32	s15, s14, s0
+  69              		.loc 1 15 7 view .LVU7
+  70 000a 034B     		ldr	r3, .L5+4
+  71 000c C3ED007A 		vstr.32	s15, [r3]
+  16:Core/drogui/src/kalman.c **** }
+  72              		.loc 1 16 1 view .LVU8
+  73 0010 7047     		bx	lr
+  74              	.L6:
+  75 0012 00BF     		.align	2
+  76              	.L5:
+  77 0014 00000000 		.word	.LANCHOR0
+  78 0018 00000000 		.word	.LANCHOR1
+  79              		.cfi_endproc
+  80              	.LFE142:
+  82              		.section	.text.initMatGlobal,"ax",%progbits
+  83              		.align	1
+  84              		.global	initMatGlobal
+  85              		.syntax unified
+  86              		.thumb
+  87              		.thumb_func
+  88              		.fpu fpv5-sp-d16
+  90              	initMatGlobal:
+  91              	.LFB143:
+  17:Core/drogui/src/kalman.c **** 
+  18:Core/drogui/src/kalman.c **** void initMatGlobal(){
+  92              		.loc 1 18 21 is_stmt 1 view -0
+  93              		.cfi_startproc
+  94              		@ args = 0, pretend = 0, frame = 0
+  95              		@ frame_needed = 0, uses_anonymous_args = 0
+  96 0000 10B5     		push	{r4, lr}
+  97              	.LCFI0:
+  98              		.cfi_def_cfa_offset 8
+  99              		.cfi_offset 4, -8
+ 100              		.cfi_offset 14, -4
+  19:Core/drogui/src/kalman.c ****     matInit(&Rq, 3, 3);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 3
+
+
+ 101              		.loc 1 19 5 view .LVU10
+ 102 0002 0322     		movs	r2, #3
+ 103 0004 1146     		mov	r1, r2
+ 104 0006 5748     		ldr	r0, .L23
+ 105 0008 FFF7FEFF 		bl	matInit
+ 106              	.LVL2:
+  20:Core/drogui/src/kalman.c ****     matInit(&u, 3, 1);
+ 107              		.loc 1 20 5 view .LVU11
+ 108 000c 0122     		movs	r2, #1
+ 109 000e 0321     		movs	r1, #3
+ 110 0010 5548     		ldr	r0, .L23+4
+ 111 0012 FFF7FEFF 		bl	matInit
+ 112              	.LVL3:
+  21:Core/drogui/src/kalman.c ****     matInit(&s, 3, 1);
+ 113              		.loc 1 21 5 view .LVU12
+ 114 0016 0122     		movs	r2, #1
+ 115 0018 0321     		movs	r1, #3
+ 116 001a 5448     		ldr	r0, .L23+8
+ 117 001c FFF7FEFF 		bl	matInit
+ 118              	.LVL4:
+  22:Core/drogui/src/kalman.c ****     matInit(&p, 3, 1);
+ 119              		.loc 1 22 5 view .LVU13
+ 120 0020 0122     		movs	r2, #1
+ 121 0022 0321     		movs	r1, #3
+ 122 0024 5248     		ldr	r0, .L23+12
+ 123 0026 FFF7FEFF 		bl	matInit
+ 124              	.LVL5:
+  23:Core/drogui/src/kalman.c ****     matInit(&v, 3, 1);
+ 125              		.loc 1 23 5 view .LVU14
+ 126 002a 0122     		movs	r2, #1
+ 127 002c 0321     		movs	r1, #3
+ 128 002e 5148     		ldr	r0, .L23+16
+ 129 0030 FFF7FEFF 		bl	matInit
+ 130              	.LVL6:
+  24:Core/drogui/src/kalman.c ****     matInit(&bias_p, 3, 1);
+ 131              		.loc 1 24 5 view .LVU15
+ 132 0034 0122     		movs	r2, #1
+ 133 0036 0321     		movs	r1, #3
+ 134 0038 4F48     		ldr	r0, .L23+20
+ 135 003a FFF7FEFF 		bl	matInit
+ 136              	.LVL7:
+  25:Core/drogui/src/kalman.c ****     matInit(&bias_u, 3, 1);
+ 137              		.loc 1 25 5 view .LVU16
+ 138 003e 0122     		movs	r2, #1
+ 139 0040 0321     		movs	r1, #3
+ 140 0042 4E48     		ldr	r0, .L23+24
+ 141 0044 FFF7FEFF 		bl	matInit
+ 142              	.LVL8:
+  26:Core/drogui/src/kalman.c ****     matInit(&bias_v, 3, 1);
+ 143              		.loc 1 26 5 view .LVU17
+ 144 0048 0122     		movs	r2, #1
+ 145 004a 0321     		movs	r1, #3
+ 146 004c 4C48     		ldr	r0, .L23+28
+ 147 004e FFF7FEFF 		bl	matInit
+ 148              	.LVL9:
+  27:Core/drogui/src/kalman.c ****     matInit(&ye, 3, 1);
+ 149              		.loc 1 27 5 view .LVU18
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 4
+
+
+ 150 0052 0122     		movs	r2, #1
+ 151 0054 0321     		movs	r1, #3
+ 152 0056 4B48     		ldr	r0, .L23+32
+ 153 0058 FFF7FEFF 		bl	matInit
+ 154              	.LVL10:
+  28:Core/drogui/src/kalman.c ****     matInit(&p_gps,3, 1);
+ 155              		.loc 1 28 5 view .LVU19
+ 156 005c 0122     		movs	r2, #1
+ 157 005e 0321     		movs	r1, #3
+ 158 0060 4948     		ldr	r0, .L23+36
+ 159 0062 FFF7FEFF 		bl	matInit
+ 160              	.LVL11:
+  29:Core/drogui/src/kalman.c ****     matInit(&KalmanGain, 9, 3);    
+ 161              		.loc 1 29 5 view .LVU20
+ 162 0066 0322     		movs	r2, #3
+ 163 0068 0921     		movs	r1, #9
+ 164 006a 4848     		ldr	r0, .L23+40
+ 165 006c FFF7FEFF 		bl	matInit
+ 166              	.LVL12:
+  30:Core/drogui/src/kalman.c ****     matInit(&delta, 9, 1);
+ 167              		.loc 1 30 5 view .LVU21
+ 168 0070 0122     		movs	r2, #1
+ 169 0072 0921     		movs	r1, #9
+ 170 0074 4648     		ldr	r0, .L23+44
+ 171 0076 FFF7FEFF 		bl	matInit
+ 172              	.LVL13:
+  31:Core/drogui/src/kalman.c **** 
+  32:Core/drogui/src/kalman.c ****     matInit(&Rc, 3, 3);
+ 173              		.loc 1 32 5 view .LVU22
+ 174 007a 0322     		movs	r2, #3
+ 175 007c 1146     		mov	r1, r2
+ 176 007e 4548     		ldr	r0, .L23+48
+ 177 0080 FFF7FEFF 		bl	matInit
+ 178              	.LVL14:
+  33:Core/drogui/src/kalman.c ****     for(int i = 0; i < 3;  i++) setMatVal(&Rc,i,i,0.1);
+ 179              		.loc 1 33 5 view .LVU23
+ 180              	.LBB2:
+ 181              		.loc 1 33 9 view .LVU24
+ 182              		.loc 1 33 13 is_stmt 0 view .LVU25
+ 183 0084 0024     		movs	r4, #0
+ 184              		.loc 1 33 5 view .LVU26
+ 185 0086 07E0     		b	.L8
+ 186              	.LVL15:
+ 187              	.L9:
+ 188              		.loc 1 33 33 is_stmt 1 discriminator 3 view .LVU27
+ 189 0088 9FED430A 		vldr.32	s0, .L23+52
+ 190 008c 2246     		mov	r2, r4
+ 191 008e 2146     		mov	r1, r4
+ 192 0090 4048     		ldr	r0, .L23+48
+ 193 0092 FFF7FEFF 		bl	setMatVal
+ 194              	.LVL16:
+ 195              		.loc 1 33 28 discriminator 3 view .LVU28
+ 196              		.loc 1 33 29 is_stmt 0 discriminator 3 view .LVU29
+ 197 0096 0134     		adds	r4, r4, #1
+ 198              	.LVL17:
+ 199              	.L8:
+ 200              		.loc 1 33 20 is_stmt 1 discriminator 1 view .LVU30
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 5
+
+
+ 201              		.loc 1 33 5 is_stmt 0 discriminator 1 view .LVU31
+ 202 0098 022C     		cmp	r4, #2
+ 203 009a F5DD     		ble	.L9
+ 204              	.LBE2:
+  34:Core/drogui/src/kalman.c **** 
+  35:Core/drogui/src/kalman.c ****     matInit(&Q12, 6, 6); 
+ 205              		.loc 1 35 5 is_stmt 1 view .LVU32
+ 206 009c 0622     		movs	r2, #6
+ 207 009e 1146     		mov	r1, r2
+ 208 00a0 3E48     		ldr	r0, .L23+56
+ 209 00a2 FFF7FEFF 		bl	matInit
+ 210              	.LVL18:
+  36:Core/drogui/src/kalman.c ****     for(int i = 0; i < 6;  i++) setMatVal(&Q12,i,i,0.01);
+ 211              		.loc 1 36 5 view .LVU33
+ 212              	.LBB3:
+ 213              		.loc 1 36 9 view .LVU34
+ 214              		.loc 1 36 13 is_stmt 0 view .LVU35
+ 215 00a6 0024     		movs	r4, #0
+ 216              	.LVL19:
+ 217              		.loc 1 36 5 view .LVU36
+ 218 00a8 07E0     		b	.L10
+ 219              	.LVL20:
+ 220              	.L11:
+ 221              		.loc 1 36 33 is_stmt 1 discriminator 3 view .LVU37
+ 222 00aa 9FED3D0A 		vldr.32	s0, .L23+60
+ 223 00ae 2246     		mov	r2, r4
+ 224 00b0 2146     		mov	r1, r4
+ 225 00b2 3A48     		ldr	r0, .L23+56
+ 226 00b4 FFF7FEFF 		bl	setMatVal
+ 227              	.LVL21:
+ 228              		.loc 1 36 28 discriminator 3 view .LVU38
+ 229              		.loc 1 36 29 is_stmt 0 discriminator 3 view .LVU39
+ 230 00b8 0134     		adds	r4, r4, #1
+ 231              	.LVL22:
+ 232              	.L10:
+ 233              		.loc 1 36 20 is_stmt 1 discriminator 1 view .LVU40
+ 234              		.loc 1 36 5 is_stmt 0 discriminator 1 view .LVU41
+ 235 00ba 052C     		cmp	r4, #5
+ 236 00bc F5DD     		ble	.L11
+ 237              	.LBE3:
+  37:Core/drogui/src/kalman.c **** 
+  38:Core/drogui/src/kalman.c ****     matInit(&Pm, 9, 9); 
+ 238              		.loc 1 38 5 is_stmt 1 view .LVU42
+ 239 00be 0922     		movs	r2, #9
+ 240 00c0 1146     		mov	r1, r2
+ 241 00c2 3848     		ldr	r0, .L23+64
+ 242 00c4 FFF7FEFF 		bl	matInit
+ 243              	.LVL23:
+  39:Core/drogui/src/kalman.c ****     for(int i = 0; i < 9;  i++) setMatVal(&Pm,i,i,0.1);
+ 244              		.loc 1 39 5 view .LVU43
+ 245              	.LBB4:
+ 246              		.loc 1 39 9 view .LVU44
+ 247              		.loc 1 39 13 is_stmt 0 view .LVU45
+ 248 00c8 0024     		movs	r4, #0
+ 249              	.LVL24:
+ 250              		.loc 1 39 5 view .LVU46
+ 251 00ca 07E0     		b	.L12
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 6
+
+
+ 252              	.LVL25:
+ 253              	.L13:
+ 254              		.loc 1 39 33 is_stmt 1 discriminator 3 view .LVU47
+ 255 00cc 9FED320A 		vldr.32	s0, .L23+52
+ 256 00d0 2246     		mov	r2, r4
+ 257 00d2 2146     		mov	r1, r4
+ 258 00d4 3348     		ldr	r0, .L23+64
+ 259 00d6 FFF7FEFF 		bl	setMatVal
+ 260              	.LVL26:
+ 261              		.loc 1 39 28 discriminator 3 view .LVU48
+ 262              		.loc 1 39 29 is_stmt 0 discriminator 3 view .LVU49
+ 263 00da 0134     		adds	r4, r4, #1
+ 264              	.LVL27:
+ 265              	.L12:
+ 266              		.loc 1 39 20 is_stmt 1 discriminator 1 view .LVU50
+ 267              		.loc 1 39 5 is_stmt 0 discriminator 1 view .LVU51
+ 268 00dc 082C     		cmp	r4, #8
+ 269 00de F5DD     		ble	.L13
+ 270              	.LBE4:
+  40:Core/drogui/src/kalman.c **** 
+  41:Core/drogui/src/kalman.c ****     matInit(&Fm, 9, 9);
+ 271              		.loc 1 41 5 is_stmt 1 view .LVU52
+ 272 00e0 0922     		movs	r2, #9
+ 273 00e2 1146     		mov	r1, r2
+ 274 00e4 3048     		ldr	r0, .L23+68
+ 275 00e6 FFF7FEFF 		bl	matInit
+ 276              	.LVL28:
+  42:Core/drogui/src/kalman.c ****     for(int i = 0; i < 9 ; i++) setMatVal(&Fm, i, i, 1);
+ 277              		.loc 1 42 5 view .LVU53
+ 278              	.LBB5:
+ 279              		.loc 1 42 9 view .LVU54
+ 280              		.loc 1 42 13 is_stmt 0 view .LVU55
+ 281 00ea 0024     		movs	r4, #0
+ 282              	.LVL29:
+ 283              		.loc 1 42 5 view .LVU56
+ 284 00ec 07E0     		b	.L14
+ 285              	.LVL30:
+ 286              	.L15:
+ 287              		.loc 1 42 33 is_stmt 1 discriminator 3 view .LVU57
+ 288 00ee B7EE000A 		vmov.f32	s0, #1.0e+0
+ 289 00f2 2246     		mov	r2, r4
+ 290 00f4 2146     		mov	r1, r4
+ 291 00f6 2C48     		ldr	r0, .L23+68
+ 292 00f8 FFF7FEFF 		bl	setMatVal
+ 293              	.LVL31:
+ 294              		.loc 1 42 28 discriminator 3 view .LVU58
+ 295              		.loc 1 42 29 is_stmt 0 discriminator 3 view .LVU59
+ 296 00fc 0134     		adds	r4, r4, #1
+ 297              	.LVL32:
+ 298              	.L14:
+ 299              		.loc 1 42 20 is_stmt 1 discriminator 1 view .LVU60
+ 300              		.loc 1 42 5 is_stmt 0 discriminator 1 view .LVU61
+ 301 00fe 082C     		cmp	r4, #8
+ 302 0100 F5DD     		ble	.L15
+ 303              	.LBE5:
+ 304              	.LBB6:
+  43:Core/drogui/src/kalman.c ****     for(int i = 0; i < 3; i++) setMatVal(&Fm, i, i+3, Ts);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 7
+
+
+ 305              		.loc 1 43 13 view .LVU62
+ 306 0102 0024     		movs	r4, #0
+ 307              	.LVL33:
+ 308              		.loc 1 43 13 view .LVU63
+ 309 0104 08E0     		b	.L16
+ 310              	.LVL34:
+ 311              	.L17:
+ 312              		.loc 1 43 32 is_stmt 1 discriminator 3 view .LVU64
+ 313 0106 294B     		ldr	r3, .L23+72
+ 314 0108 93ED000A 		vldr.32	s0, [r3]
+ 315 010c E21C     		adds	r2, r4, #3
+ 316 010e 2146     		mov	r1, r4
+ 317 0110 2548     		ldr	r0, .L23+68
+ 318 0112 FFF7FEFF 		bl	setMatVal
+ 319              	.LVL35:
+ 320              		.loc 1 43 27 discriminator 3 view .LVU65
+ 321              		.loc 1 43 28 is_stmt 0 discriminator 3 view .LVU66
+ 322 0116 0134     		adds	r4, r4, #1
+ 323              	.LVL36:
+ 324              	.L16:
+ 325              		.loc 1 43 20 is_stmt 1 discriminator 1 view .LVU67
+ 326              		.loc 1 43 5 is_stmt 0 discriminator 1 view .LVU68
+ 327 0118 022C     		cmp	r4, #2
+ 328 011a F4DD     		ble	.L17
+ 329              	.LBE6:
+  44:Core/drogui/src/kalman.c **** 
+  45:Core/drogui/src/kalman.c ****     matInit(&Hm, 3, 9); 
+ 330              		.loc 1 45 5 is_stmt 1 view .LVU69
+ 331 011c 0922     		movs	r2, #9
+ 332 011e 0321     		movs	r1, #3
+ 333 0120 2348     		ldr	r0, .L23+76
+ 334 0122 FFF7FEFF 		bl	matInit
+ 335              	.LVL37:
+  46:Core/drogui/src/kalman.c ****     for(int i = 0; i <3; i++) setMatVal(&Hm, i, i,1);
+ 336              		.loc 1 46 5 view .LVU70
+ 337              	.LBB7:
+ 338              		.loc 1 46 9 view .LVU71
+ 339              		.loc 1 46 13 is_stmt 0 view .LVU72
+ 340 0126 0024     		movs	r4, #0
+ 341              	.LVL38:
+ 342              		.loc 1 46 5 view .LVU73
+ 343 0128 07E0     		b	.L18
+ 344              	.LVL39:
+ 345              	.L19:
+ 346              		.loc 1 46 31 is_stmt 1 discriminator 3 view .LVU74
+ 347 012a B7EE000A 		vmov.f32	s0, #1.0e+0
+ 348 012e 2246     		mov	r2, r4
+ 349 0130 2146     		mov	r1, r4
+ 350 0132 1F48     		ldr	r0, .L23+76
+ 351 0134 FFF7FEFF 		bl	setMatVal
+ 352              	.LVL40:
+ 353              		.loc 1 46 26 discriminator 3 view .LVU75
+ 354              		.loc 1 46 27 is_stmt 0 discriminator 3 view .LVU76
+ 355 0138 0134     		adds	r4, r4, #1
+ 356              	.LVL41:
+ 357              	.L18:
+ 358              		.loc 1 46 20 is_stmt 1 discriminator 1 view .LVU77
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 8
+
+
+ 359              		.loc 1 46 5 is_stmt 0 discriminator 1 view .LVU78
+ 360 013a 022C     		cmp	r4, #2
+ 361 013c F5DD     		ble	.L19
+ 362              	.LBE7:
+  47:Core/drogui/src/kalman.c **** 
+  48:Core/drogui/src/kalman.c ****     matInit(&Gm,9,6);
+ 363              		.loc 1 48 5 is_stmt 1 view .LVU79
+ 364 013e 0622     		movs	r2, #6
+ 365 0140 0921     		movs	r1, #9
+ 366 0142 1C48     		ldr	r0, .L23+80
+ 367 0144 FFF7FEFF 		bl	matInit
+ 368              	.LVL42:
+  49:Core/drogui/src/kalman.c ****     for( int i = 6;  i < 9; i++ ) setMatVal(&Gm, i, i-3,1);
+ 369              		.loc 1 49 5 view .LVU80
+ 370              	.LBB8:
+ 371              		.loc 1 49 10 view .LVU81
+ 372              		.loc 1 49 14 is_stmt 0 view .LVU82
+ 373 0148 0624     		movs	r4, #6
+ 374              	.LVL43:
+ 375              		.loc 1 49 5 view .LVU83
+ 376 014a 07E0     		b	.L20
+ 377              	.LVL44:
+ 378              	.L21:
+ 379              		.loc 1 49 35 is_stmt 1 discriminator 3 view .LVU84
+ 380 014c B7EE000A 		vmov.f32	s0, #1.0e+0
+ 381 0150 E21E     		subs	r2, r4, #3
+ 382 0152 2146     		mov	r1, r4
+ 383 0154 1748     		ldr	r0, .L23+80
+ 384 0156 FFF7FEFF 		bl	setMatVal
+ 385              	.LVL45:
+ 386              		.loc 1 49 29 discriminator 3 view .LVU85
+ 387              		.loc 1 49 30 is_stmt 0 discriminator 3 view .LVU86
+ 388 015a 0134     		adds	r4, r4, #1
+ 389              	.LVL46:
+ 390              	.L20:
+ 391              		.loc 1 49 22 is_stmt 1 discriminator 1 view .LVU87
+ 392              		.loc 1 49 5 is_stmt 0 discriminator 1 view .LVU88
+ 393 015c 082C     		cmp	r4, #8
+ 394 015e F5DD     		ble	.L21
+ 395              	.LBE8:
+  50:Core/drogui/src/kalman.c ****     
+  51:Core/drogui/src/kalman.c **** }
+ 396              		.loc 1 51 1 view .LVU89
+ 397 0160 10BD     		pop	{r4, pc}
+ 398              	.LVL47:
+ 399              	.L24:
+ 400              		.loc 1 51 1 view .LVU90
+ 401 0162 00BF     		.align	2
+ 402              	.L23:
+ 403 0164 00000000 		.word	.LANCHOR2
+ 404 0168 00000000 		.word	.LANCHOR3
+ 405 016c 00000000 		.word	.LANCHOR4
+ 406 0170 00000000 		.word	.LANCHOR5
+ 407 0174 00000000 		.word	.LANCHOR6
+ 408 0178 00000000 		.word	.LANCHOR7
+ 409 017c 00000000 		.word	.LANCHOR8
+ 410 0180 00000000 		.word	.LANCHOR9
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 9
+
+
+ 411 0184 00000000 		.word	.LANCHOR10
+ 412 0188 00000000 		.word	.LANCHOR11
+ 413 018c 00000000 		.word	.LANCHOR12
+ 414 0190 00000000 		.word	.LANCHOR13
+ 415 0194 00000000 		.word	.LANCHOR14
+ 416 0198 CDCCCC3D 		.word	1036831949
+ 417 019c 00000000 		.word	.LANCHOR15
+ 418 01a0 0AD7233C 		.word	1008981770
+ 419 01a4 00000000 		.word	.LANCHOR16
+ 420 01a8 00000000 		.word	.LANCHOR17
+ 421 01ac 00000000 		.word	.LANCHOR0
+ 422 01b0 00000000 		.word	.LANCHOR18
+ 423 01b4 00000000 		.word	.LANCHOR19
+ 424              		.cfi_endproc
+ 425              	.LFE143:
+ 427              		.section	.text.kynematics,"ax",%progbits
+ 428              		.align	1
+ 429              		.global	kynematics
+ 430              		.syntax unified
+ 431              		.thumb
+ 432              		.thumb_func
+ 433              		.fpu fpv5-sp-d16
+ 435              	kynematics:
+ 436              	.LFB144:
+  52:Core/drogui/src/kalman.c **** 
+  53:Core/drogui/src/kalman.c **** void kynematics(){
+ 437              		.loc 1 53 18 is_stmt 1 view -0
+ 438              		.cfi_startproc
+ 439              		@ args = 0, pretend = 0, frame = 32
+ 440              		@ frame_needed = 0, uses_anonymous_args = 0
+ 441 0000 70B5     		push	{r4, r5, r6, lr}
+ 442              	.LCFI1:
+ 443              		.cfi_def_cfa_offset 16
+ 444              		.cfi_offset 4, -16
+ 445              		.cfi_offset 5, -12
+ 446              		.cfi_offset 6, -8
+ 447              		.cfi_offset 14, -4
+ 448 0002 88B0     		sub	sp, sp, #32
+ 449              	.LCFI2:
+ 450              		.cfi_def_cfa_offset 48
+  54:Core/drogui/src/kalman.c ****     mat aux1, aux2;
+ 451              		.loc 1 54 5 view .LVU92
+  55:Core/drogui/src/kalman.c **** 
+  56:Core/drogui/src/kalman.c ****     matInit(&aux1, p.row, p.col);
+ 452              		.loc 1 56 5 view .LVU93
+ 453 0004 1F4C     		ldr	r4, .L27
+ 454 0006 6268     		ldr	r2, [r4, #4]
+ 455 0008 2168     		ldr	r1, [r4]
+ 456 000a 04A8     		add	r0, sp, #16
+ 457 000c FFF7FEFF 		bl	matInit
+ 458              	.LVL48:
+  57:Core/drogui/src/kalman.c ****     matScale(&aux1, &v, Ts);
+ 459              		.loc 1 57 5 view .LVU94
+ 460 0010 1D4D     		ldr	r5, .L27+4
+ 461 0012 1E4E     		ldr	r6, .L27+8
+ 462 0014 95ED000A 		vldr.32	s0, [r5]
+ 463 0018 3146     		mov	r1, r6
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 10
+
+
+ 464 001a 04A8     		add	r0, sp, #16
+ 465 001c FFF7FEFF 		bl	matScale
+ 466              	.LVL49:
+  58:Core/drogui/src/kalman.c **** 
+  59:Core/drogui/src/kalman.c ****     matInit(&aux2, p.row, p.col);
+ 467              		.loc 1 59 5 view .LVU95
+ 468 0020 6268     		ldr	r2, [r4, #4]
+ 469 0022 2168     		ldr	r1, [r4]
+ 470 0024 6846     		mov	r0, sp
+ 471 0026 FFF7FEFF 		bl	matInit
+ 472              	.LVL50:
+  60:Core/drogui/src/kalman.c ****     matMult(&aux2, &Rq, &u);
+ 473              		.loc 1 60 5 view .LVU96
+ 474 002a 194A     		ldr	r2, .L27+12
+ 475 002c 1949     		ldr	r1, .L27+16
+ 476 002e 6846     		mov	r0, sp
+ 477 0030 FFF7FEFF 		bl	matMult
+ 478              	.LVL51:
+  61:Core/drogui/src/kalman.c **** 
+  62:Core/drogui/src/kalman.c ****     //setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0) + 10.0062);
+  63:Core/drogui/src/kalman.c **** 
+  64:Core/drogui/src/kalman.c ****     matScale(&aux2, &aux2, Ts);    
+ 479              		.loc 1 64 5 view .LVU97
+ 480 0034 95ED000A 		vldr.32	s0, [r5]
+ 481 0038 6946     		mov	r1, sp
+ 482 003a 6846     		mov	r0, sp
+ 483 003c FFF7FEFF 		bl	matScale
+ 484              	.LVL52:
+  65:Core/drogui/src/kalman.c **** 
+  66:Core/drogui/src/kalman.c ****     matAdd(&v, &v, &aux2);
+ 485              		.loc 1 66 5 view .LVU98
+ 486 0040 6A46     		mov	r2, sp
+ 487 0042 3146     		mov	r1, r6
+ 488 0044 3046     		mov	r0, r6
+ 489 0046 FFF7FEFF 		bl	matAdd
+ 490              	.LVL53:
+  67:Core/drogui/src/kalman.c ****    
+  68:Core/drogui/src/kalman.c ****     matScale(&aux2, &aux2, Ts/2);
+ 491              		.loc 1 68 5 view .LVU99
+ 492 004a 95ED000A 		vldr.32	s0, [r5]
+ 493 004e F6EE007A 		vmov.f32	s15, #5.0e-1
+ 494 0052 20EE270A 		vmul.f32	s0, s0, s15
+ 495 0056 6946     		mov	r1, sp
+ 496 0058 6846     		mov	r0, sp
+ 497 005a FFF7FEFF 		bl	matScale
+ 498              	.LVL54:
+  69:Core/drogui/src/kalman.c **** 
+  70:Core/drogui/src/kalman.c ****     matAdd(&p, &p, &aux1);
+ 499              		.loc 1 70 5 view .LVU100
+ 500 005e 04AA     		add	r2, sp, #16
+ 501 0060 2146     		mov	r1, r4
+ 502 0062 2046     		mov	r0, r4
+ 503 0064 FFF7FEFF 		bl	matAdd
+ 504              	.LVL55:
+  71:Core/drogui/src/kalman.c ****     matAdd(&p, &p, &aux2);
+ 505              		.loc 1 71 5 view .LVU101
+ 506 0068 6A46     		mov	r2, sp
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 11
+
+
+ 507 006a 2146     		mov	r1, r4
+ 508 006c 2046     		mov	r0, r4
+ 509 006e FFF7FEFF 		bl	matAdd
+ 510              	.LVL56:
+  72:Core/drogui/src/kalman.c ****     
+  73:Core/drogui/src/kalman.c **** 
+  74:Core/drogui/src/kalman.c ****     matDestruct(&aux1);
+ 511              		.loc 1 74 5 view .LVU102
+ 512 0072 04A8     		add	r0, sp, #16
+ 513 0074 FFF7FEFF 		bl	matDestruct
+ 514              	.LVL57:
+  75:Core/drogui/src/kalman.c ****     matDestruct(&aux2);
+ 515              		.loc 1 75 5 view .LVU103
+ 516 0078 6846     		mov	r0, sp
+ 517 007a FFF7FEFF 		bl	matDestruct
+ 518              	.LVL58:
+  76:Core/drogui/src/kalman.c **** }
+ 519              		.loc 1 76 1 is_stmt 0 view .LVU104
+ 520 007e 08B0     		add	sp, sp, #32
+ 521              	.LCFI3:
+ 522              		.cfi_def_cfa_offset 16
+ 523              		@ sp needed
+ 524 0080 70BD     		pop	{r4, r5, r6, pc}
+ 525              	.L28:
+ 526 0082 00BF     		.align	2
+ 527              	.L27:
+ 528 0084 00000000 		.word	.LANCHOR5
+ 529 0088 00000000 		.word	.LANCHOR0
+ 530 008c 00000000 		.word	.LANCHOR6
+ 531 0090 00000000 		.word	.LANCHOR3
+ 532 0094 00000000 		.word	.LANCHOR2
+ 533              		.cfi_endproc
+ 534              	.LFE144:
+ 536              		.section	.text.getMatFm,"ax",%progbits
+ 537              		.align	1
+ 538              		.global	getMatFm
+ 539              		.syntax unified
+ 540              		.thumb
+ 541              		.thumb_func
+ 542              		.fpu fpv5-sp-d16
+ 544              	getMatFm:
+ 545              	.LFB145:
+  77:Core/drogui/src/kalman.c **** 
+  78:Core/drogui/src/kalman.c **** 
+  79:Core/drogui/src/kalman.c **** void getMatFm(){
+ 546              		.loc 1 79 16 is_stmt 1 view -0
+ 547              		.cfi_startproc
+ 548              		@ args = 0, pretend = 0, frame = 0
+ 549              		@ frame_needed = 0, uses_anonymous_args = 0
+ 550 0000 38B5     		push	{r3, r4, r5, lr}
+ 551              	.LCFI4:
+ 552              		.cfi_def_cfa_offset 16
+ 553              		.cfi_offset 3, -16
+ 554              		.cfi_offset 4, -12
+ 555              		.cfi_offset 5, -8
+ 556              		.cfi_offset 14, -4
+  80:Core/drogui/src/kalman.c ****     for(int i = 0; i < 3; i++)
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 12
+
+
+ 557              		.loc 1 80 5 view .LVU106
+ 558              	.LBB9:
+ 559              		.loc 1 80 9 view .LVU107
+ 560              	.LVL59:
+ 561              		.loc 1 80 13 is_stmt 0 view .LVU108
+ 562 0002 0025     		movs	r5, #0
+ 563              		.loc 1 80 5 view .LVU109
+ 564 0004 12E0     		b	.L30
+ 565              	.LVL60:
+ 566              	.L31:
+ 567              	.LBB10:
+  81:Core/drogui/src/kalman.c ****         for(int j = 0; j < 3; j++)
+  82:Core/drogui/src/kalman.c ****             setMatVal(&Fm, i + 3 ,j + 6, Ts*getMatVal(&Rq, i, j));
+ 568              		.loc 1 82 13 is_stmt 1 discriminator 3 view .LVU110
+ 569              		.loc 1 82 45 is_stmt 0 discriminator 3 view .LVU111
+ 570 0006 2246     		mov	r2, r4
+ 571 0008 2946     		mov	r1, r5
+ 572 000a 0B48     		ldr	r0, .L36
+ 573 000c FFF7FEFF 		bl	getMatVal
+ 574              	.LVL61:
+ 575              		.loc 1 82 13 discriminator 3 view .LVU112
+ 576 0010 0A4B     		ldr	r3, .L36+4
+ 577 0012 D3ED007A 		vldr.32	s15, [r3]
+ 578 0016 20EE270A 		vmul.f32	s0, s0, s15
+ 579 001a A21D     		adds	r2, r4, #6
+ 580 001c E91C     		adds	r1, r5, #3
+ 581 001e 0848     		ldr	r0, .L36+8
+ 582 0020 FFF7FEFF 		bl	setMatVal
+ 583              	.LVL62:
+  81:Core/drogui/src/kalman.c ****         for(int j = 0; j < 3; j++)
+ 584              		.loc 1 81 31 is_stmt 1 discriminator 3 view .LVU113
+  81:Core/drogui/src/kalman.c ****         for(int j = 0; j < 3; j++)
+ 585              		.loc 1 81 32 is_stmt 0 discriminator 3 view .LVU114
+ 586 0024 0134     		adds	r4, r4, #1
+ 587              	.LVL63:
+ 588              	.L32:
+  81:Core/drogui/src/kalman.c ****         for(int j = 0; j < 3; j++)
+ 589              		.loc 1 81 24 is_stmt 1 discriminator 1 view .LVU115
+  81:Core/drogui/src/kalman.c ****         for(int j = 0; j < 3; j++)
+ 590              		.loc 1 81 9 is_stmt 0 discriminator 1 view .LVU116
+ 591 0026 022C     		cmp	r4, #2
+ 592 0028 EDDD     		ble	.L31
+ 593              	.LBE10:
+  80:Core/drogui/src/kalman.c ****     for(int i = 0; i < 3; i++)
+ 594              		.loc 1 80 27 is_stmt 1 discriminator 2 view .LVU117
+  80:Core/drogui/src/kalman.c ****     for(int i = 0; i < 3; i++)
+ 595              		.loc 1 80 28 is_stmt 0 discriminator 2 view .LVU118
+ 596 002a 0135     		adds	r5, r5, #1
+ 597              	.LVL64:
+ 598              	.L30:
+  80:Core/drogui/src/kalman.c ****     for(int i = 0; i < 3; i++)
+ 599              		.loc 1 80 20 is_stmt 1 discriminator 1 view .LVU119
+  80:Core/drogui/src/kalman.c ****     for(int i = 0; i < 3; i++)
+ 600              		.loc 1 80 5 is_stmt 0 discriminator 1 view .LVU120
+ 601 002c 022D     		cmp	r5, #2
+ 602 002e 01DC     		bgt	.L35
+ 603              	.LBB11:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 13
+
+
+  81:Core/drogui/src/kalman.c ****         for(int j = 0; j < 3; j++)
+ 604              		.loc 1 81 17 view .LVU121
+ 605 0030 0024     		movs	r4, #0
+ 606 0032 F8E7     		b	.L32
+ 607              	.L35:
+ 608              	.LBE11:
+ 609              	.LBE9:
+  83:Core/drogui/src/kalman.c **** }
+ 610              		.loc 1 83 1 view .LVU122
+ 611 0034 38BD     		pop	{r3, r4, r5, pc}
+ 612              	.LVL65:
+ 613              	.L37:
+ 614              		.loc 1 83 1 view .LVU123
+ 615 0036 00BF     		.align	2
+ 616              	.L36:
+ 617 0038 00000000 		.word	.LANCHOR2
+ 618 003c 00000000 		.word	.LANCHOR0
+ 619 0040 00000000 		.word	.LANCHOR17
+ 620              		.cfi_endproc
+ 621              	.LFE145:
+ 623              		.section	.text.getMatGm,"ax",%progbits
+ 624              		.align	1
+ 625              		.global	getMatGm
+ 626              		.syntax unified
+ 627              		.thumb
+ 628              		.thumb_func
+ 629              		.fpu fpv5-sp-d16
+ 631              	getMatGm:
+ 632              	.LFB146:
+  84:Core/drogui/src/kalman.c **** 
+  85:Core/drogui/src/kalman.c **** void getMatGm(){
+ 633              		.loc 1 85 16 is_stmt 1 view -0
+ 634              		.cfi_startproc
+ 635              		@ args = 0, pretend = 0, frame = 0
+ 636              		@ frame_needed = 0, uses_anonymous_args = 0
+ 637 0000 38B5     		push	{r3, r4, r5, lr}
+ 638              	.LCFI5:
+ 639              		.cfi_def_cfa_offset 16
+ 640              		.cfi_offset 3, -16
+ 641              		.cfi_offset 4, -12
+ 642              		.cfi_offset 5, -8
+ 643              		.cfi_offset 14, -4
+  86:Core/drogui/src/kalman.c ****     for( int i = 0;  i < 3; i++ ){
+ 644              		.loc 1 86 5 view .LVU125
+ 645              	.LBB12:
+ 646              		.loc 1 86 10 view .LVU126
+ 647              	.LVL66:
+ 648              		.loc 1 86 14 is_stmt 0 view .LVU127
+ 649 0002 0025     		movs	r5, #0
+ 650              		.loc 1 86 5 view .LVU128
+ 651 0004 12E0     		b	.L39
+ 652              	.LVL67:
+ 653              	.L40:
+ 654              	.LBB13:
+  87:Core/drogui/src/kalman.c ****         for( int j = 0; j < 3; j++) 
+  88:Core/drogui/src/kalman.c ****             setMatVal(&Gm, i+3, j, Ts*getMatVal(&Rq, i,j));
+ 655              		.loc 1 88 13 is_stmt 1 discriminator 3 view .LVU129
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 14
+
+
+ 656              		.loc 1 88 39 is_stmt 0 discriminator 3 view .LVU130
+ 657 0006 2246     		mov	r2, r4
+ 658 0008 2946     		mov	r1, r5
+ 659 000a 0B48     		ldr	r0, .L45
+ 660 000c FFF7FEFF 		bl	getMatVal
+ 661              	.LVL68:
+ 662              		.loc 1 88 13 discriminator 3 view .LVU131
+ 663 0010 0A4B     		ldr	r3, .L45+4
+ 664 0012 D3ED007A 		vldr.32	s15, [r3]
+ 665 0016 20EE270A 		vmul.f32	s0, s0, s15
+ 666 001a 2246     		mov	r2, r4
+ 667 001c E91C     		adds	r1, r5, #3
+ 668 001e 0848     		ldr	r0, .L45+8
+ 669 0020 FFF7FEFF 		bl	setMatVal
+ 670              	.LVL69:
+  87:Core/drogui/src/kalman.c ****         for( int j = 0; j < 3; j++) 
+ 671              		.loc 1 87 32 is_stmt 1 discriminator 3 view .LVU132
+  87:Core/drogui/src/kalman.c ****         for( int j = 0; j < 3; j++) 
+ 672              		.loc 1 87 33 is_stmt 0 discriminator 3 view .LVU133
+ 673 0024 0134     		adds	r4, r4, #1
+ 674              	.LVL70:
+ 675              	.L41:
+  87:Core/drogui/src/kalman.c ****         for( int j = 0; j < 3; j++) 
+ 676              		.loc 1 87 25 is_stmt 1 discriminator 1 view .LVU134
+  87:Core/drogui/src/kalman.c ****         for( int j = 0; j < 3; j++) 
+ 677              		.loc 1 87 9 is_stmt 0 discriminator 1 view .LVU135
+ 678 0026 022C     		cmp	r4, #2
+ 679 0028 EDDD     		ble	.L40
+ 680              	.LBE13:
+  86:Core/drogui/src/kalman.c ****     for( int i = 0;  i < 3; i++ ){
+ 681              		.loc 1 86 29 is_stmt 1 discriminator 2 view .LVU136
+  86:Core/drogui/src/kalman.c ****     for( int i = 0;  i < 3; i++ ){
+ 682              		.loc 1 86 30 is_stmt 0 discriminator 2 view .LVU137
+ 683 002a 0135     		adds	r5, r5, #1
+ 684              	.LVL71:
+ 685              	.L39:
+  86:Core/drogui/src/kalman.c ****     for( int i = 0;  i < 3; i++ ){
+ 686              		.loc 1 86 22 is_stmt 1 discriminator 1 view .LVU138
+  86:Core/drogui/src/kalman.c ****     for( int i = 0;  i < 3; i++ ){
+ 687              		.loc 1 86 5 is_stmt 0 discriminator 1 view .LVU139
+ 688 002c 022D     		cmp	r5, #2
+ 689 002e 01DC     		bgt	.L44
+ 690              	.LBB14:
+  87:Core/drogui/src/kalman.c ****         for( int j = 0; j < 3; j++) 
+ 691              		.loc 1 87 18 view .LVU140
+ 692 0030 0024     		movs	r4, #0
+ 693 0032 F8E7     		b	.L41
+ 694              	.L44:
+ 695              	.LBE14:
+ 696              	.LBE12:
+  89:Core/drogui/src/kalman.c ****     } 
+  90:Core/drogui/src/kalman.c **** }
+ 697              		.loc 1 90 1 view .LVU141
+ 698 0034 38BD     		pop	{r3, r4, r5, pc}
+ 699              	.LVL72:
+ 700              	.L46:
+ 701              		.loc 1 90 1 view .LVU142
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 15
+
+
+ 702 0036 00BF     		.align	2
+ 703              	.L45:
+ 704 0038 00000000 		.word	.LANCHOR2
+ 705 003c 00000000 		.word	.LANCHOR0
+ 706 0040 00000000 		.word	.LANCHOR19
+ 707              		.cfi_endproc
+ 708              	.LFE146:
+ 710              		.section	.text.UpdatePm,"ax",%progbits
+ 711              		.align	1
+ 712              		.global	UpdatePm
+ 713              		.syntax unified
+ 714              		.thumb
+ 715              		.thumb_func
+ 716              		.fpu fpv5-sp-d16
+ 718              	UpdatePm:
+ 719              	.LFB147:
+  91:Core/drogui/src/kalman.c **** 
+  92:Core/drogui/src/kalman.c **** void UpdatePm(){
+ 720              		.loc 1 92 16 is_stmt 1 view -0
+ 721              		.cfi_startproc
+ 722              		@ args = 0, pretend = 0, frame = 80
+ 723              		@ frame_needed = 0, uses_anonymous_args = 0
+ 724 0000 70B5     		push	{r4, r5, r6, lr}
+ 725              	.LCFI6:
+ 726              		.cfi_def_cfa_offset 16
+ 727              		.cfi_offset 4, -16
+ 728              		.cfi_offset 5, -12
+ 729              		.cfi_offset 6, -8
+ 730              		.cfi_offset 14, -4
+ 731 0002 94B0     		sub	sp, sp, #80
+ 732              	.LCFI7:
+ 733              		.cfi_def_cfa_offset 96
+  93:Core/drogui/src/kalman.c ****     
+  94:Core/drogui/src/kalman.c ****     mat aux1,aux2,aux3,aux4,aux5;
+ 734              		.loc 1 94 5 view .LVU144
+  95:Core/drogui/src/kalman.c ****     matInit(&aux1, 9, 9);
+ 735              		.loc 1 95 5 view .LVU145
+ 736 0004 0922     		movs	r2, #9
+ 737 0006 1146     		mov	r1, r2
+ 738 0008 10A8     		add	r0, sp, #64
+ 739 000a FFF7FEFF 		bl	matInit
+ 740              	.LVL73:
+  96:Core/drogui/src/kalman.c ****     matInit(&aux2, 6, 9);
+ 741              		.loc 1 96 5 view .LVU146
+ 742 000e 0922     		movs	r2, #9
+ 743 0010 0621     		movs	r1, #6
+ 744 0012 0CA8     		add	r0, sp, #48
+ 745 0014 FFF7FEFF 		bl	matInit
+ 746              	.LVL74:
+  97:Core/drogui/src/kalman.c ****     matInit(&aux3, 9, 9);
+ 747              		.loc 1 97 5 view .LVU147
+ 748 0018 0922     		movs	r2, #9
+ 749 001a 1146     		mov	r1, r2
+ 750 001c 08A8     		add	r0, sp, #32
+ 751 001e FFF7FEFF 		bl	matInit
+ 752              	.LVL75:
+  98:Core/drogui/src/kalman.c ****     matInit(&aux4, 9, 9);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 16
+
+
+ 753              		.loc 1 98 5 view .LVU148
+ 754 0022 0922     		movs	r2, #9
+ 755 0024 1146     		mov	r1, r2
+ 756 0026 04A8     		add	r0, sp, #16
+ 757 0028 FFF7FEFF 		bl	matInit
+ 758              	.LVL76:
+  99:Core/drogui/src/kalman.c ****     matInit(&aux5, 9, 6);
+ 759              		.loc 1 99 5 view .LVU149
+ 760 002c 0622     		movs	r2, #6
+ 761 002e 0921     		movs	r1, #9
+ 762 0030 6846     		mov	r0, sp
+ 763 0032 FFF7FEFF 		bl	matInit
+ 764              	.LVL77:
+ 100:Core/drogui/src/kalman.c ****     
+ 101:Core/drogui/src/kalman.c ****     getMatFm();
+ 765              		.loc 1 101 5 view .LVU150
+ 766 0036 FFF7FEFF 		bl	getMatFm
+ 767              	.LVL78:
+ 102:Core/drogui/src/kalman.c ****     getMatGm();
+ 768              		.loc 1 102 5 view .LVU151
+ 769 003a FFF7FEFF 		bl	getMatGm
+ 770              	.LVL79:
+ 103:Core/drogui/src/kalman.c **** 
+ 104:Core/drogui/src/kalman.c ****     matTrans(&aux1,&Fm);
+ 771              		.loc 1 104 5 view .LVU152
+ 772 003e 1A4E     		ldr	r6, .L49
+ 773 0040 3146     		mov	r1, r6
+ 774 0042 10A8     		add	r0, sp, #64
+ 775 0044 FFF7FEFF 		bl	matTrans
+ 776              	.LVL80:
+ 105:Core/drogui/src/kalman.c ****     matTrans(&aux2,&Gm);
+ 777              		.loc 1 105 5 view .LVU153
+ 778 0048 184D     		ldr	r5, .L49+4
+ 779 004a 2946     		mov	r1, r5
+ 780 004c 0CA8     		add	r0, sp, #48
+ 781 004e FFF7FEFF 		bl	matTrans
+ 782              	.LVL81:
+ 106:Core/drogui/src/kalman.c ****     
+ 107:Core/drogui/src/kalman.c ****     matMult(&aux4,&Fm,&Pm);
+ 783              		.loc 1 107 5 view .LVU154
+ 784 0052 174C     		ldr	r4, .L49+8
+ 785 0054 2246     		mov	r2, r4
+ 786 0056 3146     		mov	r1, r6
+ 787 0058 04A8     		add	r0, sp, #16
+ 788 005a FFF7FEFF 		bl	matMult
+ 789              	.LVL82:
+ 108:Core/drogui/src/kalman.c ****     matMult(&Pm,&aux4,&aux1);
+ 790              		.loc 1 108 5 view .LVU155
+ 791 005e 10AA     		add	r2, sp, #64
+ 792 0060 04A9     		add	r1, sp, #16
+ 793 0062 2046     		mov	r0, r4
+ 794 0064 FFF7FEFF 		bl	matMult
+ 795              	.LVL83:
+ 109:Core/drogui/src/kalman.c **** 
+ 110:Core/drogui/src/kalman.c ****     matMult(&aux5,&Gm,&Q12);
+ 796              		.loc 1 110 5 view .LVU156
+ 797 0068 124A     		ldr	r2, .L49+12
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 17
+
+
+ 798 006a 2946     		mov	r1, r5
+ 799 006c 6846     		mov	r0, sp
+ 800 006e FFF7FEFF 		bl	matMult
+ 801              	.LVL84:
+ 111:Core/drogui/src/kalman.c ****     matMult(&aux3,&aux5,&aux2);
+ 802              		.loc 1 111 5 view .LVU157
+ 803 0072 0CAA     		add	r2, sp, #48
+ 804 0074 6946     		mov	r1, sp
+ 805 0076 08A8     		add	r0, sp, #32
+ 806 0078 FFF7FEFF 		bl	matMult
+ 807              	.LVL85:
+ 112:Core/drogui/src/kalman.c ****     matAdd(&Pm, &Pm, &aux3);
+ 808              		.loc 1 112 5 view .LVU158
+ 809 007c 08AA     		add	r2, sp, #32
+ 810 007e 2146     		mov	r1, r4
+ 811 0080 2046     		mov	r0, r4
+ 812 0082 FFF7FEFF 		bl	matAdd
+ 813              	.LVL86:
+ 113:Core/drogui/src/kalman.c **** 
+ 114:Core/drogui/src/kalman.c ****     matDestruct(&aux1);
+ 814              		.loc 1 114 5 view .LVU159
+ 815 0086 10A8     		add	r0, sp, #64
+ 816 0088 FFF7FEFF 		bl	matDestruct
+ 817              	.LVL87:
+ 115:Core/drogui/src/kalman.c ****     matDestruct(&aux2);
+ 818              		.loc 1 115 5 view .LVU160
+ 819 008c 0CA8     		add	r0, sp, #48
+ 820 008e FFF7FEFF 		bl	matDestruct
+ 821              	.LVL88:
+ 116:Core/drogui/src/kalman.c ****     matDestruct(&aux3);
+ 822              		.loc 1 116 5 view .LVU161
+ 823 0092 08A8     		add	r0, sp, #32
+ 824 0094 FFF7FEFF 		bl	matDestruct
+ 825              	.LVL89:
+ 117:Core/drogui/src/kalman.c ****     matDestruct(&aux4);
+ 826              		.loc 1 117 5 view .LVU162
+ 827 0098 04A8     		add	r0, sp, #16
+ 828 009a FFF7FEFF 		bl	matDestruct
+ 829              	.LVL90:
+ 118:Core/drogui/src/kalman.c ****     matDestruct(&aux5);
+ 830              		.loc 1 118 5 view .LVU163
+ 831 009e 6846     		mov	r0, sp
+ 832 00a0 FFF7FEFF 		bl	matDestruct
+ 833              	.LVL91:
+ 119:Core/drogui/src/kalman.c **** }
+ 834              		.loc 1 119 1 is_stmt 0 view .LVU164
+ 835 00a4 14B0     		add	sp, sp, #80
+ 836              	.LCFI8:
+ 837              		.cfi_def_cfa_offset 16
+ 838              		@ sp needed
+ 839 00a6 70BD     		pop	{r4, r5, r6, pc}
+ 840              	.L50:
+ 841              		.align	2
+ 842              	.L49:
+ 843 00a8 00000000 		.word	.LANCHOR17
+ 844 00ac 00000000 		.word	.LANCHOR19
+ 845 00b0 00000000 		.word	.LANCHOR16
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 18
+
+
+ 846 00b4 00000000 		.word	.LANCHOR15
+ 847              		.cfi_endproc
+ 848              	.LFE147:
+ 850              		.section	.text.getKalmanGain,"ax",%progbits
+ 851              		.align	1
+ 852              		.global	getKalmanGain
+ 853              		.syntax unified
+ 854              		.thumb
+ 855              		.thumb_func
+ 856              		.fpu fpv5-sp-d16
+ 858              	getKalmanGain:
+ 859              	.LFB148:
+ 120:Core/drogui/src/kalman.c **** void getKalmanGain(){
+ 860              		.loc 1 120 21 is_stmt 1 view -0
+ 861              		.cfi_startproc
+ 862              		@ args = 0, pretend = 0, frame = 64
+ 863              		@ frame_needed = 0, uses_anonymous_args = 0
+ 864 0000 10B5     		push	{r4, lr}
+ 865              	.LCFI9:
+ 866              		.cfi_def_cfa_offset 8
+ 867              		.cfi_offset 4, -8
+ 868              		.cfi_offset 14, -4
+ 869 0002 90B0     		sub	sp, sp, #64
+ 870              	.LCFI10:
+ 871              		.cfi_def_cfa_offset 72
+ 121:Core/drogui/src/kalman.c ****     
+ 122:Core/drogui/src/kalman.c ****     mat aux1, aux2, aux3,aux4;
+ 872              		.loc 1 122 5 view .LVU166
+ 123:Core/drogui/src/kalman.c **** 
+ 124:Core/drogui/src/kalman.c **** 
+ 125:Core/drogui/src/kalman.c ****     matInit(&aux1, 3, 3);
+ 873              		.loc 1 125 5 view .LVU167
+ 874 0004 0322     		movs	r2, #3
+ 875 0006 1146     		mov	r1, r2
+ 876 0008 0CA8     		add	r0, sp, #48
+ 877 000a FFF7FEFF 		bl	matInit
+ 878              	.LVL92:
+ 126:Core/drogui/src/kalman.c ****     matInit(&aux2, 9, 3);   
+ 879              		.loc 1 126 5 view .LVU168
+ 880 000e 0322     		movs	r2, #3
+ 881 0010 0921     		movs	r1, #9
+ 882 0012 08A8     		add	r0, sp, #32
+ 883 0014 FFF7FEFF 		bl	matInit
+ 884              	.LVL93:
+ 127:Core/drogui/src/kalman.c ****     matInit(&aux3, 9, 3);
+ 885              		.loc 1 127 5 view .LVU169
+ 886 0018 0322     		movs	r2, #3
+ 887 001a 0921     		movs	r1, #9
+ 888 001c 04A8     		add	r0, sp, #16
+ 889 001e FFF7FEFF 		bl	matInit
+ 890              	.LVL94:
+ 128:Core/drogui/src/kalman.c ****     matInit(&aux4, 3, 3);
+ 891              		.loc 1 128 5 view .LVU170
+ 892 0022 0322     		movs	r2, #3
+ 893 0024 1146     		mov	r1, r2
+ 894 0026 6846     		mov	r0, sp
+ 895 0028 FFF7FEFF 		bl	matInit
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 19
+
+
+ 896              	.LVL95:
+ 129:Core/drogui/src/kalman.c **** 
+ 130:Core/drogui/src/kalman.c ****     matTrans(&aux3, &Hm);
+ 897              		.loc 1 130 5 view .LVU171
+ 898 002c 154C     		ldr	r4, .L53
+ 899 002e 2146     		mov	r1, r4
+ 900 0030 04A8     		add	r0, sp, #16
+ 901 0032 FFF7FEFF 		bl	matTrans
+ 902              	.LVL96:
+ 131:Core/drogui/src/kalman.c ****     matMult(&aux2, &Pm, &aux3);
+ 903              		.loc 1 131 5 view .LVU172
+ 904 0036 04AA     		add	r2, sp, #16
+ 905 0038 1349     		ldr	r1, .L53+4
+ 906 003a 08A8     		add	r0, sp, #32
+ 907 003c FFF7FEFF 		bl	matMult
+ 908              	.LVL97:
+ 132:Core/drogui/src/kalman.c **** 
+ 133:Core/drogui/src/kalman.c ****     matMult(&aux1, &Hm, &aux2);
+ 909              		.loc 1 133 5 view .LVU173
+ 910 0040 08AA     		add	r2, sp, #32
+ 911 0042 2146     		mov	r1, r4
+ 912 0044 0CA8     		add	r0, sp, #48
+ 913 0046 FFF7FEFF 		bl	matMult
+ 914              	.LVL98:
+ 134:Core/drogui/src/kalman.c ****     matAdd(&aux1, &aux1, &Rc);
+ 915              		.loc 1 134 5 view .LVU174
+ 916 004a 104A     		ldr	r2, .L53+8
+ 917 004c 0CA9     		add	r1, sp, #48
+ 918 004e 0846     		mov	r0, r1
+ 919 0050 FFF7FEFF 		bl	matAdd
+ 920              	.LVL99:
+ 135:Core/drogui/src/kalman.c ****     matInv3(&aux4, &aux1);
+ 921              		.loc 1 135 5 view .LVU175
+ 922 0054 0CA9     		add	r1, sp, #48
+ 923 0056 6846     		mov	r0, sp
+ 924 0058 FFF7FEFF 		bl	matInv3
+ 925              	.LVL100:
+ 136:Core/drogui/src/kalman.c **** 
+ 137:Core/drogui/src/kalman.c ****     matMult(&KalmanGain, &aux2, &aux4);
+ 926              		.loc 1 137 5 view .LVU176
+ 927 005c 6A46     		mov	r2, sp
+ 928 005e 08A9     		add	r1, sp, #32
+ 929 0060 0B48     		ldr	r0, .L53+12
+ 930 0062 FFF7FEFF 		bl	matMult
+ 931              	.LVL101:
+ 138:Core/drogui/src/kalman.c **** 
+ 139:Core/drogui/src/kalman.c ****     matDestruct(&aux1);
+ 932              		.loc 1 139 5 view .LVU177
+ 933 0066 0CA8     		add	r0, sp, #48
+ 934 0068 FFF7FEFF 		bl	matDestruct
+ 935              	.LVL102:
+ 140:Core/drogui/src/kalman.c ****     matDestruct(&aux2);
+ 936              		.loc 1 140 5 view .LVU178
+ 937 006c 08A8     		add	r0, sp, #32
+ 938 006e FFF7FEFF 		bl	matDestruct
+ 939              	.LVL103:
+ 141:Core/drogui/src/kalman.c ****     matDestruct(&aux3);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 20
+
+
+ 940              		.loc 1 141 5 view .LVU179
+ 941 0072 04A8     		add	r0, sp, #16
+ 942 0074 FFF7FEFF 		bl	matDestruct
+ 943              	.LVL104:
+ 142:Core/drogui/src/kalman.c ****     matDestruct(&aux4);
+ 944              		.loc 1 142 5 view .LVU180
+ 945 0078 6846     		mov	r0, sp
+ 946 007a FFF7FEFF 		bl	matDestruct
+ 947              	.LVL105:
+ 143:Core/drogui/src/kalman.c **** }
+ 948              		.loc 1 143 1 is_stmt 0 view .LVU181
+ 949 007e 10B0     		add	sp, sp, #64
+ 950              	.LCFI11:
+ 951              		.cfi_def_cfa_offset 8
+ 952              		@ sp needed
+ 953 0080 10BD     		pop	{r4, pc}
+ 954              	.L54:
+ 955 0082 00BF     		.align	2
+ 956              	.L53:
+ 957 0084 00000000 		.word	.LANCHOR18
+ 958 0088 00000000 		.word	.LANCHOR16
+ 959 008c 00000000 		.word	.LANCHOR14
+ 960 0090 00000000 		.word	.LANCHOR12
+ 961              		.cfi_endproc
+ 962              	.LFE148:
+ 964              		.section	.text.UpdatePmCovGPS,"ax",%progbits
+ 965              		.align	1
+ 966              		.global	UpdatePmCovGPS
+ 967              		.syntax unified
+ 968              		.thumb
+ 969              		.thumb_func
+ 970              		.fpu fpv5-sp-d16
+ 972              	UpdatePmCovGPS:
+ 973              	.LFB149:
+ 144:Core/drogui/src/kalman.c **** 
+ 145:Core/drogui/src/kalman.c **** void UpdatePmCovGPS(){
+ 974              		.loc 1 145 22 is_stmt 1 view -0
+ 975              		.cfi_startproc
+ 976              		@ args = 0, pretend = 0, frame = 32
+ 977              		@ frame_needed = 0, uses_anonymous_args = 0
+ 978 0000 10B5     		push	{r4, lr}
+ 979              	.LCFI12:
+ 980              		.cfi_def_cfa_offset 8
+ 981              		.cfi_offset 4, -8
+ 982              		.cfi_offset 14, -4
+ 983 0002 88B0     		sub	sp, sp, #32
+ 984              	.LCFI13:
+ 985              		.cfi_def_cfa_offset 40
+ 146:Core/drogui/src/kalman.c ****     mat aux1,aux2;
+ 986              		.loc 1 146 5 view .LVU183
+ 147:Core/drogui/src/kalman.c ****     matInit(&aux1, 9, 9);
+ 987              		.loc 1 147 5 view .LVU184
+ 988 0004 0922     		movs	r2, #9
+ 989 0006 1146     		mov	r1, r2
+ 990 0008 04A8     		add	r0, sp, #16
+ 991 000a FFF7FEFF 		bl	matInit
+ 992              	.LVL106:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 21
+
+
+ 148:Core/drogui/src/kalman.c ****     matInit(&aux2, 9, 9);
+ 993              		.loc 1 148 5 view .LVU185
+ 994 000e 0922     		movs	r2, #9
+ 995 0010 1146     		mov	r1, r2
+ 996 0012 6846     		mov	r0, sp
+ 997 0014 FFF7FEFF 		bl	matInit
+ 998              	.LVL107:
+ 149:Core/drogui/src/kalman.c ****     matMult(&aux1, &KalmanGain, &Hm);
+ 999              		.loc 1 149 5 view .LVU186
+ 1000 0018 174A     		ldr	r2, .L59
+ 1001 001a 1849     		ldr	r1, .L59+4
+ 1002 001c 04A8     		add	r0, sp, #16
+ 1003 001e FFF7FEFF 		bl	matMult
+ 1004              	.LVL108:
+ 150:Core/drogui/src/kalman.c ****     matScale(&aux1, &aux1, -1);
+ 1005              		.loc 1 150 5 view .LVU187
+ 1006 0022 BFEE000A 		vmov.f32	s0, #-1.0e+0
+ 1007 0026 04A9     		add	r1, sp, #16
+ 1008 0028 0846     		mov	r0, r1
+ 1009 002a FFF7FEFF 		bl	matScale
+ 1010              	.LVL109:
+ 151:Core/drogui/src/kalman.c ****     for(int i = 0; i < 9; i++) 
+ 1011              		.loc 1 151 5 view .LVU188
+ 1012              	.LBB15:
+ 1013              		.loc 1 151 9 view .LVU189
+ 1014              		.loc 1 151 13 is_stmt 0 view .LVU190
+ 1015 002e 0024     		movs	r4, #0
+ 1016              		.loc 1 151 5 view .LVU191
+ 1017 0030 0EE0     		b	.L56
+ 1018              	.LVL110:
+ 1019              	.L57:
+ 152:Core/drogui/src/kalman.c ****         setMatVal(&aux1, i , i, 1 + getMatVal(&aux1, i , i));
+ 1020              		.loc 1 152 9 is_stmt 1 discriminator 3 view .LVU192
+ 1021              		.loc 1 152 37 is_stmt 0 discriminator 3 view .LVU193
+ 1022 0032 2246     		mov	r2, r4
+ 1023 0034 2146     		mov	r1, r4
+ 1024 0036 04A8     		add	r0, sp, #16
+ 1025 0038 FFF7FEFF 		bl	getMatVal
+ 1026              	.LVL111:
+ 1027              		.loc 1 152 9 discriminator 3 view .LVU194
+ 1028 003c F7EE007A 		vmov.f32	s15, #1.0e+0
+ 1029 0040 30EE270A 		vadd.f32	s0, s0, s15
+ 1030 0044 2246     		mov	r2, r4
+ 1031 0046 2146     		mov	r1, r4
+ 1032 0048 04A8     		add	r0, sp, #16
+ 1033 004a FFF7FEFF 		bl	setMatVal
+ 1034              	.LVL112:
+ 151:Core/drogui/src/kalman.c ****     for(int i = 0; i < 9; i++) 
+ 1035              		.loc 1 151 27 is_stmt 1 discriminator 3 view .LVU195
+ 151:Core/drogui/src/kalman.c ****     for(int i = 0; i < 9; i++) 
+ 1036              		.loc 1 151 28 is_stmt 0 discriminator 3 view .LVU196
+ 1037 004e 0134     		adds	r4, r4, #1
+ 1038              	.LVL113:
+ 1039              	.L56:
+ 151:Core/drogui/src/kalman.c ****     for(int i = 0; i < 9; i++) 
+ 1040              		.loc 1 151 20 is_stmt 1 discriminator 1 view .LVU197
+ 151:Core/drogui/src/kalman.c ****     for(int i = 0; i < 9; i++) 
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 22
+
+
+ 1041              		.loc 1 151 5 is_stmt 0 discriminator 1 view .LVU198
+ 1042 0050 082C     		cmp	r4, #8
+ 1043 0052 EEDD     		ble	.L57
+ 1044              	.LBE15:
+ 153:Core/drogui/src/kalman.c ****     
+ 154:Core/drogui/src/kalman.c ****     
+ 155:Core/drogui/src/kalman.c ****     matMult(&aux2, &aux1, &Pm);
+ 1045              		.loc 1 155 5 is_stmt 1 view .LVU199
+ 1046 0054 0A4C     		ldr	r4, .L59+8
+ 1047              	.LVL114:
+ 1048              		.loc 1 155 5 is_stmt 0 view .LVU200
+ 1049 0056 2246     		mov	r2, r4
+ 1050 0058 04A9     		add	r1, sp, #16
+ 1051 005a 6846     		mov	r0, sp
+ 1052 005c FFF7FEFF 		bl	matMult
+ 1053              	.LVL115:
+ 156:Core/drogui/src/kalman.c ****     matCopy(&Pm, &aux2);
+ 1054              		.loc 1 156 5 is_stmt 1 view .LVU201
+ 1055 0060 6946     		mov	r1, sp
+ 1056 0062 2046     		mov	r0, r4
+ 1057 0064 FFF7FEFF 		bl	matCopy
+ 1058              	.LVL116:
+ 157:Core/drogui/src/kalman.c ****     
+ 158:Core/drogui/src/kalman.c ****     matDestruct(&aux1);
+ 1059              		.loc 1 158 5 view .LVU202
+ 1060 0068 04A8     		add	r0, sp, #16
+ 1061 006a FFF7FEFF 		bl	matDestruct
+ 1062              	.LVL117:
+ 159:Core/drogui/src/kalman.c ****     matDestruct(&aux2);
+ 1063              		.loc 1 159 5 view .LVU203
+ 1064 006e 6846     		mov	r0, sp
+ 1065 0070 FFF7FEFF 		bl	matDestruct
+ 1066              	.LVL118:
+ 160:Core/drogui/src/kalman.c **** }
+ 1067              		.loc 1 160 1 is_stmt 0 view .LVU204
+ 1068 0074 08B0     		add	sp, sp, #32
+ 1069              	.LCFI14:
+ 1070              		.cfi_def_cfa_offset 8
+ 1071              		@ sp needed
+ 1072 0076 10BD     		pop	{r4, pc}
+ 1073              	.L60:
+ 1074              		.align	2
+ 1075              	.L59:
+ 1076 0078 00000000 		.word	.LANCHOR18
+ 1077 007c 00000000 		.word	.LANCHOR12
+ 1078 0080 00000000 		.word	.LANCHOR16
+ 1079              		.cfi_endproc
+ 1080              	.LFE149:
+ 1082              		.section	.text.getBias,"ax",%progbits
+ 1083              		.align	1
+ 1084              		.global	getBias
+ 1085              		.syntax unified
+ 1086              		.thumb
+ 1087              		.thumb_func
+ 1088              		.fpu fpv5-sp-d16
+ 1090              	getBias:
+ 1091              	.LFB150:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 23
+
+
+ 161:Core/drogui/src/kalman.c **** 
+ 162:Core/drogui/src/kalman.c **** void getBias(){
+ 1092              		.loc 1 162 15 is_stmt 1 view -0
+ 1093              		.cfi_startproc
+ 1094              		@ args = 0, pretend = 0, frame = 0
+ 1095              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1096 0000 38B5     		push	{r3, r4, r5, lr}
+ 1097              	.LCFI15:
+ 1098              		.cfi_def_cfa_offset 16
+ 1099              		.cfi_offset 3, -16
+ 1100              		.cfi_offset 4, -12
+ 1101              		.cfi_offset 5, -8
+ 1102              		.cfi_offset 14, -4
+ 1103 0002 2DED028B 		vpush.64	{d8}
+ 1104              	.LCFI16:
+ 1105              		.cfi_def_cfa_offset 24
+ 1106              		.cfi_offset 80, -24
+ 1107              		.cfi_offset 81, -20
+ 163:Core/drogui/src/kalman.c **** 
+ 164:Core/drogui/src/kalman.c **** 
+ 165:Core/drogui/src/kalman.c ****     matSubs(&ye, &p_gps,  &p);
+ 1108              		.loc 1 165 5 view .LVU206
+ 1109 0006 434D     		ldr	r5, .L63
+ 1110 0008 434A     		ldr	r2, .L63+4
+ 1111 000a 4449     		ldr	r1, .L63+8
+ 1112 000c 2846     		mov	r0, r5
+ 1113 000e FFF7FEFF 		bl	matSubs
+ 1114              	.LVL119:
+ 166:Core/drogui/src/kalman.c ****     matMult(&delta, &KalmanGain, &ye);
+ 1115              		.loc 1 166 5 view .LVU207
+ 1116 0012 434C     		ldr	r4, .L63+12
+ 1117 0014 2A46     		mov	r2, r5
+ 1118 0016 4349     		ldr	r1, .L63+16
+ 1119 0018 2046     		mov	r0, r4
+ 1120 001a FFF7FEFF 		bl	matMult
+ 1121              	.LVL120:
+ 167:Core/drogui/src/kalman.c **** 
+ 168:Core/drogui/src/kalman.c ****     setMatVal(&delta, 6, 0, getMatVal(&delta, 6, 0) + getMatVal(&bias_u, 0, 0));
+ 1122              		.loc 1 168 5 view .LVU208
+ 1123              		.loc 1 168 29 is_stmt 0 view .LVU209
+ 1124 001e 0022     		movs	r2, #0
+ 1125 0020 0621     		movs	r1, #6
+ 1126 0022 2046     		mov	r0, r4
+ 1127 0024 FFF7FEFF 		bl	getMatVal
+ 1128              	.LVL121:
+ 1129 0028 B0EE408A 		vmov.f32	s16, s0
+ 1130              		.loc 1 168 55 view .LVU210
+ 1131 002c 3E4D     		ldr	r5, .L63+20
+ 1132 002e 0022     		movs	r2, #0
+ 1133 0030 1146     		mov	r1, r2
+ 1134 0032 2846     		mov	r0, r5
+ 1135 0034 FFF7FEFF 		bl	getMatVal
+ 1136              	.LVL122:
+ 1137              		.loc 1 168 5 view .LVU211
+ 1138 0038 38EE000A 		vadd.f32	s0, s16, s0
+ 1139 003c 0022     		movs	r2, #0
+ 1140 003e 0621     		movs	r1, #6
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 24
+
+
+ 1141 0040 2046     		mov	r0, r4
+ 1142 0042 FFF7FEFF 		bl	setMatVal
+ 1143              	.LVL123:
+ 169:Core/drogui/src/kalman.c ****     setMatVal(&delta, 7, 0, getMatVal(&delta, 7, 0) + getMatVal(&bias_u, 1, 0));
+ 1144              		.loc 1 169 5 is_stmt 1 view .LVU212
+ 1145              		.loc 1 169 29 is_stmt 0 view .LVU213
+ 1146 0046 0022     		movs	r2, #0
+ 1147 0048 0721     		movs	r1, #7
+ 1148 004a 2046     		mov	r0, r4
+ 1149 004c FFF7FEFF 		bl	getMatVal
+ 1150              	.LVL124:
+ 1151 0050 B0EE408A 		vmov.f32	s16, s0
+ 1152              		.loc 1 169 55 view .LVU214
+ 1153 0054 0022     		movs	r2, #0
+ 1154 0056 0121     		movs	r1, #1
+ 1155 0058 2846     		mov	r0, r5
+ 1156 005a FFF7FEFF 		bl	getMatVal
+ 1157              	.LVL125:
+ 1158              		.loc 1 169 5 view .LVU215
+ 1159 005e 38EE000A 		vadd.f32	s0, s16, s0
+ 1160 0062 0022     		movs	r2, #0
+ 1161 0064 0721     		movs	r1, #7
+ 1162 0066 2046     		mov	r0, r4
+ 1163 0068 FFF7FEFF 		bl	setMatVal
+ 1164              	.LVL126:
+ 170:Core/drogui/src/kalman.c ****     setMatVal(&delta, 8, 0, getMatVal(&delta, 8, 0) + getMatVal(&bias_u, 2, 0));
+ 1165              		.loc 1 170 5 is_stmt 1 view .LVU216
+ 1166              		.loc 1 170 29 is_stmt 0 view .LVU217
+ 1167 006c 0022     		movs	r2, #0
+ 1168 006e 0821     		movs	r1, #8
+ 1169 0070 2046     		mov	r0, r4
+ 1170 0072 FFF7FEFF 		bl	getMatVal
+ 1171              	.LVL127:
+ 1172 0076 B0EE408A 		vmov.f32	s16, s0
+ 1173              		.loc 1 170 55 view .LVU218
+ 1174 007a 0022     		movs	r2, #0
+ 1175 007c 0221     		movs	r1, #2
+ 1176 007e 2846     		mov	r0, r5
+ 1177 0080 FFF7FEFF 		bl	getMatVal
+ 1178              	.LVL128:
+ 1179              		.loc 1 170 5 view .LVU219
+ 1180 0084 38EE000A 		vadd.f32	s0, s16, s0
+ 1181 0088 0022     		movs	r2, #0
+ 1182 008a 0821     		movs	r1, #8
+ 1183 008c 2046     		mov	r0, r4
+ 1184 008e FFF7FEFF 		bl	setMatVal
+ 1185              	.LVL129:
+ 171:Core/drogui/src/kalman.c **** 
+ 172:Core/drogui/src/kalman.c ****     setMatVal(&bias_p, 0, 0, getMatVal(&delta, 0, 0));
+ 1186              		.loc 1 172 5 is_stmt 1 view .LVU220
+ 1187 0092 0022     		movs	r2, #0
+ 1188 0094 1146     		mov	r1, r2
+ 1189 0096 2046     		mov	r0, r4
+ 1190 0098 FFF7FEFF 		bl	getMatVal
+ 1191              	.LVL130:
+ 1192 009c 234D     		ldr	r5, .L63+24
+ 1193 009e 0022     		movs	r2, #0
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 25
+
+
+ 1194 00a0 1146     		mov	r1, r2
+ 1195 00a2 2846     		mov	r0, r5
+ 1196 00a4 FFF7FEFF 		bl	setMatVal
+ 1197              	.LVL131:
+ 173:Core/drogui/src/kalman.c ****     setMatVal(&bias_p, 1, 0, getMatVal(&delta, 1, 0));
+ 1198              		.loc 1 173 5 view .LVU221
+ 1199 00a8 0022     		movs	r2, #0
+ 1200 00aa 0121     		movs	r1, #1
+ 1201 00ac 2046     		mov	r0, r4
+ 1202 00ae FFF7FEFF 		bl	getMatVal
+ 1203              	.LVL132:
+ 1204 00b2 0022     		movs	r2, #0
+ 1205 00b4 0121     		movs	r1, #1
+ 1206 00b6 2846     		mov	r0, r5
+ 1207 00b8 FFF7FEFF 		bl	setMatVal
+ 1208              	.LVL133:
+ 174:Core/drogui/src/kalman.c ****     setMatVal(&bias_p, 2, 0, getMatVal(&delta, 2, 0));
+ 1209              		.loc 1 174 5 view .LVU222
+ 1210 00bc 0022     		movs	r2, #0
+ 1211 00be 0221     		movs	r1, #2
+ 1212 00c0 2046     		mov	r0, r4
+ 1213 00c2 FFF7FEFF 		bl	getMatVal
+ 1214              	.LVL134:
+ 1215 00c6 0022     		movs	r2, #0
+ 1216 00c8 0221     		movs	r1, #2
+ 1217 00ca 2846     		mov	r0, r5
+ 1218 00cc FFF7FEFF 		bl	setMatVal
+ 1219              	.LVL135:
+ 175:Core/drogui/src/kalman.c **** 
+ 176:Core/drogui/src/kalman.c ****     setMatVal(&bias_v, 0, 0, getMatVal(&delta, 3, 0));
+ 1220              		.loc 1 176 5 view .LVU223
+ 1221 00d0 0022     		movs	r2, #0
+ 1222 00d2 0321     		movs	r1, #3
+ 1223 00d4 2046     		mov	r0, r4
+ 1224 00d6 FFF7FEFF 		bl	getMatVal
+ 1225              	.LVL136:
+ 1226 00da 154D     		ldr	r5, .L63+28
+ 1227 00dc 0022     		movs	r2, #0
+ 1228 00de 1146     		mov	r1, r2
+ 1229 00e0 2846     		mov	r0, r5
+ 1230 00e2 FFF7FEFF 		bl	setMatVal
+ 1231              	.LVL137:
+ 177:Core/drogui/src/kalman.c ****     setMatVal(&bias_v, 1, 0, getMatVal(&delta, 4, 0));
+ 1232              		.loc 1 177 5 view .LVU224
+ 1233 00e6 0022     		movs	r2, #0
+ 1234 00e8 0421     		movs	r1, #4
+ 1235 00ea 2046     		mov	r0, r4
+ 1236 00ec FFF7FEFF 		bl	getMatVal
+ 1237              	.LVL138:
+ 1238 00f0 0022     		movs	r2, #0
+ 1239 00f2 0121     		movs	r1, #1
+ 1240 00f4 2846     		mov	r0, r5
+ 1241 00f6 FFF7FEFF 		bl	setMatVal
+ 1242              	.LVL139:
+ 178:Core/drogui/src/kalman.c ****     setMatVal(&bias_v, 2, 0, getMatVal(&delta, 5, 0));
+ 1243              		.loc 1 178 5 view .LVU225
+ 1244 00fa 0022     		movs	r2, #0
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 26
+
+
+ 1245 00fc 0521     		movs	r1, #5
+ 1246 00fe 2046     		mov	r0, r4
+ 1247 0100 FFF7FEFF 		bl	getMatVal
+ 1248              	.LVL140:
+ 1249 0104 0022     		movs	r2, #0
+ 1250 0106 0221     		movs	r1, #2
+ 1251 0108 2846     		mov	r0, r5
+ 1252 010a FFF7FEFF 		bl	setMatVal
+ 1253              	.LVL141:
+ 179:Core/drogui/src/kalman.c **** }
+ 1254              		.loc 1 179 1 is_stmt 0 view .LVU226
+ 1255 010e BDEC028B 		vldm	sp!, {d8}
+ 1256              	.LCFI17:
+ 1257              		.cfi_restore 80
+ 1258              		.cfi_restore 81
+ 1259              		.cfi_def_cfa_offset 16
+ 1260 0112 38BD     		pop	{r3, r4, r5, pc}
+ 1261              	.L64:
+ 1262              		.align	2
+ 1263              	.L63:
+ 1264 0114 00000000 		.word	.LANCHOR10
+ 1265 0118 00000000 		.word	.LANCHOR5
+ 1266 011c 00000000 		.word	.LANCHOR11
+ 1267 0120 00000000 		.word	.LANCHOR13
+ 1268 0124 00000000 		.word	.LANCHOR12
+ 1269 0128 00000000 		.word	.LANCHOR8
+ 1270 012c 00000000 		.word	.LANCHOR7
+ 1271 0130 00000000 		.word	.LANCHOR9
+ 1272              		.cfi_endproc
+ 1273              	.LFE150:
+ 1275              		.section	.text.kalmanUpdateIMU,"ax",%progbits
+ 1276              		.align	1
+ 1277              		.global	kalmanUpdateIMU
+ 1278              		.syntax unified
+ 1279              		.thumb
+ 1280              		.thumb_func
+ 1281              		.fpu fpv5-sp-d16
+ 1283              	kalmanUpdateIMU:
+ 1284              	.LVL142:
+ 1285              	.LFB151:
+ 180:Core/drogui/src/kalman.c **** 
+ 181:Core/drogui/src/kalman.c **** void kalmanUpdateIMU(float ax, float ay, float az,float roll, float pitch, float yaw){
+ 1286              		.loc 1 181 86 is_stmt 1 view -0
+ 1287              		.cfi_startproc
+ 1288              		@ args = 0, pretend = 0, frame = 0
+ 1289              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1290              		.loc 1 181 86 is_stmt 0 view .LVU228
+ 1291 0000 10B5     		push	{r4, lr}
+ 1292              	.LCFI18:
+ 1293              		.cfi_def_cfa_offset 8
+ 1294              		.cfi_offset 4, -8
+ 1295              		.cfi_offset 14, -4
+ 1296 0002 2DED048B 		vpush.64	{d8, d9}
+ 1297              	.LCFI19:
+ 1298              		.cfi_def_cfa_offset 24
+ 1299              		.cfi_offset 80, -24
+ 1300              		.cfi_offset 81, -20
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 27
+
+
+ 1301              		.cfi_offset 82, -16
+ 1302              		.cfi_offset 83, -12
+ 1303 0006 B0EE409A 		vmov.f32	s18, s0
+ 1304 000a F0EE608A 		vmov.f32	s17, s1
+ 1305 000e B0EE418A 		vmov.f32	s16, s2
+ 182:Core/drogui/src/kalman.c ****     
+ 183:Core/drogui/src/kalman.c ****     //quaternionToR(&Rq, qw, qx, qy, qz);
+ 184:Core/drogui/src/kalman.c ****     rpyToR(&Rq, roll, pitch, yaw);
+ 1306              		.loc 1 184 5 is_stmt 1 view .LVU229
+ 1307 0012 B0EE621A 		vmov.f32	s2, s5
+ 1308              	.LVL143:
+ 1309              		.loc 1 184 5 is_stmt 0 view .LVU230
+ 1310 0016 F0EE420A 		vmov.f32	s1, s4
+ 1311              	.LVL144:
+ 1312              		.loc 1 184 5 view .LVU231
+ 1313 001a B0EE610A 		vmov.f32	s0, s3
+ 1314              	.LVL145:
+ 1315              		.loc 1 184 5 view .LVU232
+ 1316 001e 1248     		ldr	r0, .L67
+ 1317 0020 FFF7FEFF 		bl	rpyToR
+ 1318              	.LVL146:
+ 185:Core/drogui/src/kalman.c ****     setMatVal(&u, 0, 0, ax*GRAVITY);
+ 1319              		.loc 1 185 5 is_stmt 1 view .LVU233
+ 1320 0024 114C     		ldr	r4, .L67+4
+ 1321 0026 B0EE490A 		vmov.f32	s0, s18
+ 1322 002a 0022     		movs	r2, #0
+ 1323 002c 1146     		mov	r1, r2
+ 1324 002e 2046     		mov	r0, r4
+ 1325 0030 FFF7FEFF 		bl	setMatVal
+ 1326              	.LVL147:
+ 186:Core/drogui/src/kalman.c ****     setMatVal(&u, 1, 0, ay*GRAVITY);
+ 1327              		.loc 1 186 5 view .LVU234
+ 1328 0034 B0EE680A 		vmov.f32	s0, s17
+ 1329 0038 0022     		movs	r2, #0
+ 1330 003a 0121     		movs	r1, #1
+ 1331 003c 2046     		mov	r0, r4
+ 1332 003e FFF7FEFF 		bl	setMatVal
+ 1333              	.LVL148:
+ 187:Core/drogui/src/kalman.c ****     setMatVal(&u, 2, 0, az*GRAVITY);
+ 1334              		.loc 1 187 5 view .LVU235
+ 1335 0042 B0EE480A 		vmov.f32	s0, s16
+ 1336 0046 0022     		movs	r2, #0
+ 1337 0048 0221     		movs	r1, #2
+ 1338 004a 2046     		mov	r0, r4
+ 1339 004c FFF7FEFF 		bl	setMatVal
+ 1340              	.LVL149:
+ 188:Core/drogui/src/kalman.c ****     //matAdd(&u, &s, &bias_u);
+ 189:Core/drogui/src/kalman.c ****     kynematics();
+ 1341              		.loc 1 189 5 view .LVU236
+ 1342 0050 FFF7FEFF 		bl	kynematics
+ 1343              	.LVL150:
+ 190:Core/drogui/src/kalman.c ****     UpdatePm();
+ 1344              		.loc 1 190 5 view .LVU237
+ 1345 0054 FFF7FEFF 		bl	UpdatePm
+ 1346              	.LVL151:
+ 191:Core/drogui/src/kalman.c **** 
+ 192:Core/drogui/src/kalman.c ****     matAdd(&p, &p, &bias_p);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 28
+
+
+ 1347              		.loc 1 192 5 view .LVU238
+ 1348 0058 0548     		ldr	r0, .L67+8
+ 1349 005a 064A     		ldr	r2, .L67+12
+ 1350 005c 0146     		mov	r1, r0
+ 1351 005e FFF7FEFF 		bl	matAdd
+ 1352              	.LVL152:
+ 193:Core/drogui/src/kalman.c **** }
+ 1353              		.loc 1 193 1 is_stmt 0 view .LVU239
+ 1354 0062 BDEC048B 		vldm	sp!, {d8-d9}
+ 1355              	.LCFI20:
+ 1356              		.cfi_restore 82
+ 1357              		.cfi_restore 83
+ 1358              		.cfi_restore 80
+ 1359              		.cfi_restore 81
+ 1360              		.cfi_def_cfa_offset 8
+ 1361              	.LVL153:
+ 1362              		.loc 1 193 1 view .LVU240
+ 1363 0066 10BD     		pop	{r4, pc}
+ 1364              	.L68:
+ 1365              		.align	2
+ 1366              	.L67:
+ 1367 0068 00000000 		.word	.LANCHOR2
+ 1368 006c 00000000 		.word	.LANCHOR3
+ 1369 0070 00000000 		.word	.LANCHOR5
+ 1370 0074 00000000 		.word	.LANCHOR7
+ 1371              		.cfi_endproc
+ 1372              	.LFE151:
+ 1374              		.section	.text.kalmanUpdateGPS,"ax",%progbits
+ 1375              		.align	1
+ 1376              		.global	kalmanUpdateGPS
+ 1377              		.syntax unified
+ 1378              		.thumb
+ 1379              		.thumb_func
+ 1380              		.fpu fpv5-sp-d16
+ 1382              	kalmanUpdateGPS:
+ 1383              	.LVL154:
+ 1384              	.LFB152:
+ 194:Core/drogui/src/kalman.c **** 
+ 195:Core/drogui/src/kalman.c **** void kalmanUpdateGPS(float x_gps, float y_gps, float z_gps){
+ 1385              		.loc 1 195 60 is_stmt 1 view -0
+ 1386              		.cfi_startproc
+ 1387              		@ args = 0, pretend = 0, frame = 0
+ 1388              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1389              		.loc 1 195 60 is_stmt 0 view .LVU242
+ 1390 0000 10B5     		push	{r4, lr}
+ 1391              	.LCFI21:
+ 1392              		.cfi_def_cfa_offset 8
+ 1393              		.cfi_offset 4, -8
+ 1394              		.cfi_offset 14, -4
+ 1395 0002 2DED028B 		vpush.64	{d8}
+ 1396              	.LCFI22:
+ 1397              		.cfi_def_cfa_offset 16
+ 1398              		.cfi_offset 80, -16
+ 1399              		.cfi_offset 81, -12
+ 1400 0006 F0EE608A 		vmov.f32	s17, s1
+ 1401 000a B0EE418A 		vmov.f32	s16, s2
+ 196:Core/drogui/src/kalman.c **** 
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 29
+
+
+ 197:Core/drogui/src/kalman.c ****     setMatVal(&p_gps, 0, 0, x_gps);
+ 1402              		.loc 1 197 5 is_stmt 1 view .LVU243
+ 1403 000e 184C     		ldr	r4, .L71
+ 1404 0010 0022     		movs	r2, #0
+ 1405 0012 1146     		mov	r1, r2
+ 1406 0014 2046     		mov	r0, r4
+ 1407 0016 FFF7FEFF 		bl	setMatVal
+ 1408              	.LVL155:
+ 198:Core/drogui/src/kalman.c ****     setMatVal(&p_gps, 1, 0, y_gps);
+ 1409              		.loc 1 198 5 view .LVU244
+ 1410 001a B0EE680A 		vmov.f32	s0, s17
+ 1411 001e 0022     		movs	r2, #0
+ 1412 0020 0121     		movs	r1, #1
+ 1413 0022 2046     		mov	r0, r4
+ 1414 0024 FFF7FEFF 		bl	setMatVal
+ 1415              	.LVL156:
+ 199:Core/drogui/src/kalman.c ****     setMatVal(&p_gps, 2, 0, z_gps);
+ 1416              		.loc 1 199 5 view .LVU245
+ 1417 0028 B0EE480A 		vmov.f32	s0, s16
+ 1418 002c 0022     		movs	r2, #0
+ 1419 002e 0221     		movs	r1, #2
+ 1420 0030 2046     		mov	r0, r4
+ 1421 0032 FFF7FEFF 		bl	setMatVal
+ 1422              	.LVL157:
+ 200:Core/drogui/src/kalman.c ****     
+ 201:Core/drogui/src/kalman.c ****     getKalmanGain();
+ 1423              		.loc 1 201 5 view .LVU246
+ 1424 0036 FFF7FEFF 		bl	getKalmanGain
+ 1425              	.LVL158:
+ 202:Core/drogui/src/kalman.c **** 
+ 203:Core/drogui/src/kalman.c ****     getBias();
+ 1426              		.loc 1 203 5 view .LVU247
+ 1427 003a FFF7FEFF 		bl	getBias
+ 1428              	.LVL159:
+ 204:Core/drogui/src/kalman.c ****     
+ 205:Core/drogui/src/kalman.c ****     UpdatePmCovGPS();
+ 1429              		.loc 1 205 5 view .LVU248
+ 1430 003e FFF7FEFF 		bl	UpdatePmCovGPS
+ 1431              	.LVL160:
+ 206:Core/drogui/src/kalman.c ****     
+ 207:Core/drogui/src/kalman.c ****     matScale(&bias_v, &bias_v, 1/1.3);
+ 1432              		.loc 1 207 5 view .LVU249
+ 1433 0042 0C4C     		ldr	r4, .L71+4
+ 1434 0044 9FED0C0A 		vldr.32	s0, .L71+8
+ 1435 0048 2146     		mov	r1, r4
+ 1436 004a 2046     		mov	r0, r4
+ 1437 004c FFF7FEFF 		bl	matScale
+ 1438              	.LVL161:
+ 208:Core/drogui/src/kalman.c ****     matAdd(&v, &v, &bias_v);
+ 1439              		.loc 1 208 5 view .LVU250
+ 1440 0050 0A48     		ldr	r0, .L71+12
+ 1441 0052 2246     		mov	r2, r4
+ 1442 0054 0146     		mov	r1, r0
+ 1443 0056 FFF7FEFF 		bl	matAdd
+ 1444              	.LVL162:
+ 209:Core/drogui/src/kalman.c ****     matScale(&bias_p, &bias_p, N);
+ 1445              		.loc 1 209 5 view .LVU251
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 30
+
+
+ 1446 005a 0948     		ldr	r0, .L71+16
+ 1447 005c 094B     		ldr	r3, .L71+20
+ 1448 005e 93ED000A 		vldr.32	s0, [r3]
+ 1449 0062 0146     		mov	r1, r0
+ 1450 0064 FFF7FEFF 		bl	matScale
+ 1451              	.LVL163:
+ 210:Core/drogui/src/kalman.c **** }
+ 1452              		.loc 1 210 1 is_stmt 0 view .LVU252
+ 1453 0068 BDEC028B 		vldm	sp!, {d8}
+ 1454              	.LCFI23:
+ 1455              		.cfi_restore 80
+ 1456              		.cfi_restore 81
+ 1457              		.cfi_def_cfa_offset 8
+ 1458              	.LVL164:
+ 1459              		.loc 1 210 1 view .LVU253
+ 1460 006c 10BD     		pop	{r4, pc}
+ 1461              	.L72:
+ 1462 006e 00BF     		.align	2
+ 1463              	.L71:
+ 1464 0070 00000000 		.word	.LANCHOR11
+ 1465 0074 00000000 		.word	.LANCHOR9
+ 1466 0078 4FEC443F 		.word	1061481551
+ 1467 007c 00000000 		.word	.LANCHOR6
+ 1468 0080 00000000 		.word	.LANCHOR7
+ 1469 0084 00000000 		.word	.LANCHOR1
+ 1470              		.cfi_endproc
+ 1471              	.LFE152:
+ 1473              		.section	.text.getPosition,"ax",%progbits
+ 1474              		.align	1
+ 1475              		.global	getPosition
+ 1476              		.syntax unified
+ 1477              		.thumb
+ 1478              		.thumb_func
+ 1479              		.fpu fpv5-sp-d16
+ 1481              	getPosition:
+ 1482              	.LVL165:
+ 1483              	.LFB153:
+ 211:Core/drogui/src/kalman.c **** 
+ 212:Core/drogui/src/kalman.c **** 
+ 213:Core/drogui/src/kalman.c **** 
+ 214:Core/drogui/src/kalman.c **** void getPosition(float *x, float *y, float *z){
+ 1484              		.loc 1 214 47 is_stmt 1 view -0
+ 1485              		.cfi_startproc
+ 1486              		@ args = 0, pretend = 0, frame = 0
+ 1487              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1488              		.loc 1 214 47 is_stmt 0 view .LVU255
+ 1489 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1490              	.LCFI24:
+ 1491              		.cfi_def_cfa_offset 24
+ 1492              		.cfi_offset 3, -24
+ 1493              		.cfi_offset 4, -20
+ 1494              		.cfi_offset 5, -16
+ 1495              		.cfi_offset 6, -12
+ 1496              		.cfi_offset 7, -8
+ 1497              		.cfi_offset 14, -4
+ 1498 0002 0746     		mov	r7, r0
+ 1499 0004 0E46     		mov	r6, r1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 31
+
+
+ 1500 0006 1446     		mov	r4, r2
+ 215:Core/drogui/src/kalman.c ****     *x = getMatVal(&p, 0, 0);
+ 1501              		.loc 1 215 5 is_stmt 1 view .LVU256
+ 1502              		.loc 1 215 10 is_stmt 0 view .LVU257
+ 1503 0008 0B4D     		ldr	r5, .L75
+ 1504 000a 0022     		movs	r2, #0
+ 1505              	.LVL166:
+ 1506              		.loc 1 215 10 view .LVU258
+ 1507 000c 1146     		mov	r1, r2
+ 1508              	.LVL167:
+ 1509              		.loc 1 215 10 view .LVU259
+ 1510 000e 2846     		mov	r0, r5
+ 1511              	.LVL168:
+ 1512              		.loc 1 215 10 view .LVU260
+ 1513 0010 FFF7FEFF 		bl	getMatVal
+ 1514              	.LVL169:
+ 1515              		.loc 1 215 8 view .LVU261
+ 1516 0014 87ED000A 		vstr.32	s0, [r7]
+ 216:Core/drogui/src/kalman.c ****     *y = getMatVal(&p, 1, 0);
+ 1517              		.loc 1 216 5 is_stmt 1 view .LVU262
+ 1518              		.loc 1 216 10 is_stmt 0 view .LVU263
+ 1519 0018 0022     		movs	r2, #0
+ 1520 001a 0121     		movs	r1, #1
+ 1521 001c 2846     		mov	r0, r5
+ 1522 001e FFF7FEFF 		bl	getMatVal
+ 1523              	.LVL170:
+ 1524              		.loc 1 216 8 view .LVU264
+ 1525 0022 86ED000A 		vstr.32	s0, [r6]
+ 217:Core/drogui/src/kalman.c ****     *z = getMatVal(&p, 2, 0);
+ 1526              		.loc 1 217 5 is_stmt 1 view .LVU265
+ 1527              		.loc 1 217 10 is_stmt 0 view .LVU266
+ 1528 0026 0022     		movs	r2, #0
+ 1529 0028 0221     		movs	r1, #2
+ 1530 002a 2846     		mov	r0, r5
+ 1531 002c FFF7FEFF 		bl	getMatVal
+ 1532              	.LVL171:
+ 1533              		.loc 1 217 8 view .LVU267
+ 1534 0030 84ED000A 		vstr.32	s0, [r4]
+ 218:Core/drogui/src/kalman.c **** }
+ 1535              		.loc 1 218 1 view .LVU268
+ 1536 0034 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1537              	.LVL172:
+ 1538              	.L76:
+ 1539              		.loc 1 218 1 view .LVU269
+ 1540 0036 00BF     		.align	2
+ 1541              	.L75:
+ 1542 0038 00000000 		.word	.LANCHOR5
+ 1543              		.cfi_endproc
+ 1544              	.LFE153:
+ 1546              		.section	.text.clearKalman,"ax",%progbits
+ 1547              		.align	1
+ 1548              		.global	clearKalman
+ 1549              		.syntax unified
+ 1550              		.thumb
+ 1551              		.thumb_func
+ 1552              		.fpu fpv5-sp-d16
+ 1554              	clearKalman:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 32
+
+
+ 1555              	.LFB154:
+ 219:Core/drogui/src/kalman.c **** 
+ 220:Core/drogui/src/kalman.c **** void clearKalman(){
+ 1556              		.loc 1 220 19 is_stmt 1 view -0
+ 1557              		.cfi_startproc
+ 1558              		@ args = 0, pretend = 0, frame = 0
+ 1559              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1560 0000 38B5     		push	{r3, r4, r5, lr}
+ 1561              	.LCFI25:
+ 1562              		.cfi_def_cfa_offset 16
+ 1563              		.cfi_offset 3, -16
+ 1564              		.cfi_offset 4, -12
+ 1565              		.cfi_offset 5, -8
+ 1566              		.cfi_offset 14, -4
+ 1567 0002 2DED028B 		vpush.64	{d8}
+ 1568              	.LCFI26:
+ 1569              		.cfi_def_cfa_offset 24
+ 1570              		.cfi_offset 80, -24
+ 1571              		.cfi_offset 81, -20
+ 221:Core/drogui/src/kalman.c ****         
+ 222:Core/drogui/src/kalman.c ****     for(int i = 0 ; i < 3 ; i++){
+ 1572              		.loc 1 222 5 view .LVU271
+ 1573              	.LBB16:
+ 1574              		.loc 1 222 9 view .LVU272
+ 1575              	.LVL173:
+ 1576              		.loc 1 222 13 is_stmt 0 view .LVU273
+ 1577 0006 0024     		movs	r4, #0
+ 1578              		.loc 1 222 5 view .LVU274
+ 1579 0008 17E0     		b	.L78
+ 1580              	.LVL174:
+ 1581              	.L79:
+ 223:Core/drogui/src/kalman.c ****         setMatVal(&p, i, 0, 0);
+ 1582              		.loc 1 223 9 is_stmt 1 discriminator 3 view .LVU275
+ 1583 000a 9FED248A 		vldr.32	s16, .L89
+ 1584 000e B0EE480A 		vmov.f32	s0, s16
+ 1585 0012 0022     		movs	r2, #0
+ 1586 0014 2146     		mov	r1, r4
+ 1587 0016 2248     		ldr	r0, .L89+4
+ 1588 0018 FFF7FEFF 		bl	setMatVal
+ 1589              	.LVL175:
+ 224:Core/drogui/src/kalman.c ****         setMatVal(&v, i, 0, 0);
+ 1590              		.loc 1 224 9 discriminator 3 view .LVU276
+ 1591 001c B0EE480A 		vmov.f32	s0, s16
+ 1592 0020 0022     		movs	r2, #0
+ 1593 0022 2146     		mov	r1, r4
+ 1594 0024 1F48     		ldr	r0, .L89+8
+ 1595 0026 FFF7FEFF 		bl	setMatVal
+ 1596              	.LVL176:
+ 225:Core/drogui/src/kalman.c ****         setMatVal(&bias_p, i, 0, 0);
+ 1597              		.loc 1 225 9 discriminator 3 view .LVU277
+ 1598 002a B0EE480A 		vmov.f32	s0, s16
+ 1599 002e 0022     		movs	r2, #0
+ 1600 0030 2146     		mov	r1, r4
+ 1601 0032 1D48     		ldr	r0, .L89+12
+ 1602 0034 FFF7FEFF 		bl	setMatVal
+ 1603              	.LVL177:
+ 222:Core/drogui/src/kalman.c ****         setMatVal(&p, i, 0, 0);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 33
+
+
+ 1604              		.loc 1 222 29 discriminator 3 view .LVU278
+ 222:Core/drogui/src/kalman.c ****         setMatVal(&p, i, 0, 0);
+ 1605              		.loc 1 222 30 is_stmt 0 discriminator 3 view .LVU279
+ 1606 0038 0134     		adds	r4, r4, #1
+ 1607              	.LVL178:
+ 1608              	.L78:
+ 222:Core/drogui/src/kalman.c ****         setMatVal(&p, i, 0, 0);
+ 1609              		.loc 1 222 21 is_stmt 1 discriminator 1 view .LVU280
+ 222:Core/drogui/src/kalman.c ****         setMatVal(&p, i, 0, 0);
+ 1610              		.loc 1 222 5 is_stmt 0 discriminator 1 view .LVU281
+ 1611 003a 022C     		cmp	r4, #2
+ 1612 003c E5DD     		ble	.L79
+ 1613              	.LBE16:
+ 1614              	.LBB17:
+ 226:Core/drogui/src/kalman.c ****     }
+ 227:Core/drogui/src/kalman.c ****     for(int i = 0; i < 9;  i++){
+ 1615              		.loc 1 227 13 view .LVU282
+ 1616 003e 0025     		movs	r5, #0
+ 1617 0040 24E0     		b	.L80
+ 1618              	.LVL179:
+ 1619              	.L81:
+ 1620              	.LBB18:
+ 228:Core/drogui/src/kalman.c ****         for(int j = 0; j < 9; j++) setMatVal(&Pm, i, j, 0);
+ 1621              		.loc 1 228 36 is_stmt 1 discriminator 3 view .LVU283
+ 1622 0042 9FED160A 		vldr.32	s0, .L89
+ 1623 0046 2246     		mov	r2, r4
+ 1624 0048 2946     		mov	r1, r5
+ 1625 004a 1848     		ldr	r0, .L89+16
+ 1626 004c FFF7FEFF 		bl	setMatVal
+ 1627              	.LVL180:
+ 1628              		.loc 1 228 31 discriminator 3 view .LVU284
+ 1629              		.loc 1 228 32 is_stmt 0 discriminator 3 view .LVU285
+ 1630 0050 0134     		adds	r4, r4, #1
+ 1631              	.LVL181:
+ 1632              	.L84:
+ 1633              		.loc 1 228 24 is_stmt 1 discriminator 1 view .LVU286
+ 1634              		.loc 1 228 9 is_stmt 0 discriminator 1 view .LVU287
+ 1635 0052 082C     		cmp	r4, #8
+ 1636 0054 F5DD     		ble	.L81
+ 1637              	.LBE18:
+ 1638              	.LBB19:
+ 229:Core/drogui/src/kalman.c ****         for(int j = 0; j < 3; j++) setMatVal(&KalmanGain, i, j, 0);
+ 1639              		.loc 1 229 17 view .LVU288
+ 1640 0056 0024     		movs	r4, #0
+ 1641              	.LVL182:
+ 1642              	.L82:
+ 1643              		.loc 1 229 24 is_stmt 1 discriminator 1 view .LVU289
+ 1644              		.loc 1 229 9 is_stmt 0 discriminator 1 view .LVU290
+ 1645 0058 022C     		cmp	r4, #2
+ 1646 005a 08DC     		bgt	.L87
+ 1647              		.loc 1 229 36 is_stmt 1 discriminator 3 view .LVU291
+ 1648 005c 9FED0F0A 		vldr.32	s0, .L89
+ 1649 0060 2246     		mov	r2, r4
+ 1650 0062 2946     		mov	r1, r5
+ 1651 0064 1248     		ldr	r0, .L89+20
+ 1652 0066 FFF7FEFF 		bl	setMatVal
+ 1653              	.LVL183:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 34
+
+
+ 1654              		.loc 1 229 31 discriminator 3 view .LVU292
+ 1655              		.loc 1 229 32 is_stmt 0 discriminator 3 view .LVU293
+ 1656 006a 0134     		adds	r4, r4, #1
+ 1657              	.LVL184:
+ 1658              		.loc 1 229 32 discriminator 3 view .LVU294
+ 1659 006c F4E7     		b	.L82
+ 1660              	.L87:
+ 1661              		.loc 1 229 32 discriminator 3 view .LVU295
+ 1662              	.LBE19:
+ 230:Core/drogui/src/kalman.c ****         
+ 231:Core/drogui/src/kalman.c ****         setMatVal(&delta, i, 0, 0);
+ 1663              		.loc 1 231 9 is_stmt 1 discriminator 2 view .LVU296
+ 1664 006e 9FED0B0A 		vldr.32	s0, .L89
+ 1665 0072 0022     		movs	r2, #0
+ 1666 0074 2946     		mov	r1, r5
+ 1667 0076 0F48     		ldr	r0, .L89+24
+ 1668 0078 FFF7FEFF 		bl	setMatVal
+ 1669              	.LVL185:
+ 232:Core/drogui/src/kalman.c ****         setMatVal(&Pm,i,i,0.1);
+ 1670              		.loc 1 232 9 discriminator 2 view .LVU297
+ 1671 007c 9FED0E0A 		vldr.32	s0, .L89+28
+ 1672 0080 2A46     		mov	r2, r5
+ 1673 0082 2946     		mov	r1, r5
+ 1674 0084 0948     		ldr	r0, .L89+16
+ 1675 0086 FFF7FEFF 		bl	setMatVal
+ 1676              	.LVL186:
+ 227:Core/drogui/src/kalman.c ****         for(int j = 0; j < 9; j++) setMatVal(&Pm, i, j, 0);
+ 1677              		.loc 1 227 28 discriminator 2 view .LVU298
+ 227:Core/drogui/src/kalman.c ****         for(int j = 0; j < 9; j++) setMatVal(&Pm, i, j, 0);
+ 1678              		.loc 1 227 29 is_stmt 0 discriminator 2 view .LVU299
+ 1679 008a 0135     		adds	r5, r5, #1
+ 1680              	.LVL187:
+ 1681              	.L80:
+ 227:Core/drogui/src/kalman.c ****         for(int j = 0; j < 9; j++) setMatVal(&Pm, i, j, 0);
+ 1682              		.loc 1 227 20 is_stmt 1 discriminator 1 view .LVU300
+ 227:Core/drogui/src/kalman.c ****         for(int j = 0; j < 9; j++) setMatVal(&Pm, i, j, 0);
+ 1683              		.loc 1 227 5 is_stmt 0 discriminator 1 view .LVU301
+ 1684 008c 082D     		cmp	r5, #8
+ 1685 008e 01DC     		bgt	.L88
+ 1686              	.LBB20:
+ 228:Core/drogui/src/kalman.c ****         for(int j = 0; j < 3; j++) setMatVal(&KalmanGain, i, j, 0);
+ 1687              		.loc 1 228 17 view .LVU302
+ 1688 0090 0024     		movs	r4, #0
+ 1689 0092 DEE7     		b	.L84
+ 1690              	.L88:
+ 1691              	.LBE20:
+ 1692              	.LBE17:
+ 233:Core/drogui/src/kalman.c ****     }
+ 234:Core/drogui/src/kalman.c **** 
+ 235:Core/drogui/src/kalman.c **** }...
+ 1693              		.loc 1 235 1 view .LVU303
+ 1694 0094 BDEC028B 		vldm	sp!, {d8}
+ 1695              	.LCFI27:
+ 1696              		.cfi_restore 80
+ 1697              		.cfi_restore 81
+ 1698              		.cfi_def_cfa_offset 16
+ 1699 0098 38BD     		pop	{r3, r4, r5, pc}
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 35
+
+
+ 1700              	.LVL188:
+ 1701              	.L90:
+ 1702              		.loc 1 235 1 view .LVU304
+ 1703 009a 00BF     		.align	2
+ 1704              	.L89:
+ 1705 009c 00000000 		.word	0
+ 1706 00a0 00000000 		.word	.LANCHOR5
+ 1707 00a4 00000000 		.word	.LANCHOR6
+ 1708 00a8 00000000 		.word	.LANCHOR7
+ 1709 00ac 00000000 		.word	.LANCHOR16
+ 1710 00b0 00000000 		.word	.LANCHOR12
+ 1711 00b4 00000000 		.word	.LANCHOR13
+ 1712 00b8 CDCCCC3D 		.word	1036831949
+ 1713              		.cfi_endproc
+ 1714              	.LFE154:
+ 1716              		.global	delta
+ 1717              		.global	p_gps
+ 1718              		.global	KalmanGain
+ 1719              		.global	ye
+ 1720              		.global	Q12
+ 1721              		.global	Pm
+ 1722              		.global	bias_u
+ 1723              		.global	bias_v
+ 1724              		.global	bias_p
+ 1725              		.global	Hm
+ 1726              		.global	Gm
+ 1727              		.global	Fm
+ 1728              		.global	s
+ 1729              		.global	u
+ 1730              		.global	Rc
+ 1731              		.global	Rq
+ 1732              		.global	v
+ 1733              		.global	p
+ 1734              		.global	N
+ 1735              		.global	Ts
+ 1736              		.section	.bss.Fm,"aw",%nobits
+ 1737              		.align	2
+ 1738              		.set	.LANCHOR17,. + 0
+ 1741              	Fm:
+ 1742 0000 00000000 		.space	16
+ 1742      00000000 
+ 1742      00000000 
+ 1742      00000000 
+ 1743              		.section	.bss.Gm,"aw",%nobits
+ 1744              		.align	2
+ 1745              		.set	.LANCHOR19,. + 0
+ 1748              	Gm:
+ 1749 0000 00000000 		.space	16
+ 1749      00000000 
+ 1749      00000000 
+ 1749      00000000 
+ 1750              		.section	.bss.Hm,"aw",%nobits
+ 1751              		.align	2
+ 1752              		.set	.LANCHOR18,. + 0
+ 1755              	Hm:
+ 1756 0000 00000000 		.space	16
+ 1756      00000000 
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 36
+
+
+ 1756      00000000 
+ 1756      00000000 
+ 1757              		.section	.bss.KalmanGain,"aw",%nobits
+ 1758              		.align	2
+ 1759              		.set	.LANCHOR12,. + 0
+ 1762              	KalmanGain:
+ 1763 0000 00000000 		.space	16
+ 1763      00000000 
+ 1763      00000000 
+ 1763      00000000 
+ 1764              		.section	.bss.N,"aw",%nobits
+ 1765              		.align	2
+ 1766              		.set	.LANCHOR1,. + 0
+ 1769              	N:
+ 1770 0000 00000000 		.space	4
+ 1771              		.section	.bss.Pm,"aw",%nobits
+ 1772              		.align	2
+ 1773              		.set	.LANCHOR16,. + 0
+ 1776              	Pm:
+ 1777 0000 00000000 		.space	16
+ 1777      00000000 
+ 1777      00000000 
+ 1777      00000000 
+ 1778              		.section	.bss.Q12,"aw",%nobits
+ 1779              		.align	2
+ 1780              		.set	.LANCHOR15,. + 0
+ 1783              	Q12:
+ 1784 0000 00000000 		.space	16
+ 1784      00000000 
+ 1784      00000000 
+ 1784      00000000 
+ 1785              		.section	.bss.Rc,"aw",%nobits
+ 1786              		.align	2
+ 1787              		.set	.LANCHOR14,. + 0
+ 1790              	Rc:
+ 1791 0000 00000000 		.space	16
+ 1791      00000000 
+ 1791      00000000 
+ 1791      00000000 
+ 1792              		.section	.bss.Rq,"aw",%nobits
+ 1793              		.align	2
+ 1794              		.set	.LANCHOR2,. + 0
+ 1797              	Rq:
+ 1798 0000 00000000 		.space	16
+ 1798      00000000 
+ 1798      00000000 
+ 1798      00000000 
+ 1799              		.section	.bss.Ts,"aw",%nobits
+ 1800              		.align	2
+ 1801              		.set	.LANCHOR0,. + 0
+ 1804              	Ts:
+ 1805 0000 00000000 		.space	4
+ 1806              		.section	.bss.bias_p,"aw",%nobits
+ 1807              		.align	2
+ 1808              		.set	.LANCHOR7,. + 0
+ 1811              	bias_p:
+ 1812 0000 00000000 		.space	16
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 37
+
+
+ 1812      00000000 
+ 1812      00000000 
+ 1812      00000000 
+ 1813              		.section	.bss.bias_u,"aw",%nobits
+ 1814              		.align	2
+ 1815              		.set	.LANCHOR8,. + 0
+ 1818              	bias_u:
+ 1819 0000 00000000 		.space	16
+ 1819      00000000 
+ 1819      00000000 
+ 1819      00000000 
+ 1820              		.section	.bss.bias_v,"aw",%nobits
+ 1821              		.align	2
+ 1822              		.set	.LANCHOR9,. + 0
+ 1825              	bias_v:
+ 1826 0000 00000000 		.space	16
+ 1826      00000000 
+ 1826      00000000 
+ 1826      00000000 
+ 1827              		.section	.bss.delta,"aw",%nobits
+ 1828              		.align	2
+ 1829              		.set	.LANCHOR13,. + 0
+ 1832              	delta:
+ 1833 0000 00000000 		.space	16
+ 1833      00000000 
+ 1833      00000000 
+ 1833      00000000 
+ 1834              		.section	.bss.p,"aw",%nobits
+ 1835              		.align	2
+ 1836              		.set	.LANCHOR5,. + 0
+ 1839              	p:
+ 1840 0000 00000000 		.space	16
+ 1840      00000000 
+ 1840      00000000 
+ 1840      00000000 
+ 1841              		.section	.bss.p_gps,"aw",%nobits
+ 1842              		.align	2
+ 1843              		.set	.LANCHOR11,. + 0
+ 1846              	p_gps:
+ 1847 0000 00000000 		.space	16
+ 1847      00000000 
+ 1847      00000000 
+ 1847      00000000 
+ 1848              		.section	.bss.s,"aw",%nobits
+ 1849              		.align	2
+ 1850              		.set	.LANCHOR4,. + 0
+ 1853              	s:
+ 1854 0000 00000000 		.space	16
+ 1854      00000000 
+ 1854      00000000 
+ 1854      00000000 
+ 1855              		.section	.bss.u,"aw",%nobits
+ 1856              		.align	2
+ 1857              		.set	.LANCHOR3,. + 0
+ 1860              	u:
+ 1861 0000 00000000 		.space	16
+ 1861      00000000 
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 38
+
+
+ 1861      00000000 
+ 1861      00000000 
+ 1862              		.section	.bss.v,"aw",%nobits
+ 1863              		.align	2
+ 1864              		.set	.LANCHOR6,. + 0
+ 1867              	v:
+ 1868 0000 00000000 		.space	16
+ 1868      00000000 
+ 1868      00000000 
+ 1868      00000000 
+ 1869              		.section	.bss.ye,"aw",%nobits
+ 1870              		.align	2
+ 1871              		.set	.LANCHOR10,. + 0
+ 1874              	ye:
+ 1875 0000 00000000 		.space	16
+ 1875      00000000 
+ 1875      00000000 
+ 1875      00000000 
+ 1876              		.text
+ 1877              	.Letext0:
+ 1878              		.file 2 "Core/drogui/include/matlib.h"
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 39
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 kalman.c
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:18     .text.setKalmanTsImu:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:26     .text.setKalmanTsImu:00000000 setKalmanTsImu
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:44     .text.setKalmanTsImu:00000008 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:49     .text.setKalmanTsGps:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:56     .text.setKalmanTsGps:00000000 setKalmanTsGps
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:77     .text.setKalmanTsGps:00000014 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:83     .text.initMatGlobal:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:90     .text.initMatGlobal:00000000 initMatGlobal
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:403    .text.initMatGlobal:00000164 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:428    .text.kynematics:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:435    .text.kynematics:00000000 kynematics
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:528    .text.kynematics:00000084 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:537    .text.getMatFm:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:544    .text.getMatFm:00000000 getMatFm
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:617    .text.getMatFm:00000038 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:624    .text.getMatGm:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:631    .text.getMatGm:00000000 getMatGm
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:704    .text.getMatGm:00000038 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:711    .text.UpdatePm:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:718    .text.UpdatePm:00000000 UpdatePm
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:843    .text.UpdatePm:000000a8 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:851    .text.getKalmanGain:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:858    .text.getKalmanGain:00000000 getKalmanGain
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:957    .text.getKalmanGain:00000084 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:965    .text.UpdatePmCovGPS:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:972    .text.UpdatePmCovGPS:00000000 UpdatePmCovGPS
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1076   .text.UpdatePmCovGPS:00000078 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1083   .text.getBias:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1090   .text.getBias:00000000 getBias
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1264   .text.getBias:00000114 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1276   .text.kalmanUpdateIMU:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1283   .text.kalmanUpdateIMU:00000000 kalmanUpdateIMU
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1367   .text.kalmanUpdateIMU:00000068 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1375   .text.kalmanUpdateGPS:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1382   .text.kalmanUpdateGPS:00000000 kalmanUpdateGPS
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1464   .text.kalmanUpdateGPS:00000070 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1474   .text.getPosition:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1481   .text.getPosition:00000000 getPosition
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1542   .text.getPosition:00000038 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1547   .text.clearKalman:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1554   .text.clearKalman:00000000 clearKalman
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1705   .text.clearKalman:0000009c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1832   .bss.delta:00000000 delta
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1846   .bss.p_gps:00000000 p_gps
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1762   .bss.KalmanGain:00000000 KalmanGain
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1874   .bss.ye:00000000 ye
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1783   .bss.Q12:00000000 Q12
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1776   .bss.Pm:00000000 Pm
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1818   .bss.bias_u:00000000 bias_u
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1825   .bss.bias_v:00000000 bias_v
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1811   .bss.bias_p:00000000 bias_p
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1755   .bss.Hm:00000000 Hm
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1748   .bss.Gm:00000000 Gm
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1741   .bss.Fm:00000000 Fm
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1853   .bss.s:00000000 s
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s 			page 40
+
+
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1860   .bss.u:00000000 u
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1790   .bss.Rc:00000000 Rc
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1797   .bss.Rq:00000000 Rq
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1867   .bss.v:00000000 v
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1839   .bss.p:00000000 p
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1769   .bss.N:00000000 N
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1804   .bss.Ts:00000000 Ts
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1737   .bss.Fm:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1744   .bss.Gm:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1751   .bss.Hm:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1758   .bss.KalmanGain:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1765   .bss.N:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1772   .bss.Pm:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1779   .bss.Q12:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1786   .bss.Rc:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1793   .bss.Rq:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1800   .bss.Ts:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1807   .bss.bias_p:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1814   .bss.bias_u:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1821   .bss.bias_v:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1828   .bss.delta:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1835   .bss.p:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1842   .bss.p_gps:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1849   .bss.s:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1856   .bss.u:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1863   .bss.v:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccU40E7f.s:1870   .bss.ye:00000000 $d
+
+UNDEFINED SYMBOLS
+matInit
+setMatVal
+matScale
+matMult
+matAdd
+matDestruct
+getMatVal
+matTrans
+matInv3
+matCopy
+matSubs
+rpyToR

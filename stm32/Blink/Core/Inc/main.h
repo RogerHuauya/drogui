@@ -29,7 +29,6 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f7xx_hal.h"
-#include "_main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -56,12 +55,8 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 
-extern I2C_HandleTypeDef hi2c1;
-
-extern UART_HandleTypeDef huart1;
-
 /* USER CODE END EFP */
-
+#define ARM_MATH_CM7
 /* Private defines -----------------------------------------------------------*/
 #define LED_Pin GPIO_PIN_1
 #define LED_GPIO_Port GPIOE

@@ -1,4 +1,5 @@
-build/principal.o: Core/drogui/src/principal.c Core/Inc/main.h \
+build/mpu9250_test.o: Core/drogui/test/mpu9250_test.c \
+ Core/drogui/include/_main.h Core/Inc/main.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h \
  Core/Inc/stm32f7xx_hal_conf.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_rcc.h \
@@ -25,8 +26,9 @@ build/principal.o: Core/drogui/src/principal.c Core/Inc/main.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pwr_ex.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h \
- Core/drogui/include/_main.h Core/Inc/mylib.h \
- Core/drogui/include/lib_test.h
+ Core/drogui/include/MPU9250.h Core/Inc/usart.h Core/Inc/main.h \
+ Drivers/CMSIS/DSP/Include/arm_math.h
+Core/drogui/include/_main.h:
 Core/Inc/main.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h:
 Core/Inc/stm32f7xx_hal_conf.h:
@@ -56,6 +58,7 @@ Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pwr.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pwr_ex.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h:
-Core/drogui/include/_main.h:
-Core/Inc/mylib.h:
-Core/drogui/include/lib_test.h:
+Core/drogui/include/MPU9250.h:
+Core/Inc/usart.h:
+Core/Inc/main.h:
+Drivers/CMSIS/DSP/Include/arm_math.h:

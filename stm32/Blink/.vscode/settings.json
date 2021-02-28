@@ -2,6 +2,10 @@
     "files.associations": {
         "main.h": "c",
         "stm32f7xx_hal.h": "c",
-        "stm32f7xx_hal_conf.h": "c"
+        "stm32f7xx_hal_conf.h": "c",
+        "usart.h": "c",
+        "i2c.h": "c",
+        "_main.h": "c",
+        "arm_math.h": "c"
     }
 }
