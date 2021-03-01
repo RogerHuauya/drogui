@@ -10,6 +10,10 @@
         "cmsis_os.h": "c",
         "freertos.h": "c",
         "sensorstasks.h": "c",
-        "filter.h": "c"
+        "filter.h": "c",
+        "cmath": "cpp",
+        "_freertos.h": "c",
+        "typeinfo": "c",
+        "controltasks.h": "c"
     }
 }

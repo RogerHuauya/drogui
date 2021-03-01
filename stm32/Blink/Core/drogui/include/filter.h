@@ -11,14 +11,15 @@ typedef struct _filter{
 }filter ;
 
 typedef struct _dNotchFilter{
-    filter f;
     float *values;
     int n;
     float fs, threshold, a, zeta;
-    float num[3], den[2];
+    float coeffs[5];
+    float state[4];
     int head;
     uint8_t exponent;
-    //arduinoFFT FFT; 
+    arm_cfft_radix2_instance_f32 fft;
+    arm_biquad_cascade_df2T_instance_f32 f;
 }dNotchFilter;
 
 void initFilter(filter* f, int n, float* a, float* b);

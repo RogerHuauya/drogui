@@ -23,15 +23,14 @@ void initDNotchFilter(dNotchFilter* df, int n, float threshold, float fs, float 
     df -> fs = fs;
     df -> threshold = threshold;
     
-    df -> num[0]  = 1; df -> num[1] = df -> num[2] = 0;
-    df -> den[0] = 0; df -> den[1] = 0;
+    df -> coeffs[0] = 1;
+    df -> coeffs[1] = df -> coeffs[2] = df -> coeffs[3] = df -> coeffs[4] = 0;
+    df -> state[0] = df -> state[1] = df -> state[2] = df -> state[3] =  0;
 
     df -> values = (float*) calloc(n, sizeof(float));
     df -> head = 0;
-    /*df -> FFT = arduinoFFT(); 
-    df->exponent = (df -> FFT).Exponent(df -> n);
-    
-    initFilter(&(df->f), 3, df->den, df-> num);*/
+    arm_cfft_radix2_init_f32(&(df->fft), n, 0, 0);
+    arm_biquad_cascade_df2T_init_f32(&(df->f), 1, df->coeffs, df->state);
 }
 
 void updateCoeffNotch(dNotchFilter *df, float fc){
@@ -42,12 +41,12 @@ void updateCoeffNotch(dNotchFilter *df, float fc){
     float q = wn*wn;
     float n = wn*((df->a) +1/(df -> a));
     
-    df -> num[0] = (4+p*ts*ts)/(4+2*n*ts + q*ts*ts);
-    df -> num[1] = (2*p*ts*ts-8)/(4+2*n*ts + q*ts*ts);
-    df -> num[2] = (4+p*ts*ts)/(4+2*n*ts + q*ts*ts);
+    df -> coeffs[0] = (4+p*ts*ts)/(4+2*n*ts + q*ts*ts);
+    df -> coeffs[1] = (2*p*ts*ts-8)/(4+2*n*ts + q*ts*ts);
+    df -> coeffs[2] = (4+p*ts*ts)/(4+2*n*ts + q*ts*ts);
      
-    df -> den[0] = (2*q*ts*ts-8)/(4+2*n*ts + q*ts*ts);
-    df -> den[1] = (4-2*n*ts+q*ts*ts)/(4+2*n*ts + q*ts*ts);
+    df -> coeffs[3] = (2*q*ts*ts-8)/(4+2*n*ts + q*ts*ts);
+    df -> coeffs[4] = (4-2*n*ts+q*ts*ts)/(4+2*n*ts + q*ts*ts);
 }
 
 
@@ -63,27 +62,27 @@ float computeDNotch(dNotchFilter *df, float val){
     }
 
     if(df -> head == df -> n){
-        float fft[df->n];
-        /*float imag[df->n], fft[df->n];
-        for (uint16_t i = 0; i < df->n; i++) fft[i] = df->values[i], imag[i] = 0; 
+        float fft_arr[2*(df->n)];
+        for (uint16_t i = 0; i < df->n; i++) fft_arr[i] = df->values[i]; 
         
+        arm_cfft_radix2_f32(&(df->fft), fft_arr);
+
+        for(int i = 1; i< 2*(df -> n) ; i += 2) 
+            fft_arr[i-1] = sqrt(fft_arr[i-1]*fft_arr[i-1] + fft_arr[i]*fft_arr[i]);
         
-        (df->FFT).Compute(fft, imag, df -> n, df->exponent, FFT_FORWARD); 
-        (df->FFT).ComplexToMagnitude(fft, imag, df -> n); */
-        
-        
-        for(int i = 0; i< df -> n ; i++) fft[i] = (i > 0 ? 2 : 1) * fft[i] / (df->n);
+        for(int i = 0; i< 2*(df -> n) ; i += 2) 
+            fft_arr[i] = (i > 0 ? 2 : 1) * fft_arr[i] / (df->n);
 
         int thres_ind = (df -> threshold)*(df -> n)/(df -> fs);
         float maxi = 0; float fc = 0;
 
-        for(int i = thres_ind; i <= df -> n/2 + 1 ; i++) 
-            if(fft[i] > maxi) maxi = fft[i], fc = (i)*(df->fs)/(df -> n);
+        for(int i = 2*thres_ind; i <= df -> n + 2 ; i += 2) 
+            if(fft_arr[i] > maxi) maxi = fft_arr[i], fc = (i)*(df->fs)/(df -> n);
         
         updateCoeffNotch(df, fc);
-        
-        val = computeFilter(&(df->f), val);
-        df->values[df->n-1] = val;
+        float ans;
+        arm_biquad_cascade_df2T_f32(&(df->f), &val, &ans, 1);
+        df->values[df->n-1] = ans;
     }       
     
     return val;    

@@ -1,0 +1,2569 @@
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"controlTasks.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.rpyControlTask,"ax",%progbits
+  18              		.align	1
+  19              		.global	rpyControlTask
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv5-sp-d16
+  26              	rpyControlTask:
+  27              	.LFB181:
+  28              		.file 1 "Core/drogui/src/controlTasks.c"
+   1:Core/drogui/src/controlTasks.c **** #include "_freertos.h"
+   2:Core/drogui/src/controlTasks.c **** #include "controlTasks.h"
+   3:Core/drogui/src/controlTasks.c **** #include "filter.h"
+   4:Core/drogui/src/controlTasks.c **** 
+   5:Core/drogui/src/controlTasks.c **** 
+   6:Core/drogui/src/controlTasks.c **** //pwm m1, m2, m3, m4;
+   7:Core/drogui/src/controlTasks.c **** pid roll2w, pitch2w, yaw2w; 
+   8:Core/drogui/src/controlTasks.c **** pid wroll_control, wpitch_control, wyaw_control;
+   9:Core/drogui/src/controlTasks.c **** pid z_control, x_control, y_control;
+  10:Core/drogui/src/controlTasks.c **** 
+  11:Core/drogui/src/controlTasks.c **** 
+  12:Core/drogui/src/controlTasks.c **** float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, R_MAX = PI/22.0 , P_MAX = PI/22.0;
+  13:Core/drogui/src/controlTasks.c **** float M1,M2,M3,M4;
+  14:Core/drogui/src/controlTasks.c **** 
+  15:Core/drogui/src/controlTasks.c **** float roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
+  16:Core/drogui/src/controlTasks.c **** float wroll_ref, wpitch_ref, wyaw_ref, roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
+  17:Core/drogui/src/controlTasks.c **** float wroll_err,wpitch_err,wyaw_err; 
+  18:Core/drogui/src/controlTasks.c **** 
+  19:Core/drogui/src/controlTasks.c **** //timer timer_wcontrol, timer_rpycontrol, timer_xyzcontrol;
+  20:Core/drogui/src/controlTasks.c **** 
+  21:Core/drogui/src/controlTasks.c **** void saturateM(float H){
+  22:Core/drogui/src/controlTasks.c ****     float f_max = 1;
+  23:Core/drogui/src/controlTasks.c ****     float arr_M[] = {M1, M2, M3, M4};
+  24:Core/drogui/src/controlTasks.c ****     for(int i = 0; i < 4 ; i++){
+  25:Core/drogui/src/controlTasks.c ****         float delta = fmax(fmax(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
+  26:Core/drogui/src/controlTasks.c ****         f_max = fmax(f_max, fabs(arr_M[i] / (fabs(arr_M[i]) - delta + 0.0000001)) );
+  27:Core/drogui/src/controlTasks.c ****     }
+  28:Core/drogui/src/controlTasks.c **** 
+  29:Core/drogui/src/controlTasks.c ****     M1 = sqrt(M1 / f_max + H);
+  30:Core/drogui/src/controlTasks.c ****     M2 = sqrt(M2 / f_max + H);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 2
+
+
+  31:Core/drogui/src/controlTasks.c ****     M3 = sqrt(M3 / f_max + H);
+  32:Core/drogui/src/controlTasks.c ****     M4 = sqrt(M4 / f_max + H);
+  33:Core/drogui/src/controlTasks.c **** }
+  34:Core/drogui/src/controlTasks.c **** 
+  35:Core/drogui/src/controlTasks.c **** 
+  36:Core/drogui/src/controlTasks.c **** void updatePID(){
+  37:Core/drogui/src/controlTasks.c ****     int index = getReg(PID_INDEX), var = getReg(PID_VAR);
+  38:Core/drogui/src/controlTasks.c ****     if(index >= 0) {
+  39:Core/drogui/src/controlTasks.c ****         switch(var){
+  40:Core/drogui/src/controlTasks.c **** 
+  41:Core/drogui/src/controlTasks.c ****             case PID_ROLL:
+  42:Core/drogui/src/controlTasks.c ****                 if(index == 0)
+  43:Core/drogui/src/controlTasks.c ****                     roll2w.kp[0] = getReg(ROLL_KP),  roll2w.ki[0] = getReg(ROLL_KI),  roll2w.kd[0] 
+  44:Core/drogui/src/controlTasks.c ****                 else
+  45:Core/drogui/src/controlTasks.c ****                     wroll_control.kp[0] = getReg(ROLL_KP),  wroll_control.ki[0] = getReg(ROLL_KI), 
+  46:Core/drogui/src/controlTasks.c **** 
+  47:Core/drogui/src/controlTasks.c ****             break;
+  48:Core/drogui/src/controlTasks.c ****             
+  49:Core/drogui/src/controlTasks.c ****             case PID_PITCH:
+  50:Core/drogui/src/controlTasks.c ****                 if(index == 0)
+  51:Core/drogui/src/controlTasks.c ****                     pitch2w.kp[0] = getReg(PITCH_KP),  pitch2w.ki[0] = getReg(PITCH_KI),  pitch2w.k
+  52:Core/drogui/src/controlTasks.c ****                 else
+  53:Core/drogui/src/controlTasks.c ****                     wpitch_control.kp[0] = getReg(PITCH_KP),  wpitch_control.ki[0] = getReg(PITCH_K
+  54:Core/drogui/src/controlTasks.c **** 
+  55:Core/drogui/src/controlTasks.c ****             break;
+  56:Core/drogui/src/controlTasks.c **** 
+  57:Core/drogui/src/controlTasks.c ****             case PID_YAW:
+  58:Core/drogui/src/controlTasks.c ****                 if(index == 0)
+  59:Core/drogui/src/controlTasks.c ****                     yaw2w.kp[0] = getReg(YAW_KP),  yaw2w.ki[0] = getReg(YAW_KI),  yaw2w.kd[0] = get
+  60:Core/drogui/src/controlTasks.c ****                 else
+  61:Core/drogui/src/controlTasks.c ****                     wyaw_control.kp[0] = getReg(YAW_KP),  wyaw_control.ki[0] = getReg(YAW_KI),  wya
+  62:Core/drogui/src/controlTasks.c **** 
+  63:Core/drogui/src/controlTasks.c ****             break;
+  64:Core/drogui/src/controlTasks.c ****             
+  65:Core/drogui/src/controlTasks.c ****             case PID_Z:
+  66:Core/drogui/src/controlTasks.c ****                 z_control.kp[0] = getReg(Z_KP);
+  67:Core/drogui/src/controlTasks.c ****                 z_control.ki[0] = getReg(Z_KI);
+  68:Core/drogui/src/controlTasks.c ****                 z_control.kd[0] = getReg(Z_KD);
+  69:Core/drogui/src/controlTasks.c ****             break;
+  70:Core/drogui/src/controlTasks.c ****         }
+  71:Core/drogui/src/controlTasks.c ****         roll2w.N_filt = pitch2w.N_filt = yaw2w.N_filt = wroll_control.N_filt = wpitch_control.N_fil
+  72:Core/drogui/src/controlTasks.c ****     }
+  73:Core/drogui/src/controlTasks.c **** }
+  74:Core/drogui/src/controlTasks.c **** 
+  75:Core/drogui/src/controlTasks.c **** osThreadId_t wControlHandle;
+  76:Core/drogui/src/controlTasks.c **** const osThreadAttr_t wControlAttributes = {    .name = "wControlTask", \
+  77:Core/drogui/src/controlTasks.c ****                                             .stack_size = 128 * 4, \
+  78:Core/drogui/src/controlTasks.c ****                                             .priority = (osPriority_t) osPriorityHigh7};
+  79:Core/drogui/src/controlTasks.c **** 
+  80:Core/drogui/src/controlTasks.c **** 
+  81:Core/drogui/src/controlTasks.c **** osThreadId_t rpyControlHandle;
+  82:Core/drogui/src/controlTasks.c **** const osThreadAttr_t rpyControlAttributes = {    .name = "rpyControlTask",\
+  83:Core/drogui/src/controlTasks.c ****                                             .stack_size = 128 * 4,\
+  84:Core/drogui/src/controlTasks.c ****                                             .priority = (osPriority_t) osPriorityHigh7};
+  85:Core/drogui/src/controlTasks.c **** 
+  86:Core/drogui/src/controlTasks.c **** osThreadId_t xyzControlHandle;
+  87:Core/drogui/src/controlTasks.c **** const osThreadAttr_t xyzControlAttributes = {    .name = "xyzControlTask",\
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 3
+
+
+  88:Core/drogui/src/controlTasks.c ****                                             .stack_size = 128 * 4,\
+  89:Core/drogui/src/controlTasks.c ****                                             .priority = (osPriority_t) osPriorityHigh7};
+  90:Core/drogui/src/controlTasks.c **** 
+  91:Core/drogui/src/controlTasks.c **** 
+  92:Core/drogui/src/controlTasks.c **** 
+  93:Core/drogui/src/controlTasks.c **** void wControlTask(){
+  94:Core/drogui/src/controlTasks.c **** 
+  95:Core/drogui/src/controlTasks.c ****     while(1){
+  96:Core/drogui/src/controlTasks.c ****     
+  97:Core/drogui/src/controlTasks.c ****         wroll_err = fmax( fmin( wroll_ref - gx , 100), -100);
+  98:Core/drogui/src/controlTasks.c ****         wpitch_err = fmax( fmin( wpitch_ref - gy , 100), -100);
+  99:Core/drogui/src/controlTasks.c ****         wyaw_err = fmax( fmin( wyaw_ref - gz , 100), -100);
+ 100:Core/drogui/src/controlTasks.c **** 
+ 101:Core/drogui/src/controlTasks.c **** 
+ 102:Core/drogui/src/controlTasks.c ****         R = computePid(&wroll_control, wroll_err, time, 0);
+ 103:Core/drogui/src/controlTasks.c ****         P = computePid(&wpitch_control, wpitch_err, time, 0);
+ 104:Core/drogui/src/controlTasks.c ****         Y = computePid(&wyaw_control, wyaw_err, time, 0);
+ 105:Core/drogui/src/controlTasks.c ****         
+ 106:Core/drogui/src/controlTasks.c ****         setReg(DER_GYRO_X, wroll_control.errd);
+ 107:Core/drogui/src/controlTasks.c ****         setReg(DER_GYRO_Y, wpitch_control.errd);
+ 108:Core/drogui/src/controlTasks.c ****         
+ 109:Core/drogui/src/controlTasks.c **** 
+ 110:Core/drogui/src/controlTasks.c ****         /*R = getReg(ROLL_REF);
+ 111:Core/drogui/src/controlTasks.c ****         P = getReg(PITCH_REF);
+ 112:Core/drogui/src/controlTasks.c ****         Y = getReg(YAW_REF);*/
+ 113:Core/drogui/src/controlTasks.c ****         
+ 114:Core/drogui/src/controlTasks.c ****         setReg(ROLL_U, R);
+ 115:Core/drogui/src/controlTasks.c ****         setReg(PITCH_U, P);
+ 116:Core/drogui/src/controlTasks.c ****         setReg(YAW_U, Y);
+ 117:Core/drogui/src/controlTasks.c ****         setReg(Z_U, H_comp);
+ 118:Core/drogui/src/controlTasks.c **** 
+ 119:Core/drogui/src/controlTasks.c ****         M1 = R + P + Y;
+ 120:Core/drogui/src/controlTasks.c ****         M2 = R - P - Y;
+ 121:Core/drogui/src/controlTasks.c ****         M3 = -R - P + Y;
+ 122:Core/drogui/src/controlTasks.c ****         M4 = -R + P - Y;
+ 123:Core/drogui/src/controlTasks.c **** 
+ 124:Core/drogui/src/controlTasks.c ****         saturateM(H_comp*H_comp);
+ 125:Core/drogui/src/controlTasks.c **** 
+ 126:Core/drogui/src/controlTasks.c ****         setReg(MOTOR_1, M1);
+ 127:Core/drogui/src/controlTasks.c ****         setReg(MOTOR_2, M2);
+ 128:Core/drogui/src/controlTasks.c ****         setReg(MOTOR_3, M3);
+ 129:Core/drogui/src/controlTasks.c ****         setReg(MOTOR_4, M4);
+ 130:Core/drogui/src/controlTasks.c **** 
+ 131:Core/drogui/src/controlTasks.c ****         if(security){
+ 132:Core/drogui/src/controlTasks.c ****             M1 = M2 = M3 = M4 = 0;
+ 133:Core/drogui/src/controlTasks.c ****             resetPid(&wroll_control, time);
+ 134:Core/drogui/src/controlTasks.c ****             resetPid(&wpitch_control, time);
+ 135:Core/drogui/src/controlTasks.c ****             resetPid(&wyaw_control, time);
+ 136:Core/drogui/src/controlTasks.c ****         }
+ 137:Core/drogui/src/controlTasks.c **** 
+ 138:Core/drogui/src/controlTasks.c ****         osDelay(1);
+ 139:Core/drogui/src/controlTasks.c ****     }
+ 140:Core/drogui/src/controlTasks.c ****     /*setPwmDutyTime(&m1, min(fmax(M1,0), 100));
+ 141:Core/drogui/src/controlTasks.c ****     setPwmDutyTime(&m2, min(fmax(M2,0), 100));
+ 142:Core/drogui/src/controlTasks.c ****     setPwmDutyTime(&m3, min(fmax(M3,0), 100));
+ 143:Core/drogui/src/controlTasks.c ****     setPwmDutyTime(&m4, min(fmax(M4,0), 100));*/
+ 144:Core/drogui/src/controlTasks.c **** }
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 4
+
+
+ 145:Core/drogui/src/controlTasks.c **** 
+ 146:Core/drogui/src/controlTasks.c **** void rpyControlTask(){
+  29              		.loc 1 146 22 view -0
+  30              		.cfi_startproc
+  31              		@ Volatile: function does not return.
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34 0000 08B5     		push	{r3, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 3, -8
+  38              		.cfi_offset 14, -4
+  39 0002 0FE0     		b	.L3
+  40              	.L5:
+ 147:Core/drogui/src/controlTasks.c ****     while(1){
+ 148:Core/drogui/src/controlTasks.c **** 
+ 149:Core/drogui/src/controlTasks.c ****         wroll_ref = computePid(&roll2w, angle_dif(roll_ref, roll), time, 0);
+ 150:Core/drogui/src/controlTasks.c ****         wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),time, 0);
+ 151:Core/drogui/src/controlTasks.c ****         wyaw_ref = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),time, 0);
+ 152:Core/drogui/src/controlTasks.c **** 
+ 153:Core/drogui/src/controlTasks.c ****     /*
+ 154:Core/drogui/src/controlTasks.c ****         Serial.print("\nu values: ");
+ 155:Core/drogui/src/controlTasks.c ****         for(int i = 0 ; i < 13; i++) Serial.print(filter_wroll.arr_u.values[i]), Serial.print('\t')
+ 156:Core/drogui/src/controlTasks.c ****         Serial.print("\nu coeff: ");
+ 157:Core/drogui/src/controlTasks.c ****         for(int i = 0 ; i < 13; i++) Serial.print(filter_wroll.arr_u.coeff[i]), Serial.print('\t');
+ 158:Core/drogui/src/controlTasks.c ****         Serial.print("\ny values: ");
+ 159:Core/drogui/src/controlTasks.c ****         for(int i = 0 ; i < 12; i++) Serial.print(filter_wroll.arr_y.values[i]), Serial.print('\t')
+ 160:Core/drogui/src/controlTasks.c ****         Serial.print("\ny coeff: ");
+ 161:Core/drogui/src/controlTasks.c ****         for(int i = 0 ; i < 12; i++) Serial.print(filter_wroll.arr_y.coeff[i]), Serial.print('\t');
+ 162:Core/drogui/src/controlTasks.c ****         Serial.println("***************************************************************************
+ 163:Core/drogui/src/controlTasks.c ****     */
+ 164:Core/drogui/src/controlTasks.c ****         setReg(GYRO_X_REF,wroll_ref);
+ 165:Core/drogui/src/controlTasks.c ****         setReg(GYRO_Y_REF,wpitch_ref);
+ 166:Core/drogui/src/controlTasks.c ****         setReg(GYRO_Z_REF,wyaw_ref);
+ 167:Core/drogui/src/controlTasks.c ****         
+ 168:Core/drogui/src/controlTasks.c ****         if(security){
+ 169:Core/drogui/src/controlTasks.c ****             resetPid(&roll2w, time);
+  41              		.loc 1 169 13 view .LVU1
+  42 0004 2D4C     		ldr	r4, .L6
+  43 0006 2168     		ldr	r1, [r4]
+  44 0008 2D48     		ldr	r0, .L6+4
+  45 000a FFF7FEFF 		bl	resetPid
+  46              	.LVL0:
+ 170:Core/drogui/src/controlTasks.c ****             resetPid(&pitch2w, time);
+  47              		.loc 1 170 13 view .LVU2
+  48 000e 2168     		ldr	r1, [r4]
+  49 0010 2C48     		ldr	r0, .L6+8
+  50 0012 FFF7FEFF 		bl	resetPid
+  51              	.LVL1:
+ 171:Core/drogui/src/controlTasks.c ****             resetPid(&yaw2w, time);
+  52              		.loc 1 171 13 view .LVU3
+  53 0016 2168     		ldr	r1, [r4]
+  54 0018 2B48     		ldr	r0, .L6+12
+  55 001a FFF7FEFF 		bl	resetPid
+  56              	.LVL2:
+  57              	.L2:
+ 172:Core/drogui/src/controlTasks.c ****         }
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 5
+
+
+ 173:Core/drogui/src/controlTasks.c ****         osDelay(2);
+  58              		.loc 1 173 9 view .LVU4
+  59 001e 0220     		movs	r0, #2
+  60 0020 FFF7FEFF 		bl	osDelay
+  61              	.LVL3:
+ 147:Core/drogui/src/controlTasks.c **** 
+  62              		.loc 1 147 10 view .LVU5
+  63              	.L3:
+ 147:Core/drogui/src/controlTasks.c **** 
+  64              		.loc 1 147 5 view .LVU6
+ 149:Core/drogui/src/controlTasks.c ****         wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),time, 0);
+  65              		.loc 1 149 9 view .LVU7
+ 149:Core/drogui/src/controlTasks.c ****         wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),time, 0);
+  66              		.loc 1 149 21 is_stmt 0 view .LVU8
+  67 0024 294B     		ldr	r3, .L6+16
+  68 0026 D3ED000A 		vldr.32	s1, [r3]
+  69 002a 294B     		ldr	r3, .L6+20
+  70 002c 93ED000A 		vldr.32	s0, [r3]
+  71 0030 FFF7FEFF 		bl	angle_dif
+  72              	.LVL4:
+  73 0034 9FED278A 		vldr.32	s16, .L6+24
+  74 0038 204C     		ldr	r4, .L6
+  75 003a F0EE480A 		vmov.f32	s1, s16
+  76 003e 2168     		ldr	r1, [r4]
+  77 0040 1F48     		ldr	r0, .L6+4
+  78 0042 FFF7FEFF 		bl	computePid
+  79              	.LVL5:
+ 149:Core/drogui/src/controlTasks.c ****         wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),time, 0);
+  80              		.loc 1 149 19 view .LVU9
+  81 0046 244E     		ldr	r6, .L6+28
+  82 0048 86ED000A 		vstr.32	s0, [r6]
+ 150:Core/drogui/src/controlTasks.c ****         wyaw_ref = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),time, 0);
+  83              		.loc 1 150 9 is_stmt 1 view .LVU10
+ 150:Core/drogui/src/controlTasks.c ****         wyaw_ref = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),time, 0);
+  84              		.loc 1 150 22 is_stmt 0 view .LVU11
+  85 004c 234B     		ldr	r3, .L6+32
+  86 004e D3ED000A 		vldr.32	s1, [r3]
+  87 0052 234B     		ldr	r3, .L6+36
+  88 0054 93ED000A 		vldr.32	s0, [r3]
+  89 0058 FFF7FEFF 		bl	angle_dif
+  90              	.LVL6:
+  91 005c F0EE480A 		vmov.f32	s1, s16
+  92 0060 2168     		ldr	r1, [r4]
+  93 0062 1848     		ldr	r0, .L6+8
+  94 0064 FFF7FEFF 		bl	computePid
+  95              	.LVL7:
+ 150:Core/drogui/src/controlTasks.c ****         wyaw_ref = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),time, 0);
+  96              		.loc 1 150 20 view .LVU12
+  97 0068 1E4D     		ldr	r5, .L6+40
+  98 006a 85ED000A 		vstr.32	s0, [r5]
+ 151:Core/drogui/src/controlTasks.c **** 
+  99              		.loc 1 151 9 is_stmt 1 view .LVU13
+ 151:Core/drogui/src/controlTasks.c **** 
+ 100              		.loc 1 151 21 is_stmt 0 view .LVU14
+ 101 006e 1E4B     		ldr	r3, .L6+44
+ 102 0070 D3ED000A 		vldr.32	s1, [r3]
+ 103 0074 1D4B     		ldr	r3, .L6+48
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 6
+
+
+ 104 0076 93ED000A 		vldr.32	s0, [r3]
+ 105 007a FFF7FEFF 		bl	angle_dif
+ 106              	.LVL8:
+ 107 007e F0EE480A 		vmov.f32	s1, s16
+ 108 0082 2168     		ldr	r1, [r4]
+ 109 0084 1048     		ldr	r0, .L6+12
+ 110 0086 FFF7FEFF 		bl	computePid
+ 111              	.LVL9:
+ 151:Core/drogui/src/controlTasks.c **** 
+ 112              		.loc 1 151 20 view .LVU15
+ 113 008a B1EE400A 		vneg.f32	s0, s0
+ 151:Core/drogui/src/controlTasks.c **** 
+ 114              		.loc 1 151 18 view .LVU16
+ 115 008e 184C     		ldr	r4, .L6+52
+ 116 0090 84ED000A 		vstr.32	s0, [r4]
+ 164:Core/drogui/src/controlTasks.c ****         setReg(GYRO_Y_REF,wpitch_ref);
+ 117              		.loc 1 164 9 is_stmt 1 view .LVU17
+ 118 0094 96ED000A 		vldr.32	s0, [r6]
+ 119 0098 8220     		movs	r0, #130
+ 120 009a FFF7FEFF 		bl	setReg
+ 121              	.LVL10:
+ 165:Core/drogui/src/controlTasks.c ****         setReg(GYRO_Z_REF,wyaw_ref);
+ 122              		.loc 1 165 9 view .LVU18
+ 123 009e 95ED000A 		vldr.32	s0, [r5]
+ 124 00a2 8420     		movs	r0, #132
+ 125 00a4 FFF7FEFF 		bl	setReg
+ 126              	.LVL11:
+ 166:Core/drogui/src/controlTasks.c ****         
+ 127              		.loc 1 166 9 view .LVU19
+ 128 00a8 94ED000A 		vldr.32	s0, [r4]
+ 129 00ac 8620     		movs	r0, #134
+ 130 00ae FFF7FEFF 		bl	setReg
+ 131              	.LVL12:
+ 168:Core/drogui/src/controlTasks.c ****             resetPid(&roll2w, time);
+ 132              		.loc 1 168 9 view .LVU20
+ 168:Core/drogui/src/controlTasks.c ****             resetPid(&roll2w, time);
+ 133              		.loc 1 168 12 is_stmt 0 view .LVU21
+ 134 00b2 104B     		ldr	r3, .L6+56
+ 135 00b4 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 168:Core/drogui/src/controlTasks.c ****             resetPid(&roll2w, time);
+ 136              		.loc 1 168 11 view .LVU22
+ 137 00b6 002B     		cmp	r3, #0
+ 138 00b8 A4D1     		bne	.L5
+ 139 00ba B0E7     		b	.L2
+ 140              	.L7:
+ 141              		.align	2
+ 142              	.L6:
+ 143 00bc 00000000 		.word	time
+ 144 00c0 00000000 		.word	.LANCHOR1
+ 145 00c4 00000000 		.word	.LANCHOR4
+ 146 00c8 00000000 		.word	.LANCHOR7
+ 147 00cc 00000000 		.word	roll
+ 148 00d0 00000000 		.word	.LANCHOR0
+ 149 00d4 00000000 		.word	0
+ 150 00d8 00000000 		.word	.LANCHOR2
+ 151 00dc 00000000 		.word	pitch
+ 152 00e0 00000000 		.word	.LANCHOR3
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 7
+
+
+ 153 00e4 00000000 		.word	.LANCHOR5
+ 154 00e8 00000000 		.word	yaw
+ 155 00ec 00000000 		.word	.LANCHOR6
+ 156 00f0 00000000 		.word	.LANCHOR8
+ 157 00f4 00000000 		.word	security
+ 158              		.cfi_endproc
+ 159              	.LFE181:
+ 161              		.section	.text.xyzControlTask,"ax",%progbits
+ 162              		.align	1
+ 163              		.global	xyzControlTask
+ 164              		.syntax unified
+ 165              		.thumb
+ 166              		.thumb_func
+ 167              		.fpu fpv5-sp-d16
+ 169              	xyzControlTask:
+ 170              	.LFB182:
+ 174:Core/drogui/src/controlTasks.c ****     }
+ 175:Core/drogui/src/controlTasks.c **** }
+ 176:Core/drogui/src/controlTasks.c **** 
+ 177:Core/drogui/src/controlTasks.c **** void xyzControlTask(){
+ 171              		.loc 1 177 22 is_stmt 1 view -0
+ 172              		.cfi_startproc
+ 173              		@ Volatile: function does not return.
+ 174              		@ args = 0, pretend = 0, frame = 0
+ 175              		@ frame_needed = 0, uses_anonymous_args = 0
+ 176 0000 08B5     		push	{r3, lr}
+ 177              	.LCFI1:
+ 178              		.cfi_def_cfa_offset 8
+ 179              		.cfi_offset 3, -8
+ 180              		.cfi_offset 14, -4
+ 181 0002 11E0     		b	.L10
+ 182              	.L12:
+ 178:Core/drogui/src/controlTasks.c ****     while(1){
+ 179:Core/drogui/src/controlTasks.c ****         X_C = computePid(&x_control, -x, time, H);
+ 180:Core/drogui/src/controlTasks.c ****         Y_C = computePid(&y_control, -y, time, H);
+ 181:Core/drogui/src/controlTasks.c **** 
+ 182:Core/drogui/src/controlTasks.c ****         rampValue(&z_ref, getReg(Z_REF), getReg(Z_REF_SIZE));
+ 183:Core/drogui/src/controlTasks.c **** 
+ 184:Core/drogui/src/controlTasks.c ****         H_ref = computePid(&z_control, z_ref - z, time,0) + getReg(Z_MG);
+ 185:Core/drogui/src/controlTasks.c ****         rampValue(&H, H_ref, 0.2);
+ 186:Core/drogui/src/controlTasks.c **** 
+ 187:Core/drogui/src/controlTasks.c ****         H_comp = H;
+ 188:Core/drogui/src/controlTasks.c **** 
+ 189:Core/drogui/src/controlTasks.c ****         rampValue(&roll_ref, getReg(ROLL_REF) + roll_off, 0.015);
+ 190:Core/drogui/src/controlTasks.c ****         rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.015);
+ 191:Core/drogui/src/controlTasks.c ****         yaw_ref = getReg(YAW_REF) + yaw_off;
+ 192:Core/drogui/src/controlTasks.c **** 
+ 193:Core/drogui/src/controlTasks.c ****         if(security){
+ 194:Core/drogui/src/controlTasks.c ****             H = 0; z_ref = 0;
+ 183              		.loc 1 194 13 view .LVU24
+ 184              		.loc 1 194 15 is_stmt 0 view .LVU25
+ 185 0004 0023     		movs	r3, #0
+ 186 0006 2360     		str	r3, [r4]	@ float
+ 187              		.loc 1 194 20 is_stmt 1 view .LVU26
+ 188              		.loc 1 194 26 is_stmt 0 view .LVU27
+ 189 0008 3360     		str	r3, [r6]	@ float
+ 195:Core/drogui/src/controlTasks.c ****             resetPid(&x_control, time);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 8
+
+
+ 190              		.loc 1 195 13 is_stmt 1 view .LVU28
+ 191 000a 2968     		ldr	r1, [r5]
+ 192 000c 4348     		ldr	r0, .L13
+ 193 000e FFF7FEFF 		bl	resetPid
+ 194              	.LVL13:
+ 196:Core/drogui/src/controlTasks.c ****             resetPid(&y_control, time);
+ 195              		.loc 1 196 13 view .LVU29
+ 196 0012 2968     		ldr	r1, [r5]
+ 197 0014 4248     		ldr	r0, .L13+4
+ 198 0016 FFF7FEFF 		bl	resetPid
+ 199              	.LVL14:
+ 197:Core/drogui/src/controlTasks.c ****             resetPid(&z_control, time);
+ 200              		.loc 1 197 13 view .LVU30
+ 201 001a 2968     		ldr	r1, [r5]
+ 202 001c 4148     		ldr	r0, .L13+8
+ 203 001e FFF7FEFF 		bl	resetPid
+ 204              	.LVL15:
+ 205              	.L9:
+ 198:Core/drogui/src/controlTasks.c ****         }
+ 199:Core/drogui/src/controlTasks.c ****         osDelay(10);
+ 206              		.loc 1 199 9 view .LVU31
+ 207 0022 0A20     		movs	r0, #10
+ 208 0024 FFF7FEFF 		bl	osDelay
+ 209              	.LVL16:
+ 178:Core/drogui/src/controlTasks.c ****         X_C = computePid(&x_control, -x, time, H);
+ 210              		.loc 1 178 10 view .LVU32
+ 211              	.L10:
+ 178:Core/drogui/src/controlTasks.c ****         X_C = computePid(&x_control, -x, time, H);
+ 212              		.loc 1 178 5 view .LVU33
+ 179:Core/drogui/src/controlTasks.c ****         Y_C = computePid(&y_control, -y, time, H);
+ 213              		.loc 1 179 9 view .LVU34
+ 179:Core/drogui/src/controlTasks.c ****         Y_C = computePid(&y_control, -y, time, H);
+ 214              		.loc 1 179 15 is_stmt 0 view .LVU35
+ 215 0028 3F4C     		ldr	r4, .L13+12
+ 216 002a 404D     		ldr	r5, .L13+16
+ 217 002c 404B     		ldr	r3, .L13+20
+ 218 002e 93ED000A 		vldr.32	s0, [r3]
+ 219 0032 D4ED000A 		vldr.32	s1, [r4]
+ 220 0036 2968     		ldr	r1, [r5]
+ 221 0038 B1EE400A 		vneg.f32	s0, s0
+ 222 003c 3748     		ldr	r0, .L13
+ 223 003e FFF7FEFF 		bl	computePid
+ 224              	.LVL17:
+ 179:Core/drogui/src/controlTasks.c ****         Y_C = computePid(&y_control, -y, time, H);
+ 225              		.loc 1 179 13 view .LVU36
+ 226 0042 3C4B     		ldr	r3, .L13+24
+ 227 0044 83ED000A 		vstr.32	s0, [r3]
+ 180:Core/drogui/src/controlTasks.c **** 
+ 228              		.loc 1 180 9 is_stmt 1 view .LVU37
+ 180:Core/drogui/src/controlTasks.c **** 
+ 229              		.loc 1 180 15 is_stmt 0 view .LVU38
+ 230 0048 3B4B     		ldr	r3, .L13+28
+ 231 004a 93ED000A 		vldr.32	s0, [r3]
+ 232 004e D4ED000A 		vldr.32	s1, [r4]
+ 233 0052 2968     		ldr	r1, [r5]
+ 234 0054 B1EE400A 		vneg.f32	s0, s0
+ 235 0058 3148     		ldr	r0, .L13+4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 9
+
+
+ 236 005a FFF7FEFF 		bl	computePid
+ 237              	.LVL18:
+ 180:Core/drogui/src/controlTasks.c **** 
+ 238              		.loc 1 180 13 view .LVU39
+ 239 005e 374B     		ldr	r3, .L13+32
+ 240 0060 83ED000A 		vstr.32	s0, [r3]
+ 182:Core/drogui/src/controlTasks.c **** 
+ 241              		.loc 1 182 9 is_stmt 1 view .LVU40
+ 242 0064 5220     		movs	r0, #82
+ 243 0066 FFF7FEFF 		bl	getReg
+ 244              	.LVL19:
+ 245 006a B0EE408A 		vmov.f32	s16, s0
+ 246 006e 5E20     		movs	r0, #94
+ 247 0070 FFF7FEFF 		bl	getReg
+ 248              	.LVL20:
+ 249 0074 F0EE400A 		vmov.f32	s1, s0
+ 250 0078 314E     		ldr	r6, .L13+36
+ 251 007a B0EE480A 		vmov.f32	s0, s16
+ 252 007e 3046     		mov	r0, r6
+ 253 0080 FFF7FEFF 		bl	rampValue
+ 254              	.LVL21:
+ 184:Core/drogui/src/controlTasks.c ****         rampValue(&H, H_ref, 0.2);
+ 255              		.loc 1 184 9 view .LVU41
+ 184:Core/drogui/src/controlTasks.c ****         rampValue(&H, H_ref, 0.2);
+ 256              		.loc 1 184 17 is_stmt 0 view .LVU42
+ 257 0084 96ED000A 		vldr.32	s0, [r6]
+ 258 0088 2E4B     		ldr	r3, .L13+40
+ 259 008a D3ED007A 		vldr.32	s15, [r3]
+ 260 008e DFED2E0A 		vldr.32	s1, .L13+44
+ 261 0092 2968     		ldr	r1, [r5]
+ 262 0094 30EE670A 		vsub.f32	s0, s0, s15
+ 263 0098 2248     		ldr	r0, .L13+8
+ 264 009a FFF7FEFF 		bl	computePid
+ 265              	.LVL22:
+ 266 009e B0EE408A 		vmov.f32	s16, s0
+ 184:Core/drogui/src/controlTasks.c ****         rampValue(&H, H_ref, 0.2);
+ 267              		.loc 1 184 61 view .LVU43
+ 268 00a2 4620     		movs	r0, #70
+ 269 00a4 FFF7FEFF 		bl	getReg
+ 270              	.LVL23:
+ 184:Core/drogui/src/controlTasks.c ****         rampValue(&H, H_ref, 0.2);
+ 271              		.loc 1 184 59 view .LVU44
+ 272 00a8 38EE000A 		vadd.f32	s0, s16, s0
+ 184:Core/drogui/src/controlTasks.c ****         rampValue(&H, H_ref, 0.2);
+ 273              		.loc 1 184 15 view .LVU45
+ 274 00ac 274B     		ldr	r3, .L13+48
+ 275 00ae 83ED000A 		vstr.32	s0, [r3]
+ 185:Core/drogui/src/controlTasks.c **** 
+ 276              		.loc 1 185 9 is_stmt 1 view .LVU46
+ 277 00b2 DFED270A 		vldr.32	s1, .L13+52
+ 278 00b6 2046     		mov	r0, r4
+ 279 00b8 FFF7FEFF 		bl	rampValue
+ 280              	.LVL24:
+ 187:Core/drogui/src/controlTasks.c **** 
+ 281              		.loc 1 187 9 view .LVU47
+ 187:Core/drogui/src/controlTasks.c **** 
+ 282              		.loc 1 187 16 is_stmt 0 view .LVU48
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 10
+
+
+ 283 00bc 2268     		ldr	r2, [r4]	@ float
+ 284 00be 254B     		ldr	r3, .L13+56
+ 285 00c0 1A60     		str	r2, [r3]	@ float
+ 189:Core/drogui/src/controlTasks.c ****         rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.015);
+ 286              		.loc 1 189 9 is_stmt 1 view .LVU49
+ 189:Core/drogui/src/controlTasks.c ****         rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.015);
+ 287              		.loc 1 189 30 is_stmt 0 view .LVU50
+ 288 00c2 4820     		movs	r0, #72
+ 289 00c4 FFF7FEFF 		bl	getReg
+ 290              	.LVL25:
+ 189:Core/drogui/src/controlTasks.c ****         rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.015);
+ 291              		.loc 1 189 9 view .LVU51
+ 292 00c8 9FED238A 		vldr.32	s16, .L13+60
+ 293 00cc 234B     		ldr	r3, .L13+64
+ 294 00ce D3ED007A 		vldr.32	s15, [r3]
+ 295 00d2 F0EE480A 		vmov.f32	s1, s16
+ 296 00d6 30EE270A 		vadd.f32	s0, s0, s15
+ 297 00da 2148     		ldr	r0, .L13+68
+ 298 00dc FFF7FEFF 		bl	rampValue
+ 299              	.LVL26:
+ 190:Core/drogui/src/controlTasks.c ****         yaw_ref = getReg(YAW_REF) + yaw_off;
+ 300              		.loc 1 190 9 is_stmt 1 view .LVU52
+ 190:Core/drogui/src/controlTasks.c ****         yaw_ref = getReg(YAW_REF) + yaw_off;
+ 301              		.loc 1 190 31 is_stmt 0 view .LVU53
+ 302 00e0 4A20     		movs	r0, #74
+ 303 00e2 FFF7FEFF 		bl	getReg
+ 304              	.LVL27:
+ 190:Core/drogui/src/controlTasks.c ****         yaw_ref = getReg(YAW_REF) + yaw_off;
+ 305              		.loc 1 190 9 view .LVU54
+ 306 00e6 1F4B     		ldr	r3, .L13+72
+ 307 00e8 D3ED007A 		vldr.32	s15, [r3]
+ 308 00ec F0EE480A 		vmov.f32	s1, s16
+ 309 00f0 30EE270A 		vadd.f32	s0, s0, s15
+ 310 00f4 1C48     		ldr	r0, .L13+76
+ 311 00f6 FFF7FEFF 		bl	rampValue
+ 312              	.LVL28:
+ 191:Core/drogui/src/controlTasks.c **** 
+ 313              		.loc 1 191 9 is_stmt 1 view .LVU55
+ 191:Core/drogui/src/controlTasks.c **** 
+ 314              		.loc 1 191 19 is_stmt 0 view .LVU56
+ 315 00fa 4C20     		movs	r0, #76
+ 316 00fc FFF7FEFF 		bl	getReg
+ 317              	.LVL29:
+ 191:Core/drogui/src/controlTasks.c **** 
+ 318              		.loc 1 191 35 view .LVU57
+ 319 0100 1A4B     		ldr	r3, .L13+80
+ 320 0102 D3ED007A 		vldr.32	s15, [r3]
+ 321 0106 30EE270A 		vadd.f32	s0, s0, s15
+ 191:Core/drogui/src/controlTasks.c **** 
+ 322              		.loc 1 191 17 view .LVU58
+ 323 010a 194B     		ldr	r3, .L13+84
+ 324 010c 83ED000A 		vstr.32	s0, [r3]
+ 193:Core/drogui/src/controlTasks.c ****             H = 0; z_ref = 0;
+ 325              		.loc 1 193 9 is_stmt 1 view .LVU59
+ 193:Core/drogui/src/controlTasks.c ****             H = 0; z_ref = 0;
+ 326              		.loc 1 193 12 is_stmt 0 view .LVU60
+ 327 0110 184B     		ldr	r3, .L13+88
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 11
+
+
+ 328 0112 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 193:Core/drogui/src/controlTasks.c ****             H = 0; z_ref = 0;
+ 329              		.loc 1 193 11 view .LVU61
+ 330 0114 002B     		cmp	r3, #0
+ 331 0116 7FF475AF 		bne	.L12
+ 332 011a 82E7     		b	.L9
+ 333              	.L14:
+ 334              		.align	2
+ 335              	.L13:
+ 336 011c 00000000 		.word	.LANCHOR10
+ 337 0120 00000000 		.word	.LANCHOR12
+ 338 0124 00000000 		.word	.LANCHOR15
+ 339 0128 00000000 		.word	.LANCHOR9
+ 340 012c 00000000 		.word	time
+ 341 0130 00000000 		.word	x
+ 342 0134 00000000 		.word	.LANCHOR11
+ 343 0138 00000000 		.word	y
+ 344 013c 00000000 		.word	.LANCHOR13
+ 345 0140 00000000 		.word	.LANCHOR14
+ 346 0144 00000000 		.word	z
+ 347 0148 00000000 		.word	0
+ 348 014c 00000000 		.word	.LANCHOR16
+ 349 0150 CDCC4C3E 		.word	1045220557
+ 350 0154 00000000 		.word	.LANCHOR17
+ 351 0158 8FC2753C 		.word	1014350479
+ 352 015c 00000000 		.word	.LANCHOR18
+ 353 0160 00000000 		.word	.LANCHOR0
+ 354 0164 00000000 		.word	.LANCHOR19
+ 355 0168 00000000 		.word	.LANCHOR3
+ 356 016c 00000000 		.word	.LANCHOR20
+ 357 0170 00000000 		.word	.LANCHOR6
+ 358 0174 00000000 		.word	security
+ 359              		.cfi_endproc
+ 360              	.LFE182:
+ 362              		.global	__aeabi_f2d
+ 363              		.global	__aeabi_d2f
+ 364              		.global	__aeabi_dsub
+ 365              		.global	__aeabi_dadd
+ 366              		.global	__aeabi_ddiv
+ 367              		.section	.text.saturateM,"ax",%progbits
+ 368              		.align	1
+ 369              		.global	saturateM
+ 370              		.syntax unified
+ 371              		.thumb
+ 372              		.thumb_func
+ 373              		.fpu fpv5-sp-d16
+ 375              	saturateM:
+ 376              	.LVL30:
+ 377              	.LFB178:
+  21:Core/drogui/src/controlTasks.c ****     float f_max = 1;
+ 378              		.loc 1 21 24 is_stmt 1 view -0
+ 379              		.cfi_startproc
+ 380              		@ args = 0, pretend = 0, frame = 16
+ 381              		@ frame_needed = 0, uses_anonymous_args = 0
+  21:Core/drogui/src/controlTasks.c ****     float f_max = 1;
+ 382              		.loc 1 21 24 is_stmt 0 view .LVU63
+ 383 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 12
+
+
+ 384              	.LCFI2:
+ 385              		.cfi_def_cfa_offset 36
+ 386              		.cfi_offset 4, -36
+ 387              		.cfi_offset 5, -32
+ 388              		.cfi_offset 6, -28
+ 389              		.cfi_offset 7, -24
+ 390              		.cfi_offset 8, -20
+ 391              		.cfi_offset 9, -16
+ 392              		.cfi_offset 10, -12
+ 393              		.cfi_offset 11, -8
+ 394              		.cfi_offset 14, -4
+ 395 0004 2DED088B 		vpush.64	{d8, d9, d10, d11}
+ 396              	.LCFI3:
+ 397              		.cfi_def_cfa_offset 68
+ 398              		.cfi_offset 80, -68
+ 399              		.cfi_offset 81, -64
+ 400              		.cfi_offset 82, -60
+ 401              		.cfi_offset 83, -56
+ 402              		.cfi_offset 84, -52
+ 403              		.cfi_offset 85, -48
+ 404              		.cfi_offset 86, -44
+ 405              		.cfi_offset 87, -40
+ 406 0008 85B0     		sub	sp, sp, #20
+ 407              	.LCFI4:
+ 408              		.cfi_def_cfa_offset 88
+ 409 000a F0EE40AA 		vmov.f32	s21, s0
+  22:Core/drogui/src/controlTasks.c ****     float arr_M[] = {M1, M2, M3, M4};
+ 410              		.loc 1 22 5 is_stmt 1 view .LVU64
+ 411              	.LVL31:
+  23:Core/drogui/src/controlTasks.c ****     for(int i = 0; i < 4 ; i++){
+ 412              		.loc 1 23 5 view .LVU65
+  23:Core/drogui/src/controlTasks.c ****     for(int i = 0; i < 4 ; i++){
+ 413              		.loc 1 23 11 is_stmt 0 view .LVU66
+ 414 000e 6A4B     		ldr	r3, .L19+16
+ 415 0010 93ED00BA 		vldr.32	s22, [r3]
+ 416 0014 8DED00BA 		vstr.32	s22, [sp]
+ 417 0018 684B     		ldr	r3, .L19+20
+ 418 001a 1B68     		ldr	r3, [r3]	@ float
+ 419 001c 0193     		str	r3, [sp, #4]	@ float
+ 420 001e 684B     		ldr	r3, .L19+24
+ 421 0020 1B68     		ldr	r3, [r3]	@ float
+ 422 0022 0293     		str	r3, [sp, #8]	@ float
+ 423 0024 674B     		ldr	r3, .L19+28
+ 424 0026 1B68     		ldr	r3, [r3]	@ float
+ 425 0028 0393     		str	r3, [sp, #12]	@ float
+  24:Core/drogui/src/controlTasks.c ****         float delta = fmax(fmax(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
+ 426              		.loc 1 24 5 is_stmt 1 view .LVU67
+ 427              	.LBB2:
+  24:Core/drogui/src/controlTasks.c ****         float delta = fmax(fmax(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
+ 428              		.loc 1 24 9 view .LVU68
+ 429              	.LVL32:
+  24:Core/drogui/src/controlTasks.c ****         float delta = fmax(fmax(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
+ 430              		.loc 1 24 13 is_stmt 0 view .LVU69
+ 431 002a 4FF0000A 		mov	r10, #0
+ 432              	.LBE2:
+  22:Core/drogui/src/controlTasks.c ****     float arr_M[] = {M1, M2, M3, M4};
+ 433              		.loc 1 22 11 view .LVU70
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 13
+
+
+ 434 002e B7EE008A 		vmov.f32	s16, #1.0e+0
+ 435              	.LBB4:
+  24:Core/drogui/src/controlTasks.c ****         float delta = fmax(fmax(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
+ 436              		.loc 1 24 5 view .LVU71
+ 437 0032 60E0     		b	.L16
+ 438              	.LVL33:
+ 439              	.L17:
+ 440              	.LBB3:
+  25:Core/drogui/src/controlTasks.c ****         f_max = fmax(f_max, fabs(arr_M[i] / (fabs(arr_M[i]) - delta + 0.0000001)) );
+ 441              		.loc 1 25 9 is_stmt 1 discriminator 3 view .LVU72
+  25:Core/drogui/src/controlTasks.c ****         f_max = fmax(f_max, fabs(arr_M[i] / (fabs(arr_M[i]) - delta + 0.0000001)) );
+ 442              		.loc 1 25 38 is_stmt 0 discriminator 3 view .LVU73
+ 443 0034 04AB     		add	r3, sp, #16
+ 444 0036 03EB8A03 		add	r3, r3, r10, lsl #2
+ 445 003a 53ED048A 		vldr.32	s17, [r3, #-16]
+  25:Core/drogui/src/controlTasks.c ****         f_max = fmax(f_max, fabs(arr_M[i] / (fabs(arr_M[i]) - delta + 0.0000001)) );
+ 446              		.loc 1 25 42 discriminator 3 view .LVU74
+ 447 003e 38EEAAAA 		vadd.f32	s20, s17, s21
+  25:Core/drogui/src/controlTasks.c ****         f_max = fmax(f_max, fabs(arr_M[i] / (fabs(arr_M[i]) - delta + 0.0000001)) );
+ 448              		.loc 1 25 46 discriminator 3 view .LVU75
+ 449 0042 DFED617A 		vldr.32	s15, .L19+32
+ 450 0046 3AEE67AA 		vsub.f32	s20, s20, s15
+  25:Core/drogui/src/controlTasks.c ****         f_max = fmax(f_max, fabs(arr_M[i] / (fabs(arr_M[i]) - delta + 0.0000001)) );
+ 451              		.loc 1 25 55 discriminator 3 view .LVU76
+ 452 004a F1EE687A 		vneg.f32	s15, s17
+  25:Core/drogui/src/controlTasks.c ****         f_max = fmax(f_max, fabs(arr_M[i] / (fabs(arr_M[i]) - delta + 0.0000001)) );
+ 453              		.loc 1 25 23 discriminator 3 view .LVU77
+ 454 004e 77EEEA7A 		vsub.f32	s15, s15, s21
+ 455 0052 17EE900A 		vmov	r0, s15
+ 456 0056 FFF7FEFF 		bl	__aeabi_f2d
+ 457              	.LVL34:
+ 458 005a 41EC190B 		vmov	d9, r0, r1
+ 459 005e 1AEE100A 		vmov	r0, s20
+ 460 0062 FFF7FEFF 		bl	__aeabi_f2d
+ 461              	.LVL35:
+ 462 0066 B0EE491A 		vmov.f32	s2, s18
+ 463 006a F0EE691A 		vmov.f32	s3, s19
+ 464 006e 41EC100B 		vmov	d0, r0, r1
+ 465 0072 FFF7FEFF 		bl	fmax
+ 466              	.LVL36:
+ 467 0076 9FED4C1B 		vldr.64	d1, .L19
+ 468 007a FFF7FEFF 		bl	fmax
+ 469              	.LVL37:
+ 470 007e 51EC100B 		vmov	r0, r1, d0
+  25:Core/drogui/src/controlTasks.c ****         f_max = fmax(f_max, fabs(arr_M[i] / (fabs(arr_M[i]) - delta + 0.0000001)) );
+ 471              		.loc 1 25 15 discriminator 3 view .LVU78
+ 472 0082 FFF7FEFF 		bl	__aeabi_d2f
+ 473              	.LVL38:
+ 474 0086 8346     		mov	fp, r0	@ float
+ 475              	.LVL39:
+  26:Core/drogui/src/controlTasks.c ****     }
+ 476              		.loc 1 26 9 is_stmt 1 discriminator 3 view .LVU79
+  26:Core/drogui/src/controlTasks.c ****     }
+ 477              		.loc 1 26 39 is_stmt 0 discriminator 3 view .LVU80
+ 478 0088 18EE900A 		vmov	r0, s17
+ 479              	.LVL40:
+  26:Core/drogui/src/controlTasks.c ****     }
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 14
+
+
+ 480              		.loc 1 26 39 discriminator 3 view .LVU81
+ 481 008c FFF7FEFF 		bl	__aeabi_f2d
+ 482              	.LVL41:
+ 483 0090 0446     		mov	r4, r0
+ 484 0092 0D46     		mov	r5, r1
+  26:Core/drogui/src/controlTasks.c ****     }
+ 485              		.loc 1 26 46 discriminator 3 view .LVU82
+ 486 0094 F0EEE87A 		vabs.f32	s15, s17
+ 487 0098 17EE900A 		vmov	r0, s15
+ 488 009c FFF7FEFF 		bl	__aeabi_f2d
+ 489              	.LVL42:
+ 490 00a0 0646     		mov	r6, r0
+ 491 00a2 0F46     		mov	r7, r1
+  26:Core/drogui/src/controlTasks.c ****     }
+ 492              		.loc 1 26 61 discriminator 3 view .LVU83
+ 493 00a4 5846     		mov	r0, fp	@ float
+ 494 00a6 FFF7FEFF 		bl	__aeabi_f2d
+ 495              	.LVL43:
+ 496 00aa 0246     		mov	r2, r0
+ 497 00ac 0B46     		mov	r3, r1
+ 498 00ae 3046     		mov	r0, r6
+ 499 00b0 3946     		mov	r1, r7
+ 500 00b2 FFF7FEFF 		bl	__aeabi_dsub
+ 501              	.LVL44:
+  26:Core/drogui/src/controlTasks.c ****     }
+ 502              		.loc 1 26 69 discriminator 3 view .LVU84
+ 503 00b6 3EA3     		adr	r3, .L19+8
+ 504 00b8 D3E90023 		ldrd	r2, [r3]
+ 505 00bc FFF7FEFF 		bl	__aeabi_dadd
+ 506              	.LVL45:
+ 507 00c0 0246     		mov	r2, r0
+ 508 00c2 0B46     		mov	r3, r1
+  26:Core/drogui/src/controlTasks.c ****     }
+ 509              		.loc 1 26 43 discriminator 3 view .LVU85
+ 510 00c4 2046     		mov	r0, r4
+ 511 00c6 2946     		mov	r1, r5
+ 512 00c8 FFF7FEFF 		bl	__aeabi_ddiv
+ 513              	.LVL46:
+  26:Core/drogui/src/controlTasks.c ****     }
+ 514              		.loc 1 26 17 discriminator 3 view .LVU86
+ 515 00cc 8046     		mov	r8, r0
+ 516 00ce 21F00049 		bic	r9, r1, #-2147483648
+ 517 00d2 18EE100A 		vmov	r0, s16
+ 518 00d6 FFF7FEFF 		bl	__aeabi_f2d
+ 519              	.LVL47:
+ 520 00da 49EC118B 		vmov	d1, r8, r9
+ 521 00de 41EC100B 		vmov	d0, r0, r1
+ 522 00e2 FFF7FEFF 		bl	fmax
+ 523              	.LVL48:
+ 524 00e6 51EC100B 		vmov	r0, r1, d0
+  26:Core/drogui/src/controlTasks.c ****     }
+ 525              		.loc 1 26 15 discriminator 3 view .LVU87
+ 526 00ea FFF7FEFF 		bl	__aeabi_d2f
+ 527              	.LVL49:
+ 528 00ee 08EE100A 		vmov	s16, r0
+ 529              	.LVL50:
+  26:Core/drogui/src/controlTasks.c ****     }
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 15
+
+
+ 530              		.loc 1 26 15 discriminator 3 view .LVU88
+ 531              	.LBE3:
+  24:Core/drogui/src/controlTasks.c ****         float delta = fmax(fmax(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
+ 532              		.loc 1 24 28 is_stmt 1 discriminator 3 view .LVU89
+  24:Core/drogui/src/controlTasks.c ****         float delta = fmax(fmax(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
+ 533              		.loc 1 24 29 is_stmt 0 discriminator 3 view .LVU90
+ 534 00f2 0AF1010A 		add	r10, r10, #1
+ 535              	.LVL51:
+ 536              	.L16:
+  24:Core/drogui/src/controlTasks.c ****         float delta = fmax(fmax(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
+ 537              		.loc 1 24 20 is_stmt 1 discriminator 1 view .LVU91
+  24:Core/drogui/src/controlTasks.c ****         float delta = fmax(fmax(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
+ 538              		.loc 1 24 5 is_stmt 0 discriminator 1 view .LVU92
+ 539 00f6 BAF1030F 		cmp	r10, #3
+ 540 00fa 9BDD     		ble	.L17
+ 541              	.LBE4:
+  29:Core/drogui/src/controlTasks.c ****     M2 = sqrt(M2 / f_max + H);
+ 542              		.loc 1 29 5 is_stmt 1 view .LVU93
+  29:Core/drogui/src/controlTasks.c ****     M2 = sqrt(M2 / f_max + H);
+ 543              		.loc 1 29 18 is_stmt 0 view .LVU94
+ 544 00fc CBEE087A 		vdiv.f32	s15, s22, s16
+  29:Core/drogui/src/controlTasks.c ****     M2 = sqrt(M2 / f_max + H);
+ 545              		.loc 1 29 10 view .LVU95
+ 546 0100 77EEAA7A 		vadd.f32	s15, s15, s21
+ 547 0104 17EE900A 		vmov	r0, s15
+ 548 0108 FFF7FEFF 		bl	__aeabi_f2d
+ 549              	.LVL52:
+ 550 010c 41EC100B 		vmov	d0, r0, r1
+ 551 0110 FFF7FEFF 		bl	sqrt
+ 552              	.LVL53:
+ 553 0114 51EC100B 		vmov	r0, r1, d0
+ 554 0118 FFF7FEFF 		bl	__aeabi_d2f
+ 555              	.LVL54:
+  29:Core/drogui/src/controlTasks.c ****     M2 = sqrt(M2 / f_max + H);
+ 556              		.loc 1 29 8 view .LVU96
+ 557 011c 264B     		ldr	r3, .L19+16
+ 558 011e 1860     		str	r0, [r3]	@ float
+  30:Core/drogui/src/controlTasks.c ****     M3 = sqrt(M3 / f_max + H);
+ 559              		.loc 1 30 5 is_stmt 1 view .LVU97
+  30:Core/drogui/src/controlTasks.c ****     M3 = sqrt(M3 / f_max + H);
+ 560              		.loc 1 30 18 is_stmt 0 view .LVU98
+ 561 0120 264C     		ldr	r4, .L19+20
+ 562 0122 94ED007A 		vldr.32	s14, [r4]
+ 563 0126 C7EE087A 		vdiv.f32	s15, s14, s16
+  30:Core/drogui/src/controlTasks.c ****     M3 = sqrt(M3 / f_max + H);
+ 564              		.loc 1 30 10 view .LVU99
+ 565 012a 77EEAA7A 		vadd.f32	s15, s15, s21
+ 566 012e 17EE900A 		vmov	r0, s15
+ 567 0132 FFF7FEFF 		bl	__aeabi_f2d
+ 568              	.LVL55:
+ 569 0136 41EC100B 		vmov	d0, r0, r1
+ 570 013a FFF7FEFF 		bl	sqrt
+ 571              	.LVL56:
+ 572 013e 51EC100B 		vmov	r0, r1, d0
+ 573 0142 FFF7FEFF 		bl	__aeabi_d2f
+ 574              	.LVL57:
+  30:Core/drogui/src/controlTasks.c ****     M3 = sqrt(M3 / f_max + H);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 16
+
+
+ 575              		.loc 1 30 8 view .LVU100
+ 576 0146 2060     		str	r0, [r4]	@ float
+  31:Core/drogui/src/controlTasks.c ****     M4 = sqrt(M4 / f_max + H);
+ 577              		.loc 1 31 5 is_stmt 1 view .LVU101
+  31:Core/drogui/src/controlTasks.c ****     M4 = sqrt(M4 / f_max + H);
+ 578              		.loc 1 31 18 is_stmt 0 view .LVU102
+ 579 0148 1D4C     		ldr	r4, .L19+24
+ 580 014a 94ED007A 		vldr.32	s14, [r4]
+ 581 014e C7EE087A 		vdiv.f32	s15, s14, s16
+  31:Core/drogui/src/controlTasks.c ****     M4 = sqrt(M4 / f_max + H);
+ 582              		.loc 1 31 10 view .LVU103
+ 583 0152 77EEAA7A 		vadd.f32	s15, s15, s21
+ 584 0156 17EE900A 		vmov	r0, s15
+ 585 015a FFF7FEFF 		bl	__aeabi_f2d
+ 586              	.LVL58:
+ 587 015e 41EC100B 		vmov	d0, r0, r1
+ 588 0162 FFF7FEFF 		bl	sqrt
+ 589              	.LVL59:
+ 590 0166 51EC100B 		vmov	r0, r1, d0
+ 591 016a FFF7FEFF 		bl	__aeabi_d2f
+ 592              	.LVL60:
+  31:Core/drogui/src/controlTasks.c ****     M4 = sqrt(M4 / f_max + H);
+ 593              		.loc 1 31 8 view .LVU104
+ 594 016e 2060     		str	r0, [r4]	@ float
+  32:Core/drogui/src/controlTasks.c **** }
+ 595              		.loc 1 32 5 is_stmt 1 view .LVU105
+  32:Core/drogui/src/controlTasks.c **** }
+ 596              		.loc 1 32 18 is_stmt 0 view .LVU106
+ 597 0170 144C     		ldr	r4, .L19+28
+ 598 0172 94ED007A 		vldr.32	s14, [r4]
+ 599 0176 C7EE087A 		vdiv.f32	s15, s14, s16
+  32:Core/drogui/src/controlTasks.c **** }
+ 600              		.loc 1 32 10 view .LVU107
+ 601 017a 77EEAA7A 		vadd.f32	s15, s15, s21
+ 602 017e 17EE900A 		vmov	r0, s15
+ 603 0182 FFF7FEFF 		bl	__aeabi_f2d
+ 604              	.LVL61:
+ 605 0186 41EC100B 		vmov	d0, r0, r1
+ 606 018a FFF7FEFF 		bl	sqrt
+ 607              	.LVL62:
+ 608 018e 51EC100B 		vmov	r0, r1, d0
+ 609 0192 FFF7FEFF 		bl	__aeabi_d2f
+ 610              	.LVL63:
+  32:Core/drogui/src/controlTasks.c **** }
+ 611              		.loc 1 32 8 view .LVU108
+ 612 0196 2060     		str	r0, [r4]	@ float
+  33:Core/drogui/src/controlTasks.c **** 
+ 613              		.loc 1 33 1 view .LVU109
+ 614 0198 05B0     		add	sp, sp, #20
+ 615              	.LCFI5:
+ 616              		.cfi_def_cfa_offset 68
+ 617              		@ sp needed
+ 618 019a BDEC088B 		vldm	sp!, {d8-d11}
+ 619              	.LCFI6:
+ 620              		.cfi_restore 86
+ 621              		.cfi_restore 87
+ 622              		.cfi_restore 84
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 17
+
+
+ 623              		.cfi_restore 85
+ 624              		.cfi_restore 82
+ 625              		.cfi_restore 83
+ 626              		.cfi_restore 80
+ 627              		.cfi_restore 81
+ 628              		.cfi_def_cfa_offset 36
+ 629              	.LVL64:
+  33:Core/drogui/src/controlTasks.c **** 
+ 630              		.loc 1 33 1 view .LVU110
+ 631 019e BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 632              	.LVL65:
+ 633              	.L20:
+  33:Core/drogui/src/controlTasks.c **** 
+ 634              		.loc 1 33 1 view .LVU111
+ 635 01a2 00BFAFF3 		.align	3
+ 635      0080
+ 636              	.L19:
+ 637 01a8 00000000 		.word	0
+ 638 01ac 00000000 		.word	0
+ 639 01b0 48AFBC9A 		.word	-1698910392
+ 640 01b4 F2D77A3E 		.word	1048238066
+ 641 01b8 00000000 		.word	.LANCHOR21
+ 642 01bc 00000000 		.word	.LANCHOR22
+ 643 01c0 00000000 		.word	.LANCHOR23
+ 644 01c4 00000000 		.word	.LANCHOR24
+ 645 01c8 00401C46 		.word	1176256512
+ 646              		.cfi_endproc
+ 647              	.LFE178:
+ 649              		.section	.text.wControlTask,"ax",%progbits
+ 650              		.align	1
+ 651              		.global	wControlTask
+ 652              		.syntax unified
+ 653              		.thumb
+ 654              		.thumb_func
+ 655              		.fpu fpv5-sp-d16
+ 657              	wControlTask:
+ 658              	.LFB180:
+  93:Core/drogui/src/controlTasks.c **** 
+ 659              		.loc 1 93 20 is_stmt 1 view -0
+ 660              		.cfi_startproc
+ 661              		@ Volatile: function does not return.
+ 662              		@ args = 0, pretend = 0, frame = 0
+ 663              		@ frame_needed = 0, uses_anonymous_args = 0
+ 664 0000 80B5     		push	{r7, lr}
+ 665              	.LCFI7:
+ 666              		.cfi_def_cfa_offset 8
+ 667              		.cfi_offset 7, -8
+ 668              		.cfi_offset 14, -4
+ 669 0002 17E0     		b	.L23
+ 670              	.L25:
+ 132:Core/drogui/src/controlTasks.c ****             resetPid(&wroll_control, time);
+ 671              		.loc 1 132 13 view .LVU113
+ 132:Core/drogui/src/controlTasks.c ****             resetPid(&wroll_control, time);
+ 672              		.loc 1 132 31 is_stmt 0 view .LVU114
+ 673 0004 C4ED008A 		vstr.32	s17, [r4]
+ 132:Core/drogui/src/controlTasks.c ****             resetPid(&wroll_control, time);
+ 674              		.loc 1 132 26 view .LVU115
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 18
+
+
+ 675 0008 C5ED008A 		vstr.32	s17, [r5]
+ 132:Core/drogui/src/controlTasks.c ****             resetPid(&wroll_control, time);
+ 676              		.loc 1 132 21 view .LVU116
+ 677 000c C6ED008A 		vstr.32	s17, [r6]
+ 132:Core/drogui/src/controlTasks.c ****             resetPid(&wroll_control, time);
+ 678              		.loc 1 132 16 view .LVU117
+ 679 0010 C7ED008A 		vstr.32	s17, [r7]
+ 133:Core/drogui/src/controlTasks.c ****             resetPid(&wpitch_control, time);
+ 680              		.loc 1 133 13 is_stmt 1 view .LVU118
+ 681 0014 864C     		ldr	r4, .L26+16
+ 682 0016 2168     		ldr	r1, [r4]
+ 683 0018 8648     		ldr	r0, .L26+20
+ 684 001a FFF7FEFF 		bl	resetPid
+ 685              	.LVL66:
+ 134:Core/drogui/src/controlTasks.c ****             resetPid(&wyaw_control, time);
+ 686              		.loc 1 134 13 view .LVU119
+ 687 001e 2168     		ldr	r1, [r4]
+ 688 0020 8548     		ldr	r0, .L26+24
+ 689 0022 FFF7FEFF 		bl	resetPid
+ 690              	.LVL67:
+ 135:Core/drogui/src/controlTasks.c ****         }
+ 691              		.loc 1 135 13 view .LVU120
+ 692 0026 2168     		ldr	r1, [r4]
+ 693 0028 8448     		ldr	r0, .L26+28
+ 694 002a FFF7FEFF 		bl	resetPid
+ 695              	.LVL68:
+ 696              	.L22:
+ 138:Core/drogui/src/controlTasks.c ****     }
+ 697              		.loc 1 138 9 view .LVU121
+ 698 002e 0120     		movs	r0, #1
+ 699 0030 FFF7FEFF 		bl	osDelay
+ 700              	.LVL69:
+  95:Core/drogui/src/controlTasks.c ****     
+ 701              		.loc 1 95 10 view .LVU122
+ 702              	.L23:
+  95:Core/drogui/src/controlTasks.c ****     
+ 703              		.loc 1 95 5 view .LVU123
+  97:Core/drogui/src/controlTasks.c ****         wpitch_err = fmax( fmin( wpitch_ref - gy , 100), -100);
+ 704              		.loc 1 97 9 view .LVU124
+  97:Core/drogui/src/controlTasks.c ****         wpitch_err = fmax( fmin( wpitch_ref - gy , 100), -100);
+ 705              		.loc 1 97 43 is_stmt 0 view .LVU125
+ 706 0034 824B     		ldr	r3, .L26+32
+ 707 0036 93ED007A 		vldr.32	s14, [r3]
+ 708 003a 824B     		ldr	r3, .L26+36
+ 709 003c D3ED007A 		vldr.32	s15, [r3]
+  97:Core/drogui/src/controlTasks.c ****         wpitch_err = fmax( fmin( wpitch_ref - gy , 100), -100);
+ 710              		.loc 1 97 21 view .LVU126
+ 711 0040 9FED77AB 		vldr.64	d10, .L26
+ 712 0044 77EE677A 		vsub.f32	s15, s14, s15
+ 713 0048 17EE900A 		vmov	r0, s15
+ 714 004c FFF7FEFF 		bl	__aeabi_f2d
+ 715              	.LVL70:
+ 716 0050 B0EE4A1A 		vmov.f32	s2, s20
+ 717 0054 F0EE6A1A 		vmov.f32	s3, s21
+ 718 0058 41EC100B 		vmov	d0, r0, r1
+ 719 005c FFF7FEFF 		bl	fmin
+ 720              	.LVL71:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 19
+
+
+ 721 0060 9FED719B 		vldr.64	d9, .L26+8
+ 722 0064 B0EE491A 		vmov.f32	s2, s18
+ 723 0068 F0EE691A 		vmov.f32	s3, s19
+ 724 006c FFF7FEFF 		bl	fmax
+ 725              	.LVL72:
+ 726 0070 51EC100B 		vmov	r0, r1, d0
+ 727 0074 FFF7FEFF 		bl	__aeabi_d2f
+ 728              	.LVL73:
+ 729 0078 08EE100A 		vmov	s16, r0
+  97:Core/drogui/src/controlTasks.c ****         wpitch_err = fmax( fmin( wpitch_ref - gy , 100), -100);
+ 730              		.loc 1 97 19 view .LVU127
+ 731 007c 724B     		ldr	r3, .L26+40
+ 732 007e 1860     		str	r0, [r3]	@ float
+  98:Core/drogui/src/controlTasks.c ****         wyaw_err = fmax( fmin( wyaw_ref - gz , 100), -100);
+ 733              		.loc 1 98 9 is_stmt 1 view .LVU128
+  98:Core/drogui/src/controlTasks.c ****         wyaw_err = fmax( fmin( wyaw_ref - gz , 100), -100);
+ 734              		.loc 1 98 45 is_stmt 0 view .LVU129
+ 735 0080 724B     		ldr	r3, .L26+44
+ 736 0082 93ED007A 		vldr.32	s14, [r3]
+ 737 0086 724B     		ldr	r3, .L26+48
+ 738 0088 D3ED007A 		vldr.32	s15, [r3]
+  98:Core/drogui/src/controlTasks.c ****         wyaw_err = fmax( fmin( wyaw_ref - gz , 100), -100);
+ 739              		.loc 1 98 22 view .LVU130
+ 740 008c 77EE677A 		vsub.f32	s15, s14, s15
+ 741 0090 17EE900A 		vmov	r0, s15
+ 742 0094 FFF7FEFF 		bl	__aeabi_f2d
+ 743              	.LVL74:
+ 744 0098 B0EE4A1A 		vmov.f32	s2, s20
+ 745 009c F0EE6A1A 		vmov.f32	s3, s21
+ 746 00a0 41EC100B 		vmov	d0, r0, r1
+ 747 00a4 FFF7FEFF 		bl	fmin
+ 748              	.LVL75:
+ 749 00a8 B0EE491A 		vmov.f32	s2, s18
+ 750 00ac F0EE691A 		vmov.f32	s3, s19
+ 751 00b0 FFF7FEFF 		bl	fmax
+ 752              	.LVL76:
+ 753 00b4 51EC100B 		vmov	r0, r1, d0
+ 754 00b8 FFF7FEFF 		bl	__aeabi_d2f
+ 755              	.LVL77:
+  98:Core/drogui/src/controlTasks.c ****         wyaw_err = fmax( fmin( wyaw_ref - gz , 100), -100);
+ 756              		.loc 1 98 20 view .LVU131
+ 757 00bc 654D     		ldr	r5, .L26+52
+ 758 00be 2860     		str	r0, [r5]	@ float
+  99:Core/drogui/src/controlTasks.c **** 
+ 759              		.loc 1 99 9 is_stmt 1 view .LVU132
+  99:Core/drogui/src/controlTasks.c **** 
+ 760              		.loc 1 99 41 is_stmt 0 view .LVU133
+ 761 00c0 654B     		ldr	r3, .L26+56
+ 762 00c2 93ED007A 		vldr.32	s14, [r3]
+ 763 00c6 654B     		ldr	r3, .L26+60
+ 764 00c8 D3ED007A 		vldr.32	s15, [r3]
+  99:Core/drogui/src/controlTasks.c **** 
+ 765              		.loc 1 99 20 view .LVU134
+ 766 00cc 77EE677A 		vsub.f32	s15, s14, s15
+ 767 00d0 17EE900A 		vmov	r0, s15
+ 768 00d4 FFF7FEFF 		bl	__aeabi_f2d
+ 769              	.LVL78:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 20
+
+
+ 770 00d8 B0EE4A1A 		vmov.f32	s2, s20
+ 771 00dc F0EE6A1A 		vmov.f32	s3, s21
+ 772 00e0 41EC100B 		vmov	d0, r0, r1
+ 773 00e4 FFF7FEFF 		bl	fmin
+ 774              	.LVL79:
+ 775 00e8 B0EE491A 		vmov.f32	s2, s18
+ 776 00ec F0EE691A 		vmov.f32	s3, s19
+ 777 00f0 FFF7FEFF 		bl	fmax
+ 778              	.LVL80:
+ 779 00f4 51EC100B 		vmov	r0, r1, d0
+ 780 00f8 FFF7FEFF 		bl	__aeabi_d2f
+ 781              	.LVL81:
+  99:Core/drogui/src/controlTasks.c **** 
+ 782              		.loc 1 99 18 view .LVU135
+ 783 00fc DFF88491 		ldr	r9, .L26+100
+ 784 0100 C9F80000 		str	r0, [r9]	@ float
+ 102:Core/drogui/src/controlTasks.c ****         P = computePid(&wpitch_control, wpitch_err, time, 0);
+ 785              		.loc 1 102 9 is_stmt 1 view .LVU136
+ 102:Core/drogui/src/controlTasks.c ****         P = computePid(&wpitch_control, wpitch_err, time, 0);
+ 786              		.loc 1 102 13 is_stmt 0 view .LVU137
+ 787 0104 DFED568A 		vldr.32	s17, .L26+64
+ 788 0108 494C     		ldr	r4, .L26+16
+ 789 010a DFF82881 		ldr	r8, .L26+20
+ 790 010e F0EE680A 		vmov.f32	s1, s17
+ 791 0112 2168     		ldr	r1, [r4]
+ 792 0114 B0EE480A 		vmov.f32	s0, s16
+ 793 0118 4046     		mov	r0, r8
+ 794 011a FFF7FEFF 		bl	computePid
+ 795              	.LVL82:
+ 102:Core/drogui/src/controlTasks.c ****         P = computePid(&wpitch_control, wpitch_err, time, 0);
+ 796              		.loc 1 102 11 view .LVU138
+ 797 011e 514E     		ldr	r6, .L26+68
+ 798 0120 86ED000A 		vstr.32	s0, [r6]
+ 103:Core/drogui/src/controlTasks.c ****         Y = computePid(&wyaw_control, wyaw_err, time, 0);
+ 799              		.loc 1 103 9 is_stmt 1 view .LVU139
+ 103:Core/drogui/src/controlTasks.c ****         Y = computePid(&wyaw_control, wyaw_err, time, 0);
+ 800              		.loc 1 103 13 is_stmt 0 view .LVU140
+ 801 0124 444F     		ldr	r7, .L26+24
+ 802 0126 F0EE680A 		vmov.f32	s1, s17
+ 803 012a 2168     		ldr	r1, [r4]
+ 804 012c 95ED000A 		vldr.32	s0, [r5]
+ 805 0130 3846     		mov	r0, r7
+ 806 0132 FFF7FEFF 		bl	computePid
+ 807              	.LVL83:
+ 103:Core/drogui/src/controlTasks.c ****         Y = computePid(&wyaw_control, wyaw_err, time, 0);
+ 808              		.loc 1 103 11 view .LVU141
+ 809 0136 4C4D     		ldr	r5, .L26+72
+ 810 0138 85ED000A 		vstr.32	s0, [r5]
+ 104:Core/drogui/src/controlTasks.c ****         
+ 811              		.loc 1 104 9 is_stmt 1 view .LVU142
+ 104:Core/drogui/src/controlTasks.c ****         
+ 812              		.loc 1 104 13 is_stmt 0 view .LVU143
+ 813 013c F0EE680A 		vmov.f32	s1, s17
+ 814 0140 2168     		ldr	r1, [r4]
+ 815 0142 99ED000A 		vldr.32	s0, [r9]
+ 816 0146 3D48     		ldr	r0, .L26+28
+ 817 0148 FFF7FEFF 		bl	computePid
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 21
+
+
+ 818              	.LVL84:
+ 104:Core/drogui/src/controlTasks.c ****         
+ 819              		.loc 1 104 11 view .LVU144
+ 820 014c 474C     		ldr	r4, .L26+76
+ 821 014e 84ED000A 		vstr.32	s0, [r4]
+ 106:Core/drogui/src/controlTasks.c ****         setReg(DER_GYRO_Y, wpitch_control.errd);
+ 822              		.loc 1 106 9 is_stmt 1 view .LVU145
+ 823 0152 98ED170A 		vldr.32	s0, [r8, #92]
+ 824 0156 8820     		movs	r0, #136
+ 825 0158 FFF7FEFF 		bl	setReg
+ 826              	.LVL85:
+ 107:Core/drogui/src/controlTasks.c ****         
+ 827              		.loc 1 107 9 view .LVU146
+ 828 015c 97ED170A 		vldr.32	s0, [r7, #92]
+ 829 0160 8A20     		movs	r0, #138
+ 830 0162 FFF7FEFF 		bl	setReg
+ 831              	.LVL86:
+ 114:Core/drogui/src/controlTasks.c ****         setReg(PITCH_U, P);
+ 832              		.loc 1 114 9 view .LVU147
+ 833 0166 96ED000A 		vldr.32	s0, [r6]
+ 834 016a 3A20     		movs	r0, #58
+ 835 016c FFF7FEFF 		bl	setReg
+ 836              	.LVL87:
+ 115:Core/drogui/src/controlTasks.c ****         setReg(YAW_U, Y);
+ 837              		.loc 1 115 9 view .LVU148
+ 838 0170 95ED000A 		vldr.32	s0, [r5]
+ 839 0174 3C20     		movs	r0, #60
+ 840 0176 FFF7FEFF 		bl	setReg
+ 841              	.LVL88:
+ 116:Core/drogui/src/controlTasks.c ****         setReg(Z_U, H_comp);
+ 842              		.loc 1 116 9 view .LVU149
+ 843 017a 94ED000A 		vldr.32	s0, [r4]
+ 844 017e 3E20     		movs	r0, #62
+ 845 0180 FFF7FEFF 		bl	setReg
+ 846              	.LVL89:
+ 117:Core/drogui/src/controlTasks.c **** 
+ 847              		.loc 1 117 9 view .LVU150
+ 848 0184 DFF80081 		ldr	r8, .L26+104
+ 849 0188 98ED000A 		vldr.32	s0, [r8]
+ 850 018c 4420     		movs	r0, #68
+ 851 018e FFF7FEFF 		bl	setReg
+ 852              	.LVL90:
+ 119:Core/drogui/src/controlTasks.c ****         M2 = R - P - Y;
+ 853              		.loc 1 119 9 view .LVU151
+ 119:Core/drogui/src/controlTasks.c ****         M2 = R - P - Y;
+ 854              		.loc 1 119 16 is_stmt 0 view .LVU152
+ 855 0192 96ED006A 		vldr.32	s12, [r6]
+ 856 0196 D5ED007A 		vldr.32	s15, [r5]
+ 857 019a 36EE277A 		vadd.f32	s14, s12, s15
+ 119:Core/drogui/src/controlTasks.c ****         M2 = R - P - Y;
+ 858              		.loc 1 119 20 view .LVU153
+ 859 019e D4ED006A 		vldr.32	s13, [r4]
+ 860 01a2 37EE267A 		vadd.f32	s14, s14, s13
+ 119:Core/drogui/src/controlTasks.c ****         M2 = R - P - Y;
+ 861              		.loc 1 119 12 view .LVU154
+ 862 01a6 324F     		ldr	r7, .L26+80
+ 863 01a8 87ED007A 		vstr.32	s14, [r7]
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 22
+
+
+ 120:Core/drogui/src/controlTasks.c ****         M3 = -R - P + Y;
+ 864              		.loc 1 120 9 is_stmt 1 view .LVU155
+ 120:Core/drogui/src/controlTasks.c ****         M3 = -R - P + Y;
+ 865              		.loc 1 120 16 is_stmt 0 view .LVU156
+ 866 01ac 36EE677A 		vsub.f32	s14, s12, s15
+ 120:Core/drogui/src/controlTasks.c ****         M3 = -R - P + Y;
+ 867              		.loc 1 120 20 view .LVU157
+ 868 01b0 37EE667A 		vsub.f32	s14, s14, s13
+ 120:Core/drogui/src/controlTasks.c ****         M3 = -R - P + Y;
+ 869              		.loc 1 120 12 view .LVU158
+ 870 01b4 2F4E     		ldr	r6, .L26+84
+ 871 01b6 86ED007A 		vstr.32	s14, [r6]
+ 121:Core/drogui/src/controlTasks.c ****         M4 = -R + P - Y;
+ 872              		.loc 1 121 9 is_stmt 1 view .LVU159
+ 121:Core/drogui/src/controlTasks.c ****         M4 = -R + P - Y;
+ 873              		.loc 1 121 14 is_stmt 0 view .LVU160
+ 874 01ba B1EE467A 		vneg.f32	s14, s12
+ 121:Core/drogui/src/controlTasks.c ****         M4 = -R + P - Y;
+ 875              		.loc 1 121 17 view .LVU161
+ 876 01be 37EE677A 		vsub.f32	s14, s14, s15
+ 121:Core/drogui/src/controlTasks.c ****         M4 = -R + P - Y;
+ 877              		.loc 1 121 21 view .LVU162
+ 878 01c2 36EE877A 		vadd.f32	s14, s13, s14
+ 121:Core/drogui/src/controlTasks.c ****         M4 = -R + P - Y;
+ 879              		.loc 1 121 12 view .LVU163
+ 880 01c6 2C4D     		ldr	r5, .L26+88
+ 881 01c8 85ED007A 		vstr.32	s14, [r5]
+ 122:Core/drogui/src/controlTasks.c **** 
+ 882              		.loc 1 122 9 is_stmt 1 view .LVU164
+ 122:Core/drogui/src/controlTasks.c **** 
+ 883              		.loc 1 122 17 is_stmt 0 view .LVU165
+ 884 01cc 77EEC67A 		vsub.f32	s15, s15, s12
+ 122:Core/drogui/src/controlTasks.c **** 
+ 885              		.loc 1 122 21 view .LVU166
+ 886 01d0 77EEE67A 		vsub.f32	s15, s15, s13
+ 122:Core/drogui/src/controlTasks.c **** 
+ 887              		.loc 1 122 12 view .LVU167
+ 888 01d4 294C     		ldr	r4, .L26+92
+ 889 01d6 C4ED007A 		vstr.32	s15, [r4]
+ 124:Core/drogui/src/controlTasks.c **** 
+ 890              		.loc 1 124 9 is_stmt 1 view .LVU168
+ 891 01da 98ED000A 		vldr.32	s0, [r8]
+ 892 01de 20EE000A 		vmul.f32	s0, s0, s0
+ 893 01e2 FFF7FEFF 		bl	saturateM
+ 894              	.LVL91:
+ 126:Core/drogui/src/controlTasks.c ****         setReg(MOTOR_2, M2);
+ 895              		.loc 1 126 9 view .LVU169
+ 896 01e6 97ED000A 		vldr.32	s0, [r7]
+ 897 01ea 8C20     		movs	r0, #140
+ 898 01ec FFF7FEFF 		bl	setReg
+ 899              	.LVL92:
+ 127:Core/drogui/src/controlTasks.c ****         setReg(MOTOR_3, M3);
+ 900              		.loc 1 127 9 view .LVU170
+ 901 01f0 96ED000A 		vldr.32	s0, [r6]
+ 902 01f4 8E20     		movs	r0, #142
+ 903 01f6 FFF7FEFF 		bl	setReg
+ 904              	.LVL93:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 23
+
+
+ 128:Core/drogui/src/controlTasks.c ****         setReg(MOTOR_4, M4);
+ 905              		.loc 1 128 9 view .LVU171
+ 906 01fa 95ED000A 		vldr.32	s0, [r5]
+ 907 01fe 9020     		movs	r0, #144
+ 908 0200 FFF7FEFF 		bl	setReg
+ 909              	.LVL94:
+ 129:Core/drogui/src/controlTasks.c **** 
+ 910              		.loc 1 129 9 view .LVU172
+ 911 0204 94ED000A 		vldr.32	s0, [r4]
+ 912 0208 9220     		movs	r0, #146
+ 913 020a FFF7FEFF 		bl	setReg
+ 914              	.LVL95:
+ 131:Core/drogui/src/controlTasks.c ****             M1 = M2 = M3 = M4 = 0;
+ 915              		.loc 1 131 9 view .LVU173
+ 131:Core/drogui/src/controlTasks.c ****             M1 = M2 = M3 = M4 = 0;
+ 916              		.loc 1 131 12 is_stmt 0 view .LVU174
+ 917 020e 1C4B     		ldr	r3, .L26+96
+ 918 0210 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 131:Core/drogui/src/controlTasks.c ****             M1 = M2 = M3 = M4 = 0;
+ 919              		.loc 1 131 11 view .LVU175
+ 920 0212 002B     		cmp	r3, #0
+ 921 0214 7FF4F6AE 		bne	.L25
+ 922 0218 09E7     		b	.L22
+ 923              	.L27:
+ 924 021a 00BFAFF3 		.align	3
+ 924      0080
+ 925              	.L26:
+ 926 0220 00000000 		.word	0
+ 927 0224 00005940 		.word	1079574528
+ 928 0228 00000000 		.word	0
+ 929 022c 000059C0 		.word	-1067909120
+ 930 0230 00000000 		.word	time
+ 931 0234 00000000 		.word	.LANCHOR28
+ 932 0238 00000000 		.word	.LANCHOR30
+ 933 023c 00000000 		.word	.LANCHOR32
+ 934 0240 00000000 		.word	.LANCHOR2
+ 935 0244 00000000 		.word	gx
+ 936 0248 00000000 		.word	.LANCHOR25
+ 937 024c 00000000 		.word	.LANCHOR5
+ 938 0250 00000000 		.word	gy
+ 939 0254 00000000 		.word	.LANCHOR26
+ 940 0258 00000000 		.word	.LANCHOR8
+ 941 025c 00000000 		.word	gz
+ 942 0260 00000000 		.word	0
+ 943 0264 00000000 		.word	.LANCHOR29
+ 944 0268 00000000 		.word	.LANCHOR31
+ 945 026c 00000000 		.word	.LANCHOR33
+ 946 0270 00000000 		.word	.LANCHOR21
+ 947 0274 00000000 		.word	.LANCHOR22
+ 948 0278 00000000 		.word	.LANCHOR23
+ 949 027c 00000000 		.word	.LANCHOR24
+ 950 0280 00000000 		.word	security
+ 951 0284 00000000 		.word	.LANCHOR27
+ 952 0288 00000000 		.word	.LANCHOR17
+ 953              		.cfi_endproc
+ 954              	.LFE180:
+ 956              		.section	.text.updatePID,"ax",%progbits
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 24
+
+
+ 957              		.align	1
+ 958              		.global	updatePID
+ 959              		.syntax unified
+ 960              		.thumb
+ 961              		.thumb_func
+ 962              		.fpu fpv5-sp-d16
+ 964              	updatePID:
+ 965              	.LFB179:
+  36:Core/drogui/src/controlTasks.c ****     int index = getReg(PID_INDEX), var = getReg(PID_VAR);
+ 966              		.loc 1 36 17 is_stmt 1 view -0
+ 967              		.cfi_startproc
+ 968              		@ args = 0, pretend = 0, frame = 0
+ 969              		@ frame_needed = 0, uses_anonymous_args = 0
+ 970 0000 10B5     		push	{r4, lr}
+ 971              	.LCFI8:
+ 972              		.cfi_def_cfa_offset 8
+ 973              		.cfi_offset 4, -8
+ 974              		.cfi_offset 14, -4
+  37:Core/drogui/src/controlTasks.c ****     if(index >= 0) {
+ 975              		.loc 1 37 5 view .LVU177
+  37:Core/drogui/src/controlTasks.c ****     if(index >= 0) {
+ 976              		.loc 1 37 17 is_stmt 0 view .LVU178
+ 977 0002 6220     		movs	r0, #98
+ 978 0004 FFF7FEFF 		bl	getReg
+ 979              	.LVL96:
+  37:Core/drogui/src/controlTasks.c ****     if(index >= 0) {
+ 980              		.loc 1 37 9 view .LVU179
+ 981 0008 FDEEC07A 		vcvt.s32.f32	s15, s0
+ 982 000c 17EE904A 		vmov	r4, s15	@ int
+ 983              	.LVL97:
+  37:Core/drogui/src/controlTasks.c ****     if(index >= 0) {
+ 984              		.loc 1 37 42 view .LVU180
+ 985 0010 6420     		movs	r0, #100
+ 986 0012 FFF7FEFF 		bl	getReg
+ 987              	.LVL98:
+  38:Core/drogui/src/controlTasks.c ****         switch(var){
+ 988              		.loc 1 38 5 is_stmt 1 view .LVU181
+  38:Core/drogui/src/controlTasks.c ****         switch(var){
+ 989              		.loc 1 38 7 is_stmt 0 view .LVU182
+ 990 0016 002C     		cmp	r4, #0
+ 991 0018 C0F29980 		blt	.L28
+ 992 001c BDEEC00A 		vcvt.s32.f32	s0, s0
+ 993              	.LVL99:
+  39:Core/drogui/src/controlTasks.c **** 
+ 994              		.loc 1 39 9 is_stmt 1 view .LVU183
+ 995 0020 10EE103A 		vmov	r3, s0	@ int
+ 996 0024 052B     		cmp	r3, #5
+ 997 0026 7DD8     		bhi	.L30
+ 998 0028 DFE803F0 		tbb	[pc, r3]
+ 999              	.L32:
+ 1000 002c 03       		.byte	(.L35-.L32)/2
+ 1001 002d 26       		.byte	(.L34-.L32)/2
+ 1002 002e 49       		.byte	(.L33-.L32)/2
+ 1003 002f 7C       		.byte	(.L30-.L32)/2
+ 1004 0030 7C       		.byte	(.L30-.L32)/2
+ 1005 0031 6C       		.byte	(.L31-.L32)/2
+ 1006              		.p2align 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 25
+
+
+ 1007              	.L35:
+  42:Core/drogui/src/controlTasks.c ****                     roll2w.kp[0] = getReg(ROLL_KP),  roll2w.ki[0] = getReg(ROLL_KI),  roll2w.kd[0] 
+ 1008              		.loc 1 42 17 view .LVU184
+  42:Core/drogui/src/controlTasks.c ****                     roll2w.kp[0] = getReg(ROLL_KP),  roll2w.ki[0] = getReg(ROLL_KI),  roll2w.kd[0] 
+ 1009              		.loc 1 42 19 is_stmt 0 view .LVU185
+ 1010 0032 84B9     		cbnz	r4, .L36
+  43:Core/drogui/src/controlTasks.c ****                 else
+ 1011              		.loc 1 43 21 is_stmt 1 view .LVU186
+  43:Core/drogui/src/controlTasks.c ****                 else
+ 1012              		.loc 1 43 36 is_stmt 0 view .LVU187
+ 1013 0034 0A20     		movs	r0, #10
+ 1014 0036 FFF7FEFF 		bl	getReg
+ 1015              	.LVL100:
+  43:Core/drogui/src/controlTasks.c ****                 else
+ 1016              		.loc 1 43 34 view .LVU188
+ 1017 003a 454C     		ldr	r4, .L40
+ 1018              	.LVL101:
+  43:Core/drogui/src/controlTasks.c ****                 else
+ 1019              		.loc 1 43 34 view .LVU189
+ 1020 003c 84ED000A 		vstr.32	s0, [r4]
+  43:Core/drogui/src/controlTasks.c ****                 else
+ 1021              		.loc 1 43 69 view .LVU190
+ 1022 0040 0C20     		movs	r0, #12
+ 1023 0042 FFF7FEFF 		bl	getReg
+ 1024              	.LVL102:
+  43:Core/drogui/src/controlTasks.c ****                 else
+ 1025              		.loc 1 43 67 view .LVU191
+ 1026 0046 84ED0A0A 		vstr.32	s0, [r4, #40]
+  43:Core/drogui/src/controlTasks.c ****                 else
+ 1027              		.loc 1 43 102 view .LVU192
+ 1028 004a 0E20     		movs	r0, #14
+ 1029 004c FFF7FEFF 		bl	getReg
+ 1030              	.LVL103:
+  43:Core/drogui/src/controlTasks.c ****                 else
+ 1031              		.loc 1 43 100 view .LVU193
+ 1032 0050 84ED050A 		vstr.32	s0, [r4, #20]
+ 1033 0054 66E0     		b	.L30
+ 1034              	.LVL104:
+ 1035              	.L36:
+  45:Core/drogui/src/controlTasks.c **** 
+ 1036              		.loc 1 45 21 is_stmt 1 view .LVU194
+  45:Core/drogui/src/controlTasks.c **** 
+ 1037              		.loc 1 45 43 is_stmt 0 view .LVU195
+ 1038 0056 0A20     		movs	r0, #10
+ 1039 0058 FFF7FEFF 		bl	getReg
+ 1040              	.LVL105:
+  45:Core/drogui/src/controlTasks.c **** 
+ 1041              		.loc 1 45 41 view .LVU196
+ 1042 005c 3D4C     		ldr	r4, .L40+4
+ 1043              	.LVL106:
+  45:Core/drogui/src/controlTasks.c **** 
+ 1044              		.loc 1 45 41 view .LVU197
+ 1045 005e 84ED000A 		vstr.32	s0, [r4]
+  45:Core/drogui/src/controlTasks.c **** 
+ 1046              		.loc 1 45 83 view .LVU198
+ 1047 0062 0C20     		movs	r0, #12
+ 1048 0064 FFF7FEFF 		bl	getReg
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 26
+
+
+ 1049              	.LVL107:
+  45:Core/drogui/src/controlTasks.c **** 
+ 1050              		.loc 1 45 81 view .LVU199
+ 1051 0068 84ED0A0A 		vstr.32	s0, [r4, #40]
+  45:Core/drogui/src/controlTasks.c **** 
+ 1052              		.loc 1 45 123 view .LVU200
+ 1053 006c 0E20     		movs	r0, #14
+ 1054 006e FFF7FEFF 		bl	getReg
+ 1055              	.LVL108:
+  45:Core/drogui/src/controlTasks.c **** 
+ 1056              		.loc 1 45 121 view .LVU201
+ 1057 0072 84ED050A 		vstr.32	s0, [r4, #20]
+ 1058 0076 55E0     		b	.L30
+ 1059              	.LVL109:
+ 1060              	.L34:
+  50:Core/drogui/src/controlTasks.c ****                     pitch2w.kp[0] = getReg(PITCH_KP),  pitch2w.ki[0] = getReg(PITCH_KI),  pitch2w.k
+ 1061              		.loc 1 50 17 is_stmt 1 view .LVU202
+  50:Core/drogui/src/controlTasks.c ****                     pitch2w.kp[0] = getReg(PITCH_KP),  pitch2w.ki[0] = getReg(PITCH_KI),  pitch2w.k
+ 1062              		.loc 1 50 19 is_stmt 0 view .LVU203
+ 1063 0078 84B9     		cbnz	r4, .L37
+  51:Core/drogui/src/controlTasks.c ****                 else
+ 1064              		.loc 1 51 21 is_stmt 1 view .LVU204
+  51:Core/drogui/src/controlTasks.c ****                 else
+ 1065              		.loc 1 51 37 is_stmt 0 view .LVU205
+ 1066 007a 1020     		movs	r0, #16
+ 1067 007c FFF7FEFF 		bl	getReg
+ 1068              	.LVL110:
+  51:Core/drogui/src/controlTasks.c ****                 else
+ 1069              		.loc 1 51 35 view .LVU206
+ 1070 0080 354C     		ldr	r4, .L40+8
+ 1071              	.LVL111:
+  51:Core/drogui/src/controlTasks.c ****                 else
+ 1072              		.loc 1 51 35 view .LVU207
+ 1073 0082 84ED000A 		vstr.32	s0, [r4]
+  51:Core/drogui/src/controlTasks.c ****                 else
+ 1074              		.loc 1 51 72 view .LVU208
+ 1075 0086 1220     		movs	r0, #18
+ 1076 0088 FFF7FEFF 		bl	getReg
+ 1077              	.LVL112:
+  51:Core/drogui/src/controlTasks.c ****                 else
+ 1078              		.loc 1 51 70 view .LVU209
+ 1079 008c 84ED0A0A 		vstr.32	s0, [r4, #40]
+  51:Core/drogui/src/controlTasks.c ****                 else
+ 1080              		.loc 1 51 107 view .LVU210
+ 1081 0090 1420     		movs	r0, #20
+ 1082 0092 FFF7FEFF 		bl	getReg
+ 1083              	.LVL113:
+  51:Core/drogui/src/controlTasks.c ****                 else
+ 1084              		.loc 1 51 105 view .LVU211
+ 1085 0096 84ED050A 		vstr.32	s0, [r4, #20]
+ 1086 009a 43E0     		b	.L30
+ 1087              	.LVL114:
+ 1088              	.L37:
+  53:Core/drogui/src/controlTasks.c **** 
+ 1089              		.loc 1 53 21 is_stmt 1 view .LVU212
+  53:Core/drogui/src/controlTasks.c **** 
+ 1090              		.loc 1 53 44 is_stmt 0 view .LVU213
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 27
+
+
+ 1091 009c 1020     		movs	r0, #16
+ 1092 009e FFF7FEFF 		bl	getReg
+ 1093              	.LVL115:
+  53:Core/drogui/src/controlTasks.c **** 
+ 1094              		.loc 1 53 42 view .LVU214
+ 1095 00a2 2E4C     		ldr	r4, .L40+12
+ 1096              	.LVL116:
+  53:Core/drogui/src/controlTasks.c **** 
+ 1097              		.loc 1 53 42 view .LVU215
+ 1098 00a4 84ED000A 		vstr.32	s0, [r4]
+  53:Core/drogui/src/controlTasks.c **** 
+ 1099              		.loc 1 53 86 view .LVU216
+ 1100 00a8 1220     		movs	r0, #18
+ 1101 00aa FFF7FEFF 		bl	getReg
+ 1102              	.LVL117:
+  53:Core/drogui/src/controlTasks.c **** 
+ 1103              		.loc 1 53 84 view .LVU217
+ 1104 00ae 84ED0A0A 		vstr.32	s0, [r4, #40]
+  53:Core/drogui/src/controlTasks.c **** 
+ 1105              		.loc 1 53 128 view .LVU218
+ 1106 00b2 1420     		movs	r0, #20
+ 1107 00b4 FFF7FEFF 		bl	getReg
+ 1108              	.LVL118:
+  53:Core/drogui/src/controlTasks.c **** 
+ 1109              		.loc 1 53 126 view .LVU219
+ 1110 00b8 84ED050A 		vstr.32	s0, [r4, #20]
+ 1111 00bc 32E0     		b	.L30
+ 1112              	.LVL119:
+ 1113              	.L33:
+  58:Core/drogui/src/controlTasks.c ****                     yaw2w.kp[0] = getReg(YAW_KP),  yaw2w.ki[0] = getReg(YAW_KI),  yaw2w.kd[0] = get
+ 1114              		.loc 1 58 17 is_stmt 1 view .LVU220
+  58:Core/drogui/src/controlTasks.c ****                     yaw2w.kp[0] = getReg(YAW_KP),  yaw2w.ki[0] = getReg(YAW_KI),  yaw2w.kd[0] = get
+ 1115              		.loc 1 58 19 is_stmt 0 view .LVU221
+ 1116 00be 84B9     		cbnz	r4, .L38
+  59:Core/drogui/src/controlTasks.c ****                 else
+ 1117              		.loc 1 59 21 is_stmt 1 view .LVU222
+  59:Core/drogui/src/controlTasks.c ****                 else
+ 1118              		.loc 1 59 35 is_stmt 0 view .LVU223
+ 1119 00c0 1620     		movs	r0, #22
+ 1120 00c2 FFF7FEFF 		bl	getReg
+ 1121              	.LVL120:
+  59:Core/drogui/src/controlTasks.c ****                 else
+ 1122              		.loc 1 59 33 view .LVU224
+ 1123 00c6 264C     		ldr	r4, .L40+16
+ 1124              	.LVL121:
+  59:Core/drogui/src/controlTasks.c ****                 else
+ 1125              		.loc 1 59 33 view .LVU225
+ 1126 00c8 84ED000A 		vstr.32	s0, [r4]
+  59:Core/drogui/src/controlTasks.c ****                 else
+ 1127              		.loc 1 59 66 view .LVU226
+ 1128 00cc 1820     		movs	r0, #24
+ 1129 00ce FFF7FEFF 		bl	getReg
+ 1130              	.LVL122:
+  59:Core/drogui/src/controlTasks.c ****                 else
+ 1131              		.loc 1 59 64 view .LVU227
+ 1132 00d2 84ED0A0A 		vstr.32	s0, [r4, #40]
+  59:Core/drogui/src/controlTasks.c ****                 else
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 28
+
+
+ 1133              		.loc 1 59 97 view .LVU228
+ 1134 00d6 1A20     		movs	r0, #26
+ 1135 00d8 FFF7FEFF 		bl	getReg
+ 1136              	.LVL123:
+  59:Core/drogui/src/controlTasks.c ****                 else
+ 1137              		.loc 1 59 95 view .LVU229
+ 1138 00dc 84ED050A 		vstr.32	s0, [r4, #20]
+ 1139 00e0 20E0     		b	.L30
+ 1140              	.LVL124:
+ 1141              	.L38:
+  61:Core/drogui/src/controlTasks.c **** 
+ 1142              		.loc 1 61 21 is_stmt 1 view .LVU230
+  61:Core/drogui/src/controlTasks.c **** 
+ 1143              		.loc 1 61 42 is_stmt 0 view .LVU231
+ 1144 00e2 1620     		movs	r0, #22
+ 1145 00e4 FFF7FEFF 		bl	getReg
+ 1146              	.LVL125:
+  61:Core/drogui/src/controlTasks.c **** 
+ 1147              		.loc 1 61 40 view .LVU232
+ 1148 00e8 1E4C     		ldr	r4, .L40+20
+ 1149              	.LVL126:
+  61:Core/drogui/src/controlTasks.c **** 
+ 1150              		.loc 1 61 40 view .LVU233
+ 1151 00ea 84ED000A 		vstr.32	s0, [r4]
+  61:Core/drogui/src/controlTasks.c **** 
+ 1152              		.loc 1 61 80 view .LVU234
+ 1153 00ee 1820     		movs	r0, #24
+ 1154 00f0 FFF7FEFF 		bl	getReg
+ 1155              	.LVL127:
+  61:Core/drogui/src/controlTasks.c **** 
+ 1156              		.loc 1 61 78 view .LVU235
+ 1157 00f4 84ED0A0A 		vstr.32	s0, [r4, #40]
+  61:Core/drogui/src/controlTasks.c **** 
+ 1158              		.loc 1 61 118 view .LVU236
+ 1159 00f8 1A20     		movs	r0, #26
+ 1160 00fa FFF7FEFF 		bl	getReg
+ 1161              	.LVL128:
+  61:Core/drogui/src/controlTasks.c **** 
+ 1162              		.loc 1 61 116 view .LVU237
+ 1163 00fe 84ED050A 		vstr.32	s0, [r4, #20]
+ 1164 0102 0FE0     		b	.L30
+ 1165              	.LVL129:
+ 1166              	.L31:
+  66:Core/drogui/src/controlTasks.c ****                 z_control.ki[0] = getReg(Z_KI);
+ 1167              		.loc 1 66 17 is_stmt 1 view .LVU238
+  66:Core/drogui/src/controlTasks.c ****                 z_control.ki[0] = getReg(Z_KI);
+ 1168              		.loc 1 66 35 is_stmt 0 view .LVU239
+ 1169 0104 2820     		movs	r0, #40
+ 1170 0106 FFF7FEFF 		bl	getReg
+ 1171              	.LVL130:
+  66:Core/drogui/src/controlTasks.c ****                 z_control.ki[0] = getReg(Z_KI);
+ 1172              		.loc 1 66 33 view .LVU240
+ 1173 010a 174C     		ldr	r4, .L40+24
+ 1174              	.LVL131:
+  66:Core/drogui/src/controlTasks.c ****                 z_control.ki[0] = getReg(Z_KI);
+ 1175              		.loc 1 66 33 view .LVU241
+ 1176 010c 84ED000A 		vstr.32	s0, [r4]
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 29
+
+
+  67:Core/drogui/src/controlTasks.c ****                 z_control.kd[0] = getReg(Z_KD);
+ 1177              		.loc 1 67 17 is_stmt 1 view .LVU242
+  67:Core/drogui/src/controlTasks.c ****                 z_control.kd[0] = getReg(Z_KD);
+ 1178              		.loc 1 67 35 is_stmt 0 view .LVU243
+ 1179 0110 2A20     		movs	r0, #42
+ 1180 0112 FFF7FEFF 		bl	getReg
+ 1181              	.LVL132:
+  67:Core/drogui/src/controlTasks.c ****                 z_control.kd[0] = getReg(Z_KD);
+ 1182              		.loc 1 67 33 view .LVU244
+ 1183 0116 84ED0A0A 		vstr.32	s0, [r4, #40]
+  68:Core/drogui/src/controlTasks.c ****             break;
+ 1184              		.loc 1 68 17 is_stmt 1 view .LVU245
+  68:Core/drogui/src/controlTasks.c ****             break;
+ 1185              		.loc 1 68 35 is_stmt 0 view .LVU246
+ 1186 011a 2C20     		movs	r0, #44
+ 1187 011c FFF7FEFF 		bl	getReg
+ 1188              	.LVL133:
+  68:Core/drogui/src/controlTasks.c ****             break;
+ 1189              		.loc 1 68 33 view .LVU247
+ 1190 0120 84ED050A 		vstr.32	s0, [r4, #20]
+  69:Core/drogui/src/controlTasks.c ****         }
+ 1191              		.loc 1 69 13 is_stmt 1 view .LVU248
+ 1192              	.L30:
+  71:Core/drogui/src/controlTasks.c ****     }
+ 1193              		.loc 1 71 9 view .LVU249
+  71:Core/drogui/src/controlTasks.c ****     }
+ 1194              		.loc 1 71 126 is_stmt 0 view .LVU250
+ 1195 0124 9A20     		movs	r0, #154
+ 1196 0126 FFF7FEFF 		bl	getReg
+ 1197              	.LVL134:
+  71:Core/drogui/src/controlTasks.c ****     }
+ 1198              		.loc 1 71 124 view .LVU251
+ 1199 012a 0E4B     		ldr	r3, .L40+20
+ 1200 012c 83ED260A 		vstr.32	s0, [r3, #152]
+  71:Core/drogui/src/controlTasks.c ****     }
+ 1201              		.loc 1 71 102 view .LVU252
+ 1202 0130 0A4B     		ldr	r3, .L40+12
+ 1203 0132 83ED260A 		vstr.32	s0, [r3, #152]
+  71:Core/drogui/src/controlTasks.c ****     }
+ 1204              		.loc 1 71 78 view .LVU253
+ 1205 0136 074B     		ldr	r3, .L40+4
+ 1206 0138 83ED260A 		vstr.32	s0, [r3, #152]
+  71:Core/drogui/src/controlTasks.c ****     }
+ 1207              		.loc 1 71 55 view .LVU254
+ 1208 013c 084B     		ldr	r3, .L40+16
+ 1209 013e 83ED260A 		vstr.32	s0, [r3, #152]
+  71:Core/drogui/src/controlTasks.c ****     }
+ 1210              		.loc 1 71 40 view .LVU255
+ 1211 0142 054B     		ldr	r3, .L40+8
+ 1212 0144 83ED260A 		vstr.32	s0, [r3, #152]
+  71:Core/drogui/src/controlTasks.c ****     }
+ 1213              		.loc 1 71 23 view .LVU256
+ 1214 0148 014B     		ldr	r3, .L40
+ 1215 014a 83ED260A 		vstr.32	s0, [r3, #152]
+ 1216              	.L28:
+  73:Core/drogui/src/controlTasks.c **** 
+ 1217              		.loc 1 73 1 view .LVU257
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 30
+
+
+ 1218 014e 10BD     		pop	{r4, pc}
+ 1219              	.L41:
+ 1220              		.align	2
+ 1221              	.L40:
+ 1222 0150 00000000 		.word	.LANCHOR1
+ 1223 0154 00000000 		.word	.LANCHOR28
+ 1224 0158 00000000 		.word	.LANCHOR4
+ 1225 015c 00000000 		.word	.LANCHOR30
+ 1226 0160 00000000 		.word	.LANCHOR7
+ 1227 0164 00000000 		.word	.LANCHOR32
+ 1228 0168 00000000 		.word	.LANCHOR15
+ 1229              		.cfi_endproc
+ 1230              	.LFE179:
+ 1232              		.section	.text.initControlTasks,"ax",%progbits
+ 1233              		.align	1
+ 1234              		.global	initControlTasks
+ 1235              		.syntax unified
+ 1236              		.thumb
+ 1237              		.thumb_func
+ 1238              		.fpu fpv5-sp-d16
+ 1240              	initControlTasks:
+ 1241              	.LFB183:
+ 200:Core/drogui/src/controlTasks.c ****     }
+ 201:Core/drogui/src/controlTasks.c **** }
+ 202:Core/drogui/src/controlTasks.c **** 
+ 203:Core/drogui/src/controlTasks.c **** 
+ 204:Core/drogui/src/controlTasks.c **** void initControlTasks(){
+ 1242              		.loc 1 204 24 is_stmt 1 view -0
+ 1243              		.cfi_startproc
+ 1244              		@ args = 0, pretend = 0, frame = 0
+ 1245              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1246 0000 10B5     		push	{r4, lr}
+ 1247              	.LCFI9:
+ 1248              		.cfi_def_cfa_offset 8
+ 1249              		.cfi_offset 4, -8
+ 1250              		.cfi_offset 14, -4
+ 1251 0002 2DED048B 		vpush.64	{d8, d9}
+ 1252              	.LCFI10:
+ 1253              		.cfi_def_cfa_offset 24
+ 1254              		.cfi_offset 80, -24
+ 1255              		.cfi_offset 81, -20
+ 1256              		.cfi_offset 82, -16
+ 1257              		.cfi_offset 83, -12
+ 205:Core/drogui/src/controlTasks.c ****     /*initOneshot125(&m1, 5);
+ 206:Core/drogui/src/controlTasks.c ****     initOneshot125(&m2, 4);
+ 207:Core/drogui/src/controlTasks.c ****     initOneshot125(&m3, 3);
+ 208:Core/drogui/src/controlTasks.c ****     initOneshot125(&m4, 2);*/
+ 209:Core/drogui/src/controlTasks.c **** 
+ 210:Core/drogui/src/controlTasks.c ****     initPid(&z_control, 0, 0, 0, 0, 1 , 100000, 15, NORMAL);
+ 1258              		.loc 1 210 5 view .LVU259
+ 1259 0006 DFED678A 		vldr.32	s17, .L44
+ 1260 000a 9FED678A 		vldr.32	s16, .L44+4
+ 1261 000e 0022     		movs	r2, #0
+ 1262 0010 F2EE0E2A 		vmov.f32	s5, #1.5e+1
+ 1263 0014 B0EE682A 		vmov.f32	s4, s17
+ 1264 0018 F7EE001A 		vmov.f32	s3, #1.0e+0
+ 1265 001c 1146     		mov	r1, r2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 31
+
+
+ 1266 001e B0EE481A 		vmov.f32	s2, s16
+ 1267 0022 F0EE480A 		vmov.f32	s1, s16
+ 1268 0026 B0EE480A 		vmov.f32	s0, s16
+ 1269 002a 6048     		ldr	r0, .L44+8
+ 1270 002c FFF7FEFF 		bl	initPid
+ 1271              	.LVL135:
+ 211:Core/drogui/src/controlTasks.c ****     initPid(&x_control, 0, 0, 0, 0, 1 , 100000, 0.09, NORMAL);
+ 1272              		.loc 1 211 5 view .LVU260
+ 1273 0030 9FED5F9A 		vldr.32	s18, .L44+12
+ 1274 0034 0022     		movs	r2, #0
+ 1275 0036 F0EE492A 		vmov.f32	s5, s18
+ 1276 003a B0EE682A 		vmov.f32	s4, s17
+ 1277 003e F7EE001A 		vmov.f32	s3, #1.0e+0
+ 1278 0042 1146     		mov	r1, r2
+ 1279 0044 B0EE481A 		vmov.f32	s2, s16
+ 1280 0048 F0EE480A 		vmov.f32	s1, s16
+ 1281 004c B0EE480A 		vmov.f32	s0, s16
+ 1282 0050 5848     		ldr	r0, .L44+16
+ 1283 0052 FFF7FEFF 		bl	initPid
+ 1284              	.LVL136:
+ 212:Core/drogui/src/controlTasks.c ****     initPid(&y_control, 0, 0, 0, 0, 1 , 100000,0.09, NORMAL);
+ 1285              		.loc 1 212 5 view .LVU261
+ 1286 0056 0022     		movs	r2, #0
+ 1287 0058 F0EE492A 		vmov.f32	s5, s18
+ 1288 005c B0EE682A 		vmov.f32	s4, s17
+ 1289 0060 F7EE001A 		vmov.f32	s3, #1.0e+0
+ 1290 0064 1146     		mov	r1, r2
+ 1291 0066 B0EE481A 		vmov.f32	s2, s16
+ 1292 006a F0EE480A 		vmov.f32	s1, s16
+ 1293 006e B0EE480A 		vmov.f32	s0, s16
+ 1294 0072 5148     		ldr	r0, .L44+20
+ 1295 0074 FFF7FEFF 		bl	initPid
+ 1296              	.LVL137:
+ 213:Core/drogui/src/controlTasks.c **** 
+ 214:Core/drogui/src/controlTasks.c ****     initPid(&roll2w, 0, 0, 0, time, 50, 1.57*0.5,80, (P2ID & D_INT));
+ 1297              		.loc 1 214 5 view .LVU262
+ 1298 0078 9FED509A 		vldr.32	s18, .L44+24
+ 1299 007c DFED509A 		vldr.32	s19, .L44+28
+ 1300 0080 DFED508A 		vldr.32	s17, .L44+32
+ 1301 0084 504C     		ldr	r4, .L44+36
+ 1302 0086 0022     		movs	r2, #0
+ 1303 0088 F0EE492A 		vmov.f32	s5, s18
+ 1304 008c B0EE692A 		vmov.f32	s4, s19
+ 1305 0090 F0EE681A 		vmov.f32	s3, s17
+ 1306 0094 2168     		ldr	r1, [r4]
+ 1307 0096 B0EE481A 		vmov.f32	s2, s16
+ 1308 009a F0EE480A 		vmov.f32	s1, s16
+ 1309 009e B0EE480A 		vmov.f32	s0, s16
+ 1310 00a2 4A48     		ldr	r0, .L44+40
+ 1311 00a4 FFF7FEFF 		bl	initPid
+ 1312              	.LVL138:
+ 215:Core/drogui/src/controlTasks.c ****     initPid(&pitch2w, 0, 0, 0, time, 50, 1.57*0.5,80, (P2ID & D_INT));
+ 1313              		.loc 1 215 5 view .LVU263
+ 1314 00a8 0022     		movs	r2, #0
+ 1315 00aa F0EE492A 		vmov.f32	s5, s18
+ 1316 00ae B0EE692A 		vmov.f32	s4, s19
+ 1317 00b2 F0EE681A 		vmov.f32	s3, s17
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 32
+
+
+ 1318 00b6 2168     		ldr	r1, [r4]
+ 1319 00b8 B0EE481A 		vmov.f32	s2, s16
+ 1320 00bc F0EE480A 		vmov.f32	s1, s16
+ 1321 00c0 B0EE480A 		vmov.f32	s0, s16
+ 1322 00c4 4248     		ldr	r0, .L44+44
+ 1323 00c6 FFF7FEFF 		bl	initPid
+ 1324              	.LVL139:
+ 216:Core/drogui/src/controlTasks.c ****     initPid(&yaw2w, 0, 0, 0, time, 50, 1.57*0.5,80, (P2ID & D_INT));
+ 1325              		.loc 1 216 5 view .LVU264
+ 1326 00ca 0022     		movs	r2, #0
+ 1327 00cc F0EE492A 		vmov.f32	s5, s18
+ 1328 00d0 B0EE692A 		vmov.f32	s4, s19
+ 1329 00d4 F0EE681A 		vmov.f32	s3, s17
+ 1330 00d8 2168     		ldr	r1, [r4]
+ 1331 00da B0EE481A 		vmov.f32	s2, s16
+ 1332 00de F0EE480A 		vmov.f32	s1, s16
+ 1333 00e2 B0EE480A 		vmov.f32	s0, s16
+ 1334 00e6 3B48     		ldr	r0, .L44+48
+ 1335 00e8 FFF7FEFF 		bl	initPid
+ 1336              	.LVL140:
+ 217:Core/drogui/src/controlTasks.c **** 
+ 218:Core/drogui/src/controlTasks.c ****     initPid(&wroll_control, 0, 0, 0, time, 50,  80, 3000, (P2ID & D_INT));
+ 1337              		.loc 1 218 5 view .LVU265
+ 1338 00ec DFED3A9A 		vldr.32	s19, .L44+52
+ 1339 00f0 0022     		movs	r2, #0
+ 1340 00f2 F0EE692A 		vmov.f32	s5, s19
+ 1341 00f6 B0EE492A 		vmov.f32	s4, s18
+ 1342 00fa F0EE681A 		vmov.f32	s3, s17
+ 1343 00fe 2168     		ldr	r1, [r4]
+ 1344 0100 B0EE481A 		vmov.f32	s2, s16
+ 1345 0104 F0EE480A 		vmov.f32	s1, s16
+ 1346 0108 B0EE480A 		vmov.f32	s0, s16
+ 1347 010c 3348     		ldr	r0, .L44+56
+ 1348 010e FFF7FEFF 		bl	initPid
+ 1349              	.LVL141:
+ 219:Core/drogui/src/controlTasks.c ****     initPid(&wpitch_control, 0, 0, 0, time, 50, 80, 3000, (P2ID & D_INT));
+ 1350              		.loc 1 219 5 view .LVU266
+ 1351 0112 0022     		movs	r2, #0
+ 1352 0114 F0EE692A 		vmov.f32	s5, s19
+ 1353 0118 B0EE492A 		vmov.f32	s4, s18
+ 1354 011c F0EE681A 		vmov.f32	s3, s17
+ 1355 0120 2168     		ldr	r1, [r4]
+ 1356 0122 B0EE481A 		vmov.f32	s2, s16
+ 1357 0126 F0EE480A 		vmov.f32	s1, s16
+ 1358 012a B0EE480A 		vmov.f32	s0, s16
+ 1359 012e 2C48     		ldr	r0, .L44+60
+ 1360 0130 FFF7FEFF 		bl	initPid
+ 1361              	.LVL142:
+ 220:Core/drogui/src/controlTasks.c ****     initPid(&wyaw_control, 0, 0, 0, time, 50, 80, 3000, (P2ID & D_INT));
+ 1362              		.loc 1 220 5 view .LVU267
+ 1363 0134 0022     		movs	r2, #0
+ 1364 0136 F0EE692A 		vmov.f32	s5, s19
+ 1365 013a B0EE492A 		vmov.f32	s4, s18
+ 1366 013e F0EE681A 		vmov.f32	s3, s17
+ 1367 0142 2168     		ldr	r1, [r4]
+ 1368 0144 B0EE481A 		vmov.f32	s2, s16
+ 1369 0148 F0EE480A 		vmov.f32	s1, s16
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 33
+
+
+ 1370 014c B0EE480A 		vmov.f32	s0, s16
+ 1371 0150 2448     		ldr	r0, .L44+64
+ 1372 0152 FFF7FEFF 		bl	initPid
+ 1373              	.LVL143:
+ 221:Core/drogui/src/controlTasks.c ****     
+ 222:Core/drogui/src/controlTasks.c ****     setReg(PID_INDEX, -1);
+ 1374              		.loc 1 222 5 view .LVU268
+ 1375 0156 BFEE000A 		vmov.f32	s0, #-1.0e+0
+ 1376 015a 6220     		movs	r0, #98
+ 1377 015c FFF7FEFF 		bl	setReg
+ 1378              	.LVL144:
+ 223:Core/drogui/src/controlTasks.c ****     setReg(PID_VAR, -1);
+ 1379              		.loc 1 223 5 view .LVU269
+ 1380 0160 BFEE000A 		vmov.f32	s0, #-1.0e+0
+ 1381 0164 6420     		movs	r0, #100
+ 1382 0166 FFF7FEFF 		bl	setReg
+ 1383              	.LVL145:
+ 224:Core/drogui/src/controlTasks.c ****     setReg(N_FILTER, 50);
+ 1384              		.loc 1 224 5 view .LVU270
+ 1385 016a B0EE680A 		vmov.f32	s0, s17
+ 1386 016e 9A20     		movs	r0, #154
+ 1387 0170 FFF7FEFF 		bl	setReg
+ 1388              	.LVL146:
+ 225:Core/drogui/src/controlTasks.c ****     
+ 226:Core/drogui/src/controlTasks.c ****     wControlHandle = osThreadNew(wControlTask, NULL, &wControlAttributes);
+ 1389              		.loc 1 226 5 view .LVU271
+ 1390              		.loc 1 226 22 is_stmt 0 view .LVU272
+ 1391 0174 1C4A     		ldr	r2, .L44+68
+ 1392 0176 0021     		movs	r1, #0
+ 1393 0178 1C48     		ldr	r0, .L44+72
+ 1394 017a FFF7FEFF 		bl	osThreadNew
+ 1395              	.LVL147:
+ 1396              		.loc 1 226 20 view .LVU273
+ 1397 017e 1C4B     		ldr	r3, .L44+76
+ 1398 0180 1860     		str	r0, [r3]
+ 227:Core/drogui/src/controlTasks.c ****     rpyControlHandle = osThreadNew(rpyControlTask, NULL, &rpyControlAttributes);
+ 1399              		.loc 1 227 5 is_stmt 1 view .LVU274
+ 1400              		.loc 1 227 24 is_stmt 0 view .LVU275
+ 1401 0182 1C4A     		ldr	r2, .L44+80
+ 1402 0184 0021     		movs	r1, #0
+ 1403 0186 1C48     		ldr	r0, .L44+84
+ 1404 0188 FFF7FEFF 		bl	osThreadNew
+ 1405              	.LVL148:
+ 1406              		.loc 1 227 22 view .LVU276
+ 1407 018c 1B4B     		ldr	r3, .L44+88
+ 1408 018e 1860     		str	r0, [r3]
+ 228:Core/drogui/src/controlTasks.c ****     xyzControlHandle = osThreadNew(xyzControlTask, NULL, &xyzControlAttributes);
+ 1409              		.loc 1 228 5 is_stmt 1 view .LVU277
+ 1410              		.loc 1 228 24 is_stmt 0 view .LVU278
+ 1411 0190 1B4A     		ldr	r2, .L44+92
+ 1412 0192 0021     		movs	r1, #0
+ 1413 0194 1B48     		ldr	r0, .L44+96
+ 1414 0196 FFF7FEFF 		bl	osThreadNew
+ 1415              	.LVL149:
+ 1416              		.loc 1 228 22 view .LVU279
+ 1417 019a 1B4B     		ldr	r3, .L44+100
+ 1418 019c 1860     		str	r0, [r3]
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 34
+
+
+ 229:Core/drogui/src/controlTasks.c **** }
+ 1419              		.loc 1 229 1 view .LVU280
+ 1420 019e BDEC048B 		vldm	sp!, {d8-d9}
+ 1421              	.LCFI11:
+ 1422              		.cfi_restore 82
+ 1423              		.cfi_restore 83
+ 1424              		.cfi_restore 80
+ 1425              		.cfi_restore 81
+ 1426              		.cfi_def_cfa_offset 8
+ 1427 01a2 10BD     		pop	{r4, pc}
+ 1428              	.L45:
+ 1429              		.align	2
+ 1430              	.L44:
+ 1431 01a4 0050C347 		.word	1203982336
+ 1432 01a8 00000000 		.word	0
+ 1433 01ac 00000000 		.word	.LANCHOR15
+ 1434 01b0 EC51B83D 		.word	1035489772
+ 1435 01b4 00000000 		.word	.LANCHOR10
+ 1436 01b8 00000000 		.word	.LANCHOR12
+ 1437 01bc 0000A042 		.word	1117782016
+ 1438 01c0 C3F5483F 		.word	1061746115
+ 1439 01c4 00004842 		.word	1112014848
+ 1440 01c8 00000000 		.word	time
+ 1441 01cc 00000000 		.word	.LANCHOR1
+ 1442 01d0 00000000 		.word	.LANCHOR4
+ 1443 01d4 00000000 		.word	.LANCHOR7
+ 1444 01d8 00803B45 		.word	1161527296
+ 1445 01dc 00000000 		.word	.LANCHOR28
+ 1446 01e0 00000000 		.word	.LANCHOR30
+ 1447 01e4 00000000 		.word	.LANCHOR32
+ 1448 01e8 00000000 		.word	.LANCHOR34
+ 1449 01ec 00000000 		.word	wControlTask
+ 1450 01f0 00000000 		.word	.LANCHOR35
+ 1451 01f4 00000000 		.word	.LANCHOR36
+ 1452 01f8 00000000 		.word	rpyControlTask
+ 1453 01fc 00000000 		.word	.LANCHOR37
+ 1454 0200 00000000 		.word	.LANCHOR38
+ 1455 0204 00000000 		.word	xyzControlTask
+ 1456 0208 00000000 		.word	.LANCHOR39
+ 1457              		.cfi_endproc
+ 1458              	.LFE183:
+ 1460              		.global	xyzControlAttributes
+ 1461              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 1462              		.align	2
+ 1463              	.LC0:
+ 1464 0000 78797A43 		.ascii	"xyzControlTask\000"
+ 1464      6F6E7472 
+ 1464      6F6C5461 
+ 1464      736B00
+ 1465              		.global	xyzControlHandle
+ 1466              		.global	rpyControlAttributes
+ 1467 000f 00       		.align	2
+ 1468              	.LC1:
+ 1469 0010 72707943 		.ascii	"rpyControlTask\000"
+ 1469      6F6E7472 
+ 1469      6F6C5461 
+ 1469      736B00
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 35
+
+
+ 1470              		.global	rpyControlHandle
+ 1471              		.global	wControlAttributes
+ 1472 001f 00       		.align	2
+ 1473              	.LC2:
+ 1474 0020 77436F6E 		.ascii	"wControlTask\000"
+ 1474      74726F6C 
+ 1474      5461736B 
+ 1474      00
+ 1475              		.global	wControlHandle
+ 1476              		.global	wyaw_err
+ 1477              		.global	wpitch_err
+ 1478              		.global	wroll_err
+ 1479              		.global	z_ref
+ 1480              		.global	y_ref
+ 1481              		.global	x_ref
+ 1482              		.global	yaw_ref
+ 1483              		.global	pitch_ref
+ 1484              		.global	roll_ref
+ 1485              		.global	wyaw_ref
+ 1486              		.global	wpitch_ref
+ 1487              		.global	wroll_ref
+ 1488              		.global	z_off
+ 1489              		.global	y_off
+ 1490              		.global	x_off
+ 1491              		.global	yaw_off
+ 1492              		.global	pitch_off
+ 1493              		.global	roll_off
+ 1494              		.global	M4
+ 1495              		.global	M3
+ 1496              		.global	M2
+ 1497              		.global	M1
+ 1498              		.global	P_MAX
+ 1499              		.global	R_MAX
+ 1500              		.global	Y_C
+ 1501              		.global	X_C
+ 1502              		.global	H_ref
+ 1503              		.global	Y
+ 1504              		.global	P
+ 1505              		.global	R
+ 1506              		.global	H_comp
+ 1507              		.global	H
+ 1508              		.global	y_control
+ 1509              		.global	x_control
+ 1510              		.global	z_control
+ 1511              		.global	wyaw_control
+ 1512              		.global	wpitch_control
+ 1513              		.global	wroll_control
+ 1514              		.global	yaw2w
+ 1515              		.global	pitch2w
+ 1516              		.global	roll2w
+ 1517              		.section	.bss.H,"aw",%nobits
+ 1518              		.align	2
+ 1519              		.set	.LANCHOR9,. + 0
+ 1522              	H:
+ 1523 0000 00000000 		.space	4
+ 1524              		.section	.bss.H_comp,"aw",%nobits
+ 1525              		.align	2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 36
+
+
+ 1526              		.set	.LANCHOR17,. + 0
+ 1529              	H_comp:
+ 1530 0000 00000000 		.space	4
+ 1531              		.section	.bss.H_ref,"aw",%nobits
+ 1532              		.align	2
+ 1533              		.set	.LANCHOR16,. + 0
+ 1536              	H_ref:
+ 1537 0000 00000000 		.space	4
+ 1538              		.section	.bss.M1,"aw",%nobits
+ 1539              		.align	2
+ 1540              		.set	.LANCHOR21,. + 0
+ 1543              	M1:
+ 1544 0000 00000000 		.space	4
+ 1545              		.section	.bss.M2,"aw",%nobits
+ 1546              		.align	2
+ 1547              		.set	.LANCHOR22,. + 0
+ 1550              	M2:
+ 1551 0000 00000000 		.space	4
+ 1552              		.section	.bss.M3,"aw",%nobits
+ 1553              		.align	2
+ 1554              		.set	.LANCHOR23,. + 0
+ 1557              	M3:
+ 1558 0000 00000000 		.space	4
+ 1559              		.section	.bss.M4,"aw",%nobits
+ 1560              		.align	2
+ 1561              		.set	.LANCHOR24,. + 0
+ 1564              	M4:
+ 1565 0000 00000000 		.space	4
+ 1566              		.section	.bss.P,"aw",%nobits
+ 1567              		.align	2
+ 1568              		.set	.LANCHOR31,. + 0
+ 1571              	P:
+ 1572 0000 00000000 		.space	4
+ 1573              		.section	.bss.R,"aw",%nobits
+ 1574              		.align	2
+ 1575              		.set	.LANCHOR29,. + 0
+ 1578              	R:
+ 1579 0000 00000000 		.space	4
+ 1580              		.section	.bss.X_C,"aw",%nobits
+ 1581              		.align	2
+ 1582              		.set	.LANCHOR11,. + 0
+ 1585              	X_C:
+ 1586 0000 00000000 		.space	4
+ 1587              		.section	.bss.Y,"aw",%nobits
+ 1588              		.align	2
+ 1589              		.set	.LANCHOR33,. + 0
+ 1592              	Y:
+ 1593 0000 00000000 		.space	4
+ 1594              		.section	.bss.Y_C,"aw",%nobits
+ 1595              		.align	2
+ 1596              		.set	.LANCHOR13,. + 0
+ 1599              	Y_C:
+ 1600 0000 00000000 		.space	4
+ 1601              		.section	.bss.pitch2w,"aw",%nobits
+ 1602              		.align	2
+ 1603              		.set	.LANCHOR4,. + 0
+ 1606              	pitch2w:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 37
+
+
+ 1607 0000 00000000 		.space	156
+ 1607      00000000 
+ 1607      00000000 
+ 1607      00000000 
+ 1607      00000000 
+ 1608              		.section	.bss.pitch_off,"aw",%nobits
+ 1609              		.align	2
+ 1610              		.set	.LANCHOR19,. + 0
+ 1613              	pitch_off:
+ 1614 0000 00000000 		.space	4
+ 1615              		.section	.bss.pitch_ref,"aw",%nobits
+ 1616              		.align	2
+ 1617              		.set	.LANCHOR3,. + 0
+ 1620              	pitch_ref:
+ 1621 0000 00000000 		.space	4
+ 1622              		.section	.bss.roll2w,"aw",%nobits
+ 1623              		.align	2
+ 1624              		.set	.LANCHOR1,. + 0
+ 1627              	roll2w:
+ 1628 0000 00000000 		.space	156
+ 1628      00000000 
+ 1628      00000000 
+ 1628      00000000 
+ 1628      00000000 
+ 1629              		.section	.bss.roll_off,"aw",%nobits
+ 1630              		.align	2
+ 1631              		.set	.LANCHOR18,. + 0
+ 1634              	roll_off:
+ 1635 0000 00000000 		.space	4
+ 1636              		.section	.bss.roll_ref,"aw",%nobits
+ 1637              		.align	2
+ 1638              		.set	.LANCHOR0,. + 0
+ 1641              	roll_ref:
+ 1642 0000 00000000 		.space	4
+ 1643              		.section	.bss.rpyControlHandle,"aw",%nobits
+ 1644              		.align	2
+ 1645              		.set	.LANCHOR37,. + 0
+ 1648              	rpyControlHandle:
+ 1649 0000 00000000 		.space	4
+ 1650              		.section	.bss.wControlHandle,"aw",%nobits
+ 1651              		.align	2
+ 1652              		.set	.LANCHOR35,. + 0
+ 1655              	wControlHandle:
+ 1656 0000 00000000 		.space	4
+ 1657              		.section	.bss.wpitch_control,"aw",%nobits
+ 1658              		.align	2
+ 1659              		.set	.LANCHOR30,. + 0
+ 1662              	wpitch_control:
+ 1663 0000 00000000 		.space	156
+ 1663      00000000 
+ 1663      00000000 
+ 1663      00000000 
+ 1663      00000000 
+ 1664              		.section	.bss.wpitch_err,"aw",%nobits
+ 1665              		.align	2
+ 1666              		.set	.LANCHOR26,. + 0
+ 1669              	wpitch_err:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 38
+
+
+ 1670 0000 00000000 		.space	4
+ 1671              		.section	.bss.wpitch_ref,"aw",%nobits
+ 1672              		.align	2
+ 1673              		.set	.LANCHOR5,. + 0
+ 1676              	wpitch_ref:
+ 1677 0000 00000000 		.space	4
+ 1678              		.section	.bss.wroll_control,"aw",%nobits
+ 1679              		.align	2
+ 1680              		.set	.LANCHOR28,. + 0
+ 1683              	wroll_control:
+ 1684 0000 00000000 		.space	156
+ 1684      00000000 
+ 1684      00000000 
+ 1684      00000000 
+ 1684      00000000 
+ 1685              		.section	.bss.wroll_err,"aw",%nobits
+ 1686              		.align	2
+ 1687              		.set	.LANCHOR25,. + 0
+ 1690              	wroll_err:
+ 1691 0000 00000000 		.space	4
+ 1692              		.section	.bss.wroll_ref,"aw",%nobits
+ 1693              		.align	2
+ 1694              		.set	.LANCHOR2,. + 0
+ 1697              	wroll_ref:
+ 1698 0000 00000000 		.space	4
+ 1699              		.section	.bss.wyaw_control,"aw",%nobits
+ 1700              		.align	2
+ 1701              		.set	.LANCHOR32,. + 0
+ 1704              	wyaw_control:
+ 1705 0000 00000000 		.space	156
+ 1705      00000000 
+ 1705      00000000 
+ 1705      00000000 
+ 1705      00000000 
+ 1706              		.section	.bss.wyaw_err,"aw",%nobits
+ 1707              		.align	2
+ 1708              		.set	.LANCHOR27,. + 0
+ 1711              	wyaw_err:
+ 1712 0000 00000000 		.space	4
+ 1713              		.section	.bss.wyaw_ref,"aw",%nobits
+ 1714              		.align	2
+ 1715              		.set	.LANCHOR8,. + 0
+ 1718              	wyaw_ref:
+ 1719 0000 00000000 		.space	4
+ 1720              		.section	.bss.x_control,"aw",%nobits
+ 1721              		.align	2
+ 1722              		.set	.LANCHOR10,. + 0
+ 1725              	x_control:
+ 1726 0000 00000000 		.space	156
+ 1726      00000000 
+ 1726      00000000 
+ 1726      00000000 
+ 1726      00000000 
+ 1727              		.section	.bss.x_off,"aw",%nobits
+ 1728              		.align	2
+ 1731              	x_off:
+ 1732 0000 00000000 		.space	4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 39
+
+
+ 1733              		.section	.bss.x_ref,"aw",%nobits
+ 1734              		.align	2
+ 1737              	x_ref:
+ 1738 0000 00000000 		.space	4
+ 1739              		.section	.bss.xyzControlHandle,"aw",%nobits
+ 1740              		.align	2
+ 1741              		.set	.LANCHOR39,. + 0
+ 1744              	xyzControlHandle:
+ 1745 0000 00000000 		.space	4
+ 1746              		.section	.bss.y_control,"aw",%nobits
+ 1747              		.align	2
+ 1748              		.set	.LANCHOR12,. + 0
+ 1751              	y_control:
+ 1752 0000 00000000 		.space	156
+ 1752      00000000 
+ 1752      00000000 
+ 1752      00000000 
+ 1752      00000000 
+ 1753              		.section	.bss.y_off,"aw",%nobits
+ 1754              		.align	2
+ 1757              	y_off:
+ 1758 0000 00000000 		.space	4
+ 1759              		.section	.bss.y_ref,"aw",%nobits
+ 1760              		.align	2
+ 1763              	y_ref:
+ 1764 0000 00000000 		.space	4
+ 1765              		.section	.bss.yaw2w,"aw",%nobits
+ 1766              		.align	2
+ 1767              		.set	.LANCHOR7,. + 0
+ 1770              	yaw2w:
+ 1771 0000 00000000 		.space	156
+ 1771      00000000 
+ 1771      00000000 
+ 1771      00000000 
+ 1771      00000000 
+ 1772              		.section	.bss.yaw_off,"aw",%nobits
+ 1773              		.align	2
+ 1774              		.set	.LANCHOR20,. + 0
+ 1777              	yaw_off:
+ 1778 0000 00000000 		.space	4
+ 1779              		.section	.bss.yaw_ref,"aw",%nobits
+ 1780              		.align	2
+ 1781              		.set	.LANCHOR6,. + 0
+ 1784              	yaw_ref:
+ 1785 0000 00000000 		.space	4
+ 1786              		.section	.bss.z_control,"aw",%nobits
+ 1787              		.align	2
+ 1788              		.set	.LANCHOR15,. + 0
+ 1791              	z_control:
+ 1792 0000 00000000 		.space	156
+ 1792      00000000 
+ 1792      00000000 
+ 1792      00000000 
+ 1792      00000000 
+ 1793              		.section	.bss.z_off,"aw",%nobits
+ 1794              		.align	2
+ 1797              	z_off:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 40
+
+
+ 1798 0000 00000000 		.space	4
+ 1799              		.section	.bss.z_ref,"aw",%nobits
+ 1800              		.align	2
+ 1801              		.set	.LANCHOR14,. + 0
+ 1804              	z_ref:
+ 1805 0000 00000000 		.space	4
+ 1806              		.section	.data.P_MAX,"aw"
+ 1807              		.align	2
+ 1810              	P_MAX:
+ 1811 0000 143A123E 		.word	1041381908
+ 1812              		.section	.data.R_MAX,"aw"
+ 1813              		.align	2
+ 1816              	R_MAX:
+ 1817 0000 143A123E 		.word	1041381908
+ 1818              		.section	.rodata.rpyControlAttributes,"a"
+ 1819              		.align	2
+ 1820              		.set	.LANCHOR36,. + 0
+ 1823              	rpyControlAttributes:
+ 1824 0000 10000000 		.word	.LC1
+ 1825 0004 00000000 		.space	16
+ 1825      00000000 
+ 1825      00000000 
+ 1825      00000000 
+ 1826 0014 00020000 		.word	512
+ 1827 0018 2F000000 		.word	47
+ 1828 001c 00000000 		.space	8
+ 1828      00000000 
+ 1829              		.section	.rodata.wControlAttributes,"a"
+ 1830              		.align	2
+ 1831              		.set	.LANCHOR34,. + 0
+ 1834              	wControlAttributes:
+ 1835 0000 20000000 		.word	.LC2
+ 1836 0004 00000000 		.space	16
+ 1836      00000000 
+ 1836      00000000 
+ 1836      00000000 
+ 1837 0014 00020000 		.word	512
+ 1838 0018 2F000000 		.word	47
+ 1839 001c 00000000 		.space	8
+ 1839      00000000 
+ 1840              		.section	.rodata.xyzControlAttributes,"a"
+ 1841              		.align	2
+ 1842              		.set	.LANCHOR38,. + 0
+ 1845              	xyzControlAttributes:
+ 1846 0000 00000000 		.word	.LC0
+ 1847 0004 00000000 		.space	16
+ 1847      00000000 
+ 1847      00000000 
+ 1847      00000000 
+ 1848 0014 00020000 		.word	512
+ 1849 0018 2F000000 		.word	47
+ 1850 001c 00000000 		.space	8
+ 1850      00000000 
+ 1851              		.text
+ 1852              	.Letext0:
+ 1853              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 1854              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 41
+
+
+ 1855              		.file 4 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
+ 1856              		.file 5 "Drivers/CMSIS/DSP/Include/arm_math.h"
+ 1857              		.file 6 "Core/drogui/include/filter.h"
+ 1858              		.file 7 "Core/drogui/include/_main.h"
+ 1859              		.file 8 "Core/drogui/include/utils.h"
+ 1860              		.file 9 "Core/drogui/include/sensorsTasks.h"
+ 1861              		.file 10 "Core/drogui/include/registerMap.h"
+ 1862              		.file 11 "Core/drogui/include/control.h"
+ 1863              		.file 12 "Core/drogui/include/controlTasks.h"
+ 1864              		.file 13 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 42
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 controlTasks.c
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:18     .text.rpyControlTask:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:26     .text.rpyControlTask:00000000 rpyControlTask
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:143    .text.rpyControlTask:000000bc $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:162    .text.xyzControlTask:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:169    .text.xyzControlTask:00000000 xyzControlTask
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:336    .text.xyzControlTask:0000011c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:368    .text.saturateM:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:375    .text.saturateM:00000000 saturateM
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:637    .text.saturateM:000001a8 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:650    .text.wControlTask:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:657    .text.wControlTask:00000000 wControlTask
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:926    .text.wControlTask:00000220 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:957    .text.updatePID:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:964    .text.updatePID:00000000 updatePID
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1000   .text.updatePID:0000002c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1006   .text.updatePID:00000032 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1222   .text.updatePID:00000150 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1233   .text.initControlTasks:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1240   .text.initControlTasks:00000000 initControlTasks
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1431   .text.initControlTasks:000001a4 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1845   .rodata.xyzControlAttributes:00000000 xyzControlAttributes
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1462   .rodata.str1.4:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1744   .bss.xyzControlHandle:00000000 xyzControlHandle
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1823   .rodata.rpyControlAttributes:00000000 rpyControlAttributes
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1648   .bss.rpyControlHandle:00000000 rpyControlHandle
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1834   .rodata.wControlAttributes:00000000 wControlAttributes
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1655   .bss.wControlHandle:00000000 wControlHandle
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1711   .bss.wyaw_err:00000000 wyaw_err
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1669   .bss.wpitch_err:00000000 wpitch_err
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1690   .bss.wroll_err:00000000 wroll_err
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1804   .bss.z_ref:00000000 z_ref
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1763   .bss.y_ref:00000000 y_ref
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1737   .bss.x_ref:00000000 x_ref
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1784   .bss.yaw_ref:00000000 yaw_ref
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1620   .bss.pitch_ref:00000000 pitch_ref
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1641   .bss.roll_ref:00000000 roll_ref
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1718   .bss.wyaw_ref:00000000 wyaw_ref
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1676   .bss.wpitch_ref:00000000 wpitch_ref
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1697   .bss.wroll_ref:00000000 wroll_ref
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1797   .bss.z_off:00000000 z_off
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1757   .bss.y_off:00000000 y_off
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1731   .bss.x_off:00000000 x_off
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1777   .bss.yaw_off:00000000 yaw_off
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1613   .bss.pitch_off:00000000 pitch_off
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1634   .bss.roll_off:00000000 roll_off
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1564   .bss.M4:00000000 M4
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1557   .bss.M3:00000000 M3
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1550   .bss.M2:00000000 M2
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1543   .bss.M1:00000000 M1
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1810   .data.P_MAX:00000000 P_MAX
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1816   .data.R_MAX:00000000 R_MAX
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1599   .bss.Y_C:00000000 Y_C
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1585   .bss.X_C:00000000 X_C
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1536   .bss.H_ref:00000000 H_ref
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1592   .bss.Y:00000000 Y
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 43
+
+
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1571   .bss.P:00000000 P
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1578   .bss.R:00000000 R
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1529   .bss.H_comp:00000000 H_comp
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1522   .bss.H:00000000 H
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1751   .bss.y_control:00000000 y_control
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1725   .bss.x_control:00000000 x_control
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1791   .bss.z_control:00000000 z_control
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1704   .bss.wyaw_control:00000000 wyaw_control
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1662   .bss.wpitch_control:00000000 wpitch_control
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1683   .bss.wroll_control:00000000 wroll_control
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1770   .bss.yaw2w:00000000 yaw2w
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1606   .bss.pitch2w:00000000 pitch2w
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1627   .bss.roll2w:00000000 roll2w
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1518   .bss.H:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1525   .bss.H_comp:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1532   .bss.H_ref:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1539   .bss.M1:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1546   .bss.M2:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1553   .bss.M3:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1560   .bss.M4:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1567   .bss.P:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1574   .bss.R:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1581   .bss.X_C:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1588   .bss.Y:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1595   .bss.Y_C:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1602   .bss.pitch2w:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1609   .bss.pitch_off:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1616   .bss.pitch_ref:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1623   .bss.roll2w:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1630   .bss.roll_off:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1637   .bss.roll_ref:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1644   .bss.rpyControlHandle:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1651   .bss.wControlHandle:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1658   .bss.wpitch_control:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1665   .bss.wpitch_err:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1672   .bss.wpitch_ref:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1679   .bss.wroll_control:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1686   .bss.wroll_err:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1693   .bss.wroll_ref:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1700   .bss.wyaw_control:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1707   .bss.wyaw_err:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1714   .bss.wyaw_ref:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1721   .bss.x_control:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1728   .bss.x_off:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1734   .bss.x_ref:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1740   .bss.xyzControlHandle:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1747   .bss.y_control:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1754   .bss.y_off:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1760   .bss.y_ref:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1766   .bss.yaw2w:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1773   .bss.yaw_off:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1780   .bss.yaw_ref:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1787   .bss.z_control:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1794   .bss.z_off:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1800   .bss.z_ref:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1807   .data.P_MAX:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1813   .data.R_MAX:00000000 $d
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s 			page 44
+
+
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1819   .rodata.rpyControlAttributes:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1830   .rodata.wControlAttributes:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccWS8eUa.s:1841   .rodata.xyzControlAttributes:00000000 $d
+
+UNDEFINED SYMBOLS
+resetPid
+osDelay
+angle_dif
+computePid
+setReg
+time
+roll
+pitch
+yaw
+security
+getReg
+rampValue
+x
+y
+z
+__aeabi_f2d
+__aeabi_d2f
+__aeabi_dsub
+__aeabi_dadd
+__aeabi_ddiv
+fmax
+sqrt
+fmin
+gx
+gy
+gz
+initPid
+osThreadNew

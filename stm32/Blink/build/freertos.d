@@ -42,7 +42,8 @@ build/freertos.o: Core/Src/freertos.c Core/drogui/include/_freertos.h \
  Core/drogui/include/_main.h Core/drogui/include/sensorsTasks.h \
  Core/drogui/include/filter.h Drivers/CMSIS/DSP/Include/arm_math.h \
  Core/drogui/include/MPU9250.h Core/drogui/include/registerMap.h \
- Core/drogui/include/utils.h
+ Core/drogui/include/utils.h Core/drogui/include/controlTasks.h \
+ Core/drogui/include/control.h
 Core/drogui/include/_freertos.h:
 Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 Core/Inc/FreeRTOSConfig.h:
@@ -94,3 +95,5 @@ Drivers/CMSIS/DSP/Include/arm_math.h:
 Core/drogui/include/MPU9250.h:
 Core/drogui/include/registerMap.h:
 Core/drogui/include/utils.h:
+Core/drogui/include/controlTasks.h:
+Core/drogui/include/control.h:

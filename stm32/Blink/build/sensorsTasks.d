@@ -43,7 +43,9 @@ build/sensorsTasks.o: Core/drogui/src/sensorsTasks.c \
  Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h \
  Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
  Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
- Core/drogui/include/_main.h Core/drogui/include/sensorsTasks.h
+ Core/drogui/include/_main.h Core/drogui/include/sensorsTasks.h \
+ Core/drogui/include/controlTasks.h Core/drogui/include/control.h \
+ Core/drogui/include/mahony.h
 Core/drogui/include/sensorsTasks.h:
 Core/drogui/include/filter.h:
 Core/Inc/main.h:
@@ -96,3 +98,6 @@ Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h:
 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h:
 Core/drogui/include/_main.h:
 Core/drogui/include/sensorsTasks.h:
+Core/drogui/include/controlTasks.h:
+Core/drogui/include/control.h:
+Core/drogui/include/mahony.h:

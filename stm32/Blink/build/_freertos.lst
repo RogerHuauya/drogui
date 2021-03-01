@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc4FPoBr.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccfXxuE7.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -48,23 +48,32 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc4FPoBr.s 			page 1
   41              		.loc 1 5 5 view .LVU2
   42 0006 FFF7FEFF 		bl	initSensorsTasks
   43              	.LVL1:
-   6:Core/drogui/src/_freertos.c **** }
-  44              		.loc 1 6 1 is_stmt 0 view .LVU3
-  45 000a 08BD     		pop	{r3, pc}
-  46              		.cfi_endproc
-  47              	.LFE178:
-  49              		.text
-  50              	.Letext0:
-  51              		.file 2 "Core/drogui/include/_main.h"
-  52              		.file 3 "Core/drogui/include/sensorsTasks.h"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc4FPoBr.s 			page 2
+   6:Core/drogui/src/_freertos.c ****     initControlTasks();
+  44              		.loc 1 6 5 view .LVU3
+  45 000a FFF7FEFF 		bl	initControlTasks
+  46              	.LVL2:
+   7:Core/drogui/src/_freertos.c **** }
+  47              		.loc 1 7 1 is_stmt 0 view .LVU4
+  48 000e 08BD     		pop	{r3, pc}
+  49              		.cfi_endproc
+  50              	.LFE178:
+  52              		.text
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccfXxuE7.s 			page 2
+
+
+  53              	.Letext0:
+  54              		.file 2 "Core/drogui/include/_main.h"
+  55              		.file 3 "Core/drogui/include/sensorsTasks.h"
+  56              		.file 4 "Core/drogui/include/controlTasks.h"
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccfXxuE7.s 			page 3
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 _freertos.c
-C:\Users\GUILLE~1\AppData\Local\Temp\cc4FPoBr.s:18     .text.initGlobal:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc4FPoBr.s:26     .text.initGlobal:00000000 initGlobal
+C:\Users\GUILLE~1\AppData\Local\Temp\ccfXxuE7.s:18     .text.initGlobal:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccfXxuE7.s:26     .text.initGlobal:00000000 initGlobal
 
 UNDEFINED SYMBOLS
 initSystem
 initSensorsTasks
+initControlTasks

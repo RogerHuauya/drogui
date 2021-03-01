@@ -8,6 +8,7 @@
 #include "cmsis_os2.h"
 #include "_main.h"
 #include "sensorsTasks.h"
+#include "controlTasks.h"
 
 void initGlobal();
 
