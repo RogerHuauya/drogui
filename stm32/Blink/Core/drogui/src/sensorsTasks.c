@@ -17,6 +17,10 @@ dNotchFilter dnotch_ax, dnotch_ay, dnotch_az;
 filter filter_roll, filter_pitch, filter_yaw;
 float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
 
+
+float state[4] = {};
+arm_iir_lattice_instance_f32 f;
+
 void accelTask(){
     for(;;){
         readAcc(&myIMU);
@@ -41,8 +45,9 @@ void gyroTask(){
     for(;;){
         readGyro(&myIMU);
 
-        gx = computeFilter(&filter_gx, myIMU.gx);
-/*        gy = computeFilter(&filter_gy, myIMU.gy);
+        arm_iir_lattice_f32(&f, &(myIMU.gx), &gx, 1);
+ /*       gx = computeFilter(&filter_gx, myIMU.gx);
+        gy = computeFilter(&filter_gy, myIMU.gy);
         gz = computeFilter(&filter_gz, myIMU.gz);
 
         
@@ -66,7 +71,7 @@ void gyroTask(){
         setReg(GYRO_X, gx);
         setReg(GYRO_Y, gy);
         setReg(GYRO_Z, gz);
-        osDelay(1);
+        osDelay(10);
     }
 }
 
@@ -133,7 +138,8 @@ const osThreadAttr_t rpyAttributes = {    .name = "rpyTask",\
 void initSensorsTasks(){
     
     initMpu(&myIMU);
-
+    
+    arm_iir_lattice_init_f32(&f, sz_1_10 , k_1_10, v_1_10, state, 1);
 
     initFilter(&filter_gx, sz_1_10 , k_1_10, v_1_10);
  /*   initFilter(&filter_gy, sz_1_10 , k_1_10, v_1_10);
