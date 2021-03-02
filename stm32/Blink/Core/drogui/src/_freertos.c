@@ -2,6 +2,6 @@
 
 void initGlobal(){
     initSystem();
-    initSensorsTasks();
+    //initSensorsTasks();
     //initControlTasks();
 }

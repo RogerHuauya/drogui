@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
   47 0006 0D46     		mov	r5, r1
   48 0008 1646     		mov	r6, r2
   49 000a 1F46     		mov	r7, r3
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 2
 
 
   10:Core/drogui/src/filter.c ****     f->state = (float*) calloc(n, sizeof(float));
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
  100              		.cfi_def_cfa_offset 4
  101              		.cfi_offset 14, -4
  102 0002 85B0     		sub	sp, sp, #20
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 3
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 3
 
 
  103              	.LCFI4:
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
  149              		.loc 1 25 5 is_stmt 1 view .LVU18
  150              		.loc 1 25 13 is_stmt 0 view .LVU19
  151 0006 4160     		str	r1, [r0, #4]
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 4
 
 
   26:Core/drogui/src/filter.c ****     df -> a = a;
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
  196              	.LVL10:
  197              		.loc 1 35 18 view .LVU44
  198 0038 2060     		str	r0, [r4]
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 5
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 5
 
 
   36:Core/drogui/src/filter.c ****     df -> head = 0;
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
   43:Core/drogui/src/filter.c ****     float wn = 2*pi*fc;
  248              		.loc 1 43 5 is_stmt 1 view .LVU53
  249              		.loc 1 43 20 is_stmt 0 view .LVU54
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 6
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 6
 
 
  250 0008 FFF7FEFF 		bl	__aeabi_f2d
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
  298 0056 F1EE004A 		vmov.f32	s9, #4.0e+0
  299 005a 34EE244A 		vadd.f32	s8, s8, s9
  300              		.loc 1 49 39 view .LVU76
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 7
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 7
 
 
  301 005e 76EEA66A 		vadd.f32	s13, s13, s13
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
  351 00b6 84ED097A 		vstr.32	s14, [r4, #36]
   54:Core/drogui/src/filter.c ****     df -> coeffs[4] = -(4-2*n*ts+q*ts*ts)/(4+2*n*ts + q*ts*ts);
  352              		.loc 1 54 5 is_stmt 1 view .LVU101
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 8
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 8
 
 
  353              		.loc 1 54 26 is_stmt 0 view .LVU102
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
  405              	.LCFI10:
  406              		.cfi_def_cfa_register 7
  407 0008 0446     		mov	r4, r0
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 9
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 9
 
 
  408 000a 87ED010A 		vstr.32	s0, [r7, #4]
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
   83:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
   84:Core/drogui/src/filter.c **** 
   85:Core/drogui/src/filter.c ****         for(int i = thres_ind; i < (df -> n)/2 ; i ++) 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 10
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 10
 
 
   86:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
   64:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
  471              		.loc 1 64 24 discriminator 1 view .LVU133
   64:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 11
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 11
 
 
  472              		.loc 1 64 30 is_stmt 0 discriminator 1 view .LVU134
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
   71:Core/drogui/src/filter.c ****         for (uint16_t i = 0; i < (df->n) ; i++) fft_arr[i] = df->values[i]; 
  514              		.loc 1 71 9 is_stmt 1 discriminator 1 view .LVU147
   71:Core/drogui/src/filter.c ****         for (uint16_t i = 0; i < (df->n) ; i++) fft_arr[i] = df->values[i]; 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 12
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 12
 
 
  515              		.loc 1 71 15 is_stmt 0 discriminator 1 view .LVU148
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
  554              	.LVL40:
   74:Core/drogui/src/filter.c **** 
  555              		.loc 1 74 9 is_stmt 0 view .LVU164
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 13
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 13
 
 
  556 009a 3246     		mov	r2, r6
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
  594              		.loc 1 77 66 discriminator 3 view .LVU180
  595 00ca 6B1C     		adds	r3, r5, #1
   77:Core/drogui/src/filter.c ****         
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 14
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 14
 
 
  596              		.loc 1 77 64 discriminator 3 view .LVU181
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
  639              		.loc 1 79 42 is_stmt 1 discriminator 4 view .LVU192
   79:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
  640              		.loc 1 79 44 is_stmt 0 discriminator 4 view .LVU193
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 15
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 15
 
 
  641 011e 0132     		adds	r2, r2, #1
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
  681 0156 BDEEC77A 		vcvt.s32.f32	s14, s14
  682 015a 17EE103A 		vmov	r3, s14	@ int
  683              	.LVL49:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 16
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 16
 
 
   83:Core/drogui/src/filter.c **** 
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
  721 0184 F8EEE66A 		vcvt.f32.s32	s13, s13
  722 0188 66EE866A 		vmul.f32	s13, s13, s12
   86:Core/drogui/src/filter.c ****         
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 17
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 17
 
 
  723              		.loc 1 86 57 discriminator 1 view .LVU225
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
  765 01c4 00000000 		.word	0
  766              	.LBE4:
  767              		.cfi_endproc
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 18
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 18
 
 
  768              	.LFE181:
@@ -1030,23 +1030,23 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
  775              		.file 5 "Core/drogui/include/filter.h"
  776              		.file 6 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
  777              		.file 7 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 19
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s 			page 19
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 filter.c
-C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:18     .text.initFilter:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:26     .text.initFilter:00000000 initFilter
-C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:83     .text.computeFilter:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:90     .text.computeFilter:00000000 computeFilter
-C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:125    .text.initDNotchFilter:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:132    .text.initDNotchFilter:00000000 initDNotchFilter
-C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:225    .text.updateCoeffNotch:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:232    .text.updateCoeffNotch:00000000 updateCoeffNotch
-C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:370    .text.updateCoeffNotch:000000d0 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:376    .text.computeDNotch:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:383    .text.computeDNotch:00000000 computeDNotch
-C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:765    .text.computeDNotch:000001c4 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s:18     .text.initFilter:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s:26     .text.initFilter:00000000 initFilter
+C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s:83     .text.computeFilter:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s:90     .text.computeFilter:00000000 computeFilter
+C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s:125    .text.initDNotchFilter:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s:132    .text.initDNotchFilter:00000000 initDNotchFilter
+C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s:225    .text.updateCoeffNotch:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s:232    .text.updateCoeffNotch:00000000 updateCoeffNotch
+C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s:370    .text.updateCoeffNotch:000000d0 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s:376    .text.computeDNotch:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s:383    .text.computeDNotch:00000000 computeDNotch
+C:\Users\GUILLE~1\AppData\Local\Temp\cco9r8Rc.s:765    .text.computeDNotch:000001c4 $d
 
 UNDEFINED SYMBOLS
 calloc

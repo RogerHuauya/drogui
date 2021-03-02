@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
   27:Core/drogui/src/utils.c **** // Fs = 1000Hz
   28:Core/drogui/src/utils.c **** 
   29:Core/drogui/src/utils.c **** //lowpass freq = 150Hz
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 2
 
 
   30:Core/drogui/src/utils.c **** float coeffB_150Hz[] = { 0.0056, -0.0070, 0.0170, -0.0072, 0.0100, 0.0100, -0.0072, 0.0170 , -0.007
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
   49 0010 C078     		ldrb	r0, [r0, #3]	@ zero_extendqisi2
   50              	.LVL1:
   63:Core/drogui/src/utils.c ****     return val;
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 3
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 3
 
 
   51              		.loc 1 63 5 is_stmt 1 view .LVU9
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  100              		.align	1
  101              		.global	floattobytes
  102              		.syntax unified
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 4
 
 
  103              		.thumb
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  150              		.loc 1 81 1 view .LVU34
  151 000a 02B0     		add	sp, sp, #8
  152              	.LCFI1:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 5
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 5
 
 
  153              		.cfi_def_cfa_offset 0
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  198              		.cfi_startproc
  199              		@ args = 0, pretend = 0, frame = 0
  200              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 6
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 6
 
 
  201              		@ link register save eliminated.
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  247              		.cfi_offset 82, -48
  248              		.cfi_offset 83, -44
  249 0008 F0EE408A 		vmov.f32	s17, s0
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 7
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 7
 
 
  250 000c B0EE608A 		vmov.f32	s16, s1
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  302 0070 D3E90023 		ldrd	r2, [r3]
  303 0074 3046     		mov	r0, r6
  304 0076 3946     		mov	r1, r7
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 8
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 8
 
 
  305 0078 FFF7FEFF 		bl	__aeabi_dsub
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  348 00b4 10A1     		adr	r1, .L23
  349 00b6 D1E90001 		ldrd	r0, [r1]
  350 00ba FFF7FEFF 		bl	__aeabi_dsub
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 9
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 9
 
 
  351              	.LVL22:
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  401              	getEuler:
  402              	.LVL27:
  403              	.LFB148:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 10
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 10
 
 
  114:Core/drogui/src/utils.c **** 
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  452 0034 77EEA97A 		vadd.f32	s15, s15, s19
  453              		.loc 1 119 29 view .LVU77
  454 0038 77EEA77A 		vadd.f32	s15, s15, s15
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 11
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 11
 
 
  455              		.loc 1 119 11 view .LVU78
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  503 0094 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  504 0098 2DD4     		bmi	.L37
  505 009a 1F4B     		ldr	r3, .L38
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 12
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 12
 
 
  506              	.L28:
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  553              	.LVL47:
  554              		.loc 1 132 10 view .LVU109
  555 00ee 2060     		str	r0, [r4]	@ float
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 13
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 13
 
 
  133:Core/drogui/src/utils.c **** }
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  605              		.section	.text.rampValue,"ax",%progbits
  606              		.align	1
  607              		.global	rampValue
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 14
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 14
 
 
  608              		.syntax unified
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  656 0042 B5EEC00A 		vcmpe.f32	s0, #0
  657 0046 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  658 004a 02DD     		ble	.L54
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 15
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 15
 
 
  659              	.L45:
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  718 0008 1B1EE6C1 		.word	-1041883621
  719 000c 636EF941 		.word	1106865763
  720 0010 4F1EB3C1 		.word	-1045225905
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 16
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 16
 
 
  721 0014 58392641 		.word	1093024088
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  785 0010 B4AB5BC1 		.word	-1050956876
  786 0014 9FA18A40 		.word	1082827167
  787 0018 F06517BF 		.word	-1088985616
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 17
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 17
 
 
  788              		.section	.data.coeffA_8Hz,"aw"
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  852 0010 F167CEBA 		.word	-1160878095
  853 0014 7786153A 		.word	974489207
  854              		.section	.data.coeffB_300Hz,"aw"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 18
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 18
 
 
  855              		.align	2
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  919              		.section	.data.k_3_10,"aw"
  920              		.align	2
  923              	k_3_10:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 19
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 19
 
 
  924 0000 7804DDBC 		.word	-1126366088
@@ -1117,81 +1117,81 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 1
  965              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
  966              		.file 4 "Core/drogui/include/utils.h"
  967              		.file 5 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 20
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 20
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 utils.c
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:18     .text.bytestoint32:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:26     .text.bytestoint32:00000000 bytestoint32
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:61     .text.int32tobytes:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:68     .text.int32tobytes:00000000 int32tobytes
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:100    .text.floattobytes:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:107    .text.floattobytes:00000000 floattobytes
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:124    .text.bytestofloat:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:131    .text.bytestofloat:00000000 bytestofloat
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:160    .text.getReg:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:167    .text.getReg:00000000 getReg
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:182    .text.getReg:00000008 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:187    .text.setReg:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:194    .text.setReg:00000000 setReg
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:214    .text.angle_dif:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:221    .text.angle_dif:00000000 angle_dif
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:388    .text.angle_dif:000000f8 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:394    .text.getEuler:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:401    .text.getEuler:00000000 getEuler
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:600    .text.getEuler:00000118 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:606    .text.rampValue:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:613    .text.rampValue:00000000 rampValue
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:955    .data.v_3_10:00000000 v_3_10
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:923    .data.k_3_10:00000000 k_3_10
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:939    .data.sz_3_10:00000000 sz_3_10
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:945    .data.v_1_10:00000000 v_1_10
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:914    .data.k_1_10:00000000 k_1_10
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:933    .data.sz_1_10:00000000 sz_1_10
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:767    .data.coeffA_50Hz:00000000 coeffA_50Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:874    .data.coeffB_50Hz:00000000 coeffB_50Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:752    .data.coeffA_300Hz:00000000 coeffA_300Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:858    .data.coeffB_300Hz:00000000 coeffB_300Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:702    .data.coeffA_100Hz:00000000 coeffA_100Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:804    .data.coeffB_100Hz:00000000 coeffB_100Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:728    .data.coeffA_150Hz:00000000 coeffA_150Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:832    .data.coeffB_150Hz:00000000 coeffB_150Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:780    .data.coeffA_5Hz:00000000 coeffA_5Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:888    .data.coeffB_5Hz:00000000 coeffB_5Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:742    .data.coeffA_2Hz:00000000 coeffA_2Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:847    .data.coeffB_2Hz:00000000 coeffB_2Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:901    .data.coeffB_8Hz:00000000 coeffB_8Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:792    .data.coeffA_8Hz:00000000 coeffA_8Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:818    .data.coeffB_10Hz:00000000 coeffB_10Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:715    .data.coeffA_10Hz:00000000 coeffA_10Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:696    .bss.security:00000000 security
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:697    .bss.security:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:699    .data.coeffA_100Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:712    .data.coeffA_10Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:725    .data.coeffA_150Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:739    .data.coeffA_2Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:749    .data.coeffA_300Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:764    .data.coeffA_50Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:777    .data.coeffA_5Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:789    .data.coeffA_8Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:801    .data.coeffB_100Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:815    .data.coeffB_10Hz:00000000 $d
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s 			page 21
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:18     .text.bytestoint32:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:26     .text.bytestoint32:00000000 bytestoint32
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:61     .text.int32tobytes:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:68     .text.int32tobytes:00000000 int32tobytes
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:100    .text.floattobytes:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:107    .text.floattobytes:00000000 floattobytes
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:124    .text.bytestofloat:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:131    .text.bytestofloat:00000000 bytestofloat
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:160    .text.getReg:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:167    .text.getReg:00000000 getReg
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:182    .text.getReg:00000008 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:187    .text.setReg:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:194    .text.setReg:00000000 setReg
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:214    .text.angle_dif:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:221    .text.angle_dif:00000000 angle_dif
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:388    .text.angle_dif:000000f8 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:394    .text.getEuler:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:401    .text.getEuler:00000000 getEuler
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:600    .text.getEuler:00000118 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:606    .text.rampValue:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:613    .text.rampValue:00000000 rampValue
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:955    .data.v_3_10:00000000 v_3_10
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:923    .data.k_3_10:00000000 k_3_10
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:939    .data.sz_3_10:00000000 sz_3_10
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:945    .data.v_1_10:00000000 v_1_10
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:914    .data.k_1_10:00000000 k_1_10
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:933    .data.sz_1_10:00000000 sz_1_10
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:767    .data.coeffA_50Hz:00000000 coeffA_50Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:874    .data.coeffB_50Hz:00000000 coeffB_50Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:752    .data.coeffA_300Hz:00000000 coeffA_300Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:858    .data.coeffB_300Hz:00000000 coeffB_300Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:702    .data.coeffA_100Hz:00000000 coeffA_100Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:804    .data.coeffB_100Hz:00000000 coeffB_100Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:728    .data.coeffA_150Hz:00000000 coeffA_150Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:832    .data.coeffB_150Hz:00000000 coeffB_150Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:780    .data.coeffA_5Hz:00000000 coeffA_5Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:888    .data.coeffB_5Hz:00000000 coeffB_5Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:742    .data.coeffA_2Hz:00000000 coeffA_2Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:847    .data.coeffB_2Hz:00000000 coeffB_2Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:901    .data.coeffB_8Hz:00000000 coeffB_8Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:792    .data.coeffA_8Hz:00000000 coeffA_8Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:818    .data.coeffB_10Hz:00000000 coeffB_10Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:715    .data.coeffA_10Hz:00000000 coeffA_10Hz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:696    .bss.security:00000000 security
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:697    .bss.security:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:699    .data.coeffA_100Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:712    .data.coeffA_10Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:725    .data.coeffA_150Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:739    .data.coeffA_2Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:749    .data.coeffA_300Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:764    .data.coeffA_50Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:777    .data.coeffA_5Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:789    .data.coeffA_8Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:801    .data.coeffB_100Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:815    .data.coeffB_10Hz:00000000 $d
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s 			page 21
 
 
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:829    .data.coeffB_150Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:844    .data.coeffB_2Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:855    .data.coeffB_300Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:871    .data.coeffB_50Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:885    .data.coeffB_5Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:898    .data.coeffB_8Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:911    .data.k_1_10:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:920    .data.k_3_10:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:930    .data.sz_1_10:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:936    .data.sz_3_10:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:942    .data.v_1_10:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc8hFlDH.s:952    .data.v_3_10:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:829    .data.coeffB_150Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:844    .data.coeffB_2Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:855    .data.coeffB_300Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:871    .data.coeffB_50Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:885    .data.coeffB_5Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:898    .data.coeffB_8Hz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:911    .data.k_1_10:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:920    .data.k_3_10:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:930    .data.sz_1_10:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:936    .data.sz_3_10:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:942    .data.v_1_10:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccCmqAQV.s:952    .data.v_3_10:00000000 $d
 
 UNDEFINED SYMBOLS
 __aeabi_f2d

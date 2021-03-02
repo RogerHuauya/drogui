@@ -19,6 +19,10 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "i2c.h"
+#include "main.h"
+#include "usart.h"
+#include <string.h>
+#include <stdio.h>
 
 /* USER CODE BEGIN 0 */
 
@@ -104,9 +108,8 @@ void MX_I2C4_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN I2C4_Init 2 */
 
-  /* USER CODE END I2C4_Init 2 */
+  HAL_I2C_EnableListen_IT(&hi2c4);  //Enable slave interrupt reception
 
 }
 
@@ -158,11 +161,33 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
 
     /* I2C4 clock enable */
     __HAL_RCC_I2C4_CLK_ENABLE();
+
+    /* I2C4 interrupt Init */
+    HAL_NVIC_SetPriority(I2C4_EV_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(I2C4_EV_IRQn);
   /* USER CODE BEGIN I2C4_MspInit 1 */
 
   /* USER CODE END I2C4_MspInit 1 */
   }
 }
+
+char buffer[40];
+void I2C4_EV_IRQHandler(){
+  uint8_t ans;
+  
+  HAL_I2C_EV_IRQHandler(&hi2c4);
+
+  HAL_StatusTypeDef answer = HAL_I2C_Slave_Receive(&hi2c4, &ans, 1, 1000);
+  if(answer == HAL_OK){
+    sprintf(buffer, " %x\n", ans);
+    HAL_UART_Transmit(&huart2, (uint8_t *)buffer, strlen(buffer), 1000);
+  }
+  else{
+    HAL_UART_Transmit(&huart2, (uint8_t*)"error\n", 7, 100);
+  }
+  
+}
+
 
 void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle)
 {
@@ -203,6 +228,8 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle)
 
     HAL_GPIO_DeInit(GPIOD, GPIO_PIN_13);
 
+    /* I2C4 interrupt Deinit */
+    HAL_NVIC_DisableIRQ(I2C4_EV_IRQn);
   /* USER CODE BEGIN I2C4_MspDeInit 1 */
 
   /* USER CODE END I2C4_MspDeInit 1 */
@@ -210,7 +237,18 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle)
 }
 
 /* USER CODE BEGIN 1 */
+void HAL_I2C_SlaveTxCpltCallback(I2C_HandleTypeDef *I2cHandle){
+  if(I2cHandle->Instance == I2C4)
+  HAL_UART_Transmit(&huart2, (uint8_t*)"txCallback\n", 12, 100);
+  //HAL_I2C_Slave_Receive_IT(&I2cHandle,i2c_slave_recv,I2C_REC_BYTES);
 
+}
+
+void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef *I2cHandle){
+  if(I2cHandle->Instance == I2C4)
+  HAL_UART_Transmit(&huart2, (uint8_t*)"rxCallback\n", 12, 100);
+  //HAL_I2C_Slave_Transmit_IT(&I2cHandle,send_buffer,send_cnt);
+}
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

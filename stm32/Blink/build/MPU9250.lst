@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
   44 0004 84B0     		sub	sp, sp, #16
   45              	.LCFI1:
   46              		.cfi_def_cfa_offset 40
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 2
 
 
   47 0006 0446     		mov	r4, r0
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
   98              		.syntax unified
   99              		.thumb
  100              		.thumb_func
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 3
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 3
 
 
  101              		.fpu fpv5-sp-d16
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  150              	.LCFI5:
  151              		.cfi_def_cfa_offset 16
  152              		@ sp needed
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 4
 
 
  153 0034 70BD     		pop	{r4, r5, r6, pc}
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  201 001e FFF7FEFF 		bl	I2CwriteByte
  202              	.LVL18:
   31:Core/drogui/src/MPU9250.c ****     I2CwriteByte(MPU9250_ADDRESS, ACCEL_CONFIG2, 4);
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 5
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 5
 
 
  203              		.loc 1 31 5 view .LVU26
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  252              		.loc 1 38 28 is_stmt 0 view .LVU37
  253 0000 10B5     		push	{r4, lr}
  254              	.LCFI7:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 6
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 6
 
 
  255              		.cfi_def_cfa_offset 8
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  304              		.loc 1 43 9 view .LVU55
  305 0048 0C48     		ldr	r0, .L13+8
  306 004a 0180     		strh	r1, [r0]	@ movhi
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 7
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 7
 
 
   44:Core/drogui/src/MPU9250.c ****     /*
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  348              	.LVL26:
  349              	.LFB148:
   59:Core/drogui/src/MPU9250.c **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 8
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 8
 
 
   60:Core/drogui/src/MPU9250.c **** void readRawGyro(mpu9250* m){ // degrees/sec
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
   66:Core/drogui/src/MPU9250.c ****     _gz =   (Buf[4] << 8) | Buf[5];
  398              		.loc 1 66 5 is_stmt 1 view .LVU79
  399              		.loc 1 66 17 is_stmt 0 view .LVU80
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 9
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 9
 
 
  400 003a 9DF80400 		ldrb	r0, [sp, #4]	@ zero_extendqisi2
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
   71:Core/drogui/src/MPU9250.c **** 
   72:Core/drogui/src/MPU9250.c **** void readRawMag(mpu9250* m){ // m/s^2
  452              		.loc 1 72 28 is_stmt 1 view -0
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 10
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 10
 
 
  453              		.cfi_startproc
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  502 003a 9DF80500 		ldrb	r0, [sp, #5]	@ zero_extendqisi2
  503              		.loc 1 77 30 view .LVU109
  504 003e 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 11
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 11
 
 
  505              		.loc 1 77 25 view .LVU110
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  555              		.loc 1 83 25 is_stmt 1 view -0
  556              		.cfi_startproc
  557              		@ args = 0, pretend = 0, frame = 8
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 12
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 12
 
 
  558              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  607              		.loc 1 88 25 view .LVU138
  608 0040 42EA0122 		orr	r2, r2, r1, lsl #8
  609              		.loc 1 88 9 view .LVU139
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 13
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 13
 
 
  610 0044 1849     		ldr	r1, .L25+8
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  660 00a0 00000000 		.word	.LANCHOR0
  661 00a4 00000000 		.word	.LANCHOR1
  662 00a8 00000000 		.word	.LANCHOR2
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 14
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 14
 
 
  663              		.cfi_endproc
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  712 0024 1A80     		strh	r2, [r3]	@ movhi
  100:Core/drogui/src/MPU9250.c ****     _gy = -((Buf[2] << 8) | Buf[3]);
  713              		.loc 1 100 5 is_stmt 1 view .LVU168
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 15
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 15
 
 
  714              		.loc 1 100 17 is_stmt 0 view .LVU169
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  106:Core/drogui/src/MPU9250.c **** }
  763              		.loc 1 106 1 view .LVU190
  764 0088 02B0     		add	sp, sp, #8
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 16
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 16
 
 
  765              	.LCFI21:
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  815              		.loc 1 112 5 is_stmt 1 view .LVU197
  816              		.loc 1 112 17 is_stmt 0 view .LVU198
  817 0012 9DF80330 		ldrb	r3, [sp, #3]	@ zero_extendqisi2
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 17
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 17
 
 
  818              		.loc 1 112 30 view .LVU199
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  865              		.loc 1 119 23 is_stmt 0 view .LVU219
  866 006a 94ED117A 		vldr.32	s14, [r4, #68]
  867              		.loc 1 119 20 view .LVU220
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 18
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 18
 
 
  868 006e 07EE902A 		vmov	s15, r2	@ int
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  124:Core/drogui/src/MPU9250.c **** 
  125:Core/drogui/src/MPU9250.c **** bool quiet(mpu9250* m, int n, float treshold, bool cal){
  920              		.loc 1 125 56 is_stmt 1 view -0
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 19
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 19
 
 
  921              		.cfi_startproc
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  971              	.L56:
  130:Core/drogui/src/MPU9250.c ****         
  131:Core/drogui/src/MPU9250.c ****         readRawGyro(m);   /*
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 20
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 20
 
 
  132:Core/drogui/src/MPU9250.c ****         Serial.print(m->gx);
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  1002              		.loc 1 129 20 is_stmt 1 discriminator 1 view .LVU256
  129:Core/drogui/src/MPU9250.c ****         
  1003              		.loc 1 129 5 is_stmt 0 discriminator 1 view .LVU257
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 21
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 21
 
 
  1004 003e B542     		cmp	r5, r6
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  145:Core/drogui/src/MPU9250.c ****                 max_gyro[2] = fmax(max_gyro[2], m->raw_gz);
  1050              		.loc 1 145 29 view .LVU266
  1051 009e 0490     		str	r0, [sp, #16]	@ float
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 22
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 22
 
 
  146:Core/drogui/src/MPU9250.c ****                 
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  1098              	.LVL69:
  149:Core/drogui/src/MPU9250.c ****                 min_gyro[2] = fmin(min_gyro[2], m->raw_gz);
  1099              		.loc 1 149 29 view .LVU275
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 23
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 23
 
 
  1100 0108 0190     		str	r0, [sp, #4]	@ float
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  1140              		.loc 1 162 90 discriminator 1 view .LVU289
  1141 0156 DFED1D7A 		vldr.32	s15, .L58+4
  1142 015a 7BEE277A 		vadd.f32	s15, s22, s15
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 24
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 24
 
 
  1143              		.loc 1 162 51 discriminator 1 view .LVU290
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  1179              		.loc 1 166 53 view .LVU305
  1180 01a0 67EEC77A 		vnmul.f32	s15, s15, s14
  166:Core/drogui/src/MPU9250.c ****             m->off_gz = -(max_gyro[2] + min_gyro[2])/2;
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 25
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 25
 
 
  1181              		.loc 1 166 23 view .LVU306
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  1227 01c6 00BF     		.align	2
  1228              	.L58:
  1229 01c8 00005C43 		.word	1130102784
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 26
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 26
 
 
  1230 01cc 0000C843 		.word	1137180672
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  1281 0026 FFF7FEFF 		bl	setReg
  1282              	.LVL81:
  178:Core/drogui/src/MPU9250.c ****     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 27
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 27
 
 
  1283              		.loc 1 178 5 view .LVU326
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  1335              		.loc 1 182 56 view .LVU337
  1336 0016 71EE622A 		vsub.f32	s5, s2, s5
  1337              	.LVL87:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 28
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 28
 
 
  1338              		.loc 1 182 60 view .LVU338
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  1392              	.LCFI34:
  1393              		.cfi_def_cfa_offset 52
  1394              		.cfi_offset 80, -52
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 29
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 29
 
 
  1395              		.cfi_offset 81, -48
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  193:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
  1436              		.loc 1 193 9 is_stmt 0 discriminator 1 view .LVU358
  1437 002e 022A     		cmp	r2, #2
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 30
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 30
 
 
  1438 0030 F3DD     		ble	.L69
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  204:Core/drogui/src/MPU9250.c ****     bool done = false, valid;
  1478              		.loc 1 204 5 view .LVU370
  205:Core/drogui/src/MPU9250.c ****     
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 31
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 31
 
 
  206:Core/drogui/src/MPU9250.c ****     while(!done){
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  1512 0078 FFF7FEFF 		bl	fmin
  1513              	.LVL104:
  1514 007c 51EC100B 		vmov	r0, r1, d0
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 32
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 32
 
 
  1515              		.loc 1 223 28 view .LVU382
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  1561              		.loc 1 208 9 is_stmt 1 view .LVU393
  1562 00d0 3046     		mov	r0, r6
  1563 00d2 FFF7FEFF 		bl	readRawAcc
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 33
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 33
 
 
  1564              	.LVL111:
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  1605 011e B4EEE70A 		vcmpe.f32	s0, s15
  1606 0122 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  1607 0126 9DD4     		bmi	.L88
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 34
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 34
 
 
  1608              	.LBE8:
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  221:Core/drogui/src/MPU9250.c ****         }
  1647              		.loc 1 221 32 view .LVU422
  1648 0158 844A     		ldr	r2, .L102+36
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 35
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 35
 
 
  1649 015a 82FB0328 		smull	r2, r8, r2, r3
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  231:Core/drogui/src/MPU9250.c ****                     //x2*x2-x1*x1+y2*y2-y1*y1+z2*z2-z1*z1 = 2*c1*(x1-x2)+2*c2*(y1-y2)+2*c3*(z1-z2)
  232:Core/drogui/src/MPU9250.c ****                     aux += acc[(head + i)%6][j]*acc[(head + i)%6][j] - acc[(head + i-1)%6][j]*acc[(
  1697              		.loc 1 232 21 is_stmt 1 discriminator 3 view .LVU433
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 36
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 36
 
 
  1698              		.loc 1 232 45 is_stmt 0 discriminator 3 view .LVU434
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  228:Core/drogui/src/MPU9250.c ****                 for(int j = 0; j < 3; j++){
  1741              		.loc 1 228 21 view .LVU450
  1742 0202 9FED578A 		vldr.32	s16, .L102+24
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 37
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 37
 
 
  1743 0206 ECE7     		b	.L80
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  1788              		.loc 1 240 38 discriminator 3 view .LVU464
  1789 023c 38EE008A 		vadd.f32	s16, s16, s0
  1790              		.loc 1 240 73 discriminator 3 view .LVU465
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 38
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 38
 
 
  1791 0240 54ED1E8A 		vldr.32	s17, [r4, #-120]
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  1837              		.loc 1 244 13 is_stmt 1 view .LVU478
  245:Core/drogui/src/MPU9250.c ****             for(int i = neq ; i <= tot-1; i++){
  1838              		.loc 1 245 13 view .LVU479
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 39
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 39
 
 
  1839              	.LBB15:
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  1888              		.loc 1 247 39 is_stmt 0 discriminator 3 view .LVU495
  1889 02e0 0137     		adds	r7, r7, #1
  1890              	.LVL146:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 40
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 40
 
 
  1891              	.L86:
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  1936 032a 0027     		movs	r7, #0
  1937              	.LBE17:
  246:Core/drogui/src/MPU9250.c ****                 for(int j= 0; j < 3; j++){
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 41
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 41
 
 
  1938              		.loc 1 246 21 view .LVU509
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  1980 037a 1146     		mov	r1, r2
  1981 037c 16A8     		add	r0, sp, #88
  1982 037e FFF7FEFF 		bl	getMatVal
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 42
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 42
 
 
  1983              	.LVL157:
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2024 03ba BDEC048B 		vldm	sp!, {d8-d9}
  2025              	.LCFI37:
  2026              		.cfi_restore 82
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 43
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 43
 
 
  2027              		.cfi_restore 83
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2079 0012 0820     		movs	r0, #8
  2080              	.LVL164:
  2081              		.loc 1 278 5 is_stmt 0 view .LVU536
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 44
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 44
 
 
  2082 0014 FFF7FEFF 		bl	setReg
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  286:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < n; i++){
  2121              		.loc 1 286 28 is_stmt 0 discriminator 2 view .LVU554
  2122 0036 0131     		adds	r1, r1, #1
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 45
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 45
 
 
  2123              	.LVL169:
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2153              	.LVL172:
  2154              	.L112:
  307:Core/drogui/src/MPU9250.c ****             HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 46
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 46
 
 
  308:Core/drogui/src/MPU9250.c ****             mag[head][0] = magX, mag[head][1] = magY, mag[head][2] = magZ;
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2193 008a 96ED1E8A 		vldr.32	s16, [r6, #120]
  297:Core/drogui/src/MPU9250.c **** 
  2194              		.loc 1 297 14 view .LVU578
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 47
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 47
 
 
  2195 008e 28EE278A 		vmul.f32	s16, s16, s15
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2236 00d4 DFED2C7A 		vldr.32	s15, .L126+8
  2237 00d8 B4EEE70A 		vcmpe.f32	s0, s15
  2238 00dc F1EE10FA 		vmrs	APSR_nzcv, FPSCR
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 48
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 48
 
 
  2239 00e0 01D4     		bmi	.L118
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2279              		.loc 1 309 32 view .LVU605
  2280 010e 1D4A     		ldr	r2, .L126+4
  2281 0110 82FB0312 		smull	r1, r2, r2, r3
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 49
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 49
 
 
  2282 0114 4FEAE379 		asr	r9, r3, #31
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2327              	.LVL196:
  321:Core/drogui/src/MPU9250.c ****     matInit(&w, n, 1);
  2328              		.loc 1 321 5 view .LVU615
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 50
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 50
 
 
  2329 0164 0122     		movs	r2, #1
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2358 0194 04EB4408 		add	r8, r4, r4, lsl #1
  2359 0198 05EB8808 		add	r8, r5, r8, lsl #2
  2360 019c 98ED000A 		vldr.32	s0, [r8]
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 51
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 51
 
 
  2361 01a0 0022     		movs	r2, #0
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2408              		.loc 1 353 35 is_stmt 0 discriminator 3 view .LVU632
  2409 0204 98ED000A 		vldr.32	s0, [r8]
  2410              		.loc 1 353 9 discriminator 3 view .LVU633
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 52
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 52
 
 
  2411 0208 20EE000A 		vmul.f32	s0, s0, s0
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2442              	.LVL210:
  373:Core/drogui/src/MPU9250.c ****     matMult(&prod2, &inverse, &Ht);
  2443              		.loc 1 373 5 view .LVU641
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 53
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 53
 
 
  2444 0244 07F15002 		add	r2, r7, #80
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2490 02a4 0221     		movs	r1, #2
  2491 02a6 07F11000 		add	r0, r7, #16
  2492 02aa FFF7FEFF 		bl	getMatVal
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 54
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 54
 
 
  2493              	.LVL216:
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2541 030a 86ED116A 		vstr.32	s12, [r6, #68]
  388:Core/drogui/src/MPU9250.c ****     m -> off_mz /= scaleGlobal;
  2542              		.loc 1 388 5 is_stmt 1 view .LVU674
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 55
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 55
 
 
  2543              		.loc 1 388 17 is_stmt 0 view .LVU675
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2593 0372 07F11000 		add	r0, r7, #16
  2594 0376 FFF7FEFF 		bl	getMatVal
  2595              	.LVL229:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 56
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 56
 
 
  2596              		.loc 1 392 21 view .LVU687
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2632 03c4 FFF7FEFF 		bl	matDestruct
  2633              	.LVL238:
  411:Core/drogui/src/MPU9250.c ****     matDestruct(&w); 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 57
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 57
 
 
  2634              		.loc 1 411 5 view .LVU695
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2666 03ec E17A843F 		.word	1065646817
  2667              		.cfi_endproc
  2668              	.LFE157:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 58
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 58
 
 
  2670              		.global	_mz
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2742              		.text
  2743              	.Letext0:
  2744              		.file 2 "Core/drogui/include/MPU9250.h"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 59
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 59
 
 
  2745              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
@@ -3493,75 +3493,75 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 1
  2754              		.file 12 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h"
  2755              		.file 13 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_gpio.h"
  2756              		.file 14 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 60
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 60
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 MPU9250.c
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:18     .text.I2Cread:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:26     .text.I2Cread:00000000 I2Cread
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:91     .text.I2Cread:00000044 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:96     .text.I2CwriteByte:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:103    .text.I2CwriteByte:00000000 I2CwriteByte
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:157    .text.I2CwriteByte:00000038 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:162    .text.initMpu:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:169    .text.initMpu:00000000 initMpu
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:238    .text.readRawAcc:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:245    .text.readRawAcc:00000000 readRawAcc
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:333    .text.readRawAcc:00000074 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:340    .text.readRawGyro:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:347    .text.readRawGyro:00000000 readRawGyro
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:435    .text.readRawGyro:00000074 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:442    .text.readRawMag:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:449    .text.readRawMag:00000000 readRawMag
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:538    .text.readRawMag:00000078 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:545    .text.readAcc:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:552    .text.readAcc:00000000 readAcc
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:660    .text.readAcc:000000a0 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:667    .text.readGyro:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:674    .text.readGyro:00000000 readGyro
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:774    .text.readGyro:0000008c $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:781    .text.readMag:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:788    .text.readMag:00000000 readMag
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:901    .text.readMag:000000a8 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:910    .text.quiet:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:917    .text.quiet:00000000 quiet
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:1229   .text.quiet:000001c8 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:1236   .text.calibrateGyro:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:1243   .text.calibrateGyro:00000000 calibrateGyro
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:1295   .text.calibrateGyro:00000034 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:1302   .text.dis3d:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:1309   .text.dis3d:00000000 dis3d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:1364   .text.calibrateAccel:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:1371   .text.calibrateAccel:00000000 calibrateAccel
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:1963   .text.calibrateAccel:00000348 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:1979   .text.calibrateAccel:00000378 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2037   .text.calibrateMag:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2044   .text.calibrateMag:00000000 calibrateMag
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2350   .text.calibrateMag:00000180 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2358   .text.calibrateMag:00000194 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2665   .text.calibrateMag:000003e8 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2740   .bss._mz:00000000 _mz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2733   .bss._my:00000000 _my
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2726   .bss._mx:00000000 _mx
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2719   .bss._gz:00000000 _gz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2712   .bss._gy:00000000 _gy
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2705   .bss._gx:00000000 _gx
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2698   .bss._az:00000000 _az
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2691   .bss._ay:00000000 _ay
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2684   .bss._ax:00000000 _ax
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2680   .bss._ax:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2687   .bss._ay:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2694   .bss._az:00000000 $d
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s 			page 61
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:18     .text.I2Cread:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:26     .text.I2Cread:00000000 I2Cread
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:91     .text.I2Cread:00000044 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:96     .text.I2CwriteByte:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:103    .text.I2CwriteByte:00000000 I2CwriteByte
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:157    .text.I2CwriteByte:00000038 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:162    .text.initMpu:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:169    .text.initMpu:00000000 initMpu
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:238    .text.readRawAcc:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:245    .text.readRawAcc:00000000 readRawAcc
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:333    .text.readRawAcc:00000074 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:340    .text.readRawGyro:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:347    .text.readRawGyro:00000000 readRawGyro
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:435    .text.readRawGyro:00000074 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:442    .text.readRawMag:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:449    .text.readRawMag:00000000 readRawMag
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:538    .text.readRawMag:00000078 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:545    .text.readAcc:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:552    .text.readAcc:00000000 readAcc
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:660    .text.readAcc:000000a0 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:667    .text.readGyro:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:674    .text.readGyro:00000000 readGyro
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:774    .text.readGyro:0000008c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:781    .text.readMag:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:788    .text.readMag:00000000 readMag
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:901    .text.readMag:000000a8 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:910    .text.quiet:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:917    .text.quiet:00000000 quiet
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:1229   .text.quiet:000001c8 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:1236   .text.calibrateGyro:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:1243   .text.calibrateGyro:00000000 calibrateGyro
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:1295   .text.calibrateGyro:00000034 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:1302   .text.dis3d:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:1309   .text.dis3d:00000000 dis3d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:1364   .text.calibrateAccel:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:1371   .text.calibrateAccel:00000000 calibrateAccel
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:1963   .text.calibrateAccel:00000348 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:1979   .text.calibrateAccel:00000378 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2037   .text.calibrateMag:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2044   .text.calibrateMag:00000000 calibrateMag
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2350   .text.calibrateMag:00000180 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2358   .text.calibrateMag:00000194 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2665   .text.calibrateMag:000003e8 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2740   .bss._mz:00000000 _mz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2733   .bss._my:00000000 _my
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2726   .bss._mx:00000000 _mx
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2719   .bss._gz:00000000 _gz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2712   .bss._gy:00000000 _gy
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2705   .bss._gx:00000000 _gx
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2698   .bss._az:00000000 _az
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2691   .bss._ay:00000000 _ay
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2684   .bss._ax:00000000 _ax
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2680   .bss._ax:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2687   .bss._ay:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2694   .bss._az:00000000 $d
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s 			page 61
 
 
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2701   .bss._gx:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2708   .bss._gy:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2715   .bss._gz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2722   .bss._mx:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2729   .bss._my:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccblieeI.s:2736   .bss._mz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2701   .bss._gx:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2708   .bss._gy:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2715   .bss._gz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2722   .bss._mx:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2729   .bss._my:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTAM5P2.s:2736   .bss._mz:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_I2C_Master_Transmit

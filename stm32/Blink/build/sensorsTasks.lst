@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
   28:Core/drogui/src/sensorsTasks.c ****         ax = computeFilter(&filter_ax, myIMU.ax);
   29:Core/drogui/src/sensorsTasks.c ****         ay = computeFilter(&filter_ay, myIMU.ay);
   30:Core/drogui/src/sensorsTasks.c ****         az = computeFilter(&filter_az, myIMU.az);
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 2
 
 
   31:Core/drogui/src/sensorsTasks.c ****         
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
   64 001e 95ED070A 		vldr.32	s0, [r5, #28]
   65 0022 1948     		ldr	r0, .L4+12
   66 0024 FFF7FEFF 		bl	computeFilter
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 3
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 3
 
 
   67              	.LVL2:
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
   97              		.loc 1 73 9 discriminator 1 view .LVU18
   98 0068 94ED000A 		vldr.32	s0, [r4]
   99 006c 8020     		movs	r0, #128
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 4
 
 
  100 006e FFF7FEFF 		bl	setReg
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  149              		.loc 1 28 14 is_stmt 0 discriminator 1 view .LVU25
  150 000a 94ED000A 		vldr.32	s0, [r4]
  151 000e 2048     		ldr	r0, .L9+4
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 5
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 5
 
 
  152 0010 FFF7FEFF 		bl	computeFilter
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
   35:Core/drogui/src/sensorsTasks.c ****         
  192              		.loc 1 35 14 is_stmt 0 discriminator 1 view .LVU40
  193 0056 94ED000A 		vldr.32	s0, [r4]
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 6
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 6
 
 
  194 005a 1548     		ldr	r0, .L9+36
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  244              	magTask:
  245              	.LFB180:
   75:Core/drogui/src/sensorsTasks.c ****     }
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 7
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 7
 
 
   76:Core/drogui/src/sensorsTasks.c **** }
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  290 0024 00000000 		.word	.LANCHOR0
  291 0028 00000000 		.word	.LANCHOR15
  292 002c 00000000 		.word	.LANCHOR16
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 8
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 8
 
 
  293 0030 00000000 		.word	.LANCHOR17
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  339              		.loc 1 94 9 discriminator 1 view .LVU68
  340 0026 DFED6B7A 		vldr.32	s15, .L19+16
  341 002a 6B4B     		ldr	r3, .L19+20
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 9
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 9
 
 
  342 002c 93ED004A 		vldr.32	s8, [r3]
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  393              	.LVL26:
  394 00bc 55EC104B 		vmov	r4, r5, d0
  395              		.loc 1 97 14 discriminator 1 view .LVU73
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 10
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 10
 
 
  396 00c0 1BEE100A 		vmov	r0, s22
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  448 013c 41EC110B 		vmov	d1, r0, r1
  449 0140 B0EE490A 		vmov.f32	s0, s18
  450 0144 F0EE690A 		vmov.f32	s1, s19
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 11
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 11
 
 
  451 0148 FFF7FEFF 		bl	fmin
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  498              		.loc 1 106 9 discriminator 1 view .LVU92
  499 01a6 95ED000A 		vldr.32	s0, [r5]
  500 01aa 3020     		movs	r0, #48
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 12
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 12
 
 
  501 01ac FFF7FEFF 		bl	setReg
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  115:Core/drogui/src/sensorsTasks.c **** 
  116:Core/drogui/src/sensorsTasks.c **** 
  117:Core/drogui/src/sensorsTasks.c **** osThreadId_t accelHandle;
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 13
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 13
 
 
  118:Core/drogui/src/sensorsTasks.c **** const osThreadAttr_t accelAttributes = {    .name = "accelTask", \
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  577 001c 3246     		mov	r2, r6
  578 001e 2988     		ldrh	r1, [r5]
  579 0020 0F48     		ldr	r0, .L23+20
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 14
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 14
 
 
  580 0022 FFF7FEFF 		bl	arm_iir_lattice_init_f32
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  596 003a 0021     		movs	r1, #0
  597 003c 0B48     		ldr	r0, .L23+32
  598 003e FFF7FEFF 		bl	osThreadNew
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 15
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 15
 
 
  599              	.LVL53:
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  643              	.LC3:
  644 001c 61636365 		.ascii	"accelTask\000"
  644      6C546173 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 16
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 16
 
 
  644      6B00
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  704              	ay:
  705 0000 00000000 		.space	4
  706              		.section	.bss.az,"aw",%nobits
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 17
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 17
 
 
  707              		.align	2
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  751      00000000 
  752              		.section	.bss.dnotch_gy2,"aw",%nobits
  753              		.align	2
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 18
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 18
 
 
  756              	dnotch_gy2:
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  797      00000000 
  797      00000000 
  797      00000000 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 19
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 19
 
 
  798              		.section	.bss.filter_gx,"aw",%nobits
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  841      00000000 
  841      00000000 
  841      00000000 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 20
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 20
 
 
  841      00000000 
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  905              		.align	2
  906              		.set	.LANCHOR0,. + 0
  909              	myIMU:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 21
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 21
 
 
  910 0000 00000000 		.space	140
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  977              		.section	.rodata.accelAttributes,"a"
  978              		.align	2
  981              	accelAttributes:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 22
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 22
 
 
  982 0000 1C000000 		.word	.LC3
@@ -1318,131 +1318,131 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 1
  1026              		.file 8 "Core/drogui/include/sensorsTasks.h"
  1027              		.file 9 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
  1028              		.file 10 "Core/drogui/include/mahony.h"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 23
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 23
 
 
  1029              		.file 11 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 24
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 24
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 sensorsTasks.c
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:18     .text.gyroTask:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:26     .text.gyroTask:00000000 gyroTask
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:112    .text.gyroTask:0000007c $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:122    .text.accelTask:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:129    .text.accelTask:00000000 accelTask
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:223    .text.accelTask:0000008c $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:237    .text.magTask:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:244    .text.magTask:00000000 magTask
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:290    .text.magTask:00000024 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:301    .text.rpyTask:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:308    .text.rpyTask:00000000 rpyTask
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:517    .text.rpyTask:000001c4 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:539    .text.initSensorsTasks:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:546    .text.initSensorsTasks:00000000 initSensorsTasks
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:612    .text.initSensorsTasks:0000004c $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:1012   .rodata.rpyAttributes:00000000 rpyAttributes
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:627    .rodata.str1.4:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:936    .bss.rpyHandle:00000000 rpyHandle
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:1002   .rodata.magAttributes:00000000 magAttributes
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:888    .bss.magHandle:00000000 magHandle
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:992    .rodata.gyroAttributes:00000000 gyroAttributes
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:875    .bss.gyroHandle:00000000 gyroHandle
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:981    .rodata.accelAttributes:00000000 accelAttributes
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:690    .bss.accelHandle:00000000 accelHandle
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:975    .data.Kdfilt:00000000 Kdfilt
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:775    .bss.f:00000000 f
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:943    .bss.state:00000000 state
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:968    .bss.z:00000000 z
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:955    .bss.y:00000000 y
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:949    .bss.x:00000000 x
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:916    .bss.mz:00000000 mz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:902    .bss.my:00000000 my
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:895    .bss.mx:00000000 mx
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:882    .bss.gz:00000000 gz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:868    .bss.gy:00000000 gy
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:861    .bss.gx:00000000 gx
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:711    .bss.az:00000000 az
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:704    .bss.ay:00000000 ay
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:697    .bss.ax:00000000 ax
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:962    .bss.yaw:00000000 yaw
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:923    .bss.pitch:00000000 pitch
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:930    .bss.roll:00000000 roll
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:854    .bss.filter_yaw:00000000 filter_yaw
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:840    .bss.filter_pitch:00000000 filter_pitch
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:847    .bss.filter_roll:00000000 filter_roll
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:732    .bss.dnotch_az:00000000 dnotch_az
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:725    .bss.dnotch_ay:00000000 dnotch_ay
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:718    .bss.dnotch_ax:00000000 dnotch_ax
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:796    .bss.filter_az:00000000 filter_az
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:789    .bss.filter_ay:00000000 filter_ay
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:782    .bss.filter_ax:00000000 filter_ax
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:768    .bss.dnotch_gz2:00000000 dnotch_gz2
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:756    .bss.dnotch_gy2:00000000 dnotch_gy2
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:744    .bss.dnotch_gx2:00000000 dnotch_gx2
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:762    .bss.dnotch_gz:00000000 dnotch_gz
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 25
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:18     .text.gyroTask:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:26     .text.gyroTask:00000000 gyroTask
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:112    .text.gyroTask:0000007c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:122    .text.accelTask:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:129    .text.accelTask:00000000 accelTask
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:223    .text.accelTask:0000008c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:237    .text.magTask:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:244    .text.magTask:00000000 magTask
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:290    .text.magTask:00000024 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:301    .text.rpyTask:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:308    .text.rpyTask:00000000 rpyTask
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:517    .text.rpyTask:000001c4 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:539    .text.initSensorsTasks:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:546    .text.initSensorsTasks:00000000 initSensorsTasks
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:612    .text.initSensorsTasks:0000004c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:1012   .rodata.rpyAttributes:00000000 rpyAttributes
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:627    .rodata.str1.4:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:936    .bss.rpyHandle:00000000 rpyHandle
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:1002   .rodata.magAttributes:00000000 magAttributes
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:888    .bss.magHandle:00000000 magHandle
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:992    .rodata.gyroAttributes:00000000 gyroAttributes
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:875    .bss.gyroHandle:00000000 gyroHandle
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:981    .rodata.accelAttributes:00000000 accelAttributes
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:690    .bss.accelHandle:00000000 accelHandle
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:975    .data.Kdfilt:00000000 Kdfilt
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:775    .bss.f:00000000 f
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:943    .bss.state:00000000 state
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:968    .bss.z:00000000 z
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:955    .bss.y:00000000 y
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:949    .bss.x:00000000 x
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:916    .bss.mz:00000000 mz
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:902    .bss.my:00000000 my
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:895    .bss.mx:00000000 mx
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:882    .bss.gz:00000000 gz
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:868    .bss.gy:00000000 gy
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:861    .bss.gx:00000000 gx
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:711    .bss.az:00000000 az
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:704    .bss.ay:00000000 ay
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:697    .bss.ax:00000000 ax
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:962    .bss.yaw:00000000 yaw
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:923    .bss.pitch:00000000 pitch
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:930    .bss.roll:00000000 roll
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:854    .bss.filter_yaw:00000000 filter_yaw
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:840    .bss.filter_pitch:00000000 filter_pitch
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:847    .bss.filter_roll:00000000 filter_roll
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:732    .bss.dnotch_az:00000000 dnotch_az
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:725    .bss.dnotch_ay:00000000 dnotch_ay
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:718    .bss.dnotch_ax:00000000 dnotch_ax
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:796    .bss.filter_az:00000000 filter_az
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:789    .bss.filter_ay:00000000 filter_ay
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:782    .bss.filter_ax:00000000 filter_ax
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:768    .bss.dnotch_gz2:00000000 dnotch_gz2
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:756    .bss.dnotch_gy2:00000000 dnotch_gy2
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:744    .bss.dnotch_gx2:00000000 dnotch_gx2
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:762    .bss.dnotch_gz:00000000 dnotch_gz
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 25
 
 
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:750    .bss.dnotch_gy:00000000 dnotch_gy
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:738    .bss.dnotch_gx:00000000 dnotch_gx
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:833    .bss.filter_gz2:00000000 filter_gz2
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:821    .bss.filter_gy2:00000000 filter_gy2
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:809    .bss.filter_gx2:00000000 filter_gx2
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:827    .bss.filter_gz:00000000 filter_gz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:815    .bss.filter_gy:00000000 filter_gy
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:803    .bss.filter_gx:00000000 filter_gx
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:909    .bss.myIMU:00000000 myIMU
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:687    .bss.accelHandle:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:693    .bss.ax:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:700    .bss.ay:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:707    .bss.az:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:714    .bss.dnotch_ax:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:721    .bss.dnotch_ay:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:728    .bss.dnotch_az:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:735    .bss.dnotch_gx:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:741    .bss.dnotch_gx2:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:747    .bss.dnotch_gy:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:753    .bss.dnotch_gy2:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:759    .bss.dnotch_gz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:765    .bss.dnotch_gz2:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:771    .bss.f:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:778    .bss.filter_ax:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:785    .bss.filter_ay:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:792    .bss.filter_az:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:799    .bss.filter_gx:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:806    .bss.filter_gx2:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:812    .bss.filter_gy:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:818    .bss.filter_gy2:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:824    .bss.filter_gz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:830    .bss.filter_gz2:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:836    .bss.filter_pitch:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:843    .bss.filter_roll:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:850    .bss.filter_yaw:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:857    .bss.gx:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:864    .bss.gy:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:871    .bss.gyroHandle:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:878    .bss.gz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:885    .bss.magHandle:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:891    .bss.mx:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:898    .bss.my:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:905    .bss.myIMU:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:912    .bss.mz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:919    .bss.pitch:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:926    .bss.roll:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:933    .bss.rpyHandle:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:939    .bss.state:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:946    .bss.x:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:952    .bss.y:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:958    .bss.yaw:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:965    .bss.z:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:971    .data.Kdfilt:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:978    .rodata.accelAttributes:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:988    .rodata.gyroAttributes:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:999    .rodata.magAttributes:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s:1009   .rodata.rpyAttributes:00000000 $d
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc9uP39T.s 			page 26
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:750    .bss.dnotch_gy:00000000 dnotch_gy
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:738    .bss.dnotch_gx:00000000 dnotch_gx
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:833    .bss.filter_gz2:00000000 filter_gz2
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:821    .bss.filter_gy2:00000000 filter_gy2
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:809    .bss.filter_gx2:00000000 filter_gx2
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:827    .bss.filter_gz:00000000 filter_gz
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:815    .bss.filter_gy:00000000 filter_gy
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:803    .bss.filter_gx:00000000 filter_gx
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:909    .bss.myIMU:00000000 myIMU
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:687    .bss.accelHandle:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:693    .bss.ax:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:700    .bss.ay:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:707    .bss.az:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:714    .bss.dnotch_ax:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:721    .bss.dnotch_ay:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:728    .bss.dnotch_az:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:735    .bss.dnotch_gx:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:741    .bss.dnotch_gx2:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:747    .bss.dnotch_gy:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:753    .bss.dnotch_gy2:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:759    .bss.dnotch_gz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:765    .bss.dnotch_gz2:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:771    .bss.f:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:778    .bss.filter_ax:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:785    .bss.filter_ay:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:792    .bss.filter_az:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:799    .bss.filter_gx:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:806    .bss.filter_gx2:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:812    .bss.filter_gy:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:818    .bss.filter_gy2:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:824    .bss.filter_gz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:830    .bss.filter_gz2:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:836    .bss.filter_pitch:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:843    .bss.filter_roll:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:850    .bss.filter_yaw:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:857    .bss.gx:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:864    .bss.gy:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:871    .bss.gyroHandle:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:878    .bss.gz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:885    .bss.magHandle:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:891    .bss.mx:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:898    .bss.my:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:905    .bss.myIMU:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:912    .bss.mz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:919    .bss.pitch:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:926    .bss.roll:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:933    .bss.rpyHandle:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:939    .bss.state:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:946    .bss.x:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:952    .bss.y:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:958    .bss.yaw:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:965    .bss.z:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:971    .data.Kdfilt:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:978    .rodata.accelAttributes:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:988    .rodata.gyroAttributes:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:999    .rodata.magAttributes:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s:1009   .rodata.rpyAttributes:00000000 $d
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cchX9vFR.s 			page 26
 
 
 

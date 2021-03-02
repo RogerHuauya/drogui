@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXUsFo7.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccaAHXZI.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -44,31 +44,23 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXUsFo7.s 			page 1
   38              		.loc 1 4 5 view .LVU1
   39 0002 FFF7FEFF 		bl	initSystem
   40              	.LVL0:
-   5:Core/drogui/src/_freertos.c ****     initSensorsTasks();
-  41              		.loc 1 5 5 view .LVU2
-  42 0006 FFF7FEFF 		bl	initSensorsTasks
-  43              	.LVL1:
+   5:Core/drogui/src/_freertos.c ****     //initSensorsTasks();
    6:Core/drogui/src/_freertos.c ****     //initControlTasks();
    7:Core/drogui/src/_freertos.c **** }
-  44              		.loc 1 7 1 is_stmt 0 view .LVU3
-  45 000a 08BD     		pop	{r3, pc}
-  46              		.cfi_endproc
-  47              	.LFE178:
-  49              		.text
-  50              	.Letext0:
-  51              		.file 2 "Core/drogui/include/_main.h"
-  52              		.file 3 "Core/drogui/include/sensorsTasks.h"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXUsFo7.s 			page 2
-
-
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXUsFo7.s 			page 3
+  41              		.loc 1 7 1 is_stmt 0 view .LVU2
+  42 0006 08BD     		pop	{r3, pc}
+  43              		.cfi_endproc
+  44              	.LFE178:
+  46              		.text
+  47              	.Letext0:
+  48              		.file 2 "Core/drogui/include/_main.h"
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccaAHXZI.s 			page 2
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 _freertos.c
-C:\Users\GUILLE~1\AppData\Local\Temp\ccXUsFo7.s:18     .text.initGlobal:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccXUsFo7.s:26     .text.initGlobal:00000000 initGlobal
+C:\Users\GUILLE~1\AppData\Local\Temp\ccaAHXZI.s:18     .text.initGlobal:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccaAHXZI.s:26     .text.initGlobal:00000000 initGlobal
 
 UNDEFINED SYMBOLS
 initSystem
-initSensorsTasks
