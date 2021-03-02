@@ -44,10 +44,10 @@ void accelTask(){
 void gyroTask(){
     for(;;){
         readGyro(&myIMU);
-
-        arm_iir_lattice_f32(&f, &(myIMU.gx), &gx, 1);
- /*       gx = computeFilter(&filter_gx, myIMU.gx);
-        gy = computeFilter(&filter_gy, myIMU.gy);
+        float aux = myIMU.gx;
+        arm_iir_lattice_f32(&f, &aux, &gx, 1);
+        gy = computeFilter(&filter_gx, myIMU.gx);
+        /*gy = computeFilter(&filter_gy, myIMU.gy);
         gz = computeFilter(&filter_gz, myIMU.gz);
 
         
@@ -71,7 +71,7 @@ void gyroTask(){
         setReg(GYRO_X, gx);
         setReg(GYRO_Y, gy);
         setReg(GYRO_Z, gz);
-        osDelay(10);
+        osDelay(1);
     }
 }
 
