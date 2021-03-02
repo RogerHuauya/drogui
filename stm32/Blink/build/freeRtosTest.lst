@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -41,7 +41,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s 			page 1
   11:Core/drogui/test/freeRtosTest.c **** 
   12:Core/drogui/test/freeRtosTest.c **** osThreadId_t debugHandle;
   13:Core/drogui/test/freeRtosTest.c **** const osThreadAttr_t debugAttributes = {    .name = "debugTask", \
-  14:Core/drogui/test/freeRtosTest.c ****                                             .stack_size = 256 * 4, \
+  14:Core/drogui/test/freeRtosTest.c ****                                             .stack_size = 512 * 4, \
   15:Core/drogui/test/freeRtosTest.c ****                                             .priority = (osPriority_t) osPriorityNormal};
   16:Core/drogui/test/freeRtosTest.c **** 
   17:Core/drogui/test/freeRtosTest.c **** 
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s 			page 1
   33              		@ frame_needed = 0, uses_anonymous_args = 0
   34              	.LVL0:
   35              		.loc 1 23 31 is_stmt 0 view .LVU1
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s 			page 2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s 			page 2
 
 
   36 0000 08B5     		push	{r3, lr}
@@ -95,9 +95,9 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s 			page 1
   63              		.section	.rodata.debugTask.str1.4,"aMS",%progbits,1
   64              		.align	2
   65              	.LC0:
-  66 0000 25660925 		.ascii	"%f\011%f\011%f\012\000"
-  66      66092566 
-  66      0A00
+  66 0000 25660925 		.ascii	"%f\011%f ;\012\000"
+  66      66203B0A 
+  66      00
   67              		.section	.text.debugTask,"ax",%progbits
   68              		.align	1
   69              		.global	debugTask
@@ -109,258 +109,259 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s 			page 1
   76              	.LFB182:
   28:Core/drogui/test/freeRtosTest.c ****     }
   29:Core/drogui/test/freeRtosTest.c **** }
-  30:Core/drogui/test/freeRtosTest.c **** char buff[50] = "hola";
-  31:Core/drogui/test/freeRtosTest.c **** void debugTask(void *argument){
-  77              		.loc 1 31 31 view -0
+  30:Core/drogui/test/freeRtosTest.c **** 
+  31:Core/drogui/test/freeRtosTest.c **** char buff[50] = "hola\n";
+  32:Core/drogui/test/freeRtosTest.c **** void debugTask(void *argument){
+  77              		.loc 1 32 31 view -0
   78              		.cfi_startproc
   79              		@ Volatile: function does not return.
   80              		@ args = 0, pretend = 0, frame = 0
   81              		@ frame_needed = 0, uses_anonymous_args = 0
   82              	.LVL4:
-  83              		.loc 1 31 31 is_stmt 0 view .LVU7
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s 			page 3
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s 			page 3
 
 
+  83              		.loc 1 32 31 is_stmt 0 view .LVU7
   84 0000 80B5     		push	{r7, lr}
   85              	.LCFI1:
   86              		.cfi_def_cfa_offset 8
   87              		.cfi_offset 7, -8
   88              		.cfi_offset 14, -4
-  89 0002 84B0     		sub	sp, sp, #16
+  89 0002 82B0     		sub	sp, sp, #8
   90              	.LCFI2:
-  91              		.cfi_def_cfa_offset 24
+  91              		.cfi_def_cfa_offset 16
   92              	.LVL5:
   93              	.L7:
-  32:Core/drogui/test/freeRtosTest.c ****     
-  33:Core/drogui/test/freeRtosTest.c ****     for(;;){
-  94              		.loc 1 33 5 is_stmt 1 discriminator 1 view .LVU8
-  34:Core/drogui/test/freeRtosTest.c ****         sprintf(buff, "%f\t%f\t%f\n", gx, gy, gz);
-  95              		.loc 1 34 9 discriminator 1 view .LVU9
-  96 0004 124B     		ldr	r3, .L9
-  97 0006 1868     		ldr	r0, [r3]	@ float
-  98 0008 FFF7FEFF 		bl	__aeabi_f2d
-  99              	.LVL6:
- 100 000c 0646     		mov	r6, r0
- 101 000e 0F46     		mov	r7, r1
- 102 0010 104C     		ldr	r4, .L9+4
- 103 0012 114B     		ldr	r3, .L9+8
- 104 0014 1868     		ldr	r0, [r3]	@ float
- 105 0016 FFF7FEFF 		bl	__aeabi_f2d
- 106              	.LVL7:
- 107 001a CDE90201 		strd	r0, [sp, #8]
- 108 001e 0F4B     		ldr	r3, .L9+12
- 109 0020 1868     		ldr	r0, [r3]	@ float
- 110 0022 FFF7FEFF 		bl	__aeabi_f2d
- 111              	.LVL8:
- 112 0026 CDE90001 		strd	r0, [sp]
- 113 002a 3246     		mov	r2, r6
- 114 002c 3B46     		mov	r3, r7
- 115 002e 0C49     		ldr	r1, .L9+16
- 116 0030 2046     		mov	r0, r4
- 117 0032 FFF7FEFF 		bl	sprintf
- 118              	.LVL9:
-  35:Core/drogui/test/freeRtosTest.c ****         HAL_UART_Transmit(&huart1, (uint8_t*) buff, strlen(buff), 100);
- 119              		.loc 1 35 9 discriminator 1 view .LVU10
- 120              		.loc 1 35 53 is_stmt 0 discriminator 1 view .LVU11
- 121 0036 2046     		mov	r0, r4
- 122 0038 FFF7FEFF 		bl	strlen
- 123              	.LVL10:
- 124              		.loc 1 35 9 discriminator 1 view .LVU12
- 125 003c 6423     		movs	r3, #100
- 126 003e 82B2     		uxth	r2, r0
- 127 0040 2146     		mov	r1, r4
- 128 0042 0848     		ldr	r0, .L9+20
- 129 0044 FFF7FEFF 		bl	HAL_UART_Transmit
- 130              	.LVL11:
-  36:Core/drogui/test/freeRtosTest.c ****         osDelay(10);
- 131              		.loc 1 36 9 is_stmt 1 discriminator 1 view .LVU13
- 132 0048 0A20     		movs	r0, #10
- 133 004a FFF7FEFF 		bl	osDelay
- 134              	.LVL12:
-  33:Core/drogui/test/freeRtosTest.c ****         sprintf(buff, "%f\t%f\t%f\n", gx, gy, gz);
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s 			page 4
+  33:Core/drogui/test/freeRtosTest.c ****     
+  34:Core/drogui/test/freeRtosTest.c ****     for(;;){
+  94              		.loc 1 34 5 is_stmt 1 discriminator 1 view .LVU8
+  35:Core/drogui/test/freeRtosTest.c ****         sprintf(buff, "%f\t%f ;\n", myIMU.gx/5, gx);
+  95              		.loc 1 35 9 discriminator 1 view .LVU9
+  96              		.loc 1 35 42 is_stmt 0 discriminator 1 view .LVU10
+  97 0004 134B     		ldr	r3, .L9
+  98 0006 93ED077A 		vldr.32	s14, [r3, #28]
+  99              		.loc 1 35 9 discriminator 1 view .LVU11
+ 100 000a F1EE047A 		vmov.f32	s15, #5.0e+0
+ 101 000e C7EE277A 		vdiv.f32	s15, s14, s15
+ 102 0012 17EE900A 		vmov	r0, s15
+ 103 0016 FFF7FEFF 		bl	__aeabi_f2d
+ 104              	.LVL6:
+ 105 001a 0646     		mov	r6, r0
+ 106 001c 0F46     		mov	r7, r1
+ 107 001e 0E4C     		ldr	r4, .L9+4
+ 108 0020 0E4B     		ldr	r3, .L9+8
+ 109 0022 1868     		ldr	r0, [r3]	@ float
+ 110 0024 FFF7FEFF 		bl	__aeabi_f2d
+ 111              	.LVL7:
+ 112 0028 CDE90001 		strd	r0, [sp]
+ 113 002c 3246     		mov	r2, r6
+ 114 002e 3B46     		mov	r3, r7
+ 115 0030 0B49     		ldr	r1, .L9+12
+ 116 0032 2046     		mov	r0, r4
+ 117 0034 FFF7FEFF 		bl	sprintf
+ 118              	.LVL8:
+  36:Core/drogui/test/freeRtosTest.c ****         HAL_UART_Transmit(&huart2, (uint8_t*) buff, strlen(buff), 100);
+ 119              		.loc 1 36 9 is_stmt 1 discriminator 1 view .LVU12
+ 120              		.loc 1 36 53 is_stmt 0 discriminator 1 view .LVU13
+ 121 0038 2046     		mov	r0, r4
+ 122 003a FFF7FEFF 		bl	strlen
+ 123              	.LVL9:
+ 124              		.loc 1 36 9 discriminator 1 view .LVU14
+ 125 003e 6423     		movs	r3, #100
+ 126 0040 82B2     		uxth	r2, r0
+ 127 0042 2146     		mov	r1, r4
+ 128 0044 0748     		ldr	r0, .L9+16
+ 129 0046 FFF7FEFF 		bl	HAL_UART_Transmit
+ 130              	.LVL10:
+  37:Core/drogui/test/freeRtosTest.c ****         osDelay(10);
+ 131              		.loc 1 37 9 is_stmt 1 discriminator 1 view .LVU15
+ 132 004a 0A20     		movs	r0, #10
+ 133 004c FFF7FEFF 		bl	osDelay
+ 134              	.LVL11:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s 			page 4
 
 
- 135              		.loc 1 33 10 discriminator 1 view .LVU14
- 136 004e D9E7     		b	.L7
+  34:Core/drogui/test/freeRtosTest.c ****         sprintf(buff, "%f\t%f ;\n", myIMU.gx/5, gx);
+ 135              		.loc 1 34 10 discriminator 1 view .LVU16
+ 136 0050 D8E7     		b	.L7
  137              	.L10:
- 138              		.align	2
+ 138 0052 00BF     		.align	2
  139              	.L9:
- 140 0050 00000000 		.word	gx
- 141 0054 00000000 		.word	.LANCHOR0
- 142 0058 00000000 		.word	gz
- 143 005c 00000000 		.word	gy
- 144 0060 00000000 		.word	.LC0
- 145 0064 00000000 		.word	huart1
- 146              		.cfi_endproc
- 147              	.LFE182:
- 149              		.section	.text.initSystem,"ax",%progbits
- 150              		.align	1
- 151              		.global	initSystem
- 152              		.syntax unified
- 153              		.thumb
- 154              		.thumb_func
- 155              		.fpu fpv5-sp-d16
- 157              	initSystem:
- 158              	.LFB183:
-  37:Core/drogui/test/freeRtosTest.c ****     }
-  38:Core/drogui/test/freeRtosTest.c **** }
-  39:Core/drogui/test/freeRtosTest.c **** 
-  40:Core/drogui/test/freeRtosTest.c **** void initSystem(){
- 159              		.loc 1 40 18 view -0
- 160              		.cfi_startproc
- 161              		@ args = 0, pretend = 0, frame = 0
- 162              		@ frame_needed = 0, uses_anonymous_args = 0
- 163 0000 08B5     		push	{r3, lr}
- 164              	.LCFI3:
- 165              		.cfi_def_cfa_offset 8
- 166              		.cfi_offset 3, -8
- 167              		.cfi_offset 14, -4
-  41:Core/drogui/test/freeRtosTest.c ****     blinkHandle = osThreadNew(blinkTask, NULL, &blinkAttributes);
- 168              		.loc 1 41 5 view .LVU16
- 169              		.loc 1 41 19 is_stmt 0 view .LVU17
- 170 0002 074A     		ldr	r2, .L13
- 171 0004 0021     		movs	r1, #0
- 172 0006 0748     		ldr	r0, .L13+4
- 173 0008 FFF7FEFF 		bl	osThreadNew
- 174              	.LVL13:
- 175              		.loc 1 41 17 view .LVU18
- 176 000c 064B     		ldr	r3, .L13+8
- 177 000e 1860     		str	r0, [r3]
-  42:Core/drogui/test/freeRtosTest.c ****     debugHandle = osThreadNew(debugTask, NULL, &debugAttributes);
- 178              		.loc 1 42 5 is_stmt 1 view .LVU19
- 179              		.loc 1 42 19 is_stmt 0 view .LVU20
- 180 0010 064A     		ldr	r2, .L13+12
- 181 0012 0021     		movs	r1, #0
- 182 0014 0648     		ldr	r0, .L13+16
- 183 0016 FFF7FEFF 		bl	osThreadNew
- 184              	.LVL14:
- 185              		.loc 1 42 17 view .LVU21
- 186 001a 064B     		ldr	r3, .L13+20
- 187 001c 1860     		str	r0, [r3]
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s 			page 5
+ 140 0054 00000000 		.word	myIMU
+ 141 0058 00000000 		.word	.LANCHOR0
+ 142 005c 00000000 		.word	gx
+ 143 0060 00000000 		.word	.LC0
+ 144 0064 00000000 		.word	huart2
+ 145              		.cfi_endproc
+ 146              	.LFE182:
+ 148              		.section	.text.initSystem,"ax",%progbits
+ 149              		.align	1
+ 150              		.global	initSystem
+ 151              		.syntax unified
+ 152              		.thumb
+ 153              		.thumb_func
+ 154              		.fpu fpv5-sp-d16
+ 156              	initSystem:
+ 157              	.LFB183:
+  38:Core/drogui/test/freeRtosTest.c ****     }
+  39:Core/drogui/test/freeRtosTest.c **** }
+  40:Core/drogui/test/freeRtosTest.c **** 
+  41:Core/drogui/test/freeRtosTest.c **** void initSystem(){
+ 158              		.loc 1 41 18 view -0
+ 159              		.cfi_startproc
+ 160              		@ args = 0, pretend = 0, frame = 0
+ 161              		@ frame_needed = 0, uses_anonymous_args = 0
+ 162 0000 08B5     		push	{r3, lr}
+ 163              	.LCFI3:
+ 164              		.cfi_def_cfa_offset 8
+ 165              		.cfi_offset 3, -8
+ 166              		.cfi_offset 14, -4
+  42:Core/drogui/test/freeRtosTest.c ****     blinkHandle = osThreadNew(blinkTask, NULL, &blinkAttributes);
+ 167              		.loc 1 42 5 view .LVU18
+ 168              		.loc 1 42 19 is_stmt 0 view .LVU19
+ 169 0002 074A     		ldr	r2, .L13
+ 170 0004 0021     		movs	r1, #0
+ 171 0006 0748     		ldr	r0, .L13+4
+ 172 0008 FFF7FEFF 		bl	osThreadNew
+ 173              	.LVL12:
+ 174              		.loc 1 42 17 view .LVU20
+ 175 000c 064B     		ldr	r3, .L13+8
+ 176 000e 1860     		str	r0, [r3]
+  43:Core/drogui/test/freeRtosTest.c ****     debugHandle = osThreadNew(debugTask, NULL, &debugAttributes);
+ 177              		.loc 1 43 5 is_stmt 1 view .LVU21
+ 178              		.loc 1 43 19 is_stmt 0 view .LVU22
+ 179 0010 064A     		ldr	r2, .L13+12
+ 180 0012 0021     		movs	r1, #0
+ 181 0014 0648     		ldr	r0, .L13+16
+ 182 0016 FFF7FEFF 		bl	osThreadNew
+ 183              	.LVL13:
+ 184              		.loc 1 43 17 view .LVU23
+ 185 001a 064B     		ldr	r3, .L13+20
+ 186 001c 1860     		str	r0, [r3]
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s 			page 5
 
 
-  43:Core/drogui/test/freeRtosTest.c **** }
- 188              		.loc 1 43 1 view .LVU22
- 189 001e 08BD     		pop	{r3, pc}
- 190              	.L14:
- 191              		.align	2
- 192              	.L13:
- 193 0020 00000000 		.word	.LANCHOR1
- 194 0024 00000000 		.word	blinkTask
- 195 0028 00000000 		.word	.LANCHOR2
- 196 002c 00000000 		.word	.LANCHOR3
- 197 0030 00000000 		.word	debugTask
- 198 0034 00000000 		.word	.LANCHOR4
- 199              		.cfi_endproc
- 200              	.LFE183:
- 202              		.global	buff
- 203              		.global	blinkAttributes
- 204              		.section	.rodata.str1.4,"aMS",%progbits,1
- 205              		.align	2
- 206              	.LC1:
- 207 0000 626C696E 		.ascii	"blinkTask\000"
- 207      6B546173 
- 207      6B00
- 208              		.global	blinkHandle
- 209              		.global	debugAttributes
- 210 000a 0000     		.align	2
- 211              	.LC2:
- 212 000c 64656275 		.ascii	"debugTask\000"
- 212      67546173 
- 212      6B00
- 213              		.global	debugHandle
- 214              		.section	.bss.blinkHandle,"aw",%nobits
- 215              		.align	2
- 216              		.set	.LANCHOR2,. + 0
- 219              	blinkHandle:
- 220 0000 00000000 		.space	4
- 221              		.section	.bss.debugHandle,"aw",%nobits
- 222              		.align	2
- 223              		.set	.LANCHOR4,. + 0
- 226              	debugHandle:
- 227 0000 00000000 		.space	4
- 228              		.section	.data.buff,"aw"
- 229              		.align	2
- 230              		.set	.LANCHOR0,. + 0
- 233              	buff:
- 234 0000 686F6C61 		.ascii	"hola\000"
- 234      00
- 235 0005 00000000 		.space	45
- 235      00000000 
- 235      00000000 
- 235      00000000 
- 235      00000000 
- 236              		.section	.rodata.blinkAttributes,"a"
- 237              		.align	2
- 238              		.set	.LANCHOR1,. + 0
- 241              	blinkAttributes:
- 242 0000 00000000 		.word	.LC1
- 243 0004 00000000 		.space	16
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s 			page 6
+  44:Core/drogui/test/freeRtosTest.c **** }
+ 187              		.loc 1 44 1 view .LVU24
+ 188 001e 08BD     		pop	{r3, pc}
+ 189              	.L14:
+ 190              		.align	2
+ 191              	.L13:
+ 192 0020 00000000 		.word	.LANCHOR1
+ 193 0024 00000000 		.word	blinkTask
+ 194 0028 00000000 		.word	.LANCHOR2
+ 195 002c 00000000 		.word	.LANCHOR3
+ 196 0030 00000000 		.word	debugTask
+ 197 0034 00000000 		.word	.LANCHOR4
+ 198              		.cfi_endproc
+ 199              	.LFE183:
+ 201              		.global	buff
+ 202              		.global	blinkAttributes
+ 203              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 204              		.align	2
+ 205              	.LC1:
+ 206 0000 626C696E 		.ascii	"blinkTask\000"
+ 206      6B546173 
+ 206      6B00
+ 207              		.global	blinkHandle
+ 208              		.global	debugAttributes
+ 209 000a 0000     		.align	2
+ 210              	.LC2:
+ 211 000c 64656275 		.ascii	"debugTask\000"
+ 211      67546173 
+ 211      6B00
+ 212              		.global	debugHandle
+ 213              		.section	.bss.blinkHandle,"aw",%nobits
+ 214              		.align	2
+ 215              		.set	.LANCHOR2,. + 0
+ 218              	blinkHandle:
+ 219 0000 00000000 		.space	4
+ 220              		.section	.bss.debugHandle,"aw",%nobits
+ 221              		.align	2
+ 222              		.set	.LANCHOR4,. + 0
+ 225              	debugHandle:
+ 226 0000 00000000 		.space	4
+ 227              		.section	.data.buff,"aw"
+ 228              		.align	2
+ 229              		.set	.LANCHOR0,. + 0
+ 232              	buff:
+ 233 0000 686F6C61 		.ascii	"hola\012\000"
+ 233      0A00
+ 234 0006 00000000 		.space	44
+ 234      00000000 
+ 234      00000000 
+ 234      00000000 
+ 234      00000000 
+ 235              		.section	.rodata.blinkAttributes,"a"
+ 236              		.align	2
+ 237              		.set	.LANCHOR1,. + 0
+ 240              	blinkAttributes:
+ 241 0000 00000000 		.word	.LC1
+ 242 0004 00000000 		.space	16
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s 			page 6
 
 
- 243      00000000 
- 243      00000000 
- 243      00000000 
- 244 0014 00020000 		.word	512
- 245 0018 18000000 		.word	24
- 246 001c 00000000 		.space	8
- 246      00000000 
- 247              		.section	.rodata.debugAttributes,"a"
- 248              		.align	2
- 249              		.set	.LANCHOR3,. + 0
- 252              	debugAttributes:
- 253 0000 0C000000 		.word	.LC2
- 254 0004 00000000 		.space	16
- 254      00000000 
- 254      00000000 
- 254      00000000 
- 255 0014 00040000 		.word	1024
- 256 0018 18000000 		.word	24
- 257 001c 00000000 		.space	8
- 257      00000000 
- 258              		.text
- 259              	.Letext0:
- 260              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 261              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 262              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
- 263              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
- 264              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
- 265              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h"
- 266              		.file 8 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
- 267              		.file 9 "Core/drogui/include/sensorsTasks.h"
- 268              		.file 10 "Core/Inc/usart.h"
- 269              		.file 11 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
- 270              		.file 12 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
- 271              		.file 13 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_gpio.h"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s 			page 7
+ 242      00000000 
+ 242      00000000 
+ 242      00000000 
+ 243 0014 00020000 		.word	512
+ 244 0018 18000000 		.word	24
+ 245 001c 00000000 		.space	8
+ 245      00000000 
+ 246              		.section	.rodata.debugAttributes,"a"
+ 247              		.align	2
+ 248              		.set	.LANCHOR3,. + 0
+ 251              	debugAttributes:
+ 252 0000 0C000000 		.word	.LC2
+ 253 0004 00000000 		.space	16
+ 253      00000000 
+ 253      00000000 
+ 253      00000000 
+ 254 0014 00080000 		.word	2048
+ 255 0018 18000000 		.word	24
+ 256 001c 00000000 		.space	8
+ 256      00000000 
+ 257              		.text
+ 258              	.Letext0:
+ 259              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 260              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 261              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
+ 262              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
+ 263              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
+ 264              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h"
+ 265              		.file 8 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
+ 266              		.file 9 "Core/drogui/include/MPU9250.h"
+ 267              		.file 10 "Core/Inc/usart.h"
+ 268              		.file 11 "Core/drogui/include/sensorsTasks.h"
+ 269              		.file 12 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ 270              		.file 13 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ 271              		.file 14 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_gpio.h"
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 freeRtosTest.c
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:18     .text.blinkTask:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:26     .text.blinkTask:00000000 blinkTask
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:58     .text.blinkTask:00000014 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:64     .rodata.debugTask.str1.4:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:68     .text.debugTask:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:75     .text.debugTask:00000000 debugTask
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:140    .text.debugTask:00000050 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:150    .text.initSystem:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:157    .text.initSystem:00000000 initSystem
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:193    .text.initSystem:00000020 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:233    .data.buff:00000000 buff
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:241    .rodata.blinkAttributes:00000000 blinkAttributes
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:205    .rodata.str1.4:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:219    .bss.blinkHandle:00000000 blinkHandle
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:252    .rodata.debugAttributes:00000000 debugAttributes
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:226    .bss.debugHandle:00000000 debugHandle
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:215    .bss.blinkHandle:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:222    .bss.debugHandle:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:229    .data.buff:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:237    .rodata.blinkAttributes:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccMpzPEB.s:248    .rodata.debugAttributes:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:18     .text.blinkTask:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:26     .text.blinkTask:00000000 blinkTask
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:58     .text.blinkTask:00000014 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:64     .rodata.debugTask.str1.4:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:68     .text.debugTask:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:75     .text.debugTask:00000000 debugTask
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:140    .text.debugTask:00000054 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:149    .text.initSystem:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:156    .text.initSystem:00000000 initSystem
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:192    .text.initSystem:00000020 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:232    .data.buff:00000000 buff
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:240    .rodata.blinkAttributes:00000000 blinkAttributes
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:204    .rodata.str1.4:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:218    .bss.blinkHandle:00000000 blinkHandle
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:251    .rodata.debugAttributes:00000000 debugAttributes
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:225    .bss.debugHandle:00000000 debugHandle
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:214    .bss.blinkHandle:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:221    .bss.debugHandle:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:228    .data.buff:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:236    .rodata.blinkAttributes:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccf6bjE9.s:247    .rodata.debugAttributes:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_TogglePin
@@ -369,8 +370,7 @@ __aeabi_f2d
 sprintf
 strlen
 HAL_UART_Transmit
+myIMU
 gx
-gz
-gy
-huart1
+huart2
 osThreadNew

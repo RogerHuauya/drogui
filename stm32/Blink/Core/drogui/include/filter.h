@@ -18,11 +18,11 @@ typedef struct _dNotchFilter{
     float state[4];
     int head;
     uint8_t exponent;
-    arm_cfft_radix2_instance_f32 fft;
+    arm_rfft_fast_instance_f32 fft;
     arm_biquad_cascade_df2T_instance_f32 f;
 }dNotchFilter;
 
-void initFilter(filter* f, int n, float* a, float* b);
+void initFilter(filter* f, int n, float* k, float* v);
 float computeFilter(filter *f, float x);
 
 

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
   27:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   lines are not active and the I/O ports are configured in input floating mode.
   28:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   
   29:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   [..]   
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 2
 
 
   30:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   All GPIO pins have weak internal pull-up and pull-down resistors, which can be 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
   84:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****     (#) The LSE oscillator pins OSC32_IN and OSC32_OUT can be used as general purpose 
   85:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****         (PC14 and PC15, respectively) when the LSE oscillator is off. The LSE has 
   86:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****         priority over the GPIO function.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 3
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 3
 
 
   87:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  141:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c **** /* Private functions ---------------------------------------------------------*/
  142:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c **** /* Exported functions --------------------------------------------------------*/
  143:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c **** /** @defgroup GPIO_Exported_Functions GPIO Exported Functions
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 4
 
 
  144:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   * @{
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
   44 0000 0023     		movs	r3, #0
   45              	.LVL1:
   46              		.loc 1 183 21 is_stmt 1 view .LVU11
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 5
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 5
 
 
   47              		.loc 1 183 3 is_stmt 0 view .LVU12
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  219:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****       if((GPIO_Init->Mode == GPIO_MODE_AF_PP) || (GPIO_Init->Mode == GPIO_MODE_AF_OD))
  220:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****       {
  221:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****         /* Check the Alternate function parameter */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 6
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 6
 
 
  222:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****         assert_param(IS_GPIO_AF(GPIO_Init->Alternate));
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
   89              		.loc 1 251 9 is_stmt 1 discriminator 40 view .LVU23
   90              		.loc 1 251 17 is_stmt 0 discriminator 40 view .LVU24
   91 0024 6FEA0C02 		mvn	r2, ip
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 7
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 7
 
 
   92              		.loc 1 251 14 discriminator 40 view .LVU25
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  265:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c **** 
  266:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****         /* Clear Rising Falling edge configuration */
  267:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****         temp = EXTI->RTSR;
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 8
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 8
 
 
  133              		.loc 1 267 9 is_stmt 1 view .LVU44
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  280:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****         }
  281:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****         EXTI->FTSR = temp;
  175              		.loc 1 281 9 is_stmt 1 view .LVU64
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 9
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 9
 
 
  176              		.loc 1 281 20 is_stmt 0 view .LVU65
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  215 009e 01D9     		bls	.L4
  195:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****       {
  216              		.loc 1 195 51 view .LVU81
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 10
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 10
 
 
  217 00a0 122C     		cmp	r4, #18
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  253              		.loc 1 208 9 is_stmt 1 view .LVU99
  208:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****         GPIOx->OTYPER = temp;
  254              		.loc 1 208 29 is_stmt 0 view .LVU100
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 11
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 11
 
 
  255 00be 4C68     		ldr	r4, [r1, #4]
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  292              		.loc 1 216 7 is_stmt 1 view .LVU117
  216:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c **** 
  293              		.loc 1 216 20 is_stmt 0 view .LVU118
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 12
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 12
 
 
  294 00e4 C460     		str	r4, [r0, #12]
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  331              		.loc 1 228 9 is_stmt 1 view .LVU135
  228:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****       }
  332              		.loc 1 228 35 is_stmt 0 view .LVU136
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 13
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 13
 
 
  333 010c 40F82540 		str	r4, [r0, r5, lsl #2]
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  370 012e 44F48044 		orr	r4, r4, #16384
  371 0132 5464     		str	r4, [r2, #68]
  372              	.LVL42:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 14
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 14
 
 
  242:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c **** 
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  412 016c 20D0     		beq	.L15
  246:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****         SYSCFG->EXTICR[position >> 2] = temp;
  413              		.loc 1 246 29 discriminator 5 view .LVU169
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 15
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 15
 
 
  414 016e 02F58062 		add	r2, r2, #1024
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  459 01ba 2BE7     		b	.L7
  460              	.L18:
  461 01bc 0522     		movs	r2, #5
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 16
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 16
 
 
  462 01be 29E7     		b	.L7
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  288:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   * @brief  De-initializes the GPIOx peripheral registers to their default reset values.
  289:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   * @param  GPIOx where x can be (A..K) to select the GPIO peripheral.
  290:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   * @param  GPIO_Pin specifies the port bit to be written.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 17
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 17
 
 
  291:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   *          This parameter can be one of GPIO_PIN_x where x can be (0..15).
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  315:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****       tmp = SYSCFG->EXTICR[position >> 2];
  316:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****       tmp &= (((uint32_t)0x0F) << (4 * (position & 0x03)));
  317:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****       if(tmp == ((uint32_t)(GPIO_GET_INDEX(GPIOx)) << (4 * (position & 0x03))))
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 18
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 18
 
 
  541              		.loc 1 317 29 view .LVU192
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  576 003e 0F25     		movs	r5, #15
  577 0040 B540     		lsls	r5, r5, r6
  578              		.loc 1 336 33 view .LVU206
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 19
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 19
 
 
  579 0042 24EA0504 		bic	r4, r4, r5
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  616 006c 02EA0106 		and	r6, r2, r1
  617              	.LVL57:
  312:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****     {
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 20
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 20
 
 
  618              		.loc 1 312 5 is_stmt 1 view .LVU222
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  317:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****       {
  658              		.loc 1 317 29 discriminator 7 view .LVU237
  659 00b2 05F58065 		add	r5, r5, #1024
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 21
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 21
 
 
  660 00b6 A842     		cmp	r0, r5
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  708 0104 85E7     		b	.L34
  709              	.L51:
  320:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****         EXTI->EMR &= ~((uint32_t)iocurrent);
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 22
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 22
 
 
  710              		.loc 1 320 9 is_stmt 1 view .LVU244
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  749              	.LVL64:
  750              	.L50:
  751              	.LCFI5:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 23
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 23
 
 
  752              		.cfi_def_cfa_offset 0
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  782              		@ args = 0, pretend = 0, frame = 0
  783              		@ frame_needed = 0, uses_anonymous_args = 0
  784              		@ link register save eliminated.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 24
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 24
 
 
  375:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   GPIO_PinState bitstatus;
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  396:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   *         the read and the modify access.
  397:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   *
  398:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   * @param  GPIOx where x can be (A..K) to select the GPIO peripheral.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 25
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 25
 
 
  399:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   * @param  GPIO_Pin specifies the port bit to be written.
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  852              		.fpu fpv5-sp-d16
  854              	HAL_GPIO_TogglePin:
  855              	.LVL71:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 26
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 26
 
 
  856              	.LFB145:
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  892              	.LVL74:
  893              	.LFB146:
  442:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 27
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 27
 
 
  443:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c **** /**
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  922 0014 019B     		ldr	r3, [sp, #4]
  923 0016 C361     		str	r3, [r0, #28]
  469:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   /* Read LCKR register. This read is mandatory to complete key lock sequence */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 28
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 28
 
 
  470:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   tmp = GPIOx->LCKR;
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  966              	HAL_GPIO_EXTI_Callback:
  967              	.LVL78:
  968              	.LFB148:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 29
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 29
 
 
  482:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c **** 
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  994              		@ frame_needed = 0, uses_anonymous_args = 0
  489:Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.c ****   /* EXTI line interrupt detected */
  995              		.loc 1 489 1 is_stmt 0 view .LVU319
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 30
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 30
 
 
  996 0000 08B5     		push	{r3, lr}
@@ -1788,29 +1788,29 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 1
  1034              		.file 5 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f7xx.h"
  1035              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
  1036              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_gpio.h"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s 			page 31
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s 			page 31
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f7xx_hal_gpio.c
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:18     .text.HAL_GPIO_Init:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:26     .text.HAL_GPIO_Init:00000000 HAL_GPIO_Init
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:494    .text.HAL_GPIO_Init:000001d4 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:502    .text.HAL_GPIO_DeInit:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:509    .text.HAL_GPIO_DeInit:00000000 HAL_GPIO_DeInit
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:763    .text.HAL_GPIO_DeInit:00000140 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:770    .text.HAL_GPIO_ReadPin:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:777    .text.HAL_GPIO_ReadPin:00000000 HAL_GPIO_ReadPin
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:810    .text.HAL_GPIO_WritePin:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:817    .text.HAL_GPIO_WritePin:00000000 HAL_GPIO_WritePin
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:847    .text.HAL_GPIO_TogglePin:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:854    .text.HAL_GPIO_TogglePin:00000000 HAL_GPIO_TogglePin
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:884    .text.HAL_GPIO_LockPin:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:891    .text.HAL_GPIO_LockPin:00000000 HAL_GPIO_LockPin
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:959    .text.HAL_GPIO_EXTI_Callback:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:966    .text.HAL_GPIO_EXTI_Callback:00000000 HAL_GPIO_EXTI_Callback
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:981    .text.HAL_GPIO_EXTI_IRQHandler:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:988    .text.HAL_GPIO_EXTI_IRQHandler:00000000 HAL_GPIO_EXTI_IRQHandler
-C:\Users\GUILLE~1\AppData\Local\Temp\ccJTOt3W.s:1025   .text.HAL_GPIO_EXTI_IRQHandler:00000018 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:18     .text.HAL_GPIO_Init:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:26     .text.HAL_GPIO_Init:00000000 HAL_GPIO_Init
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:494    .text.HAL_GPIO_Init:000001d4 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:502    .text.HAL_GPIO_DeInit:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:509    .text.HAL_GPIO_DeInit:00000000 HAL_GPIO_DeInit
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:763    .text.HAL_GPIO_DeInit:00000140 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:770    .text.HAL_GPIO_ReadPin:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:777    .text.HAL_GPIO_ReadPin:00000000 HAL_GPIO_ReadPin
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:810    .text.HAL_GPIO_WritePin:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:817    .text.HAL_GPIO_WritePin:00000000 HAL_GPIO_WritePin
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:847    .text.HAL_GPIO_TogglePin:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:854    .text.HAL_GPIO_TogglePin:00000000 HAL_GPIO_TogglePin
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:884    .text.HAL_GPIO_LockPin:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:891    .text.HAL_GPIO_LockPin:00000000 HAL_GPIO_LockPin
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:959    .text.HAL_GPIO_EXTI_Callback:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:966    .text.HAL_GPIO_EXTI_Callback:00000000 HAL_GPIO_EXTI_Callback
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:981    .text.HAL_GPIO_EXTI_IRQHandler:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:988    .text.HAL_GPIO_EXTI_IRQHandler:00000000 HAL_GPIO_EXTI_IRQHandler
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81Tg9a.s:1025   .text.HAL_GPIO_EXTI_IRQHandler:00000018 $d
 
 NO UNDEFINED SYMBOLS

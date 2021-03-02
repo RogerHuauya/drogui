@@ -33,7 +33,7 @@ void accelTask(){
         setReg(ACC_X,(float)(ax));
         setReg(ACC_Y,(float)(ay));
         setReg(ACC_Z,(float)(az));
-        osDelay(1);
+        osDelay(10);
     }
 }
 
@@ -42,7 +42,7 @@ void gyroTask(){
         readGyro(&myIMU);
 
         gx = computeFilter(&filter_gx, myIMU.gx);
-        gy = computeFilter(&filter_gy, myIMU.gy);
+/*        gy = computeFilter(&filter_gy, myIMU.gy);
         gz = computeFilter(&filter_gz, myIMU.gz);
 
         
@@ -56,7 +56,7 @@ void gyroTask(){
 
         gx = computeDNotch(&dnotch_gx2, gx);
         gy = computeDNotch(&dnotch_gy2, gy);
-        gz = computeDNotch(&dnotch_gz2, gz);
+        gz = computeDNotch(&dnotch_gz2, gz);*/
         
         gx /= 5;
         gy /= 5;
@@ -117,7 +117,7 @@ const osThreadAttr_t accelAttributes = {    .name = "accelTask", \
 
 osThreadId_t gyroHandle;
 const osThreadAttr_t gyroAttributes = {    .name = "gyroTask",\
-                                            .stack_size = 128 * 4,\
+                                            .stack_size = 256 * 4,\
                                             .priority = (osPriority_t) osPriorityHigh7};
 
 osThreadId_t magHandle;
@@ -136,7 +136,7 @@ void initSensorsTasks(){
 
 
     initFilter(&filter_gx, sz_1_10 , k_1_10, v_1_10);
-    initFilter(&filter_gy, sz_1_10 , k_1_10, v_1_10);
+ /*   initFilter(&filter_gy, sz_1_10 , k_1_10, v_1_10);
     initFilter(&filter_gz, sz_1_10 , k_1_10, v_1_10);
 
     initFilter(&filter_gx2, sz_3_10 , k_3_10, v_3_10);
@@ -163,17 +163,17 @@ void initSensorsTasks(){
     
     initFilter(&filter_roll, sz_1_10, k_1_10, v_1_10);
     initFilter(&filter_pitch, sz_1_10, k_1_10, v_1_10);
-    initFilter(&filter_yaw, sz_1_10, k_1_10, v_1_10);
+    initFilter(&filter_yaw, sz_1_10, k_1_10, v_1_10);*/
 
 
     calibrateGyro(&myIMU);
     //calibrateAccel(&myIMU);
     //calibrateMag(&myIMU);
     
-    accelHandle = osThreadNew(accelTask, NULL, &accelAttributes);
+    //accelHandle = osThreadNew(accelTask, NULL, &accelAttributes);
     gyroHandle = osThreadNew(gyroTask, NULL, &gyroAttributes);
-    magHandle = osThreadNew(magTask, NULL, &magAttributes);
-    rpyHandle = osThreadNew(rpyTask, NULL, &rpyAttributes);
+    /*magHandle = osThreadNew(magTask, NULL, &magAttributes);
+    rpyHandle = osThreadNew(rpyTask, NULL, &rpyAttributes);*/
     /*initTimer(&timer_accel, &accelInterrupt, 1000);
     initTimer(&timer_gyro, &gyroInterrupt, 1000);
     initTimer(&timer_mag, &magInterrupt, 10);

@@ -11,7 +11,7 @@
 
 osThreadId_t debugHandle;
 const osThreadAttr_t debugAttributes = {    .name = "debugTask", \
-                                            .stack_size = 256 * 4, \
+                                            .stack_size = 512 * 4, \
                                             .priority = (osPriority_t) osPriorityNormal};
 
 
@@ -27,12 +27,13 @@ void blinkTask(void *argument){
         osDelay(1000);
     }
 }
-char buff[50] = "hola";
+
+char buff[50] = "hola\n";
 void debugTask(void *argument){
     
     for(;;){
-        sprintf(buff, "%f\t%f\t%f\n", gx, gy, gz);
-        HAL_UART_Transmit(&huart1, (uint8_t*) buff, strlen(buff), 100);
+        sprintf(buff, "%f\t%f ;\n", myIMU.gx/5, gx);
+        HAL_UART_Transmit(&huart2, (uint8_t*) buff, strlen(buff), 100);
         osDelay(10);
     }
 }

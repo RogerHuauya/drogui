@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -27,17 +27,22 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 1
   24              		.fpu fpv5-sp-d16
   26              	initFilter:
   27              	.LVL0:
-  28              	.LFB174:
+  28              	.LFB177:
   29              		.file 1 "Core/drogui/src/filter.c"
    1:Core/drogui/src/filter.c **** #include "filter.h"
    2:Core/drogui/src/filter.c **** #include "utils.h"
    3:Core/drogui/src/filter.c **** #include <stdlib.h>
-   4:Core/drogui/src/filter.c **** void initFilter(filter* f, int n, float* k, float* v){
-  30              		.loc 1 4 54 view -0
+   4:Core/drogui/src/filter.c **** #include <stdio.h>
+   5:Core/drogui/src/filter.c **** #include <usart.h>
+   6:Core/drogui/src/filter.c **** #include <string.h>
+   7:Core/drogui/src/filter.c **** 
+   8:Core/drogui/src/filter.c **** 
+   9:Core/drogui/src/filter.c **** void initFilter(filter* f, int n, float* k, float* v){
+  30              		.loc 1 9 54 view -0
   31              		.cfi_startproc
   32              		@ args = 0, pretend = 0, frame = 0
   33              		@ frame_needed = 0, uses_anonymous_args = 0
-  34              		.loc 1 4 54 is_stmt 0 view .LVU1
+  34              		.loc 1 9 54 is_stmt 0 view .LVU1
   35 0000 F0B5     		push	{r4, r5, r6, r7, lr}
   36              	.LCFI0:
   37              		.cfi_def_cfa_offset 20
@@ -53,24 +58,24 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 1
   47 0006 0D46     		mov	r5, r1
   48 0008 1646     		mov	r6, r2
   49 000a 1F46     		mov	r7, r3
-   5:Core/drogui/src/filter.c ****     f->state = (float*) calloc(n+1, sizeof(float));
-  50              		.loc 1 5 5 is_stmt 1 view .LVU2
-  51              		.loc 1 5 25 is_stmt 0 view .LVU3
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 2
+
+
+  10:Core/drogui/src/filter.c ****     f->state = (float*) calloc(n, sizeof(float));
+  50              		.loc 1 10 5 is_stmt 1 view .LVU2
+  51              		.loc 1 10 25 is_stmt 0 view .LVU3
   52 000c 0421     		movs	r1, #4
   53              	.LVL1:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 2
-
-
-  54              		.loc 1 5 25 view .LVU4
-  55 000e 681C     		adds	r0, r5, #1
+  54              		.loc 1 10 25 view .LVU4
+  55 000e 2846     		mov	r0, r5
   56              	.LVL2:
-  57              		.loc 1 5 25 view .LVU5
+  57              		.loc 1 10 25 view .LVU5
   58 0010 FFF7FEFF 		bl	calloc
   59              	.LVL3:
-  60              		.loc 1 5 14 view .LVU6
+  60              		.loc 1 10 14 view .LVU6
   61 0014 2061     		str	r0, [r4, #16]
-   6:Core/drogui/src/filter.c ****     arm_iir_lattice_init_f32(&(f->f), n, k, v, f->state, 1);
-  62              		.loc 1 6 5 is_stmt 1 view .LVU7
+  11:Core/drogui/src/filter.c ****     arm_iir_lattice_init_f32(&(f->f), n, k, v, f->state, 1);
+  62              		.loc 1 11 5 is_stmt 1 view .LVU7
   63 0016 0123     		movs	r3, #1
   64 0018 0193     		str	r3, [sp, #4]
   65 001a 0090     		str	r0, [sp]
@@ -80,16 +85,16 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 1
   69 0022 2046     		mov	r0, r4
   70 0024 FFF7FEFF 		bl	arm_iir_lattice_init_f32
   71              	.LVL4:
-   7:Core/drogui/src/filter.c **** }
-  72              		.loc 1 7 1 is_stmt 0 view .LVU8
+  12:Core/drogui/src/filter.c **** }
+  72              		.loc 1 12 1 is_stmt 0 view .LVU8
   73 0028 03B0     		add	sp, sp, #12
   74              	.LCFI2:
   75              		.cfi_def_cfa_offset 20
   76              		@ sp needed
   77 002a F0BD     		pop	{r4, r5, r6, r7, pc}
-  78              		.loc 1 7 1 view .LVU9
+  78              		.loc 1 12 1 view .LVU9
   79              		.cfi_endproc
-  80              	.LFE174:
+  80              	.LFE177:
   82              		.section	.text.computeFilter,"ax",%progbits
   83              		.align	1
   84              		.global	computeFilter
@@ -99,39 +104,39 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 1
   88              		.fpu fpv5-sp-d16
   90              	computeFilter:
   91              	.LVL5:
-  92              	.LFB175:
-   8:Core/drogui/src/filter.c **** 
-   9:Core/drogui/src/filter.c **** 
-  10:Core/drogui/src/filter.c **** float computeFilter(filter *f, float x){
-  93              		.loc 1 10 40 is_stmt 1 view -0
+  92              	.LFB178:
+  13:Core/drogui/src/filter.c **** 
+  14:Core/drogui/src/filter.c **** 
+  15:Core/drogui/src/filter.c **** float computeFilter(filter *f, float x){
+  93              		.loc 1 15 40 is_stmt 1 view -0
   94              		.cfi_startproc
   95              		@ args = 0, pretend = 0, frame = 16
   96              		@ frame_needed = 0, uses_anonymous_args = 0
-  97              		.loc 1 10 40 is_stmt 0 view .LVU11
+  97              		.loc 1 15 40 is_stmt 0 view .LVU11
   98 0000 00B5     		push	{lr}
   99              	.LCFI3:
  100              		.cfi_def_cfa_offset 4
  101              		.cfi_offset 14, -4
  102 0002 85B0     		sub	sp, sp, #20
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 3
+
+
  103              	.LCFI4:
  104              		.cfi_def_cfa_offset 24
  105 0004 8DED010A 		vstr.32	s0, [sp, #4]
-  11:Core/drogui/src/filter.c ****     float ans;
- 106              		.loc 1 11 5 is_stmt 1 view .LVU12
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 3
-
-
-  12:Core/drogui/src/filter.c ****     arm_iir_lattice_f32(&(f->f), &x, &ans, 1);
- 107              		.loc 1 12 5 view .LVU13
+  16:Core/drogui/src/filter.c ****     float ans;
+ 106              		.loc 1 16 5 is_stmt 1 view .LVU12
+  17:Core/drogui/src/filter.c ****     arm_iir_lattice_f32(&(f->f), &x, &ans, 1);
+ 107              		.loc 1 17 5 view .LVU13
  108 0008 0123     		movs	r3, #1
  109 000a 03AA     		add	r2, sp, #12
  110 000c 01A9     		add	r1, sp, #4
  111 000e FFF7FEFF 		bl	arm_iir_lattice_f32
  112              	.LVL6:
-  13:Core/drogui/src/filter.c ****     return ans;
- 113              		.loc 1 13 5 view .LVU14
-  14:Core/drogui/src/filter.c **** }
- 114              		.loc 1 14 1 is_stmt 0 view .LVU15
+  18:Core/drogui/src/filter.c ****     return ans;
+ 113              		.loc 1 18 5 view .LVU14
+  19:Core/drogui/src/filter.c **** }
+ 114              		.loc 1 19 1 is_stmt 0 view .LVU15
  115 0012 9DED030A 		vldr.32	s0, [sp, #12]
  116 0016 05B0     		add	sp, sp, #20
  117              	.LCFI5:
@@ -139,7 +144,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 1
  119              		@ sp needed
  120 0018 5DF804FB 		ldr	pc, [sp], #4
  121              		.cfi_endproc
- 122              	.LFE175:
+ 122              	.LFE178:
  124              		.section	.text.initDNotchFilter,"ax",%progbits
  125              		.align	1
  126              		.global	initDNotchFilter
@@ -149,17 +154,17 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 1
  130              		.fpu fpv5-sp-d16
  132              	initDNotchFilter:
  133              	.LVL7:
- 134              	.LFB176:
-  15:Core/drogui/src/filter.c **** 
-  16:Core/drogui/src/filter.c **** 
-  17:Core/drogui/src/filter.c **** 
-  18:Core/drogui/src/filter.c **** 
-  19:Core/drogui/src/filter.c **** void initDNotchFilter(dNotchFilter* df, int n, float threshold, float fs, float a, float zeta){
- 135              		.loc 1 19 95 is_stmt 1 view -0
+ 134              	.LFB179:
+  20:Core/drogui/src/filter.c **** 
+  21:Core/drogui/src/filter.c **** 
+  22:Core/drogui/src/filter.c **** 
+  23:Core/drogui/src/filter.c **** 
+  24:Core/drogui/src/filter.c **** void initDNotchFilter(dNotchFilter* df, int n, float threshold, float fs, float a, float zeta){
+ 135              		.loc 1 24 95 is_stmt 1 view -0
  136              		.cfi_startproc
  137              		@ args = 0, pretend = 0, frame = 0
  138              		@ frame_needed = 0, uses_anonymous_args = 0
- 139              		.loc 1 19 95 is_stmt 0 view .LVU17
+ 139              		.loc 1 24 95 is_stmt 0 view .LVU17
  140 0000 38B5     		push	{r3, r4, r5, lr}
  141              	.LCFI6:
  142              		.cfi_def_cfa_offset 16
@@ -169,841 +174,889 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 1
  146              		.cfi_offset 14, -4
  147 0002 0446     		mov	r4, r0
  148 0004 0D46     		mov	r5, r1
-  20:Core/drogui/src/filter.c ****     df -> n = n;
- 149              		.loc 1 20 5 is_stmt 1 view .LVU18
- 150              		.loc 1 20 13 is_stmt 0 view .LVU19
+  25:Core/drogui/src/filter.c ****     df -> n = n;
+ 149              		.loc 1 25 5 is_stmt 1 view .LVU18
+ 150              		.loc 1 25 13 is_stmt 0 view .LVU19
  151 0006 4160     		str	r1, [r0, #4]
-  21:Core/drogui/src/filter.c ****     df -> a = a;
- 152              		.loc 1 21 5 is_stmt 1 view .LVU20
- 153              		.loc 1 21 13 is_stmt 0 view .LVU21
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 4
+
+
+  26:Core/drogui/src/filter.c ****     df -> a = a;
+ 152              		.loc 1 26 5 is_stmt 1 view .LVU20
+ 153              		.loc 1 26 13 is_stmt 0 view .LVU21
  154 0008 80ED041A 		vstr.32	s2, [r0, #16]
-  22:Core/drogui/src/filter.c ****     df -> zeta = zeta;
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 4
-
-
- 155              		.loc 1 22 5 is_stmt 1 view .LVU22
- 156              		.loc 1 22 16 is_stmt 0 view .LVU23
+  27:Core/drogui/src/filter.c ****     df -> zeta = zeta;
+ 155              		.loc 1 27 5 is_stmt 1 view .LVU22
+ 156              		.loc 1 27 16 is_stmt 0 view .LVU23
  157 000c C0ED051A 		vstr.32	s3, [r0, #20]
-  23:Core/drogui/src/filter.c ****     df -> fs = fs;
- 158              		.loc 1 23 5 is_stmt 1 view .LVU24
- 159              		.loc 1 23 14 is_stmt 0 view .LVU25
+  28:Core/drogui/src/filter.c ****     df -> fs = fs;
+ 158              		.loc 1 28 5 is_stmt 1 view .LVU24
+ 159              		.loc 1 28 14 is_stmt 0 view .LVU25
  160 0010 C0ED020A 		vstr.32	s1, [r0, #8]
-  24:Core/drogui/src/filter.c ****     df -> threshold = threshold;
- 161              		.loc 1 24 5 is_stmt 1 view .LVU26
- 162              		.loc 1 24 21 is_stmt 0 view .LVU27
+  29:Core/drogui/src/filter.c ****     df -> threshold = threshold;
+ 161              		.loc 1 29 5 is_stmt 1 view .LVU26
+ 162              		.loc 1 29 21 is_stmt 0 view .LVU27
  163 0014 80ED030A 		vstr.32	s0, [r0, #12]
-  25:Core/drogui/src/filter.c ****     
-  26:Core/drogui/src/filter.c ****     df -> coeffs[0] = 1;
- 164              		.loc 1 26 5 is_stmt 1 view .LVU28
- 165              		.loc 1 26 21 is_stmt 0 view .LVU29
+  30:Core/drogui/src/filter.c ****     
+  31:Core/drogui/src/filter.c ****     df -> coeffs[0] = 1;
+ 164              		.loc 1 31 5 is_stmt 1 view .LVU28
+ 165              		.loc 1 31 21 is_stmt 0 view .LVU29
  166 0018 4FF07E53 		mov	r3, #1065353216
  167 001c 8361     		str	r3, [r0, #24]	@ float
-  27:Core/drogui/src/filter.c ****     df -> coeffs[1] = df -> coeffs[2] = df -> coeffs[3] = df -> coeffs[4] = 0;
- 168              		.loc 1 27 5 is_stmt 1 view .LVU30
- 169              		.loc 1 27 75 is_stmt 0 view .LVU31
+  32:Core/drogui/src/filter.c ****     df -> coeffs[1] = df -> coeffs[2] = df -> coeffs[3] = df -> coeffs[4] = 0;
+ 168              		.loc 1 32 5 is_stmt 1 view .LVU30
+ 169              		.loc 1 32 75 is_stmt 0 view .LVU31
  170 001e 0023     		movs	r3, #0
  171 0020 8362     		str	r3, [r0, #40]	@ float
- 172              		.loc 1 27 57 view .LVU32
+ 172              		.loc 1 32 57 view .LVU32
  173 0022 4362     		str	r3, [r0, #36]	@ float
- 174              		.loc 1 27 39 view .LVU33
+ 174              		.loc 1 32 39 view .LVU33
  175 0024 0362     		str	r3, [r0, #32]	@ float
- 176              		.loc 1 27 21 view .LVU34
+ 176              		.loc 1 32 21 view .LVU34
  177 0026 C361     		str	r3, [r0, #28]	@ float
-  28:Core/drogui/src/filter.c ****     df -> state[0] = df -> state[1] = df -> state[2] = df -> state[3] =  0;
- 178              		.loc 1 28 5 is_stmt 1 view .LVU35
- 179              		.loc 1 28 71 is_stmt 0 view .LVU36
+  33:Core/drogui/src/filter.c ****     df -> state[0] = df -> state[1] = df -> state[2] = df -> state[3] =  0;
+ 178              		.loc 1 33 5 is_stmt 1 view .LVU35
+ 179              		.loc 1 33 71 is_stmt 0 view .LVU36
  180 0028 8363     		str	r3, [r0, #56]	@ float
- 181              		.loc 1 28 54 view .LVU37
+ 181              		.loc 1 33 54 view .LVU37
  182 002a 4363     		str	r3, [r0, #52]	@ float
- 183              		.loc 1 28 37 view .LVU38
+ 183              		.loc 1 33 37 view .LVU38
  184 002c 0363     		str	r3, [r0, #48]	@ float
- 185              		.loc 1 28 20 view .LVU39
+ 185              		.loc 1 33 20 view .LVU39
  186 002e C362     		str	r3, [r0, #44]	@ float
-  29:Core/drogui/src/filter.c **** 
-  30:Core/drogui/src/filter.c ****     df -> values = (float*) calloc(n, sizeof(float));
- 187              		.loc 1 30 5 is_stmt 1 view .LVU40
- 188              		.loc 1 30 29 is_stmt 0 view .LVU41
+  34:Core/drogui/src/filter.c **** 
+  35:Core/drogui/src/filter.c ****     df -> values = (float*) calloc(n, sizeof(float));
+ 187              		.loc 1 35 5 is_stmt 1 view .LVU40
+ 188              		.loc 1 35 29 is_stmt 0 view .LVU41
  189 0030 0421     		movs	r1, #4
  190              	.LVL8:
- 191              		.loc 1 30 29 view .LVU42
+ 191              		.loc 1 35 29 view .LVU42
  192 0032 2846     		mov	r0, r5
  193              	.LVL9:
- 194              		.loc 1 30 29 view .LVU43
+ 194              		.loc 1 35 29 view .LVU43
  195 0034 FFF7FEFF 		bl	calloc
  196              	.LVL10:
- 197              		.loc 1 30 18 view .LVU44
+ 197              		.loc 1 35 18 view .LVU44
  198 0038 2060     		str	r0, [r4]
-  31:Core/drogui/src/filter.c ****     df -> head = 0;
- 199              		.loc 1 31 5 is_stmt 1 view .LVU45
- 200              		.loc 1 31 16 is_stmt 0 view .LVU46
- 201 003a 0022     		movs	r2, #0
- 202 003c E263     		str	r2, [r4, #60]
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 5
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 5
 
 
-  32:Core/drogui/src/filter.c ****     arm_cfft_radix2_init_f32(&(df->fft), n, 0, 0);
- 203              		.loc 1 32 5 is_stmt 1 view .LVU47
- 204 003e 1346     		mov	r3, r2
- 205 0040 A9B2     		uxth	r1, r5
- 206 0042 04F14400 		add	r0, r4, #68
- 207 0046 FFF7FEFF 		bl	arm_cfft_radix2_init_f32
- 208              	.LVL11:
-  33:Core/drogui/src/filter.c ****     arm_biquad_cascade_df2T_init_f32(&(df->f), 1, df->coeffs, df->state);
- 209              		.loc 1 33 5 view .LVU48
- 210 004a 04F12C03 		add	r3, r4, #44
- 211 004e 04F11802 		add	r2, r4, #24
- 212 0052 0121     		movs	r1, #1
- 213 0054 04F15800 		add	r0, r4, #88
- 214 0058 FFF7FEFF 		bl	arm_biquad_cascade_df2T_init_f32
- 215              	.LVL12:
-  34:Core/drogui/src/filter.c **** }
- 216              		.loc 1 34 1 is_stmt 0 view .LVU49
- 217 005c 38BD     		pop	{r3, r4, r5, pc}
- 218              		.loc 1 34 1 view .LVU50
- 219              		.cfi_endproc
- 220              	.LFE176:
- 222              		.global	__aeabi_f2d
- 223              		.global	__aeabi_dmul
- 224              		.global	__aeabi_d2f
- 225              		.section	.text.updateCoeffNotch,"ax",%progbits
- 226              		.align	1
- 227              		.global	updateCoeffNotch
- 228              		.syntax unified
- 229              		.thumb
- 230              		.thumb_func
- 231              		.fpu fpv5-sp-d16
- 233              	updateCoeffNotch:
- 234              	.LVL13:
- 235              	.LFB177:
-  35:Core/drogui/src/filter.c **** 
-  36:Core/drogui/src/filter.c **** void updateCoeffNotch(dNotchFilter *df, float fc){
- 236              		.loc 1 36 50 is_stmt 1 view -0
- 237              		.cfi_startproc
- 238              		@ args = 0, pretend = 0, frame = 0
- 239              		@ frame_needed = 0, uses_anonymous_args = 0
- 240              		.loc 1 36 50 is_stmt 0 view .LVU52
- 241 0000 10B5     		push	{r4, lr}
- 242              	.LCFI7:
- 243              		.cfi_def_cfa_offset 8
- 244              		.cfi_offset 4, -8
- 245              		.cfi_offset 14, -4
- 246 0002 0446     		mov	r4, r0
- 247 0004 10EE100A 		vmov	r0, s0
- 248              	.LVL14:
-  37:Core/drogui/src/filter.c ****     
-  38:Core/drogui/src/filter.c ****     float wn = 2*pi*fc;
- 249              		.loc 1 38 5 is_stmt 1 view .LVU53
- 250              		.loc 1 38 20 is_stmt 0 view .LVU54
- 251 0008 FFF7FEFF 		bl	__aeabi_f2d
- 252              	.LVL15:
- 253              		.loc 1 38 20 view .LVU55
- 254 000c 2EA3     		adr	r3, .L9
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 6
+  36:Core/drogui/src/filter.c ****     df -> head = 0;
+ 199              		.loc 1 36 5 is_stmt 1 view .LVU45
+ 200              		.loc 1 36 16 is_stmt 0 view .LVU46
+ 201 003a 0023     		movs	r3, #0
+ 202 003c E363     		str	r3, [r4, #60]
+  37:Core/drogui/src/filter.c ****     arm_rfft_fast_init_f32(&(df->fft), n);
+ 203              		.loc 1 37 5 is_stmt 1 view .LVU47
+ 204 003e A9B2     		uxth	r1, r5
+ 205 0040 04F14400 		add	r0, r4, #68
+ 206 0044 FFF7FEFF 		bl	arm_rfft_fast_init_f32
+ 207              	.LVL11:
+  38:Core/drogui/src/filter.c ****     arm_biquad_cascade_df2T_init_f32(&(df->f), 1, df->coeffs, df->state);
+ 208              		.loc 1 38 5 view .LVU48
+ 209 0048 04F12C03 		add	r3, r4, #44
+ 210 004c 04F11802 		add	r2, r4, #24
+ 211 0050 0121     		movs	r1, #1
+ 212 0052 04F15C00 		add	r0, r4, #92
+ 213 0056 FFF7FEFF 		bl	arm_biquad_cascade_df2T_init_f32
+ 214              	.LVL12:
+  39:Core/drogui/src/filter.c **** }
+ 215              		.loc 1 39 1 is_stmt 0 view .LVU49
+ 216 005a 38BD     		pop	{r3, r4, r5, pc}
+ 217              		.loc 1 39 1 view .LVU50
+ 218              		.cfi_endproc
+ 219              	.LFE179:
+ 221              		.global	__aeabi_f2d
+ 222              		.global	__aeabi_dmul
+ 223              		.global	__aeabi_d2f
+ 224              		.section	.text.updateCoeffNotch,"ax",%progbits
+ 225              		.align	1
+ 226              		.global	updateCoeffNotch
+ 227              		.syntax unified
+ 228              		.thumb
+ 229              		.thumb_func
+ 230              		.fpu fpv5-sp-d16
+ 232              	updateCoeffNotch:
+ 233              	.LVL13:
+ 234              	.LFB180:
+  40:Core/drogui/src/filter.c **** 
+  41:Core/drogui/src/filter.c **** void updateCoeffNotch(dNotchFilter *df, float fc){
+ 235              		.loc 1 41 50 is_stmt 1 view -0
+ 236              		.cfi_startproc
+ 237              		@ args = 0, pretend = 0, frame = 0
+ 238              		@ frame_needed = 0, uses_anonymous_args = 0
+ 239              		.loc 1 41 50 is_stmt 0 view .LVU52
+ 240 0000 10B5     		push	{r4, lr}
+ 241              	.LCFI7:
+ 242              		.cfi_def_cfa_offset 8
+ 243              		.cfi_offset 4, -8
+ 244              		.cfi_offset 14, -4
+ 245 0002 0446     		mov	r4, r0
+ 246 0004 10EE100A 		vmov	r0, s0
+ 247              	.LVL14:
+  42:Core/drogui/src/filter.c ****     
+  43:Core/drogui/src/filter.c ****     float wn = 2*pi*fc;
+ 248              		.loc 1 43 5 is_stmt 1 view .LVU53
+ 249              		.loc 1 43 20 is_stmt 0 view .LVU54
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 6
 
 
- 255 000e D3E90023 		ldrd	r2, [r3]
- 256 0012 FFF7FEFF 		bl	__aeabi_dmul
- 257              	.LVL16:
- 258              		.loc 1 38 11 view .LVU56
- 259 0016 FFF7FEFF 		bl	__aeabi_d2f
- 260              	.LVL17:
- 261 001a 05EE100A 		vmov	s10, r0
- 262              	.LVL18:
-  39:Core/drogui/src/filter.c ****     float p = 2*(df->zeta)*wn + wn*wn;
- 263              		.loc 1 39 5 is_stmt 1 view .LVU57
- 264              		.loc 1 39 20 is_stmt 0 view .LVU58
- 265 001e D4ED057A 		vldr.32	s15, [r4, #20]
- 266              		.loc 1 39 16 view .LVU59
- 267 0022 77EEA77A 		vadd.f32	s15, s15, s15
- 268              		.loc 1 39 27 view .LVU60
- 269 0026 67EE857A 		vmul.f32	s15, s15, s10
- 270              		.loc 1 39 35 view .LVU61
- 271 002a 25EE056A 		vmul.f32	s12, s10, s10
- 272              		.loc 1 39 11 view .LVU62
- 273 002e 77EE867A 		vadd.f32	s15, s15, s12
- 274              	.LVL19:
-  40:Core/drogui/src/filter.c ****     float ts = 1/(df->fs);
- 275              		.loc 1 40 5 is_stmt 1 view .LVU63
- 276              		.loc 1 40 21 is_stmt 0 view .LVU64
- 277 0032 94ED027A 		vldr.32	s14, [r4, #8]
- 278              		.loc 1 40 11 view .LVU65
- 279 0036 F7EE004A 		vmov.f32	s9, #1.0e+0
- 280 003a C4EE875A 		vdiv.f32	s11, s9, s14
- 281              	.LVL20:
-  41:Core/drogui/src/filter.c ****     float q = wn*wn;
- 282              		.loc 1 41 5 is_stmt 1 view .LVU66
-  42:Core/drogui/src/filter.c ****     float n = wn*((df->a) +1/(df -> a));
- 283              		.loc 1 42 5 view .LVU67
- 284              		.loc 1 42 22 is_stmt 0 view .LVU68
- 285 003e D4ED046A 		vldr.32	s13, [r4, #16]
- 286              		.loc 1 42 29 view .LVU69
- 287 0042 84EEA67A 		vdiv.f32	s14, s9, s13
- 288              		.loc 1 42 27 view .LVU70
- 289 0046 36EE877A 		vadd.f32	s14, s13, s14
- 290              		.loc 1 42 11 view .LVU71
- 291 004a 27EE057A 		vmul.f32	s14, s14, s10
- 292              	.LVL21:
-  43:Core/drogui/src/filter.c ****     
-  44:Core/drogui/src/filter.c ****     df -> coeffs[0] = (4+p*ts*ts)/(4+2*n*ts + q*ts*ts);
- 293              		.loc 1 44 5 is_stmt 1 view .LVU72
- 294              		.loc 1 44 27 is_stmt 0 view .LVU73
- 295 004e 27EEA54A 		vmul.f32	s8, s15, s11
- 296              		.loc 1 44 30 view .LVU74
- 297 0052 24EE254A 		vmul.f32	s8, s8, s11
- 298              		.loc 1 44 25 view .LVU75
- 299 0056 F1EE004A 		vmov.f32	s9, #4.0e+0
- 300 005a 34EE244A 		vadd.f32	s8, s8, s9
- 301              		.loc 1 44 39 view .LVU76
- 302 005e 37EE077A 		vadd.f32	s14, s14, s14
- 303              	.LVL22:
- 304              		.loc 1 44 41 view .LVU77
- 305 0062 27EE257A 		vmul.f32	s14, s14, s11
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 7
+ 250 0008 FFF7FEFF 		bl	__aeabi_f2d
+ 251              	.LVL15:
+ 252              		.loc 1 43 20 view .LVU55
+ 253 000c 30A3     		adr	r3, .L9
+ 254 000e D3E90023 		ldrd	r2, [r3]
+ 255 0012 FFF7FEFF 		bl	__aeabi_dmul
+ 256              	.LVL16:
+ 257              		.loc 1 43 11 view .LVU56
+ 258 0016 FFF7FEFF 		bl	__aeabi_d2f
+ 259              	.LVL17:
+ 260 001a 05EE100A 		vmov	s10, r0
+ 261              	.LVL18:
+  44:Core/drogui/src/filter.c ****     float p = 2*(df->zeta)*wn + wn*wn;
+ 262              		.loc 1 44 5 is_stmt 1 view .LVU57
+ 263              		.loc 1 44 20 is_stmt 0 view .LVU58
+ 264 001e D4ED057A 		vldr.32	s15, [r4, #20]
+ 265              		.loc 1 44 16 view .LVU59
+ 266 0022 77EEA77A 		vadd.f32	s15, s15, s15
+ 267              		.loc 1 44 27 view .LVU60
+ 268 0026 67EE857A 		vmul.f32	s15, s15, s10
+ 269              		.loc 1 44 35 view .LVU61
+ 270 002a 25EE057A 		vmul.f32	s14, s10, s10
+ 271              		.loc 1 44 11 view .LVU62
+ 272 002e 77EE877A 		vadd.f32	s15, s15, s14
+ 273              	.LVL19:
+  45:Core/drogui/src/filter.c ****     float ts = 1/(df->fs);
+ 274              		.loc 1 45 5 is_stmt 1 view .LVU63
+ 275              		.loc 1 45 21 is_stmt 0 view .LVU64
+ 276 0032 D4ED026A 		vldr.32	s13, [r4, #8]
+ 277              		.loc 1 45 11 view .LVU65
+ 278 0036 F7EE004A 		vmov.f32	s9, #1.0e+0
+ 279 003a C4EEA65A 		vdiv.f32	s11, s9, s13
+ 280              	.LVL20:
+  46:Core/drogui/src/filter.c ****     float q = wn*wn;
+ 281              		.loc 1 46 5 is_stmt 1 view .LVU66
+  47:Core/drogui/src/filter.c ****     float n = wn*((df->a) +1/(df -> a));
+ 282              		.loc 1 47 5 view .LVU67
+ 283              		.loc 1 47 22 is_stmt 0 view .LVU68
+ 284 003e 94ED046A 		vldr.32	s12, [r4, #16]
+ 285              		.loc 1 47 29 view .LVU69
+ 286 0042 C4EE866A 		vdiv.f32	s13, s9, s12
+ 287              		.loc 1 47 27 view .LVU70
+ 288 0046 76EE266A 		vadd.f32	s13, s12, s13
+ 289              		.loc 1 47 11 view .LVU71
+ 290 004a 66EE856A 		vmul.f32	s13, s13, s10
+ 291              	.LVL21:
+  48:Core/drogui/src/filter.c ****     
+  49:Core/drogui/src/filter.c ****     df -> coeffs[0] = (4+p*ts*ts)/(4+2*n*ts + q*ts*ts);
+ 292              		.loc 1 49 5 is_stmt 1 view .LVU72
+ 293              		.loc 1 49 27 is_stmt 0 view .LVU73
+ 294 004e 27EEA54A 		vmul.f32	s8, s15, s11
+ 295              		.loc 1 49 30 view .LVU74
+ 296 0052 24EE254A 		vmul.f32	s8, s8, s11
+ 297              		.loc 1 49 25 view .LVU75
+ 298 0056 F1EE004A 		vmov.f32	s9, #4.0e+0
+ 299 005a 34EE244A 		vadd.f32	s8, s8, s9
+ 300              		.loc 1 49 39 view .LVU76
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 7
 
 
- 306              		.loc 1 44 37 view .LVU78
- 307 0066 77EE246A 		vadd.f32	s13, s14, s9
- 308              	.LVL23:
- 309              		.loc 1 44 48 view .LVU79
- 310 006a 26EE255A 		vmul.f32	s10, s12, s11
- 311              		.loc 1 44 51 view .LVU80
- 312 006e 25EE255A 		vmul.f32	s10, s10, s11
- 313              		.loc 1 44 45 view .LVU81
- 314 0072 76EE856A 		vadd.f32	s13, s13, s10
- 315              		.loc 1 44 34 view .LVU82
- 316 0076 C4EE263A 		vdiv.f32	s7, s8, s13
- 317              		.loc 1 44 21 view .LVU83
- 318 007a C4ED063A 		vstr.32	s7, [r4, #24]
-  45:Core/drogui/src/filter.c ****     df -> coeffs[1] = (2*p*ts*ts-8)/(4+2*n*ts + q*ts*ts);
- 319              		.loc 1 45 5 is_stmt 1 view .LVU84
- 320              		.loc 1 45 25 is_stmt 0 view .LVU85
- 321 007e 77EEA77A 		vadd.f32	s15, s15, s15
- 322              	.LVL24:
- 323              		.loc 1 45 27 view .LVU86
- 324 0082 67EEA57A 		vmul.f32	s15, s15, s11
- 325              		.loc 1 45 30 view .LVU87
- 326 0086 67EEA57A 		vmul.f32	s15, s15, s11
- 327              		.loc 1 45 33 view .LVU88
- 328 008a B2EE004A 		vmov.f32	s8, #8.0e+0
- 329 008e 77EEC47A 		vsub.f32	s15, s15, s8
- 330              		.loc 1 45 36 view .LVU89
- 331 0092 87EEA63A 		vdiv.f32	s6, s15, s13
- 332              		.loc 1 45 21 view .LVU90
- 333 0096 84ED073A 		vstr.32	s6, [r4, #28]
-  46:Core/drogui/src/filter.c ****     df -> coeffs[2] = (4+p*ts*ts)/(4+2*n*ts + q*ts*ts);
- 334              		.loc 1 46 5 is_stmt 1 view .LVU91
- 335              		.loc 1 46 21 is_stmt 0 view .LVU92
- 336 009a C4ED083A 		vstr.32	s7, [r4, #32]
-  47:Core/drogui/src/filter.c ****      
-  48:Core/drogui/src/filter.c ****     df -> coeffs[3] = (2*q*ts*ts-8)/(4+2*n*ts + q*ts*ts);
- 337              		.loc 1 48 5 is_stmt 1 view .LVU93
- 338              		.loc 1 48 25 is_stmt 0 view .LVU94
- 339 009e 36EE066A 		vadd.f32	s12, s12, s12
- 340              	.LVL25:
- 341              		.loc 1 48 27 view .LVU95
- 342 00a2 26EE256A 		vmul.f32	s12, s12, s11
- 343              		.loc 1 48 30 view .LVU96
- 344 00a6 26EE256A 		vmul.f32	s12, s12, s11
- 345              		.loc 1 48 33 view .LVU97
- 346 00aa 36EE446A 		vsub.f32	s12, s12, s8
- 347              		.loc 1 48 36 view .LVU98
- 348 00ae C6EE267A 		vdiv.f32	s15, s12, s13
- 349              		.loc 1 48 21 view .LVU99
- 350 00b2 C4ED097A 		vstr.32	s15, [r4, #36]
-  49:Core/drogui/src/filter.c ****     df -> coeffs[4] = (4-2*n*ts+q*ts*ts)/(4+2*n*ts + q*ts*ts);
- 351              		.loc 1 49 5 is_stmt 1 view .LVU100
- 352              		.loc 1 49 25 is_stmt 0 view .LVU101
- 353 00b6 34EEC77A 		vsub.f32	s14, s9, s14
- 354              		.loc 1 49 32 view .LVU102
- 355 00ba 35EE075A 		vadd.f32	s10, s10, s14
- 356              		.loc 1 49 41 view .LVU103
- 357 00be C5EE267A 		vdiv.f32	s15, s10, s13
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 8
+ 301 005e 76EEA66A 		vadd.f32	s13, s13, s13
+ 302              	.LVL22:
+ 303              		.loc 1 49 41 view .LVU77
+ 304 0062 66EEA56A 		vmul.f32	s13, s13, s11
+ 305              		.loc 1 49 37 view .LVU78
+ 306 0066 36EEA45A 		vadd.f32	s10, s13, s9
+ 307              		.loc 1 49 48 view .LVU79
+ 308 006a 27EE256A 		vmul.f32	s12, s14, s11
+ 309              	.LVL23:
+ 310              		.loc 1 49 51 view .LVU80
+ 311 006e 26EE256A 		vmul.f32	s12, s12, s11
+ 312              		.loc 1 49 45 view .LVU81
+ 313 0072 35EE065A 		vadd.f32	s10, s10, s12
+ 314              		.loc 1 49 34 view .LVU82
+ 315 0076 C4EE053A 		vdiv.f32	s7, s8, s10
+ 316              		.loc 1 49 21 view .LVU83
+ 317 007a C4ED063A 		vstr.32	s7, [r4, #24]
+  50:Core/drogui/src/filter.c ****     df -> coeffs[1] = (2*p*ts*ts-8)/(4+2*n*ts + q*ts*ts);
+ 318              		.loc 1 50 5 is_stmt 1 view .LVU84
+ 319              		.loc 1 50 25 is_stmt 0 view .LVU85
+ 320 007e 77EEA77A 		vadd.f32	s15, s15, s15
+ 321              	.LVL24:
+ 322              		.loc 1 50 27 view .LVU86
+ 323 0082 67EEA57A 		vmul.f32	s15, s15, s11
+ 324              		.loc 1 50 30 view .LVU87
+ 325 0086 67EEA57A 		vmul.f32	s15, s15, s11
+ 326              		.loc 1 50 33 view .LVU88
+ 327 008a B2EE004A 		vmov.f32	s8, #8.0e+0
+ 328 008e 77EEC47A 		vsub.f32	s15, s15, s8
+ 329              		.loc 1 50 36 view .LVU89
+ 330 0092 87EE853A 		vdiv.f32	s6, s15, s10
+ 331              		.loc 1 50 21 view .LVU90
+ 332 0096 84ED073A 		vstr.32	s6, [r4, #28]
+  51:Core/drogui/src/filter.c ****     df -> coeffs[2] = (4+p*ts*ts)/(4+2*n*ts + q*ts*ts);
+ 333              		.loc 1 51 5 is_stmt 1 view .LVU91
+ 334              		.loc 1 51 21 is_stmt 0 view .LVU92
+ 335 009a C4ED083A 		vstr.32	s7, [r4, #32]
+  52:Core/drogui/src/filter.c ****      
+  53:Core/drogui/src/filter.c ****     df -> coeffs[3] = -(2*q*ts*ts-8)/(4+2*n*ts + q*ts*ts);
+ 336              		.loc 1 53 5 is_stmt 1 view .LVU93
+ 337              		.loc 1 53 26 is_stmt 0 view .LVU94
+ 338 009e 37EE077A 		vadd.f32	s14, s14, s14
+ 339              	.LVL25:
+ 340              		.loc 1 53 28 view .LVU95
+ 341 00a2 67EE257A 		vmul.f32	s15, s14, s11
+ 342              		.loc 1 53 31 view .LVU96
+ 343 00a6 67EEA57A 		vmul.f32	s15, s15, s11
+ 344              		.loc 1 53 34 view .LVU97
+ 345 00aa 77EEC47A 		vsub.f32	s15, s15, s8
+ 346              		.loc 1 53 23 view .LVU98
+ 347 00ae F1EE677A 		vneg.f32	s15, s15
+ 348              		.loc 1 53 37 view .LVU99
+ 349 00b2 87EE857A 		vdiv.f32	s14, s15, s10
+ 350              		.loc 1 53 21 view .LVU100
+ 351 00b6 84ED097A 		vstr.32	s14, [r4, #36]
+  54:Core/drogui/src/filter.c ****     df -> coeffs[4] = -(4-2*n*ts+q*ts*ts)/(4+2*n*ts + q*ts*ts);
+ 352              		.loc 1 54 5 is_stmt 1 view .LVU101
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 8
 
 
- 358              		.loc 1 49 21 view .LVU104
- 359 00c2 C4ED0A7A 		vstr.32	s15, [r4, #40]
-  50:Core/drogui/src/filter.c **** }
- 360              		.loc 1 50 1 view .LVU105
- 361 00c6 10BD     		pop	{r4, pc}
- 362              	.LVL26:
- 363              	.L10:
- 364              		.loc 1 50 1 view .LVU106
- 365              		.align	3
- 366              	.L9:
- 367 00c8 182D4454 		.word	1413754136
- 368 00cc FB211940 		.word	1075388923
- 369              		.cfi_endproc
- 370              	.LFE177:
- 372              		.section	.text.computeDNotch,"ax",%progbits
- 373              		.align	1
- 374              		.global	computeDNotch
- 375              		.syntax unified
- 376              		.thumb
- 377              		.thumb_func
- 378              		.fpu fpv5-sp-d16
- 380              	computeDNotch:
- 381              	.LVL27:
- 382              	.LFB178:
-  51:Core/drogui/src/filter.c **** 
-  52:Core/drogui/src/filter.c **** 
-  53:Core/drogui/src/filter.c **** float computeDNotch(dNotchFilter *df, float val){
- 383              		.loc 1 53 49 is_stmt 1 view -0
- 384              		.cfi_startproc
- 385              		@ args = 0, pretend = 0, frame = 16
- 386              		@ frame_needed = 1, uses_anonymous_args = 0
- 387              		.loc 1 53 49 is_stmt 0 view .LVU108
- 388 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
- 389              	.LCFI8:
- 390              		.cfi_def_cfa_offset 28
- 391              		.cfi_offset 4, -28
- 392              		.cfi_offset 5, -24
- 393              		.cfi_offset 6, -20
- 394              		.cfi_offset 7, -16
- 395              		.cfi_offset 8, -12
- 396              		.cfi_offset 9, -8
- 397              		.cfi_offset 14, -4
- 398 0004 85B0     		sub	sp, sp, #20
- 399              	.LCFI9:
- 400              		.cfi_def_cfa_offset 48
- 401 0006 00AF     		add	r7, sp, #0
- 402              	.LCFI10:
- 403              		.cfi_def_cfa_register 7
- 404 0008 0446     		mov	r4, r0
- 405 000a 87ED010A 		vstr.32	s0, [r7, #4]
-  54:Core/drogui/src/filter.c **** 
-  55:Core/drogui/src/filter.c ****     if(df -> head < df -> n){
- 406              		.loc 1 55 5 is_stmt 1 view .LVU109
- 407              		.loc 1 55 11 is_stmt 0 view .LVU110
- 408 000e C36B     		ldr	r3, [r0, #60]
- 409              		.loc 1 55 24 view .LVU111
- 410 0010 4268     		ldr	r2, [r0, #4]
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 9
+ 353              		.loc 1 54 26 is_stmt 0 view .LVU102
+ 354 00ba 74EEE66A 		vsub.f32	s13, s9, s13
+ 355              		.loc 1 54 33 view .LVU103
+ 356 00be 36EE266A 		vadd.f32	s12, s12, s13
+ 357              		.loc 1 54 23 view .LVU104
+ 358 00c2 B1EE466A 		vneg.f32	s12, s12
+ 359              		.loc 1 54 42 view .LVU105
+ 360 00c6 C6EE057A 		vdiv.f32	s15, s12, s10
+ 361              		.loc 1 54 21 view .LVU106
+ 362 00ca C4ED0A7A 		vstr.32	s15, [r4, #40]
+  55:Core/drogui/src/filter.c **** }
+ 363              		.loc 1 55 1 view .LVU107
+ 364 00ce 10BD     		pop	{r4, pc}
+ 365              	.LVL26:
+ 366              	.L10:
+ 367              		.loc 1 55 1 view .LVU108
+ 368              		.align	3
+ 369              	.L9:
+ 370 00d0 182D4454 		.word	1413754136
+ 371 00d4 FB211940 		.word	1075388923
+ 372              		.cfi_endproc
+ 373              	.LFE180:
+ 375              		.section	.text.computeDNotch,"ax",%progbits
+ 376              		.align	1
+ 377              		.global	computeDNotch
+ 378              		.syntax unified
+ 379              		.thumb
+ 380              		.thumb_func
+ 381              		.fpu fpv5-sp-d16
+ 383              	computeDNotch:
+ 384              	.LVL27:
+ 385              	.LFB181:
+  56:Core/drogui/src/filter.c **** 
+  57:Core/drogui/src/filter.c **** 
+  58:Core/drogui/src/filter.c **** float computeDNotch(dNotchFilter *df, float val){
+ 386              		.loc 1 58 49 is_stmt 1 view -0
+ 387              		.cfi_startproc
+ 388              		@ args = 0, pretend = 0, frame = 16
+ 389              		@ frame_needed = 1, uses_anonymous_args = 0
+ 390              		.loc 1 58 49 is_stmt 0 view .LVU110
+ 391 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 392              	.LCFI8:
+ 393              		.cfi_def_cfa_offset 28
+ 394              		.cfi_offset 4, -28
+ 395              		.cfi_offset 5, -24
+ 396              		.cfi_offset 6, -20
+ 397              		.cfi_offset 7, -16
+ 398              		.cfi_offset 8, -12
+ 399              		.cfi_offset 9, -8
+ 400              		.cfi_offset 14, -4
+ 401 0004 85B0     		sub	sp, sp, #20
+ 402              	.LCFI9:
+ 403              		.cfi_def_cfa_offset 48
+ 404 0006 00AF     		add	r7, sp, #0
+ 405              	.LCFI10:
+ 406              		.cfi_def_cfa_register 7
+ 407 0008 0446     		mov	r4, r0
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 9
 
 
- 411              		.loc 1 55 7 view .LVU112
- 412 0012 9342     		cmp	r3, r2
- 413 0014 25DA     		bge	.L27
-  56:Core/drogui/src/filter.c ****         df -> values[df -> head++]  = val;
- 414              		.loc 1 56 9 is_stmt 1 view .LVU113
- 415              		.loc 1 56 12 is_stmt 0 view .LVU114
- 416 0016 0268     		ldr	r2, [r0]
- 417              		.loc 1 56 32 view .LVU115
- 418 0018 591C     		adds	r1, r3, #1
- 419 001a C163     		str	r1, [r0, #60]
- 420              		.loc 1 56 21 view .LVU116
- 421 001c 02EB8303 		add	r3, r2, r3, lsl #2
- 422              		.loc 1 56 37 view .LVU117
- 423 0020 83ED000A 		vstr.32	s0, [r3]
- 424              	.L13:
-  57:Core/drogui/src/filter.c ****     }
-  58:Core/drogui/src/filter.c ****     else{
-  59:Core/drogui/src/filter.c ****         for(int i = 0; i < df->n-1 ; i++)
-  60:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
-  61:Core/drogui/src/filter.c ****         df->values[ df -> n - 1] = val;
+ 408 000a 87ED010A 		vstr.32	s0, [r7, #4]
+  59:Core/drogui/src/filter.c **** 
+  60:Core/drogui/src/filter.c ****     if(df -> head < df -> n){
+ 409              		.loc 1 60 5 is_stmt 1 view .LVU111
+ 410              		.loc 1 60 11 is_stmt 0 view .LVU112
+ 411 000e C36B     		ldr	r3, [r0, #60]
+ 412              		.loc 1 60 24 view .LVU113
+ 413 0010 4268     		ldr	r2, [r0, #4]
+ 414              		.loc 1 60 7 view .LVU114
+ 415 0012 9342     		cmp	r3, r2
+ 416 0014 25DA     		bge	.L29
+  61:Core/drogui/src/filter.c ****         df -> values[df -> head++]  = val;
+ 417              		.loc 1 61 9 is_stmt 1 view .LVU115
+ 418              		.loc 1 61 12 is_stmt 0 view .LVU116
+ 419 0016 0268     		ldr	r2, [r0]
+ 420              		.loc 1 61 32 view .LVU117
+ 421 0018 591C     		adds	r1, r3, #1
+ 422 001a C163     		str	r1, [r0, #60]
+ 423              		.loc 1 61 21 view .LVU118
+ 424 001c 02EB8303 		add	r3, r2, r3, lsl #2
+ 425              		.loc 1 61 37 view .LVU119
+ 426 0020 83ED000A 		vstr.32	s0, [r3]
+ 427              	.L13:
   62:Core/drogui/src/filter.c ****     }
-  63:Core/drogui/src/filter.c **** 
-  64:Core/drogui/src/filter.c ****     if(df -> head == df -> n){
- 425              		.loc 1 64 5 is_stmt 1 view .LVU118
- 426              		.loc 1 64 11 is_stmt 0 view .LVU119
- 427 0024 E26B     		ldr	r2, [r4, #60]
- 428              		.loc 1 64 25 view .LVU120
- 429 0026 6368     		ldr	r3, [r4, #4]
- 430              		.loc 1 64 7 view .LVU121
- 431 0028 9A42     		cmp	r2, r3
- 432 002a 1CD0     		beq	.L31
- 433              	.LVL28:
- 434              	.L15:
-  65:Core/drogui/src/filter.c ****         float fft_arr[2*(df->n)];
-  66:Core/drogui/src/filter.c ****         for (uint16_t i = 0; i < df->n; i++) fft_arr[i] = df->values[i]; 
-  67:Core/drogui/src/filter.c ****         
-  68:Core/drogui/src/filter.c ****         arm_cfft_radix2_f32(&(df->fft), fft_arr);
-  69:Core/drogui/src/filter.c **** 
-  70:Core/drogui/src/filter.c ****         for(int i = 1; i< 2*(df -> n) ; i += 2) 
-  71:Core/drogui/src/filter.c ****             fft_arr[i-1] = sqrt(fft_arr[i-1]*fft_arr[i-1] + fft_arr[i]*fft_arr[i]);
-  72:Core/drogui/src/filter.c ****         
-  73:Core/drogui/src/filter.c ****         for(int i = 0; i< 2*(df -> n) ; i += 2) 
-  74:Core/drogui/src/filter.c ****             fft_arr[i] = (i > 0 ? 2 : 1) * fft_arr[i] / (df->n);
+  63:Core/drogui/src/filter.c ****     else{
+  64:Core/drogui/src/filter.c ****         for(int i = 0; i < df->n-1 ; i++)
+  65:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
+  66:Core/drogui/src/filter.c ****         df->values[ (df -> n) - 1] = val;
+  67:Core/drogui/src/filter.c ****     }
+  68:Core/drogui/src/filter.c **** 
+  69:Core/drogui/src/filter.c ****     if(df -> head == df -> n){
+ 428              		.loc 1 69 5 is_stmt 1 view .LVU120
+ 429              		.loc 1 69 11 is_stmt 0 view .LVU121
+ 430 0024 E26B     		ldr	r2, [r4, #60]
+ 431              		.loc 1 69 25 view .LVU122
+ 432 0026 6368     		ldr	r3, [r4, #4]
+ 433              		.loc 1 69 7 view .LVU123
+ 434 0028 9A42     		cmp	r2, r3
+ 435 002a 1CD0     		beq	.L33
+ 436              	.LVL28:
+ 437              	.L15:
+  70:Core/drogui/src/filter.c ****         float fft_arr[df->n];
+  71:Core/drogui/src/filter.c ****         float fft_ans[df->n];
+  72:Core/drogui/src/filter.c ****         for (uint16_t i = 0; i < (df->n) ; i++) fft_arr[i] = df->values[i]; 
+  73:Core/drogui/src/filter.c ****         
+  74:Core/drogui/src/filter.c ****         arm_rfft_fast_f32(&(df->fft), fft_arr, fft_ans, 0);
   75:Core/drogui/src/filter.c **** 
-  76:Core/drogui/src/filter.c ****         int thres_ind = (df -> threshold)*(df -> n)/(df -> fs);
-  77:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
-  78:Core/drogui/src/filter.c **** 
-  79:Core/drogui/src/filter.c ****         for(int i = 2*thres_ind; i <= df -> n + 2 ; i += 2) 
-  80:Core/drogui/src/filter.c ****             if(fft_arr[i] > maxi) maxi = fft_arr[i], fc = (i)*(df->fs)/(df -> n);
-  81:Core/drogui/src/filter.c ****         
-  82:Core/drogui/src/filter.c ****         updateCoeffNotch(df, fc);
-  83:Core/drogui/src/filter.c ****         float ans;
-  84:Core/drogui/src/filter.c ****         arm_biquad_cascade_df2T_f32(&(df->f), &val, &ans, 1);
-  85:Core/drogui/src/filter.c ****         df->values[df->n-1] = ans;
-  86:Core/drogui/src/filter.c ****     }       
-  87:Core/drogui/src/filter.c ****     
-  88:Core/drogui/src/filter.c ****     return val;    
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 10
+  76:Core/drogui/src/filter.c ****         for(int i = 0; i< (df -> n) ; i += 2) 
+  77:Core/drogui/src/filter.c ****             fft_ans[i/2] = sqrt(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1]);
+  78:Core/drogui/src/filter.c ****         
+  79:Core/drogui/src/filter.c ****         for(int i = 0; i < (df -> n)/2 ; i ++) 
+  80:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+  81:Core/drogui/src/filter.c **** 
+  82:Core/drogui/src/filter.c ****         int thres_ind = (df -> threshold)*(df -> n)/(df -> fs);
+  83:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
+  84:Core/drogui/src/filter.c **** 
+  85:Core/drogui/src/filter.c ****         for(int i = thres_ind; i < (df -> n)/2 ; i ++) 
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 10
 
 
- 435              		.loc 1 88 5 is_stmt 1 view .LVU122
-  89:Core/drogui/src/filter.c **** }
- 436              		.loc 1 89 1 is_stmt 0 view .LVU123
- 437 002c 97ED010A 		vldr.32	s0, [r7, #4]
- 438 0030 1437     		adds	r7, r7, #20
- 439              	.LCFI11:
- 440              		.cfi_remember_state
- 441              		.cfi_def_cfa_offset 28
- 442 0032 BD46     		mov	sp, r7
- 443              	.LCFI12:
- 444              		.cfi_def_cfa_register 13
- 445              		@ sp needed
- 446 0034 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
- 447              	.LVL29:
- 448              	.L14:
- 449              	.LCFI13:
- 450              		.cfi_restore_state
- 451              	.LBB2:
-  60:Core/drogui/src/filter.c ****         df->values[ df -> n - 1] = val;
- 452              		.loc 1 60 13 is_stmt 1 discriminator 3 view .LVU124
-  60:Core/drogui/src/filter.c ****         df->values[ df -> n - 1] = val;
- 453              		.loc 1 60 32 is_stmt 0 discriminator 3 view .LVU125
- 454 0038 2268     		ldr	r2, [r4]
-  60:Core/drogui/src/filter.c ****         df->values[ df -> n - 1] = val;
- 455              		.loc 1 60 24 discriminator 3 view .LVU126
- 456 003a 02EB8301 		add	r1, r2, r3, lsl #2
-  60:Core/drogui/src/filter.c ****         df->values[ df -> n - 1] = val;
- 457              		.loc 1 60 41 discriminator 3 view .LVU127
- 458 003e 0133     		adds	r3, r3, #1
- 459              	.LVL30:
-  60:Core/drogui/src/filter.c ****         df->values[ df -> n - 1] = val;
- 460              		.loc 1 60 41 discriminator 3 view .LVU128
- 461 0040 02EB8302 		add	r2, r2, r3, lsl #2
- 462 0044 1268     		ldr	r2, [r2]	@ float
-  60:Core/drogui/src/filter.c ****         df->values[ df -> n - 1] = val;
- 463              		.loc 1 60 28 discriminator 3 view .LVU129
- 464 0046 0A60     		str	r2, [r1]	@ float
-  59:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
- 465              		.loc 1 59 38 is_stmt 1 discriminator 3 view .LVU130
- 466              	.LVL31:
- 467              	.L12:
-  59:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
- 468              		.loc 1 59 24 discriminator 1 view .LVU131
-  59:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
- 469              		.loc 1 59 30 is_stmt 0 discriminator 1 view .LVU132
- 470 0048 6268     		ldr	r2, [r4, #4]
-  59:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
- 471              		.loc 1 59 33 discriminator 1 view .LVU133
- 472 004a 511E     		subs	r1, r2, #1
-  59:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
- 473              		.loc 1 59 9 discriminator 1 view .LVU134
- 474 004c 9942     		cmp	r1, r3
- 475 004e F3DC     		bgt	.L14
- 476              	.LBE2:
-  61:Core/drogui/src/filter.c ****     }
- 477              		.loc 1 61 9 is_stmt 1 view .LVU135
-  61:Core/drogui/src/filter.c ****     }
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 11
+  86:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+  87:Core/drogui/src/filter.c ****         
+  88:Core/drogui/src/filter.c ****         /*char buff[50];
+  89:Core/drogui/src/filter.c ****         sprintf(buff, "%f\n",fc);
+  90:Core/drogui/src/filter.c ****         HAL_UART_Transmit(&huart1, (uint8_t*) buff, strlen(buff), 100);*/
+  91:Core/drogui/src/filter.c ****         updateCoeffNotch(df, fc);
+  92:Core/drogui/src/filter.c ****         float ans;
+  93:Core/drogui/src/filter.c ****         arm_biquad_cascade_df2T_f32(&(df ->f), &val, &ans, 1);
+  94:Core/drogui/src/filter.c ****         df->values[df->n-1] = ans;
+  95:Core/drogui/src/filter.c ****         val = ans;
+  96:Core/drogui/src/filter.c ****     }       
+  97:Core/drogui/src/filter.c ****    
+  98:Core/drogui/src/filter.c ****     return val;    
+ 438              		.loc 1 98 5 is_stmt 1 view .LVU124
+  99:Core/drogui/src/filter.c **** }
+ 439              		.loc 1 99 1 is_stmt 0 view .LVU125
+ 440 002c 97ED010A 		vldr.32	s0, [r7, #4]
+ 441 0030 1437     		adds	r7, r7, #20
+ 442              	.LCFI11:
+ 443              		.cfi_remember_state
+ 444              		.cfi_def_cfa_offset 28
+ 445 0032 BD46     		mov	sp, r7
+ 446              	.LCFI12:
+ 447              		.cfi_def_cfa_register 13
+ 448              		@ sp needed
+ 449 0034 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 450              	.LVL29:
+ 451              	.L14:
+ 452              	.LCFI13:
+ 453              		.cfi_restore_state
+ 454              	.LBB2:
+  65:Core/drogui/src/filter.c ****         df->values[ (df -> n) - 1] = val;
+ 455              		.loc 1 65 13 is_stmt 1 discriminator 3 view .LVU126
+  65:Core/drogui/src/filter.c ****         df->values[ (df -> n) - 1] = val;
+ 456              		.loc 1 65 32 is_stmt 0 discriminator 3 view .LVU127
+ 457 0038 2268     		ldr	r2, [r4]
+  65:Core/drogui/src/filter.c ****         df->values[ (df -> n) - 1] = val;
+ 458              		.loc 1 65 24 discriminator 3 view .LVU128
+ 459 003a 02EB8301 		add	r1, r2, r3, lsl #2
+  65:Core/drogui/src/filter.c ****         df->values[ (df -> n) - 1] = val;
+ 460              		.loc 1 65 41 discriminator 3 view .LVU129
+ 461 003e 0133     		adds	r3, r3, #1
+ 462              	.LVL30:
+  65:Core/drogui/src/filter.c ****         df->values[ (df -> n) - 1] = val;
+ 463              		.loc 1 65 41 discriminator 3 view .LVU130
+ 464 0040 02EB8302 		add	r2, r2, r3, lsl #2
+ 465 0044 1268     		ldr	r2, [r2]	@ float
+  65:Core/drogui/src/filter.c ****         df->values[ (df -> n) - 1] = val;
+ 466              		.loc 1 65 28 discriminator 3 view .LVU131
+ 467 0046 0A60     		str	r2, [r1]	@ float
+  64:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
+ 468              		.loc 1 64 38 is_stmt 1 discriminator 3 view .LVU132
+ 469              	.LVL31:
+ 470              	.L12:
+  64:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
+ 471              		.loc 1 64 24 discriminator 1 view .LVU133
+  64:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 11
 
 
- 478              		.loc 1 61 11 is_stmt 0 view .LVU136
- 479 0050 2368     		ldr	r3, [r4]
- 480              	.LVL32:
-  61:Core/drogui/src/filter.c ****     }
- 481              		.loc 1 61 19 view .LVU137
- 482 0052 6FF04041 		mvn	r1, #-1073741824
- 483 0056 1144     		add	r1, r1, r2
- 484 0058 03EB8103 		add	r3, r3, r1, lsl #2
-  61:Core/drogui/src/filter.c ****     }
- 485              		.loc 1 61 34 view .LVU138
- 486 005c 7A68     		ldr	r2, [r7, #4]	@ float
- 487 005e 1A60     		str	r2, [r3]	@ float
- 488 0060 E0E7     		b	.L13
- 489              	.L27:
- 490              	.LBB3:
-  59:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
- 491              		.loc 1 59 17 view .LVU139
- 492 0062 0023     		movs	r3, #0
- 493 0064 F0E7     		b	.L12
- 494              	.L31:
-  59:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
- 495              		.loc 1 59 17 view .LVU140
- 496              	.LBE3:
- 497              	.LBB4:
-  64:Core/drogui/src/filter.c ****         float fft_arr[2*(df->n)];
- 498              		.loc 1 64 30 discriminator 1 view .LVU141
- 499 0066 6E46     		mov	r6, sp
-  65:Core/drogui/src/filter.c ****         for (uint16_t i = 0; i < df->n; i++) fft_arr[i] = df->values[i]; 
- 500              		.loc 1 65 9 is_stmt 1 discriminator 1 view .LVU142
- 501              	.LVL33:
-  65:Core/drogui/src/filter.c ****         for (uint16_t i = 0; i < df->n; i++) fft_arr[i] = df->values[i]; 
- 502              		.loc 1 65 15 is_stmt 0 discriminator 1 view .LVU143
- 503 0068 A6EBC303 		sub	r3, r6, r3, lsl #3
- 504              	.LVL34:
-  65:Core/drogui/src/filter.c ****         for (uint16_t i = 0; i < df->n; i++) fft_arr[i] = df->values[i]; 
- 505              		.loc 1 65 15 discriminator 1 view .LVU144
- 506 006c 9D46     		mov	sp, r3
- 507 006e 6D46     		mov	r5, sp
- 508              	.LVL35:
-  66:Core/drogui/src/filter.c ****         
- 509              		.loc 1 66 9 is_stmt 1 discriminator 1 view .LVU145
- 510              	.LBB5:
-  66:Core/drogui/src/filter.c ****         
- 511              		.loc 1 66 14 discriminator 1 view .LVU146
-  66:Core/drogui/src/filter.c ****         
- 512              		.loc 1 66 23 is_stmt 0 discriminator 1 view .LVU147
- 513 0070 0023     		movs	r3, #0
- 514              	.LVL36:
-  66:Core/drogui/src/filter.c ****         
- 515              		.loc 1 66 9 discriminator 1 view .LVU148
- 516 0072 08E0     		b	.L16
- 517              	.LVL37:
- 518              	.L17:
-  66:Core/drogui/src/filter.c ****         
- 519              		.loc 1 66 46 is_stmt 1 discriminator 3 view .LVU149
-  66:Core/drogui/src/filter.c ****         
- 520              		.loc 1 66 61 is_stmt 0 discriminator 3 view .LVU150
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 12
+ 472              		.loc 1 64 30 is_stmt 0 discriminator 1 view .LVU134
+ 473 0048 6268     		ldr	r2, [r4, #4]
+  64:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
+ 474              		.loc 1 64 33 discriminator 1 view .LVU135
+ 475 004a 511E     		subs	r1, r2, #1
+  64:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
+ 476              		.loc 1 64 9 discriminator 1 view .LVU136
+ 477 004c 9942     		cmp	r1, r3
+ 478 004e F3DC     		bgt	.L14
+ 479              	.LBE2:
+  66:Core/drogui/src/filter.c ****     }
+ 480              		.loc 1 66 9 is_stmt 1 view .LVU137
+  66:Core/drogui/src/filter.c ****     }
+ 481              		.loc 1 66 11 is_stmt 0 view .LVU138
+ 482 0050 2368     		ldr	r3, [r4]
+ 483              	.LVL32:
+  66:Core/drogui/src/filter.c ****     }
+ 484              		.loc 1 66 19 view .LVU139
+ 485 0052 6FF04041 		mvn	r1, #-1073741824
+ 486 0056 1144     		add	r1, r1, r2
+ 487 0058 03EB8103 		add	r3, r3, r1, lsl #2
+  66:Core/drogui/src/filter.c ****     }
+ 488              		.loc 1 66 36 view .LVU140
+ 489 005c 7A68     		ldr	r2, [r7, #4]	@ float
+ 490 005e 1A60     		str	r2, [r3]	@ float
+ 491 0060 E0E7     		b	.L13
+ 492              	.L29:
+ 493              	.LBB3:
+  64:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
+ 494              		.loc 1 64 17 view .LVU141
+ 495 0062 0023     		movs	r3, #0
+ 496 0064 F0E7     		b	.L12
+ 497              	.L33:
+  64:Core/drogui/src/filter.c ****             df-> values[i] = df-> values[i +1]; 
+ 498              		.loc 1 64 17 view .LVU142
+ 499              	.LBE3:
+ 500              	.LBB4:
+  69:Core/drogui/src/filter.c ****         float fft_arr[df->n];
+ 501              		.loc 1 69 30 discriminator 1 view .LVU143
+ 502 0066 E846     		mov	r8, sp
+  70:Core/drogui/src/filter.c ****         float fft_ans[df->n];
+ 503              		.loc 1 70 9 is_stmt 1 discriminator 1 view .LVU144
+ 504              	.LVL33:
+  70:Core/drogui/src/filter.c ****         float fft_ans[df->n];
+ 505              		.loc 1 70 15 is_stmt 0 discriminator 1 view .LVU145
+ 506 0068 9B00     		lsls	r3, r3, #2
+ 507              	.LVL34:
+  70:Core/drogui/src/filter.c ****         float fft_ans[df->n];
+ 508              		.loc 1 70 15 discriminator 1 view .LVU146
+ 509 006a 0733     		adds	r3, r3, #7
+ 510 006c 23F00703 		bic	r3, r3, #7
+ 511 0070 ADEB030D 		sub	sp, sp, r3
+ 512 0074 6946     		mov	r1, sp
+ 513              	.LVL35:
+  71:Core/drogui/src/filter.c ****         for (uint16_t i = 0; i < (df->n) ; i++) fft_arr[i] = df->values[i]; 
+ 514              		.loc 1 71 9 is_stmt 1 discriminator 1 view .LVU147
+  71:Core/drogui/src/filter.c ****         for (uint16_t i = 0; i < (df->n) ; i++) fft_arr[i] = df->values[i]; 
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 12
 
 
- 521 0074 2268     		ldr	r2, [r4]
-  66:Core/drogui/src/filter.c ****         
- 522              		.loc 1 66 69 discriminator 3 view .LVU151
- 523 0076 02EB8302 		add	r2, r2, r3, lsl #2
- 524 007a 1168     		ldr	r1, [r2]	@ float
-  66:Core/drogui/src/filter.c ****         
- 525              		.loc 1 66 57 discriminator 3 view .LVU152
- 526 007c 05EB8302 		add	r2, r5, r3, lsl #2
- 527 0080 1160     		str	r1, [r2]	@ float
-  66:Core/drogui/src/filter.c ****         
- 528              		.loc 1 66 41 is_stmt 1 discriminator 3 view .LVU153
-  66:Core/drogui/src/filter.c ****         
- 529              		.loc 1 66 42 is_stmt 0 discriminator 3 view .LVU154
- 530 0082 0133     		adds	r3, r3, #1
- 531              	.LVL38:
-  66:Core/drogui/src/filter.c ****         
- 532              		.loc 1 66 42 discriminator 3 view .LVU155
- 533 0084 9BB2     		uxth	r3, r3
- 534              	.LVL39:
- 535              	.L16:
-  66:Core/drogui/src/filter.c ****         
- 536              		.loc 1 66 30 is_stmt 1 discriminator 1 view .LVU156
-  66:Core/drogui/src/filter.c ****         
- 537              		.loc 1 66 36 is_stmt 0 discriminator 1 view .LVU157
- 538 0086 6268     		ldr	r2, [r4, #4]
-  66:Core/drogui/src/filter.c ****         
- 539              		.loc 1 66 9 discriminator 1 view .LVU158
- 540 0088 9342     		cmp	r3, r2
- 541 008a F3DB     		blt	.L17
- 542              	.LBE5:
-  68:Core/drogui/src/filter.c **** 
- 543              		.loc 1 68 9 is_stmt 1 view .LVU159
- 544 008c 2946     		mov	r1, r5
- 545 008e 04F14400 		add	r0, r4, #68
- 546              	.LVL40:
-  68:Core/drogui/src/filter.c **** 
- 547              		.loc 1 68 9 is_stmt 0 view .LVU160
- 548 0092 FFF7FEFF 		bl	arm_cfft_radix2_f32
- 549              	.LVL41:
-  70:Core/drogui/src/filter.c ****             fft_arr[i-1] = sqrt(fft_arr[i-1]*fft_arr[i-1] + fft_arr[i]*fft_arr[i]);
- 550              		.loc 1 70 9 is_stmt 1 view .LVU161
- 551              	.LBB6:
-  70:Core/drogui/src/filter.c ****             fft_arr[i-1] = sqrt(fft_arr[i-1]*fft_arr[i-1] + fft_arr[i]*fft_arr[i]);
- 552              		.loc 1 70 13 view .LVU162
-  70:Core/drogui/src/filter.c ****             fft_arr[i-1] = sqrt(fft_arr[i-1]*fft_arr[i-1] + fft_arr[i]*fft_arr[i]);
- 553              		.loc 1 70 17 is_stmt 0 view .LVU163
- 554 0096 4FF00108 		mov	r8, #1
-  70:Core/drogui/src/filter.c ****             fft_arr[i-1] = sqrt(fft_arr[i-1]*fft_arr[i-1] + fft_arr[i]*fft_arr[i]);
- 555              		.loc 1 70 9 view .LVU164
- 556 009a 1FE0     		b	.L18
- 557              	.LVL42:
- 558              	.L19:
-  71:Core/drogui/src/filter.c ****         
- 559              		.loc 1 71 13 is_stmt 1 discriminator 3 view .LVU165
-  71:Core/drogui/src/filter.c ****         
- 560              		.loc 1 71 42 is_stmt 0 discriminator 3 view .LVU166
- 561 009c 08F1FF39 		add	r9, r8, #-1
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 13
-
-
-  71:Core/drogui/src/filter.c ****         
- 562              		.loc 1 71 40 discriminator 3 view .LVU167
- 563 00a0 05EB8909 		add	r9, r5, r9, lsl #2
- 564 00a4 D9ED007A 		vldr.32	s15, [r9]
-  71:Core/drogui/src/filter.c ****         
- 565              		.loc 1 71 45 discriminator 3 view .LVU168
- 566 00a8 27EEA77A 		vmul.f32	s14, s15, s15
-  71:Core/drogui/src/filter.c ****         
- 567              		.loc 1 71 68 discriminator 3 view .LVU169
- 568 00ac 05EB8803 		add	r3, r5, r8, lsl #2
- 569 00b0 D3ED007A 		vldr.32	s15, [r3]
-  71:Core/drogui/src/filter.c ****         
- 570              		.loc 1 71 71 discriminator 3 view .LVU170
- 571 00b4 67EEA77A 		vmul.f32	s15, s15, s15
-  71:Core/drogui/src/filter.c ****         
- 572              		.loc 1 71 28 discriminator 3 view .LVU171
- 573 00b8 77EE277A 		vadd.f32	s15, s14, s15
- 574 00bc 17EE900A 		vmov	r0, s15
- 575 00c0 FFF7FEFF 		bl	__aeabi_f2d
- 576              	.LVL43:
- 577 00c4 41EC100B 		vmov	d0, r0, r1
- 578 00c8 FFF7FEFF 		bl	sqrt
- 579              	.LVL44:
- 580 00cc 51EC100B 		vmov	r0, r1, d0
- 581 00d0 FFF7FEFF 		bl	__aeabi_d2f
- 582              	.LVL45:
-  71:Core/drogui/src/filter.c ****         
- 583              		.loc 1 71 26 discriminator 3 view .LVU172
- 584 00d4 C9F80000 		str	r0, [r9]	@ float
-  70:Core/drogui/src/filter.c ****             fft_arr[i-1] = sqrt(fft_arr[i-1]*fft_arr[i-1] + fft_arr[i]*fft_arr[i]);
- 585              		.loc 1 70 41 is_stmt 1 discriminator 3 view .LVU173
-  70:Core/drogui/src/filter.c ****             fft_arr[i-1] = sqrt(fft_arr[i-1]*fft_arr[i-1] + fft_arr[i]*fft_arr[i]);
- 586              		.loc 1 70 43 is_stmt 0 discriminator 3 view .LVU174
- 587 00d8 08F10208 		add	r8, r8, #2
- 588              	.LVL46:
- 589              	.L18:
-  70:Core/drogui/src/filter.c ****             fft_arr[i-1] = sqrt(fft_arr[i-1]*fft_arr[i-1] + fft_arr[i]*fft_arr[i]);
- 590              		.loc 1 70 24 is_stmt 1 discriminator 1 view .LVU175
-  70:Core/drogui/src/filter.c ****             fft_arr[i-1] = sqrt(fft_arr[i-1]*fft_arr[i-1] + fft_arr[i]*fft_arr[i]);
- 591              		.loc 1 70 33 is_stmt 0 discriminator 1 view .LVU176
- 592 00dc 6368     		ldr	r3, [r4, #4]
-  70:Core/drogui/src/filter.c ****             fft_arr[i-1] = sqrt(fft_arr[i-1]*fft_arr[i-1] + fft_arr[i]*fft_arr[i]);
- 593              		.loc 1 70 9 discriminator 1 view .LVU177
- 594 00de B8EB430F 		cmp	r8, r3, lsl #1
- 595 00e2 DBDB     		blt	.L19
- 596              	.LBE6:
- 597              	.LBB7:
-  73:Core/drogui/src/filter.c ****             fft_arr[i] = (i > 0 ? 2 : 1) * fft_arr[i] / (df->n);
- 598              		.loc 1 73 17 view .LVU178
- 599 00e4 0022     		movs	r2, #0
- 600 00e6 10E0     		b	.L20
- 601              	.LVL47:
- 602              	.L28:
+ 515              		.loc 1 71 15 is_stmt 0 discriminator 1 view .LVU148
+ 516 0076 ADEB030D 		sub	sp, sp, r3
+ 517 007a 6E46     		mov	r6, sp
+ 518              	.LVL36:
+  72:Core/drogui/src/filter.c ****         
+ 519              		.loc 1 72 9 is_stmt 1 discriminator 1 view .LVU149
+ 520              	.LBB5:
+  72:Core/drogui/src/filter.c ****         
+ 521              		.loc 1 72 14 discriminator 1 view .LVU150
+  72:Core/drogui/src/filter.c ****         
+ 522              		.loc 1 72 23 is_stmt 0 discriminator 1 view .LVU151
+ 523 007c 0023     		movs	r3, #0
+  72:Core/drogui/src/filter.c ****         
+ 524              		.loc 1 72 9 discriminator 1 view .LVU152
+ 525 007e 08E0     		b	.L16
+ 526              	.LVL37:
+ 527              	.L17:
+  72:Core/drogui/src/filter.c ****         
+ 528              		.loc 1 72 49 is_stmt 1 discriminator 3 view .LVU153
+  72:Core/drogui/src/filter.c ****         
+ 529              		.loc 1 72 64 is_stmt 0 discriminator 3 view .LVU154
+ 530 0080 2268     		ldr	r2, [r4]
+  72:Core/drogui/src/filter.c ****         
+ 531              		.loc 1 72 72 discriminator 3 view .LVU155
+ 532 0082 02EB8302 		add	r2, r2, r3, lsl #2
+ 533 0086 1068     		ldr	r0, [r2]	@ float
+  72:Core/drogui/src/filter.c ****         
+ 534              		.loc 1 72 60 discriminator 3 view .LVU156
+ 535 0088 01EB8302 		add	r2, r1, r3, lsl #2
+ 536 008c 1060     		str	r0, [r2]	@ float
+  72:Core/drogui/src/filter.c ****         
+ 537              		.loc 1 72 44 is_stmt 1 discriminator 3 view .LVU157
+  72:Core/drogui/src/filter.c ****         
+ 538              		.loc 1 72 45 is_stmt 0 discriminator 3 view .LVU158
+ 539 008e 0133     		adds	r3, r3, #1
+ 540              	.LVL38:
+  72:Core/drogui/src/filter.c ****         
+ 541              		.loc 1 72 45 discriminator 3 view .LVU159
+ 542 0090 9BB2     		uxth	r3, r3
+ 543              	.LVL39:
+ 544              	.L16:
+  72:Core/drogui/src/filter.c ****         
+ 545              		.loc 1 72 30 is_stmt 1 discriminator 1 view .LVU160
+  72:Core/drogui/src/filter.c ****         
+ 546              		.loc 1 72 37 is_stmt 0 discriminator 1 view .LVU161
+ 547 0092 6268     		ldr	r2, [r4, #4]
+  72:Core/drogui/src/filter.c ****         
+ 548              		.loc 1 72 9 discriminator 1 view .LVU162
+ 549 0094 9342     		cmp	r3, r2
+ 550 0096 F3DB     		blt	.L17
+ 551              	.LBE5:
   74:Core/drogui/src/filter.c **** 
- 603              		.loc 1 74 42 view .LVU179
- 604 00e8 F7EE007A 		vmov.f32	s15, #1.0e+0
- 605              	.L21:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 14
-
-
+ 552              		.loc 1 74 9 is_stmt 1 view .LVU163
+ 553 0098 0023     		movs	r3, #0
+ 554              	.LVL40:
   74:Core/drogui/src/filter.c **** 
- 606              		.loc 1 74 51 discriminator 4 view .LVU180
- 607 00ec 05EB8201 		add	r1, r5, r2, lsl #2
- 608 00f0 91ED007A 		vldr.32	s14, [r1]
-  74:Core/drogui/src/filter.c **** 
- 609              		.loc 1 74 42 discriminator 4 view .LVU181
- 610 00f4 27EE277A 		vmul.f32	s14, s14, s15
-  74:Core/drogui/src/filter.c **** 
- 611              		.loc 1 74 55 discriminator 4 view .LVU182
- 612 00f8 07EE903A 		vmov	s15, r3	@ int
- 613 00fc F8EEE77A 		vcvt.f32.s32	s15, s15
- 614 0100 C7EE276A 		vdiv.f32	s13, s14, s15
-  74:Core/drogui/src/filter.c **** 
- 615              		.loc 1 74 24 discriminator 4 view .LVU183
- 616 0104 C1ED006A 		vstr.32	s13, [r1]
-  73:Core/drogui/src/filter.c ****             fft_arr[i] = (i > 0 ? 2 : 1) * fft_arr[i] / (df->n);
- 617              		.loc 1 73 41 is_stmt 1 discriminator 4 view .LVU184
-  73:Core/drogui/src/filter.c ****             fft_arr[i] = (i > 0 ? 2 : 1) * fft_arr[i] / (df->n);
- 618              		.loc 1 73 43 is_stmt 0 discriminator 4 view .LVU185
- 619 0108 0232     		adds	r2, r2, #2
- 620              	.LVL48:
- 621              	.L20:
-  73:Core/drogui/src/filter.c ****             fft_arr[i] = (i > 0 ? 2 : 1) * fft_arr[i] / (df->n);
- 622              		.loc 1 73 24 is_stmt 1 discriminator 2 view .LVU186
-  73:Core/drogui/src/filter.c ****             fft_arr[i] = (i > 0 ? 2 : 1) * fft_arr[i] / (df->n);
- 623              		.loc 1 73 33 is_stmt 0 discriminator 2 view .LVU187
- 624 010a 6368     		ldr	r3, [r4, #4]
-  73:Core/drogui/src/filter.c ****             fft_arr[i] = (i > 0 ? 2 : 1) * fft_arr[i] / (df->n);
- 625              		.loc 1 73 9 discriminator 2 view .LVU188
- 626 010c B2EB430F 		cmp	r2, r3, lsl #1
- 627 0110 04DA     		bge	.L32
-  74:Core/drogui/src/filter.c **** 
- 628              		.loc 1 74 13 is_stmt 1 view .LVU189
-  74:Core/drogui/src/filter.c **** 
- 629              		.loc 1 74 42 is_stmt 0 view .LVU190
- 630 0112 002A     		cmp	r2, #0
- 631 0114 E8DD     		ble	.L28
- 632 0116 F0EE007A 		vmov.f32	s15, #2.0e+0
- 633 011a E7E7     		b	.L21
- 634              	.L32:
- 635              	.LBE7:
-  76:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
- 636              		.loc 1 76 9 is_stmt 1 view .LVU191
-  76:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
- 637              		.loc 1 76 29 is_stmt 0 view .LVU192
- 638 011c 94ED037A 		vldr.32	s14, [r4, #12]
-  76:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
- 639              		.loc 1 76 42 view .LVU193
- 640 0120 07EE903A 		vmov	s15, r3	@ int
- 641 0124 B8EEE76A 		vcvt.f32.s32	s12, s15
- 642 0128 27EE067A 		vmul.f32	s14, s14, s12
-  76:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
- 643              		.loc 1 76 57 view .LVU194
- 644 012c D4ED026A 		vldr.32	s13, [r4, #8]
-  76:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
- 645              		.loc 1 76 52 view .LVU195
- 646 0130 C7EE267A 		vdiv.f32	s15, s14, s13
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 15
+ 555              		.loc 1 74 9 is_stmt 0 view .LVU164
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 13
 
 
-  76:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
- 647              		.loc 1 76 13 view .LVU196
- 648 0134 FDEEE77A 		vcvt.s32.f32	s15, s15
- 649 0138 17EE902A 		vmov	r2, s15	@ int
- 650              	.LVL49:
-  77:Core/drogui/src/filter.c **** 
- 651              		.loc 1 77 9 is_stmt 1 view .LVU197
-  77:Core/drogui/src/filter.c **** 
- 652              		.loc 1 77 25 view .LVU198
-  79:Core/drogui/src/filter.c ****             if(fft_arr[i] > maxi) maxi = fft_arr[i], fc = (i)*(df->fs)/(df -> n);
- 653              		.loc 1 79 9 view .LVU199
- 654              	.LBB8:
-  79:Core/drogui/src/filter.c ****             if(fft_arr[i] > maxi) maxi = fft_arr[i], fc = (i)*(df->fs)/(df -> n);
- 655              		.loc 1 79 13 view .LVU200
-  79:Core/drogui/src/filter.c ****             if(fft_arr[i] > maxi) maxi = fft_arr[i], fc = (i)*(df->fs)/(df -> n);
- 656              		.loc 1 79 17 is_stmt 0 view .LVU201
- 657 013c 5200     		lsls	r2, r2, #1
- 658              	.LVL50:
-  79:Core/drogui/src/filter.c ****             if(fft_arr[i] > maxi) maxi = fft_arr[i], fc = (i)*(df->fs)/(df -> n);
- 659              		.loc 1 79 17 view .LVU202
- 660              	.LBE8:
-  77:Core/drogui/src/filter.c **** 
- 661              		.loc 1 77 31 view .LVU203
- 662 013e 9FED190A 		vldr.32	s0, .L34
-  77:Core/drogui/src/filter.c **** 
- 663              		.loc 1 77 15 view .LVU204
- 664 0142 B0EE407A 		vmov.f32	s14, s0
- 665              	.LBB9:
-  79:Core/drogui/src/filter.c ****             if(fft_arr[i] > maxi) maxi = fft_arr[i], fc = (i)*(df->fs)/(df -> n);
- 666              		.loc 1 79 9 view .LVU205
- 667 0146 00E0     		b	.L23
- 668              	.LVL51:
- 669              	.L24:
-  79:Core/drogui/src/filter.c ****             if(fft_arr[i] > maxi) maxi = fft_arr[i], fc = (i)*(df->fs)/(df -> n);
- 670              		.loc 1 79 53 is_stmt 1 discriminator 2 view .LVU206
-  79:Core/drogui/src/filter.c ****             if(fft_arr[i] > maxi) maxi = fft_arr[i], fc = (i)*(df->fs)/(df -> n);
- 671              		.loc 1 79 55 is_stmt 0 discriminator 2 view .LVU207
- 672 0148 0232     		adds	r2, r2, #2
- 673              	.LVL52:
- 674              	.L23:
-  79:Core/drogui/src/filter.c ****             if(fft_arr[i] > maxi) maxi = fft_arr[i], fc = (i)*(df->fs)/(df -> n);
- 675              		.loc 1 79 34 is_stmt 1 discriminator 1 view .LVU208
-  79:Core/drogui/src/filter.c ****             if(fft_arr[i] > maxi) maxi = fft_arr[i], fc = (i)*(df->fs)/(df -> n);
- 676              		.loc 1 79 47 is_stmt 0 discriminator 1 view .LVU209
- 677 014a 991C     		adds	r1, r3, #2
-  79:Core/drogui/src/filter.c ****             if(fft_arr[i] > maxi) maxi = fft_arr[i], fc = (i)*(df->fs)/(df -> n);
- 678              		.loc 1 79 9 discriminator 1 view .LVU210
- 679 014c 9142     		cmp	r1, r2
- 680 014e 13DB     		blt	.L33
-  80:Core/drogui/src/filter.c ****         
- 681              		.loc 1 80 13 is_stmt 1 view .LVU211
-  80:Core/drogui/src/filter.c ****         
- 682              		.loc 1 80 23 is_stmt 0 view .LVU212
- 683 0150 05EB8201 		add	r1, r5, r2, lsl #2
- 684 0154 D1ED007A 		vldr.32	s15, [r1]
-  80:Core/drogui/src/filter.c ****         
- 685              		.loc 1 80 15 view .LVU213
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 16
+ 556 009a 3246     		mov	r2, r6
+ 557 009c 04F14400 		add	r0, r4, #68
+ 558 00a0 FFF7FEFF 		bl	arm_rfft_fast_f32
+ 559              	.LVL41:
+  76:Core/drogui/src/filter.c ****             fft_ans[i/2] = sqrt(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1]);
+ 560              		.loc 1 76 9 is_stmt 1 view .LVU165
+ 561              	.LBB6:
+  76:Core/drogui/src/filter.c ****             fft_ans[i/2] = sqrt(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1]);
+ 562              		.loc 1 76 13 view .LVU166
+  76:Core/drogui/src/filter.c ****             fft_ans[i/2] = sqrt(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1]);
+ 563              		.loc 1 76 17 is_stmt 0 view .LVU167
+ 564 00a4 0025     		movs	r5, #0
+  76:Core/drogui/src/filter.c ****             fft_ans[i/2] = sqrt(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1]);
+ 565              		.loc 1 76 9 view .LVU168
+ 566 00a6 07E0     		b	.L18
+ 567              	.LVL42:
+ 568              	.L19:
+  77:Core/drogui/src/filter.c ****         
+ 569              		.loc 1 77 22 discriminator 3 view .LVU169
+ 570 00a8 4FEA6309 		asr	r9, r3, #1
+  77:Core/drogui/src/filter.c ****         
+ 571              		.loc 1 77 28 discriminator 3 view .LVU170
+ 572 00ac FFF7FEFF 		bl	__aeabi_d2f
+ 573              	.LVL43:
+  77:Core/drogui/src/filter.c ****         
+ 574              		.loc 1 77 26 discriminator 3 view .LVU171
+ 575 00b0 06EB8903 		add	r3, r6, r9, lsl #2
+ 576 00b4 1860     		str	r0, [r3]	@ float
+  76:Core/drogui/src/filter.c ****             fft_ans[i/2] = sqrt(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1]);
+ 577              		.loc 1 76 39 is_stmt 1 discriminator 3 view .LVU172
+  76:Core/drogui/src/filter.c ****             fft_ans[i/2] = sqrt(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1]);
+ 578              		.loc 1 76 41 is_stmt 0 discriminator 3 view .LVU173
+ 579 00b6 0235     		adds	r5, r5, #2
+ 580              	.LVL44:
+ 581              	.L18:
+  76:Core/drogui/src/filter.c ****             fft_ans[i/2] = sqrt(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1]);
+ 582              		.loc 1 76 24 is_stmt 1 discriminator 1 view .LVU174
+  76:Core/drogui/src/filter.c ****             fft_ans[i/2] = sqrt(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1]);
+ 583              		.loc 1 76 31 is_stmt 0 discriminator 1 view .LVU175
+ 584 00b8 6368     		ldr	r3, [r4, #4]
+  76:Core/drogui/src/filter.c ****             fft_ans[i/2] = sqrt(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1]);
+ 585              		.loc 1 76 9 discriminator 1 view .LVU176
+ 586 00ba 9D42     		cmp	r5, r3
+ 587 00bc 1DDA     		bge	.L34
+  77:Core/drogui/src/filter.c ****         
+ 588              		.loc 1 77 13 is_stmt 1 discriminator 3 view .LVU177
+  77:Core/drogui/src/filter.c ****         
+ 589              		.loc 1 77 40 is_stmt 0 discriminator 3 view .LVU178
+ 590 00be 06EB8503 		add	r3, r6, r5, lsl #2
+ 591 00c2 D3ED007A 		vldr.32	s15, [r3]
+  77:Core/drogui/src/filter.c ****         
+ 592              		.loc 1 77 43 discriminator 3 view .LVU179
+ 593 00c6 27EEA77A 		vmul.f32	s14, s15, s15
+  77:Core/drogui/src/filter.c ****         
+ 594              		.loc 1 77 66 discriminator 3 view .LVU180
+ 595 00ca 6B1C     		adds	r3, r5, #1
+  77:Core/drogui/src/filter.c ****         
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 14
 
 
- 686 0158 F4EEC77A 		vcmpe.f32	s15, s14
- 687 015c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 688 0160 F2DD     		ble	.L24
-  80:Core/drogui/src/filter.c ****         
- 689              		.loc 1 80 35 is_stmt 1 discriminator 1 view .LVU214
- 690              	.LVL53:
-  80:Core/drogui/src/filter.c ****         
- 691              		.loc 1 80 62 is_stmt 0 discriminator 1 view .LVU215
- 692 0162 07EE102A 		vmov	s14, r2	@ int
- 693 0166 B8EEC77A 		vcvt.f32.s32	s14, s14
- 694 016a 27EE267A 		vmul.f32	s14, s14, s13
-  80:Core/drogui/src/filter.c ****         
- 695              		.loc 1 80 57 discriminator 1 view .LVU216
- 696 016e 87EE060A 		vdiv.f32	s0, s14, s12
- 697              	.LVL54:
-  80:Core/drogui/src/filter.c ****         
- 698              		.loc 1 80 40 discriminator 1 view .LVU217
- 699 0172 B0EE677A 		vmov.f32	s14, s15
- 700 0176 E7E7     		b	.L24
- 701              	.LVL55:
- 702              	.L33:
-  80:Core/drogui/src/filter.c ****         
- 703              		.loc 1 80 40 discriminator 1 view .LVU218
- 704              	.LBE9:
-  82:Core/drogui/src/filter.c ****         float ans;
- 705              		.loc 1 82 9 is_stmt 1 view .LVU219
- 706 0178 2046     		mov	r0, r4
- 707 017a FFF7FEFF 		bl	updateCoeffNotch
- 708              	.LVL56:
-  83:Core/drogui/src/filter.c ****         arm_biquad_cascade_df2T_f32(&(df->f), &val, &ans, 1);
- 709              		.loc 1 83 9 view .LVU220
-  84:Core/drogui/src/filter.c ****         df->values[df->n-1] = ans;
- 710              		.loc 1 84 9 view .LVU221
- 711 017e 0123     		movs	r3, #1
- 712 0180 07F10C02 		add	r2, r7, #12
- 713 0184 391D     		adds	r1, r7, #4
- 714 0186 04F15800 		add	r0, r4, #88
- 715 018a FFF7FEFF 		bl	arm_biquad_cascade_df2T_f32
- 716              	.LVL57:
-  85:Core/drogui/src/filter.c ****     }       
- 717              		.loc 1 85 9 view .LVU222
-  85:Core/drogui/src/filter.c ****     }       
- 718              		.loc 1 85 11 is_stmt 0 view .LVU223
- 719 018e 2368     		ldr	r3, [r4]
-  85:Core/drogui/src/filter.c ****     }       
- 720              		.loc 1 85 22 view .LVU224
- 721 0190 6168     		ldr	r1, [r4, #4]
-  85:Core/drogui/src/filter.c ****     }       
- 722              		.loc 1 85 19 view .LVU225
- 723 0192 6FF04042 		mvn	r2, #-1073741824
- 724 0196 0A44     		add	r2, r2, r1
- 725 0198 03EB8203 		add	r3, r3, r2, lsl #2
-  85:Core/drogui/src/filter.c ****     }       
- 726              		.loc 1 85 29 view .LVU226
- 727 019c FA68     		ldr	r2, [r7, #12]	@ float
- 728 019e 1A60     		str	r2, [r3]	@ float
- 729 01a0 B546     		mov	sp, r6
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 17
+ 596              		.loc 1 77 64 discriminator 3 view .LVU181
+ 597 00cc 06EB8303 		add	r3, r6, r3, lsl #2
+ 598 00d0 D3ED007A 		vldr.32	s15, [r3]
+  77:Core/drogui/src/filter.c ****         
+ 599              		.loc 1 77 69 discriminator 3 view .LVU182
+ 600 00d4 67EEA77A 		vmul.f32	s15, s15, s15
+  77:Core/drogui/src/filter.c ****         
+ 601              		.loc 1 77 28 discriminator 3 view .LVU183
+ 602 00d8 77EE277A 		vadd.f32	s15, s14, s15
+ 603 00dc 17EE900A 		vmov	r0, s15
+ 604 00e0 FFF7FEFF 		bl	__aeabi_f2d
+ 605              	.LVL45:
+ 606 00e4 41EC100B 		vmov	d0, r0, r1
+ 607 00e8 FFF7FEFF 		bl	sqrt
+ 608              	.LVL46:
+ 609 00ec 51EC100B 		vmov	r0, r1, d0
+  77:Core/drogui/src/filter.c ****         
+ 610              		.loc 1 77 22 discriminator 3 view .LVU184
+ 611 00f0 2B46     		mov	r3, r5
+ 612 00f2 002D     		cmp	r5, #0
+ 613 00f4 D8DA     		bge	.L19
+ 614 00f6 6B1C     		adds	r3, r5, #1
+ 615 00f8 D6E7     		b	.L19
+ 616              	.L34:
+  77:Core/drogui/src/filter.c ****         
+ 617              		.loc 1 77 22 discriminator 3 view .LVU185
+ 618              	.LBE6:
+ 619              	.LBB7:
+  79:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 620              		.loc 1 79 17 view .LVU186
+ 621 00fa 0022     		movs	r2, #0
+ 622 00fc 10E0     		b	.L21
+ 623              	.LVL47:
+ 624              	.L30:
+  80:Core/drogui/src/filter.c **** 
+ 625              		.loc 1 80 42 view .LVU187
+ 626 00fe B7EE007A 		vmov.f32	s14, #1.0e+0
+ 627              	.L22:
+  80:Core/drogui/src/filter.c **** 
+ 628              		.loc 1 80 51 discriminator 4 view .LVU188
+ 629 0102 06EB8201 		add	r1, r6, r2, lsl #2
+ 630 0106 D1ED007A 		vldr.32	s15, [r1]
+  80:Core/drogui/src/filter.c **** 
+ 631              		.loc 1 80 42 discriminator 4 view .LVU189
+ 632 010a 27EE277A 		vmul.f32	s14, s14, s15
+  80:Core/drogui/src/filter.c **** 
+ 633              		.loc 1 80 55 discriminator 4 view .LVU190
+ 634 010e 07EE903A 		vmov	s15, r3	@ int
+ 635 0112 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 636 0116 C7EE276A 		vdiv.f32	s13, s14, s15
+  80:Core/drogui/src/filter.c **** 
+ 637              		.loc 1 80 24 discriminator 4 view .LVU191
+ 638 011a C1ED006A 		vstr.32	s13, [r1]
+  79:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 639              		.loc 1 79 42 is_stmt 1 discriminator 4 view .LVU192
+  79:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 640              		.loc 1 79 44 is_stmt 0 discriminator 4 view .LVU193
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 15
 
 
- 730 01a2 43E7     		b	.L15
- 731              	.L35:
- 732              		.align	2
- 733              	.L34:
- 734 01a4 00000000 		.word	0
- 735              	.LBE4:
- 736              		.cfi_endproc
- 737              	.LFE178:
- 739              		.text
- 740              	.Letext0:
- 741              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 742              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 743              		.file 4 "Drivers/CMSIS/DSP/Include/arm_math.h"
- 744              		.file 5 "Core/drogui/include/filter.h"
- 745              		.file 6 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 746              		.file 7 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s 			page 18
+ 641 011e 0132     		adds	r2, r2, #1
+ 642              	.LVL48:
+ 643              	.L21:
+  79:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 644              		.loc 1 79 24 is_stmt 1 discriminator 2 view .LVU194
+  79:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 645              		.loc 1 79 32 is_stmt 0 discriminator 2 view .LVU195
+ 646 0120 6368     		ldr	r3, [r4, #4]
+  79:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 647              		.loc 1 79 37 discriminator 2 view .LVU196
+ 648 0122 1946     		mov	r1, r3
+ 649 0124 002B     		cmp	r3, #0
+ 650 0126 08DB     		blt	.L35
+ 651              	.L23:
+ 652 0128 4810     		asrs	r0, r1, #1
+  79:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 653              		.loc 1 79 9 discriminator 2 view .LVU197
+ 654 012a B2EB610F 		cmp	r2, r1, asr #1
+ 655 012e 06DA     		bge	.L36
+  80:Core/drogui/src/filter.c **** 
+ 656              		.loc 1 80 13 is_stmt 1 view .LVU198
+  80:Core/drogui/src/filter.c **** 
+ 657              		.loc 1 80 42 is_stmt 0 view .LVU199
+ 658 0130 002A     		cmp	r2, #0
+ 659 0132 E4DD     		ble	.L30
+ 660 0134 B0EE007A 		vmov.f32	s14, #2.0e+0
+ 661 0138 E3E7     		b	.L22
+ 662              	.L35:
+  79:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 663              		.loc 1 79 37 discriminator 2 view .LVU200
+ 664 013a 591C     		adds	r1, r3, #1
+ 665 013c F4E7     		b	.L23
+ 666              	.L36:
+  79:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 667              		.loc 1 79 37 discriminator 2 view .LVU201
+ 668              	.LBE7:
+  82:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
+ 669              		.loc 1 82 9 is_stmt 1 view .LVU202
+  82:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
+ 670              		.loc 1 82 29 is_stmt 0 view .LVU203
+ 671 013e D4ED036A 		vldr.32	s13, [r4, #12]
+  82:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
+ 672              		.loc 1 82 42 view .LVU204
+ 673 0142 07EE903A 		vmov	s15, r3	@ int
+ 674 0146 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 675 014a 66EEA76A 		vmul.f32	s13, s13, s15
+  82:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
+ 676              		.loc 1 82 57 view .LVU205
+ 677 014e 94ED026A 		vldr.32	s12, [r4, #8]
+  82:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
+ 678              		.loc 1 82 52 view .LVU206
+ 679 0152 86EE867A 		vdiv.f32	s14, s13, s12
+  82:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
+ 680              		.loc 1 82 13 view .LVU207
+ 681 0156 BDEEC77A 		vcvt.s32.f32	s14, s14
+ 682 015a 17EE103A 		vmov	r3, s14	@ int
+ 683              	.LVL49:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 16
+
+
+  83:Core/drogui/src/filter.c **** 
+ 684              		.loc 1 83 9 is_stmt 1 view .LVU208
+  83:Core/drogui/src/filter.c **** 
+ 685              		.loc 1 83 25 view .LVU209
+  85:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+ 686              		.loc 1 85 9 view .LVU210
+ 687              	.LBB8:
+  85:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+ 688              		.loc 1 85 13 view .LVU211
+  85:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+ 689              		.loc 1 85 13 is_stmt 0 view .LVU212
+ 690              	.LBE8:
+  83:Core/drogui/src/filter.c **** 
+ 691              		.loc 1 83 31 view .LVU213
+ 692 015e 9FED190A 		vldr.32	s0, .L38
+  83:Core/drogui/src/filter.c **** 
+ 693              		.loc 1 83 15 view .LVU214
+ 694 0162 F0EE406A 		vmov.f32	s13, s0
+ 695              	.LBB9:
+  85:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+ 696              		.loc 1 85 9 view .LVU215
+ 697 0166 00E0     		b	.L25
+ 698              	.LVL50:
+ 699              	.L26:
+  85:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+ 700              		.loc 1 85 50 is_stmt 1 discriminator 2 view .LVU216
+  85:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+ 701              		.loc 1 85 52 is_stmt 0 discriminator 2 view .LVU217
+ 702 0168 0133     		adds	r3, r3, #1
+ 703              	.LVL51:
+ 704              	.L25:
+  85:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+ 705              		.loc 1 85 32 is_stmt 1 discriminator 1 view .LVU218
+  85:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+ 706              		.loc 1 85 9 is_stmt 0 discriminator 1 view .LVU219
+ 707 016a 8342     		cmp	r3, r0
+ 708 016c 13DA     		bge	.L37
+  86:Core/drogui/src/filter.c ****         
+ 709              		.loc 1 86 13 is_stmt 1 view .LVU220
+  86:Core/drogui/src/filter.c ****         
+ 710              		.loc 1 86 23 is_stmt 0 view .LVU221
+ 711 016e 06EB8302 		add	r2, r6, r3, lsl #2
+ 712 0172 92ED007A 		vldr.32	s14, [r2]
+  86:Core/drogui/src/filter.c ****         
+ 713              		.loc 1 86 15 view .LVU222
+ 714 0176 F4EEC76A 		vcmpe.f32	s13, s14
+ 715 017a F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 716 017e F3D5     		bpl	.L26
+  86:Core/drogui/src/filter.c ****         
+ 717              		.loc 1 86 35 is_stmt 1 discriminator 1 view .LVU223
+ 718              	.LVL52:
+  86:Core/drogui/src/filter.c ****         
+ 719              		.loc 1 86 62 is_stmt 0 discriminator 1 view .LVU224
+ 720 0180 06EE903A 		vmov	s13, r3	@ int
+ 721 0184 F8EEE66A 		vcvt.f32.s32	s13, s13
+ 722 0188 66EE866A 		vmul.f32	s13, s13, s12
+  86:Core/drogui/src/filter.c ****         
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 17
+
+
+ 723              		.loc 1 86 57 discriminator 1 view .LVU225
+ 724 018c 86EEA70A 		vdiv.f32	s0, s13, s15
+ 725              	.LVL53:
+  86:Core/drogui/src/filter.c ****         
+ 726              		.loc 1 86 40 discriminator 1 view .LVU226
+ 727 0190 F0EE476A 		vmov.f32	s13, s14
+ 728 0194 E8E7     		b	.L26
+ 729              	.LVL54:
+ 730              	.L37:
+  86:Core/drogui/src/filter.c ****         
+ 731              		.loc 1 86 40 discriminator 1 view .LVU227
+ 732              	.LBE9:
+  91:Core/drogui/src/filter.c ****         float ans;
+ 733              		.loc 1 91 9 is_stmt 1 view .LVU228
+ 734 0196 2046     		mov	r0, r4
+ 735 0198 FFF7FEFF 		bl	updateCoeffNotch
+ 736              	.LVL55:
+  92:Core/drogui/src/filter.c ****         arm_biquad_cascade_df2T_f32(&(df ->f), &val, &ans, 1);
+ 737              		.loc 1 92 9 view .LVU229
+  93:Core/drogui/src/filter.c ****         df->values[df->n-1] = ans;
+ 738              		.loc 1 93 9 view .LVU230
+ 739 019c 0123     		movs	r3, #1
+ 740 019e 07F10C02 		add	r2, r7, #12
+ 741 01a2 391D     		adds	r1, r7, #4
+ 742 01a4 04F15C00 		add	r0, r4, #92
+ 743 01a8 FFF7FEFF 		bl	arm_biquad_cascade_df2T_f32
+ 744              	.LVL56:
+  94:Core/drogui/src/filter.c ****         val = ans;
+ 745              		.loc 1 94 9 view .LVU231
+  94:Core/drogui/src/filter.c ****         val = ans;
+ 746              		.loc 1 94 11 is_stmt 0 view .LVU232
+ 747 01ac 2368     		ldr	r3, [r4]
+  94:Core/drogui/src/filter.c ****         val = ans;
+ 748              		.loc 1 94 22 view .LVU233
+ 749 01ae 6168     		ldr	r1, [r4, #4]
+  94:Core/drogui/src/filter.c ****         val = ans;
+ 750              		.loc 1 94 19 view .LVU234
+ 751 01b0 6FF04042 		mvn	r2, #-1073741824
+ 752 01b4 0A44     		add	r2, r2, r1
+ 753 01b6 03EB8203 		add	r3, r3, r2, lsl #2
+  94:Core/drogui/src/filter.c ****         val = ans;
+ 754              		.loc 1 94 29 view .LVU235
+ 755 01ba FA68     		ldr	r2, [r7, #12]	@ float
+ 756 01bc 1A60     		str	r2, [r3]	@ float
+  95:Core/drogui/src/filter.c ****     }       
+ 757              		.loc 1 95 9 is_stmt 1 view .LVU236
+  95:Core/drogui/src/filter.c ****     }       
+ 758              		.loc 1 95 13 is_stmt 0 view .LVU237
+ 759 01be 7A60     		str	r2, [r7, #4]	@ float
+ 760 01c0 C546     		mov	sp, r8
+ 761 01c2 33E7     		b	.L15
+ 762              	.L39:
+ 763              		.align	2
+ 764              	.L38:
+ 765 01c4 00000000 		.word	0
+ 766              	.LBE4:
+ 767              		.cfi_endproc
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 18
+
+
+ 768              	.LFE181:
+ 770              		.text
+ 771              	.Letext0:
+ 772              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 773              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 774              		.file 4 "Drivers/CMSIS/DSP/Include/arm_math.h"
+ 775              		.file 5 "Core/drogui/include/filter.h"
+ 776              		.file 6 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 777              		.file 7 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s 			page 19
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 filter.c
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s:18     .text.initFilter:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s:26     .text.initFilter:00000000 initFilter
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s:83     .text.computeFilter:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s:90     .text.computeFilter:00000000 computeFilter
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s:125    .text.initDNotchFilter:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s:132    .text.initDNotchFilter:00000000 initDNotchFilter
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s:226    .text.updateCoeffNotch:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s:233    .text.updateCoeffNotch:00000000 updateCoeffNotch
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s:367    .text.updateCoeffNotch:000000c8 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s:373    .text.computeDNotch:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s:380    .text.computeDNotch:00000000 computeDNotch
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCkMB5k.s:734    .text.computeDNotch:000001a4 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:18     .text.initFilter:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:26     .text.initFilter:00000000 initFilter
+C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:83     .text.computeFilter:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:90     .text.computeFilter:00000000 computeFilter
+C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:125    .text.initDNotchFilter:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:132    .text.initDNotchFilter:00000000 initDNotchFilter
+C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:225    .text.updateCoeffNotch:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:232    .text.updateCoeffNotch:00000000 updateCoeffNotch
+C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:370    .text.updateCoeffNotch:000000d0 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:376    .text.computeDNotch:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:383    .text.computeDNotch:00000000 computeDNotch
+C:\Users\GUILLE~1\AppData\Local\Temp\cctBoalc.s:765    .text.computeDNotch:000001c4 $d
 
 UNDEFINED SYMBOLS
 calloc
 arm_iir_lattice_init_f32
 arm_iir_lattice_f32
-arm_cfft_radix2_init_f32
+arm_rfft_fast_init_f32
 arm_biquad_cascade_df2T_init_f32
 __aeabi_f2d
 __aeabi_dmul
 __aeabi_d2f
-arm_cfft_radix2_f32
+arm_rfft_fast_f32
 sqrt
 arm_biquad_cascade_df2T_f32

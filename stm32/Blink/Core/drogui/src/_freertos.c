@@ -3,5 +3,5 @@
 void initGlobal(){
     initSystem();
     initSensorsTasks();
-    initControlTasks();
+    //initControlTasks();
 }

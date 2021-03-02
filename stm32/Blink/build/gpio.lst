@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cck0a8mQ.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccMPfl1W.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cck0a8mQ.s 			page 1
   28:Core/Src/gpio.c **** /* Configure GPIO                                                             */
   29:Core/Src/gpio.c **** /*----------------------------------------------------------------------------*/
   30:Core/Src/gpio.c **** /* USER CODE BEGIN 1 */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cck0a8mQ.s 			page 2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccMPfl1W.s 			page 2
 
 
   31:Core/Src/gpio.c **** 
@@ -93,18 +93,18 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cck0a8mQ.s 			page 1
   49 000e 0794     		str	r4, [sp, #28]
   40:Core/Src/gpio.c **** 
   41:Core/Src/gpio.c ****   /* GPIO Ports Clock Enable */
-  42:Core/Src/gpio.c ****   __HAL_RCC_GPIOA_CLK_ENABLE();
+  42:Core/Src/gpio.c ****   __HAL_RCC_GPIOD_CLK_ENABLE();
   50              		.loc 1 42 3 is_stmt 1 view .LVU3
   51              	.LBB2:
   52              		.loc 1 42 3 view .LVU4
   53              		.loc 1 42 3 view .LVU5
   54 0010 164B     		ldr	r3, .L3
   55 0012 1A6B     		ldr	r2, [r3, #48]
-  56 0014 42F00102 		orr	r2, r2, #1
+  56 0014 42F00802 		orr	r2, r2, #8
   57 0018 1A63     		str	r2, [r3, #48]
   58              		.loc 1 42 3 view .LVU6
   59 001a 1A6B     		ldr	r2, [r3, #48]
-  60 001c 02F00102 		and	r2, r2, #1
+  60 001c 02F00802 		and	r2, r2, #8
   61 0020 0092     		str	r2, [sp]
   62              		.loc 1 42 3 view .LVU7
   63 0022 009A     		ldr	r2, [sp]
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cck0a8mQ.s 			page 1
   70 0024 1A6B     		ldr	r2, [r3, #48]
   71 0026 42F00202 		orr	r2, r2, #2
   72 002a 1A63     		str	r2, [r3, #48]
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cck0a8mQ.s 			page 3
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccMPfl1W.s 			page 3
 
 
   73              		.loc 1 43 3 view .LVU12
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cck0a8mQ.s 			page 1
   54:Core/Src/gpio.c ****   HAL_GPIO_Init(LED_GPIO_Port, &GPIO_InitStruct);
  117              		.loc 1 54 3 is_stmt 1 view .LVU30
  118 0060 03A9     		add	r1, sp, #12
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cck0a8mQ.s 			page 4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccMPfl1W.s 			page 4
 
 
  119 0062 2846     		mov	r0, r5
@@ -205,14 +205,14 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cck0a8mQ.s 			page 1
  139              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
  140              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
  141              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_gpio.h"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cck0a8mQ.s 			page 5
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccMPfl1W.s 			page 5
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 gpio.c
-C:\Users\GUILLE~1\AppData\Local\Temp\cck0a8mQ.s:18     .text.MX_GPIO_Init:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cck0a8mQ.s:26     .text.MX_GPIO_Init:00000000 MX_GPIO_Init
-C:\Users\GUILLE~1\AppData\Local\Temp\cck0a8mQ.s:131    .text.MX_GPIO_Init:0000006c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccMPfl1W.s:18     .text.MX_GPIO_Init:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccMPfl1W.s:26     .text.MX_GPIO_Init:00000000 MX_GPIO_Init
+C:\Users\GUILLE~1\AppData\Local\Temp\ccMPfl1W.s:131    .text.MX_GPIO_Init:0000006c $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_WritePin

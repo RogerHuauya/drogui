@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYrdAoS.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccbUfAUp.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -49,56 +49,26 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYrdAoS.s 			page 1
   19:Core/Src/freertos.c **** /* USER CODE END Header */
   20:Core/Src/freertos.c **** 
   21:Core/Src/freertos.c **** /* Includes ------------------------------------------------------------------*/
-  22:Core/Src/freertos.c **** 
-  23:Core/Src/freertos.c **** #include "_freertos.h"
-  24:Core/Src/freertos.c **** 
-  25:Core/Src/freertos.c **** /* Private includes ----------------------------------------------------------*/
-  26:Core/Src/freertos.c **** /* USER CODE BEGIN Includes */
-  27:Core/Src/freertos.c **** 
-  28:Core/Src/freertos.c **** /* USER CODE END Includes */
+  22:Core/Src/freertos.c **** #include "_freertos.h"
+  23:Core/Src/freertos.c **** 
+  24:Core/Src/freertos.c **** /* Private function prototypes -----------------------------------------------*/
+  25:Core/Src/freertos.c **** /* USER CODE BEGIN FunctionPrototypes */
+  26:Core/Src/freertos.c **** 
+  27:Core/Src/freertos.c **** /* USER CODE END FunctionPrototypes */
+  28:Core/Src/freertos.c **** 
   29:Core/Src/freertos.c **** 
-  30:Core/Src/freertos.c **** /* Private typedef -----------------------------------------------------------*/
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYrdAoS.s 			page 2
+  30:Core/Src/freertos.c **** void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccbUfAUp.s 			page 2
 
 
-  31:Core/Src/freertos.c **** /* USER CODE BEGIN PTD */
-  32:Core/Src/freertos.c **** 
-  33:Core/Src/freertos.c **** /* USER CODE END PTD */
-  34:Core/Src/freertos.c **** 
-  35:Core/Src/freertos.c **** /* Private define ------------------------------------------------------------*/
-  36:Core/Src/freertos.c **** /* USER CODE BEGIN PD */
-  37:Core/Src/freertos.c **** 
-  38:Core/Src/freertos.c **** /* USER CODE END PD */
-  39:Core/Src/freertos.c **** 
-  40:Core/Src/freertos.c **** /* Private macro -------------------------------------------------------------*/
-  41:Core/Src/freertos.c **** /* USER CODE BEGIN PM */
-  42:Core/Src/freertos.c **** 
-  43:Core/Src/freertos.c **** /* USER CODE END PM */
-  44:Core/Src/freertos.c **** 
-  45:Core/Src/freertos.c **** /* Private variables ---------------------------------------------------------*/
-  46:Core/Src/freertos.c **** /* USER CODE BEGIN Variables */
-  47:Core/Src/freertos.c **** 
-  48:Core/Src/freertos.c **** /* USER CODE END Variables */
-  49:Core/Src/freertos.c **** /* Definitions for defaultTask */
-  50:Core/Src/freertos.c **** 
-  51:Core/Src/freertos.c **** 
-  52:Core/Src/freertos.c **** 
-  53:Core/Src/freertos.c **** 
-  54:Core/Src/freertos.c **** /* Private function prototypes -----------------------------------------------*/
-  55:Core/Src/freertos.c **** /* USER CODE BEGIN FunctionPrototypes */
-  56:Core/Src/freertos.c **** 
-  57:Core/Src/freertos.c **** /* USER CODE END FunctionPrototypes */
-  58:Core/Src/freertos.c **** 
-  59:Core/Src/freertos.c **** 
-  60:Core/Src/freertos.c **** void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
-  61:Core/Src/freertos.c **** 
-  62:Core/Src/freertos.c **** /**
-  63:Core/Src/freertos.c ****   * @brief  FreeRTOS initialization
-  64:Core/Src/freertos.c ****   * @param  None
-  65:Core/Src/freertos.c ****   * @retval None
-  66:Core/Src/freertos.c ****   */
-  67:Core/Src/freertos.c **** void MX_FREERTOS_Init(void) {
-  29              		.loc 1 67 29 view -0
+  31:Core/Src/freertos.c **** 
+  32:Core/Src/freertos.c **** /**
+  33:Core/Src/freertos.c ****   * @brief  FreeRTOS initialization
+  34:Core/Src/freertos.c ****   * @param  None
+  35:Core/Src/freertos.c ****   * @retval None
+  36:Core/Src/freertos.c ****   */
+  37:Core/Src/freertos.c **** void MX_FREERTOS_Init(void) {
+  29              		.loc 1 37 29 view -0
   30              		.cfi_startproc
   31              		@ args = 0, pretend = 0, frame = 0
   32              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -107,64 +77,59 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYrdAoS.s 			page 1
   35              		.cfi_def_cfa_offset 8
   36              		.cfi_offset 3, -8
   37              		.cfi_offset 14, -4
-  68:Core/Src/freertos.c ****   /* USER CODE BEGIN Init */
-  69:Core/Src/freertos.c **** 
-  70:Core/Src/freertos.c ****   /* USER CODE END Init */
-  71:Core/Src/freertos.c **** 
-  72:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_MUTEX */
-  73:Core/Src/freertos.c ****   /* add mutexes, ... */
-  74:Core/Src/freertos.c ****   /* USER CODE END RTOS_MUTEX */
-  75:Core/Src/freertos.c **** 
-  76:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_SEMAPHORES */
-  77:Core/Src/freertos.c ****   /* add semaphores, ... */
-  78:Core/Src/freertos.c ****   /* USER CODE END RTOS_SEMAPHORES */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYrdAoS.s 			page 3
-
-
-  79:Core/Src/freertos.c **** 
-  80:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_TIMERS */
-  81:Core/Src/freertos.c ****   /* start timers, add new ones, ... */
-  82:Core/Src/freertos.c ****   /* USER CODE END RTOS_TIMERS */
-  83:Core/Src/freertos.c **** 
-  84:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_QUEUES */
-  85:Core/Src/freertos.c ****   /* add queues, ... */
-  86:Core/Src/freertos.c ****   /* USER CODE END RTOS_QUEUES */
-  87:Core/Src/freertos.c ****   initGlobal();
-  38              		.loc 1 87 3 view .LVU1
+  38:Core/Src/freertos.c ****   /* USER CODE BEGIN Init */
+  39:Core/Src/freertos.c **** 
+  40:Core/Src/freertos.c ****   /* USER CODE END Init */
+  41:Core/Src/freertos.c **** 
+  42:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_MUTEX */
+  43:Core/Src/freertos.c ****   /* add mutexes, ... */
+  44:Core/Src/freertos.c ****   /* USER CODE END RTOS_MUTEX */
+  45:Core/Src/freertos.c **** 
+  46:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_SEMAPHORES */
+  47:Core/Src/freertos.c ****   /* add semaphores, ... */
+  48:Core/Src/freertos.c ****   /* USER CODE END RTOS_SEMAPHORES */
+  49:Core/Src/freertos.c **** 
+  50:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_TIMERS */
+  51:Core/Src/freertos.c ****   /* start timers, add new ones, ... */
+  52:Core/Src/freertos.c ****   /* USER CODE END RTOS_TIMERS */
+  53:Core/Src/freertos.c **** 
+  54:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_QUEUES */
+  55:Core/Src/freertos.c ****   /* add queues, ... */
+  56:Core/Src/freertos.c ****   /* USER CODE END RTOS_QUEUES */
+  57:Core/Src/freertos.c **** 
+  58:Core/Src/freertos.c ****   /* Create the thread(s) */
+  59:Core/Src/freertos.c ****   /* creation of defaultTask */
+  60:Core/Src/freertos.c ****   initGlobal();
+  38              		.loc 1 60 3 view .LVU1
   39 0002 FFF7FEFF 		bl	initGlobal
   40              	.LVL0:
-  88:Core/Src/freertos.c ****   /* Create the thread(s) */
-  89:Core/Src/freertos.c ****   /* creation of defaultTask */
-  90:Core/Src/freertos.c ****   //defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
-  91:Core/Src/freertos.c **** 
-  92:Core/Src/freertos.c ****   /* creation of myTask02 */
-  93:Core/Src/freertos.c ****   //myTask02Handle = osThreadNew(StartTask02, NULL, &myTask02_attributes);
-  94:Core/Src/freertos.c **** 
-  95:Core/Src/freertos.c ****   // BlinkHandle = osThreadNew(BlinkTask, NULL, &Blink_attributes);
-  96:Core/Src/freertos.c **** 
-  97:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_THREADS */
-  98:Core/Src/freertos.c ****   /* add threads, ... */
-  99:Core/Src/freertos.c ****   /* USER CODE END RTOS_THREADS */
- 100:Core/Src/freertos.c **** 
- 101:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_EVENTS */
- 102:Core/Src/freertos.c ****   /* add events, ... */
- 103:Core/Src/freertos.c ****   /* USER CODE END RTOS_EVENTS */
- 104:Core/Src/freertos.c **** 
- 105:Core/Src/freertos.c **** }
-  41              		.loc 1 105 1 is_stmt 0 view .LVU2
+  61:Core/Src/freertos.c **** 
+  62:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_THREADS */
+  63:Core/Src/freertos.c ****   /* add threads, ... */
+  64:Core/Src/freertos.c ****   /* USER CODE END RTOS_THREADS */
+  65:Core/Src/freertos.c **** 
+  66:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_EVENTS */
+  67:Core/Src/freertos.c ****   /* add events, ... */
+  68:Core/Src/freertos.c ****   /* USER CODE END RTOS_EVENTS */
+  69:Core/Src/freertos.c **** 
+  70:Core/Src/freertos.c **** }
+  41              		.loc 1 70 1 is_stmt 0 view .LVU2
   42 0006 08BD     		pop	{r3, pc}
   43              		.cfi_endproc
   44              	.LFE178:
   46              		.text
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccbUfAUp.s 			page 3
+
+
   47              	.Letext0:
   48              		.file 2 "Core/drogui/include/_freertos.h"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYrdAoS.s 			page 4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccbUfAUp.s 			page 4
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 freertos.c
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYrdAoS.s:18     .text.MX_FREERTOS_Init:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYrdAoS.s:26     .text.MX_FREERTOS_Init:00000000 MX_FREERTOS_Init
+C:\Users\GUILLE~1\AppData\Local\Temp\ccbUfAUp.s:18     .text.MX_FREERTOS_Init:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccbUfAUp.s:26     .text.MX_FREERTOS_Init:00000000 MX_FREERTOS_Init
 
 UNDEFINED SYMBOLS
 initGlobal

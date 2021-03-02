@@ -14,6 +14,7 @@
         "cmath": "cpp",
         "_freertos.h": "c",
         "typeinfo": "c",
-        "controltasks.h": "c"
+        "controltasks.h": "c",
+        "string.h": "c"
     }
 }
