@@ -12,18 +12,18 @@ typedef struct _pid{
     float erri ,err_ant2, err_ant1;
     float errd,errd_ant,errd_acum;
     float u, u_ant;
-    unsigned long tant;
+    uint32_t tant;
     float isat, osat, dt;
     int type;
     filter f;
     float N_filt;
 } pid;
 
-float computePid(pid* p, float error, unsigned long t, float h);
-void resetPid(pid* p, unsigned long ti);
+float computePid(pid* p, float error, uint32_t t, float h);
+void resetPid(pid* p, uint32_t ti);
 
-void initPid(pid* p, float kp, float kd, float ki,unsigned long ti, float N, float isat,float osat, int tipo );
-void initPidFilter(pid* p, float kp, float kd, float ki,unsigned long ti, float N, float isat,float osat,int tipo, int n, float*a, float*b);
+void initPid(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float isat,float osat, int tipo );
+void initPidFilter(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float isat,float osat,int tipo, int n, float*a, float*b);
 
 
 #endif

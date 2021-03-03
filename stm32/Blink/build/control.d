@@ -28,7 +28,8 @@ build/control.o: Core/drogui/src/control.c Core/drogui/include/control.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h \
- Core/drogui/include/filter.h Drivers/CMSIS/DSP/Include/arm_math.h
+ Core/drogui/include/_main.h Core/drogui/include/filter.h \
+ Drivers/CMSIS/DSP/Include/arm_math.h
 Core/drogui/include/control.h:
 Core/drogui/include/utils.h:
 Core/Inc/main.h:
@@ -62,5 +63,6 @@ Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h:
+Core/drogui/include/_main.h:
 Core/drogui/include/filter.h:
 Drivers/CMSIS/DSP/Include/arm_math.h:

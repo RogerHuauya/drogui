@@ -28,7 +28,7 @@ build/kalman.o: Core/drogui/src/kalman.c Core/drogui/include/kalman.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h \
- Core/drogui/include/matlib.h
+ Core/drogui/include/_main.h Core/drogui/include/matlib.h
 Core/drogui/include/kalman.h:
 Core/drogui/include/utils.h:
 Core/Inc/main.h:
@@ -62,4 +62,5 @@ Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h:
+Core/drogui/include/_main.h:
 Core/drogui/include/matlib.h:

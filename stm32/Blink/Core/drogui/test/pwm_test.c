@@ -1,11 +1,10 @@
-#define PWM_TEST
+//#define PWM_TEST
 #ifdef PWM_TEST
 
 #include "_main.h"
 #include "usart.h"
 #include <stdio.h>
 #include <string.h>
-#include "_freertos.h"
 #include "tim.h"
 
 

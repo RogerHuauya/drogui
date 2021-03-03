@@ -2,7 +2,7 @@
 #include <math.h>
 
 
-float computePid(pid* p, float error, unsigned long t, float h){
+float computePid(pid* p, float error, uint32_t t, float h){
     float kp = 1, kd = 1, ki = 1;
 
 
@@ -51,7 +51,7 @@ float computePid(pid* p, float error, unsigned long t, float h){
 }
 
 
-void resetPid(pid* p, unsigned long ti){
+void resetPid(pid* p, uint32_t ti){
     p->tant = ti;
     p->erri = 0;
     p->err_ant1 = p->err_ant2 = 0;
@@ -59,7 +59,7 @@ void resetPid(pid* p, unsigned long ti){
     p->u_ant = 0;
 }
 
-void initPid(pid* p, float kp, float kd, float ki,unsigned long ti, float N, float isat, float osat, int type){
+void initPid(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float isat, float osat, int type){
     for(int i = 0; i < 5; i++){
         p->kp[i] = kp;
         p->kd[i] = kd;
@@ -75,7 +75,7 @@ void initPid(pid* p, float kp, float kd, float ki,unsigned long ti, float N, flo
     p->isat = isat;
 }
 
-void initPidFilter(pid* p, float kp, float kd, float ki,unsigned long ti, float N, float isat, float osat, int type,int n, float* a , float*b ){
+void initPidFilter(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float isat, float osat, int type,int n, float* a , float*b ){
     for(int i = 0; i < 5; i++){
         p->kp[i] = kp;
         p->kd[i] = kd;

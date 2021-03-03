@@ -21,6 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f7xx_it.h"
+#include "usart.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -57,8 +58,6 @@
 
 /* External variables --------------------------------------------------------*/
 extern I2C_HandleTypeDef hi2c4;
-extern TIM_HandleTypeDef htim1;
-
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -142,6 +141,19 @@ void UsageFault_Handler(void)
 }
 
 /**
+  * @brief This function handles System service call via SWI instruction.
+  */
+void SVC_Handler(void)
+{
+  /* USER CODE BEGIN SVCall_IRQn 0 */
+
+  /* USER CODE END SVCall_IRQn 0 */
+  /* USER CODE BEGIN SVCall_IRQn 1 */
+
+  /* USER CODE END SVCall_IRQn 1 */
+}
+
+/**
   * @brief This function handles Debug monitor.
   */
 void DebugMon_Handler(void)
@@ -154,6 +166,33 @@ void DebugMon_Handler(void)
   /* USER CODE END DebugMonitor_IRQn 1 */
 }
 
+/**
+  * @brief This function handles Pendable request for system service.
+  */
+void PendSV_Handler(void)
+{
+  /* USER CODE BEGIN PendSV_IRQn 0 */
+
+  /* USER CODE END PendSV_IRQn 0 */
+  /* USER CODE BEGIN PendSV_IRQn 1 */
+
+  /* USER CODE END PendSV_IRQn 1 */
+}
+
+/**
+  * @brief This function handles System tick timer.
+  */
+void SysTick_Handler(void)
+{
+  /* USER CODE BEGIN SysTick_IRQn 0 */
+
+  /* USER CODE END SysTick_IRQn 0 */
+  HAL_IncTick();
+  /* USER CODE BEGIN SysTick_IRQn 1 */
+
+  /* USER CODE END SysTick_IRQn 1 */
+}
+
 /******************************************************************************/
 /* STM32F7xx Peripheral Interrupt Handlers                                    */
 /* Add here the Interrupt Handlers for the used peripherals.                  */
@@ -162,32 +201,35 @@ void DebugMon_Handler(void)
 /******************************************************************************/
 
 /**
-  * @brief This function handles TIM1 update interrupt and TIM10 global interrupt.
-  */
-void TIM1_UP_TIM10_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM1_UP_TIM10_IRQn 0 */
-
-  /* USER CODE END TIM1_UP_TIM10_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim1);
-  /* USER CODE BEGIN TIM1_UP_TIM10_IRQn 1 */
-
-  /* USER CODE END TIM1_UP_TIM10_IRQn 1 */
-}
-
-/**
   * @brief This function handles I2C4 event interrupt.
   */
-__weak void I2C4_EV_IRQHandler(void)
+ char buffer[50];
+void I2C4_EV_IRQHandler(void)
 {
   /* USER CODE BEGIN I2C4_EV_IRQn 0 */
 
+  
   /* USER CODE END I2C4_EV_IRQn 0 */
-  HAL_I2C_EV_IRQHandler(&hi2c4);
+  uint32_t itflags   = READ_REG(hi2c4.Instance->ISR);
+  uint32_t itsources = READ_REG(hi2c4.Instance->CR1);
+__HAL_LOCK(&hi2c4);
+  if ((I2C_CHECK_FLAG(itflags, I2C_FLAG_RXNE) != RESET) && (I2C_CHECK_IT_SOURCE(itsources, I2C_IT_RXI) != RESET))
+  {
+    
+    HAL_UART_Transmit(&huart2, (uint8_t*) "RX\n", 4, 1000);
+    
+  }
+  else if ((I2C_CHECK_FLAG(itflags, I2C_FLAG_TXIS) != RESET) && (I2C_CHECK_IT_SOURCE(itsources, I2C_IT_TXI) != RESET))
+  {
+    HAL_UART_Transmit(&huart2, (uint8_t*) "TX\n", 4, 1000);
+  }
   /* USER CODE BEGIN I2C4_EV_IRQn 1 */
-
+  HAL_UART_Transmit(&huart2, hi2c4.pBuffPtr, 5, 1000);
+  
+  HAL_UART_Transmit(&huart2, (uint8_t*) "hola\n", 6, 1000);
   /* USER CODE END I2C4_EV_IRQn 1 */
 }
+
 
 /* USER CODE BEGIN 1 */
 

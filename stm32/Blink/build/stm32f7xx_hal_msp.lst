@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccV4lVFU.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cccU9om2.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccV4lVFU.s 			page 1
   28:Core/Src/stm32f7xx_hal_msp.c **** /* Private typedef -----------------------------------------------------------*/
   29:Core/Src/stm32f7xx_hal_msp.c **** /* USER CODE BEGIN TD */
   30:Core/Src/stm32f7xx_hal_msp.c **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccV4lVFU.s 			page 2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cccU9om2.s 			page 2
 
 
   31:Core/Src/stm32f7xx_hal_msp.c **** /* USER CODE END TD */
@@ -100,97 +100,81 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccV4lVFU.s 			page 1
   30              		.cfi_startproc
   31              		@ args = 0, pretend = 0, frame = 8
   32              		@ frame_needed = 0, uses_anonymous_args = 0
-  33 0000 00B5     		push	{lr}
-  34              	.LCFI0:
-  35              		.cfi_def_cfa_offset 4
-  36              		.cfi_offset 14, -4
-  37 0002 83B0     		sub	sp, sp, #12
-  38              	.LCFI1:
-  39              		.cfi_def_cfa_offset 16
+  33              		@ link register save eliminated.
+  34 0000 82B0     		sub	sp, sp, #8
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
   66:Core/Src/stm32f7xx_hal_msp.c ****   /* USER CODE BEGIN MspInit 0 */
   67:Core/Src/stm32f7xx_hal_msp.c **** 
   68:Core/Src/stm32f7xx_hal_msp.c ****   /* USER CODE END MspInit 0 */
   69:Core/Src/stm32f7xx_hal_msp.c **** 
   70:Core/Src/stm32f7xx_hal_msp.c ****   __HAL_RCC_PWR_CLK_ENABLE();
-  40              		.loc 1 70 3 view .LVU1
-  41              	.LBB2:
-  42              		.loc 1 70 3 view .LVU2
-  43              		.loc 1 70 3 view .LVU3
-  44 0004 0D4B     		ldr	r3, .L3
-  45 0006 1A6C     		ldr	r2, [r3, #64]
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccV4lVFU.s 			page 3
+  37              		.loc 1 70 3 view .LVU1
+  38              	.LBB2:
+  39              		.loc 1 70 3 view .LVU2
+  40              		.loc 1 70 3 view .LVU3
+  41 0002 0A4B     		ldr	r3, .L3
+  42 0004 1A6C     		ldr	r2, [r3, #64]
+  43 0006 42F08052 		orr	r2, r2, #268435456
+  44 000a 1A64     		str	r2, [r3, #64]
+  45              		.loc 1 70 3 view .LVU4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cccU9om2.s 			page 3
 
 
-  46 0008 42F08052 		orr	r2, r2, #268435456
-  47 000c 1A64     		str	r2, [r3, #64]
-  48              		.loc 1 70 3 view .LVU4
-  49 000e 1A6C     		ldr	r2, [r3, #64]
-  50 0010 02F08052 		and	r2, r2, #268435456
-  51 0014 0092     		str	r2, [sp]
-  52              		.loc 1 70 3 view .LVU5
-  53 0016 009A     		ldr	r2, [sp]
-  54              	.LBE2:
-  55              		.loc 1 70 3 view .LVU6
+  46 000c 1A6C     		ldr	r2, [r3, #64]
+  47 000e 02F08052 		and	r2, r2, #268435456
+  48 0012 0092     		str	r2, [sp]
+  49              		.loc 1 70 3 view .LVU5
+  50 0014 009A     		ldr	r2, [sp]
+  51              	.LBE2:
+  52              		.loc 1 70 3 view .LVU6
   71:Core/Src/stm32f7xx_hal_msp.c ****   __HAL_RCC_SYSCFG_CLK_ENABLE();
-  56              		.loc 1 71 3 view .LVU7
-  57              	.LBB3:
-  58              		.loc 1 71 3 view .LVU8
-  59              		.loc 1 71 3 view .LVU9
-  60 0018 5A6C     		ldr	r2, [r3, #68]
-  61 001a 42F48042 		orr	r2, r2, #16384
-  62 001e 5A64     		str	r2, [r3, #68]
-  63              		.loc 1 71 3 view .LVU10
-  64 0020 5B6C     		ldr	r3, [r3, #68]
-  65 0022 03F48043 		and	r3, r3, #16384
-  66 0026 0193     		str	r3, [sp, #4]
-  67              		.loc 1 71 3 view .LVU11
-  68 0028 019B     		ldr	r3, [sp, #4]
-  69              	.LBE3:
-  70              		.loc 1 71 3 view .LVU12
+  53              		.loc 1 71 3 view .LVU7
+  54              	.LBB3:
+  55              		.loc 1 71 3 view .LVU8
+  56              		.loc 1 71 3 view .LVU9
+  57 0016 5A6C     		ldr	r2, [r3, #68]
+  58 0018 42F48042 		orr	r2, r2, #16384
+  59 001c 5A64     		str	r2, [r3, #68]
+  60              		.loc 1 71 3 view .LVU10
+  61 001e 5B6C     		ldr	r3, [r3, #68]
+  62 0020 03F48043 		and	r3, r3, #16384
+  63 0024 0193     		str	r3, [sp, #4]
+  64              		.loc 1 71 3 view .LVU11
+  65 0026 019B     		ldr	r3, [sp, #4]
+  66              	.LBE3:
+  67              		.loc 1 71 3 view .LVU12
   72:Core/Src/stm32f7xx_hal_msp.c **** 
   73:Core/Src/stm32f7xx_hal_msp.c ****   /* System interrupt init*/
-  74:Core/Src/stm32f7xx_hal_msp.c ****   /* PendSV_IRQn interrupt configuration */
-  75:Core/Src/stm32f7xx_hal_msp.c ****   HAL_NVIC_SetPriority(PendSV_IRQn, 15, 0);
-  71              		.loc 1 75 3 view .LVU13
-  72 002a 0022     		movs	r2, #0
-  73 002c 0F21     		movs	r1, #15
-  74 002e 6FF00100 		mvn	r0, #1
-  75 0032 FFF7FEFF 		bl	HAL_NVIC_SetPriority
-  76              	.LVL0:
+  74:Core/Src/stm32f7xx_hal_msp.c **** 
+  75:Core/Src/stm32f7xx_hal_msp.c ****   /* USER CODE BEGIN MspInit 1 */
   76:Core/Src/stm32f7xx_hal_msp.c **** 
-  77:Core/Src/stm32f7xx_hal_msp.c ****   /* USER CODE BEGIN MspInit 1 */
-  78:Core/Src/stm32f7xx_hal_msp.c **** 
-  79:Core/Src/stm32f7xx_hal_msp.c ****   /* USER CODE END MspInit 1 */
-  80:Core/Src/stm32f7xx_hal_msp.c **** }
-  77              		.loc 1 80 1 is_stmt 0 view .LVU14
-  78 0036 03B0     		add	sp, sp, #12
-  79              	.LCFI2:
-  80              		.cfi_def_cfa_offset 4
-  81              		@ sp needed
-  82 0038 5DF804FB 		ldr	pc, [sp], #4
-  83              	.L4:
-  84              		.align	2
-  85              	.L3:
-  86 003c 00380240 		.word	1073887232
-  87              		.cfi_endproc
-  88              	.LFE141:
-  90              		.text
-  91              	.Letext0:
-  92              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
-  93              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccV4lVFU.s 			page 4
-
-
-  94              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
-  95              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_cortex.h"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccV4lVFU.s 			page 5
+  77:Core/Src/stm32f7xx_hal_msp.c ****   /* USER CODE END MspInit 1 */
+  78:Core/Src/stm32f7xx_hal_msp.c **** }
+  68              		.loc 1 78 1 is_stmt 0 view .LVU13
+  69 0028 02B0     		add	sp, sp, #8
+  70              	.LCFI1:
+  71              		.cfi_def_cfa_offset 0
+  72              		@ sp needed
+  73 002a 7047     		bx	lr
+  74              	.L4:
+  75              		.align	2
+  76              	.L3:
+  77 002c 00380240 		.word	1073887232
+  78              		.cfi_endproc
+  79              	.LFE141:
+  81              		.text
+  82              	.Letext0:
+  83              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+  84              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+  85              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cccU9om2.s 			page 4
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f7xx_hal_msp.c
-C:\Users\GUILLE~1\AppData\Local\Temp\ccV4lVFU.s:18     .text.HAL_MspInit:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccV4lVFU.s:26     .text.HAL_MspInit:00000000 HAL_MspInit
-C:\Users\GUILLE~1\AppData\Local\Temp\ccV4lVFU.s:86     .text.HAL_MspInit:0000003c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cccU9om2.s:18     .text.HAL_MspInit:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cccU9om2.s:26     .text.HAL_MspInit:00000000 HAL_MspInit
+C:\Users\GUILLE~1\AppData\Local\Temp\cccU9om2.s:77     .text.HAL_MspInit:0000002c $d
 
-UNDEFINED SYMBOLS
-HAL_NVIC_SetPriority
+NO UNDEFINED SYMBOLS
