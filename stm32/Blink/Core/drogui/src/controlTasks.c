@@ -1,7 +1,6 @@
-#include "_freertos.h"
 #include "controlTasks.h"
 #include "filter.h"
-
+#include "task.h"
 
 //pwm m1, m2, m3, m4;
 pid roll2w, pitch2w, yaw2w; 
@@ -16,7 +15,7 @@ float roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0
 float wroll_ref, wpitch_ref, wyaw_ref, roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
 float wroll_err,wpitch_err,wyaw_err; 
 
-//timer timer_wcontrol, timer_rpycontrol, timer_xyzcontrol;
+//TIMEr TIMEr_wcontrol, TIMEr_rpycontrol, TIMEr_xyzcontrol;
 
 void saturateM(float H){
     float f_max = 1;
@@ -72,131 +71,106 @@ void updatePID(){
     }
 }
 
-osThreadId_t wControlHandle;
-const osThreadAttr_t wControlAttributes = {    .name = "wControlTask", \
-                                            .stack_size = 128 * 4, \
-                                            .priority = (osPriority_t) osPriorityHigh7};
-
-
-osThreadId_t rpyControlHandle;
-const osThreadAttr_t rpyControlAttributes = {    .name = "rpyControlTask",\
-                                            .stack_size = 128 * 4,\
-                                            .priority = (osPriority_t) osPriorityHigh7};
-
-osThreadId_t xyzControlHandle;
-const osThreadAttr_t xyzControlAttributes = {    .name = "xyzControlTask",\
-                                            .stack_size = 128 * 4,\
-                                            .priority = (osPriority_t) osPriorityHigh7};
 
 
 
-void wControlTask(){
-
-    while(1){
+void wControlTask(){ 
     
-        wroll_err = fmax( fmin( wroll_ref - gx , 100), -100);
-        wpitch_err = fmax( fmin( wpitch_ref - gy , 100), -100);
-        wyaw_err = fmax( fmin( wyaw_ref - gz , 100), -100);
+    wroll_err = fmax( fmin( wroll_ref - gx , 100), -100);
+    wpitch_err = fmax( fmin( wpitch_ref - gy , 100), -100);
+    wyaw_err = fmax( fmin( wyaw_ref - gz , 100), -100);
 
 
-        R = computePid(&wroll_control, wroll_err, time, 0);
-        P = computePid(&wpitch_control, wpitch_err, time, 0);
-        Y = computePid(&wyaw_control, wyaw_err, time, 0);
-        
-        setReg(DER_GYRO_X, wroll_control.errd);
-        setReg(DER_GYRO_Y, wpitch_control.errd);
-        
+    R = computePid(&wroll_control, wroll_err, TIME, 0);
+    P = computePid(&wpitch_control, wpitch_err, TIME, 0);
+    Y = computePid(&wyaw_control, wyaw_err, TIME, 0);
 
-        /*R = getReg(ROLL_REF);
-        P = getReg(PITCH_REF);
-        Y = getReg(YAW_REF);*/
-        
-        setReg(ROLL_U, R);
-        setReg(PITCH_U, P);
-        setReg(YAW_U, Y);
-        setReg(Z_U, H_comp);
+    setReg(DER_GYRO_X, wroll_control.errd);
+    setReg(DER_GYRO_Y, wpitch_control.errd);
 
-        M1 = R + P + Y;
-        M2 = R - P - Y;
-        M3 = -R - P + Y;
-        M4 = -R + P - Y;
 
-        saturateM(H_comp*H_comp);
+    /*R = getReg(ROLL_REF);
+    P = getReg(PITCH_REF);
+    Y = getReg(YAW_REF);*/
 
-        setReg(MOTOR_1, M1);
-        setReg(MOTOR_2, M2);
-        setReg(MOTOR_3, M3);
-        setReg(MOTOR_4, M4);
+    setReg(ROLL_U, R);
+    setReg(PITCH_U, P);
+    setReg(YAW_U, Y);
+    setReg(Z_U, H_comp);
 
-        if(security){
-            M1 = M2 = M3 = M4 = 0;
-            resetPid(&wroll_control, time);
-            resetPid(&wpitch_control, time);
-            resetPid(&wyaw_control, time);
-        }
+    M1 = R + P + Y;
+    M2 = R - P - Y;
+    M3 = -R - P + Y;
+    M4 = -R + P - Y;
 
-        osDelay(1);
+    saturateM(H_comp*H_comp);
+
+    setReg(MOTOR_1, M1);
+    setReg(MOTOR_2, M2);
+    setReg(MOTOR_3, M3);
+    setReg(MOTOR_4, M4);
+
+    if(security){
+        M1 = M2 = M3 = M4 = 0;
+        resetPid(&wroll_control, TIME);
+        resetPid(&wpitch_control, TIME);
+        resetPid(&wyaw_control, TIME);
     }
-    /*setPwmDutyTime(&m1, min(fmax(M1,0), 100));
-    setPwmDutyTime(&m2, min(fmax(M2,0), 100));
-    setPwmDutyTime(&m3, min(fmax(M3,0), 100));
-    setPwmDutyTime(&m4, min(fmax(M4,0), 100));*/
+
+    /*setPwmDutyTIME(&m1, min(fmax(M1,0), 100));
+    setPwmDutyTIME(&m2, min(fmax(M2,0), 100));
+    setPwmDutyTIME(&m3, min(fmax(M3,0), 100));
+    setPwmDutyTIME(&m4, min(fmax(M4,0), 100));*/
 }
 
 void rpyControlTask(){
-    while(1){
 
-        wroll_ref = computePid(&roll2w, angle_dif(roll_ref, roll), time, 0);
-        wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),time, 0);
-        wyaw_ref = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),time, 0);
+    wroll_ref = computePid(&roll2w, angle_dif(roll_ref, roll), TIME, 0);
+    wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0);
+    wyaw_ref = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);
 
-    /*
-        Serial.print("\nu values: ");
-        for(int i = 0 ; i < 13; i++) Serial.print(filter_wroll.arr_u.values[i]), Serial.print('\t');
-        Serial.print("\nu coeff: ");
-        for(int i = 0 ; i < 13; i++) Serial.print(filter_wroll.arr_u.coeff[i]), Serial.print('\t');
-        Serial.print("\ny values: ");
-        for(int i = 0 ; i < 12; i++) Serial.print(filter_wroll.arr_y.values[i]), Serial.print('\t');
-        Serial.print("\ny coeff: ");
-        for(int i = 0 ; i < 12; i++) Serial.print(filter_wroll.arr_y.coeff[i]), Serial.print('\t');
-        Serial.println("****************************************************************************");
-    */
-        setReg(GYRO_X_REF,wroll_ref);
-        setReg(GYRO_Y_REF,wpitch_ref);
-        setReg(GYRO_Z_REF,wyaw_ref);
-        
-        if(security){
-            resetPid(&roll2w, time);
-            resetPid(&pitch2w, time);
-            resetPid(&yaw2w, time);
-        }
-        osDelay(2);
+/*
+    Serial.print("\nu values: ");
+    for(int i = 0 ; i < 13; i++) Serial.print(filter_wroll.arr_u.values[i]), Serial.print('\t');
+    Serial.print("\nu coeff: ");
+    for(int i = 0 ; i < 13; i++) Serial.print(filter_wroll.arr_u.coeff[i]), Serial.print('\t');
+    Serial.print("\ny values: ");
+    for(int i = 0 ; i < 12; i++) Serial.print(filter_wroll.arr_y.values[i]), Serial.print('\t');
+    Serial.print("\ny coeff: ");
+    for(int i = 0 ; i < 12; i++) Serial.print(filter_wroll.arr_y.coeff[i]), Serial.print('\t');
+    Serial.println("****************************************************************************");
+*/
+    setReg(GYRO_X_REF,wroll_ref);
+    setReg(GYRO_Y_REF,wpitch_ref);
+    setReg(GYRO_Z_REF,wyaw_ref);
+    
+    if(security){
+        resetPid(&roll2w, TIME);
+        resetPid(&pitch2w, TIME);
+        resetPid(&yaw2w, TIME);
     }
 }
 
 void xyzControlTask(){
-    while(1){
-        X_C = computePid(&x_control, -x, time, H);
-        Y_C = computePid(&y_control, -y, time, H);
+    X_C = computePid(&x_control, -x, TIME, H);
+    Y_C = computePid(&y_control, -y, TIME, H);
 
-        rampValue(&z_ref, getReg(Z_REF), getReg(Z_REF_SIZE));
+    rampValue(&z_ref, getReg(Z_REF), getReg(Z_REF_SIZE));
 
-        H_ref = computePid(&z_control, z_ref - z, time,0) + getReg(Z_MG);
-        rampValue(&H, H_ref, 0.2);
+    H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG);
+    rampValue(&H, H_ref, 0.2);
 
-        H_comp = H;
+    H_comp = H;
 
-        rampValue(&roll_ref, getReg(ROLL_REF) + roll_off, 0.015);
-        rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.015);
-        yaw_ref = getReg(YAW_REF) + yaw_off;
+    rampValue(&roll_ref, getReg(ROLL_REF) + roll_off, 0.015);
+    rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.015);
+    yaw_ref = getReg(YAW_REF) + yaw_off;
 
-        if(security){
-            H = 0; z_ref = 0;
-            resetPid(&x_control, time);
-            resetPid(&y_control, time);
-            resetPid(&z_control, time);
-        }
-        osDelay(10);
+    if(security){
+        H = 0; z_ref = 0;
+        resetPid(&x_control, TIME);
+        resetPid(&y_control, TIME);
+        resetPid(&z_control, TIME);
     }
 }
 
@@ -211,19 +185,18 @@ void initControlTasks(){
     initPid(&x_control, 0, 0, 0, 0, 1 , 100000, 0.09, NORMAL);
     initPid(&y_control, 0, 0, 0, 0, 1 , 100000,0.09, NORMAL);
 
-    initPid(&roll2w, 0, 0, 0, time, 50, 1.57*0.5,80, (P2ID & D_INT));
-    initPid(&pitch2w, 0, 0, 0, time, 50, 1.57*0.5,80, (P2ID & D_INT));
-    initPid(&yaw2w, 0, 0, 0, time, 50, 1.57*0.5,80, (P2ID & D_INT));
+    initPid(&roll2w, 0, 0, 0, TIME, 50, 1.57*0.5,80, (P2ID & D_INT));
+    initPid(&pitch2w, 0, 0, 0, TIME, 50, 1.57*0.5,80, (P2ID & D_INT));
+    initPid(&yaw2w, 0, 0, 0, TIME, 50, 1.57*0.5,80, (P2ID & D_INT));
 
-    initPid(&wroll_control, 0, 0, 0, time, 50,  80, 3000, (P2ID & D_INT));
-    initPid(&wpitch_control, 0, 0, 0, time, 50, 80, 3000, (P2ID & D_INT));
-    initPid(&wyaw_control, 0, 0, 0, time, 50, 80, 3000, (P2ID & D_INT));
+    initPid(&wroll_control, 0, 0, 0, TIME, 50,  80, 3000, (P2ID & D_INT));
+    initPid(&wpitch_control, 0, 0, 0, TIME, 50, 80, 3000, (P2ID & D_INT));
+    initPid(&wyaw_control, 0, 0, 0, TIME, 50, 80, 3000, (P2ID & D_INT));
     
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
     setReg(N_FILTER, 50);
-    
-    wControlHandle = osThreadNew(wControlTask, NULL, &wControlAttributes);
-    rpyControlHandle = osThreadNew(rpyControlTask, NULL, &rpyControlAttributes);
-    xyzControlHandle = osThreadNew(xyzControlTask, NULL, &xyzControlAttributes);
+    addTask(&wControlTask, 1000, 1);
+    addTask(&rpyControlTask, 2000, 1);
+    addTask(&xyzControlTask, 10000, 1);
 }

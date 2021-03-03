@@ -9,21 +9,17 @@
   * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
   */
 
 /* Includes ------------------------------------------------------------------*/
 #include "i2c.h"
-#include "main.h"
 #include "usart.h"
-#include <string.h>
-#include <stdio.h>
-
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
@@ -171,23 +167,6 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
   }
 }
 
-char buffer[40];
-void I2C4_EV_IRQHandler(){
-  uint8_t ans;
-  
-  HAL_I2C_EV_IRQHandler(&hi2c4);
-
-  HAL_StatusTypeDef answer = HAL_I2C_Slave_Receive(&hi2c4, &ans, 1, 1000);
-  if(answer == HAL_OK){
-    sprintf(buffer, " %x\n", ans);
-    HAL_UART_Transmit(&huart2, (uint8_t *)buffer, strlen(buffer), 1000);
-  }
-  else{
-    HAL_UART_Transmit(&huart2, (uint8_t*)"error\n", 7, 100);
-  }
-  
-}
-
 
 void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle)
 {
@@ -243,7 +222,15 @@ void HAL_I2C_SlaveTxCpltCallback(I2C_HandleTypeDef *I2cHandle){
   //HAL_I2C_Slave_Receive_IT(&I2cHandle,i2c_slave_recv,I2C_REC_BYTES);
 
 }
-
+void HAL_I2C_AddrCallback(I2C_HandleTypeDef *hi2c, uint8_t TransferDirection, uint16_t AddrMatchCode)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(hi2c);
+  UNUSED(TransferDirection);
+  UNUSED(AddrMatchCode);
+  
+    __HAL_I2C_CLEAR_FLAG(hi2c, I2C_FLAG_ADDR);
+}
 void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef *I2cHandle){
   if(I2cHandle->Instance == I2C4)
   HAL_UART_Transmit(&huart2, (uint8_t*)"rxCallback\n", 12, 100);

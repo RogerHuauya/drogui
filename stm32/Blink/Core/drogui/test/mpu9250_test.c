@@ -18,16 +18,16 @@ float ax_filt;
 void _main(){
     initMpu(&myImu);
     calibrateGyro(&myImu); 
-    calibrateAccel(&myImu);
+    //calibrateAccel(&myImu);
     initFilter(&my_filter, sz_1_10, k_1_10, v_1_10);
     
     while(1){
         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-        readAcc(&myImu);
-        ax_filt = computeFilter(&my_filter, myImu.ax);
-        sprintf(buff, "%f \t %f;\n", myImu.ax, ax_filt);
+        readGyro(&myImu);
+        ax_filt = computeFilter(&my_filter, myImu.gx);
+        sprintf(buff, "%f \t %f;\n", myImu.gx, ax_filt);
         
-        HAL_UART_Transmit(&huart1, (uint8_t *)buff, strlen(buff), 100);
+        HAL_UART_Transmit(&huart2, (uint8_t *)buff, strlen(buff), 100);
         HAL_Delay(1);
     }
 }

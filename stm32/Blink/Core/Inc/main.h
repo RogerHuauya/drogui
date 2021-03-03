@@ -29,6 +29,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f7xx_hal.h"
+#include "_main.h"
 #define ARM_MATH_CM7
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
