@@ -1,8 +1,9 @@
 #include "controlTasks.h"
 #include "filter.h"
 #include "task.h"
+#include "pwm.h"
 
-//pwm m1, m2, m3, m4;
+pwm m1, m2, m3, m4;
 pid roll2w, pitch2w, yaw2w; 
 pid wroll_control, wpitch_control, wyaw_control;
 pid z_control, x_control, y_control;
@@ -117,10 +118,10 @@ void wControlTask(){
         resetPid(&wyaw_control, TIME);
     }
 
-    /*setPwmDutyTIME(&m1, min(fmax(M1,0), 100));
-    setPwmDutyTIME(&m2, min(fmax(M2,0), 100));
-    setPwmDutyTIME(&m3, min(fmax(M3,0), 100));
-    setPwmDutyTIME(&m4, min(fmax(M4,0), 100));*/
+    setPwm(&m1, min(fmax(M1,0), 100));
+    setPwm(&m2, min(fmax(M2,0), 100));
+    setPwm(&m3, min(fmax(M3,0), 100));
+    setPwm(&m4, min(fmax(M4,0), 100));
 }
 
 void rpyControlTask(){
@@ -176,10 +177,10 @@ void xyzControlTask(){
 
 
 void initControlTasks(){
-    /*initOneshot125(&m1, 5);
-    initOneshot125(&m2, 4);
-    initOneshot125(&m3, 3);
-    initOneshot125(&m4, 2);*/
+    initPwm(&m1, &htim3, TIM_CHANNEL_1, &(htim3.Instance->CCR1));
+    initPwm(&m2, &htim3, TIM_CHANNEL_2, &(htim3.Instance->CCR2));
+    initPwm(&m3, &htim4, TIM_CHANNEL_3, &(htim3.Instance->CCR3));
+    initPwm(&m4, &htim4, TIM_CHANNEL_4, &(htim3.Instance->CCR4));
 
     initPid(&z_control, 0, 0, 0, 0, 1 , 100000, 15, NORMAL);
     initPid(&x_control, 0, 0, 0, 0, 1 , 100000, 0.09, NORMAL);
