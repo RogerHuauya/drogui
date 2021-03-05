@@ -106,6 +106,7 @@ void MX_I2C4_Init(void)
   {
     Error_Handler();
   }
+  /* USER CODE BEGIN I2C4_Init 2 */
 
   //HAL_I2C_EnableListen_IT(&hi2c4);  //Enable slave interrupt reception
   
@@ -174,14 +175,13 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
     __HAL_RCC_I2C4_CLK_ENABLE();
 
     /* I2C4 interrupt Init */
-    HAL_NVIC_SetPriority(I2C4_EV_IRQn, 5, 0);
+    HAL_NVIC_SetPriority(I2C4_EV_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(I2C4_EV_IRQn);
   /* USER CODE BEGIN I2C4_MspInit 1 */
 
   /* USER CODE END I2C4_MspInit 1 */
   }
 }
-
 
 void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle)
 {
@@ -232,8 +232,8 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle)
 
 /* USER CODE BEGIN 1 */
 void HAL_I2C_SlaveTxCpltCallback(I2C_HandleTypeDef *I2cHandle){
-  if(I2cHandle->Instance == I2C4)
-  HAL_UART_Transmit(&huart2, (uint8_t*)"txCallback\n", 12, 100);
+  //if(I2cHandle->Instance == I2C4)
+  //HAL_UART_Transmit(&huart2, (uint8_t*)"txCallback\n", 12, 100);
   //HAL_I2C_Slave_Receive_IT(&I2cHandle,i2c_slave_recv,I2C_REC_BYTES);
 
 }
@@ -246,8 +246,8 @@ void HAL_I2C_AddrCallback(I2C_HandleTypeDef *hi2c, uint8_t TransferDirection, ui
   
 }
 void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef *I2cHandle){
-  if(I2cHandle->Instance == I2C4)
-  HAL_UART_Transmit(&huart2, (uint8_t*)"rxCallback\n", 12, 100);
+  //if(I2cHandle->Instance == I2C4)
+  //HAL_UART_Transmit(&huart2, (uint8_t*)"rxCallback\n", 12, 100);
   //HAL_I2C_Slave_Transmit_IT(&I2cHandle,send_buffer,send_cnt);
 }
 /* USER CODE END 1 */

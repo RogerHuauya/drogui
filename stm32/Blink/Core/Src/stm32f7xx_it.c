@@ -267,7 +267,6 @@ void I2C4_EV_IRQHandler(void)
 
 }
 
-
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */

@@ -111,7 +111,7 @@ int _main(void){
 
     initializeSystem();
     initControlTasks();
-    initSensorsTasks();
+    //initSensorsTasks();
 
 
     delay(1000);
@@ -120,7 +120,7 @@ int _main(void){
         if(timerReady(&timer_debug)) executeTimer(&timer_debug);
         if(timerReady(&timer_security)) executeTimer(&timer_security);  
         executeControlTasks();
-        executeSensorsTasks();   
+        //executeSensorsTasks();   
     }
     return 0;
 }
