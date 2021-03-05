@@ -111,16 +111,15 @@ int _main(void){
 
     initializeSystem();
     initControlTasks();
-    //initSensorsTasks();
-
+    initSensorsTasks();
 
     delay(1000);
     while(1){
         if(timerReady(&timer_blink)) executeTimer(&timer_blink);
         if(timerReady(&timer_debug)) executeTimer(&timer_debug);
-        if(timerReady(&timer_security)) executeTimer(&timer_security);  
-        executeControlTasks();
-        //executeSensorsTasks();   
+        //if(timerReady(&timer_security)) executeTimer(&timer_security);  
+        //executeControlTasks();
+        executeSensorsTasks();   
     }
     return 0;
 }

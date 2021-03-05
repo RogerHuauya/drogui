@@ -84,10 +84,10 @@ void gyroInterrupt(){
 }
 
 void magInterrupt(){
-    readMag(&myIMU);
-    mx = myIMU.mx;
-    my = myIMU.my;
-    mz = myIMU.mz;
+    readRawMag(&myIMU);
+    mx = myIMU.raw_mx;
+    my = myIMU.raw_my;
+    mz = myIMU.raw_mz;
 }
 float Kdfilt = 0.0005;
 void rpyInterrupt(){
@@ -188,19 +188,19 @@ void initSensorsTasks(){
 
     //calibrateGyro(&myIMU);
     //calibrateAccel(&myIMU);
-    calibrateMag(&myIMU);
+    //calibrateMag(&myIMU);
     
 
-    initTimer(&timer_accel, &accelInterrupt, 1000);
-    initTimer(&timer_gyro, &gyroInterrupt, 1000);
+    //initTimer(&timer_accel, &accelInterrupt, 1000);
+    //initTimer(&timer_gyro, &gyroInterrupt, 1000);
     initTimer(&timer_mag, &magInterrupt, 10);
-    initTimer(&timer_rpy, &rpyInterrupt, 500);
+    //initTimer(&timer_rpy, &rpyInterrupt, 500);
 }
 
 void executeSensorsTasks(){
     
-    if(timerReady(&timer_rpy))  executeTimer(&timer_rpy);
-    if(timerReady(&timer_accel))  executeTimer(&timer_accel);
-    if(timerReady(&timer_gyro))  executeTimer(&timer_gyro);  
+    //if(timerReady(&timer_rpy))  executeTimer(&timer_rpy);
+    //if(timerReady(&timer_accel))  executeTimer(&timer_accel);
+    //if(timerReady(&timer_gyro))  executeTimer(&timer_gyro);  
     if(timerReady(&timer_mag))  executeTimer(&timer_mag);  
 }
