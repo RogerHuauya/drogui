@@ -29,9 +29,9 @@ void accelTask(){
     az = computeFilter(&filter_az, myIMU.az);
 
 
-    ax = computeDNotch(&dnotch_ax, ax);
+    /*ax = computeDNotch(&dnotch_ax, ax);
     ay = computeDNotch(&dnotch_ay, ay);
-    az = computeDNotch(&dnotch_az, az);
+    az = computeDNotch(&dnotch_az, az);*/
 
     setReg(ACC_X,(float)(ax));
     setReg(ACC_Y,(float)(ay));
@@ -40,15 +40,20 @@ void accelTask(){
 
 char buff2[50] = "hola\n";
 void gyroTask(){
+    //sprintf(buff2, "%lu;\n",TIME);
+    //HAL_UART_Transmit(&huart2, (uint8_t*) buff2, strlen(buff2), 100);
     readGyro(&myIMU);
 
     gx = computeFilter(&filter_gx, myIMU.gx);
+
+
     /*
     sprintf(buff2, "%f\t%f ;\n", myIMU.gx, gx);
     HAL_UART_Transmit(&huart2, (uint8_t*) buff2, strlen(buff2), 100);*/
-    /*gy = computeFilter(&filter_gy, myIMU.gy);
+    gy = computeFilter(&filter_gy, myIMU.gy);
     gz = computeFilter(&filter_gz, myIMU.gz);
 
+    
     
     gx = computeFilter(&filter_gx2, gx);
     gy = computeFilter(&filter_gy2, gy);
@@ -60,7 +65,7 @@ void gyroTask(){
 
     gx = computeDNotch(&dnotch_gx2, gx);
     gy = computeDNotch(&dnotch_gy2, gy);
-    gz = computeDNotch(&dnotch_gz2, gz);*/
+    gz = computeDNotch(&dnotch_gz2, gz);
     
     gx /= 5;
     gy /= 5;
@@ -122,13 +127,18 @@ void initSensorsTasks(){
 
 
 
-    initFilter(&filter_ax, sz_1_10 , k_1_10, v_1_10);
+    /*initFilter(&filter_ax, sz_1_10 , k_1_10, v_1_10);
     initFilter(&filter_ay, sz_1_10 , k_1_10, v_1_10);
-    initFilter(&filter_az, sz_1_10 , k_1_10, v_1_10);
+    initFilter(&filter_az, sz_1_10 , k_1_10, v_1_10);*/
 
-    initDNotchFilter(&dnotch_ax, 64, 40, 1000, 1, 10);
-    initDNotchFilter(&dnotch_ay, 64, 40, 1000, 1, 10);
-    initDNotchFilter(&dnotch_az, 64, 40, 1000, 1, 10);
+    initFilter(&filter_ax, sz_5_100 , k_5_100, v_5_100);
+    initFilter(&filter_ay, sz_5_100 , k_5_100, v_5_100);
+    initFilter(&filter_az, sz_5_100 , k_5_100, v_5_100);
+
+
+    initDNotchFilter(&dnotch_ax, 64, 30, 1000, 1, 10);
+    initDNotchFilter(&dnotch_ay, 64, 30, 1000, 1, 10);
+    initDNotchFilter(&dnotch_az, 64, 30, 1000, 1, 10);
     
     initFilter(&filter_roll, sz_1_10, k_1_10, v_1_10);
     initFilter(&filter_pitch, sz_1_10, k_1_10, v_1_10);
@@ -136,11 +146,12 @@ void initSensorsTasks(){
 
 
     calibrateGyro(&myIMU);
-    //calibrateAccel(&myIMU);
+    calibrateAccel(&myIMU);
     //calibrateMag(&myIMU);
     
     //accelHandle = osThreadNew(accelTask, NULL, &accelAttributes);
     addTask(&gyroTask, 1000, 1);
+    addTask(&accelTask, 1000, 1);
     /*magHandle = osThreadNew(magTask, NULL, &magAttributes);
     rpyHandle = osThreadNew(rpyTask, NULL, &rpyAttributes);*/
     /*initTimer(&timer_accel, &accelInterrupt, 1000);

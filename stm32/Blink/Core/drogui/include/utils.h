@@ -69,6 +69,13 @@ extern int sz_3_10;
 extern float k_3_10[];
 extern float v_3_10[];
 
+// Fc/Fs = 5/100
+extern int sz_5_100;
+extern float k_5_100[];
+extern float v_5_100[];
+
+
+
 void rampValue(float *var, float desired, float step);
 
 #endif

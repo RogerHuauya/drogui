@@ -1,4 +1,4 @@
-build/task.o: Core/drogui/src/task.c Core/drogui/include/task.h \
+build/pwm.o: Core/drogui/src/pwm.c Core/drogui/include/pwm.h \
  Core/Inc/tim.h Core/Inc/main.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h \
  Core/Inc/stm32f7xx_hal_conf.h \
@@ -28,8 +28,8 @@ build/task.o: Core/drogui/src/task.c Core/drogui/include/task.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h \
- Core/drogui/include/_main.h Core/Inc/main.h Core/Inc/usart.h
-Core/drogui/include/task.h:
+ Core/drogui/include/_main.h Core/Inc/main.h
+Core/drogui/include/pwm.h:
 Core/Inc/tim.h:
 Core/Inc/main.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h:
@@ -64,4 +64,3 @@ Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h:
 Core/drogui/include/_main.h:
 Core/Inc/main.h:
-Core/Inc/usart.h:

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
   27:Core/drogui/src/utils.c **** // Fs = 1000Hz
   28:Core/drogui/src/utils.c **** 
   29:Core/drogui/src/utils.c **** //lowpass freq = 150Hz
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 2
 
 
   30:Core/drogui/src/utils.c **** float coeffB_150Hz[] = { 0.0056, -0.0070, 0.0170, -0.0072, 0.0100, 0.0100, -0.0072, 0.0170 , -0.007
@@ -89,44 +89,49 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
   55:Core/drogui/src/utils.c **** float k_3_10[] = {-2.697967e-02,2.384924e-01,9.148143e-02,8.721701e-01,3.546651e-01};
   56:Core/drogui/src/utils.c **** float v_3_10[] = {1.218396e-01,4.440312e-01,5.297272e-01,7.356926e-02,-1.524383e-01,-3.933188e-02};
   57:Core/drogui/src/utils.c **** 
-  58:Core/drogui/src/utils.c **** int32_t bytestoint32(uint8_t *bytesint32){
-  30              		.loc 1 58 42 view -0
+  58:Core/drogui/src/utils.c **** // Fc/Fs = 5/100
+  59:Core/drogui/src/utils.c **** int sz_5_100 = 4;
+  60:Core/drogui/src/utils.c **** float k_5_100[] = {0.570001631825510, -0.930138552823475, 0.973018195256895, -0.970196251743969 };
+  61:Core/drogui/src/utils.c **** float v_5_100[] = { 0.002648137189435, 0.007518846486390, 0.013531091846070, 0.010565966787239, 0.0
+  62:Core/drogui/src/utils.c **** 
+  63:Core/drogui/src/utils.c **** int32_t bytestoint32(uint8_t *bytesint32){
+  30              		.loc 1 63 42 view -0
   31              		.cfi_startproc
   32              		@ args = 0, pretend = 0, frame = 0
   33              		@ frame_needed = 0, uses_anonymous_args = 0
   34              		@ link register save eliminated.
-  59:Core/drogui/src/utils.c ****     int32_t val = (int32_t) (int32_t)(bytesint32[0]) << 24 |
-  35              		.loc 1 59 5 view .LVU1
-  36              		.loc 1 59 49 is_stmt 0 view .LVU2
+  64:Core/drogui/src/utils.c ****     int32_t val = (int32_t) (int32_t)(bytesint32[0]) << 24 |
+  35              		.loc 1 64 5 view .LVU1
+  36              		.loc 1 64 49 is_stmt 0 view .LVU2
   37 0000 0278     		ldrb	r2, [r0]	@ zero_extendqisi2
-  60:Core/drogui/src/utils.c ****             (int32_t)(bytesint32[1]) << 16 |
-  38              		.loc 1 60 33 view .LVU3
+  65:Core/drogui/src/utils.c ****             (int32_t)(bytesint32[1]) << 16 |
+  38              		.loc 1 65 33 view .LVU3
   39 0002 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
-  40              		.loc 1 60 38 view .LVU4
+  40              		.loc 1 65 38 view .LVU4
   41 0004 1B04     		lsls	r3, r3, #16
-  59:Core/drogui/src/utils.c ****     int32_t val = (int32_t) (int32_t)(bytesint32[0]) << 24 |
-  42              		.loc 1 59 60 view .LVU5
+  64:Core/drogui/src/utils.c ****     int32_t val = (int32_t) (int32_t)(bytesint32[0]) << 24 |
+  42              		.loc 1 64 60 view .LVU5
   43 0006 43EA0263 		orr	r3, r3, r2, lsl #24
-  61:Core/drogui/src/utils.c ****             (int32_t)(bytesint32[2]) << 8 |
-  44              		.loc 1 61 33 view .LVU6
+  66:Core/drogui/src/utils.c ****             (int32_t)(bytesint32[2]) << 8 |
+  44              		.loc 1 66 33 view .LVU6
   45 000a 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
-  60:Core/drogui/src/utils.c ****             (int32_t)(bytesint32[1]) << 16 |
-  46              		.loc 1 60 44 view .LVU7
+  65:Core/drogui/src/utils.c ****             (int32_t)(bytesint32[1]) << 16 |
+  46              		.loc 1 65 44 view .LVU7
   47 000c 43EA0223 		orr	r3, r3, r2, lsl #8
-  62:Core/drogui/src/utils.c ****             (int32_t)(bytesint32[3]);
-  48              		.loc 1 62 33 view .LVU8
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 3
+
+
+  67:Core/drogui/src/utils.c ****             (int32_t)(bytesint32[3]);
+  48              		.loc 1 67 33 view .LVU8
   49 0010 C078     		ldrb	r0, [r0, #3]	@ zero_extendqisi2
   50              	.LVL1:
-  63:Core/drogui/src/utils.c ****     return val;
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 3
-
-
-  51              		.loc 1 63 5 is_stmt 1 view .LVU9
-  64:Core/drogui/src/utils.c **** }
-  52              		.loc 1 64 1 is_stmt 0 view .LVU10
+  68:Core/drogui/src/utils.c ****     return val;
+  51              		.loc 1 68 5 is_stmt 1 view .LVU9
+  69:Core/drogui/src/utils.c **** }
+  52              		.loc 1 69 1 is_stmt 0 view .LVU10
   53 0012 1843     		orrs	r0, r0, r3
   54              	.LVL2:
-  55              		.loc 1 64 1 view .LVU11
+  55              		.loc 1 69 1 view .LVU11
   56 0014 7047     		bx	lr
   57              		.cfi_endproc
   58              	.LFE141:
@@ -140,66 +145,66 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
   68              	int32tobytes:
   69              	.LVL3:
   70              	.LFB142:
-  65:Core/drogui/src/utils.c **** 
-  66:Core/drogui/src/utils.c **** void int32tobytes(int32_t n,uint8_t *bytesint32){
-  71              		.loc 1 66 49 is_stmt 1 view -0
+  70:Core/drogui/src/utils.c **** 
+  71:Core/drogui/src/utils.c **** void int32tobytes(int32_t n,uint8_t *bytesint32){
+  71              		.loc 1 71 49 is_stmt 1 view -0
   72              		.cfi_startproc
   73              		@ args = 0, pretend = 0, frame = 0
   74              		@ frame_needed = 0, uses_anonymous_args = 0
   75              		@ link register save eliminated.
-  67:Core/drogui/src/utils.c ****     bytesint32[0] =(uint8_t) (n >> 24) & 0xFF;
-  76              		.loc 1 67 5 view .LVU13
-  77              		.loc 1 67 20 is_stmt 0 view .LVU14
+  72:Core/drogui/src/utils.c ****     bytesint32[0] =(uint8_t) (n >> 24) & 0xFF;
+  76              		.loc 1 72 5 view .LVU13
+  77              		.loc 1 72 20 is_stmt 0 view .LVU14
   78 0000 030E     		lsrs	r3, r0, #24
-  79              		.loc 1 67 19 view .LVU15
+  79              		.loc 1 72 19 view .LVU15
   80 0002 0B70     		strb	r3, [r1]
-  68:Core/drogui/src/utils.c ****     bytesint32[1] =(uint8_t) (n >> 16) & 0xFF;
-  81              		.loc 1 68 5 is_stmt 1 view .LVU16
-  82              		.loc 1 68 20 is_stmt 0 view .LVU17
+  73:Core/drogui/src/utils.c ****     bytesint32[1] =(uint8_t) (n >> 16) & 0xFF;
+  81              		.loc 1 73 5 is_stmt 1 view .LVU16
+  82              		.loc 1 73 20 is_stmt 0 view .LVU17
   83 0004 C0F30743 		ubfx	r3, r0, #16, #8
-  84              		.loc 1 68 19 view .LVU18
+  84              		.loc 1 73 19 view .LVU18
   85 0008 4B70     		strb	r3, [r1, #1]
-  69:Core/drogui/src/utils.c ****     bytesint32[2] =(uint8_t) (n >> 8) & 0xFF;
-  86              		.loc 1 69 5 is_stmt 1 view .LVU19
-  87              		.loc 1 69 20 is_stmt 0 view .LVU20
+  74:Core/drogui/src/utils.c ****     bytesint32[2] =(uint8_t) (n >> 8) & 0xFF;
+  86              		.loc 1 74 5 is_stmt 1 view .LVU19
+  87              		.loc 1 74 20 is_stmt 0 view .LVU20
   88 000a C0F30723 		ubfx	r3, r0, #8, #8
-  89              		.loc 1 69 19 view .LVU21
+  89              		.loc 1 74 19 view .LVU21
   90 000e 8B70     		strb	r3, [r1, #2]
-  70:Core/drogui/src/utils.c ****     bytesint32[3] =(uint8_t)  n & 0xFF;
-  91              		.loc 1 70 5 is_stmt 1 view .LVU22
-  92              		.loc 1 70 19 is_stmt 0 view .LVU23
+  75:Core/drogui/src/utils.c ****     bytesint32[3] =(uint8_t)  n & 0xFF;
+  91              		.loc 1 75 5 is_stmt 1 view .LVU22
+  92              		.loc 1 75 19 is_stmt 0 view .LVU23
   93 0010 C870     		strb	r0, [r1, #3]
-  71:Core/drogui/src/utils.c **** }
-  94              		.loc 1 71 1 view .LVU24
+  76:Core/drogui/src/utils.c **** }
+  94              		.loc 1 76 1 view .LVU24
   95 0012 7047     		bx	lr
   96              		.cfi_endproc
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 4
+
+
   97              	.LFE142:
   99              		.section	.text.floattobytes,"ax",%progbits
  100              		.align	1
  101              		.global	floattobytes
  102              		.syntax unified
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 4
-
-
  103              		.thumb
  104              		.thumb_func
  105              		.fpu fpv5-sp-d16
  107              	floattobytes:
  108              	.LVL4:
  109              	.LFB143:
-  72:Core/drogui/src/utils.c **** 
-  73:Core/drogui/src/utils.c **** void floattobytes(float n, uint8_t* bytesfloat){
- 110              		.loc 1 73 48 is_stmt 1 view -0
+  77:Core/drogui/src/utils.c **** 
+  78:Core/drogui/src/utils.c **** void floattobytes(float n, uint8_t* bytesfloat){
+ 110              		.loc 1 78 48 is_stmt 1 view -0
  111              		.cfi_startproc
  112              		@ args = 0, pretend = 0, frame = 0
  113              		@ frame_needed = 0, uses_anonymous_args = 0
  114              		@ link register save eliminated.
-  74:Core/drogui/src/utils.c ****     memcpy(bytesfloat, &n, sizeof n);
- 115              		.loc 1 74 5 view .LVU26
+  79:Core/drogui/src/utils.c ****     memcpy(bytesfloat, &n, sizeof n);
+ 115              		.loc 1 79 5 view .LVU26
  116 0000 10EE103A 		vmov	r3, s0	@ int
  117 0004 0360     		str	r3, [r0]	@ unaligned
-  75:Core/drogui/src/utils.c **** }
- 118              		.loc 1 75 1 is_stmt 0 view .LVU27
+  80:Core/drogui/src/utils.c **** }
+ 118              		.loc 1 80 1 is_stmt 0 view .LVU27
  119 0006 7047     		bx	lr
  120              		.cfi_endproc
  121              	.LFE143:
@@ -213,34 +218,34 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  131              	bytestofloat:
  132              	.LVL5:
  133              	.LFB144:
-  76:Core/drogui/src/utils.c **** 
-  77:Core/drogui/src/utils.c **** float bytestofloat(uint8_t *bytesfloat){
- 134              		.loc 1 77 40 is_stmt 1 view -0
+  81:Core/drogui/src/utils.c **** 
+  82:Core/drogui/src/utils.c **** float bytestofloat(uint8_t *bytesfloat){
+ 134              		.loc 1 82 40 is_stmt 1 view -0
  135              		.cfi_startproc
  136              		@ args = 0, pretend = 0, frame = 8
  137              		@ frame_needed = 0, uses_anonymous_args = 0
  138              		@ link register save eliminated.
- 139              		.loc 1 77 40 is_stmt 0 view .LVU29
+ 139              		.loc 1 82 40 is_stmt 0 view .LVU29
  140 0000 82B0     		sub	sp, sp, #8
  141              	.LCFI0:
  142              		.cfi_def_cfa_offset 8
-  78:Core/drogui/src/utils.c ****     float val;
- 143              		.loc 1 78 5 is_stmt 1 view .LVU30
-  79:Core/drogui/src/utils.c ****     memcpy(&val, bytesfloat, sizeof(val));
- 144              		.loc 1 79 5 view .LVU31
+  83:Core/drogui/src/utils.c ****     float val;
+ 143              		.loc 1 83 5 is_stmt 1 view .LVU30
+  84:Core/drogui/src/utils.c ****     memcpy(&val, bytesfloat, sizeof(val));
+ 144              		.loc 1 84 5 view .LVU31
  145 0002 0368     		ldr	r3, [r0]	@ unaligned
  146 0004 0193     		str	r3, [sp, #4]
-  80:Core/drogui/src/utils.c ****     return val;
- 147              		.loc 1 80 5 view .LVU32
- 148              		.loc 1 80 12 is_stmt 0 view .LVU33
+  85:Core/drogui/src/utils.c ****     return val;
+ 147              		.loc 1 85 5 view .LVU32
+ 148              		.loc 1 85 12 is_stmt 0 view .LVU33
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 5
+
+
  149 0006 00EE103A 		vmov	s0, r3
-  81:Core/drogui/src/utils.c **** }
- 150              		.loc 1 81 1 view .LVU34
+  86:Core/drogui/src/utils.c **** }
+ 150              		.loc 1 86 1 view .LVU34
  151 000a 02B0     		add	sp, sp, #8
  152              	.LCFI1:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 5
-
-
  153              		.cfi_def_cfa_offset 0
  154              		@ sp needed
  155 000c 7047     		bx	lr
@@ -256,24 +261,24 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  167              	getReg:
  168              	.LVL6:
  169              	.LFB145:
-  82:Core/drogui/src/utils.c **** 
-  83:Core/drogui/src/utils.c **** float getReg(uint8_t reg){
- 170              		.loc 1 83 26 is_stmt 1 view -0
+  87:Core/drogui/src/utils.c **** 
+  88:Core/drogui/src/utils.c **** float getReg(uint8_t reg){
+ 170              		.loc 1 88 26 is_stmt 1 view -0
  171              		.cfi_startproc
  172              		@ args = 0, pretend = 0, frame = 0
  173              		@ frame_needed = 0, uses_anonymous_args = 0
  174              		@ link register save eliminated.
-  84:Core/drogui/src/utils.c ****     /*
-  85:Core/drogui/src/utils.c ****     float val;
-  86:Core/drogui/src/utils.c ****     uint8_t arr[4];
-  87:Core/drogui/src/utils.c ****     for(int i = 0; i < 4 ; i++){
-  88:Core/drogui/src/utils.c ****      arr[i] = i2c1Reg[reg][i];
-  89:Core/drogui/src/utils.c ****     }
-  90:Core/drogui/src/utils.c ****     val = bytestofloat(arr); */
-  91:Core/drogui/src/utils.c ****     return 0; 
- 175              		.loc 1 91 5 view .LVU36
-  92:Core/drogui/src/utils.c **** }
- 176              		.loc 1 92 1 is_stmt 0 view .LVU37
+  89:Core/drogui/src/utils.c ****     /*
+  90:Core/drogui/src/utils.c ****     float val;
+  91:Core/drogui/src/utils.c ****     uint8_t arr[4];
+  92:Core/drogui/src/utils.c ****     for(int i = 0; i < 4 ; i++){
+  93:Core/drogui/src/utils.c ****      arr[i] = i2c1Reg[reg][i];
+  94:Core/drogui/src/utils.c ****     }
+  95:Core/drogui/src/utils.c ****     val = bytestofloat(arr); */
+  96:Core/drogui/src/utils.c ****     return 0; 
+ 175              		.loc 1 96 5 view .LVU36
+  97:Core/drogui/src/utils.c **** }
+ 176              		.loc 1 97 1 is_stmt 0 view .LVU37
  177 0000 9FED010A 		vldr.32	s0, .L7
  178 0004 7047     		bx	lr
  179              	.L8:
@@ -292,25 +297,25 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  194              	setReg:
  195              	.LVL7:
  196              	.LFB146:
-  93:Core/drogui/src/utils.c **** 
-  94:Core/drogui/src/utils.c **** void setReg(uint8_t reg, float val){
- 197              		.loc 1 94 36 is_stmt 1 view -0
+  98:Core/drogui/src/utils.c **** 
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 6
+
+
+  99:Core/drogui/src/utils.c **** void setReg(uint8_t reg, float val){
+ 197              		.loc 1 99 36 is_stmt 1 view -0
  198              		.cfi_startproc
  199              		@ args = 0, pretend = 0, frame = 0
  200              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 6
-
-
  201              		@ link register save eliminated.
-  95:Core/drogui/src/utils.c ****     /*
-  96:Core/drogui/src/utils.c ****     uint8_t arr[4];
-  97:Core/drogui/src/utils.c ****     floattobytes(val, arr);
-  98:Core/drogui/src/utils.c **** 
-  99:Core/drogui/src/utils.c ****     for(int i = 0; i < 4 ; i++) i2c1Reg[reg][i] = arr[i];*/
- 100:Core/drogui/src/utils.c ****     return;
- 202              		.loc 1 100 5 view .LVU39
- 101:Core/drogui/src/utils.c **** }
- 203              		.loc 1 101 1 is_stmt 0 view .LVU40
+ 100:Core/drogui/src/utils.c ****     /*
+ 101:Core/drogui/src/utils.c ****     uint8_t arr[4];
+ 102:Core/drogui/src/utils.c ****     floattobytes(val, arr);
+ 103:Core/drogui/src/utils.c **** 
+ 104:Core/drogui/src/utils.c ****     for(int i = 0; i < 4 ; i++) i2c1Reg[reg][i] = arr[i];*/
+ 105:Core/drogui/src/utils.c ****     return;
+ 202              		.loc 1 105 5 view .LVU39
+ 106:Core/drogui/src/utils.c **** }
+ 203              		.loc 1 106 1 is_stmt 0 view .LVU40
  204 0000 7047     		bx	lr
  205              		.cfi_endproc
  206              	.LFE146:
@@ -329,14 +334,14 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  221              	angle_dif:
  222              	.LVL8:
  223              	.LFB147:
- 102:Core/drogui/src/utils.c **** 
- 103:Core/drogui/src/utils.c **** 
- 104:Core/drogui/src/utils.c **** float angle_dif(float angle1, float angle2){
- 224              		.loc 1 104 44 is_stmt 1 view -0
+ 107:Core/drogui/src/utils.c **** 
+ 108:Core/drogui/src/utils.c **** 
+ 109:Core/drogui/src/utils.c **** float angle_dif(float angle1, float angle2){
+ 224              		.loc 1 109 44 is_stmt 1 view -0
  225              		.cfi_startproc
  226              		@ args = 0, pretend = 0, frame = 0
  227              		@ frame_needed = 0, uses_anonymous_args = 0
- 228              		.loc 1 104 44 is_stmt 0 view .LVU42
+ 228              		.loc 1 109 44 is_stmt 0 view .LVU42
  229 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
  230              	.LCFI2:
  231              		.cfi_def_cfa_offset 40
@@ -353,32 +358,32 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  242 0004 2DED048B 		vpush.64	{d8, d9}
  243              	.LCFI3:
  244              		.cfi_def_cfa_offset 56
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 7
+
+
  245              		.cfi_offset 80, -56
  246              		.cfi_offset 81, -52
  247              		.cfi_offset 82, -48
  248              		.cfi_offset 83, -44
  249 0008 F0EE408A 		vmov.f32	s17, s0
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 7
-
-
  250 000c B0EE608A 		vmov.f32	s16, s1
- 105:Core/drogui/src/utils.c ****     if(angle1 > angle2){
- 251              		.loc 1 105 5 is_stmt 1 view .LVU43
- 252              		.loc 1 105 7 is_stmt 0 view .LVU44
+ 110:Core/drogui/src/utils.c ****     if(angle1 > angle2){
+ 251              		.loc 1 110 5 is_stmt 1 view .LVU43
+ 252              		.loc 1 110 7 is_stmt 0 view .LVU44
  253 0010 B4EEE00A 		vcmpe.f32	s0, s1
  254 0014 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  255 0018 3EDD     		ble	.L20
- 106:Core/drogui/src/utils.c ****         if((angle1 - angle2) > (2*pi - angle1 + angle2)) return -2*pi + angle1 - angle2;
- 256              		.loc 1 106 9 is_stmt 1 view .LVU45
- 257              		.loc 1 106 20 is_stmt 0 view .LVU46
+ 111:Core/drogui/src/utils.c ****         if((angle1 - angle2) > (2*pi - angle1 + angle2)) return -2*pi + angle1 - angle2;
+ 256              		.loc 1 111 9 is_stmt 1 view .LVU45
+ 257              		.loc 1 111 20 is_stmt 0 view .LVU46
  258 001a 30EE609A 		vsub.f32	s18, s0, s1
  259 001e 19EE100A 		vmov	r0, s18
  260 0022 FFF7FEFF 		bl	__aeabi_f2d
  261              	.LVL9:
- 262              		.loc 1 106 20 view .LVU47
+ 262              		.loc 1 111 20 view .LVU47
  263 0026 8246     		mov	r10, r0
  264 0028 8B46     		mov	fp, r1
- 265              		.loc 1 106 38 view .LVU48
+ 265              		.loc 1 111 38 view .LVU48
  266 002a 18EE900A 		vmov	r0, s17
  267 002e FFF7FEFF 		bl	__aeabi_f2d
  268              	.LVL10:
@@ -392,7 +397,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  276              	.LVL11:
  277 0044 8046     		mov	r8, r0
  278 0046 8946     		mov	r9, r1
- 279              		.loc 1 106 47 view .LVU49
+ 279              		.loc 1 111 47 view .LVU49
  280 0048 18EE100A 		vmov	r0, s16
  281 004c FFF7FEFF 		bl	__aeabi_f2d
  282              	.LVL12:
@@ -406,24 +411,24 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  290              	.LVL13:
  291 0060 0246     		mov	r2, r0
  292 0062 0B46     		mov	r3, r1
- 293              		.loc 1 106 11 view .LVU50
+ 293              		.loc 1 111 11 view .LVU50
  294 0064 5046     		mov	r0, r10
  295 0066 5946     		mov	r1, fp
  296 0068 FFF7FEFF 		bl	__aeabi_dcmpgt
  297              	.LVL14:
  298 006c 70B1     		cbz	r0, .L10
- 299              		.loc 1 106 58 is_stmt 1 discriminator 1 view .LVU51
- 300              		.loc 1 106 71 is_stmt 0 discriminator 1 view .LVU52
+ 299              		.loc 1 111 58 is_stmt 1 discriminator 1 view .LVU51
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 8
+
+
+ 300              		.loc 1 111 71 is_stmt 0 discriminator 1 view .LVU52
  301 006e 22A3     		adr	r3, .L23
  302 0070 D3E90023 		ldrd	r2, [r3]
  303 0074 3046     		mov	r0, r6
  304 0076 3946     		mov	r1, r7
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 8
-
-
  305 0078 FFF7FEFF 		bl	__aeabi_dsub
  306              	.LVL15:
- 307              		.loc 1 106 80 discriminator 1 view .LVU53
+ 307              		.loc 1 111 80 discriminator 1 view .LVU53
  308 007c 2246     		mov	r2, r4
  309 007e 2B46     		mov	r3, r5
  310 0080 FFF7FEFF 		bl	__aeabi_dsub
@@ -432,14 +437,14 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  313              	.LVL17:
  314 0088 09EE100A 		vmov	s18, r0
  315              	.L10:
- 107:Core/drogui/src/utils.c ****         else return angle1 - angle2;
- 108:Core/drogui/src/utils.c ****     }
- 109:Core/drogui/src/utils.c ****     else{
- 110:Core/drogui/src/utils.c ****         if((angle2 - angle1) > (2*pi - angle2 + angle1)) return 2*pi - angle2 + angle1;
- 111:Core/drogui/src/utils.c ****         else return angle1 - angle2;
- 112:Core/drogui/src/utils.c ****     }
- 113:Core/drogui/src/utils.c **** }
- 316              		.loc 1 113 1 view .LVU54
+ 112:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 113:Core/drogui/src/utils.c ****     }
+ 114:Core/drogui/src/utils.c ****     else{
+ 115:Core/drogui/src/utils.c ****         if((angle2 - angle1) > (2*pi - angle2 + angle1)) return 2*pi - angle2 + angle1;
+ 116:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 117:Core/drogui/src/utils.c ****     }
+ 118:Core/drogui/src/utils.c **** }
+ 316              		.loc 1 118 1 view .LVU54
  317 008c B0EE490A 		vmov.f32	s0, s18
  318 0090 BDEC048B 		vldm	sp!, {d8-d9}
  319              	.LCFI4:
@@ -450,42 +455,42 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  324              		.cfi_restore 81
  325              		.cfi_def_cfa_offset 40
  326              	.LVL18:
- 327              		.loc 1 113 1 view .LVU55
+ 327              		.loc 1 118 1 view .LVU55
  328 0094 BDE8F88F 		pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, pc}
  329              	.LVL19:
  330              	.L20:
  331              	.LCFI5:
  332              		.cfi_restore_state
- 110:Core/drogui/src/utils.c ****         else return angle1 - angle2;
- 333              		.loc 1 110 9 is_stmt 1 view .LVU56
- 110:Core/drogui/src/utils.c ****         else return angle1 - angle2;
- 334              		.loc 1 110 20 is_stmt 0 view .LVU57
+ 115:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 333              		.loc 1 115 9 is_stmt 1 view .LVU56
+ 115:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 334              		.loc 1 115 20 is_stmt 0 view .LVU57
  335 0098 70EEC07A 		vsub.f32	s15, s1, s0
  336 009c 17EE900A 		vmov	r0, s15
  337 00a0 FFF7FEFF 		bl	__aeabi_f2d
  338              	.LVL20:
- 110:Core/drogui/src/utils.c ****         else return angle1 - angle2;
- 339              		.loc 1 110 20 view .LVU58
+ 115:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 339              		.loc 1 115 20 view .LVU58
  340 00a4 0646     		mov	r6, r0
  341 00a6 0F46     		mov	r7, r1
- 110:Core/drogui/src/utils.c ****         else return angle1 - angle2;
- 342              		.loc 1 110 38 view .LVU59
+ 115:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 342              		.loc 1 115 38 view .LVU59
  343 00a8 18EE100A 		vmov	r0, s16
  344 00ac FFF7FEFF 		bl	__aeabi_f2d
  345              	.LVL21:
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 9
+
+
  346 00b0 0246     		mov	r2, r0
  347 00b2 0B46     		mov	r3, r1
  348 00b4 10A1     		adr	r1, .L23
  349 00b6 D1E90001 		ldrd	r0, [r1]
  350 00ba FFF7FEFF 		bl	__aeabi_dsub
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 9
-
-
  351              	.LVL22:
  352 00be 0446     		mov	r4, r0
  353 00c0 0D46     		mov	r5, r1
- 110:Core/drogui/src/utils.c ****         else return angle1 - angle2;
- 354              		.loc 1 110 47 view .LVU60
+ 115:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 354              		.loc 1 115 47 view .LVU60
  355 00c2 18EE900A 		vmov	r0, s17
  356 00c6 FFF7FEFF 		bl	__aeabi_f2d
  357              	.LVL23:
@@ -495,8 +500,8 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  361              	.LVL24:
  362 00d2 0446     		mov	r4, r0
  363 00d4 0D46     		mov	r5, r1
- 110:Core/drogui/src/utils.c ****         else return angle1 - angle2;
- 364              		.loc 1 110 11 view .LVU61
+ 115:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 364              		.loc 1 115 11 view .LVU61
  365 00d6 0246     		mov	r2, r0
  366 00d8 0B46     		mov	r3, r1
  367 00da 3046     		mov	r0, r6
@@ -504,10 +509,10 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  369 00de FFF7FEFF 		bl	__aeabi_dcmpgt
  370              	.LVL25:
  371 00e2 30B1     		cbz	r0, .L21
- 110:Core/drogui/src/utils.c ****         else return angle1 - angle2;
- 372              		.loc 1 110 58 is_stmt 1 discriminator 1 view .LVU62
- 110:Core/drogui/src/utils.c ****         else return angle1 - angle2;
- 373              		.loc 1 110 79 is_stmt 0 discriminator 1 view .LVU63
+ 115:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 372              		.loc 1 115 58 is_stmt 1 discriminator 1 view .LVU62
+ 115:Core/drogui/src/utils.c ****         else return angle1 - angle2;
+ 373              		.loc 1 115 79 is_stmt 0 discriminator 1 view .LVU63
  374 00e4 2046     		mov	r0, r4
  375 00e6 2946     		mov	r1, r5
  376 00e8 FFF7FEFF 		bl	__aeabi_d2f
@@ -515,10 +520,10 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  378 00ec 09EE100A 		vmov	s18, r0
  379 00f0 CCE7     		b	.L10
  380              	.L21:
- 111:Core/drogui/src/utils.c ****     }
- 381              		.loc 1 111 14 is_stmt 1 view .LVU64
- 111:Core/drogui/src/utils.c ****     }
- 382              		.loc 1 111 28 is_stmt 0 view .LVU65
+ 116:Core/drogui/src/utils.c ****     }
+ 381              		.loc 1 116 14 is_stmt 1 view .LVU64
+ 116:Core/drogui/src/utils.c ****     }
+ 382              		.loc 1 116 28 is_stmt 0 view .LVU65
  383 00f2 38EEC89A 		vsub.f32	s18, s17, s16
  384 00f6 C9E7     		b	.L10
  385              	.L24:
@@ -533,21 +538,21 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  395              		.global	getEuler
  396              		.syntax unified
  397              		.thumb
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 10
+
+
  398              		.thumb_func
  399              		.fpu fpv5-sp-d16
  401              	getEuler:
  402              	.LVL27:
  403              	.LFB148:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 10
-
-
- 114:Core/drogui/src/utils.c **** 
- 115:Core/drogui/src/utils.c **** void getEuler(float q0, float q1, float q2, float q3, float* roll, float *pitch, float* yaw){
- 404              		.loc 1 115 93 is_stmt 1 view -0
+ 119:Core/drogui/src/utils.c **** 
+ 120:Core/drogui/src/utils.c **** void getEuler(float q0, float q1, float q2, float q3, float* roll, float *pitch, float* yaw){
+ 404              		.loc 1 120 93 is_stmt 1 view -0
  405              		.cfi_startproc
  406              		@ args = 0, pretend = 0, frame = 0
  407              		@ frame_needed = 0, uses_anonymous_args = 0
- 408              		.loc 1 115 93 is_stmt 0 view .LVU67
+ 408              		.loc 1 120 93 is_stmt 0 view .LVU67
  409 0000 70B5     		push	{r4, r5, r6, lr}
  410              	.LCFI6:
  411              		.cfi_def_cfa_offset 16
@@ -575,47 +580,47 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  433 0016 0646     		mov	r6, r0
  434 0018 0D46     		mov	r5, r1
  435 001a 1446     		mov	r4, r2
- 116:Core/drogui/src/utils.c **** 	
- 117:Core/drogui/src/utils.c ****     // roll (x-axis rotation)
- 118:Core/drogui/src/utils.c ****     float sinr_cosp = 2 * (q0 * q1 + q2 * q3);
- 436              		.loc 1 118 5 is_stmt 1 view .LVU68
- 437              		.loc 1 118 31 is_stmt 0 view .LVU69
+ 121:Core/drogui/src/utils.c **** 	
+ 122:Core/drogui/src/utils.c ****     // roll (x-axis rotation)
+ 123:Core/drogui/src/utils.c ****     float sinr_cosp = 2 * (q0 * q1 + q2 * q3);
+ 436              		.loc 1 123 5 is_stmt 1 view .LVU68
+ 437              		.loc 1 123 31 is_stmt 0 view .LVU69
  438 001c 60EE207A 		vmul.f32	s15, s0, s1
- 439              		.loc 1 118 41 view .LVU70
+ 439              		.loc 1 123 41 view .LVU70
  440 0020 21EE217A 		vmul.f32	s14, s2, s3
- 441              		.loc 1 118 36 view .LVU71
+ 441              		.loc 1 123 36 view .LVU71
  442 0024 77EE877A 		vadd.f32	s15, s15, s14
- 443              		.loc 1 118 11 view .LVU72
+ 443              		.loc 1 123 11 view .LVU72
  444 0028 77EEA7AA 		vadd.f32	s21, s15, s15
  445              	.LVL28:
- 119:Core/drogui/src/utils.c ****     float cosr_cosp = 1 - 2 * (q1 * q1 + q2 * q2);
- 446              		.loc 1 119 5 is_stmt 1 view .LVU73
- 447              		.loc 1 119 35 is_stmt 0 view .LVU74
+ 124:Core/drogui/src/utils.c ****     float cosr_cosp = 1 - 2 * (q1 * q1 + q2 * q2);
+ 446              		.loc 1 124 5 is_stmt 1 view .LVU73
+ 447              		.loc 1 124 35 is_stmt 0 view .LVU74
  448 002c 60EEA07A 		vmul.f32	s15, s1, s1
- 449              		.loc 1 119 45 view .LVU75
+ 449              		.loc 1 124 45 view .LVU75
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 11
+
+
  450 0030 61EE019A 		vmul.f32	s19, s2, s2
- 451              		.loc 1 119 40 view .LVU76
+ 451              		.loc 1 124 40 view .LVU76
  452 0034 77EEA97A 		vadd.f32	s15, s15, s19
- 453              		.loc 1 119 29 view .LVU77
+ 453              		.loc 1 124 29 view .LVU77
  454 0038 77EEA77A 		vadd.f32	s15, s15, s15
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 11
-
-
- 455              		.loc 1 119 11 view .LVU78
+ 455              		.loc 1 124 11 view .LVU78
  456 003c B7EE00CA 		vmov.f32	s24, #1.0e+0
  457              	.LVL29:
- 120:Core/drogui/src/utils.c ****     *roll = atan2(sinr_cosp, cosr_cosp);
- 458              		.loc 1 120 5 is_stmt 1 view .LVU79
- 459              		.loc 1 120 13 is_stmt 0 view .LVU80
+ 125:Core/drogui/src/utils.c ****     *roll = atan2(sinr_cosp, cosr_cosp);
+ 458              		.loc 1 125 5 is_stmt 1 view .LVU79
+ 459              		.loc 1 125 13 is_stmt 0 view .LVU80
  460 0040 7CEE677A 		vsub.f32	s15, s24, s15
  461              	.LVL30:
- 462              		.loc 1 120 13 view .LVU81
+ 462              		.loc 1 125 13 view .LVU81
  463 0044 17EE900A 		vmov	r0, s15
  464              	.LVL31:
- 465              		.loc 1 120 13 view .LVU82
+ 465              		.loc 1 125 13 view .LVU82
  466 0048 FFF7FEFF 		bl	__aeabi_f2d
  467              	.LVL32:
- 468              		.loc 1 120 13 view .LVU83
+ 468              		.loc 1 125 13 view .LVU83
  469 004c 41EC1B0B 		vmov	d11, r0, r1
  470 0050 1AEE900A 		vmov	r0, s21
  471 0054 FFF7FEFF 		bl	__aeabi_f2d
@@ -628,82 +633,82 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  478 0068 51EC100B 		vmov	r0, r1, d0
  479 006c FFF7FEFF 		bl	__aeabi_d2f
  480              	.LVL35:
- 481              		.loc 1 120 11 view .LVU84
+ 481              		.loc 1 125 11 view .LVU84
  482 0070 3060     		str	r0, [r6]	@ float
- 121:Core/drogui/src/utils.c **** 
- 122:Core/drogui/src/utils.c ****     // pitch (y-axis rotation)
- 123:Core/drogui/src/utils.c ****     float sinp = 2 * (q0 * q2 - q3 * q1);
- 483              		.loc 1 123 5 is_stmt 1 view .LVU85
- 484              		.loc 1 123 26 is_stmt 0 view .LVU86
+ 126:Core/drogui/src/utils.c **** 
+ 127:Core/drogui/src/utils.c ****     // pitch (y-axis rotation)
+ 128:Core/drogui/src/utils.c ****     float sinp = 2 * (q0 * q2 - q3 * q1);
+ 483              		.loc 1 128 5 is_stmt 1 view .LVU85
+ 484              		.loc 1 128 26 is_stmt 0 view .LVU86
  485 0072 68EE0A7A 		vmul.f32	s15, s16, s20
- 486              		.loc 1 123 36 view .LVU87
+ 486              		.loc 1 128 36 view .LVU87
  487 0076 29EE287A 		vmul.f32	s14, s18, s17
- 488              		.loc 1 123 31 view .LVU88
+ 488              		.loc 1 128 31 view .LVU88
  489 007a 77EEC77A 		vsub.f32	s15, s15, s14
- 490              		.loc 1 123 11 view .LVU89
+ 490              		.loc 1 128 11 view .LVU89
  491 007e 77EEA77A 		vadd.f32	s15, s15, s15
  492              	.LVL36:
- 124:Core/drogui/src/utils.c ****     if (fabs(sinp) >= 1)
- 493              		.loc 1 124 5 is_stmt 1 view .LVU90
- 494              		.loc 1 124 9 is_stmt 0 view .LVU91
+ 129:Core/drogui/src/utils.c ****     if (fabs(sinp) >= 1)
+ 493              		.loc 1 129 5 is_stmt 1 view .LVU90
+ 494              		.loc 1 129 9 is_stmt 0 view .LVU91
  495 0082 B0EEE77A 		vabs.f32	s14, s15
- 496              		.loc 1 124 8 view .LVU92
+ 496              		.loc 1 129 8 view .LVU92
  497 0086 B4EECC7A 		vcmpe.f32	s14, s24
  498 008a F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  499 008e 34DB     		blt	.L34
- 125:Core/drogui/src/utils.c ****         *pitch = copysign(pi / 2, sinp); // use 90 degrees if out of range
- 500              		.loc 1 125 9 is_stmt 1 view .LVU93
- 501              		.loc 1 125 18 is_stmt 0 view .LVU94
+ 130:Core/drogui/src/utils.c ****         *pitch = copysign(pi / 2, sinp); // use 90 degrees if out of range
+ 500              		.loc 1 130 9 is_stmt 1 view .LVU93
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 12
+
+
+ 501              		.loc 1 130 18 is_stmt 0 view .LVU94
  502 0090 F5EEC07A 		vcmpe.f32	s15, #0
  503 0094 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  504 0098 2DD4     		bmi	.L37
  505 009a 1F4B     		ldr	r3, .L38
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 12
-
-
  506              	.L28:
- 507              		.loc 1 125 16 discriminator 4 view .LVU95
+ 507              		.loc 1 130 16 discriminator 4 view .LVU95
  508 009c 2B60     		str	r3, [r5]	@ float
  509              	.LVL37:
  510              	.L30:
- 126:Core/drogui/src/utils.c ****     else
- 127:Core/drogui/src/utils.c ****         *pitch = asin(sinp);
- 128:Core/drogui/src/utils.c **** 
- 129:Core/drogui/src/utils.c ****     // yaw (z-axis rotation)
- 130:Core/drogui/src/utils.c ****     float siny_cosp = 2 * (q0 * q3 + q1 * q2);
- 511              		.loc 1 130 5 is_stmt 1 view .LVU96
- 512              		.loc 1 130 31 is_stmt 0 view .LVU97
+ 131:Core/drogui/src/utils.c ****     else
+ 132:Core/drogui/src/utils.c ****         *pitch = asin(sinp);
+ 133:Core/drogui/src/utils.c **** 
+ 134:Core/drogui/src/utils.c ****     // yaw (z-axis rotation)
+ 135:Core/drogui/src/utils.c ****     float siny_cosp = 2 * (q0 * q3 + q1 * q2);
+ 511              		.loc 1 135 5 is_stmt 1 view .LVU96
+ 512              		.loc 1 135 31 is_stmt 0 view .LVU97
  513 009e 28EE288A 		vmul.f32	s16, s16, s17
  514              	.LVL38:
- 515              		.loc 1 130 41 view .LVU98
+ 515              		.loc 1 135 41 view .LVU98
  516 00a2 29EE0A9A 		vmul.f32	s18, s18, s20
  517              	.LVL39:
- 518              		.loc 1 130 36 view .LVU99
+ 518              		.loc 1 135 36 view .LVU99
  519 00a6 38EE098A 		vadd.f32	s16, s16, s18
- 520              		.loc 1 130 11 view .LVU100
+ 520              		.loc 1 135 11 view .LVU100
  521 00aa 38EE088A 		vadd.f32	s16, s16, s16
  522              	.LVL40:
- 131:Core/drogui/src/utils.c ****     float cosy_cosp = 1 - 2 * (q2 * q2 + q3 * q3);
- 523              		.loc 1 131 5 is_stmt 1 view .LVU101
- 524              		.loc 1 131 45 is_stmt 0 view .LVU102
+ 136:Core/drogui/src/utils.c ****     float cosy_cosp = 1 - 2 * (q2 * q2 + q3 * q3);
+ 523              		.loc 1 136 5 is_stmt 1 view .LVU101
+ 524              		.loc 1 136 45 is_stmt 0 view .LVU102
  525 00ae 68EEA88A 		vmul.f32	s17, s17, s17
  526              	.LVL41:
- 527              		.loc 1 131 40 view .LVU103
+ 527              		.loc 1 136 40 view .LVU103
  528 00b2 79EEA88A 		vadd.f32	s17, s19, s17
- 529              		.loc 1 131 29 view .LVU104
+ 529              		.loc 1 136 29 view .LVU104
  530 00b6 78EEA88A 		vadd.f32	s17, s17, s17
  531              	.LVL42:
- 132:Core/drogui/src/utils.c ****     *yaw = atan2(siny_cosp, cosy_cosp);
- 532              		.loc 1 132 5 is_stmt 1 view .LVU105
- 533              		.loc 1 132 12 is_stmt 0 view .LVU106
+ 137:Core/drogui/src/utils.c ****     *yaw = atan2(siny_cosp, cosy_cosp);
+ 532              		.loc 1 137 5 is_stmt 1 view .LVU105
+ 533              		.loc 1 137 12 is_stmt 0 view .LVU106
  534 00ba F7EE007A 		vmov.f32	s15, #1.0e+0
  535 00be 77EEE87A 		vsub.f32	s15, s15, s17
  536              	.LVL43:
- 537              		.loc 1 132 12 view .LVU107
+ 537              		.loc 1 137 12 view .LVU107
  538 00c2 17EE900A 		vmov	r0, s15
  539 00c6 FFF7FEFF 		bl	__aeabi_f2d
  540              	.LVL44:
- 541              		.loc 1 132 12 view .LVU108
+ 541              		.loc 1 137 12 view .LVU108
  542 00ca 41EC190B 		vmov	d9, r0, r1
  543 00ce 18EE100A 		vmov	r0, s16
  544 00d2 FFF7FEFF 		bl	__aeabi_f2d
@@ -713,16 +718,16 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  548 00de 41EC100B 		vmov	d0, r0, r1
  549 00e2 FFF7FEFF 		bl	atan2
  550              	.LVL46:
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 13
+
+
  551 00e6 51EC100B 		vmov	r0, r1, d0
  552 00ea FFF7FEFF 		bl	__aeabi_d2f
  553              	.LVL47:
- 554              		.loc 1 132 10 view .LVU109
+ 554              		.loc 1 137 10 view .LVU109
  555 00ee 2060     		str	r0, [r4]	@ float
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 13
-
-
- 133:Core/drogui/src/utils.c **** }
- 556              		.loc 1 133 1 view .LVU110
+ 138:Core/drogui/src/utils.c **** }
+ 556              		.loc 1 138 1 view .LVU110
  557 00f0 BDEC0A8B 		vldm	sp!, {d8-d12}
  558              	.LCFI8:
  559              		.cfi_remember_state
@@ -738,34 +743,34 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  569              		.cfi_restore 81
  570              		.cfi_def_cfa_offset 16
  571              	.LVL48:
- 572              		.loc 1 133 1 view .LVU111
+ 572              		.loc 1 138 1 view .LVU111
  573 00f4 70BD     		pop	{r4, r5, r6, pc}
  574              	.LVL49:
  575              	.L37:
  576              	.LCFI9:
  577              		.cfi_restore_state
- 125:Core/drogui/src/utils.c ****     else
- 578              		.loc 1 125 18 view .LVU112
+ 130:Core/drogui/src/utils.c ****     else
+ 578              		.loc 1 130 18 view .LVU112
  579 00f6 094B     		ldr	r3, .L38+4
  580 00f8 D0E7     		b	.L28
  581              	.L34:
- 127:Core/drogui/src/utils.c **** 
- 582              		.loc 1 127 9 is_stmt 1 view .LVU113
- 127:Core/drogui/src/utils.c **** 
- 583              		.loc 1 127 18 is_stmt 0 view .LVU114
+ 132:Core/drogui/src/utils.c **** 
+ 582              		.loc 1 132 9 is_stmt 1 view .LVU113
+ 132:Core/drogui/src/utils.c **** 
+ 583              		.loc 1 132 18 is_stmt 0 view .LVU114
  584 00fa 17EE900A 		vmov	r0, s15
  585 00fe FFF7FEFF 		bl	__aeabi_f2d
  586              	.LVL50:
- 127:Core/drogui/src/utils.c **** 
- 587              		.loc 1 127 18 view .LVU115
+ 132:Core/drogui/src/utils.c **** 
+ 587              		.loc 1 132 18 view .LVU115
  588 0102 41EC100B 		vmov	d0, r0, r1
  589 0106 FFF7FEFF 		bl	asin
  590              	.LVL51:
  591 010a 51EC100B 		vmov	r0, r1, d0
  592 010e FFF7FEFF 		bl	__aeabi_d2f
  593              	.LVL52:
- 127:Core/drogui/src/utils.c **** 
- 594              		.loc 1 127 16 view .LVU116
+ 132:Core/drogui/src/utils.c **** 
+ 594              		.loc 1 132 16 view .LVU116
  595 0112 2860     		str	r0, [r5]	@ float
  596 0114 C3E7     		b	.L30
  597              	.L39:
@@ -773,14 +778,14 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  599              	.L38:
  600 0118 DB0FC93F 		.word	1070141403
  601 011c DB0FC9BF 		.word	-1077342245
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 14
+
+
  602              		.cfi_endproc
  603              	.LFE148:
  605              		.section	.text.rampValue,"ax",%progbits
  606              		.align	1
  607              		.global	rampValue
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 14
-
-
  608              		.syntax unified
  609              		.thumb
  610              		.thumb_func
@@ -788,410 +793,441 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 1
  613              	rampValue:
  614              	.LVL53:
  615              	.LFB149:
- 134:Core/drogui/src/utils.c **** 
- 135:Core/drogui/src/utils.c **** 
- 136:Core/drogui/src/utils.c **** void rampValue(float *var, float desired, float step){
- 616              		.loc 1 136 54 is_stmt 1 view -0
+ 139:Core/drogui/src/utils.c **** 
+ 140:Core/drogui/src/utils.c **** 
+ 141:Core/drogui/src/utils.c **** void rampValue(float *var, float desired, float step){
+ 616              		.loc 1 141 54 is_stmt 1 view -0
  617              		.cfi_startproc
  618              		@ args = 0, pretend = 0, frame = 0
  619              		@ frame_needed = 0, uses_anonymous_args = 0
  620              		@ link register save eliminated.
- 137:Core/drogui/src/utils.c **** 
- 138:Core/drogui/src/utils.c ****     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*va
- 621              		.loc 1 138 5 view .LVU118
- 622              		.loc 1 138 12 is_stmt 0 view .LVU119
+ 142:Core/drogui/src/utils.c **** 
+ 143:Core/drogui/src/utils.c ****     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*va
+ 621              		.loc 1 143 5 view .LVU118
+ 622              		.loc 1 143 12 is_stmt 0 view .LVU119
  623 0000 D0ED007A 		vldr.32	s15, [r0]
- 624              		.loc 1 138 28 view .LVU120
+ 624              		.loc 1 143 28 view .LVU120
  625 0004 30EE670A 		vsub.f32	s0, s0, s15
  626              	.LVL54:
- 627              		.loc 1 138 15 view .LVU121
+ 627              		.loc 1 143 15 view .LVU121
  628 0008 B0EEC07A 		vabs.f32	s14, s0
- 629              		.loc 1 138 83 view .LVU122
+ 629              		.loc 1 143 83 view .LVU122
  630 000c B4EEE07A 		vcmpe.f32	s14, s1
  631 0010 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  632 0014 10DB     		blt	.L41
- 633              		.loc 1 138 50 discriminator 1 view .LVU123
+ 633              		.loc 1 143 50 discriminator 1 view .LVU123
  634 0016 F5EEC00A 		vcmpe.f32	s1, #0
  635 001a F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  636 001e 04DD     		ble	.L43
- 637              		.loc 1 138 50 discriminator 3 view .LVU124
+ 637              		.loc 1 143 50 discriminator 3 view .LVU124
  638 0020 B5EEC00A 		vcmpe.f32	s0, #0
  639 0024 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  640 0028 10D4     		bmi	.L45
  641              	.L43:
- 642              		.loc 1 138 50 discriminator 6 view .LVU125
+ 642              		.loc 1 143 50 discriminator 6 view .LVU125
  643 002a F5EEC00A 		vcmpe.f32	s1, #0
  644 002e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  645 0032 06D4     		bmi	.L55
- 646              		.loc 1 138 50 view .LVU126
+ 646              		.loc 1 143 50 view .LVU126
  647 0034 B0EE600A 		vmov.f32	s0, s1
  648              	.L41:
- 649              		.loc 1 138 12 discriminator 14 view .LVU127
+ 649              		.loc 1 143 12 discriminator 14 view .LVU127
  650 0038 37EE800A 		vadd.f32	s0, s15, s0
  651 003c 80ED000A 		vstr.32	s0, [r0]
- 139:Core/drogui/src/utils.c **** }  ...
- 652              		.loc 1 139 1 discriminator 14 view .LVU128
+ 144:Core/drogui/src/utils.c **** }  ...
+ 652              		.loc 1 144 1 discriminator 14 view .LVU128
  653 0040 7047     		bx	lr
  654              	.L55:
- 138:Core/drogui/src/utils.c ****     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*va
- 655              		.loc 1 138 50 discriminator 7 view .LVU129
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 15
+
+
+ 143:Core/drogui/src/utils.c ****     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*va
+ 655              		.loc 1 143 50 discriminator 7 view .LVU129
  656 0042 B5EEC00A 		vcmpe.f32	s0, #0
  657 0046 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  658 004a 02DD     		ble	.L54
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 15
-
-
  659              	.L45:
- 138:Core/drogui/src/utils.c ****     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*va
- 660              		.loc 1 138 50 discriminator 9 view .LVU130
+ 143:Core/drogui/src/utils.c ****     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*va
+ 660              		.loc 1 143 50 discriminator 9 view .LVU130
  661 004c B1EE600A 		vneg.f32	s0, s1
  662 0050 F2E7     		b	.L41
  663              	.L54:
- 138:Core/drogui/src/utils.c ****     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*va
- 664              		.loc 1 138 50 view .LVU131
+ 143:Core/drogui/src/utils.c ****     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*va
+ 664              		.loc 1 143 50 view .LVU131
  665 0052 B0EE600A 		vmov.f32	s0, s1
  666 0056 EFE7     		b	.L41
  667              		.cfi_endproc
  668              	.LFE149:
- 670              		.global	v_3_10
- 671              		.global	k_3_10
- 672              		.global	sz_3_10
- 673              		.global	v_1_10
- 674              		.global	k_1_10
- 675              		.global	sz_1_10
- 676              		.global	coeffA_50Hz
- 677              		.global	coeffB_50Hz
- 678              		.global	coeffA_300Hz
- 679              		.global	coeffB_300Hz
- 680              		.global	coeffA_100Hz
- 681              		.global	coeffB_100Hz
- 682              		.global	coeffA_150Hz
- 683              		.global	coeffB_150Hz
- 684              		.global	coeffA_5Hz
- 685              		.global	coeffB_5Hz
- 686              		.global	coeffA_2Hz
- 687              		.global	coeffB_2Hz
- 688              		.global	coeffB_8Hz
- 689              		.global	coeffA_8Hz
- 690              		.global	coeffB_10Hz
- 691              		.global	coeffA_10Hz
- 692              		.global	security
- 693              		.section	.bss.security,"aw",%nobits
- 696              	security:
- 697 0000 00       		.space	1
- 698              		.section	.data.coeffA_100Hz,"aw"
- 699              		.align	2
- 702              	coeffA_100Hz:
- 703 0000 A301C4C0 		.word	-1060896349
- 704 0004 C7A98941 		.word	1099540935
- 705 0008 1B1EE6C1 		.word	-1041883621
- 706 000c 636EF941 		.word	1106865763
- 707 0010 4F1EB3C1 		.word	-1045225905
- 708 0014 58392641 		.word	1093024088
- 709 0018 242836C0 		.word	-1070192604
- 710 001c FD87B43E 		.word	1052018685
- 711              		.section	.data.coeffA_10Hz,"aw"
- 712              		.align	2
- 715              	coeffA_10Hz:
- 716 0000 A301C4C0 		.word	-1060896349
- 717 0004 C7A98941 		.word	1099540935
- 718 0008 1B1EE6C1 		.word	-1041883621
- 719 000c 636EF941 		.word	1106865763
- 720 0010 4F1EB3C1 		.word	-1045225905
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 16
+ 670              		.global	v_5_100
+ 671              		.global	k_5_100
+ 672              		.global	sz_5_100
+ 673              		.global	v_3_10
+ 674              		.global	k_3_10
+ 675              		.global	sz_3_10
+ 676              		.global	v_1_10
+ 677              		.global	k_1_10
+ 678              		.global	sz_1_10
+ 679              		.global	coeffA_50Hz
+ 680              		.global	coeffB_50Hz
+ 681              		.global	coeffA_300Hz
+ 682              		.global	coeffB_300Hz
+ 683              		.global	coeffA_100Hz
+ 684              		.global	coeffB_100Hz
+ 685              		.global	coeffA_150Hz
+ 686              		.global	coeffB_150Hz
+ 687              		.global	coeffA_5Hz
+ 688              		.global	coeffB_5Hz
+ 689              		.global	coeffA_2Hz
+ 690              		.global	coeffB_2Hz
+ 691              		.global	coeffB_8Hz
+ 692              		.global	coeffA_8Hz
+ 693              		.global	coeffB_10Hz
+ 694              		.global	coeffA_10Hz
+ 695              		.global	security
+ 696              		.section	.bss.security,"aw",%nobits
+ 699              	security:
+ 700 0000 00       		.space	1
+ 701              		.section	.data.coeffA_100Hz,"aw"
+ 702              		.align	2
+ 705              	coeffA_100Hz:
+ 706 0000 A301C4C0 		.word	-1060896349
+ 707 0004 C7A98941 		.word	1099540935
+ 708 0008 1B1EE6C1 		.word	-1041883621
+ 709 000c 636EF941 		.word	1106865763
+ 710 0010 4F1EB3C1 		.word	-1045225905
+ 711 0014 58392641 		.word	1093024088
+ 712 0018 242836C0 		.word	-1070192604
+ 713 001c FD87B43E 		.word	1052018685
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 16
 
 
- 721 0014 58392641 		.word	1093024088
- 722 0018 242836C0 		.word	-1070192604
- 723 001c FD87B43E 		.word	1052018685
- 724              		.section	.data.coeffA_150Hz,"aw"
- 725              		.align	2
- 728              	coeffA_150Hz:
- 729 0000 DAACAAC0 		.word	-1062556454
- 730 0004 B5156641 		.word	1097209269
- 731 0008 64DDC5C1 		.word	-1043997340
- 732 000c B38CEC41 		.word	1106021555
- 733 0010 2742CAC1 		.word	-1043709401
- 734 0014 90A07641 		.word	1098293392
- 735 0018 8885CEC0 		.word	-1060207224
- 736 001c 2BF6D73F 		.word	1071117867
- 737 0020 F5DB57BE 		.word	-1101538315
- 738              		.section	.data.coeffA_2Hz,"aw"
- 739              		.align	2
- 742              	coeffA_2Hz:
- 743 0000 C66B98C0 		.word	-1063752762
- 744 0004 B1951141 		.word	1091671473
- 745 0008 FA680BC1 		.word	-1056216838
- 746 000c EDD38540 		.word	1082512365
- 747 0010 CF0B4EBF 		.word	-1085404209
- 748              		.section	.data.coeffA_300Hz,"aw"
- 749              		.align	2
- 752              	coeffA_300Hz:
- 753 0000 4F409B3F 		.word	1067139151
- 754 0004 3A236240 		.word	1080173370
- 755 0008 80481B40 		.word	1075529856
- 756 000c 2F6E7B40 		.word	1081830959
- 757 0010 9EEFA73F 		.word	1067970462
- 758 0014 30BBE73F 		.word	1072151344
- 759 0018 E63FA43D 		.word	1034174438
- 760 001c 5F29CB3E 		.word	1053501791
- 761 0020 68B36ABD 		.word	-1117080728
- 762 0024 EFC9433D 		.word	1027852783
- 763              		.section	.data.coeffA_50Hz,"aw"
- 764              		.align	2
- 767              	coeffA_50Hz:
- 768 0000 E201C4C0 		.word	-1060896286
- 769 0004 B3A98941 		.word	1099540915
- 770 0008 161EE6C1 		.word	-1041883626
- 771 000c 636EF941 		.word	1106865763
- 772 0010 401EB3C1 		.word	-1045225920
- 773 0014 2E392641 		.word	1093024046
- 774 0018 F62836C0 		.word	-1070192394
- 775 001c 2185B43E 		.word	1052017953
- 776              		.section	.data.coeffA_5Hz,"aw"
- 777              		.align	2
- 780              	coeffA_5Hz:
- 781 0000 E15DC9C0 		.word	-1060545055
- 782 0004 814F8941 		.word	1099517825
- 783 0008 D84DD2C1 		.word	-1043182120
- 784 000c 8C3EC341 		.word	1103314572
- 785 0010 B4AB5BC1 		.word	-1050956876
- 786 0014 9FA18A40 		.word	1082827167
- 787 0018 F06517BF 		.word	-1088985616
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 17
+ 714              		.section	.data.coeffA_10Hz,"aw"
+ 715              		.align	2
+ 718              	coeffA_10Hz:
+ 719 0000 A301C4C0 		.word	-1060896349
+ 720 0004 C7A98941 		.word	1099540935
+ 721 0008 1B1EE6C1 		.word	-1041883621
+ 722 000c 636EF941 		.word	1106865763
+ 723 0010 4F1EB3C1 		.word	-1045225905
+ 724 0014 58392641 		.word	1093024088
+ 725 0018 242836C0 		.word	-1070192604
+ 726 001c FD87B43E 		.word	1052018685
+ 727              		.section	.data.coeffA_150Hz,"aw"
+ 728              		.align	2
+ 731              	coeffA_150Hz:
+ 732 0000 DAACAAC0 		.word	-1062556454
+ 733 0004 B5156641 		.word	1097209269
+ 734 0008 64DDC5C1 		.word	-1043997340
+ 735 000c B38CEC41 		.word	1106021555
+ 736 0010 2742CAC1 		.word	-1043709401
+ 737 0014 90A07641 		.word	1098293392
+ 738 0018 8885CEC0 		.word	-1060207224
+ 739 001c 2BF6D73F 		.word	1071117867
+ 740 0020 F5DB57BE 		.word	-1101538315
+ 741              		.section	.data.coeffA_2Hz,"aw"
+ 742              		.align	2
+ 745              	coeffA_2Hz:
+ 746 0000 C66B98C0 		.word	-1063752762
+ 747 0004 B1951141 		.word	1091671473
+ 748 0008 FA680BC1 		.word	-1056216838
+ 749 000c EDD38540 		.word	1082512365
+ 750 0010 CF0B4EBF 		.word	-1085404209
+ 751              		.section	.data.coeffA_300Hz,"aw"
+ 752              		.align	2
+ 755              	coeffA_300Hz:
+ 756 0000 4F409B3F 		.word	1067139151
+ 757 0004 3A236240 		.word	1080173370
+ 758 0008 80481B40 		.word	1075529856
+ 759 000c 2F6E7B40 		.word	1081830959
+ 760 0010 9EEFA73F 		.word	1067970462
+ 761 0014 30BBE73F 		.word	1072151344
+ 762 0018 E63FA43D 		.word	1034174438
+ 763 001c 5F29CB3E 		.word	1053501791
+ 764 0020 68B36ABD 		.word	-1117080728
+ 765 0024 EFC9433D 		.word	1027852783
+ 766              		.section	.data.coeffA_50Hz,"aw"
+ 767              		.align	2
+ 770              	coeffA_50Hz:
+ 771 0000 E201C4C0 		.word	-1060896286
+ 772 0004 B3A98941 		.word	1099540915
+ 773 0008 161EE6C1 		.word	-1041883626
+ 774 000c 636EF941 		.word	1106865763
+ 775 0010 401EB3C1 		.word	-1045225920
+ 776 0014 2E392641 		.word	1093024046
+ 777 0018 F62836C0 		.word	-1070192394
+ 778 001c 2185B43E 		.word	1052017953
+ 779              		.section	.data.coeffA_5Hz,"aw"
+ 780              		.align	2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 17
 
 
- 788              		.section	.data.coeffA_8Hz,"aw"
- 789              		.align	2
- 792              	coeffA_8Hz:
- 793 0000 09B4B6C0 		.word	-1061768183
- 794 0004 98D16641 		.word	1097257368
- 795 0008 87ADA6C1 		.word	-1046041209
- 796 000c F2479441 		.word	1100236786
- 797 0010 0E4A22C1 		.word	-1054717426
- 798 0014 4E2A4A40 		.word	1078602318
- 799 0018 6308DDBE 		.word	-1092810653
- 800              		.section	.data.coeffB_100Hz,"aw"
- 801              		.align	2
- 804              	coeffB_100Hz:
- 805 0000 7CF2303B 		.word	993063548
- 806 0004 96430BBC 		.word	-1140112490
- 807 0008 4B59863C 		.word	1015437643
- 808 000c 3108ACBC 		.word	-1129576399
- 809 0010 363CBD3C 		.word	1019034678
- 810 0014 3108ACBC 		.word	-1129576399
- 811 0018 4B59863C 		.word	1015437643
- 812 001c 96430BBC 		.word	-1140112490
- 813 0020 7CF2303B 		.word	993063548
- 814              		.section	.data.coeffB_10Hz,"aw"
- 815              		.align	2
- 818              	coeffB_10Hz:
- 819 0000 7CF2303B 		.word	993063548
- 820 0004 96430BBC 		.word	-1140112490
- 821 0008 4B59863C 		.word	1015437643
- 822 000c 3108ACBC 		.word	-1129576399
- 823 0010 363CBD3C 		.word	1019034678
- 824 0014 3108ACBC 		.word	-1129576399
- 825 0018 4B59863C 		.word	1015437643
- 826 001c 96430BBC 		.word	-1140112490
- 827 0020 7CF2303B 		.word	993063548
- 828              		.section	.data.coeffB_150Hz,"aw"
- 829              		.align	2
- 832              	coeffB_150Hz:
- 833 0000 3480B73B 		.word	1001881652
- 834 0004 4260E5BB 		.word	-1142595518
- 835 0008 96438B3C 		.word	1015759766
- 836 000c FAEDEBBB 		.word	-1142166022
- 837 0010 0AD7233C 		.word	1008981770
- 838 0014 0AD7233C 		.word	1008981770
- 839 0018 FAEDEBBB 		.word	-1142166022
- 840 001c 96438B3C 		.word	1015759766
- 841 0020 4260E5BB 		.word	-1142595518
- 842 0024 3480B73B 		.word	1001881652
- 843              		.section	.data.coeffB_2Hz,"aw"
- 844              		.align	2
- 847              	coeffB_2Hz:
- 848 0000 7786153A 		.word	974489207
- 849 0004 F167CEBA 		.word	-1160878095
- 850 0008 3489843A 		.word	981764404
- 851 000c 3489843A 		.word	981764404
- 852 0010 F167CEBA 		.word	-1160878095
- 853 0014 7786153A 		.word	974489207
- 854              		.section	.data.coeffB_300Hz,"aw"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 18
+ 783              	coeffA_5Hz:
+ 784 0000 E15DC9C0 		.word	-1060545055
+ 785 0004 814F8941 		.word	1099517825
+ 786 0008 D84DD2C1 		.word	-1043182120
+ 787 000c 8C3EC341 		.word	1103314572
+ 788 0010 B4AB5BC1 		.word	-1050956876
+ 789 0014 9FA18A40 		.word	1082827167
+ 790 0018 F06517BF 		.word	-1088985616
+ 791              		.section	.data.coeffA_8Hz,"aw"
+ 792              		.align	2
+ 795              	coeffA_8Hz:
+ 796 0000 09B4B6C0 		.word	-1061768183
+ 797 0004 98D16641 		.word	1097257368
+ 798 0008 87ADA6C1 		.word	-1046041209
+ 799 000c F2479441 		.word	1100236786
+ 800 0010 0E4A22C1 		.word	-1054717426
+ 801 0014 4E2A4A40 		.word	1078602318
+ 802 0018 6308DDBE 		.word	-1092810653
+ 803              		.section	.data.coeffB_100Hz,"aw"
+ 804              		.align	2
+ 807              	coeffB_100Hz:
+ 808 0000 7CF2303B 		.word	993063548
+ 809 0004 96430BBC 		.word	-1140112490
+ 810 0008 4B59863C 		.word	1015437643
+ 811 000c 3108ACBC 		.word	-1129576399
+ 812 0010 363CBD3C 		.word	1019034678
+ 813 0014 3108ACBC 		.word	-1129576399
+ 814 0018 4B59863C 		.word	1015437643
+ 815 001c 96430BBC 		.word	-1140112490
+ 816 0020 7CF2303B 		.word	993063548
+ 817              		.section	.data.coeffB_10Hz,"aw"
+ 818              		.align	2
+ 821              	coeffB_10Hz:
+ 822 0000 7CF2303B 		.word	993063548
+ 823 0004 96430BBC 		.word	-1140112490
+ 824 0008 4B59863C 		.word	1015437643
+ 825 000c 3108ACBC 		.word	-1129576399
+ 826 0010 363CBD3C 		.word	1019034678
+ 827 0014 3108ACBC 		.word	-1129576399
+ 828 0018 4B59863C 		.word	1015437643
+ 829 001c 96430BBC 		.word	-1140112490
+ 830 0020 7CF2303B 		.word	993063548
+ 831              		.section	.data.coeffB_150Hz,"aw"
+ 832              		.align	2
+ 835              	coeffB_150Hz:
+ 836 0000 3480B73B 		.word	1001881652
+ 837 0004 4260E5BB 		.word	-1142595518
+ 838 0008 96438B3C 		.word	1015759766
+ 839 000c FAEDEBBB 		.word	-1142166022
+ 840 0010 0AD7233C 		.word	1008981770
+ 841 0014 0AD7233C 		.word	1008981770
+ 842 0018 FAEDEBBB 		.word	-1142166022
+ 843 001c 96438B3C 		.word	1015759766
+ 844 0020 4260E5BB 		.word	-1142595518
+ 845 0024 3480B73B 		.word	1001881652
+ 846              		.section	.data.coeffB_2Hz,"aw"
+ 847              		.align	2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 18
 
 
- 855              		.align	2
- 858              	coeffB_300Hz:
- 859 0000 8638563D 		.word	1029060742
- 860 0004 23DB993E 		.word	1050270499
- 861 0008 2DB26D3F 		.word	1064153645
- 862 000c 58A8F53F 		.word	1073064024
- 863 0010 06813940 		.word	1077510406
- 864 0014 62105440 		.word	1079251042
- 865 0018 06813940 		.word	1077510406
- 866 001c 58A8F53F 		.word	1073064024
- 867 0020 2DB26D3F 		.word	1064153645
- 868 0024 23DB993E 		.word	1050270499
- 869 0028 8638563D 		.word	1029060742
- 870              		.section	.data.coeffB_50Hz,"aw"
- 871              		.align	2
- 874              	coeffB_50Hz:
- 875 0000 F9C2313B 		.word	993116921
- 876 0004 3E250BBC 		.word	-1140120258
- 877 0008 D149863C 		.word	1015433681
- 878 000c 73E9ABBC 		.word	-1129584269
- 879 0010 E122BD3C 		.word	1019028193
- 880 0014 73E9ABBC 		.word	-1129584269
- 881 0018 D149863C 		.word	1015433681
- 882 001c 3E250BBC 		.word	-1140120258
- 883 0020 F9C2313B 		.word	993116921
- 884              		.section	.data.coeffB_5Hz,"aw"
- 885              		.align	2
- 888              	coeffB_5Hz:
- 889 0000 28F2913A 		.word	982643240
- 890 0004 E55893BB 		.word	-1147971355
- 891 0008 FAB7E83B 		.word	1005107194
- 892 000c 751F72BB 		.word	-1150148747
- 893 0010 751F72BB 		.word	-1150148747
- 894 0014 FAB7E83B 		.word	1005107194
- 895 0018 E55893BB 		.word	-1147971355
- 896 001c 28F2913A 		.word	982643240
- 897              		.section	.data.coeffB_8Hz,"aw"
- 898              		.align	2
- 901              	coeffB_8Hz:
- 902 0000 F77A063B 		.word	990280439
- 903 0004 9C3CBEBB 		.word	-1145160548
- 904 0008 6574023C 		.word	1006793829
- 905 000c 29BC6EBB 		.word	-1150370775
- 906 0010 29BC6EBB 		.word	-1150370775
- 907 0014 6574023C 		.word	1006793829
- 908 0018 9C3CBEBB 		.word	-1145160548
- 909 001c F77A063B 		.word	990280439
- 910              		.section	.data.k_1_10,"aw"
- 911              		.align	2
- 914              	k_1_10:
- 915 0000 EE67A73E 		.word	1051158510
- 916 0004 470E41BF 		.word	-1086255545
- 917 0008 BF42653F 		.word	1063600831
- 918 000c A0DE5EBF 		.word	-1084301664
- 919              		.section	.data.k_3_10,"aw"
- 920              		.align	2
- 923              	k_3_10:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 19
+ 850              	coeffB_2Hz:
+ 851 0000 7786153A 		.word	974489207
+ 852 0004 F167CEBA 		.word	-1160878095
+ 853 0008 3489843A 		.word	981764404
+ 854 000c 3489843A 		.word	981764404
+ 855 0010 F167CEBA 		.word	-1160878095
+ 856 0014 7786153A 		.word	974489207
+ 857              		.section	.data.coeffB_300Hz,"aw"
+ 858              		.align	2
+ 861              	coeffB_300Hz:
+ 862 0000 8638563D 		.word	1029060742
+ 863 0004 23DB993E 		.word	1050270499
+ 864 0008 2DB26D3F 		.word	1064153645
+ 865 000c 58A8F53F 		.word	1073064024
+ 866 0010 06813940 		.word	1077510406
+ 867 0014 62105440 		.word	1079251042
+ 868 0018 06813940 		.word	1077510406
+ 869 001c 58A8F53F 		.word	1073064024
+ 870 0020 2DB26D3F 		.word	1064153645
+ 871 0024 23DB993E 		.word	1050270499
+ 872 0028 8638563D 		.word	1029060742
+ 873              		.section	.data.coeffB_50Hz,"aw"
+ 874              		.align	2
+ 877              	coeffB_50Hz:
+ 878 0000 F9C2313B 		.word	993116921
+ 879 0004 3E250BBC 		.word	-1140120258
+ 880 0008 D149863C 		.word	1015433681
+ 881 000c 73E9ABBC 		.word	-1129584269
+ 882 0010 E122BD3C 		.word	1019028193
+ 883 0014 73E9ABBC 		.word	-1129584269
+ 884 0018 D149863C 		.word	1015433681
+ 885 001c 3E250BBC 		.word	-1140120258
+ 886 0020 F9C2313B 		.word	993116921
+ 887              		.section	.data.coeffB_5Hz,"aw"
+ 888              		.align	2
+ 891              	coeffB_5Hz:
+ 892 0000 28F2913A 		.word	982643240
+ 893 0004 E55893BB 		.word	-1147971355
+ 894 0008 FAB7E83B 		.word	1005107194
+ 895 000c 751F72BB 		.word	-1150148747
+ 896 0010 751F72BB 		.word	-1150148747
+ 897 0014 FAB7E83B 		.word	1005107194
+ 898 0018 E55893BB 		.word	-1147971355
+ 899 001c 28F2913A 		.word	982643240
+ 900              		.section	.data.coeffB_8Hz,"aw"
+ 901              		.align	2
+ 904              	coeffB_8Hz:
+ 905 0000 F77A063B 		.word	990280439
+ 906 0004 9C3CBEBB 		.word	-1145160548
+ 907 0008 6574023C 		.word	1006793829
+ 908 000c 29BC6EBB 		.word	-1150370775
+ 909 0010 29BC6EBB 		.word	-1150370775
+ 910 0014 6574023C 		.word	1006793829
+ 911 0018 9C3CBEBB 		.word	-1145160548
+ 912 001c F77A063B 		.word	990280439
+ 913              		.section	.data.k_1_10,"aw"
+ 914              		.align	2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 19
 
 
- 924 0000 7804DDBC 		.word	-1126366088
- 925 0004 5A37743E 		.word	1047803738
- 926 0008 9E5ABB3D 		.word	1035688606
- 927 000c 8A465F3F 		.word	1063208586
- 928 0010 AA96B53E 		.word	1052087978
- 929              		.section	.data.sz_1_10,"aw"
- 930              		.align	2
- 933              	sz_1_10:
- 934 0000 04000000 		.word	4
- 935              		.section	.data.sz_3_10,"aw"
- 936              		.align	2
- 939              	sz_3_10:
- 940 0000 05000000 		.word	5
- 941              		.section	.data.v_1_10,"aw"
+ 917              	k_1_10:
+ 918 0000 EE67A73E 		.word	1051158510
+ 919 0004 470E41BF 		.word	-1086255545
+ 920 0008 BF42653F 		.word	1063600831
+ 921 000c A0DE5EBF 		.word	-1084301664
+ 922              		.section	.data.k_3_10,"aw"
+ 923              		.align	2
+ 926              	k_3_10:
+ 927 0000 7804DDBC 		.word	-1126366088
+ 928 0004 5A37743E 		.word	1047803738
+ 929 0008 9E5ABB3D 		.word	1035688606
+ 930 000c 8A465F3F 		.word	1063208586
+ 931 0010 AA96B53E 		.word	1052087978
+ 932              		.section	.data.k_5_100,"aw"
+ 933              		.align	2
+ 936              	k_5_100:
+ 937 0000 A0EB113F 		.word	1058139040
+ 938 0004 8F1D6EBF 		.word	-1083302513
+ 939 0008 B817793F 		.word	1064900536
+ 940 000c C85E78BF 		.word	-1082630456
+ 941              		.section	.data.sz_1_10,"aw"
  942              		.align	2
- 945              	v_1_10:
- 946 0000 8396223C 		.word	1008899715
- 947 0004 BE1E313D 		.word	1026629310
- 948 0008 F510C53D 		.word	1036325109
- 949 000c D2BFCA3D 		.word	1036697554
- 950 0010 A6FB203D 		.word	1025571750
- 951              		.section	.data.v_3_10,"aw"
- 952              		.align	2
- 955              	v_3_10:
- 956 0000 0A87F93D 		.word	1039763210
- 957 0004 0F58E33E 		.word	1055086607
- 958 0008 349C073F 		.word	1057463348
- 959 000c 7BAB963D 		.word	1033284475
- 960 0010 C9181CBE 		.word	-1105454903
- 961 0014 771A21BD 		.word	-1121904009
- 962              		.text
- 963              	.Letext0:
- 964              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 965              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 966              		.file 4 "Core/drogui/include/utils.h"
- 967              		.file 5 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 20
+ 945              	sz_1_10:
+ 946 0000 04000000 		.word	4
+ 947              		.section	.data.sz_3_10,"aw"
+ 948              		.align	2
+ 951              	sz_3_10:
+ 952 0000 05000000 		.word	5
+ 953              		.section	.data.sz_5_100,"aw"
+ 954              		.align	2
+ 957              	sz_5_100:
+ 958 0000 04000000 		.word	4
+ 959              		.section	.data.v_1_10,"aw"
+ 960              		.align	2
+ 963              	v_1_10:
+ 964 0000 8396223C 		.word	1008899715
+ 965 0004 BE1E313D 		.word	1026629310
+ 966 0008 F510C53D 		.word	1036325109
+ 967 000c D2BFCA3D 		.word	1036697554
+ 968 0010 A6FB203D 		.word	1025571750
+ 969              		.section	.data.v_3_10,"aw"
+ 970              		.align	2
+ 973              	v_3_10:
+ 974 0000 0A87F93D 		.word	1039763210
+ 975 0004 0F58E33E 		.word	1055086607
+ 976 0008 349C073F 		.word	1057463348
+ 977 000c 7BAB963D 		.word	1033284475
+ 978 0010 C9181CBE 		.word	-1105454903
+ 979 0014 771A21BD 		.word	-1121904009
+ 980              		.section	.data.v_5_100,"aw"
+ 981              		.align	2
+ 984              	v_5_100:
+ 985 0000 5F8C2D3B 		.word	992840799
+ 986 0004 A860F63B 		.word	1006002344
+ 987 0008 83B15D3C 		.word	1012773251
+ 988 000c E01C2D3C 		.word	1009589472
+ 989 0010 1BF6AA3B 		.word	1001059867
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 20
+
+
+ 990              		.text
+ 991              	.Letext0:
+ 992              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 993              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 994              		.file 4 "Core/drogui/include/utils.h"
+ 995              		.file 5 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 21
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 utils.c
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:18     .text.bytestoint32:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:26     .text.bytestoint32:00000000 bytestoint32
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:61     .text.int32tobytes:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:68     .text.int32tobytes:00000000 int32tobytes
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:100    .text.floattobytes:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:107    .text.floattobytes:00000000 floattobytes
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:124    .text.bytestofloat:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:131    .text.bytestofloat:00000000 bytestofloat
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:160    .text.getReg:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:167    .text.getReg:00000000 getReg
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:182    .text.getReg:00000008 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:187    .text.setReg:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:194    .text.setReg:00000000 setReg
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:214    .text.angle_dif:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:221    .text.angle_dif:00000000 angle_dif
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:388    .text.angle_dif:000000f8 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:394    .text.getEuler:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:401    .text.getEuler:00000000 getEuler
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:600    .text.getEuler:00000118 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:606    .text.rampValue:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:613    .text.rampValue:00000000 rampValue
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:955    .data.v_3_10:00000000 v_3_10
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:923    .data.k_3_10:00000000 k_3_10
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:939    .data.sz_3_10:00000000 sz_3_10
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:945    .data.v_1_10:00000000 v_1_10
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:914    .data.k_1_10:00000000 k_1_10
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:933    .data.sz_1_10:00000000 sz_1_10
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:767    .data.coeffA_50Hz:00000000 coeffA_50Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:874    .data.coeffB_50Hz:00000000 coeffB_50Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:752    .data.coeffA_300Hz:00000000 coeffA_300Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:858    .data.coeffB_300Hz:00000000 coeffB_300Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:702    .data.coeffA_100Hz:00000000 coeffA_100Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:804    .data.coeffB_100Hz:00000000 coeffB_100Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:728    .data.coeffA_150Hz:00000000 coeffA_150Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:832    .data.coeffB_150Hz:00000000 coeffB_150Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:780    .data.coeffA_5Hz:00000000 coeffA_5Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:888    .data.coeffB_5Hz:00000000 coeffB_5Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:742    .data.coeffA_2Hz:00000000 coeffA_2Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:847    .data.coeffB_2Hz:00000000 coeffB_2Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:901    .data.coeffB_8Hz:00000000 coeffB_8Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:792    .data.coeffA_8Hz:00000000 coeffA_8Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:818    .data.coeffB_10Hz:00000000 coeffB_10Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:715    .data.coeffA_10Hz:00000000 coeffA_10Hz
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:696    .bss.security:00000000 security
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:697    .bss.security:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:699    .data.coeffA_100Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:712    .data.coeffA_10Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:725    .data.coeffA_150Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:739    .data.coeffA_2Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:749    .data.coeffA_300Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:764    .data.coeffA_50Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:777    .data.coeffA_5Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:789    .data.coeffA_8Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:801    .data.coeffB_100Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:815    .data.coeffB_10Hz:00000000 $d
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s 			page 21
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:18     .text.bytestoint32:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:26     .text.bytestoint32:00000000 bytestoint32
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:61     .text.int32tobytes:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:68     .text.int32tobytes:00000000 int32tobytes
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:100    .text.floattobytes:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:107    .text.floattobytes:00000000 floattobytes
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:124    .text.bytestofloat:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:131    .text.bytestofloat:00000000 bytestofloat
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:160    .text.getReg:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:167    .text.getReg:00000000 getReg
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:182    .text.getReg:00000008 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:187    .text.setReg:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:194    .text.setReg:00000000 setReg
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:214    .text.angle_dif:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:221    .text.angle_dif:00000000 angle_dif
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:388    .text.angle_dif:000000f8 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:394    .text.getEuler:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:401    .text.getEuler:00000000 getEuler
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:600    .text.getEuler:00000118 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:606    .text.rampValue:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:613    .text.rampValue:00000000 rampValue
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:984    .data.v_5_100:00000000 v_5_100
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:936    .data.k_5_100:00000000 k_5_100
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:957    .data.sz_5_100:00000000 sz_5_100
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:973    .data.v_3_10:00000000 v_3_10
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:926    .data.k_3_10:00000000 k_3_10
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:951    .data.sz_3_10:00000000 sz_3_10
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:963    .data.v_1_10:00000000 v_1_10
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:917    .data.k_1_10:00000000 k_1_10
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:945    .data.sz_1_10:00000000 sz_1_10
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:770    .data.coeffA_50Hz:00000000 coeffA_50Hz
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:877    .data.coeffB_50Hz:00000000 coeffB_50Hz
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:755    .data.coeffA_300Hz:00000000 coeffA_300Hz
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:861    .data.coeffB_300Hz:00000000 coeffB_300Hz
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:705    .data.coeffA_100Hz:00000000 coeffA_100Hz
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:807    .data.coeffB_100Hz:00000000 coeffB_100Hz
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:731    .data.coeffA_150Hz:00000000 coeffA_150Hz
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:835    .data.coeffB_150Hz:00000000 coeffB_150Hz
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:783    .data.coeffA_5Hz:00000000 coeffA_5Hz
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:891    .data.coeffB_5Hz:00000000 coeffB_5Hz
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:745    .data.coeffA_2Hz:00000000 coeffA_2Hz
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:850    .data.coeffB_2Hz:00000000 coeffB_2Hz
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:904    .data.coeffB_8Hz:00000000 coeffB_8Hz
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:795    .data.coeffA_8Hz:00000000 coeffA_8Hz
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:821    .data.coeffB_10Hz:00000000 coeffB_10Hz
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:718    .data.coeffA_10Hz:00000000 coeffA_10Hz
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:699    .bss.security:00000000 security
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:700    .bss.security:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:702    .data.coeffA_100Hz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:715    .data.coeffA_10Hz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:728    .data.coeffA_150Hz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:742    .data.coeffA_2Hz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:752    .data.coeffA_300Hz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:767    .data.coeffA_50Hz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:780    .data.coeffA_5Hz:00000000 $d
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s 			page 22
 
 
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:829    .data.coeffB_150Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:844    .data.coeffB_2Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:855    .data.coeffB_300Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:871    .data.coeffB_50Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:885    .data.coeffB_5Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:898    .data.coeffB_8Hz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:911    .data.k_1_10:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:920    .data.k_3_10:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:930    .data.sz_1_10:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:936    .data.sz_3_10:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:942    .data.v_1_10:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccIlr8re.s:952    .data.v_3_10:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:792    .data.coeffA_8Hz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:804    .data.coeffB_100Hz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:818    .data.coeffB_10Hz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:832    .data.coeffB_150Hz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:847    .data.coeffB_2Hz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:858    .data.coeffB_300Hz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:874    .data.coeffB_50Hz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:888    .data.coeffB_5Hz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:901    .data.coeffB_8Hz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:914    .data.k_1_10:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:923    .data.k_3_10:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:933    .data.k_5_100:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:942    .data.sz_1_10:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:948    .data.sz_3_10:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:954    .data.sz_5_100:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:960    .data.v_1_10:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:970    .data.v_3_10:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccU048y7.s:981    .data.v_5_100:00000000 $d
 
 UNDEFINED SYMBOLS
 __aeabi_f2d

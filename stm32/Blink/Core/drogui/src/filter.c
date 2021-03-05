@@ -57,24 +57,20 @@ void updateCoeffNotch(dNotchFilter *df, float fc){
 
 float computeDNotch(dNotchFilter *df, float val){
 
-    if(df -> head < df -> n){
-        df -> values[df -> head++]  = val;
-    }
-    else{
-        for(int i = 0; i < df->n-1 ; i++)
-            df-> values[i] = df-> values[i +1]; 
-        df->values[ (df -> n) - 1] = val;
-    }
+    float ans;
+    arm_biquad_cascade_df2T_f32(&(df ->f), &val, &ans, 1);
 
-    if(df -> head == df -> n){
+    df -> values[df -> head++]  = val;
+    if(df->head == df->n){
+
         float fft_arr[df->n];
         float fft_ans[df->n];
         for (uint16_t i = 0; i < (df->n) ; i++) fft_arr[i] = df->values[i]; 
         
         arm_rfft_fast_f32(&(df->fft), fft_arr, fft_ans, 0);
-
+        
         for(int i = 0; i< (df -> n) ; i += 2) 
-            fft_ans[i/2] = sqrt(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1]);
+            arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
         
         for(int i = 0; i < (df -> n)/2 ; i ++) 
             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
@@ -85,15 +81,8 @@ float computeDNotch(dNotchFilter *df, float val){
         for(int i = thres_ind; i < (df -> n)/2 ; i ++) 
             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
         
-        /*char buff[50];
-        sprintf(buff, "%f\n",fc);
-        HAL_UART_Transmit(&huart1, (uint8_t*) buff, strlen(buff), 100);*/
         updateCoeffNotch(df, fc);
-        float ans;
-        arm_biquad_cascade_df2T_f32(&(df ->f), &val, &ans, 1);
-        df->values[df->n-1] = ans;
-        val = ans;
-    }       
-   
-    return val;    
+        df->head = 0;
+    }   
+    return ans;    
 }

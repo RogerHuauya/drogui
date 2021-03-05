@@ -21,7 +21,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f7xx_it.h"
-#include "usart.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -203,33 +202,17 @@ void SysTick_Handler(void)
 /**
   * @brief This function handles I2C4 event interrupt.
   */
- char buffer[50];
 void I2C4_EV_IRQHandler(void)
 {
   /* USER CODE BEGIN I2C4_EV_IRQn 0 */
 
   
   /* USER CODE END I2C4_EV_IRQn 0 */
-  uint32_t itflags   = READ_REG(hi2c4.Instance->ISR);
-  uint32_t itsources = READ_REG(hi2c4.Instance->CR1);
-__HAL_LOCK(&hi2c4);
-  if ((I2C_CHECK_FLAG(itflags, I2C_FLAG_RXNE) != RESET) && (I2C_CHECK_IT_SOURCE(itsources, I2C_IT_RXI) != RESET))
-  {
-    
-    HAL_UART_Transmit(&huart2, (uint8_t*) "RX\n", 4, 1000);
-    
-  }
-  else if ((I2C_CHECK_FLAG(itflags, I2C_FLAG_TXIS) != RESET) && (I2C_CHECK_IT_SOURCE(itsources, I2C_IT_TXI) != RESET))
-  {
-    HAL_UART_Transmit(&huart2, (uint8_t*) "TX\n", 4, 1000);
-  }
+  HAL_I2C_EV_IRQHandler(&hi2c4);
   /* USER CODE BEGIN I2C4_EV_IRQn 1 */
-  HAL_UART_Transmit(&huart2, hi2c4.pBuffPtr, 5, 1000);
   
-  HAL_UART_Transmit(&huart2, (uint8_t*) "hola\n", 6, 1000);
   /* USER CODE END I2C4_EV_IRQn 1 */
 }
-
 
 /* USER CODE BEGIN 1 */
 

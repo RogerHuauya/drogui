@@ -306,9 +306,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f7xx_hal.h"
-#include "usart.h"
-#include <stdio.h>
-#include <string.h>
 
 /** @addtogroup STM32F7xx_HAL_Driver
   * @{
@@ -4222,7 +4219,7 @@ HAL_StatusTypeDef HAL_I2C_EnableListen_IT(I2C_HandleTypeDef *hi2c)
     hi2c->XferISR = I2C_Slave_ISR_IT;
 
     /* Enable the Address Match interrupt */
-    I2C_Enable_IRQ(hi2c, I2C_XFER_LISTEN_IT | I2C_XFER_RX_IT | I2C_XFER_TX_IT);
+    I2C_Enable_IRQ(hi2c, I2C_XFER_LISTEN_IT);
 
     return HAL_OK;
   }
@@ -4770,8 +4767,6 @@ static HAL_StatusTypeDef I2C_Master_ISR_IT(struct __I2C_HandleTypeDef *hi2c, uin
   */
 static HAL_StatusTypeDef I2C_Slave_ISR_IT(struct __I2C_HandleTypeDef *hi2c, uint32_t ITFlags, uint32_t ITSources)
 {
-  
-  HAL_UART_Transmit(&huart2, (uint8_t*) "hola2\n", 6, 1000);
   uint32_t tmpoptions = hi2c->XferOptions;
   uint32_t tmpITFlags = ITFlags;
 
@@ -4783,7 +4778,6 @@ static HAL_StatusTypeDef I2C_Slave_ISR_IT(struct __I2C_HandleTypeDef *hi2c, uint
   {
     /* Call I2C Slave complete process */
     I2C_ITSlaveCplt(hi2c, tmpITFlags);
-    HAL_UART_Transmit(&huart2, (uint8_t*) "1\n", 3, 1000);
   }
 
   if ((I2C_CHECK_FLAG(tmpITFlags, I2C_FLAG_AF) != RESET) && (I2C_CHECK_IT_SOURCE(ITSources, I2C_IT_NACKI) != RESET))
@@ -4792,8 +4786,6 @@ static HAL_StatusTypeDef I2C_Slave_ISR_IT(struct __I2C_HandleTypeDef *hi2c, uint
     /* if yes, normal use case, a NACK is sent by the MASTER when Transfer is finished */
     /* Mean XferCount == 0*/
     /* So clear Flag NACKF only */
-    
-    HAL_UART_Transmit(&huart2, (uint8_t*) "2\n", 3, 1000);
     if (hi2c->XferCount == 0U)
     {
       /* Same action must be done for (tmpoptions == I2C_LAST_FRAME) which removed for Warning[Pa134]: left and right operands are identical */
@@ -4838,23 +4830,18 @@ static HAL_StatusTypeDef I2C_Slave_ISR_IT(struct __I2C_HandleTypeDef *hi2c, uint
   }
   else if ((I2C_CHECK_FLAG(tmpITFlags, I2C_FLAG_RXNE) != RESET) && (I2C_CHECK_IT_SOURCE(ITSources, I2C_IT_RXI) != RESET))
   {
-    
-    HAL_UART_Transmit(&huart2, (uint8_t*) "3\n", 3, 1000);
     if (hi2c->XferCount > 0U)
     {
       /* Read data from RXDR */
       *hi2c->pBuffPtr = (uint8_t)hi2c->Instance->RXDR;
-      
-      HAL_UART_Transmit(&huart2, hi2c->pBuffPtr, 1, 1000);
+
       /* Increment Buffer pointer */
       hi2c->pBuffPtr++;
 
       hi2c->XferSize--;
       hi2c->XferCount--;
     }
-    char buffer[50];
-    sprintf(buffer, "%d %ld\n",hi2c->XferCount, tmpoptions);
-    HAL_UART_Transmit(&huart2, (uint8_t*)buffer, strlen(buffer), 1000);
+
     if ((hi2c->XferCount == 0U) && \
         (tmpoptions != I2C_NO_OPTION_FRAME))
     {
@@ -4866,8 +4853,6 @@ static HAL_StatusTypeDef I2C_Slave_ISR_IT(struct __I2C_HandleTypeDef *hi2c, uint
            (I2C_CHECK_IT_SOURCE(ITSources, I2C_IT_ADDRI) != RESET))
   {
     I2C_ITAddrCplt(hi2c, tmpITFlags);
-    
-    HAL_UART_Transmit(&huart2, (uint8_t*) "4\n", 3, 1000);
   }
   else if ((I2C_CHECK_FLAG(tmpITFlags, I2C_FLAG_TXIS) != RESET) && (I2C_CHECK_IT_SOURCE(ITSources, I2C_IT_TXI) != RESET))
   {
@@ -4875,8 +4860,6 @@ static HAL_StatusTypeDef I2C_Slave_ISR_IT(struct __I2C_HandleTypeDef *hi2c, uint
     /* A TXIS flag can be set, during STOP treatment      */
     /* Check if all Data have already been sent */
     /* If it is the case, this last write in TXDR is not sent, correspond to a dummy TXIS event */
-    
-    HAL_UART_Transmit(&huart2, (uint8_t*) "5\n", 3, 1000);
     if (hi2c->XferCount > 0U)
     {
       /* Write data to TXDR */
@@ -4900,12 +4883,8 @@ static HAL_StatusTypeDef I2C_Slave_ISR_IT(struct __I2C_HandleTypeDef *hi2c, uint
   }
   else
   {
-    
-    HAL_UART_Transmit(&huart2, (uint8_t*) "6\n", 3, 1000);
     /* Nothing to do */
   }
-  
-    HAL_UART_Transmit(&huart2, (uint8_t*) "7\n", 3, 1000);
 
   /* Process Unlocked */
   __HAL_UNLOCK(hi2c);
@@ -5315,7 +5294,7 @@ static void I2C_ITAddrCplt(I2C_HandleTypeDef *hi2c, uint32_t ITFlags)
     slaveaddrcode     = I2C_GET_ADDR_MATCH(hi2c);
     ownadd1code       = I2C_GET_OWN_ADDRESS1(hi2c);
     ownadd2code       = I2C_GET_OWN_ADDRESS2(hi2c);
-    
+
     /* If 10bits addressing mode is selected */
     if (hi2c->Init.AddressingMode == I2C_ADDRESSINGMODE_10BIT)
     {
@@ -5363,8 +5342,6 @@ static void I2C_ITAddrCplt(I2C_HandleTypeDef *hi2c, uint32_t ITFlags)
     /* else 7 bits addressing mode is selected */
     else
     {
-      
-    HAL_UART_Transmit(&huart2, (uint8_t*) "8\n", 3, 1000);
       /* Disable ADDR Interrupts */
       I2C_Disable_IRQ(hi2c, I2C_XFER_LISTEN_IT);
 

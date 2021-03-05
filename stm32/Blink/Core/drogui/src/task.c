@@ -1,4 +1,7 @@
 #include "task.h"
+#include "usart.h"
+#include "string.h"
+#include "stdio.h"
 #include <stdbool.h>
 int tasks_count = 0;
 
@@ -27,6 +30,7 @@ void addTask(void (*f) (), uint32_t period, int priority){
     Tasks[tasks_count].ignored = 0;
     Tasks[tasks_count++].function = f;
 }
+char buffer3[100];
 void initRTOS(){
     while(1){
         
@@ -43,7 +47,13 @@ void initRTOS(){
                 Tasks[i].ignored++;
         }
 
-        if(id >= 0)
+        if(id >= 0){
+            uint32_t aux=TIME;
             executeTask(&Tasks[id]), Tasks[id].ignored = 0;
+            //sprintf(buffer3, "Init %d\t%lu\t%lu;\n",id,aux,TIME);
+            //HAL_UART_Transmit(&huart2, (uint8_t*) buffer3, strlen(buffer3), 100);
+            
+        }
+            
     }
 }

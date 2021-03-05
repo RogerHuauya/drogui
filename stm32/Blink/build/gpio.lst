@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZEgk5Y.s 			page 1
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5wbSzr.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZEgk5Y.s 			page 1
   28:Core/Src/gpio.c **** /* Configure GPIO                                                             */
   29:Core/Src/gpio.c **** /*----------------------------------------------------------------------------*/
   30:Core/Src/gpio.c **** /* USER CODE BEGIN 1 */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZEgk5Y.s 			page 2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5wbSzr.s 			page 2
 
 
   31:Core/Src/gpio.c **** 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZEgk5Y.s 			page 1
   70 0024 1A6B     		ldr	r2, [r3, #48]
   71 0026 42F00402 		orr	r2, r2, #4
   72 002a 1A63     		str	r2, [r3, #48]
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZEgk5Y.s 			page 3
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5wbSzr.s 			page 3
 
 
   73              		.loc 1 43 3 view .LVU12
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZEgk5Y.s 			page 1
  119              		.loc 1 51 23 is_stmt 0 view .LVU29
  120 0066 0223     		movs	r3, #2
  121 0068 0593     		str	r3, [sp, #20]
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZEgk5Y.s 			page 4
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5wbSzr.s 			page 4
 
 
   52:Core/Src/gpio.c ****   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -190,45 +190,46 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZEgk5Y.s 			page 1
  126              		.loc 1 53 3 is_stmt 1 view .LVU32
  127              		.loc 1 53 24 is_stmt 0 view .LVU33
  128 006e 0794     		str	r4, [sp, #28]
-  54:Core/Src/gpio.c ****   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  54:Core/Src/gpio.c ****   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
  129              		.loc 1 54 3 is_stmt 1 view .LVU34
  130              		.loc 1 54 25 is_stmt 0 view .LVU35
- 131 0070 0894     		str	r4, [sp, #32]
+ 131 0070 0323     		movs	r3, #3
+ 132 0072 0893     		str	r3, [sp, #32]
   55:Core/Src/gpio.c ****   HAL_GPIO_Init(LED_GPIO_Port, &GPIO_InitStruct);
- 132              		.loc 1 55 3 is_stmt 1 view .LVU36
- 133 0072 05A9     		add	r1, sp, #20
- 134 0074 2846     		mov	r0, r5
- 135 0076 FFF7FEFF 		bl	HAL_GPIO_Init
- 136              	.LVL1:
+ 133              		.loc 1 55 3 is_stmt 1 view .LVU36
+ 134 0074 05A9     		add	r1, sp, #20
+ 135 0076 2846     		mov	r0, r5
+ 136 0078 FFF7FEFF 		bl	HAL_GPIO_Init
+ 137              	.LVL1:
   56:Core/Src/gpio.c **** 
   57:Core/Src/gpio.c **** }
- 137              		.loc 1 57 1 is_stmt 0 view .LVU37
- 138 007a 0BB0     		add	sp, sp, #44
- 139              	.LCFI2:
- 140              		.cfi_def_cfa_offset 12
- 141              		@ sp needed
- 142 007c 30BD     		pop	{r4, r5, pc}
- 143              	.L4:
- 144 007e 00BF     		.align	2
- 145              	.L3:
- 146 0080 00380240 		.word	1073887232
- 147 0084 00100240 		.word	1073876992
- 148              		.cfi_endproc
- 149              	.LFE141:
- 151              		.text
- 152              	.Letext0:
- 153              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 154              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 155              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
- 156              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_gpio.h"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccZEgk5Y.s 			page 5
+ 138              		.loc 1 57 1 is_stmt 0 view .LVU37
+ 139 007c 0BB0     		add	sp, sp, #44
+ 140              	.LCFI2:
+ 141              		.cfi_def_cfa_offset 12
+ 142              		@ sp needed
+ 143 007e 30BD     		pop	{r4, r5, pc}
+ 144              	.L4:
+ 145              		.align	2
+ 146              	.L3:
+ 147 0080 00380240 		.word	1073887232
+ 148 0084 00100240 		.word	1073876992
+ 149              		.cfi_endproc
+ 150              	.LFE141:
+ 152              		.text
+ 153              	.Letext0:
+ 154              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 155              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 156              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
+ 157              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_gpio.h"
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5wbSzr.s 			page 5
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 gpio.c
-C:\Users\GUILLE~1\AppData\Local\Temp\ccZEgk5Y.s:18     .text.MX_GPIO_Init:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccZEgk5Y.s:26     .text.MX_GPIO_Init:00000000 MX_GPIO_Init
-C:\Users\GUILLE~1\AppData\Local\Temp\ccZEgk5Y.s:146    .text.MX_GPIO_Init:00000080 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5wbSzr.s:18     .text.MX_GPIO_Init:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5wbSzr.s:26     .text.MX_GPIO_Init:00000000 MX_GPIO_Init
+C:\Users\USUARIO\AppData\Local\Temp\cc5wbSzr.s:147    .text.MX_GPIO_Init:00000080 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_WritePin

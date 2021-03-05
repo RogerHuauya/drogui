@@ -1,0 +1,78 @@
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccqjqM9U.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"pwm.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.initPwm,"ax",%progbits
+  18              		.align	1
+  19              		.global	initPwm
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv5-sp-d16
+  26              	initPwm:
+  27              	.LVL0:
+  28              	.LFB141:
+  29              		.file 1 "Core/drogui/src/pwm.c"
+   1:Core/drogui/src/pwm.c **** #include "pwm.h"
+   2:Core/drogui/src/pwm.c **** 
+   3:Core/drogui/src/pwm.c **** 
+   4:Core/drogui/src/pwm.c **** void initPwm(pwm* p, TIM_HandleTypeDef* timer, uint32_t channel, volatile uint32_t *duty){
+  30              		.loc 1 4 90 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+   5:Core/drogui/src/pwm.c ****     p->timer = timer;
+  35              		.loc 1 5 5 view .LVU1
+  36              		.loc 1 5 14 is_stmt 0 view .LVU2
+  37 0000 0160     		str	r1, [r0]
+   6:Core/drogui/src/pwm.c ****     p->channel = channel;
+  38              		.loc 1 6 5 is_stmt 1 view .LVU3
+  39              		.loc 1 6 16 is_stmt 0 view .LVU4
+  40 0002 4260     		str	r2, [r0, #4]
+   7:Core/drogui/src/pwm.c ****     p->duty = duty;
+  41              		.loc 1 7 5 is_stmt 1 view .LVU5
+  42              		.loc 1 7 13 is_stmt 0 view .LVU6
+  43 0004 8360     		str	r3, [r0, #8]
+   8:Core/drogui/src/pwm.c **** }...
+  44              		.loc 1 8 1 view .LVU7
+  45 0006 7047     		bx	lr
+  46              		.cfi_endproc
+  47              	.LFE141:
+  49              		.text
+  50              	.Letext0:
+  51              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccqjqM9U.s 			page 2
+
+
+  52              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+  53              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
+  54              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
+  55              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
+  56              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim.h"
+  57              		.file 8 "Core/drogui/include/pwm.h"
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccqjqM9U.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pwm.c
+C:\Users\USUARIO\AppData\Local\Temp\ccqjqM9U.s:18     .text.initPwm:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccqjqM9U.s:26     .text.initPwm:00000000 initPwm
+
+NO UNDEFINED SYMBOLS
