@@ -45,11 +45,6 @@ void gyroTask(){
     readGyro(&myIMU);
 
     gx = computeFilter(&filter_gx, myIMU.gx);
-
-
-    /*
-    sprintf(buff2, "%f\t%f ;\n", myIMU.gx, gx);
-    HAL_UART_Transmit(&huart2, (uint8_t*) buff2, strlen(buff2), 100);*/
     gy = computeFilter(&filter_gy, myIMU.gy);
     gz = computeFilter(&filter_gz, myIMU.gz);
 
@@ -58,14 +53,14 @@ void gyroTask(){
     gx = computeFilter(&filter_gx2, gx);
     gy = computeFilter(&filter_gy2, gy);
     gz = computeFilter(&filter_gz2, gz);
-
+/*
     gx = computeDNotch(&dnotch_gx, gx);
     gy = computeDNotch(&dnotch_gy, gy);
     gz = computeDNotch(&dnotch_gz, gz);
 
     gx = computeDNotch(&dnotch_gx2, gx);
     gy = computeDNotch(&dnotch_gy2, gy);
-    gz = computeDNotch(&dnotch_gz2, gz);
+    gz = computeDNotch(&dnotch_gz2, gz);*/
     
     gx /= 5;
     gy /= 5;
@@ -84,11 +79,11 @@ void magTask(){
     mz = myIMU.mz;
 }
 
-float Kdfilt = 0.0005;
+float Kdfilt = 0.001;
 void rpyTask(){
     
     float rpy[3];
-    mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, my, mx, mz);
+    mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, 0, 0, 0);
     getMahonyEuler(rpy);
     //roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
     roll += fmax(fmin(Kdfilt, (rpy[0] - roll)),-Kdfilt);
@@ -145,17 +140,13 @@ void initSensorsTasks(){
     initFilter(&filter_yaw, sz_1_10, k_1_10, v_1_10);
 
 
-    calibrateGyro(&myIMU);
-    calibrateAccel(&myIMU);
-    //calibrateMag(&myIMU);
+    //calibrateGyro(&myIMU);
+    //calibrateAccel(&myIMU);
+    calibrateMag(&myIMU);
     
     //accelHandle = osThreadNew(accelTask, NULL, &accelAttributes);
-    addTask(&gyroTask, 1000, 1);
-    addTask(&accelTask, 1000, 1);
-    /*magHandle = osThreadNew(magTask, NULL, &magAttributes);
-    rpyHandle = osThreadNew(rpyTask, NULL, &rpyAttributes);*/
-    /*initTimer(&timer_accel, &accelInterrupt, 1000);
-    initTimer(&timer_gyro, &gyroInterrupt, 1000);
-    initTimer(&timer_mag, &magInterrupt, 10);
-    initTimer(&timer_rpy, &rpyInterrupt, 500);*/
+    addTask(&gyroTask, 1000, 2);
+    addTask(&accelTask, 1000, 3);
+    addTask(&magTask, 100000, 2);
+    addTask(&rpyTask, 2000, 2);
 }

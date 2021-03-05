@@ -15,16 +15,14 @@ void blinkTask(void *argument){
 char buff[50] = "hola\n";
 void debugTask(void *argument){
     
-    sprintf(buff, "%f\t%f\t%f\t%f\t%ld;\n", myIMU.gx/5, gx, myIMU.ax,ax,TIME);
+    sprintf(buff, "%f\t%f\t%f\t%ld;\n", roll, pitch, yaw,TIME);
     //sprintf(buff, "%lu;\n",TIME);
-    HAL_UART_Transmit(&huart2, (uint8_t*) buff, strlen(buff), 100);
+    //HAL_UART_Transmit(&huart2, (uint8_t*) buff, strlen(buff), 100);
 }
 
 void initDebug(){
     
-    //#if(__FPU_PRESENT == 1) && (__FPU_USED == 1)
-    addTask(&debugTask, 1000, 1);
+    addTask(&debugTask, 10000, 1);
     addTask(&blinkTask, 1000000, 1);
-    //#endif
 
 }
