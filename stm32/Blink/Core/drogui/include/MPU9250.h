@@ -40,15 +40,55 @@ typedef struct _mpu9250{
     bool isMagCalibrated;
 } mpu9250;
 
+/**
+ * @brief Initialize MPU9250
+ * @param m IMU9250 (struc mpu9250)
+*/
 void initMpu(mpu9250* m);
+/**
+ * @brief Read raw data from Accelerometer 
+ * @param m IMU9250 (struc mpu9250)
+*/
 void readRawAcc(mpu9250* m);
+/**
+ * @brief Get data transformed from Accelerometer due to offset and scale     
+ * @param m IMU9250 (struc mpu9250)
+*/
 void readAcc(mpu9250* m);
+/**
+ * @brief Read raw data from Gyroscope 
+ * @param m IMU9250 (struc mpu9250)
+*/
 void readRawGyro(mpu9250* m);
+/**
+ * @brief Read data from Gyroscope 
+ * @param m IMU9250 (struc mpu9250)
+*/
 void readGyro(mpu9250* m);
+/**
+ * @brief Get data transformed from Gyroscope due to offset and scale
+ * @param m IMU9250 (struc mpu9250)
+*/
 void readMag(mpu9250* m);
+/**
+ * @brief Get data transformed from Magnetometer due to offset and scale
+ * @param m IMU9250 (struc mpu9250)
+*/
 void readRawMag(mpu9250* m);
+/**
+ * @brief Calibrate Gyroscope taking data, for this the system must be quiet  
+ * @param m IMU9250 (struc mpu9250)
+*/
 void calibrateGyro(mpu9250* m);
+/**
+ * @brief Calibrate Accelerometer, for this the system must be quiet and in differents positions
+ * @param m IMU9250 (struc mpu9250)
+*/
 void calibrateAccel(mpu9250* m);
+/**
+ * @brief Calibrate Accelerometer, for this the system must move in differents positions around z axis
+ * @param m IMU9250 (struc mpu9250)
+*/
 void calibrateMag(mpu9250* m);
 
 #endif

@@ -8,7 +8,9 @@
 
 extern float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
 extern mpu9250 myIMU;
-
+/**
+    *@brief Initialize Sensors Tasks 
+*/
 void initSensorsTasks();
 
 #endif

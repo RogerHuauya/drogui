@@ -104,13 +104,13 @@ void initSensorsTasks(){
     
     initMpu(&myIMU);
 
-    initFilter(&filter_gx, sz_1_10 , k_1_10, v_1_10);
-    initFilter(&filter_gy, sz_1_10 , k_1_10, v_1_10);
-    initFilter(&filter_gz, sz_1_10 , k_1_10, v_1_10);
+    initFilter(&filter_gx, 4 , k_1_10, v_1_10);
+    initFilter(&filter_gy, 4 , k_1_10, v_1_10);
+    initFilter(&filter_gz, 4 , k_1_10, v_1_10);
 
-    initFilter(&filter_gx2, sz_3_10 , k_3_10, v_3_10);
-    initFilter(&filter_gy2, sz_3_10 , k_3_10, v_3_10);
-    initFilter(&filter_gz2, sz_3_10 , k_3_10, v_3_10);
+    initFilter(&filter_gx2, 5 , k_3_10, v_3_10);
+    initFilter(&filter_gy2, 5 , k_3_10, v_3_10);
+    initFilter(&filter_gz2, 5 , k_3_10, v_3_10);
 
     initDNotchFilter(&dnotch_gx, 64, 50, 1000, 1, 10);
     initDNotchFilter(&dnotch_gy, 64, 50, 1000, 1, 10);
@@ -126,18 +126,18 @@ void initSensorsTasks(){
     initFilter(&filter_ay, sz_1_10 , k_1_10, v_1_10);
     initFilter(&filter_az, sz_1_10 , k_1_10, v_1_10);*/
 
-    initFilter(&filter_ax, sz_5_100 , k_5_100, v_5_100);
-    initFilter(&filter_ay, sz_5_100 , k_5_100, v_5_100);
-    initFilter(&filter_az, sz_5_100 , k_5_100, v_5_100);
+    initFilter(&filter_ax, 4 , k_5_100, v_5_100);
+    initFilter(&filter_ay, 4 , k_5_100, v_5_100);
+    initFilter(&filter_az, 4 , k_5_100, v_5_100);
 
 
     initDNotchFilter(&dnotch_ax, 64, 30, 1000, 1, 10);
     initDNotchFilter(&dnotch_ay, 64, 30, 1000, 1, 10);
     initDNotchFilter(&dnotch_az, 64, 30, 1000, 1, 10);
     
-    initFilter(&filter_roll, sz_1_10, k_1_10, v_1_10);
-    initFilter(&filter_pitch, sz_1_10, k_1_10, v_1_10);
-    initFilter(&filter_yaw, sz_1_10, k_1_10, v_1_10);
+    initFilter(&filter_roll, 4, k_1_10, v_1_10);
+    initFilter(&filter_pitch, 4, k_1_10, v_1_10);
+    initFilter(&filter_yaw, 4, k_1_10, v_1_10);
 
 
     //calibrateGyro(&myIMU);

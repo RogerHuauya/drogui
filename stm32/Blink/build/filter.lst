@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
   47 0006 0D46     		mov	r5, r1
   48 0008 1646     		mov	r6, r2
   49 000a 1F46     		mov	r7, r3
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 2
 
 
   10:Core/drogui/src/filter.c ****     f->state = (float*) calloc(n, sizeof(float));
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  100              		.cfi_def_cfa_offset 4
  101              		.cfi_offset 14, -4
  102 0002 85B0     		sub	sp, sp, #20
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 3
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 3
 
 
  103              	.LCFI4:
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  149              		.loc 1 25 5 is_stmt 1 view .LVU18
  150              		.loc 1 25 13 is_stmt 0 view .LVU19
  151 0006 4160     		str	r1, [r0, #4]
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 4
 
 
   26:Core/drogui/src/filter.c ****     df -> a = a;
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  196              	.LVL10:
  197              		.loc 1 35 18 view .LVU44
  198 0038 2060     		str	r0, [r4]
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 5
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 5
 
 
   36:Core/drogui/src/filter.c ****     df -> head = 0;
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
   43:Core/drogui/src/filter.c ****     float wn = 2*pi*fc;
  248              		.loc 1 43 5 is_stmt 1 view .LVU53
  249              		.loc 1 43 20 is_stmt 0 view .LVU54
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 6
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 6
 
 
  250 0008 FFF7FEFF 		bl	__aeabi_f2d
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  298 0056 F1EE004A 		vmov.f32	s9, #4.0e+0
  299 005a 34EE244A 		vadd.f32	s8, s8, s9
  300              		.loc 1 49 39 view .LVU76
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 7
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 7
 
 
  301 005e 76EEA66A 		vadd.f32	s13, s13, s13
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  351 00b6 84ED097A 		vstr.32	s14, [r4, #36]
   54:Core/drogui/src/filter.c ****     df -> coeffs[4] = -(4-2*n*ts+q*ts*ts)/(4+2*n*ts + q*ts*ts);
  352              		.loc 1 54 5 is_stmt 1 view .LVU101
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 8
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 8
 
 
  353              		.loc 1 54 26 is_stmt 0 view .LVU102
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  405              	.LCFI10:
  406              		.cfi_def_cfa_register 7
  407 0008 0446     		mov	r4, r0
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 9
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 9
 
 
  408 000a 87ED010A 		vstr.32	s0, [r7, #4]
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
   80:Core/drogui/src/filter.c **** 
   81:Core/drogui/src/filter.c ****         for(int i = thres_ind; i < (df -> n)/2 ; i ++) 
   82:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 10
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 10
 
 
   83:Core/drogui/src/filter.c ****         
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  480 0056 0023     		movs	r3, #0
   68:Core/drogui/src/filter.c ****         
  481              		.loc 1 68 9 discriminator 1 view .LVU135
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 11
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 11
 
 
  482 0058 08E0     		b	.L13
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  521 007e 0025     		movs	r5, #0
   72:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
  522              		.loc 1 72 9 view .LVU151
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 12
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 12
 
 
  523 0080 0DE0     		b	.L15
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
   45:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
   46:Drivers/CMSIS/DSP/Include/arm_math.h ****    * The library has separate functions for operating on 8-bit integers, 16-bit integers,
   47:Drivers/CMSIS/DSP/Include/arm_math.h ****    * 32-bit integer and 32-bit floating-point values.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 13
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 13
 
 
   48:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  102:Drivers/CMSIS/DSP/Include/arm_math.h ****    * Preprocessor Macros
  103:Drivers/CMSIS/DSP/Include/arm_math.h ****    * ------------
  104:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 14
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 14
 
 
  105:Drivers/CMSIS/DSP/Include/arm_math.h ****    * Each library project have different preprocessor macros.
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  159:Drivers/CMSIS/DSP/Include/arm_math.h ****    * Copyright Notice
  160:Drivers/CMSIS/DSP/Include/arm_math.h ****    * ------------
  161:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 15
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 15
 
 
  162:Drivers/CMSIS/DSP/Include/arm_math.h ****    * Copyright (C) 2010-2015 Arm Limited. All rights reserved.
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  216:Drivers/CMSIS/DSP/Include/arm_math.h ****  *     pData[i*numCols + j]
  217:Drivers/CMSIS/DSP/Include/arm_math.h ****  * </pre>
  218:Drivers/CMSIS/DSP/Include/arm_math.h ****  *
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 16
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 16
 
 
  219:Drivers/CMSIS/DSP/Include/arm_math.h ****  * \par Init Functions
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  273:Drivers/CMSIS/DSP/Include/arm_math.h ****  * @defgroup groupStats Statistics Functions
  274:Drivers/CMSIS/DSP/Include/arm_math.h ****  */
  275:Drivers/CMSIS/DSP/Include/arm_math.h **** /**
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 17
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 17
 
 
  276:Drivers/CMSIS/DSP/Include/arm_math.h ****  * @defgroup groupSupport Support Functions
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  330:Drivers/CMSIS/DSP/Include/arm_math.h ****   #include "core_cm0plus.h"
  331:Drivers/CMSIS/DSP/Include/arm_math.h ****   #define ARM_MATH_CM0_FAMILY
  332:Drivers/CMSIS/DSP/Include/arm_math.h **** #elif defined (ARM_MATH_ARMV8MBL)
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 18
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 18
 
 
  333:Drivers/CMSIS/DSP/Include/arm_math.h ****   #include "core_armv8mbl.h"
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  387:Drivers/CMSIS/DSP/Include/arm_math.h **** #else
  388:Drivers/CMSIS/DSP/Include/arm_math.h ****   #if defined  (__GNUC__)
  389:Drivers/CMSIS/DSP/Include/arm_math.h ****     #define ALIGN4 __attribute__((aligned(4)))
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 19
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 19
 
 
  390:Drivers/CMSIS/DSP/Include/arm_math.h ****   #else
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  444:Drivers/CMSIS/DSP/Include/arm_math.h ****   #define __SIMD32_TYPE int32_t __packed
  445:Drivers/CMSIS/DSP/Include/arm_math.h ****   #define CMSIS_UNUSED __attribute__((unused))
  446:Drivers/CMSIS/DSP/Include/arm_math.h ****   #define CMSIS_INLINE __attribute__((always_inline))
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 20
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 20
 
 
  447:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  501:Drivers/CMSIS/DSP/Include/arm_math.h **** #ifndef ARM_MATH_BIG_ENDIAN
  502:Drivers/CMSIS/DSP/Include/arm_math.h **** 
  503:Drivers/CMSIS/DSP/Include/arm_math.h **** #define __PACKq7(v0,v1,v2,v3) ( (((int32_t)(v0) <<  0) & (int32_t)0x000000FF) | \
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 21
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 21
 
 
  504:Drivers/CMSIS/DSP/Include/arm_math.h ****                                 (((int32_t)(v1) <<  8) & (int32_t)0x0000FF00) | \
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  558:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Multiplies 32 X 64 and returns 32 bit result in 2.30 format.
  559:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
  560:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 22
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 22
 
 
  561:Drivers/CMSIS/DSP/Include/arm_math.h ****   CMSIS_INLINE __STATIC_INLINE q63_t mult32x64(
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  615:Drivers/CMSIS/DSP/Include/arm_math.h **** 
  616:Drivers/CMSIS/DSP/Include/arm_math.h ****     /* return num of signbits of out = 1/in value */
  617:Drivers/CMSIS/DSP/Include/arm_math.h ****     return (signBits + 1U);
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 23
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 23
 
 
  618:Drivers/CMSIS/DSP/Include/arm_math.h ****   }
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  672:Drivers/CMSIS/DSP/Include/arm_math.h **** /*
  673:Drivers/CMSIS/DSP/Include/arm_math.h ****  * @brief C custom defined intrinsic function for M3 and M0 processors
  674:Drivers/CMSIS/DSP/Include/arm_math.h ****  */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 24
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 24
 
 
  675:Drivers/CMSIS/DSP/Include/arm_math.h **** #if !defined (ARM_MATH_DSP)
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  729:Drivers/CMSIS/DSP/Include/arm_math.h **** 
  730:Drivers/CMSIS/DSP/Include/arm_math.h ****   /*
  731:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief C custom defined SHADD16 for M3 and M0 processors
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 25
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 25
 
 
  732:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  786:Drivers/CMSIS/DSP/Include/arm_math.h **** 
  787:Drivers/CMSIS/DSP/Include/arm_math.h ****     r = __SSAT(((((q31_t)x << 16) >> 16) - (((q31_t)y      ) >> 16)), 16) & (int32_t)0x0000FFFF;
  788:Drivers/CMSIS/DSP/Include/arm_math.h ****     s = __SSAT(((((q31_t)x      ) >> 16) + (((q31_t)y << 16) >> 16)), 16) & (int32_t)0x0000FFFF;
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 26
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 26
 
 
  789:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  843:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief C custom defined SMUSDX for M3 and M0 processors
  844:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
  845:Drivers/CMSIS/DSP/Include/arm_math.h ****   CMSIS_INLINE __STATIC_INLINE uint32_t __SMUSDX(
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 27
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 27
 
 
  846:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t x,
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  900:Drivers/CMSIS/DSP/Include/arm_math.h **** 
  901:Drivers/CMSIS/DSP/Include/arm_math.h ****   /*
  902:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief C custom defined SMLADX for M3 and M0 processors
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 28
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 28
 
 
  903:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  957:Drivers/CMSIS/DSP/Include/arm_math.h **** 
  958:Drivers/CMSIS/DSP/Include/arm_math.h **** 
  959:Drivers/CMSIS/DSP/Include/arm_math.h ****   /*
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 29
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 29
 
 
  960:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief C custom defined SMUAD for M3 and M0 processors
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1014:Drivers/CMSIS/DSP/Include/arm_math.h ****     q7_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps.*
 1015:Drivers/CMSIS/DSP/Include/arm_math.h ****   } arm_fir_instance_q7;
 1016:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 30
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 30
 
 
 1017:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1071:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_fir_instance_q7 * S,
 1072:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint16_t numTaps,
 1073:Drivers/CMSIS/DSP/Include/arm_math.h ****   q7_t * pCoeffs,
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 31
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 31
 
 
 1074:Drivers/CMSIS/DSP/Include/arm_math.h ****   q7_t * pState,
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1128:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pDst       points to the block of output data.
 1129:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  blockSize  number of samples to process.
 1130:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 32
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 32
 
 
 1131:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_fir_q31(
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1185:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     numTaps    Number of filter coefficients in the filter.
 1186:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     pCoeffs    points to the filter coefficients.
 1187:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     pState     points to the state buffer.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 33
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 33
 
 
 1188:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     blockSize  number of samples that are processed at a time.
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1242:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
 1243:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 1244:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 34
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 34
 
 
 1245:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1299:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pDst,
 1300:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
 1301:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 35
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 35
 
 
 1302:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1356:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 1357:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 1358:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 36
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 36
 
 
 1359:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Instance structure for the floating-point matrix structure.
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1413:Drivers/CMSIS/DSP/Include/arm_math.h ****   const arm_matrix_instance_q15 * pSrcB,
 1414:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_matrix_instance_q15 * pDst);
 1415:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 37
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 37
 
 
 1416:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1470:Drivers/CMSIS/DSP/Include/arm_math.h ****   const arm_matrix_instance_q31 * pSrcB,
 1471:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_matrix_instance_q31 * pDst);
 1472:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 38
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 38
 
 
 1473:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1527:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcB   points to the second input matrix structure
 1528:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pDst    points to output matrix structure
 1529:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pState  points to the array for storing intermediate results
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 39
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 39
 
 
 1530:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @return     The function returns either
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1584:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 1585:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Floating-point matrix subtraction
 1586:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcA  points to the first input matrix structure
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 40
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 40
 
 
 1587:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcB  points to the second input matrix structure
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1641:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Q15 matrix scaling.
 1642:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrc        points to input matrix
 1643:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  scaleFract  fractional portion of the scale factor
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 41
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 41
 
 
 1644:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  shift       number of bits to shift the result by
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1698:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 1699:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 1700:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 42
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 42
 
 
 1701:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Floating-point matrix initialization.
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1755:Drivers/CMSIS/DSP/Include/arm_math.h ****     float32_t state[3];    /**< The state array of length 3. */
 1756:Drivers/CMSIS/DSP/Include/arm_math.h ****     float32_t Kp;          /**< The proportional gain. */
 1757:Drivers/CMSIS/DSP/Include/arm_math.h ****     float32_t Ki;          /**< The integral gain. */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 43
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 43
 
 
 1758:Drivers/CMSIS/DSP/Include/arm_math.h ****     float32_t Kd;          /**< The derivative gain. */
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1812:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in,out] S  points to an instance of the q15 PID Control structure
 1813:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 1814:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_pid_reset_q15(
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 44
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 44
 
 
 1815:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_pid_instance_q15 * S);
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1869:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 1870:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 1871:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Q7 vector multiplication.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 45
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 45
 
 
 1872:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcA      points to the first input vector
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1926:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 1927:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Instance structure for the Q15 CFFT/CIFFT function.
 1928:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 46
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 46
 
 
 1929:Drivers/CMSIS/DSP/Include/arm_math.h ****   typedef struct
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 1983:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
 1984:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint16_t fftLen;                 /**< length of the FFT. */
 1985:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint8_t ifftFlag;                /**< flag that selects forward (ifftFlag=0) or inverse (ifftFl
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 47
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 47
 
 
 1986:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint8_t bitReverseFlag;          /**< flag that enables (bitReverseFlag=1) or disables (bitReve
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2040:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint16_t *pBitRevTable;            /**< points to the bit reversal table. */
 2041:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint16_t twidCoefModifier;         /**< twiddle coefficient modifier that supports different si
 2042:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint16_t bitRevFactor;             /**< bit reversal modifier that supports different size FFTs
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 48
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 48
 
 
 2043:Drivers/CMSIS/DSP/Include/arm_math.h ****     float32_t onebyfftLen;             /**< value of 1/fftLen. */
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2097:Drivers/CMSIS/DSP/Include/arm_math.h ****     const arm_cfft_instance_q15 * S,
 2098:Drivers/CMSIS/DSP/Include/arm_math.h ****     q15_t * p1,
 2099:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint8_t ifftFlag,
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 49
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 49
 
 
 2100:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint8_t bitReverseFlag);
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2154:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t bitReverseFlag);
 2155:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2156:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_rfft_q15(
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 50
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 50
 
 
 2157:Drivers/CMSIS/DSP/Include/arm_math.h ****   const arm_rfft_instance_q15 * S,
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2211:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t * pDst);
 2212:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2213:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 51
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 51
 
 
 2214:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Instance structure for the floating-point RFFT/RIFFT function.
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2268:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     S              points to an instance of the floating-point DCT4/IDCT4 structure
 2269:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     pState         points to state buffer.
 2270:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in,out] pInlineBuffer  points to the in-place input and output buffer.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 52
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 52
 
 
 2271:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2325:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Instance structure for the Q15 DCT4/IDCT4 function.
 2326:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 2327:Drivers/CMSIS/DSP/Include/arm_math.h ****   typedef struct
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 53
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 53
 
 
 2328:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2382:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2383:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2384:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 54
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 54
 
 
 2385:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Q7 vector addition.
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2439:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2440:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 2441:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Q7 vector subtraction.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 55
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 55
 
 
 2442:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcA      points to the first input vector
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2496:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 2497:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Multiplies a Q7 vector by a scalar.
 2498:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrc        points to the input vector
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 56
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 56
 
 
 2499:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  scaleFract  fractional portion of the scale value
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2553:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
 2554:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2555:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 57
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 57
 
 
 2556:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2610:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  blockSize  number of samples in each vector
 2611:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] result     output result returned here
 2612:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 58
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 58
 
 
 2613:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_dot_prod_q7(
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2667:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  blockSize  number of samples in the vector
 2668:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 2669:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_shift_q15(
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 59
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 59
 
 
 2670:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pSrc,
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2724:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 2725:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_offset_q15(
 2726:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pSrc,
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 60
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 60
 
 
 2727:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t offset,
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2781:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2782:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 2783:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Negates the elements of a Q31 vector.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 61
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 61
 
 
 2784:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrc       points to the input vector
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2838:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pDst,
 2839:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
 2840:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 62
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 62
 
 
 2841:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2895:Drivers/CMSIS/DSP/Include/arm_math.h ****  * @param[in]  srcBLen  length of the second input sequence.
 2896:Drivers/CMSIS/DSP/Include/arm_math.h ****  * @param[out] pDst     points to the location where the output result is written.  Length srcALen+
 2897:Drivers/CMSIS/DSP/Include/arm_math.h ****  */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 63
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 63
 
 
 2898:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_conv_f32(
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 2952:Drivers/CMSIS/DSP/Include/arm_math.h ****           uint32_t srcALen,
 2953:Drivers/CMSIS/DSP/Include/arm_math.h ****           q15_t * pSrcB,
 2954:Drivers/CMSIS/DSP/Include/arm_math.h ****           uint32_t srcBLen,
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 64
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 64
 
 
 2955:Drivers/CMSIS/DSP/Include/arm_math.h ****           q15_t * pDst);
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3009:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3010:Drivers/CMSIS/DSP/Include/arm_math.h ****     /**
 3011:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Convolution of Q7 sequences.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 65
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 65
 
 
 3012:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcA      points to the first input sequence.
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3066:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3067:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 3068:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Partial convolution of Q15 sequences.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 66
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 66
 
 
 3069:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcA       points to the first input sequence.
@@ -3958,7 +3958,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3123:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 3124:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_status arm_conv_partial_fast_q15(
 3125:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pSrcA,
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 67
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 67
 
 
 3126:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t srcALen,
@@ -4018,7 +4018,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3180:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 3181:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Partial convolution of Q31 sequences (fast version) for Cortex-M3 and Cortex-M4
 3182:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcA       points to the first input sequence.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 68
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 68
 
 
 3183:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  srcALen     length of the first input sequence.
@@ -4078,7 +4078,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3237:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_status arm_conv_partial_q7(
 3238:Drivers/CMSIS/DSP/Include/arm_math.h ****   q7_t * pSrcA,
 3239:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t srcALen,
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 69
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 69
 
 
 3240:Drivers/CMSIS/DSP/Include/arm_math.h ****   q7_t * pSrcB,
@@ -4138,7 +4138,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3294:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3295:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 3296:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Initialization function for the floating-point FIR decimator.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 70
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 70
 
 
 3297:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in,out] S          points to an instance of the floating-point FIR decimator structure.
@@ -4198,7 +4198,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3351:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @return    The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_L
 3352:Drivers/CMSIS/DSP/Include/arm_math.h ****    * <code>blockSize</code> is not a multiple of <code>M</code>.
 3353:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 71
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 71
 
 
 3354:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_status arm_fir_decimate_init_q15(
@@ -4258,7 +4258,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3408:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3409:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3410:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 72
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 72
 
 
 3411:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Instance structure for the Q15 FIR interpolator.
@@ -4318,7 +4318,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3465:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     blockSize  number of input samples to process per call.
 3466:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MA
 3467:Drivers/CMSIS/DSP/Include/arm_math.h ****    * the filter length <code>numTaps</code> is not a multiple of the interpolation factor <code>L</
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 73
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 73
 
 
 3468:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
@@ -4378,7 +4378,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3522:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t * pDst,
 3523:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
 3524:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 74
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 74
 
 
 3525:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -4438,7 +4438,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3579:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_biquad_cas_df1_32x64_ins_q31 * S,
 3580:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint8_t numStages,
 3581:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pCoeffs,
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 75
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 75
 
 
 3582:Drivers/CMSIS/DSP/Include/arm_math.h ****   q63_t * pState,
@@ -4498,7 +4498,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3636:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  blockSize  number of samples to process.
 3637:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 3638:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_biquad_cascade_stereo_df2T_f32(
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 76
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 76
 
 
 3639:Drivers/CMSIS/DSP/Include/arm_math.h ****   const arm_biquad_cascade_stereo_df2T_instance_f32 * S,
@@ -4558,7 +4558,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3693:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 3694:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_biquad_cascade_df2T_init_f64(
 3695:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_biquad_cascade_df2T_instance_f64 * S,
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 77
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 77
 
 
 3696:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint8_t numStages,
@@ -4618,7 +4618,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3750:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pDst       points to the block of output data.
 3751:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  blockSize  number of samples to process.
 3752:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 78
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 78
 
 
 3753:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_fir_lattice_q15(
@@ -4678,7 +4678,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3807:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  blockSize  number of samples to process.
 3808:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 3809:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_fir_lattice_f32(
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 79
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 79
 
 
 3810:Drivers/CMSIS/DSP/Include/arm_math.h ****   const arm_fir_lattice_instance_f32 * S,
@@ -4738,7 +4738,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3864:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 3865:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Initialization function for the floating-point IIR lattice filter.
 3866:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] S          points to an instance of the floating-point IIR lattice structure.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 80
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 80
 
 
 3867:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] numStages  number of stages in the filter.
@@ -4798,7 +4798,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3921:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_iir_lattice_q15(
 3922:Drivers/CMSIS/DSP/Include/arm_math.h ****   const arm_iir_lattice_instance_q15 * S,
 3923:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pSrc,
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 81
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 81
 
 
 3924:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pDst,
@@ -4858,7 +4858,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 3978:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] S          points to an instance of the floating-point LMS filter structure.
 3979:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] numTaps    number of filter coefficients.
 3980:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] pCoeffs    points to the coefficient buffer.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 82
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 82
 
 
 3981:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] pState     points to state buffer.
@@ -4918,7 +4918,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4035:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 4036:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_lms_q15(
 4037:Drivers/CMSIS/DSP/Include/arm_math.h ****   const arm_lms_instance_q15 * S,
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 83
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 83
 
 
 4038:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pSrc,
@@ -4978,7 +4978,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4092:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize,
 4093:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t postShift);
 4094:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 84
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 84
 
 
 4095:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -5038,7 +5038,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4149:Drivers/CMSIS/DSP/Include/arm_math.h ****   typedef struct
 4150:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
 4151:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint16_t numTaps;     /**< number of coefficients in the filter. */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 85
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 85
 
 
 4152:Drivers/CMSIS/DSP/Include/arm_math.h ****     q31_t *pState;        /**< points to the state variable array. The array is of length numTaps+b
@@ -5098,7 +5098,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4206:Drivers/CMSIS/DSP/Include/arm_math.h ****     q15_t *pState;        /**< points to the state variable array. The array is of length numTaps+b
 4207:Drivers/CMSIS/DSP/Include/arm_math.h ****     q15_t *pCoeffs;       /**< points to the coefficient array. The array is of length numTaps. */
 4208:Drivers/CMSIS/DSP/Include/arm_math.h ****     q15_t mu;             /**< step size that controls filter coefficient updates. */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 86
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 86
 
 
 4209:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint8_t postShift;    /**< bit shift applied to coefficients. */
@@ -5158,7 +5158,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4263:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t * pSrcA,
 4264:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t srcALen,
 4265:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t * pSrcB,
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 87
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 87
 
 
 4266:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t srcBLen,
@@ -5218,7 +5218,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4320:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 4321:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 4322:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 88
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 88
 
 
 4323:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Correlation of Q15 sequences (fast version) for Cortex-M3 and Cortex-M4.
@@ -5278,7 +5278,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4377:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  srcBLen    length of the second input sequence.
 4378:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pDst       points to the block of output data  Length 2 * max(srcALen, srcBLen) - 
 4379:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pScratch1  points to scratch buffer(of type q15_t) of size max(srcALen, srcBLen) +
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 89
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 89
 
 
 4380:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pScratch2  points to scratch buffer (of type q15_t) of size min(srcALen, srcBLen).
@@ -5338,7 +5338,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4434:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 4435:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Instance structure for the Q15 sparse FIR filter.
 4436:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 90
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 90
 
 
 4437:Drivers/CMSIS/DSP/Include/arm_math.h ****   typedef struct
@@ -5398,7 +5398,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4491:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t * pState,
 4492:Drivers/CMSIS/DSP/Include/arm_math.h ****   int32_t * pTapDelay,
 4493:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint16_t maxDelay,
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 91
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 91
 
 
 4494:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
@@ -5458,7 +5458,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4548:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
 4549:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 4550:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 92
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 92
 
 
 4551:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
@@ -5518,7 +5518,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4605:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint16_t maxDelay,
 4606:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
 4607:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 93
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 93
 
 
 4608:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -5578,7 +5578,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4662:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_cmplx_conj_q15(
 4663:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pSrc,
 4664:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pDst,
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 94
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 94
 
 
 4665:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t numSamples);
@@ -5638,7 +5638,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4719:Drivers/CMSIS/DSP/Include/arm_math.h ****    * is the input sample value. The functions return the output value.
 4720:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
 4721:Drivers/CMSIS/DSP/Include/arm_math.h ****    * \par Algorithm:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 95
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 95
 
 
 4722:Drivers/CMSIS/DSP/Include/arm_math.h ****    * <pre>
@@ -5698,7 +5698,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4776:Drivers/CMSIS/DSP/Include/arm_math.h ****   CMSIS_INLINE __STATIC_INLINE float32_t arm_pid_f32(
 4777:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_pid_instance_f32 * S,
 4778:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t in)
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 96
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 96
 
 
 4779:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
@@ -5758,7 +5758,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4833:Drivers/CMSIS/DSP/Include/arm_math.h ****     S->state[1] = S->state[0];
 4834:Drivers/CMSIS/DSP/Include/arm_math.h ****     S->state[0] = in;
 4835:Drivers/CMSIS/DSP/Include/arm_math.h ****     S->state[2] = out;
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 97
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 97
 
 
 4836:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -5818,7 +5818,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4890:Drivers/CMSIS/DSP/Include/arm_math.h ****     /* Update state */
 4891:Drivers/CMSIS/DSP/Include/arm_math.h ****     S->state[1] = S->state[0];
 4892:Drivers/CMSIS/DSP/Include/arm_math.h ****     S->state[0] = in;
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 98
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 98
 
 
 4893:Drivers/CMSIS/DSP/Include/arm_math.h ****     S->state[2] = out;
@@ -5878,7 +5878,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 4947:Drivers/CMSIS/DSP/Include/arm_math.h ****    * where <code>Ia</code> and <code>Ib</code> are the instantaneous stator phases and
 4948:Drivers/CMSIS/DSP/Include/arm_math.h ****    * <code>pIalpha</code> and <code>pIbeta</code> are the two coordinates of time invariant vector.
 4949:Drivers/CMSIS/DSP/Include/arm_math.h ****    * \par Fixed-Point Behavior
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 99
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 99
 
 
 4950:Drivers/CMSIS/DSP/Include/arm_math.h ****    * Care must be taken when using the Q31 version of the Clarke transform.
@@ -5938,7 +5938,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 5004:Drivers/CMSIS/DSP/Include/arm_math.h ****     *pIalpha = Ia;
 5005:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 5006:Drivers/CMSIS/DSP/Include/arm_math.h ****     /* Intermediate product is calculated by (1/(sqrt(3)) * Ia) */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 100
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 100
 
 
 5007:Drivers/CMSIS/DSP/Include/arm_math.h ****     product1 = (q31_t) (((q63_t) Ia * 0x24F34E8B) >> 30);
@@ -5998,7 +5998,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 5061:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  Ibeta   input two-phase orthogonal vector axis beta
 5062:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pIa     points to output three-phase coordinate <code>a</code>
 5063:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pIb     points to output three-phase coordinate <code>b</code>
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 101
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 101
 
 
 5064:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
@@ -6058,7 +6058,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 5118:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Converts the elements of the Q7 vector to Q15 vector.
 5119:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrc       input pointer
 5120:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pDst       output pointer
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 102
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 102
 
 
 5121:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  blockSize  number of samples to process
@@ -6118,7 +6118,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 5175:Drivers/CMSIS/DSP/Include/arm_math.h ****   CMSIS_INLINE __STATIC_INLINE void arm_park_f32(
 5176:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t Ialpha,
 5177:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t Ibeta,
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 103
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 103
 
 
 5178:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t * pId,
@@ -6178,7 +6178,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 5232:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 5233:Drivers/CMSIS/DSP/Include/arm_math.h ****     /* Calculate pIq by subtracting the two intermediate products 3 from 4 */
 5234:Drivers/CMSIS/DSP/Include/arm_math.h ****     *pIq = __QSUB(product4, product3);
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 104
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 104
 
 
 5235:Drivers/CMSIS/DSP/Include/arm_math.h ****   }
@@ -6238,7 +6238,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 5289:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t Id,
 5290:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t Iq,
 5291:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t * pIalpha,
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 105
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 105
 
 
 5292:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t * pIbeta,
@@ -6298,7 +6298,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 5346:Drivers/CMSIS/DSP/Include/arm_math.h ****     /* Calculate pIbeta by using the two intermediate products 3 and 4 */
 5347:Drivers/CMSIS/DSP/Include/arm_math.h ****     *pIbeta = __QADD(product4, product3);
 5348:Drivers/CMSIS/DSP/Include/arm_math.h ****   }
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 106
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 106
 
 
 5349:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -6358,7 +6358,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 5403:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @addtogroup LinearInterpolate
 5404:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @{
 5405:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 107
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 107
 
 
 5406:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -6418,7 +6418,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 5460:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Process function for the Q31 Linear Interpolation Function.
 5461:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] pYData   pointer to Q31 Linear Interpolation table
 5462:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] x        input sample to process
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 108
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 108
 
 
 5463:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] nValues  number of table values
@@ -6478,7 +6478,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 5517:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
 5518:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Process function for the Q15 Linear Interpolation Function.
 5519:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] pYData   pointer to Q15 Linear Interpolation table
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 109
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 109
 
 
 5520:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] x        input sample to process
@@ -6538,7 +6538,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 5574:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 5575:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
 5576:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Process function for the Q7 Linear Interpolation Function.
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 110
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 110
 
 
 5577:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] pYData   pointer to Q7 Linear Interpolation table
@@ -6598,7 +6598,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 5631:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @} end of LinearInterpolate group
 5632:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 5633:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 111
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 111
 
 
 5634:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
@@ -6658,7 +6658,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 5688:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 5689:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @ingroup groupFastMath
 5690:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 112
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 112
 
 
 5691:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -6718,7 +6718,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
 5738:Drivers/CMSIS/DSP/Include/arm_math.h ****       *pOut = __builtin_sqrtf(in);
  539              		.loc 2 5738 7 is_stmt 1 view .LVU156
  540              		.loc 2 5738 15 is_stmt 0 view .LVU157
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 113
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 113
 
 
  541 0090 FFF7FEFF 		bl	sqrtf
@@ -6778,7 +6778,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  577 00ba 67EEA77A 		vmul.f32	s15, s15, s15
   73:Core/drogui/src/filter.c ****         
  578              		.loc 1 73 13 discriminator 3 view .LVU173
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 114
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 114
 
 
  579 00be 30EE270A 		vadd.f32	s0, s0, s15
@@ -6838,7 +6838,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
   76:Core/drogui/src/filter.c **** 
  622              		.loc 1 76 24 discriminator 4 view .LVU185
  623 00f6 C1ED006A 		vstr.32	s13, [r1]
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 115
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 115
 
 
   75:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
@@ -6898,7 +6898,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  663              		.loc 1 78 52 view .LVU200
  664 012e 86EE867A 		vdiv.f32	s14, s13, s12
   78:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 116
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 116
 
 
  665              		.loc 1 78 13 view .LVU201
@@ -6958,7 +6958,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  703              	.LVL53:
   82:Core/drogui/src/filter.c ****         
  704              		.loc 1 82 62 is_stmt 0 discriminator 1 view .LVU218
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 117
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 117
 
 
  705 015c 06EE903A 		vmov	s13, r3	@ int
@@ -7004,23 +7004,23 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 1
  740              		.file 5 "Core/drogui/include/filter.h"
  741              		.file 6 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
  742              		.file 7 "<built-in>"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s 			page 118
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s 			page 118
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 filter.c
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s:18     .text.initFilter:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s:26     .text.initFilter:00000000 initFilter
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s:83     .text.computeFilter:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s:90     .text.computeFilter:00000000 computeFilter
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s:125    .text.initDNotchFilter:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s:132    .text.initDNotchFilter:00000000 initDNotchFilter
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s:225    .text.updateCoeffNotch:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s:232    .text.updateCoeffNotch:00000000 updateCoeffNotch
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s:370    .text.updateCoeffNotch:000000d0 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s:376    .text.computeDNotch:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s:383    .text.computeDNotch:00000000 computeDNotch
-C:\Users\GUILLE~1\AppData\Local\Temp\ccCUzPkc.s:731    .text.computeDNotch:00000180 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s:18     .text.initFilter:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s:26     .text.initFilter:00000000 initFilter
+C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s:83     .text.computeFilter:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s:90     .text.computeFilter:00000000 computeFilter
+C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s:125    .text.initDNotchFilter:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s:132    .text.initDNotchFilter:00000000 initDNotchFilter
+C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s:225    .text.updateCoeffNotch:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s:232    .text.updateCoeffNotch:00000000 updateCoeffNotch
+C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s:370    .text.updateCoeffNotch:000000d0 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s:376    .text.computeDNotch:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s:383    .text.computeDNotch:00000000 computeDNotch
+C:\Users\GUILLE~1\AppData\Local\Temp\ccAnF5rh.s:731    .text.computeDNotch:00000180 $d
 
 UNDEFINED SYMBOLS
 calloc
