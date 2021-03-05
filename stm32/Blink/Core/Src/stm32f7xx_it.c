@@ -22,6 +22,9 @@
 #include "main.h"
 #include "stm32f7xx_it.h"
 #include "usart.h"
+#include <stdio.h>
+#include <string.h>
+#include "utils.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -203,31 +206,65 @@ void SysTick_Handler(void)
 /**
   * @brief This function handles I2C4 event interrupt.
   */
- char buffer[50];
+char buffer[50];
+int index1 = -1, index2 = -1;
+
 void I2C4_EV_IRQHandler(void)
 {
-  /* USER CODE BEGIN I2C4_EV_IRQn 0 */
+  unsigned long isr = I2C4->ISR;
 
-  
-  /* USER CODE END I2C4_EV_IRQn 0 */
-  uint32_t itflags   = READ_REG(hi2c4.Instance->ISR);
-  uint32_t itsources = READ_REG(hi2c4.Instance->CR1);
-__HAL_LOCK(&hi2c4);
-  if ((I2C_CHECK_FLAG(itflags, I2C_FLAG_RXNE) != RESET) && (I2C_CHECK_IT_SOURCE(itsources, I2C_IT_RXI) != RESET))
+  if ( isr & I2C_ISR_TXIS )
   {
-    
-    HAL_UART_Transmit(&huart2, (uint8_t*) "RX\n", 4, 1000);
-    
+    //HAL_UART_Transmit(&huart2, (uint8_t*) "TX\n", 4, 100);
+    if(index1 != -1){
+      
+      //sprintf(buffer, "%u %d %d\n", i2cReg[index1][index2+1], index1, index2);
+      //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
+      I2C4->TXDR = i2cReg[index1][++index2];
+    }
+    else
+      I2C4->TXDR = index2;
   }
-  else if ((I2C_CHECK_FLAG(itflags, I2C_FLAG_TXIS) != RESET) && (I2C_CHECK_IT_SOURCE(itsources, I2C_IT_TXI) != RESET))
+  else if ( isr & I2C_ISR_RXNE )
   {
-    HAL_UART_Transmit(&huart2, (uint8_t*) "TX\n", 4, 1000);
+    //HAL_UART_Transmit(&huart2, (uint8_t*) "RX\n", 4, 100);
+    uint8_t a = (I2C4->RXDR);
+    if(index1 == -1)
+      index1 = a;
+    else{
+      i2cReg[index1][++index2] = a; 
+    }
+    
+    //printf(buffer, "%d %d\n", index1, index2);
+    //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
   }
-  /* USER CODE BEGIN I2C4_EV_IRQn 1 */
-  HAL_UART_Transmit(&huart2, hi2c4.pBuffPtr, 5, 1000);
-  
-  HAL_UART_Transmit(&huart2, (uint8_t*) "hola\n", 6, 1000);
-  /* USER CODE END I2C4_EV_IRQn 1 */
+  else if ( isr & I2C_ISR_STOPF )
+  {
+    if(index2 != -1) index1 = index2 = -1;
+    //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
+    I2C4->ISR |= I2C_ISR_TXE;
+    I2C4->ICR = I2C_ICR_STOPCF;
+  }
+  else if ( isr & I2C_ISR_NACKF )
+  {
+    //HAL_UART_Transmit(&huart2, (uint8_t*) "NACK\n", 6, 100);
+    I2C4->ICR = I2C_ICR_NACKCF;
+  }
+  else if ( isr & I2C_ISR_ADDR )
+  {
+    //HAL_UART_Transmit(&huart2, (uint8_t*) "ADDR\n", 6, 100);
+    /* not required, the addr match interrupt is not enabled */
+    I2C4->ICR = I2C_ICR_ADDRCF;
+  }
+ 
+  /* if at any time the addr match is set, clear the flag */
+  /* not sure, whether this is required */
+  if ( isr & I2C_ISR_ADDR )
+  {
+    I2C4->ICR = I2C_ICR_ADDRCF;
+  }
+   
+
 }
 
 

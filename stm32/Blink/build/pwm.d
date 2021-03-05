@@ -1,4 +1,5 @@
-build/stm32f7xx_it.o: Core/Src/stm32f7xx_it.c Core/Inc/main.h \
+build/pwm.o: Core/drogui/src/pwm.c Core/drogui/include/pwm.h \
+ Core/Inc/tim.h Core/Inc/main.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h \
  Core/Inc/stm32f7xx_hal_conf.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_rcc.h \
@@ -27,8 +28,9 @@ build/stm32f7xx_it.o: Core/Src/stm32f7xx_it.c Core/Inc/main.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h \
  Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h \
- Core/drogui/include/_main.h Core/Inc/stm32f7xx_it.h Core/Inc/usart.h \
- Core/Inc/main.h Core/drogui/include/utils.h
+ Core/drogui/include/_main.h Core/Inc/main.h
+Core/drogui/include/pwm.h:
+Core/Inc/tim.h:
 Core/Inc/main.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h:
 Core/Inc/stm32f7xx_hal_conf.h:
@@ -61,7 +63,4 @@ Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h:
 Core/drogui/include/_main.h:
-Core/Inc/stm32f7xx_it.h:
-Core/Inc/usart.h:
 Core/Inc/main.h:
-Core/drogui/include/utils.h:

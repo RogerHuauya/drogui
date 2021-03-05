@@ -20,6 +20,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "i2c.h"
 #include "usart.h"
+#include <string.h>
+#include <stdio.h>
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
@@ -105,8 +107,21 @@ void MX_I2C4_Init(void)
     Error_Handler();
   }
 
-  HAL_I2C_EnableListen_IT(&hi2c4);  //Enable slave interrupt reception
+  //HAL_I2C_EnableListen_IT(&hi2c4);  //Enable slave interrupt reception
+  
 
+  /* enable interrupts */
+  I2C4->CR1 |= I2C_CR1_STOPIE;
+  I2C4->CR1 |= I2C_CR1_NACKIE;
+  I2C4->CR1 |= I2C_CR1_ADDRIE;
+  I2C4->CR1 |= I2C_CR1_RXIE;
+  I2C4->CR1 |= I2C_CR1_TXIE;
+  I2C4->ISR &= !I2C_ISR_RXNE; 
+  I2C4->ISR &= !I2C_ISR_TXIS; 
+  
+  char buffer[50];
+  sprintf(buffer, "%lu\n", I2C4->ISR);
+  HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
 }
 
 void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
@@ -229,7 +244,6 @@ void HAL_I2C_AddrCallback(I2C_HandleTypeDef *hi2c, uint8_t TransferDirection, ui
   UNUSED(TransferDirection);
   UNUSED(AddrMatchCode);
   
-    __HAL_I2C_CLEAR_FLAG(hi2c, I2C_FLAG_ADDR);
 }
 void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef *I2cHandle){
   if(I2cHandle->Instance == I2C4)

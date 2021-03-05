@@ -1,7 +1,7 @@
 #include "utils.h"
 
 
-
+uint8_t i2cReg[300][4];
 bool security;
 
 // Fs = 100Hz
@@ -81,22 +81,22 @@ float bytestofloat(uint8_t *bytesfloat){
 }
 
 float getReg(uint8_t reg){
-    /*
+    
     float val;
     uint8_t arr[4];
     for(int i = 0; i < 4 ; i++){
-     arr[i] = i2c1Reg[reg][i];
+     arr[i] = i2cReg[reg][i];
     }
-    val = bytestofloat(arr); */
-    return 0; 
+    val = bytestofloat(arr); 
+    return val; 
 }
 
 void setReg(uint8_t reg, float val){
-    /*
+    
     uint8_t arr[4];
     floattobytes(val, arr);
 
-    for(int i = 0; i < 4 ; i++) i2c1Reg[reg][i] = arr[i];*/
+    for(int i = 0; i < 4 ; i++) i2cReg[reg][i] = arr[i];
     return;
 }
 

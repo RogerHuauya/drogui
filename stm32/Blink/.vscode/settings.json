@@ -19,6 +19,7 @@
         "task.h": "c",
         "utils.h": "c",
         "math.h": "c",
-        "control.h": "c"
+        "control.h": "c",
+        "random": "c"
     }
 }

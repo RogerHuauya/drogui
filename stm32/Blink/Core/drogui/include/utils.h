@@ -21,6 +21,7 @@ void getEuler(float q0, float q1, float q2, float q3, float* roll, float *pitch,
 float angle_dif(float angle1, float angle2);
 
 
+extern uint8_t i2cReg[300][4];
 extern bool security;
 
 // Fs = 100
