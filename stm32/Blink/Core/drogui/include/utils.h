@@ -15,6 +15,10 @@ int32_t bytestoint32(uint8_t *bytesint32);
 void int32tobytes(int32_t n,uint8_t *bytesint32);
 void floattobytes(float n, uint8_t* bytesfloat);
 float bytestofloat(uint8_t *bytesfloat);
+/**
+ * @param reg registro que va a ser leido
+ * @return valor en el regsitro
+ */
 float getReg(uint8_t reg);
 void setReg(uint8_t reg, float val);
 void getEuler(float q0, float q1, float q2, float q3, float* roll, float *pitch, float* yaw);
