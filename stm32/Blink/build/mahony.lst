@@ -1,0 +1,2399 @@
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"mahony.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.invSqrt,"ax",%progbits
+  18              		.align	1
+  19              		.global	invSqrt
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv5-sp-d16
+  26              	invSqrt:
+  27              	.LVL0:
+  28              	.LFB143:
+  29              		.file 1 "Core/drogui/src/mahony.c"
+   1:Core/drogui/src/mahony.c **** #include "mahony.h"
+   2:Core/drogui/src/mahony.c **** #include <stdlib.h>
+   3:Core/drogui/src/mahony.c **** #include <math.h>
+   4:Core/drogui/src/mahony.c **** #include "utils.h"
+   5:Core/drogui/src/mahony.c **** 
+   6:Core/drogui/src/mahony.c **** 
+   7:Core/drogui/src/mahony.c **** //-------------------------------------------------------------------------------------------------
+   8:Core/drogui/src/mahony.c **** // Definitions
+   9:Core/drogui/src/mahony.c **** #define sampleFreq	500.0f			// sample frequency in Hz
+  10:Core/drogui/src/mahony.c **** #define twoKpDef	(2.0f * 30.0f)	// 2 * proportional gain
+  11:Core/drogui/src/mahony.c **** #define twoKiDef	(2.0f * 0.0f)	// 2 * integral gain
+  12:Core/drogui/src/mahony.c **** 
+  13:Core/drogui/src/mahony.c **** //-------------------------------------------------------------------------------------------------
+  14:Core/drogui/src/mahony.c **** // Variable definitions
+  15:Core/drogui/src/mahony.c **** 
+  16:Core/drogui/src/mahony.c **** volatile float twoKp = twoKpDef;											// 2 * proportional gain (Kp)
+  17:Core/drogui/src/mahony.c **** volatile float twoKi = twoKiDef;											// 2 * integral gain (Ki)
+  18:Core/drogui/src/mahony.c **** volatile float q0 = 1.0f, q1 = 0.0f, q2 = 0.0f, q3 = 0.0f;					// quaternion of sensor frame relati
+  19:Core/drogui/src/mahony.c **** volatile float integralFBx = 0.0f,  integralFBy = 0.0f, integralFBz = 0.0f;	// integral error terms
+  20:Core/drogui/src/mahony.c **** 
+  21:Core/drogui/src/mahony.c **** //-------------------------------------------------------------------------------------------------
+  22:Core/drogui/src/mahony.c **** // Function declarations
+  23:Core/drogui/src/mahony.c **** 
+  24:Core/drogui/src/mahony.c **** float invSqrt(float x);
+  25:Core/drogui/src/mahony.c **** 
+  26:Core/drogui/src/mahony.c **** //=================================================================================================
+  27:Core/drogui/src/mahony.c **** // Functions
+  28:Core/drogui/src/mahony.c **** 
+  29:Core/drogui/src/mahony.c **** //-------------------------------------------------------------------------------------------------
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 2
+
+
+  30:Core/drogui/src/mahony.c **** // AHRS algorithm update
+  31:Core/drogui/src/mahony.c **** 
+  32:Core/drogui/src/mahony.c **** void mahonyUpdate(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, f
+  33:Core/drogui/src/mahony.c **** 	float recipNorm;
+  34:Core/drogui/src/mahony.c ****     float q0q0, q0q1, q0q2, q0q3, q1q1, q1q2, q1q3, q2q2, q2q3, q3q3;  
+  35:Core/drogui/src/mahony.c **** 	float hx, hy, bx, bz;
+  36:Core/drogui/src/mahony.c **** 	float halfvx, halfvy, halfvz, halfwx, halfwy, halfwz;
+  37:Core/drogui/src/mahony.c **** 	float halfex, halfey, halfez;
+  38:Core/drogui/src/mahony.c **** 	float qa, qb, qc;
+  39:Core/drogui/src/mahony.c **** 
+  40:Core/drogui/src/mahony.c **** 	// Use IMU algorithm if magnetometer measurement invalid (avoids NaN in magnetometer normalisation
+  41:Core/drogui/src/mahony.c **** 	if( ((mx == 0.0f) && (my == 0.0f) && (mz == 0.0f) ) || isnan(mx) || isnan(my) || isnan(mz)) {
+  42:Core/drogui/src/mahony.c **** 		mahonyUpdateIMU(gx, gy, gz, ax, ay, az);
+  43:Core/drogui/src/mahony.c **** 		return;
+  44:Core/drogui/src/mahony.c **** 	}
+  45:Core/drogui/src/mahony.c **** 
+  46:Core/drogui/src/mahony.c **** 	// Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisa
+  47:Core/drogui/src/mahony.c **** 	if(!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f))) {
+  48:Core/drogui/src/mahony.c **** 
+  49:Core/drogui/src/mahony.c **** 		// Normalise accelerometer measurement
+  50:Core/drogui/src/mahony.c **** 		recipNorm = invSqrt(ax * ax + ay * ay + az * az);
+  51:Core/drogui/src/mahony.c **** 		ax *= recipNorm;
+  52:Core/drogui/src/mahony.c **** 		ay *= recipNorm;
+  53:Core/drogui/src/mahony.c **** 		az *= recipNorm;     
+  54:Core/drogui/src/mahony.c **** 
+  55:Core/drogui/src/mahony.c **** 		// Normalise magnetometer measurement
+  56:Core/drogui/src/mahony.c **** 		recipNorm = invSqrt(mx * mx + my * my + mz * mz);
+  57:Core/drogui/src/mahony.c **** 		mx *= recipNorm;
+  58:Core/drogui/src/mahony.c **** 		my *= recipNorm;
+  59:Core/drogui/src/mahony.c **** 		mz *= recipNorm;   
+  60:Core/drogui/src/mahony.c **** 
+  61:Core/drogui/src/mahony.c ****         // Auxiliary variables to avoid repeated arithmetic
+  62:Core/drogui/src/mahony.c ****         q0q0 = q0 * q0;
+  63:Core/drogui/src/mahony.c ****         q0q1 = q0 * q1;
+  64:Core/drogui/src/mahony.c ****         q0q2 = q0 * q2;
+  65:Core/drogui/src/mahony.c ****         q0q3 = q0 * q3;
+  66:Core/drogui/src/mahony.c ****         q1q1 = q1 * q1;
+  67:Core/drogui/src/mahony.c ****         q1q2 = q1 * q2;
+  68:Core/drogui/src/mahony.c ****         q1q3 = q1 * q3;
+  69:Core/drogui/src/mahony.c ****         q2q2 = q2 * q2;
+  70:Core/drogui/src/mahony.c ****         q2q3 = q2 * q3;
+  71:Core/drogui/src/mahony.c ****         q3q3 = q3 * q3;   
+  72:Core/drogui/src/mahony.c **** 
+  73:Core/drogui/src/mahony.c ****         // Reference direction of Earth's magnetic field
+  74:Core/drogui/src/mahony.c ****         hx = 2.0f * (mx * (0.5f - q2q2 - q3q3) + my * (q1q2 - q0q3) + mz * (q1q3 + q0q2));
+  75:Core/drogui/src/mahony.c ****         hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
+  76:Core/drogui/src/mahony.c ****         bx = sqrt(hx * hx + hy * hy);
+  77:Core/drogui/src/mahony.c ****         bz = 2.0f * (mx * (q1q3 - q0q2) + my * (q2q3 + q0q1) + mz * (0.5f - q1q1 - q2q2));
+  78:Core/drogui/src/mahony.c **** 
+  79:Core/drogui/src/mahony.c **** 		// Estimated direction of gravity and magnetic field
+  80:Core/drogui/src/mahony.c **** 		halfvx = q1q3 - q0q2;
+  81:Core/drogui/src/mahony.c **** 		halfvy = q0q1 + q2q3;
+  82:Core/drogui/src/mahony.c **** 		halfvz = q0q0 - 0.5f + q3q3;
+  83:Core/drogui/src/mahony.c ****         halfwx = bx * (0.5f - q2q2 - q3q3) + bz * (q1q3 - q0q2);
+  84:Core/drogui/src/mahony.c ****         halfwy = bx * (q1q2 - q0q3) + bz * (q0q1 + q2q3);
+  85:Core/drogui/src/mahony.c ****         halfwz = bx * (q0q2 + q1q3) + bz * (0.5f - q1q1 - q2q2);  
+  86:Core/drogui/src/mahony.c **** 	
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 3
+
+
+  87:Core/drogui/src/mahony.c **** 		// Error is sum of cross product between estimated direction and measured direction of field vect
+  88:Core/drogui/src/mahony.c **** 		halfex = (ay * halfvz - az * halfvy) + (my * halfwz - mz * halfwy);
+  89:Core/drogui/src/mahony.c **** 		halfey = (az * halfvx - ax * halfvz) + (mz * halfwx - mx * halfwz);
+  90:Core/drogui/src/mahony.c **** 		halfez = (ax * halfvy - ay * halfvx) + (mx * halfwy - my * halfwx);
+  91:Core/drogui/src/mahony.c **** 
+  92:Core/drogui/src/mahony.c **** 		// Compute and apply integral feedback if enabled
+  93:Core/drogui/src/mahony.c **** 		if(twoKi > 0.0f) {
+  94:Core/drogui/src/mahony.c **** 			integralFBx += twoKi * halfex * (1.0f / sampleFreq);	// integral error scaled by Ki
+  95:Core/drogui/src/mahony.c **** 			integralFBy += twoKi * halfey * (1.0f / sampleFreq);
+  96:Core/drogui/src/mahony.c **** 			integralFBz += twoKi * halfez * (1.0f / sampleFreq);
+  97:Core/drogui/src/mahony.c **** 			gx += integralFBx;	// apply integral feedback
+  98:Core/drogui/src/mahony.c **** 			gy += integralFBy;
+  99:Core/drogui/src/mahony.c **** 			gz += integralFBz;
+ 100:Core/drogui/src/mahony.c **** 		}
+ 101:Core/drogui/src/mahony.c **** 		else {
+ 102:Core/drogui/src/mahony.c **** 			integralFBx = 0.0f;	// prevent integral windup
+ 103:Core/drogui/src/mahony.c **** 			integralFBy = 0.0f;
+ 104:Core/drogui/src/mahony.c **** 			integralFBz = 0.0f;
+ 105:Core/drogui/src/mahony.c **** 		}
+ 106:Core/drogui/src/mahony.c **** 
+ 107:Core/drogui/src/mahony.c **** 		// Apply proportional feedback
+ 108:Core/drogui/src/mahony.c **** 		gx += twoKp * halfex;
+ 109:Core/drogui/src/mahony.c **** 		gy += twoKp * halfey;
+ 110:Core/drogui/src/mahony.c **** 		gz += twoKp * halfez;
+ 111:Core/drogui/src/mahony.c **** 	}
+ 112:Core/drogui/src/mahony.c **** 	
+ 113:Core/drogui/src/mahony.c **** 	// Integrate rate of change of quaternion
+ 114:Core/drogui/src/mahony.c **** 	gx *= (0.5f * (1.0f / sampleFreq));		// pre-multiply common factors
+ 115:Core/drogui/src/mahony.c **** 	gy *= (0.5f * (1.0f / sampleFreq));
+ 116:Core/drogui/src/mahony.c **** 	gz *= (0.5f * (1.0f / sampleFreq));
+ 117:Core/drogui/src/mahony.c **** 	qa = q0;
+ 118:Core/drogui/src/mahony.c **** 	qb = q1;
+ 119:Core/drogui/src/mahony.c **** 	qc = q2;
+ 120:Core/drogui/src/mahony.c **** 	q0 += (-qb * gx - qc * gy - q3 * gz);
+ 121:Core/drogui/src/mahony.c **** 	q1 += (qa * gx + qc * gz - q3 * gy);
+ 122:Core/drogui/src/mahony.c **** 	q2 += (qa * gy - qb * gz + q3 * gx);
+ 123:Core/drogui/src/mahony.c **** 	q3 += (qa * gz + qb * gy - qc * gx); 
+ 124:Core/drogui/src/mahony.c **** 	
+ 125:Core/drogui/src/mahony.c **** 	// Normalise quaternion
+ 126:Core/drogui/src/mahony.c **** 	recipNorm = invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
+ 127:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 128:Core/drogui/src/mahony.c **** 	q1 *= recipNorm;
+ 129:Core/drogui/src/mahony.c **** 	q2 *= recipNorm;
+ 130:Core/drogui/src/mahony.c **** 	q3 *= recipNorm;
+ 131:Core/drogui/src/mahony.c **** }
+ 132:Core/drogui/src/mahony.c **** 
+ 133:Core/drogui/src/mahony.c **** //-------------------------------------------------------------------------------------------------
+ 134:Core/drogui/src/mahony.c **** // IMU algorithm update
+ 135:Core/drogui/src/mahony.c **** 
+ 136:Core/drogui/src/mahony.c **** void mahonyUpdateIMU(float gx, float gy, float gz, float ax, float ay, float az) {
+ 137:Core/drogui/src/mahony.c **** 	float recipNorm;
+ 138:Core/drogui/src/mahony.c **** 	float halfvx, halfvy, halfvz;
+ 139:Core/drogui/src/mahony.c **** 	float halfex, halfey, halfez;
+ 140:Core/drogui/src/mahony.c **** 	float qa, qb, qc;
+ 141:Core/drogui/src/mahony.c **** 
+ 142:Core/drogui/src/mahony.c **** 	// Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisa
+ 143:Core/drogui/src/mahony.c **** 	if(!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f))) {
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 4
+
+
+ 144:Core/drogui/src/mahony.c **** 
+ 145:Core/drogui/src/mahony.c **** 		// Normalise accelerometer measurement
+ 146:Core/drogui/src/mahony.c **** 		recipNorm = invSqrt(ax * ax + ay * ay + az * az);
+ 147:Core/drogui/src/mahony.c **** 		ax *= recipNorm;
+ 148:Core/drogui/src/mahony.c **** 		ay *= recipNorm;
+ 149:Core/drogui/src/mahony.c **** 		az *= recipNorm;        
+ 150:Core/drogui/src/mahony.c **** 
+ 151:Core/drogui/src/mahony.c **** 		// Estimated direction of gravity and vector perpendicular to magnetic flux
+ 152:Core/drogui/src/mahony.c **** 		halfvx = q1 * q3 - q0 * q2;
+ 153:Core/drogui/src/mahony.c **** 		halfvy = q0 * q1 + q2 * q3;
+ 154:Core/drogui/src/mahony.c **** 		halfvz = q0 * q0 - 0.5f + q3 * q3;
+ 155:Core/drogui/src/mahony.c **** 	
+ 156:Core/drogui/src/mahony.c **** 		// Error is sum of cross product between estimated and measured direction of gravity
+ 157:Core/drogui/src/mahony.c **** 		halfex = (ay * halfvz - az * halfvy);
+ 158:Core/drogui/src/mahony.c **** 		halfey = (az * halfvx - ax * halfvz);
+ 159:Core/drogui/src/mahony.c **** 		halfez = (ax * halfvy - ay * halfvx);
+ 160:Core/drogui/src/mahony.c **** 
+ 161:Core/drogui/src/mahony.c **** 		// Compute and apply integral feedback if enabled
+ 162:Core/drogui/src/mahony.c **** 		if(twoKi > 0.0f) {
+ 163:Core/drogui/src/mahony.c **** 			integralFBx += twoKi * halfex * (1.0f / sampleFreq);	// integral error scaled by Ki
+ 164:Core/drogui/src/mahony.c **** 			integralFBy += twoKi * halfey * (1.0f / sampleFreq);
+ 165:Core/drogui/src/mahony.c **** 			integralFBz += twoKi * halfez * (1.0f / sampleFreq);
+ 166:Core/drogui/src/mahony.c **** 			gx += integralFBx;	// apply integral feedback
+ 167:Core/drogui/src/mahony.c **** 			gy += integralFBy;
+ 168:Core/drogui/src/mahony.c **** 			gz += integralFBz;
+ 169:Core/drogui/src/mahony.c **** 		}
+ 170:Core/drogui/src/mahony.c **** 		else {
+ 171:Core/drogui/src/mahony.c **** 			integralFBx = 0.0f;	// prevent integral windup
+ 172:Core/drogui/src/mahony.c **** 			integralFBy = 0.0f;
+ 173:Core/drogui/src/mahony.c **** 			integralFBz = 0.0f;
+ 174:Core/drogui/src/mahony.c **** 		}
+ 175:Core/drogui/src/mahony.c **** 
+ 176:Core/drogui/src/mahony.c **** 		// Apply proportional feedback
+ 177:Core/drogui/src/mahony.c **** 		gx += twoKp * halfex;
+ 178:Core/drogui/src/mahony.c **** 		gy += twoKp * halfey;
+ 179:Core/drogui/src/mahony.c **** 		gz += twoKp * halfez;
+ 180:Core/drogui/src/mahony.c **** 	}
+ 181:Core/drogui/src/mahony.c **** 	
+ 182:Core/drogui/src/mahony.c **** 	// Integrate rate of change of quaternion
+ 183:Core/drogui/src/mahony.c **** 	gx *= (0.5f * (1.0f / sampleFreq));		// pre-multiply common factors
+ 184:Core/drogui/src/mahony.c **** 	gy *= (0.5f * (1.0f / sampleFreq));
+ 185:Core/drogui/src/mahony.c **** 	gz *= (0.5f * (1.0f / sampleFreq));
+ 186:Core/drogui/src/mahony.c **** 	qa = q0;
+ 187:Core/drogui/src/mahony.c **** 	qb = q1;
+ 188:Core/drogui/src/mahony.c **** 	qc = q2;
+ 189:Core/drogui/src/mahony.c **** 	q0 += (-qb * gx - qc * gy - q3 * gz);
+ 190:Core/drogui/src/mahony.c **** 	q1 += (qa * gx + qc * gz - q3 * gy);
+ 191:Core/drogui/src/mahony.c **** 	q2 += (qa * gy - qb * gz + q3 * gx);
+ 192:Core/drogui/src/mahony.c **** 	q3 += (qa * gz + qb * gy - qc * gx); 
+ 193:Core/drogui/src/mahony.c **** 	
+ 194:Core/drogui/src/mahony.c **** 	// Normalise quaternion
+ 195:Core/drogui/src/mahony.c **** 	recipNorm = invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
+ 196:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 197:Core/drogui/src/mahony.c **** 	q1 *= recipNorm;
+ 198:Core/drogui/src/mahony.c **** 	q2 *= recipNorm;
+ 199:Core/drogui/src/mahony.c **** 	q3 *= recipNorm;
+ 200:Core/drogui/src/mahony.c **** }
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 5
+
+
+ 201:Core/drogui/src/mahony.c **** 
+ 202:Core/drogui/src/mahony.c **** //-------------------------------------------------------------------------------------------------
+ 203:Core/drogui/src/mahony.c **** // Fast inverse square-root
+ 204:Core/drogui/src/mahony.c **** // See: http://en.wikipedia.org/wiki/Fast_inverse_square_root
+ 205:Core/drogui/src/mahony.c **** 
+ 206:Core/drogui/src/mahony.c **** float invSqrt(float x) {
+  30              		.loc 1 206 24 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+ 207:Core/drogui/src/mahony.c **** 	float halfx = 0.5f * x;
+  35              		.loc 1 207 2 view .LVU1
+  36              		.loc 1 207 8 is_stmt 0 view .LVU2
+  37 0000 F6EE007A 		vmov.f32	s15, #5.0e-1
+  38 0004 60EE277A 		vmul.f32	s15, s0, s15
+  39              	.LVL1:
+ 208:Core/drogui/src/mahony.c **** 	float y = x;
+  40              		.loc 1 208 2 is_stmt 1 view .LVU3
+ 209:Core/drogui/src/mahony.c **** 	long i = *(long*)&y;
+  41              		.loc 1 209 2 view .LVU4
+  42              		.loc 1 209 11 is_stmt 0 view .LVU5
+  43 0008 10EE103A 		vmov	r3, s0	@ int
+  44              	.LVL2:
+ 210:Core/drogui/src/mahony.c **** 	i = 0x5f3759df - (i>>1);
+  45              		.loc 1 210 2 is_stmt 1 view .LVU6
+ 211:Core/drogui/src/mahony.c **** 	y = *(float*)&i;
+  46              		.loc 1 211 2 view .LVU7
+  47              		.loc 1 211 6 is_stmt 0 view .LVU8
+  48 000c 074A     		ldr	r2, .L2
+  49 000e A2EB6303 		sub	r3, r2, r3, asr #1
+  50              	.LVL3:
+  51              		.loc 1 211 6 view .LVU9
+  52 0012 07EE103A 		vmov	s14, r3	@ int
+  53              	.LVL4:
+ 212:Core/drogui/src/mahony.c **** 	y = y * (1.5f - (halfx * y * y));
+  54              		.loc 1 212 2 is_stmt 1 view .LVU10
+  55              		.loc 1 212 25 is_stmt 0 view .LVU11
+  56 0016 67EE277A 		vmul.f32	s15, s14, s15
+  57              	.LVL5:
+  58              		.loc 1 212 29 view .LVU12
+  59 001a 67EE277A 		vmul.f32	s15, s14, s15
+  60              		.loc 1 212 16 view .LVU13
+  61 001e B7EE080A 		vmov.f32	s0, #1.5e+0
+  62              	.LVL6:
+  63              		.loc 1 212 16 view .LVU14
+  64 0022 30EE670A 		vsub.f32	s0, s0, s15
+  65              	.LVL7:
+ 213:Core/drogui/src/mahony.c **** 	return y;
+  66              		.loc 1 213 2 is_stmt 1 view .LVU15
+ 214:Core/drogui/src/mahony.c **** }
+  67              		.loc 1 214 1 is_stmt 0 view .LVU16
+  68 0026 27EE000A 		vmul.f32	s0, s14, s0
+  69 002a 7047     		bx	lr
+  70              	.L3:
+  71              		.align	2
+  72              	.L2:
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 6
+
+
+  73 002c DF59375F 		.word	1597463007
+  74              		.cfi_endproc
+  75              	.LFE143:
+  77              		.section	.text.mahonyUpdateIMU,"ax",%progbits
+  78              		.align	1
+  79              		.global	mahonyUpdateIMU
+  80              		.syntax unified
+  81              		.thumb
+  82              		.thumb_func
+  83              		.fpu fpv5-sp-d16
+  85              	mahonyUpdateIMU:
+  86              	.LVL8:
+  87              	.LFB142:
+ 136:Core/drogui/src/mahony.c **** 	float recipNorm;
+  88              		.loc 1 136 82 is_stmt 1 view -0
+  89              		.cfi_startproc
+  90              		@ args = 0, pretend = 0, frame = 0
+  91              		@ frame_needed = 0, uses_anonymous_args = 0
+ 136:Core/drogui/src/mahony.c **** 	float recipNorm;
+  92              		.loc 1 136 82 is_stmt 0 view .LVU18
+  93 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  94              	.LCFI0:
+  95              		.cfi_def_cfa_offset 24
+  96              		.cfi_offset 3, -24
+  97              		.cfi_offset 4, -20
+  98              		.cfi_offset 5, -16
+  99              		.cfi_offset 6, -12
+ 100              		.cfi_offset 7, -8
+ 101              		.cfi_offset 14, -4
+ 102 0002 2DED068B 		vpush.64	{d8, d9, d10}
+ 103              	.LCFI1:
+ 104              		.cfi_def_cfa_offset 48
+ 105              		.cfi_offset 80, -48
+ 106              		.cfi_offset 81, -44
+ 107              		.cfi_offset 82, -40
+ 108              		.cfi_offset 83, -36
+ 109              		.cfi_offset 84, -32
+ 110              		.cfi_offset 85, -28
+ 111 0006 F0EE408A 		vmov.f32	s17, s0
+ 112 000a B0EE609A 		vmov.f32	s18, s1
+ 113 000e B0EE418A 		vmov.f32	s16, s2
+ 114 0012 F0EE61AA 		vmov.f32	s21, s3
+ 115 0016 B0EE42AA 		vmov.f32	s20, s4
+ 116 001a F0EE629A 		vmov.f32	s19, s5
+ 137:Core/drogui/src/mahony.c **** 	float halfvx, halfvy, halfvz;
+ 117              		.loc 1 137 2 is_stmt 1 view .LVU19
+ 138:Core/drogui/src/mahony.c **** 	float halfex, halfey, halfez;
+ 118              		.loc 1 138 2 view .LVU20
+ 139:Core/drogui/src/mahony.c **** 	float qa, qb, qc;
+ 119              		.loc 1 139 2 view .LVU21
+ 140:Core/drogui/src/mahony.c **** 
+ 120              		.loc 1 140 2 view .LVU22
+ 143:Core/drogui/src/mahony.c **** 
+ 121              		.loc 1 143 2 view .LVU23
+ 143:Core/drogui/src/mahony.c **** 
+ 122              		.loc 1 143 11 is_stmt 0 view .LVU24
+ 123 001e F5EE401A 		vcmp.f32	s3, #0
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 7
+
+
+ 124 0022 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 125 0026 14BF     		ite	ne
+ 126 0028 0123     		movne	r3, #1
+ 127 002a 0023     		moveq	r3, #0
+ 143:Core/drogui/src/mahony.c **** 
+ 128              		.loc 1 143 27 view .LVU25
+ 129 002c B5EE402A 		vcmp.f32	s4, #0
+ 130 0030 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 143:Core/drogui/src/mahony.c **** 
+ 131              		.loc 1 143 20 view .LVU26
+ 132 0034 18BF     		it	ne
+ 133 0036 43F00103 		orrne	r3, r3, #1
+ 143:Core/drogui/src/mahony.c **** 
+ 134              		.loc 1 143 4 view .LVU27
+ 135 003a 2BB9     		cbnz	r3, .L5
+ 143:Core/drogui/src/mahony.c **** 
+ 136              		.loc 1 143 5 discriminator 1 view .LVU28
+ 137 003c F5EE402A 		vcmp.f32	s5, #0
+ 138 0040 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 139 0044 00F0A780 		beq	.L6
+ 140              	.L5:
+ 146:Core/drogui/src/mahony.c **** 		ax *= recipNorm;
+ 141              		.loc 1 146 3 is_stmt 1 view .LVU29
+ 146:Core/drogui/src/mahony.c **** 		ax *= recipNorm;
+ 142              		.loc 1 146 26 is_stmt 0 view .LVU30
+ 143 0048 6AEEAA7A 		vmul.f32	s15, s21, s21
+ 146:Core/drogui/src/mahony.c **** 		ax *= recipNorm;
+ 144              		.loc 1 146 36 view .LVU31
+ 145 004c 2AEE0A0A 		vmul.f32	s0, s20, s20
+ 146              	.LVL9:
+ 146:Core/drogui/src/mahony.c **** 		ax *= recipNorm;
+ 147              		.loc 1 146 31 view .LVU32
+ 148 0050 77EE807A 		vadd.f32	s15, s15, s0
+ 146:Core/drogui/src/mahony.c **** 		ax *= recipNorm;
+ 149              		.loc 1 146 46 view .LVU33
+ 150 0054 29EEA90A 		vmul.f32	s0, s19, s19
+ 146:Core/drogui/src/mahony.c **** 		ax *= recipNorm;
+ 151              		.loc 1 146 15 view .LVU34
+ 152 0058 37EE800A 		vadd.f32	s0, s15, s0
+ 153 005c FFF7FEFF 		bl	invSqrt
+ 154              	.LVL10:
+ 147:Core/drogui/src/mahony.c **** 		ay *= recipNorm;
+ 155              		.loc 1 147 3 is_stmt 1 view .LVU35
+ 147:Core/drogui/src/mahony.c **** 		ay *= recipNorm;
+ 156              		.loc 1 147 6 is_stmt 0 view .LVU36
+ 157 0060 6AEE80AA 		vmul.f32	s21, s21, s0
+ 158              	.LVL11:
+ 148:Core/drogui/src/mahony.c **** 		az *= recipNorm;        
+ 159              		.loc 1 148 3 is_stmt 1 view .LVU37
+ 148:Core/drogui/src/mahony.c **** 		az *= recipNorm;        
+ 160              		.loc 1 148 6 is_stmt 0 view .LVU38
+ 161 0064 2AEE00AA 		vmul.f32	s20, s20, s0
+ 162              	.LVL12:
+ 149:Core/drogui/src/mahony.c **** 
+ 163              		.loc 1 149 3 is_stmt 1 view .LVU39
+ 149:Core/drogui/src/mahony.c **** 
+ 164              		.loc 1 149 6 is_stmt 0 view .LVU40
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 8
+
+
+ 165 0068 69EE809A 		vmul.f32	s19, s19, s0
+ 166              	.LVL13:
+ 152:Core/drogui/src/mahony.c **** 		halfvy = q0 * q1 + q2 * q3;
+ 167              		.loc 1 152 3 is_stmt 1 view .LVU41
+ 152:Core/drogui/src/mahony.c **** 		halfvy = q0 * q1 + q2 * q3;
+ 168              		.loc 1 152 15 is_stmt 0 view .LVU42
+ 169 006c 9748     		ldr	r0, .L13
+ 170 006e 90ED002A 		vldr.32	s4, [r0]
+ 171 0072 974B     		ldr	r3, .L13+4
+ 172 0074 D3ED007A 		vldr.32	s15, [r3]
+ 173 0078 22EE272A 		vmul.f32	s4, s4, s15
+ 152:Core/drogui/src/mahony.c **** 		halfvy = q0 * q1 + q2 * q3;
+ 174              		.loc 1 152 25 view .LVU43
+ 175 007c 954A     		ldr	r2, .L13+8
+ 176 007e D2ED007A 		vldr.32	s15, [r2]
+ 177 0082 9549     		ldr	r1, .L13+12
+ 178 0084 91ED007A 		vldr.32	s14, [r1]
+ 179 0088 67EE877A 		vmul.f32	s15, s15, s14
+ 152:Core/drogui/src/mahony.c **** 		halfvy = q0 * q1 + q2 * q3;
+ 180              		.loc 1 152 10 view .LVU44
+ 181 008c 32EE672A 		vsub.f32	s4, s4, s15
+ 182              	.LVL14:
+ 153:Core/drogui/src/mahony.c **** 		halfvz = q0 * q0 - 0.5f + q3 * q3;
+ 183              		.loc 1 153 3 is_stmt 1 view .LVU45
+ 153:Core/drogui/src/mahony.c **** 		halfvz = q0 * q0 - 0.5f + q3 * q3;
+ 184              		.loc 1 153 15 is_stmt 0 view .LVU46
+ 185 0090 D2ED001A 		vldr.32	s3, [r2]
+ 186 0094 D0ED007A 		vldr.32	s15, [r0]
+ 187 0098 61EEA71A 		vmul.f32	s3, s3, s15
+ 153:Core/drogui/src/mahony.c **** 		halfvz = q0 * q0 - 0.5f + q3 * q3;
+ 188              		.loc 1 153 25 view .LVU47
+ 189 009c D1ED007A 		vldr.32	s15, [r1]
+ 190 00a0 93ED007A 		vldr.32	s14, [r3]
+ 191 00a4 67EE877A 		vmul.f32	s15, s15, s14
+ 153:Core/drogui/src/mahony.c **** 		halfvz = q0 * q0 - 0.5f + q3 * q3;
+ 192              		.loc 1 153 10 view .LVU48
+ 193 00a8 71EEA71A 		vadd.f32	s3, s3, s15
+ 194              	.LVL15:
+ 154:Core/drogui/src/mahony.c **** 	
+ 195              		.loc 1 154 3 is_stmt 1 view .LVU49
+ 154:Core/drogui/src/mahony.c **** 	
+ 196              		.loc 1 154 15 is_stmt 0 view .LVU50
+ 197 00ac D2ED007A 		vldr.32	s15, [r2]
+ 198 00b0 92ED007A 		vldr.32	s14, [r2]
+ 199 00b4 67EE877A 		vmul.f32	s15, s15, s14
+ 154:Core/drogui/src/mahony.c **** 	
+ 200              		.loc 1 154 20 view .LVU51
+ 201 00b8 B6EE007A 		vmov.f32	s14, #5.0e-1
+ 202 00bc 77EEC77A 		vsub.f32	s15, s15, s14
+ 154:Core/drogui/src/mahony.c **** 	
+ 203              		.loc 1 154 32 view .LVU52
+ 204 00c0 93ED007A 		vldr.32	s14, [r3]
+ 205 00c4 D3ED006A 		vldr.32	s13, [r3]
+ 206 00c8 27EE267A 		vmul.f32	s14, s14, s13
+ 154:Core/drogui/src/mahony.c **** 	
+ 207              		.loc 1 154 10 view .LVU53
+ 208 00cc 77EE877A 		vadd.f32	s15, s15, s14
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 9
+
+
+ 209              	.LVL16:
+ 157:Core/drogui/src/mahony.c **** 		halfey = (az * halfvx - ax * halfvz);
+ 210              		.loc 1 157 3 is_stmt 1 view .LVU54
+ 157:Core/drogui/src/mahony.c **** 		halfey = (az * halfvx - ax * halfvz);
+ 211              		.loc 1 157 16 is_stmt 0 view .LVU55
+ 212 00d0 6AEE276A 		vmul.f32	s13, s20, s15
+ 157:Core/drogui/src/mahony.c **** 		halfey = (az * halfvx - ax * halfvz);
+ 213              		.loc 1 157 30 view .LVU56
+ 214 00d4 29EEA17A 		vmul.f32	s14, s19, s3
+ 157:Core/drogui/src/mahony.c **** 		halfey = (az * halfvx - ax * halfvz);
+ 215              		.loc 1 157 10 view .LVU57
+ 216 00d8 36EEC77A 		vsub.f32	s14, s13, s14
+ 217              	.LVL17:
+ 158:Core/drogui/src/mahony.c **** 		halfez = (ax * halfvy - ay * halfvx);
+ 218              		.loc 1 158 3 is_stmt 1 view .LVU58
+ 158:Core/drogui/src/mahony.c **** 		halfez = (ax * halfvy - ay * halfvx);
+ 219              		.loc 1 158 16 is_stmt 0 view .LVU59
+ 220 00dc 69EE829A 		vmul.f32	s19, s19, s4
+ 221              	.LVL18:
+ 158:Core/drogui/src/mahony.c **** 		halfez = (ax * halfvy - ay * halfvx);
+ 222              		.loc 1 158 30 view .LVU60
+ 223 00e0 6AEEA77A 		vmul.f32	s15, s21, s15
+ 224              	.LVL19:
+ 158:Core/drogui/src/mahony.c **** 		halfez = (ax * halfvy - ay * halfvx);
+ 225              		.loc 1 158 10 view .LVU61
+ 226 00e4 79EEE79A 		vsub.f32	s19, s19, s15
+ 227              	.LVL20:
+ 159:Core/drogui/src/mahony.c **** 
+ 228              		.loc 1 159 3 is_stmt 1 view .LVU62
+ 159:Core/drogui/src/mahony.c **** 
+ 229              		.loc 1 159 16 is_stmt 0 view .LVU63
+ 230 00e8 6AEEA1AA 		vmul.f32	s21, s21, s3
+ 231              	.LVL21:
+ 159:Core/drogui/src/mahony.c **** 
+ 232              		.loc 1 159 30 view .LVU64
+ 233 00ec 2AEE02AA 		vmul.f32	s20, s20, s4
+ 234              	.LVL22:
+ 159:Core/drogui/src/mahony.c **** 
+ 235              		.loc 1 159 10 view .LVU65
+ 236 00f0 3AEECAAA 		vsub.f32	s20, s21, s20
+ 237              	.LVL23:
+ 162:Core/drogui/src/mahony.c **** 			integralFBx += twoKi * halfex * (1.0f / sampleFreq);	// integral error scaled by Ki
+ 238              		.loc 1 162 3 is_stmt 1 view .LVU66
+ 162:Core/drogui/src/mahony.c **** 			integralFBx += twoKi * halfex * (1.0f / sampleFreq);	// integral error scaled by Ki
+ 239              		.loc 1 162 12 is_stmt 0 view .LVU67
+ 240 00f4 794B     		ldr	r3, .L13+16
+ 241 00f6 D3ED007A 		vldr.32	s15, [r3]
+ 162:Core/drogui/src/mahony.c **** 			integralFBx += twoKi * halfex * (1.0f / sampleFreq);	// integral error scaled by Ki
+ 242              		.loc 1 162 5 view .LVU68
+ 243 00fa F5EEC07A 		vcmpe.f32	s15, #0
+ 244 00fe F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 245 0102 40F3DB80 		ble	.L11
+ 163:Core/drogui/src/mahony.c **** 			integralFBy += twoKi * halfey * (1.0f / sampleFreq);
+ 246              		.loc 1 163 4 is_stmt 1 view .LVU69
+ 163:Core/drogui/src/mahony.c **** 			integralFBy += twoKi * halfey * (1.0f / sampleFreq);
+ 247              		.loc 1 163 25 is_stmt 0 view .LVU70
+ 248 0106 D3ED006A 		vldr.32	s13, [r3]
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 10
+
+
+ 249 010a 66EE876A 		vmul.f32	s13, s13, s14
+ 163:Core/drogui/src/mahony.c **** 			integralFBy += twoKi * halfey * (1.0f / sampleFreq);
+ 250              		.loc 1 163 34 view .LVU71
+ 251 010e 9FED746A 		vldr.32	s12, .L13+20
+ 252 0112 66EE866A 		vmul.f32	s13, s13, s12
+ 163:Core/drogui/src/mahony.c **** 			integralFBy += twoKi * halfey * (1.0f / sampleFreq);
+ 253              		.loc 1 163 16 view .LVU72
+ 254 0116 7349     		ldr	r1, .L13+24
+ 255 0118 D1ED007A 		vldr.32	s15, [r1]
+ 256 011c 77EEA66A 		vadd.f32	s13, s15, s13
+ 257 0120 C1ED006A 		vstr.32	s13, [r1]
+ 164:Core/drogui/src/mahony.c **** 			integralFBz += twoKi * halfez * (1.0f / sampleFreq);
+ 258              		.loc 1 164 4 is_stmt 1 view .LVU73
+ 164:Core/drogui/src/mahony.c **** 			integralFBz += twoKi * halfez * (1.0f / sampleFreq);
+ 259              		.loc 1 164 25 is_stmt 0 view .LVU74
+ 260 0124 D3ED006A 		vldr.32	s13, [r3]
+ 261 0128 66EEA96A 		vmul.f32	s13, s13, s19
+ 164:Core/drogui/src/mahony.c **** 			integralFBz += twoKi * halfez * (1.0f / sampleFreq);
+ 262              		.loc 1 164 34 view .LVU75
+ 263 012c 66EE866A 		vmul.f32	s13, s13, s12
+ 164:Core/drogui/src/mahony.c **** 			integralFBz += twoKi * halfez * (1.0f / sampleFreq);
+ 264              		.loc 1 164 16 view .LVU76
+ 265 0130 6D4A     		ldr	r2, .L13+28
+ 266 0132 D2ED007A 		vldr.32	s15, [r2]
+ 267 0136 77EEA66A 		vadd.f32	s13, s15, s13
+ 268 013a C2ED006A 		vstr.32	s13, [r2]
+ 165:Core/drogui/src/mahony.c **** 			gx += integralFBx;	// apply integral feedback
+ 269              		.loc 1 165 4 is_stmt 1 view .LVU77
+ 165:Core/drogui/src/mahony.c **** 			gx += integralFBx;	// apply integral feedback
+ 270              		.loc 1 165 25 is_stmt 0 view .LVU78
+ 271 013e D3ED007A 		vldr.32	s15, [r3]
+ 272 0142 67EE8A7A 		vmul.f32	s15, s15, s20
+ 165:Core/drogui/src/mahony.c **** 			gx += integralFBx;	// apply integral feedback
+ 273              		.loc 1 165 34 view .LVU79
+ 274 0146 67EE867A 		vmul.f32	s15, s15, s12
+ 165:Core/drogui/src/mahony.c **** 			gx += integralFBx;	// apply integral feedback
+ 275              		.loc 1 165 16 view .LVU80
+ 276 014a 684B     		ldr	r3, .L13+32
+ 277 014c D3ED006A 		vldr.32	s13, [r3]
+ 278 0150 76EEA77A 		vadd.f32	s15, s13, s15
+ 279 0154 C3ED007A 		vstr.32	s15, [r3]
+ 166:Core/drogui/src/mahony.c **** 			gy += integralFBy;
+ 280              		.loc 1 166 4 is_stmt 1 view .LVU81
+ 281 0158 D1ED007A 		vldr.32	s15, [r1]
+ 166:Core/drogui/src/mahony.c **** 			gy += integralFBy;
+ 282              		.loc 1 166 7 is_stmt 0 view .LVU82
+ 283 015c 78EEA78A 		vadd.f32	s17, s17, s15
+ 284              	.LVL24:
+ 167:Core/drogui/src/mahony.c **** 			gz += integralFBz;
+ 285              		.loc 1 167 4 is_stmt 1 view .LVU83
+ 286 0160 D2ED007A 		vldr.32	s15, [r2]
+ 167:Core/drogui/src/mahony.c **** 			gz += integralFBz;
+ 287              		.loc 1 167 7 is_stmt 0 view .LVU84
+ 288 0164 39EE279A 		vadd.f32	s18, s18, s15
+ 289              	.LVL25:
+ 168:Core/drogui/src/mahony.c **** 		}
+ 290              		.loc 1 168 4 is_stmt 1 view .LVU85
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 11
+
+
+ 291 0168 D3ED007A 		vldr.32	s15, [r3]
+ 168:Core/drogui/src/mahony.c **** 		}
+ 292              		.loc 1 168 7 is_stmt 0 view .LVU86
+ 293 016c 38EE278A 		vadd.f32	s16, s16, s15
+ 294              	.LVL26:
+ 295              	.L9:
+ 177:Core/drogui/src/mahony.c **** 		gy += twoKp * halfey;
+ 296              		.loc 1 177 3 is_stmt 1 view .LVU87
+ 177:Core/drogui/src/mahony.c **** 		gy += twoKp * halfey;
+ 297              		.loc 1 177 15 is_stmt 0 view .LVU88
+ 298 0170 5F4B     		ldr	r3, .L13+36
+ 299 0172 D3ED007A 		vldr.32	s15, [r3]
+ 300 0176 27EE877A 		vmul.f32	s14, s15, s14
+ 301              	.LVL27:
+ 177:Core/drogui/src/mahony.c **** 		gy += twoKp * halfey;
+ 302              		.loc 1 177 6 view .LVU89
+ 303 017a 78EE878A 		vadd.f32	s17, s17, s14
+ 304              	.LVL28:
+ 178:Core/drogui/src/mahony.c **** 		gz += twoKp * halfez;
+ 305              		.loc 1 178 3 is_stmt 1 view .LVU90
+ 178:Core/drogui/src/mahony.c **** 		gz += twoKp * halfez;
+ 306              		.loc 1 178 15 is_stmt 0 view .LVU91
+ 307 017e D3ED007A 		vldr.32	s15, [r3]
+ 308 0182 67EEA99A 		vmul.f32	s19, s15, s19
+ 309              	.LVL29:
+ 178:Core/drogui/src/mahony.c **** 		gz += twoKp * halfez;
+ 310              		.loc 1 178 6 view .LVU92
+ 311 0186 39EE299A 		vadd.f32	s18, s18, s19
+ 312              	.LVL30:
+ 179:Core/drogui/src/mahony.c **** 	}
+ 313              		.loc 1 179 3 is_stmt 1 view .LVU93
+ 179:Core/drogui/src/mahony.c **** 	}
+ 314              		.loc 1 179 15 is_stmt 0 view .LVU94
+ 315 018a D3ED00AA 		vldr.32	s21, [r3]
+ 316 018e 2AEE8AAA 		vmul.f32	s20, s21, s20
+ 317              	.LVL31:
+ 179:Core/drogui/src/mahony.c **** 	}
+ 318              		.loc 1 179 6 view .LVU95
+ 319 0192 38EE0A8A 		vadd.f32	s16, s16, s20
+ 320              	.LVL32:
+ 321              	.L6:
+ 183:Core/drogui/src/mahony.c **** 	gy *= (0.5f * (1.0f / sampleFreq));
+ 322              		.loc 1 183 2 is_stmt 1 view .LVU96
+ 183:Core/drogui/src/mahony.c **** 	gy *= (0.5f * (1.0f / sampleFreq));
+ 323              		.loc 1 183 5 is_stmt 0 view .LVU97
+ 324 0196 DFED577A 		vldr.32	s15, .L13+40
+ 325 019a 68EEA78A 		vmul.f32	s17, s17, s15
+ 326              	.LVL33:
+ 184:Core/drogui/src/mahony.c **** 	gz *= (0.5f * (1.0f / sampleFreq));
+ 327              		.loc 1 184 2 is_stmt 1 view .LVU98
+ 184:Core/drogui/src/mahony.c **** 	gz *= (0.5f * (1.0f / sampleFreq));
+ 328              		.loc 1 184 5 is_stmt 0 view .LVU99
+ 329 019e 29EE279A 		vmul.f32	s18, s18, s15
+ 330              	.LVL34:
+ 185:Core/drogui/src/mahony.c **** 	qa = q0;
+ 331              		.loc 1 185 2 is_stmt 1 view .LVU100
+ 185:Core/drogui/src/mahony.c **** 	qa = q0;
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 12
+
+
+ 332              		.loc 1 185 5 is_stmt 0 view .LVU101
+ 333 01a2 28EE271A 		vmul.f32	s2, s16, s15
+ 334              	.LVL35:
+ 186:Core/drogui/src/mahony.c **** 	qb = q1;
+ 335              		.loc 1 186 2 is_stmt 1 view .LVU102
+ 186:Core/drogui/src/mahony.c **** 	qb = q1;
+ 336              		.loc 1 186 5 is_stmt 0 view .LVU103
+ 337 01a6 4B4F     		ldr	r7, .L13+8
+ 338 01a8 D7ED006A 		vldr.32	s13, [r7]
+ 339              	.LVL36:
+ 187:Core/drogui/src/mahony.c **** 	qc = q2;
+ 340              		.loc 1 187 2 is_stmt 1 view .LVU104
+ 187:Core/drogui/src/mahony.c **** 	qc = q2;
+ 341              		.loc 1 187 5 is_stmt 0 view .LVU105
+ 342 01ac 474E     		ldr	r6, .L13
+ 343 01ae 96ED007A 		vldr.32	s14, [r6]
+ 344              	.LVL37:
+ 188:Core/drogui/src/mahony.c **** 	q0 += (-qb * gx - qc * gy - q3 * gz);
+ 345              		.loc 1 188 2 is_stmt 1 view .LVU106
+ 188:Core/drogui/src/mahony.c **** 	q0 += (-qb * gx - qc * gy - q3 * gz);
+ 346              		.loc 1 188 5 is_stmt 0 view .LVU107
+ 347 01b2 494D     		ldr	r5, .L13+12
+ 348 01b4 95ED000A 		vldr.32	s0, [r5]
+ 349              	.LVL38:
+ 189:Core/drogui/src/mahony.c **** 	q1 += (qa * gx + qc * gz - q3 * gy);
+ 350              		.loc 1 189 2 is_stmt 1 view .LVU108
+ 189:Core/drogui/src/mahony.c **** 	q1 += (qa * gx + qc * gz - q3 * gy);
+ 351              		.loc 1 189 13 is_stmt 0 view .LVU109
+ 352 01b8 67EE687A 		vnmul.f32	s15, s14, s17
+ 189:Core/drogui/src/mahony.c **** 	q1 += (qa * gx + qc * gz - q3 * gy);
+ 353              		.loc 1 189 23 view .LVU110
+ 354 01bc 29EE006A 		vmul.f32	s12, s18, s0
+ 189:Core/drogui/src/mahony.c **** 	q1 += (qa * gx + qc * gz - q3 * gy);
+ 355              		.loc 1 189 18 view .LVU111
+ 356 01c0 77EEC67A 		vsub.f32	s15, s15, s12
+ 189:Core/drogui/src/mahony.c **** 	q1 += (qa * gx + qc * gz - q3 * gy);
+ 357              		.loc 1 189 33 view .LVU112
+ 358 01c4 424C     		ldr	r4, .L13+4
+ 359 01c6 94ED006A 		vldr.32	s12, [r4]
+ 360 01ca 26EE016A 		vmul.f32	s12, s12, s2
+ 189:Core/drogui/src/mahony.c **** 	q1 += (qa * gx + qc * gz - q3 * gy);
+ 361              		.loc 1 189 28 view .LVU113
+ 362 01ce 77EEC67A 		vsub.f32	s15, s15, s12
+ 189:Core/drogui/src/mahony.c **** 	q1 += (qa * gx + qc * gz - q3 * gy);
+ 363              		.loc 1 189 5 view .LVU114
+ 364 01d2 97ED006A 		vldr.32	s12, [r7]
+ 365 01d6 76EE277A 		vadd.f32	s15, s12, s15
+ 366 01da C7ED007A 		vstr.32	s15, [r7]
+ 190:Core/drogui/src/mahony.c **** 	q2 += (qa * gy - qb * gz + q3 * gx);
+ 367              		.loc 1 190 2 is_stmt 1 view .LVU115
+ 190:Core/drogui/src/mahony.c **** 	q2 += (qa * gy - qb * gz + q3 * gx);
+ 368              		.loc 1 190 12 is_stmt 0 view .LVU116
+ 369 01de 68EEA67A 		vmul.f32	s15, s17, s13
+ 190:Core/drogui/src/mahony.c **** 	q2 += (qa * gy - qb * gz + q3 * gx);
+ 370              		.loc 1 190 22 view .LVU117
+ 371 01e2 21EE006A 		vmul.f32	s12, s2, s0
+ 190:Core/drogui/src/mahony.c **** 	q2 += (qa * gy - qb * gz + q3 * gx);
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 13
+
+
+ 372              		.loc 1 190 17 view .LVU118
+ 373 01e6 77EE867A 		vadd.f32	s15, s15, s12
+ 190:Core/drogui/src/mahony.c **** 	q2 += (qa * gy - qb * gz + q3 * gx);
+ 374              		.loc 1 190 32 view .LVU119
+ 375 01ea 94ED006A 		vldr.32	s12, [r4]
+ 376 01ee 26EE096A 		vmul.f32	s12, s12, s18
+ 190:Core/drogui/src/mahony.c **** 	q2 += (qa * gy - qb * gz + q3 * gx);
+ 377              		.loc 1 190 27 view .LVU120
+ 378 01f2 77EEC67A 		vsub.f32	s15, s15, s12
+ 190:Core/drogui/src/mahony.c **** 	q2 += (qa * gy - qb * gz + q3 * gx);
+ 379              		.loc 1 190 5 view .LVU121
+ 380 01f6 96ED006A 		vldr.32	s12, [r6]
+ 381 01fa 76EE277A 		vadd.f32	s15, s12, s15
+ 382 01fe C6ED007A 		vstr.32	s15, [r6]
+ 191:Core/drogui/src/mahony.c **** 	q3 += (qa * gz + qb * gy - qc * gx); 
+ 383              		.loc 1 191 2 is_stmt 1 view .LVU122
+ 191:Core/drogui/src/mahony.c **** 	q3 += (qa * gz + qb * gy - qc * gx); 
+ 384              		.loc 1 191 12 is_stmt 0 view .LVU123
+ 385 0202 69EE267A 		vmul.f32	s15, s18, s13
+ 191:Core/drogui/src/mahony.c **** 	q3 += (qa * gz + qb * gy - qc * gx); 
+ 386              		.loc 1 191 22 view .LVU124
+ 387 0206 21EE076A 		vmul.f32	s12, s2, s14
+ 191:Core/drogui/src/mahony.c **** 	q3 += (qa * gz + qb * gy - qc * gx); 
+ 388              		.loc 1 191 17 view .LVU125
+ 389 020a 77EEC67A 		vsub.f32	s15, s15, s12
+ 191:Core/drogui/src/mahony.c **** 	q3 += (qa * gz + qb * gy - qc * gx); 
+ 390              		.loc 1 191 32 view .LVU126
+ 391 020e 94ED006A 		vldr.32	s12, [r4]
+ 392 0212 26EE286A 		vmul.f32	s12, s12, s17
+ 191:Core/drogui/src/mahony.c **** 	q3 += (qa * gz + qb * gy - qc * gx); 
+ 393              		.loc 1 191 27 view .LVU127
+ 394 0216 77EE867A 		vadd.f32	s15, s15, s12
+ 191:Core/drogui/src/mahony.c **** 	q3 += (qa * gz + qb * gy - qc * gx); 
+ 395              		.loc 1 191 5 view .LVU128
+ 396 021a 95ED006A 		vldr.32	s12, [r5]
+ 397 021e 76EE277A 		vadd.f32	s15, s12, s15
+ 398 0222 C5ED007A 		vstr.32	s15, [r5]
+ 192:Core/drogui/src/mahony.c **** 	
+ 399              		.loc 1 192 2 is_stmt 1 view .LVU129
+ 192:Core/drogui/src/mahony.c **** 	
+ 400              		.loc 1 192 12 is_stmt 0 view .LVU130
+ 401 0226 21EE261A 		vmul.f32	s2, s2, s13
+ 402              	.LVL39:
+ 192:Core/drogui/src/mahony.c **** 	
+ 403              		.loc 1 192 22 view .LVU131
+ 404 022a 29EE079A 		vmul.f32	s18, s18, s14
+ 405              	.LVL40:
+ 192:Core/drogui/src/mahony.c **** 	
+ 406              		.loc 1 192 17 view .LVU132
+ 407 022e 31EE091A 		vadd.f32	s2, s2, s18
+ 192:Core/drogui/src/mahony.c **** 	
+ 408              		.loc 1 192 32 view .LVU133
+ 409 0232 68EE808A 		vmul.f32	s17, s17, s0
+ 410              	.LVL41:
+ 192:Core/drogui/src/mahony.c **** 	
+ 411              		.loc 1 192 27 view .LVU134
+ 412 0236 31EE681A 		vsub.f32	s2, s2, s17
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 14
+
+
+ 192:Core/drogui/src/mahony.c **** 	
+ 413              		.loc 1 192 5 view .LVU135
+ 414 023a D4ED007A 		vldr.32	s15, [r4]
+ 415 023e 31EE271A 		vadd.f32	s2, s2, s15
+ 416 0242 84ED001A 		vstr.32	s2, [r4]
+ 195:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 417              		.loc 1 195 2 is_stmt 1 view .LVU136
+ 195:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 418              		.loc 1 195 25 is_stmt 0 view .LVU137
+ 419 0246 D7ED007A 		vldr.32	s15, [r7]
+ 420 024a 97ED000A 		vldr.32	s0, [r7]
+ 421              	.LVL42:
+ 195:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 422              		.loc 1 195 25 view .LVU138
+ 423 024e 67EE807A 		vmul.f32	s15, s15, s0
+ 195:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 424              		.loc 1 195 35 view .LVU139
+ 425 0252 96ED000A 		vldr.32	s0, [r6]
+ 426 0256 96ED007A 		vldr.32	s14, [r6]
+ 427              	.LVL43:
+ 195:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 428              		.loc 1 195 35 view .LVU140
+ 429 025a 20EE070A 		vmul.f32	s0, s0, s14
+ 195:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 430              		.loc 1 195 30 view .LVU141
+ 431 025e 77EE807A 		vadd.f32	s15, s15, s0
+ 195:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 432              		.loc 1 195 45 view .LVU142
+ 433 0262 95ED000A 		vldr.32	s0, [r5]
+ 434 0266 95ED007A 		vldr.32	s14, [r5]
+ 435 026a 20EE070A 		vmul.f32	s0, s0, s14
+ 195:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 436              		.loc 1 195 40 view .LVU143
+ 437 026e 77EE807A 		vadd.f32	s15, s15, s0
+ 195:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 438              		.loc 1 195 55 view .LVU144
+ 439 0272 94ED000A 		vldr.32	s0, [r4]
+ 440 0276 94ED007A 		vldr.32	s14, [r4]
+ 441 027a 20EE070A 		vmul.f32	s0, s0, s14
+ 195:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 442              		.loc 1 195 14 view .LVU145
+ 443 027e 37EE800A 		vadd.f32	s0, s15, s0
+ 444 0282 FFF7FEFF 		bl	invSqrt
+ 445              	.LVL44:
+ 196:Core/drogui/src/mahony.c **** 	q1 *= recipNorm;
+ 446              		.loc 1 196 2 is_stmt 1 view .LVU146
+ 196:Core/drogui/src/mahony.c **** 	q1 *= recipNorm;
+ 447              		.loc 1 196 5 is_stmt 0 view .LVU147
+ 448 0286 D7ED007A 		vldr.32	s15, [r7]
+ 449 028a 67EE807A 		vmul.f32	s15, s15, s0
+ 450 028e C7ED007A 		vstr.32	s15, [r7]
+ 197:Core/drogui/src/mahony.c **** 	q2 *= recipNorm;
+ 451              		.loc 1 197 2 is_stmt 1 view .LVU148
+ 197:Core/drogui/src/mahony.c **** 	q2 *= recipNorm;
+ 452              		.loc 1 197 5 is_stmt 0 view .LVU149
+ 453 0292 D6ED007A 		vldr.32	s15, [r6]
+ 454 0296 67EE807A 		vmul.f32	s15, s15, s0
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 15
+
+
+ 455 029a C6ED007A 		vstr.32	s15, [r6]
+ 198:Core/drogui/src/mahony.c **** 	q3 *= recipNorm;
+ 456              		.loc 1 198 2 is_stmt 1 view .LVU150
+ 198:Core/drogui/src/mahony.c **** 	q3 *= recipNorm;
+ 457              		.loc 1 198 5 is_stmt 0 view .LVU151
+ 458 029e D5ED007A 		vldr.32	s15, [r5]
+ 459 02a2 67EE807A 		vmul.f32	s15, s15, s0
+ 460 02a6 C5ED007A 		vstr.32	s15, [r5]
+ 199:Core/drogui/src/mahony.c **** }
+ 461              		.loc 1 199 2 is_stmt 1 view .LVU152
+ 199:Core/drogui/src/mahony.c **** }
+ 462              		.loc 1 199 5 is_stmt 0 view .LVU153
+ 463 02aa D4ED007A 		vldr.32	s15, [r4]
+ 464 02ae 27EE800A 		vmul.f32	s0, s15, s0
+ 465              	.LVL45:
+ 199:Core/drogui/src/mahony.c **** }
+ 466              		.loc 1 199 5 view .LVU154
+ 467 02b2 84ED000A 		vstr.32	s0, [r4]
+ 200:Core/drogui/src/mahony.c **** 
+ 468              		.loc 1 200 1 view .LVU155
+ 469 02b6 BDEC068B 		vldm	sp!, {d8-d10}
+ 470              	.LCFI2:
+ 471              		.cfi_remember_state
+ 472              		.cfi_restore 84
+ 473              		.cfi_restore 85
+ 474              		.cfi_restore 82
+ 475              		.cfi_restore 83
+ 476              		.cfi_restore 80
+ 477              		.cfi_restore 81
+ 478              		.cfi_def_cfa_offset 24
+ 479              	.LVL46:
+ 200:Core/drogui/src/mahony.c **** 
+ 480              		.loc 1 200 1 view .LVU156
+ 481 02ba F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 482              	.LVL47:
+ 483              	.L11:
+ 484              	.LCFI3:
+ 485              		.cfi_restore_state
+ 171:Core/drogui/src/mahony.c **** 			integralFBy = 0.0f;
+ 486              		.loc 1 171 4 is_stmt 1 view .LVU157
+ 171:Core/drogui/src/mahony.c **** 			integralFBy = 0.0f;
+ 487              		.loc 1 171 16 is_stmt 0 view .LVU158
+ 488 02bc 0023     		movs	r3, #0
+ 489 02be 094A     		ldr	r2, .L13+24
+ 490 02c0 1360     		str	r3, [r2]	@ float
+ 172:Core/drogui/src/mahony.c **** 			integralFBz = 0.0f;
+ 491              		.loc 1 172 4 is_stmt 1 view .LVU159
+ 172:Core/drogui/src/mahony.c **** 			integralFBz = 0.0f;
+ 492              		.loc 1 172 16 is_stmt 0 view .LVU160
+ 493 02c2 094A     		ldr	r2, .L13+28
+ 494 02c4 1360     		str	r3, [r2]	@ float
+ 173:Core/drogui/src/mahony.c **** 		}
+ 495              		.loc 1 173 4 is_stmt 1 view .LVU161
+ 173:Core/drogui/src/mahony.c **** 		}
+ 496              		.loc 1 173 16 is_stmt 0 view .LVU162
+ 497 02c6 094A     		ldr	r2, .L13+32
+ 498 02c8 1360     		str	r3, [r2]	@ float
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 16
+
+
+ 499 02ca 51E7     		b	.L9
+ 500              	.L14:
+ 501              		.align	2
+ 502              	.L13:
+ 503 02cc 00000000 		.word	.LANCHOR0
+ 504 02d0 00000000 		.word	.LANCHOR1
+ 505 02d4 00000000 		.word	.LANCHOR2
+ 506 02d8 00000000 		.word	.LANCHOR3
+ 507 02dc 00000000 		.word	.LANCHOR4
+ 508 02e0 6F12033B 		.word	990057071
+ 509 02e4 00000000 		.word	.LANCHOR5
+ 510 02e8 00000000 		.word	.LANCHOR6
+ 511 02ec 00000000 		.word	.LANCHOR7
+ 512 02f0 00000000 		.word	.LANCHOR8
+ 513 02f4 6F12833A 		.word	981668463
+ 514              		.cfi_endproc
+ 515              	.LFE142:
+ 517              		.global	__aeabi_f2d
+ 518              		.global	__aeabi_d2f
+ 519              		.section	.text.mahonyUpdate,"ax",%progbits
+ 520              		.align	1
+ 521              		.global	mahonyUpdate
+ 522              		.syntax unified
+ 523              		.thumb
+ 524              		.thumb_func
+ 525              		.fpu fpv5-sp-d16
+ 527              	mahonyUpdate:
+ 528              	.LVL48:
+ 529              	.LFB141:
+  32:Core/drogui/src/mahony.c **** 	float recipNorm;
+ 530              		.loc 1 32 109 is_stmt 1 view -0
+ 531              		.cfi_startproc
+ 532              		@ args = 0, pretend = 0, frame = 24
+ 533              		@ frame_needed = 0, uses_anonymous_args = 0
+  32:Core/drogui/src/mahony.c **** 	float recipNorm;
+ 534              		.loc 1 32 109 is_stmt 0 view .LVU164
+ 535 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 536              	.LCFI4:
+ 537              		.cfi_def_cfa_offset 20
+ 538              		.cfi_offset 4, -20
+ 539              		.cfi_offset 5, -16
+ 540              		.cfi_offset 6, -12
+ 541              		.cfi_offset 7, -8
+ 542              		.cfi_offset 14, -4
+ 543 0002 2DED108B 		vpush.64	{d8, d9, d10, d11, d12, d13, d14, d15}
+ 544              	.LCFI5:
+ 545              		.cfi_def_cfa_offset 84
+ 546              		.cfi_offset 80, -84
+ 547              		.cfi_offset 81, -80
+ 548              		.cfi_offset 82, -76
+ 549              		.cfi_offset 83, -72
+ 550              		.cfi_offset 84, -68
+ 551              		.cfi_offset 85, -64
+ 552              		.cfi_offset 86, -60
+ 553              		.cfi_offset 87, -56
+ 554              		.cfi_offset 88, -52
+ 555              		.cfi_offset 89, -48
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 17
+
+
+ 556              		.cfi_offset 90, -44
+ 557              		.cfi_offset 91, -40
+ 558              		.cfi_offset 92, -36
+ 559              		.cfi_offset 93, -32
+ 560              		.cfi_offset 94, -28
+ 561              		.cfi_offset 95, -24
+ 562 0006 87B0     		sub	sp, sp, #28
+ 563              	.LCFI6:
+ 564              		.cfi_def_cfa_offset 112
+ 565 0008 F0EE409A 		vmov.f32	s19, s0
+ 566 000c B0EE60AA 		vmov.f32	s20, s1
+ 567 0010 B0EE418A 		vmov.f32	s16, s2
+ 568 0014 F0EE618A 		vmov.f32	s17, s3
+ 569 0018 F0EE42BA 		vmov.f32	s23, s4
+ 570 001c B0EE62CA 		vmov.f32	s24, s5
+ 571 0020 B0EE439A 		vmov.f32	s18, s6
+ 572 0024 F0EE63AA 		vmov.f32	s21, s7
+ 573 0028 B0EE44BA 		vmov.f32	s22, s8
+  33:Core/drogui/src/mahony.c ****     float q0q0, q0q1, q0q2, q0q3, q1q1, q1q2, q1q3, q2q2, q2q3, q3q3;  
+ 574              		.loc 1 33 2 is_stmt 1 view .LVU165
+  34:Core/drogui/src/mahony.c **** 	float hx, hy, bx, bz;
+ 575              		.loc 1 34 5 view .LVU166
+  35:Core/drogui/src/mahony.c **** 	float halfvx, halfvy, halfvz, halfwx, halfwy, halfwz;
+ 576              		.loc 1 35 2 view .LVU167
+  36:Core/drogui/src/mahony.c **** 	float halfex, halfey, halfez;
+ 577              		.loc 1 36 2 view .LVU168
+  37:Core/drogui/src/mahony.c **** 	float qa, qb, qc;
+ 578              		.loc 1 37 2 view .LVU169
+  38:Core/drogui/src/mahony.c **** 
+ 579              		.loc 1 38 2 view .LVU170
+  41:Core/drogui/src/mahony.c **** 		mahonyUpdateIMU(gx, gy, gz, ax, ay, az);
+ 580              		.loc 1 41 2 view .LVU171
+  41:Core/drogui/src/mahony.c **** 		mahonyUpdateIMU(gx, gy, gz, ax, ay, az);
+ 581              		.loc 1 41 11 is_stmt 0 view .LVU172
+ 582 002c B5EE403A 		vcmp.f32	s6, #0
+ 583 0030 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 584 0034 0CBF     		ite	eq
+ 585 0036 0123     		moveq	r3, #1
+ 586 0038 0023     		movne	r3, #0
+  41:Core/drogui/src/mahony.c **** 		mahonyUpdateIMU(gx, gy, gz, ax, ay, az);
+ 587              		.loc 1 41 27 view .LVU173
+ 588 003a F5EE403A 		vcmp.f32	s7, #0
+ 589 003e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+  41:Core/drogui/src/mahony.c **** 		mahonyUpdateIMU(gx, gy, gz, ax, ay, az);
+ 590              		.loc 1 41 20 view .LVU174
+ 591 0042 03F00103 		and	r3, r3, #1
+ 592 0046 18BF     		it	ne
+ 593 0048 0023     		movne	r3, #0
+  41:Core/drogui/src/mahony.c **** 		mahonyUpdateIMU(gx, gy, gz, ax, ay, az);
+ 594              		.loc 1 41 4 view .LVU175
+ 595 004a 2BB1     		cbz	r3, .L16
+  41:Core/drogui/src/mahony.c **** 		mahonyUpdateIMU(gx, gy, gz, ax, ay, az);
+ 596              		.loc 1 41 36 discriminator 1 view .LVU176
+ 597 004c B5EE404A 		vcmp.f32	s8, #0
+ 598 0050 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 599 0054 00F00E82 		beq	.L17
+ 600              	.L16:
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 18
+
+
+  41:Core/drogui/src/mahony.c **** 		mahonyUpdateIMU(gx, gy, gz, ax, ay, az);
+ 601              		.loc 1 41 67 discriminator 3 view .LVU177
+ 602 0058 B4EE6A9A 		vcmp.f32	s18, s21
+ 603 005c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 604 0060 80F10882 		bvs	.L17
+  41:Core/drogui/src/mahony.c **** 		mahonyUpdateIMU(gx, gy, gz, ax, ay, az);
+ 605              		.loc 1 41 80 discriminator 4 view .LVU178
+ 606 0064 B4EE4BBA 		vcmp.f32	s22, s22
+ 607 0068 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 608 006c 80F10282 		bvs	.L17
+  47:Core/drogui/src/mahony.c **** 
+ 609              		.loc 1 47 2 is_stmt 1 view .LVU179
+  47:Core/drogui/src/mahony.c **** 
+ 610              		.loc 1 47 11 is_stmt 0 view .LVU180
+ 611 0070 F5EE408A 		vcmp.f32	s17, #0
+ 612 0074 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 613 0078 14BF     		ite	ne
+ 614 007a 0123     		movne	r3, #1
+ 615 007c 0023     		moveq	r3, #0
+  47:Core/drogui/src/mahony.c **** 
+ 616              		.loc 1 47 27 view .LVU181
+ 617 007e F5EE40BA 		vcmp.f32	s23, #0
+ 618 0082 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+  47:Core/drogui/src/mahony.c **** 
+ 619              		.loc 1 47 20 view .LVU182
+ 620 0086 18BF     		it	ne
+ 621 0088 43F00103 		orrne	r3, r3, #1
+  47:Core/drogui/src/mahony.c **** 
+ 622              		.loc 1 47 4 view .LVU183
+ 623 008c 2BB9     		cbnz	r3, .L20
+  47:Core/drogui/src/mahony.c **** 
+ 624              		.loc 1 47 5 discriminator 1 view .LVU184
+ 625 008e B5EE40CA 		vcmp.f32	s24, #0
+ 626 0092 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 627 0096 00F05981 		beq	.L21
+ 628              	.L20:
+  50:Core/drogui/src/mahony.c **** 		ax *= recipNorm;
+ 629              		.loc 1 50 3 is_stmt 1 view .LVU185
+  50:Core/drogui/src/mahony.c **** 		ax *= recipNorm;
+ 630              		.loc 1 50 26 is_stmt 0 view .LVU186
+ 631 009a 68EEA87A 		vmul.f32	s15, s17, s17
+  50:Core/drogui/src/mahony.c **** 		ax *= recipNorm;
+ 632              		.loc 1 50 36 view .LVU187
+ 633 009e 2BEEAB0A 		vmul.f32	s0, s23, s23
+ 634              	.LVL49:
+  50:Core/drogui/src/mahony.c **** 		ax *= recipNorm;
+ 635              		.loc 1 50 31 view .LVU188
+ 636 00a2 77EE807A 		vadd.f32	s15, s15, s0
+  50:Core/drogui/src/mahony.c **** 		ax *= recipNorm;
+ 637              		.loc 1 50 46 view .LVU189
+ 638 00a6 2CEE0C0A 		vmul.f32	s0, s24, s24
+  50:Core/drogui/src/mahony.c **** 		ax *= recipNorm;
+ 639              		.loc 1 50 15 view .LVU190
+ 640 00aa 37EE800A 		vadd.f32	s0, s15, s0
+ 641 00ae FFF7FEFF 		bl	invSqrt
+ 642              	.LVL50:
+  51:Core/drogui/src/mahony.c **** 		ay *= recipNorm;
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 19
+
+
+ 643              		.loc 1 51 3 is_stmt 1 view .LVU191
+  51:Core/drogui/src/mahony.c **** 		ay *= recipNorm;
+ 644              		.loc 1 51 6 is_stmt 0 view .LVU192
+ 645 00b2 68EE806A 		vmul.f32	s13, s17, s0
+ 646 00b6 CDED026A 		vstr.32	s13, [sp, #8]
+ 647              	.LVL51:
+  52:Core/drogui/src/mahony.c **** 		az *= recipNorm;     
+ 648              		.loc 1 52 3 is_stmt 1 view .LVU193
+  52:Core/drogui/src/mahony.c **** 		az *= recipNorm;     
+ 649              		.loc 1 52 6 is_stmt 0 view .LVU194
+ 650 00ba 6BEE805A 		vmul.f32	s11, s23, s0
+ 651 00be CDED035A 		vstr.32	s11, [sp, #12]
+ 652              	.LVL52:
+  53:Core/drogui/src/mahony.c **** 
+ 653              		.loc 1 53 3 is_stmt 1 view .LVU195
+  53:Core/drogui/src/mahony.c **** 
+ 654              		.loc 1 53 6 is_stmt 0 view .LVU196
+ 655 00c2 2CEE005A 		vmul.f32	s10, s24, s0
+ 656 00c6 8DED045A 		vstr.32	s10, [sp, #16]
+ 657              	.LVL53:
+  56:Core/drogui/src/mahony.c **** 		mx *= recipNorm;
+ 658              		.loc 1 56 3 is_stmt 1 view .LVU197
+  56:Core/drogui/src/mahony.c **** 		mx *= recipNorm;
+ 659              		.loc 1 56 26 is_stmt 0 view .LVU198
+ 660 00ca 69EE097A 		vmul.f32	s15, s18, s18
+  56:Core/drogui/src/mahony.c **** 		mx *= recipNorm;
+ 661              		.loc 1 56 36 view .LVU199
+ 662 00ce 2AEEAA0A 		vmul.f32	s0, s21, s21
+ 663              	.LVL54:
+  56:Core/drogui/src/mahony.c **** 		mx *= recipNorm;
+ 664              		.loc 1 56 31 view .LVU200
+ 665 00d2 77EE807A 		vadd.f32	s15, s15, s0
+  56:Core/drogui/src/mahony.c **** 		mx *= recipNorm;
+ 666              		.loc 1 56 46 view .LVU201
+ 667 00d6 2BEE0B0A 		vmul.f32	s0, s22, s22
+  56:Core/drogui/src/mahony.c **** 		mx *= recipNorm;
+ 668              		.loc 1 56 15 view .LVU202
+ 669 00da 37EE800A 		vadd.f32	s0, s15, s0
+ 670 00de FFF7FEFF 		bl	invSqrt
+ 671              	.LVL55:
+  57:Core/drogui/src/mahony.c **** 		my *= recipNorm;
+ 672              		.loc 1 57 3 is_stmt 1 view .LVU203
+  57:Core/drogui/src/mahony.c **** 		my *= recipNorm;
+ 673              		.loc 1 57 6 is_stmt 0 view .LVU204
+ 674 00e2 29EE009A 		vmul.f32	s18, s18, s0
+ 675              	.LVL56:
+  58:Core/drogui/src/mahony.c **** 		mz *= recipNorm;   
+ 676              		.loc 1 58 3 is_stmt 1 view .LVU205
+  58:Core/drogui/src/mahony.c **** 		mz *= recipNorm;   
+ 677              		.loc 1 58 6 is_stmt 0 view .LVU206
+ 678 00e6 6AEE80AA 		vmul.f32	s21, s21, s0
+ 679              	.LVL57:
+  59:Core/drogui/src/mahony.c **** 
+ 680              		.loc 1 59 3 is_stmt 1 view .LVU207
+  59:Core/drogui/src/mahony.c **** 
+ 681              		.loc 1 59 6 is_stmt 0 view .LVU208
+ 682 00ea 6BEE008A 		vmul.f32	s17, s22, s0
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 20
+
+
+ 683              	.LVL58:
+  62:Core/drogui/src/mahony.c ****         q0q1 = q0 * q1;
+ 684              		.loc 1 62 9 is_stmt 1 view .LVU209
+  62:Core/drogui/src/mahony.c ****         q0q1 = q0 * q1;
+ 685              		.loc 1 62 19 is_stmt 0 view .LVU210
+ 686 00ee ED4B     		ldr	r3, .L28
+ 687 00f0 93ED007A 		vldr.32	s14, [r3]
+ 688 00f4 D3ED007A 		vldr.32	s15, [r3]
+  62:Core/drogui/src/mahony.c ****         q0q1 = q0 * q1;
+ 689              		.loc 1 62 14 view .LVU211
+ 690 00f8 67EE277A 		vmul.f32	s15, s14, s15
+ 691 00fc CDED057A 		vstr.32	s15, [sp, #20]
+ 692              	.LVL59:
+  63:Core/drogui/src/mahony.c ****         q0q2 = q0 * q2;
+ 693              		.loc 1 63 9 is_stmt 1 view .LVU212
+  63:Core/drogui/src/mahony.c ****         q0q2 = q0 * q2;
+ 694              		.loc 1 63 19 is_stmt 0 view .LVU213
+ 695 0100 D3ED00EA 		vldr.32	s29, [r3]
+ 696 0104 E849     		ldr	r1, .L28+4
+ 697 0106 D1ED007A 		vldr.32	s15, [r1]
+ 698              	.LVL60:
+  63:Core/drogui/src/mahony.c ****         q0q2 = q0 * q2;
+ 699              		.loc 1 63 14 view .LVU214
+ 700 010a 6EEEA7EA 		vmul.f32	s29, s29, s15
+ 701              	.LVL61:
+  64:Core/drogui/src/mahony.c ****         q0q3 = q0 * q3;
+ 702              		.loc 1 64 9 is_stmt 1 view .LVU215
+  64:Core/drogui/src/mahony.c ****         q0q3 = q0 * q3;
+ 703              		.loc 1 64 19 is_stmt 0 view .LVU216
+ 704 010e 93ED00FA 		vldr.32	s30, [r3]
+ 705 0112 E64A     		ldr	r2, .L28+8
+ 706 0114 D2ED007A 		vldr.32	s15, [r2]
+  64:Core/drogui/src/mahony.c ****         q0q3 = q0 * q3;
+ 707              		.loc 1 64 14 view .LVU217
+ 708 0118 2FEE27FA 		vmul.f32	s30, s30, s15
+ 709              	.LVL62:
+  65:Core/drogui/src/mahony.c ****         q1q1 = q1 * q1;
+ 710              		.loc 1 65 9 is_stmt 1 view .LVU218
+  65:Core/drogui/src/mahony.c ****         q1q1 = q1 * q1;
+ 711              		.loc 1 65 19 is_stmt 0 view .LVU219
+ 712 011c 93ED007A 		vldr.32	s14, [r3]
+ 713 0120 E34B     		ldr	r3, .L28+12
+ 714 0122 D3ED007A 		vldr.32	s15, [r3]
+  65:Core/drogui/src/mahony.c ****         q1q1 = q1 * q1;
+ 715              		.loc 1 65 14 view .LVU220
+ 716 0126 67EE277A 		vmul.f32	s15, s14, s15
+ 717              	.LVL63:
+  66:Core/drogui/src/mahony.c ****         q1q2 = q1 * q2;
+ 718              		.loc 1 66 9 is_stmt 1 view .LVU221
+  66:Core/drogui/src/mahony.c ****         q1q2 = q1 * q2;
+ 719              		.loc 1 66 19 is_stmt 0 view .LVU222
+ 720 012a 91ED00CA 		vldr.32	s24, [r1]
+ 721 012e 91ED007A 		vldr.32	s14, [r1]
+  66:Core/drogui/src/mahony.c ****         q1q2 = q1 * q2;
+ 722              		.loc 1 66 14 view .LVU223
+ 723 0132 2CEE07CA 		vmul.f32	s24, s24, s14
+ 724              	.LVL64:
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 21
+
+
+  67:Core/drogui/src/mahony.c ****         q1q3 = q1 * q3;
+ 725              		.loc 1 67 9 is_stmt 1 view .LVU224
+  67:Core/drogui/src/mahony.c ****         q1q3 = q1 * q3;
+ 726              		.loc 1 67 19 is_stmt 0 view .LVU225
+ 727 0136 D1ED006A 		vldr.32	s13, [r1]
+ 728 013a 92ED007A 		vldr.32	s14, [r2]
+  67:Core/drogui/src/mahony.c ****         q1q3 = q1 * q3;
+ 729              		.loc 1 67 14 view .LVU226
+ 730 013e 66EE876A 		vmul.f32	s13, s13, s14
+ 731              	.LVL65:
+  68:Core/drogui/src/mahony.c ****         q2q2 = q2 * q2;
+ 732              		.loc 1 68 9 is_stmt 1 view .LVU227
+  68:Core/drogui/src/mahony.c ****         q2q2 = q2 * q2;
+ 733              		.loc 1 68 19 is_stmt 0 view .LVU228
+ 734 0142 D1ED00BA 		vldr.32	s23, [r1]
+ 735 0146 93ED007A 		vldr.32	s14, [r3]
+  68:Core/drogui/src/mahony.c ****         q2q2 = q2 * q2;
+ 736              		.loc 1 68 14 view .LVU229
+ 737 014a 6BEE87BA 		vmul.f32	s23, s23, s14
+ 738              	.LVL66:
+  69:Core/drogui/src/mahony.c ****         q2q3 = q2 * q3;
+ 739              		.loc 1 69 9 is_stmt 1 view .LVU230
+  69:Core/drogui/src/mahony.c ****         q2q3 = q2 * q3;
+ 740              		.loc 1 69 19 is_stmt 0 view .LVU231
+ 741 014e 92ED00EA 		vldr.32	s28, [r2]
+ 742 0152 92ED007A 		vldr.32	s14, [r2]
+  69:Core/drogui/src/mahony.c ****         q2q3 = q2 * q3;
+ 743              		.loc 1 69 14 view .LVU232
+ 744 0156 2EEE07EA 		vmul.f32	s28, s28, s14
+ 745              	.LVL67:
+  70:Core/drogui/src/mahony.c ****         q3q3 = q3 * q3;   
+ 746              		.loc 1 70 9 is_stmt 1 view .LVU233
+  70:Core/drogui/src/mahony.c ****         q3q3 = q3 * q3;   
+ 747              		.loc 1 70 19 is_stmt 0 view .LVU234
+ 748 015a 92ED00BA 		vldr.32	s22, [r2]
+ 749 015e 93ED007A 		vldr.32	s14, [r3]
+  70:Core/drogui/src/mahony.c ****         q3q3 = q3 * q3;   
+ 750              		.loc 1 70 14 view .LVU235
+ 751 0162 2BEE07BA 		vmul.f32	s22, s22, s14
+ 752              	.LVL68:
+  71:Core/drogui/src/mahony.c **** 
+ 753              		.loc 1 71 9 is_stmt 1 view .LVU236
+  71:Core/drogui/src/mahony.c **** 
+ 754              		.loc 1 71 19 is_stmt 0 view .LVU237
+ 755 0166 D3ED00DA 		vldr.32	s27, [r3]
+ 756 016a 93ED007A 		vldr.32	s14, [r3]
+  71:Core/drogui/src/mahony.c **** 
+ 757              		.loc 1 71 14 view .LVU238
+ 758 016e 6DEE87DA 		vmul.f32	s27, s27, s14
+ 759              	.LVL69:
+  74:Core/drogui/src/mahony.c ****         hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
+ 760              		.loc 1 74 9 is_stmt 1 view .LVU239
+  74:Core/drogui/src/mahony.c ****         hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
+ 761              		.loc 1 74 33 is_stmt 0 view .LVU240
+ 762 0172 F6EE00FA 		vmov.f32	s31, #5.0e-1
+ 763 0176 7FEECECA 		vsub.f32	s25, s31, s28
+  74:Core/drogui/src/mahony.c ****         hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 22
+
+
+ 764              		.loc 1 74 40 view .LVU241
+ 765 017a 7CEEEDCA 		vsub.f32	s25, s25, s27
+  74:Core/drogui/src/mahony.c ****         hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
+ 766              		.loc 1 74 25 view .LVU242
+ 767 017e 2CEE897A 		vmul.f32	s14, s25, s18
+  74:Core/drogui/src/mahony.c ****         hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
+ 768              		.loc 1 74 61 view .LVU243
+ 769 0182 36EEE7DA 		vsub.f32	s26, s13, s15
+  74:Core/drogui/src/mahony.c ****         hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
+ 770              		.loc 1 74 53 view .LVU244
+ 771 0186 2DEE2A6A 		vmul.f32	s12, s26, s21
+  74:Core/drogui/src/mahony.c ****         hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
+ 772              		.loc 1 74 48 view .LVU245
+ 773 018a 37EE067A 		vadd.f32	s14, s14, s12
+  74:Core/drogui/src/mahony.c ****         hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
+ 774              		.loc 1 74 82 view .LVU246
+ 775 018e 3FEE2B6A 		vadd.f32	s12, s30, s23
+  74:Core/drogui/src/mahony.c ****         hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
+ 776              		.loc 1 74 74 view .LVU247
+ 777 0192 8DED016A 		vstr.32	s12, [sp, #4]
+ 778 0196 26EE286A 		vmul.f32	s12, s12, s17
+  74:Core/drogui/src/mahony.c ****         hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
+ 779              		.loc 1 74 69 view .LVU248
+ 780 019a 37EE067A 		vadd.f32	s14, s14, s12
+  74:Core/drogui/src/mahony.c ****         hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
+ 781              		.loc 1 74 12 view .LVU249
+ 782 019e 37EE077A 		vadd.f32	s14, s14, s14
+ 783              	.LVL70:
+  75:Core/drogui/src/mahony.c ****         bx = sqrt(hx * hx + hy * hy);
+ 784              		.loc 1 75 9 is_stmt 1 view .LVU250
+  75:Core/drogui/src/mahony.c ****         bx = sqrt(hx * hx + hy * hy);
+ 785              		.loc 1 75 33 is_stmt 0 view .LVU251
+ 786 01a2 77EEA67A 		vadd.f32	s15, s15, s13
+ 787              	.LVL71:
+  75:Core/drogui/src/mahony.c ****         bx = sqrt(hx * hx + hy * hy);
+ 788              		.loc 1 75 25 view .LVU252
+ 789 01a6 67EE897A 		vmul.f32	s15, s15, s18
+  75:Core/drogui/src/mahony.c ****         bx = sqrt(hx * hx + hy * hy);
+ 790              		.loc 1 75 54 view .LVU253
+ 791 01aa 3FEECCCA 		vsub.f32	s24, s31, s24
+ 792              	.LVL72:
+  75:Core/drogui/src/mahony.c ****         bx = sqrt(hx * hx + hy * hy);
+ 793              		.loc 1 75 61 view .LVU254
+ 794 01ae 7CEE6D6A 		vsub.f32	s13, s24, s27
+ 795              	.LVL73:
+  75:Core/drogui/src/mahony.c ****         bx = sqrt(hx * hx + hy * hy);
+ 796              		.loc 1 75 46 view .LVU255
+ 797 01b2 66EEAA6A 		vmul.f32	s13, s13, s21
+  75:Core/drogui/src/mahony.c ****         bx = sqrt(hx * hx + hy * hy);
+ 798              		.loc 1 75 41 view .LVU256
+ 799 01b6 77EEA67A 		vadd.f32	s15, s15, s13
+  75:Core/drogui/src/mahony.c ****         bx = sqrt(hx * hx + hy * hy);
+ 800              		.loc 1 75 82 view .LVU257
+ 801 01ba 7BEE6E6A 		vsub.f32	s13, s22, s29
+  75:Core/drogui/src/mahony.c ****         bx = sqrt(hx * hx + hy * hy);
+ 802              		.loc 1 75 74 view .LVU258
+ 803 01be 66EEA86A 		vmul.f32	s13, s13, s17
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 23
+
+
+  75:Core/drogui/src/mahony.c ****         bx = sqrt(hx * hx + hy * hy);
+ 804              		.loc 1 75 69 view .LVU259
+ 805 01c2 77EEA67A 		vadd.f32	s15, s15, s13
+  75:Core/drogui/src/mahony.c ****         bx = sqrt(hx * hx + hy * hy);
+ 806              		.loc 1 75 12 view .LVU260
+ 807 01c6 77EEA77A 		vadd.f32	s15, s15, s15
+ 808              	.LVL74:
+  76:Core/drogui/src/mahony.c ****         bz = 2.0f * (mx * (q1q3 - q0q2) + my * (q2q3 + q0q1) + mz * (0.5f - q1q1 - q2q2));
+ 809              		.loc 1 76 9 is_stmt 1 view .LVU261
+  76:Core/drogui/src/mahony.c ****         bz = 2.0f * (mx * (q1q3 - q0q2) + my * (q2q3 + q0q1) + mz * (0.5f - q1q1 - q2q2));
+ 810              		.loc 1 76 22 is_stmt 0 view .LVU262
+ 811 01ca 27EE077A 		vmul.f32	s14, s14, s14
+ 812              	.LVL75:
+  76:Core/drogui/src/mahony.c ****         bz = 2.0f * (mx * (q1q3 - q0q2) + my * (q2q3 + q0q1) + mz * (0.5f - q1q1 - q2q2));
+ 813              		.loc 1 76 32 view .LVU263
+ 814 01ce 67EEA77A 		vmul.f32	s15, s15, s15
+ 815              	.LVL76:
+  76:Core/drogui/src/mahony.c ****         bz = 2.0f * (mx * (q1q3 - q0q2) + my * (q2q3 + q0q1) + mz * (0.5f - q1q1 - q2q2));
+ 816              		.loc 1 76 14 view .LVU264
+ 817 01d2 37EE277A 		vadd.f32	s14, s14, s15
+ 818 01d6 17EE100A 		vmov	r0, s14
+ 819 01da FFF7FEFF 		bl	__aeabi_f2d
+ 820              	.LVL77:
+  76:Core/drogui/src/mahony.c ****         bz = 2.0f * (mx * (q1q3 - q0q2) + my * (q2q3 + q0q1) + mz * (0.5f - q1q1 - q2q2));
+ 821              		.loc 1 76 14 view .LVU265
+ 822 01de 41EC100B 		vmov	d0, r0, r1
+ 823 01e2 FFF7FEFF 		bl	sqrt
+ 824              	.LVL78:
+ 825 01e6 51EC100B 		vmov	r0, r1, d0
+  76:Core/drogui/src/mahony.c ****         bz = 2.0f * (mx * (q1q3 - q0q2) + my * (q2q3 + q0q1) + mz * (0.5f - q1q1 - q2q2));
+ 826              		.loc 1 76 12 view .LVU266
+ 827 01ea FFF7FEFF 		bl	__aeabi_d2f
+ 828              	.LVL79:
+ 829 01ee 07EE100A 		vmov	s14, r0
+ 830              	.LVL80:
+  77:Core/drogui/src/mahony.c **** 
+ 831              		.loc 1 77 9 is_stmt 1 view .LVU267
+  77:Core/drogui/src/mahony.c **** 
+ 832              		.loc 1 77 33 is_stmt 0 view .LVU268
+ 833 01f2 7BEECFBA 		vsub.f32	s23, s23, s30
+ 834              	.LVL81:
+  77:Core/drogui/src/mahony.c **** 
+ 835              		.loc 1 77 25 view .LVU269
+ 836 01f6 6BEE897A 		vmul.f32	s15, s23, s18
+  77:Core/drogui/src/mahony.c **** 
+ 837              		.loc 1 77 54 view .LVU270
+ 838 01fa 3EEE8BBA 		vadd.f32	s22, s29, s22
+ 839              	.LVL82:
+  77:Core/drogui/src/mahony.c **** 
+ 840              		.loc 1 77 46 view .LVU271
+ 841 01fe 6BEE2A6A 		vmul.f32	s13, s22, s21
+  77:Core/drogui/src/mahony.c **** 
+ 842              		.loc 1 77 41 view .LVU272
+ 843 0202 77EEA67A 		vadd.f32	s15, s15, s13
+  77:Core/drogui/src/mahony.c **** 
+ 844              		.loc 1 77 82 view .LVU273
+ 845 0206 3CEE4ECA 		vsub.f32	s24, s24, s28
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 24
+
+
+  77:Core/drogui/src/mahony.c **** 
+ 846              		.loc 1 77 67 view .LVU274
+ 847 020a 2CEE28EA 		vmul.f32	s28, s24, s17
+ 848              	.LVL83:
+  77:Core/drogui/src/mahony.c **** 
+ 849              		.loc 1 77 62 view .LVU275
+ 850 020e 77EE8E7A 		vadd.f32	s15, s15, s28
+  77:Core/drogui/src/mahony.c **** 
+ 851              		.loc 1 77 12 view .LVU276
+ 852 0212 77EEA77A 		vadd.f32	s15, s15, s15
+ 853              	.LVL84:
+  80:Core/drogui/src/mahony.c **** 		halfvy = q0q1 + q2q3;
+ 854              		.loc 1 80 3 is_stmt 1 view .LVU277
+  81:Core/drogui/src/mahony.c **** 		halfvz = q0q0 - 0.5f + q3q3;
+ 855              		.loc 1 81 3 view .LVU278
+  82:Core/drogui/src/mahony.c ****         halfwx = bx * (0.5f - q2q2 - q3q3) + bz * (q1q3 - q0q2);
+ 856              		.loc 1 82 3 view .LVU279
+  82:Core/drogui/src/mahony.c ****         halfwx = bx * (0.5f - q2q2 - q3q3) + bz * (q1q3 - q0q2);
+ 857              		.loc 1 82 17 is_stmt 0 view .LVU280
+ 858 0216 DDED054A 		vldr.32	s9, [sp, #20]
+ 859 021a 74EEEFFA 		vsub.f32	s31, s9, s31
+  82:Core/drogui/src/mahony.c ****         halfwx = bx * (0.5f - q2q2 - q3q3) + bz * (q1q3 - q0q2);
+ 860              		.loc 1 82 10 view .LVU281
+ 861 021e 7FEEADDA 		vadd.f32	s27, s31, s27
+ 862              	.LVL85:
+  83:Core/drogui/src/mahony.c ****         halfwy = bx * (q1q2 - q0q3) + bz * (q0q1 + q2q3);
+ 863              		.loc 1 83 9 is_stmt 1 view .LVU282
+  83:Core/drogui/src/mahony.c ****         halfwy = bx * (q1q2 - q0q3) + bz * (q0q1 + q2q3);
+ 864              		.loc 1 83 21 is_stmt 0 view .LVU283
+ 865 0222 6CEE87CA 		vmul.f32	s25, s25, s14
+ 866              	.LVL86:
+  83:Core/drogui/src/mahony.c ****         halfwy = bx * (q1q2 - q0q3) + bz * (q0q1 + q2q3);
+ 867              		.loc 1 83 49 view .LVU284
+ 868 0226 6BEEA76A 		vmul.f32	s13, s23, s15
+  83:Core/drogui/src/mahony.c ****         halfwy = bx * (q1q2 - q0q3) + bz * (q0q1 + q2q3);
+ 869              		.loc 1 83 16 view .LVU285
+ 870 022a 7CEEA6CA 		vadd.f32	s25, s25, s13
+ 871              	.LVL87:
+  84:Core/drogui/src/mahony.c ****         halfwz = bx * (q0q2 + q1q3) + bz * (0.5f - q1q1 - q2q2);  
+ 872              		.loc 1 84 9 is_stmt 1 view .LVU286
+  84:Core/drogui/src/mahony.c ****         halfwz = bx * (q0q2 + q1q3) + bz * (0.5f - q1q1 - q2q2);  
+ 873              		.loc 1 84 21 is_stmt 0 view .LVU287
+ 874 022e 2DEE07DA 		vmul.f32	s26, s26, s14
+  84:Core/drogui/src/mahony.c ****         halfwz = bx * (q0q2 + q1q3) + bz * (0.5f - q1q1 - q2q2);  
+ 875              		.loc 1 84 42 view .LVU288
+ 876 0232 6BEE276A 		vmul.f32	s13, s22, s15
+  84:Core/drogui/src/mahony.c ****         halfwz = bx * (q0q2 + q1q3) + bz * (0.5f - q1q1 - q2q2);  
+ 877              		.loc 1 84 16 view .LVU289
+ 878 0236 3DEE26DA 		vadd.f32	s26, s26, s13
+ 879              	.LVL88:
+  85:Core/drogui/src/mahony.c **** 	
+ 880              		.loc 1 85 9 is_stmt 1 view .LVU290
+  85:Core/drogui/src/mahony.c **** 	
+ 881              		.loc 1 85 21 is_stmt 0 view .LVU291
+ 882 023a 9DED016A 		vldr.32	s12, [sp, #4]
+ 883 023e 26EE077A 		vmul.f32	s14, s12, s14
+  85:Core/drogui/src/mahony.c **** 	
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 25
+
+
+ 884              		.loc 1 85 42 view .LVU292
+ 885 0242 6CEE277A 		vmul.f32	s15, s24, s15
+ 886              	.LVL89:
+  85:Core/drogui/src/mahony.c **** 	
+ 887              		.loc 1 85 16 view .LVU293
+ 888 0246 77EE277A 		vadd.f32	s15, s14, s15
+ 889              	.LVL90:
+  88:Core/drogui/src/mahony.c **** 		halfey = (az * halfvx - ax * halfvz) + (mz * halfwx - mx * halfwz);
+ 890              		.loc 1 88 3 is_stmt 1 view .LVU294
+  88:Core/drogui/src/mahony.c **** 		halfey = (az * halfvx - ax * halfvz) + (mz * halfwx - mx * halfwz);
+ 891              		.loc 1 88 16 is_stmt 0 view .LVU295
+ 892 024a DDED035A 		vldr.32	s11, [sp, #12]
+ 893 024e 65EEAD6A 		vmul.f32	s13, s11, s27
+  88:Core/drogui/src/mahony.c **** 		halfey = (az * halfvx - ax * halfvz) + (mz * halfwx - mx * halfwz);
+ 894              		.loc 1 88 30 view .LVU296
+ 895 0252 9DED045A 		vldr.32	s10, [sp, #16]
+ 896 0256 2BEE057A 		vmul.f32	s14, s22, s10
+  88:Core/drogui/src/mahony.c **** 		halfey = (az * halfvx - ax * halfvz) + (mz * halfwx - mx * halfwz);
+ 897              		.loc 1 88 25 view .LVU297
+ 898 025a 76EEC76A 		vsub.f32	s13, s13, s14
+  88:Core/drogui/src/mahony.c **** 		halfey = (az * halfvx - ax * halfvz) + (mz * halfwx - mx * halfwz);
+ 899              		.loc 1 88 46 view .LVU298
+ 900 025e 2AEEA77A 		vmul.f32	s14, s21, s15
+  88:Core/drogui/src/mahony.c **** 		halfey = (az * halfvx - ax * halfvz) + (mz * halfwx - mx * halfwz);
+ 901              		.loc 1 88 60 view .LVU299
+ 902 0262 28EE8D6A 		vmul.f32	s12, s17, s26
+  88:Core/drogui/src/mahony.c **** 		halfey = (az * halfvx - ax * halfvz) + (mz * halfwx - mx * halfwz);
+ 903              		.loc 1 88 55 view .LVU300
+ 904 0266 37EE467A 		vsub.f32	s14, s14, s12
+  88:Core/drogui/src/mahony.c **** 		halfey = (az * halfvx - ax * halfvz) + (mz * halfwx - mx * halfwz);
+ 905              		.loc 1 88 10 view .LVU301
+ 906 026a 36EE877A 		vadd.f32	s14, s13, s14
+ 907              	.LVL91:
+  89:Core/drogui/src/mahony.c **** 		halfez = (ax * halfvy - ay * halfvx) + (mx * halfwy - my * halfwx);
+ 908              		.loc 1 89 3 is_stmt 1 view .LVU302
+  89:Core/drogui/src/mahony.c **** 		halfez = (ax * halfvy - ay * halfvx) + (mx * halfwy - my * halfwx);
+ 909              		.loc 1 89 16 is_stmt 0 view .LVU303
+ 910 026e 6BEE852A 		vmul.f32	s5, s23, s10
+  89:Core/drogui/src/mahony.c **** 		halfez = (ax * halfvy - ay * halfvx) + (mx * halfwy - my * halfwx);
+ 911              		.loc 1 89 30 view .LVU304
+ 912 0272 DDED026A 		vldr.32	s13, [sp, #8]
+ 913 0276 66EEADDA 		vmul.f32	s27, s13, s27
+ 914              	.LVL92:
+  89:Core/drogui/src/mahony.c **** 		halfez = (ax * halfvy - ay * halfvx) + (mx * halfwy - my * halfwx);
+ 915              		.loc 1 89 25 view .LVU305
+ 916 027a 72EEEDDA 		vsub.f32	s27, s5, s27
+  89:Core/drogui/src/mahony.c **** 		halfez = (ax * halfvy - ay * halfvx) + (mx * halfwy - my * halfwx);
+ 917              		.loc 1 89 46 view .LVU306
+ 918 027e 68EEAC8A 		vmul.f32	s17, s17, s25
+ 919              	.LVL93:
+  89:Core/drogui/src/mahony.c **** 		halfez = (ax * halfvy - ay * halfvx) + (mx * halfwy - my * halfwx);
+ 920              		.loc 1 89 60 view .LVU307
+ 921 0282 69EE277A 		vmul.f32	s15, s18, s15
+ 922              	.LVL94:
+  89:Core/drogui/src/mahony.c **** 		halfez = (ax * halfvy - ay * halfvx) + (mx * halfwy - my * halfwx);
+ 923              		.loc 1 89 55 view .LVU308
+ 924 0286 78EEE78A 		vsub.f32	s17, s17, s15
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 26
+
+
+  89:Core/drogui/src/mahony.c **** 		halfez = (ax * halfvy - ay * halfvx) + (mx * halfwy - my * halfwx);
+ 925              		.loc 1 89 10 view .LVU309
+ 926 028a 7DEEA88A 		vadd.f32	s17, s27, s17
+ 927              	.LVL95:
+  90:Core/drogui/src/mahony.c **** 
+ 928              		.loc 1 90 3 is_stmt 1 view .LVU310
+  90:Core/drogui/src/mahony.c **** 
+ 929              		.loc 1 90 16 is_stmt 0 view .LVU311
+ 930 028e 2BEE26BA 		vmul.f32	s22, s22, s13
+ 931              	.LVL96:
+  90:Core/drogui/src/mahony.c **** 
+ 932              		.loc 1 90 30 view .LVU312
+ 933 0292 6BEEA5BA 		vmul.f32	s23, s23, s11
+ 934              	.LVL97:
+  90:Core/drogui/src/mahony.c **** 
+ 935              		.loc 1 90 25 view .LVU313
+ 936 0296 3BEE6BBA 		vsub.f32	s22, s22, s23
+  90:Core/drogui/src/mahony.c **** 
+ 937              		.loc 1 90 46 view .LVU314
+ 938 029a 29EE0D9A 		vmul.f32	s18, s18, s26
+ 939              	.LVL98:
+  90:Core/drogui/src/mahony.c **** 
+ 940              		.loc 1 90 60 view .LVU315
+ 941 029e 6AEEACAA 		vmul.f32	s21, s21, s25
+ 942              	.LVL99:
+  90:Core/drogui/src/mahony.c **** 
+ 943              		.loc 1 90 55 view .LVU316
+ 944 02a2 39EE6A9A 		vsub.f32	s18, s18, s21
+  90:Core/drogui/src/mahony.c **** 
+ 945              		.loc 1 90 10 view .LVU317
+ 946 02a6 3BEE09BA 		vadd.f32	s22, s22, s18
+ 947              	.LVL100:
+  93:Core/drogui/src/mahony.c **** 			integralFBx += twoKi * halfex * (1.0f / sampleFreq);	// integral error scaled by Ki
+ 948              		.loc 1 93 3 is_stmt 1 view .LVU318
+  93:Core/drogui/src/mahony.c **** 			integralFBx += twoKi * halfex * (1.0f / sampleFreq);	// integral error scaled by Ki
+ 949              		.loc 1 93 12 is_stmt 0 view .LVU319
+ 950 02aa 824B     		ldr	r3, .L28+16
+ 951 02ac D3ED007A 		vldr.32	s15, [r3]
+  93:Core/drogui/src/mahony.c **** 			integralFBx += twoKi * halfex * (1.0f / sampleFreq);	// integral error scaled by Ki
+ 952              		.loc 1 93 5 view .LVU320
+ 953 02b0 F5EEC07A 		vcmpe.f32	s15, #0
+ 954 02b4 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 955 02b8 40F3EB80 		ble	.L26
+  94:Core/drogui/src/mahony.c **** 			integralFBy += twoKi * halfey * (1.0f / sampleFreq);
+ 956              		.loc 1 94 4 is_stmt 1 view .LVU321
+  94:Core/drogui/src/mahony.c **** 			integralFBy += twoKi * halfey * (1.0f / sampleFreq);
+ 957              		.loc 1 94 25 is_stmt 0 view .LVU322
+ 958 02bc D3ED006A 		vldr.32	s13, [r3]
+ 959 02c0 66EE876A 		vmul.f32	s13, s13, s14
+  94:Core/drogui/src/mahony.c **** 			integralFBy += twoKi * halfey * (1.0f / sampleFreq);
+ 960              		.loc 1 94 34 view .LVU323
+ 961 02c4 9FED7C6A 		vldr.32	s12, .L28+20
+ 962 02c8 66EE866A 		vmul.f32	s13, s13, s12
+  94:Core/drogui/src/mahony.c **** 			integralFBy += twoKi * halfey * (1.0f / sampleFreq);
+ 963              		.loc 1 94 16 view .LVU324
+ 964 02cc 7B49     		ldr	r1, .L28+24
+ 965 02ce D1ED007A 		vldr.32	s15, [r1]
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 27
+
+
+ 966 02d2 77EEA66A 		vadd.f32	s13, s15, s13
+ 967 02d6 C1ED006A 		vstr.32	s13, [r1]
+  95:Core/drogui/src/mahony.c **** 			integralFBz += twoKi * halfez * (1.0f / sampleFreq);
+ 968              		.loc 1 95 4 is_stmt 1 view .LVU325
+  95:Core/drogui/src/mahony.c **** 			integralFBz += twoKi * halfez * (1.0f / sampleFreq);
+ 969              		.loc 1 95 25 is_stmt 0 view .LVU326
+ 970 02da D3ED006A 		vldr.32	s13, [r3]
+ 971 02de 66EEA86A 		vmul.f32	s13, s13, s17
+  95:Core/drogui/src/mahony.c **** 			integralFBz += twoKi * halfez * (1.0f / sampleFreq);
+ 972              		.loc 1 95 34 view .LVU327
+ 973 02e2 66EE866A 		vmul.f32	s13, s13, s12
+  95:Core/drogui/src/mahony.c **** 			integralFBz += twoKi * halfez * (1.0f / sampleFreq);
+ 974              		.loc 1 95 16 view .LVU328
+ 975 02e6 764A     		ldr	r2, .L28+28
+ 976 02e8 D2ED007A 		vldr.32	s15, [r2]
+ 977 02ec 77EEA66A 		vadd.f32	s13, s15, s13
+ 978 02f0 C2ED006A 		vstr.32	s13, [r2]
+  96:Core/drogui/src/mahony.c **** 			gx += integralFBx;	// apply integral feedback
+ 979              		.loc 1 96 4 is_stmt 1 view .LVU329
+  96:Core/drogui/src/mahony.c **** 			gx += integralFBx;	// apply integral feedback
+ 980              		.loc 1 96 25 is_stmt 0 view .LVU330
+ 981 02f4 D3ED007A 		vldr.32	s15, [r3]
+ 982 02f8 67EE8B7A 		vmul.f32	s15, s15, s22
+  96:Core/drogui/src/mahony.c **** 			gx += integralFBx;	// apply integral feedback
+ 983              		.loc 1 96 34 view .LVU331
+ 984 02fc 67EE867A 		vmul.f32	s15, s15, s12
+  96:Core/drogui/src/mahony.c **** 			gx += integralFBx;	// apply integral feedback
+ 985              		.loc 1 96 16 view .LVU332
+ 986 0300 704B     		ldr	r3, .L28+32
+ 987 0302 D3ED006A 		vldr.32	s13, [r3]
+ 988 0306 76EEA77A 		vadd.f32	s15, s13, s15
+ 989 030a C3ED007A 		vstr.32	s15, [r3]
+  97:Core/drogui/src/mahony.c **** 			gy += integralFBy;
+ 990              		.loc 1 97 4 is_stmt 1 view .LVU333
+ 991 030e D1ED007A 		vldr.32	s15, [r1]
+  97:Core/drogui/src/mahony.c **** 			gy += integralFBy;
+ 992              		.loc 1 97 7 is_stmt 0 view .LVU334
+ 993 0312 79EEA79A 		vadd.f32	s19, s19, s15
+ 994              	.LVL101:
+  98:Core/drogui/src/mahony.c **** 			gz += integralFBz;
+ 995              		.loc 1 98 4 is_stmt 1 view .LVU335
+ 996 0316 D2ED007A 		vldr.32	s15, [r2]
+  98:Core/drogui/src/mahony.c **** 			gz += integralFBz;
+ 997              		.loc 1 98 7 is_stmt 0 view .LVU336
+ 998 031a 3AEE27AA 		vadd.f32	s20, s20, s15
+ 999              	.LVL102:
+  99:Core/drogui/src/mahony.c **** 		}
+ 1000              		.loc 1 99 4 is_stmt 1 view .LVU337
+ 1001 031e D3ED007A 		vldr.32	s15, [r3]
+  99:Core/drogui/src/mahony.c **** 		}
+ 1002              		.loc 1 99 7 is_stmt 0 view .LVU338
+ 1003 0322 38EE278A 		vadd.f32	s16, s16, s15
+ 1004              	.LVL103:
+ 1005              	.L24:
+ 108:Core/drogui/src/mahony.c **** 		gy += twoKp * halfey;
+ 1006              		.loc 1 108 3 is_stmt 1 view .LVU339
+ 108:Core/drogui/src/mahony.c **** 		gy += twoKp * halfey;
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 28
+
+
+ 1007              		.loc 1 108 15 is_stmt 0 view .LVU340
+ 1008 0326 684B     		ldr	r3, .L28+36
+ 1009 0328 D3ED007A 		vldr.32	s15, [r3]
+ 1010 032c 67EE877A 		vmul.f32	s15, s15, s14
+ 108:Core/drogui/src/mahony.c **** 		gy += twoKp * halfey;
+ 1011              		.loc 1 108 6 view .LVU341
+ 1012 0330 79EEA79A 		vadd.f32	s19, s19, s15
+ 1013              	.LVL104:
+ 109:Core/drogui/src/mahony.c **** 		gz += twoKp * halfez;
+ 1014              		.loc 1 109 3 is_stmt 1 view .LVU342
+ 109:Core/drogui/src/mahony.c **** 		gz += twoKp * halfez;
+ 1015              		.loc 1 109 15 is_stmt 0 view .LVU343
+ 1016 0334 D3ED007A 		vldr.32	s15, [r3]
+ 1017 0338 67EEA88A 		vmul.f32	s17, s15, s17
+ 1018              	.LVL105:
+ 109:Core/drogui/src/mahony.c **** 		gz += twoKp * halfez;
+ 1019              		.loc 1 109 6 view .LVU344
+ 1020 033c 3AEE28AA 		vadd.f32	s20, s20, s17
+ 1021              	.LVL106:
+ 110:Core/drogui/src/mahony.c **** 	}
+ 1022              		.loc 1 110 3 is_stmt 1 view .LVU345
+ 110:Core/drogui/src/mahony.c **** 	}
+ 1023              		.loc 1 110 15 is_stmt 0 view .LVU346
+ 1024 0340 93ED009A 		vldr.32	s18, [r3]
+ 1025 0344 29EE0BBA 		vmul.f32	s22, s18, s22
+ 1026              	.LVL107:
+ 110:Core/drogui/src/mahony.c **** 	}
+ 1027              		.loc 1 110 6 view .LVU347
+ 1028 0348 38EE0B8A 		vadd.f32	s16, s16, s22
+ 1029              	.LVL108:
+ 1030              	.L21:
+ 114:Core/drogui/src/mahony.c **** 	gy *= (0.5f * (1.0f / sampleFreq));
+ 1031              		.loc 1 114 2 is_stmt 1 view .LVU348
+ 114:Core/drogui/src/mahony.c **** 	gy *= (0.5f * (1.0f / sampleFreq));
+ 1032              		.loc 1 114 5 is_stmt 0 view .LVU349
+ 1033 034c 9FED5F1A 		vldr.32	s2, .L28+40
+ 1034 0350 69EE819A 		vmul.f32	s19, s19, s2
+ 1035              	.LVL109:
+ 115:Core/drogui/src/mahony.c **** 	gz *= (0.5f * (1.0f / sampleFreq));
+ 1036              		.loc 1 115 2 is_stmt 1 view .LVU350
+ 115:Core/drogui/src/mahony.c **** 	gz *= (0.5f * (1.0f / sampleFreq));
+ 1037              		.loc 1 115 5 is_stmt 0 view .LVU351
+ 1038 0354 2AEE01AA 		vmul.f32	s20, s20, s2
+ 1039              	.LVL110:
+ 116:Core/drogui/src/mahony.c **** 	qa = q0;
+ 1040              		.loc 1 116 2 is_stmt 1 view .LVU352
+ 116:Core/drogui/src/mahony.c **** 	qa = q0;
+ 1041              		.loc 1 116 5 is_stmt 0 view .LVU353
+ 1042 0358 28EE018A 		vmul.f32	s16, s16, s2
+ 1043              	.LVL111:
+ 117:Core/drogui/src/mahony.c **** 	qb = q1;
+ 1044              		.loc 1 117 2 is_stmt 1 view .LVU354
+ 117:Core/drogui/src/mahony.c **** 	qb = q1;
+ 1045              		.loc 1 117 5 is_stmt 0 view .LVU355
+ 1046 035c 514F     		ldr	r7, .L28
+ 1047 035e 97ED001A 		vldr.32	s2, [r7]
+ 1048              	.LVL112:
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 29
+
+
+ 118:Core/drogui/src/mahony.c **** 	qc = q2;
+ 1049              		.loc 1 118 2 is_stmt 1 view .LVU356
+ 118:Core/drogui/src/mahony.c **** 	qc = q2;
+ 1050              		.loc 1 118 5 is_stmt 0 view .LVU357
+ 1051 0362 514E     		ldr	r6, .L28+4
+ 1052 0364 D6ED000A 		vldr.32	s1, [r6]
+ 1053              	.LVL113:
+ 119:Core/drogui/src/mahony.c **** 	q0 += (-qb * gx - qc * gy - q3 * gz);
+ 1054              		.loc 1 119 2 is_stmt 1 view .LVU358
+ 119:Core/drogui/src/mahony.c **** 	q0 += (-qb * gx - qc * gy - q3 * gz);
+ 1055              		.loc 1 119 5 is_stmt 0 view .LVU359
+ 1056 0368 504D     		ldr	r5, .L28+8
+ 1057 036a 95ED000A 		vldr.32	s0, [r5]
+ 1058              	.LVL114:
+ 120:Core/drogui/src/mahony.c **** 	q1 += (qa * gx + qc * gz - q3 * gy);
+ 1059              		.loc 1 120 2 is_stmt 1 view .LVU360
+ 120:Core/drogui/src/mahony.c **** 	q1 += (qa * gx + qc * gz - q3 * gy);
+ 1060              		.loc 1 120 13 is_stmt 0 view .LVU361
+ 1061 036e 60EEE97A 		vnmul.f32	s15, s1, s19
+ 120:Core/drogui/src/mahony.c **** 	q1 += (qa * gx + qc * gz - q3 * gy);
+ 1062              		.loc 1 120 23 view .LVU362
+ 1063 0372 2AEE007A 		vmul.f32	s14, s20, s0
+ 120:Core/drogui/src/mahony.c **** 	q1 += (qa * gx + qc * gz - q3 * gy);
+ 1064              		.loc 1 120 18 view .LVU363
+ 1065 0376 77EEC77A 		vsub.f32	s15, s15, s14
+ 120:Core/drogui/src/mahony.c **** 	q1 += (qa * gx + qc * gz - q3 * gy);
+ 1066              		.loc 1 120 33 view .LVU364
+ 1067 037a 4D4C     		ldr	r4, .L28+12
+ 1068 037c 94ED007A 		vldr.32	s14, [r4]
+ 1069 0380 27EE087A 		vmul.f32	s14, s14, s16
+ 120:Core/drogui/src/mahony.c **** 	q1 += (qa * gx + qc * gz - q3 * gy);
+ 1070              		.loc 1 120 28 view .LVU365
+ 1071 0384 77EEC77A 		vsub.f32	s15, s15, s14
+ 120:Core/drogui/src/mahony.c **** 	q1 += (qa * gx + qc * gz - q3 * gy);
+ 1072              		.loc 1 120 5 view .LVU366
+ 1073 0388 97ED007A 		vldr.32	s14, [r7]
+ 1074 038c 77EE277A 		vadd.f32	s15, s14, s15
+ 1075 0390 C7ED007A 		vstr.32	s15, [r7]
+ 121:Core/drogui/src/mahony.c **** 	q2 += (qa * gy - qb * gz + q3 * gx);
+ 1076              		.loc 1 121 2 is_stmt 1 view .LVU367
+ 121:Core/drogui/src/mahony.c **** 	q2 += (qa * gy - qb * gz + q3 * gx);
+ 1077              		.loc 1 121 12 is_stmt 0 view .LVU368
+ 1078 0394 69EE817A 		vmul.f32	s15, s19, s2
+ 121:Core/drogui/src/mahony.c **** 	q2 += (qa * gy - qb * gz + q3 * gx);
+ 1079              		.loc 1 121 22 view .LVU369
+ 1080 0398 28EE007A 		vmul.f32	s14, s16, s0
+ 121:Core/drogui/src/mahony.c **** 	q2 += (qa * gy - qb * gz + q3 * gx);
+ 1081              		.loc 1 121 17 view .LVU370
+ 1082 039c 77EE877A 		vadd.f32	s15, s15, s14
+ 121:Core/drogui/src/mahony.c **** 	q2 += (qa * gy - qb * gz + q3 * gx);
+ 1083              		.loc 1 121 32 view .LVU371
+ 1084 03a0 94ED007A 		vldr.32	s14, [r4]
+ 1085 03a4 27EE0A7A 		vmul.f32	s14, s14, s20
+ 121:Core/drogui/src/mahony.c **** 	q2 += (qa * gy - qb * gz + q3 * gx);
+ 1086              		.loc 1 121 27 view .LVU372
+ 1087 03a8 77EEC77A 		vsub.f32	s15, s15, s14
+ 121:Core/drogui/src/mahony.c **** 	q2 += (qa * gy - qb * gz + q3 * gx);
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 30
+
+
+ 1088              		.loc 1 121 5 view .LVU373
+ 1089 03ac 96ED007A 		vldr.32	s14, [r6]
+ 1090 03b0 77EE277A 		vadd.f32	s15, s14, s15
+ 1091 03b4 C6ED007A 		vstr.32	s15, [r6]
+ 122:Core/drogui/src/mahony.c **** 	q3 += (qa * gz + qb * gy - qc * gx); 
+ 1092              		.loc 1 122 2 is_stmt 1 view .LVU374
+ 122:Core/drogui/src/mahony.c **** 	q3 += (qa * gz + qb * gy - qc * gx); 
+ 1093              		.loc 1 122 12 is_stmt 0 view .LVU375
+ 1094 03b8 6AEE017A 		vmul.f32	s15, s20, s2
+ 122:Core/drogui/src/mahony.c **** 	q3 += (qa * gz + qb * gy - qc * gx); 
+ 1095              		.loc 1 122 22 view .LVU376
+ 1096 03bc 28EE207A 		vmul.f32	s14, s16, s1
+ 122:Core/drogui/src/mahony.c **** 	q3 += (qa * gz + qb * gy - qc * gx); 
+ 1097              		.loc 1 122 17 view .LVU377
+ 1098 03c0 77EEC77A 		vsub.f32	s15, s15, s14
+ 122:Core/drogui/src/mahony.c **** 	q3 += (qa * gz + qb * gy - qc * gx); 
+ 1099              		.loc 1 122 32 view .LVU378
+ 1100 03c4 94ED007A 		vldr.32	s14, [r4]
+ 1101 03c8 27EE297A 		vmul.f32	s14, s14, s19
+ 122:Core/drogui/src/mahony.c **** 	q3 += (qa * gz + qb * gy - qc * gx); 
+ 1102              		.loc 1 122 27 view .LVU379
+ 1103 03cc 77EE877A 		vadd.f32	s15, s15, s14
+ 122:Core/drogui/src/mahony.c **** 	q3 += (qa * gz + qb * gy - qc * gx); 
+ 1104              		.loc 1 122 5 view .LVU380
+ 1105 03d0 95ED007A 		vldr.32	s14, [r5]
+ 1106 03d4 77EE277A 		vadd.f32	s15, s14, s15
+ 1107 03d8 C5ED007A 		vstr.32	s15, [r5]
+ 123:Core/drogui/src/mahony.c **** 	
+ 1108              		.loc 1 123 2 is_stmt 1 view .LVU381
+ 123:Core/drogui/src/mahony.c **** 	
+ 1109              		.loc 1 123 12 is_stmt 0 view .LVU382
+ 1110 03dc 28EE018A 		vmul.f32	s16, s16, s2
+ 1111              	.LVL115:
+ 123:Core/drogui/src/mahony.c **** 	
+ 1112              		.loc 1 123 22 view .LVU383
+ 1113 03e0 2AEE20AA 		vmul.f32	s20, s20, s1
+ 1114              	.LVL116:
+ 123:Core/drogui/src/mahony.c **** 	
+ 1115              		.loc 1 123 17 view .LVU384
+ 1116 03e4 38EE0A8A 		vadd.f32	s16, s16, s20
+ 123:Core/drogui/src/mahony.c **** 	
+ 1117              		.loc 1 123 32 view .LVU385
+ 1118 03e8 69EE809A 		vmul.f32	s19, s19, s0
+ 1119              	.LVL117:
+ 123:Core/drogui/src/mahony.c **** 	
+ 1120              		.loc 1 123 27 view .LVU386
+ 1121 03ec 38EE698A 		vsub.f32	s16, s16, s19
+ 123:Core/drogui/src/mahony.c **** 	
+ 1122              		.loc 1 123 5 view .LVU387
+ 1123 03f0 D4ED009A 		vldr.32	s19, [r4]
+ 1124 03f4 38EE298A 		vadd.f32	s16, s16, s19
+ 1125 03f8 84ED008A 		vstr.32	s16, [r4]
+ 126:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 1126              		.loc 1 126 2 is_stmt 1 view .LVU388
+ 126:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 1127              		.loc 1 126 25 is_stmt 0 view .LVU389
+ 1128 03fc D7ED007A 		vldr.32	s15, [r7]
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 31
+
+
+ 1129 0400 97ED000A 		vldr.32	s0, [r7]
+ 1130              	.LVL118:
+ 126:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 1131              		.loc 1 126 25 view .LVU390
+ 1132 0404 67EE807A 		vmul.f32	s15, s15, s0
+ 126:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 1133              		.loc 1 126 35 view .LVU391
+ 1134 0408 96ED000A 		vldr.32	s0, [r6]
+ 1135 040c 96ED007A 		vldr.32	s14, [r6]
+ 1136 0410 20EE070A 		vmul.f32	s0, s0, s14
+ 126:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 1137              		.loc 1 126 30 view .LVU392
+ 1138 0414 77EE807A 		vadd.f32	s15, s15, s0
+ 126:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 1139              		.loc 1 126 45 view .LVU393
+ 1140 0418 95ED000A 		vldr.32	s0, [r5]
+ 1141 041c 95ED007A 		vldr.32	s14, [r5]
+ 1142 0420 20EE070A 		vmul.f32	s0, s0, s14
+ 126:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 1143              		.loc 1 126 40 view .LVU394
+ 1144 0424 77EE807A 		vadd.f32	s15, s15, s0
+ 126:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 1145              		.loc 1 126 55 view .LVU395
+ 1146 0428 94ED000A 		vldr.32	s0, [r4]
+ 1147 042c 94ED007A 		vldr.32	s14, [r4]
+ 1148 0430 20EE070A 		vmul.f32	s0, s0, s14
+ 126:Core/drogui/src/mahony.c **** 	q0 *= recipNorm;
+ 1149              		.loc 1 126 14 view .LVU396
+ 1150 0434 37EE800A 		vadd.f32	s0, s15, s0
+ 1151 0438 FFF7FEFF 		bl	invSqrt
+ 1152              	.LVL119:
+ 127:Core/drogui/src/mahony.c **** 	q1 *= recipNorm;
+ 1153              		.loc 1 127 2 is_stmt 1 view .LVU397
+ 127:Core/drogui/src/mahony.c **** 	q1 *= recipNorm;
+ 1154              		.loc 1 127 5 is_stmt 0 view .LVU398
+ 1155 043c D7ED007A 		vldr.32	s15, [r7]
+ 1156 0440 67EE807A 		vmul.f32	s15, s15, s0
+ 1157 0444 C7ED007A 		vstr.32	s15, [r7]
+ 128:Core/drogui/src/mahony.c **** 	q2 *= recipNorm;
+ 1158              		.loc 1 128 2 is_stmt 1 view .LVU399
+ 128:Core/drogui/src/mahony.c **** 	q2 *= recipNorm;
+ 1159              		.loc 1 128 5 is_stmt 0 view .LVU400
+ 1160 0448 D6ED007A 		vldr.32	s15, [r6]
+ 1161 044c 67EE807A 		vmul.f32	s15, s15, s0
+ 1162 0450 C6ED007A 		vstr.32	s15, [r6]
+ 129:Core/drogui/src/mahony.c **** 	q3 *= recipNorm;
+ 1163              		.loc 1 129 2 is_stmt 1 view .LVU401
+ 129:Core/drogui/src/mahony.c **** 	q3 *= recipNorm;
+ 1164              		.loc 1 129 5 is_stmt 0 view .LVU402
+ 1165 0454 D5ED007A 		vldr.32	s15, [r5]
+ 1166 0458 67EE807A 		vmul.f32	s15, s15, s0
+ 1167 045c C5ED007A 		vstr.32	s15, [r5]
+ 130:Core/drogui/src/mahony.c **** }
+ 1168              		.loc 1 130 2 is_stmt 1 view .LVU403
+ 130:Core/drogui/src/mahony.c **** }
+ 1169              		.loc 1 130 5 is_stmt 0 view .LVU404
+ 1170 0460 D4ED007A 		vldr.32	s15, [r4]
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 32
+
+
+ 1171 0464 27EE800A 		vmul.f32	s0, s15, s0
+ 1172              	.LVL120:
+ 130:Core/drogui/src/mahony.c **** }
+ 1173              		.loc 1 130 5 view .LVU405
+ 1174 0468 84ED000A 		vstr.32	s0, [r4]
+ 1175              	.L15:
+ 131:Core/drogui/src/mahony.c **** 
+ 1176              		.loc 1 131 1 view .LVU406
+ 1177 046c 07B0     		add	sp, sp, #28
+ 1178              	.LCFI7:
+ 1179              		.cfi_remember_state
+ 1180              		.cfi_def_cfa_offset 84
+ 1181              		@ sp needed
+ 1182 046e BDEC108B 		vldm	sp!, {d8-d15}
+ 1183              	.LCFI8:
+ 1184              		.cfi_restore 94
+ 1185              		.cfi_restore 95
+ 1186              		.cfi_restore 92
+ 1187              		.cfi_restore 93
+ 1188              		.cfi_restore 90
+ 1189              		.cfi_restore 91
+ 1190              		.cfi_restore 88
+ 1191              		.cfi_restore 89
+ 1192              		.cfi_restore 86
+ 1193              		.cfi_restore 87
+ 1194              		.cfi_restore 84
+ 1195              		.cfi_restore 85
+ 1196              		.cfi_restore 82
+ 1197              		.cfi_restore 83
+ 1198              		.cfi_restore 80
+ 1199              		.cfi_restore 81
+ 1200              		.cfi_def_cfa_offset 20
+ 1201 0472 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1202              	.LVL121:
+ 1203              	.L17:
+ 1204              	.LCFI9:
+ 1205              		.cfi_restore_state
+  42:Core/drogui/src/mahony.c **** 		return;
+ 1206              		.loc 1 42 3 is_stmt 1 view .LVU407
+ 1207 0474 F0EE4C2A 		vmov.f32	s5, s24
+ 1208              	.LVL122:
+  42:Core/drogui/src/mahony.c **** 		return;
+ 1209              		.loc 1 42 3 is_stmt 0 view .LVU408
+ 1210 0478 B0EE6B2A 		vmov.f32	s4, s23
+ 1211              	.LVL123:
+  42:Core/drogui/src/mahony.c **** 		return;
+ 1212              		.loc 1 42 3 view .LVU409
+ 1213 047c F0EE681A 		vmov.f32	s3, s17
+ 1214              	.LVL124:
+  42:Core/drogui/src/mahony.c **** 		return;
+ 1215              		.loc 1 42 3 view .LVU410
+ 1216 0480 B0EE481A 		vmov.f32	s2, s16
+ 1217              	.LVL125:
+  42:Core/drogui/src/mahony.c **** 		return;
+ 1218              		.loc 1 42 3 view .LVU411
+ 1219 0484 F0EE4A0A 		vmov.f32	s1, s20
+ 1220              	.LVL126:
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 33
+
+
+  42:Core/drogui/src/mahony.c **** 		return;
+ 1221              		.loc 1 42 3 view .LVU412
+ 1222 0488 B0EE690A 		vmov.f32	s0, s19
+ 1223              	.LVL127:
+  42:Core/drogui/src/mahony.c **** 		return;
+ 1224              		.loc 1 42 3 view .LVU413
+ 1225 048c FFF7FEFF 		bl	mahonyUpdateIMU
+ 1226              	.LVL128:
+  43:Core/drogui/src/mahony.c **** 	}
+ 1227              		.loc 1 43 3 is_stmt 1 view .LVU414
+ 1228 0490 ECE7     		b	.L15
+ 1229              	.LVL129:
+ 1230              	.L26:
+ 102:Core/drogui/src/mahony.c **** 			integralFBy = 0.0f;
+ 1231              		.loc 1 102 4 view .LVU415
+ 102:Core/drogui/src/mahony.c **** 			integralFBy = 0.0f;
+ 1232              		.loc 1 102 16 is_stmt 0 view .LVU416
+ 1233 0492 0023     		movs	r3, #0
+ 1234 0494 094A     		ldr	r2, .L28+24
+ 1235 0496 1360     		str	r3, [r2]	@ float
+ 103:Core/drogui/src/mahony.c **** 			integralFBz = 0.0f;
+ 1236              		.loc 1 103 4 is_stmt 1 view .LVU417
+ 103:Core/drogui/src/mahony.c **** 			integralFBz = 0.0f;
+ 1237              		.loc 1 103 16 is_stmt 0 view .LVU418
+ 1238 0498 094A     		ldr	r2, .L28+28
+ 1239 049a 1360     		str	r3, [r2]	@ float
+ 104:Core/drogui/src/mahony.c **** 		}
+ 1240              		.loc 1 104 4 is_stmt 1 view .LVU419
+ 104:Core/drogui/src/mahony.c **** 		}
+ 1241              		.loc 1 104 16 is_stmt 0 view .LVU420
+ 1242 049c 094A     		ldr	r2, .L28+32
+ 1243 049e 1360     		str	r3, [r2]	@ float
+ 1244 04a0 41E7     		b	.L24
+ 1245              	.L29:
+ 1246 04a2 00BF     		.align	2
+ 1247              	.L28:
+ 1248 04a4 00000000 		.word	.LANCHOR2
+ 1249 04a8 00000000 		.word	.LANCHOR0
+ 1250 04ac 00000000 		.word	.LANCHOR3
+ 1251 04b0 00000000 		.word	.LANCHOR1
+ 1252 04b4 00000000 		.word	.LANCHOR4
+ 1253 04b8 6F12033B 		.word	990057071
+ 1254 04bc 00000000 		.word	.LANCHOR5
+ 1255 04c0 00000000 		.word	.LANCHOR6
+ 1256 04c4 00000000 		.word	.LANCHOR7
+ 1257 04c8 00000000 		.word	.LANCHOR8
+ 1258 04cc 6F12833A 		.word	981668463
+ 1259              		.cfi_endproc
+ 1260              	.LFE141:
+ 1262              		.section	.text.getMahonyQuaternion,"ax",%progbits
+ 1263              		.align	1
+ 1264              		.global	getMahonyQuaternion
+ 1265              		.syntax unified
+ 1266              		.thumb
+ 1267              		.thumb_func
+ 1268              		.fpu fpv5-sp-d16
+ 1270              	getMahonyQuaternion:
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 34
+
+
+ 1271              	.LVL130:
+ 1272              	.LFB144:
+ 215:Core/drogui/src/mahony.c **** 
+ 216:Core/drogui/src/mahony.c **** void getMahonyQuaternion(float* quat){
+ 1273              		.loc 1 216 38 is_stmt 1 view -0
+ 1274              		.cfi_startproc
+ 1275              		@ args = 0, pretend = 0, frame = 0
+ 1276              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1277              		@ link register save eliminated.
+ 217:Core/drogui/src/mahony.c **** 	quat[0] = q0;
+ 1278              		.loc 1 217 2 view .LVU422
+ 1279              		.loc 1 217 10 is_stmt 0 view .LVU423
+ 1280 0000 064B     		ldr	r3, .L31
+ 1281 0002 1B68     		ldr	r3, [r3]	@ float
+ 1282 0004 0360     		str	r3, [r0]	@ float
+ 218:Core/drogui/src/mahony.c **** 	quat[1] = q1;
+ 1283              		.loc 1 218 2 is_stmt 1 view .LVU424
+ 1284              		.loc 1 218 10 is_stmt 0 view .LVU425
+ 1285 0006 064B     		ldr	r3, .L31+4
+ 1286 0008 1B68     		ldr	r3, [r3]	@ float
+ 1287 000a 4360     		str	r3, [r0, #4]	@ float
+ 219:Core/drogui/src/mahony.c **** 	quat[2] = q2;
+ 1288              		.loc 1 219 2 is_stmt 1 view .LVU426
+ 1289              		.loc 1 219 10 is_stmt 0 view .LVU427
+ 1290 000c 054B     		ldr	r3, .L31+8
+ 1291 000e 1B68     		ldr	r3, [r3]	@ float
+ 1292 0010 8360     		str	r3, [r0, #8]	@ float
+ 220:Core/drogui/src/mahony.c **** 	quat[3] = q3;
+ 1293              		.loc 1 220 2 is_stmt 1 view .LVU428
+ 1294              		.loc 1 220 10 is_stmt 0 view .LVU429
+ 1295 0012 054B     		ldr	r3, .L31+12
+ 1296 0014 1B68     		ldr	r3, [r3]	@ float
+ 1297 0016 C360     		str	r3, [r0, #12]	@ float
+ 221:Core/drogui/src/mahony.c **** }
+ 1298              		.loc 1 221 1 view .LVU430
+ 1299 0018 7047     		bx	lr
+ 1300              	.L32:
+ 1301 001a 00BF     		.align	2
+ 1302              	.L31:
+ 1303 001c 00000000 		.word	.LANCHOR2
+ 1304 0020 00000000 		.word	.LANCHOR0
+ 1305 0024 00000000 		.word	.LANCHOR3
+ 1306 0028 00000000 		.word	.LANCHOR1
+ 1307              		.cfi_endproc
+ 1308              	.LFE144:
+ 1310              		.section	.text.getMahonyEuler,"ax",%progbits
+ 1311              		.align	1
+ 1312              		.global	getMahonyEuler
+ 1313              		.syntax unified
+ 1314              		.thumb
+ 1315              		.thumb_func
+ 1316              		.fpu fpv5-sp-d16
+ 1318              	getMahonyEuler:
+ 1319              	.LVL131:
+ 1320              	.LFB145:
+ 222:Core/drogui/src/mahony.c **** 
+ 223:Core/drogui/src/mahony.c **** 
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 35
+
+
+ 224:Core/drogui/src/mahony.c **** void getMahonyEuler(float* euler){
+ 1321              		.loc 1 224 34 is_stmt 1 view -0
+ 1322              		.cfi_startproc
+ 1323              		@ args = 0, pretend = 0, frame = 0
+ 1324              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1325              		.loc 1 224 34 is_stmt 0 view .LVU432
+ 1326 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1327              	.LCFI10:
+ 1328              		.cfi_def_cfa_offset 24
+ 1329              		.cfi_offset 4, -24
+ 1330              		.cfi_offset 5, -20
+ 1331              		.cfi_offset 6, -16
+ 1332              		.cfi_offset 7, -12
+ 1333              		.cfi_offset 8, -8
+ 1334              		.cfi_offset 14, -4
+ 1335 0004 2DED048B 		vpush.64	{d8, d9}
+ 1336              	.LCFI11:
+ 1337              		.cfi_def_cfa_offset 40
+ 1338              		.cfi_offset 80, -40
+ 1339              		.cfi_offset 81, -36
+ 1340              		.cfi_offset 82, -32
+ 1341              		.cfi_offset 83, -28
+ 1342 0008 0446     		mov	r4, r0
+ 225:Core/drogui/src/mahony.c **** 	
+ 226:Core/drogui/src/mahony.c ****     // roll (x-axis rotation)
+ 227:Core/drogui/src/mahony.c ****     float sinr_cosp = 2 * (q0 * q1 + q2 * q3);
+ 1343              		.loc 1 227 5 is_stmt 1 view .LVU433
+ 1344              		.loc 1 227 31 is_stmt 0 view .LVU434
+ 1345 000a DFF87081 		ldr	r8, .L46+16
+ 1346 000e D8ED007A 		vldr.32	s15, [r8]
+ 1347 0012 564D     		ldr	r5, .L46
+ 1348 0014 95ED007A 		vldr.32	s14, [r5]
+ 1349 0018 67EE877A 		vmul.f32	s15, s15, s14
+ 1350              		.loc 1 227 41 view .LVU435
+ 1351 001c 544E     		ldr	r6, .L46+4
+ 1352 001e 96ED007A 		vldr.32	s14, [r6]
+ 1353 0022 544F     		ldr	r7, .L46+8
+ 1354 0024 D7ED006A 		vldr.32	s13, [r7]
+ 1355 0028 27EE267A 		vmul.f32	s14, s14, s13
+ 1356              		.loc 1 227 36 view .LVU436
+ 1357 002c 77EE877A 		vadd.f32	s15, s15, s14
+ 1358              		.loc 1 227 11 view .LVU437
+ 1359 0030 37EEA78A 		vadd.f32	s16, s15, s15
+ 1360              	.LVL132:
+ 228:Core/drogui/src/mahony.c ****     float cosr_cosp = 1 - 2 * (q1 * q1 + q2 * q2);
+ 1361              		.loc 1 228 5 is_stmt 1 view .LVU438
+ 1362              		.loc 1 228 35 is_stmt 0 view .LVU439
+ 1363 0034 D5ED007A 		vldr.32	s15, [r5]
+ 1364 0038 95ED007A 		vldr.32	s14, [r5]
+ 1365 003c 67EE877A 		vmul.f32	s15, s15, s14
+ 1366              		.loc 1 228 45 view .LVU440
+ 1367 0040 96ED007A 		vldr.32	s14, [r6]
+ 1368 0044 D6ED006A 		vldr.32	s13, [r6]
+ 1369 0048 27EE267A 		vmul.f32	s14, s14, s13
+ 1370              		.loc 1 228 40 view .LVU441
+ 1371 004c 77EE877A 		vadd.f32	s15, s15, s14
+ 1372              		.loc 1 228 29 view .LVU442
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 36
+
+
+ 1373 0050 77EEA77A 		vadd.f32	s15, s15, s15
+ 1374              		.loc 1 228 11 view .LVU443
+ 1375 0054 F7EE008A 		vmov.f32	s17, #1.0e+0
+ 1376              	.LVL133:
+ 229:Core/drogui/src/mahony.c ****     euler[0] = atan2(sinr_cosp, cosr_cosp);
+ 1377              		.loc 1 229 5 is_stmt 1 view .LVU444
+ 1378              		.loc 1 229 16 is_stmt 0 view .LVU445
+ 1379 0058 78EEE77A 		vsub.f32	s15, s17, s15
+ 1380              	.LVL134:
+ 1381              		.loc 1 229 16 view .LVU446
+ 1382 005c 17EE900A 		vmov	r0, s15
+ 1383              	.LVL135:
+ 1384              		.loc 1 229 16 view .LVU447
+ 1385 0060 FFF7FEFF 		bl	__aeabi_f2d
+ 1386              	.LVL136:
+ 1387              		.loc 1 229 16 view .LVU448
+ 1388 0064 41EC190B 		vmov	d9, r0, r1
+ 1389 0068 18EE100A 		vmov	r0, s16
+ 1390 006c FFF7FEFF 		bl	__aeabi_f2d
+ 1391              	.LVL137:
+ 1392 0070 B0EE491A 		vmov.f32	s2, s18
+ 1393 0074 F0EE691A 		vmov.f32	s3, s19
+ 1394 0078 41EC100B 		vmov	d0, r0, r1
+ 1395 007c FFF7FEFF 		bl	atan2
+ 1396              	.LVL138:
+ 1397 0080 51EC100B 		vmov	r0, r1, d0
+ 1398 0084 FFF7FEFF 		bl	__aeabi_d2f
+ 1399              	.LVL139:
+ 1400              		.loc 1 229 14 view .LVU449
+ 1401 0088 2060     		str	r0, [r4]	@ float
+ 230:Core/drogui/src/mahony.c **** 
+ 231:Core/drogui/src/mahony.c ****     // pitch (y-axis rotation)
+ 232:Core/drogui/src/mahony.c ****     float sinp = 2 * (q0 * q2 - q3 * q1);
+ 1402              		.loc 1 232 5 is_stmt 1 view .LVU450
+ 1403              		.loc 1 232 26 is_stmt 0 view .LVU451
+ 1404 008a D8ED007A 		vldr.32	s15, [r8]
+ 1405 008e 96ED007A 		vldr.32	s14, [r6]
+ 1406 0092 67EE877A 		vmul.f32	s15, s15, s14
+ 1407              		.loc 1 232 36 view .LVU452
+ 1408 0096 97ED007A 		vldr.32	s14, [r7]
+ 1409 009a D5ED006A 		vldr.32	s13, [r5]
+ 1410 009e 27EE267A 		vmul.f32	s14, s14, s13
+ 1411              		.loc 1 232 31 view .LVU453
+ 1412 00a2 77EEC77A 		vsub.f32	s15, s15, s14
+ 1413              		.loc 1 232 11 view .LVU454
+ 1414 00a6 77EEA77A 		vadd.f32	s15, s15, s15
+ 1415              	.LVL140:
+ 233:Core/drogui/src/mahony.c ****     if (fabs(sinp) >= 1)
+ 1416              		.loc 1 233 5 is_stmt 1 view .LVU455
+ 1417              		.loc 1 233 9 is_stmt 0 view .LVU456
+ 1418 00aa B0EEE77A 		vabs.f32	s14, s15
+ 1419              		.loc 1 233 8 view .LVU457
+ 1420 00ae B4EEE87A 		vcmpe.f32	s14, s17
+ 1421 00b2 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1422 00b6 4BDB     		blt	.L42
+ 234:Core/drogui/src/mahony.c ****         euler[1] = copysign(pi / 2, sinp); // use 90 degrees if out of range
+ 1423              		.loc 1 234 9 is_stmt 1 view .LVU458
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 37
+
+
+ 1424              		.loc 1 234 20 is_stmt 0 view .LVU459
+ 1425 00b8 F5EEC07A 		vcmpe.f32	s15, #0
+ 1426 00bc F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1427 00c0 44D4     		bmi	.L45
+ 1428 00c2 2D4B     		ldr	r3, .L46+12
+ 1429              	.L36:
+ 1430              		.loc 1 234 18 discriminator 4 view .LVU460
+ 1431 00c4 6360     		str	r3, [r4, #4]	@ float
+ 1432              	.LVL141:
+ 1433              	.L38:
+ 235:Core/drogui/src/mahony.c ****     else
+ 236:Core/drogui/src/mahony.c ****         euler[1] = asin(sinp);
+ 237:Core/drogui/src/mahony.c **** 
+ 238:Core/drogui/src/mahony.c ****     // yaw (z-axis rotation)
+ 239:Core/drogui/src/mahony.c ****     float siny_cosp = 2 * (q0 * q3 + q1 * q2);
+ 1434              		.loc 1 239 5 is_stmt 1 view .LVU461
+ 1435              		.loc 1 239 31 is_stmt 0 view .LVU462
+ 1436 00c6 2D4B     		ldr	r3, .L46+16
+ 1437 00c8 D3ED007A 		vldr.32	s15, [r3]
+ 1438 00cc 294B     		ldr	r3, .L46+8
+ 1439 00ce 93ED007A 		vldr.32	s14, [r3]
+ 1440 00d2 67EE877A 		vmul.f32	s15, s15, s14
+ 1441              		.loc 1 239 41 view .LVU463
+ 1442 00d6 254A     		ldr	r2, .L46
+ 1443 00d8 92ED007A 		vldr.32	s14, [r2]
+ 1444 00dc 244A     		ldr	r2, .L46+4
+ 1445 00de D2ED006A 		vldr.32	s13, [r2]
+ 1446 00e2 27EE267A 		vmul.f32	s14, s14, s13
+ 1447              		.loc 1 239 36 view .LVU464
+ 1448 00e6 77EE877A 		vadd.f32	s15, s15, s14
+ 1449              		.loc 1 239 11 view .LVU465
+ 1450 00ea 37EEA78A 		vadd.f32	s16, s15, s15
+ 1451              	.LVL142:
+ 240:Core/drogui/src/mahony.c ****     float cosy_cosp = 1 - 2 * (q2 * q2 + q3 * q3);
+ 1452              		.loc 1 240 5 is_stmt 1 view .LVU466
+ 1453              		.loc 1 240 35 is_stmt 0 view .LVU467
+ 1454 00ee D2ED007A 		vldr.32	s15, [r2]
+ 1455 00f2 92ED007A 		vldr.32	s14, [r2]
+ 1456 00f6 67EE877A 		vmul.f32	s15, s15, s14
+ 1457              		.loc 1 240 45 view .LVU468
+ 1458 00fa 93ED007A 		vldr.32	s14, [r3]
+ 1459 00fe D3ED006A 		vldr.32	s13, [r3]
+ 1460 0102 27EE267A 		vmul.f32	s14, s14, s13
+ 1461              		.loc 1 240 40 view .LVU469
+ 1462 0106 77EE877A 		vadd.f32	s15, s15, s14
+ 1463              		.loc 1 240 29 view .LVU470
+ 1464 010a 77EEA77A 		vadd.f32	s15, s15, s15
+ 1465              	.LVL143:
+ 241:Core/drogui/src/mahony.c ****     euler[2] = atan2(siny_cosp, cosy_cosp);
+ 1466              		.loc 1 241 5 is_stmt 1 view .LVU471
+ 1467              		.loc 1 241 16 is_stmt 0 view .LVU472
+ 1468 010e B7EE007A 		vmov.f32	s14, #1.0e+0
+ 1469 0112 77EE677A 		vsub.f32	s15, s14, s15
+ 1470              	.LVL144:
+ 1471              		.loc 1 241 16 view .LVU473
+ 1472 0116 17EE900A 		vmov	r0, s15
+ 1473 011a FFF7FEFF 		bl	__aeabi_f2d
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 38
+
+
+ 1474              	.LVL145:
+ 1475              		.loc 1 241 16 view .LVU474
+ 1476 011e 41EC190B 		vmov	d9, r0, r1
+ 1477 0122 18EE100A 		vmov	r0, s16
+ 1478 0126 FFF7FEFF 		bl	__aeabi_f2d
+ 1479              	.LVL146:
+ 1480 012a B0EE491A 		vmov.f32	s2, s18
+ 1481 012e F0EE691A 		vmov.f32	s3, s19
+ 1482 0132 41EC100B 		vmov	d0, r0, r1
+ 1483 0136 FFF7FEFF 		bl	atan2
+ 1484              	.LVL147:
+ 1485 013a 51EC100B 		vmov	r0, r1, d0
+ 1486 013e FFF7FEFF 		bl	__aeabi_d2f
+ 1487              	.LVL148:
+ 1488              		.loc 1 241 14 view .LVU475
+ 1489 0142 A060     		str	r0, [r4, #8]	@ float
+ 242:Core/drogui/src/mahony.c **** }
+ 1490              		.loc 1 242 1 view .LVU476
+ 1491 0144 BDEC048B 		vldm	sp!, {d8-d9}
+ 1492              	.LCFI12:
+ 1493              		.cfi_remember_state
+ 1494              		.cfi_restore 82
+ 1495              		.cfi_restore 83
+ 1496              		.cfi_restore 80
+ 1497              		.cfi_restore 81
+ 1498              		.cfi_def_cfa_offset 24
+ 1499              	.LVL149:
+ 1500              		.loc 1 242 1 view .LVU477
+ 1501 0148 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1502              	.LVL150:
+ 1503              	.L45:
+ 1504              	.LCFI13:
+ 1505              		.cfi_restore_state
+ 234:Core/drogui/src/mahony.c ****     else
+ 1506              		.loc 1 234 20 view .LVU478
+ 1507 014c 0C4B     		ldr	r3, .L46+20
+ 1508 014e B9E7     		b	.L36
+ 1509              	.L42:
+ 236:Core/drogui/src/mahony.c **** 
+ 1510              		.loc 1 236 9 is_stmt 1 view .LVU479
+ 236:Core/drogui/src/mahony.c **** 
+ 1511              		.loc 1 236 20 is_stmt 0 view .LVU480
+ 1512 0150 17EE900A 		vmov	r0, s15
+ 1513 0154 FFF7FEFF 		bl	__aeabi_f2d
+ 1514              	.LVL151:
+ 236:Core/drogui/src/mahony.c **** 
+ 1515              		.loc 1 236 20 view .LVU481
+ 1516 0158 41EC100B 		vmov	d0, r0, r1
+ 1517 015c FFF7FEFF 		bl	asin
+ 1518              	.LVL152:
+ 1519 0160 51EC100B 		vmov	r0, r1, d0
+ 1520 0164 FFF7FEFF 		bl	__aeabi_d2f
+ 1521              	.LVL153:
+ 236:Core/drogui/src/mahony.c **** 
+ 1522              		.loc 1 236 18 view .LVU482
+ 1523 0168 6060     		str	r0, [r4, #4]	@ float
+ 1524 016a ACE7     		b	.L38
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 39
+
+
+ 1525              	.L47:
+ 1526              		.align	2
+ 1527              	.L46:
+ 1528 016c 00000000 		.word	.LANCHOR0
+ 1529 0170 00000000 		.word	.LANCHOR3
+ 1530 0174 00000000 		.word	.LANCHOR1
+ 1531 0178 DB0FC93F 		.word	1070141403
+ 1532 017c 00000000 		.word	.LANCHOR2
+ 1533 0180 DB0FC9BF 		.word	-1077342245
+ 1534              		.cfi_endproc
+ 1535              	.LFE145:
+ 1537              		.global	integralFBz
+ 1538              		.global	integralFBy
+ 1539              		.global	integralFBx
+ 1540              		.global	q3
+ 1541              		.global	q2
+ 1542              		.global	q1
+ 1543              		.global	q0
+ 1544              		.global	twoKi
+ 1545              		.global	twoKp
+ 1546              		.section	.bss.integralFBx,"aw",%nobits
+ 1547              		.align	2
+ 1548              		.set	.LANCHOR5,. + 0
+ 1551              	integralFBx:
+ 1552 0000 00000000 		.space	4
+ 1553              		.section	.bss.integralFBy,"aw",%nobits
+ 1554              		.align	2
+ 1555              		.set	.LANCHOR6,. + 0
+ 1558              	integralFBy:
+ 1559 0000 00000000 		.space	4
+ 1560              		.section	.bss.integralFBz,"aw",%nobits
+ 1561              		.align	2
+ 1562              		.set	.LANCHOR7,. + 0
+ 1565              	integralFBz:
+ 1566 0000 00000000 		.space	4
+ 1567              		.section	.bss.q1,"aw",%nobits
+ 1568              		.align	2
+ 1569              		.set	.LANCHOR0,. + 0
+ 1572              	q1:
+ 1573 0000 00000000 		.space	4
+ 1574              		.section	.bss.q2,"aw",%nobits
+ 1575              		.align	2
+ 1576              		.set	.LANCHOR3,. + 0
+ 1579              	q2:
+ 1580 0000 00000000 		.space	4
+ 1581              		.section	.bss.q3,"aw",%nobits
+ 1582              		.align	2
+ 1583              		.set	.LANCHOR1,. + 0
+ 1586              	q3:
+ 1587 0000 00000000 		.space	4
+ 1588              		.section	.bss.twoKi,"aw",%nobits
+ 1589              		.align	2
+ 1590              		.set	.LANCHOR4,. + 0
+ 1593              	twoKi:
+ 1594 0000 00000000 		.space	4
+ 1595              		.section	.data.q0,"aw"
+ 1596              		.align	2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 40
+
+
+ 1597              		.set	.LANCHOR2,. + 0
+ 1600              	q0:
+ 1601 0000 0000803F 		.word	1065353216
+ 1602              		.section	.data.twoKp,"aw"
+ 1603              		.align	2
+ 1604              		.set	.LANCHOR8,. + 0
+ 1607              	twoKp:
+ 1608 0000 00007042 		.word	1114636288
+ 1609              		.text
+ 1610              	.Letext0:
+ 1611              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s 			page 41
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 mahony.c
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:18     .text.invSqrt:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:26     .text.invSqrt:00000000 invSqrt
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:73     .text.invSqrt:0000002c $d
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:78     .text.mahonyUpdateIMU:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:85     .text.mahonyUpdateIMU:00000000 mahonyUpdateIMU
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:503    .text.mahonyUpdateIMU:000002cc $d
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:520    .text.mahonyUpdate:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:527    .text.mahonyUpdate:00000000 mahonyUpdate
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1248   .text.mahonyUpdate:000004a4 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1263   .text.getMahonyQuaternion:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1270   .text.getMahonyQuaternion:00000000 getMahonyQuaternion
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1303   .text.getMahonyQuaternion:0000001c $d
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1311   .text.getMahonyEuler:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1318   .text.getMahonyEuler:00000000 getMahonyEuler
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1528   .text.getMahonyEuler:0000016c $d
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1565   .bss.integralFBz:00000000 integralFBz
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1558   .bss.integralFBy:00000000 integralFBy
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1551   .bss.integralFBx:00000000 integralFBx
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1586   .bss.q3:00000000 q3
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1579   .bss.q2:00000000 q2
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1572   .bss.q1:00000000 q1
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1600   .data.q0:00000000 q0
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1593   .bss.twoKi:00000000 twoKi
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1607   .data.twoKp:00000000 twoKp
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1547   .bss.integralFBx:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1554   .bss.integralFBy:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1561   .bss.integralFBz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1568   .bss.q1:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1575   .bss.q2:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1582   .bss.q3:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1589   .bss.twoKi:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1596   .data.q0:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc18bvsx.s:1603   .data.twoKp:00000000 $d
+
+UNDEFINED SYMBOLS
+__aeabi_f2d
+__aeabi_d2f
+sqrt
+atan2
+asin

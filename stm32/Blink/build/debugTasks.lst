@@ -1,0 +1,305 @@
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"debugTasks.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.blinkTask,"ax",%progbits
+  18              		.align	1
+  19              		.global	blinkTask
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv5-sp-d16
+  26              	blinkTask:
+  27              	.LVL0:
+  28              	.LFB177:
+  29              		.file 1 "Core/drogui/src/debugTasks.c"
+   1:Core/drogui/src/debugTasks.c **** #include "debugTasks.h"
+   2:Core/drogui/src/debugTasks.c **** #include "utils.h"
+   3:Core/drogui/src/debugTasks.c **** #include "usart.h"
+   4:Core/drogui/src/debugTasks.c **** #include "sensorsTasks.h"
+   5:Core/drogui/src/debugTasks.c **** #include "task.h"
+   6:Core/drogui/src/debugTasks.c **** #include <stdio.h>
+   7:Core/drogui/src/debugTasks.c **** #include <string.h>
+   8:Core/drogui/src/debugTasks.c **** 
+   9:Core/drogui/src/debugTasks.c **** 
+  10:Core/drogui/src/debugTasks.c **** void blinkTask(void *argument){
+  30              		.loc 1 10 31 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 10 31 is_stmt 0 view .LVU1
+  35 0000 08B5     		push	{r3, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 3, -8
+  39              		.cfi_offset 14, -4
+  11:Core/drogui/src/debugTasks.c **** 
+  12:Core/drogui/src/debugTasks.c ****     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+  40              		.loc 1 12 5 is_stmt 1 view .LVU2
+  41 0002 0221     		movs	r1, #2
+  42 0004 0148     		ldr	r0, .L3
+  43              	.LVL1:
+  44              		.loc 1 12 5 is_stmt 0 view .LVU3
+  45 0006 FFF7FEFF 		bl	HAL_GPIO_TogglePin
+  46              	.LVL2:
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s 			page 2
+
+
+  13:Core/drogui/src/debugTasks.c **** }
+  47              		.loc 1 13 1 view .LVU4
+  48 000a 08BD     		pop	{r3, pc}
+  49              	.L4:
+  50              		.align	2
+  51              	.L3:
+  52 000c 00100240 		.word	1073876992
+  53              		.cfi_endproc
+  54              	.LFE177:
+  56              		.global	__aeabi_f2d
+  57              		.section	.rodata.debugTask.str1.4,"aMS",%progbits,1
+  58              		.align	2
+  59              	.LC0:
+  60 0000 25660925 		.ascii	"%f\011%f\011%f\011%f\011%ld;\012\000"
+  60      66092566 
+  60      09256609 
+  60      256C643B 
+  60      0A00
+  61              		.section	.text.debugTask,"ax",%progbits
+  62              		.align	1
+  63              		.global	debugTask
+  64              		.syntax unified
+  65              		.thumb
+  66              		.thumb_func
+  67              		.fpu fpv5-sp-d16
+  69              	debugTask:
+  70              	.LVL3:
+  71              	.LFB178:
+  14:Core/drogui/src/debugTasks.c **** 
+  15:Core/drogui/src/debugTasks.c **** char buff[50] = "hola\n";
+  16:Core/drogui/src/debugTasks.c **** void debugTask(void *argument){
+  72              		.loc 1 16 31 is_stmt 1 view -0
+  73              		.cfi_startproc
+  74              		@ args = 0, pretend = 0, frame = 0
+  75              		@ frame_needed = 0, uses_anonymous_args = 0
+  76              		.loc 1 16 31 is_stmt 0 view .LVU6
+  77 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  78              	.LCFI1:
+  79              		.cfi_def_cfa_offset 24
+  80              		.cfi_offset 4, -24
+  81              		.cfi_offset 5, -20
+  82              		.cfi_offset 6, -16
+  83              		.cfi_offset 7, -12
+  84              		.cfi_offset 8, -8
+  85              		.cfi_offset 14, -4
+  86 0004 88B0     		sub	sp, sp, #32
+  87              	.LCFI2:
+  88              		.cfi_def_cfa_offset 56
+  17:Core/drogui/src/debugTasks.c ****     
+  18:Core/drogui/src/debugTasks.c ****     sprintf(buff, "%f\t%f\t%f\t%f\t%ld;\n", myIMU.gx/5, gx, myIMU.ax,ax,TIME);
+  89              		.loc 1 18 5 is_stmt 1 view .LVU7
+  90              		.loc 1 18 50 is_stmt 0 view .LVU8
+  91 0006 1C4B     		ldr	r3, .L7
+  92 0008 93ED077A 		vldr.32	s14, [r3, #28]
+  93              		.loc 1 18 66 view .LVU9
+  94 000c 1D68     		ldr	r5, [r3]	@ float
+  95              		.loc 1 18 73 view .LVU10
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s 			page 3
+
+
+  96 000e 1B4B     		ldr	r3, .L7+4
+  97 0010 1B68     		ldr	r3, [r3]
+  98 0012 D3F82480 		ldr	r8, [r3, #36]
+  99              		.loc 1 18 5 view .LVU11
+ 100 0016 F1EE047A 		vmov.f32	s15, #5.0e+0
+ 101 001a C7EE277A 		vdiv.f32	s15, s14, s15
+ 102 001e 17EE900A 		vmov	r0, s15
+ 103              	.LVL4:
+ 104              		.loc 1 18 5 view .LVU12
+ 105 0022 FFF7FEFF 		bl	__aeabi_f2d
+ 106              	.LVL5:
+ 107 0026 0646     		mov	r6, r0
+ 108 0028 0F46     		mov	r7, r1
+ 109 002a 154C     		ldr	r4, .L7+8
+ 110 002c CDF81880 		str	r8, [sp, #24]
+ 111 0030 144B     		ldr	r3, .L7+12
+ 112 0032 1868     		ldr	r0, [r3]	@ float
+ 113 0034 FFF7FEFF 		bl	__aeabi_f2d
+ 114              	.LVL6:
+ 115 0038 CDE90401 		strd	r0, [sp, #16]
+ 116 003c 2846     		mov	r0, r5	@ float
+ 117 003e FFF7FEFF 		bl	__aeabi_f2d
+ 118              	.LVL7:
+ 119 0042 CDE90201 		strd	r0, [sp, #8]
+ 120 0046 104B     		ldr	r3, .L7+16
+ 121 0048 1868     		ldr	r0, [r3]	@ float
+ 122 004a FFF7FEFF 		bl	__aeabi_f2d
+ 123              	.LVL8:
+ 124 004e CDE90001 		strd	r0, [sp]
+ 125 0052 3246     		mov	r2, r6
+ 126 0054 3B46     		mov	r3, r7
+ 127 0056 0D49     		ldr	r1, .L7+20
+ 128 0058 2046     		mov	r0, r4
+ 129 005a FFF7FEFF 		bl	sprintf
+ 130              	.LVL9:
+  19:Core/drogui/src/debugTasks.c ****     //sprintf(buff, "%lu;\n",TIME);
+  20:Core/drogui/src/debugTasks.c ****     HAL_UART_Transmit(&huart2, (uint8_t*) buff, strlen(buff), 100);
+ 131              		.loc 1 20 5 is_stmt 1 view .LVU13
+ 132              		.loc 1 20 49 is_stmt 0 view .LVU14
+ 133 005e 2046     		mov	r0, r4
+ 134 0060 FFF7FEFF 		bl	strlen
+ 135              	.LVL10:
+ 136              		.loc 1 20 5 view .LVU15
+ 137 0064 6423     		movs	r3, #100
+ 138 0066 82B2     		uxth	r2, r0
+ 139 0068 2146     		mov	r1, r4
+ 140 006a 0948     		ldr	r0, .L7+24
+ 141 006c FFF7FEFF 		bl	HAL_UART_Transmit
+ 142              	.LVL11:
+  21:Core/drogui/src/debugTasks.c **** }
+ 143              		.loc 1 21 1 view .LVU16
+ 144 0070 08B0     		add	sp, sp, #32
+ 145              	.LCFI3:
+ 146              		.cfi_def_cfa_offset 24
+ 147              		@ sp needed
+ 148 0072 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 149              	.L8:
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s 			page 4
+
+
+ 150 0076 00BF     		.align	2
+ 151              	.L7:
+ 152 0078 00000000 		.word	myIMU
+ 153 007c 00000000 		.word	htim5
+ 154 0080 00000000 		.word	.LANCHOR0
+ 155 0084 00000000 		.word	ax
+ 156 0088 00000000 		.word	gx
+ 157 008c 00000000 		.word	.LC0
+ 158 0090 00000000 		.word	huart2
+ 159              		.cfi_endproc
+ 160              	.LFE178:
+ 162              		.section	.text.initDebug,"ax",%progbits
+ 163              		.align	1
+ 164              		.global	initDebug
+ 165              		.syntax unified
+ 166              		.thumb
+ 167              		.thumb_func
+ 168              		.fpu fpv5-sp-d16
+ 170              	initDebug:
+ 171              	.LFB179:
+  22:Core/drogui/src/debugTasks.c **** 
+  23:Core/drogui/src/debugTasks.c **** void initDebug(){
+ 172              		.loc 1 23 17 is_stmt 1 view -0
+ 173              		.cfi_startproc
+ 174              		@ args = 0, pretend = 0, frame = 0
+ 175              		@ frame_needed = 0, uses_anonymous_args = 0
+ 176 0000 08B5     		push	{r3, lr}
+ 177              	.LCFI4:
+ 178              		.cfi_def_cfa_offset 8
+ 179              		.cfi_offset 3, -8
+ 180              		.cfi_offset 14, -4
+  24:Core/drogui/src/debugTasks.c ****     
+  25:Core/drogui/src/debugTasks.c ****     //#if(__FPU_PRESENT == 1) && (__FPU_USED == 1)
+  26:Core/drogui/src/debugTasks.c ****     addTask(&debugTask, 1000, 1);
+ 181              		.loc 1 26 5 view .LVU18
+ 182 0002 0122     		movs	r2, #1
+ 183 0004 4FF47A71 		mov	r1, #1000
+ 184 0008 0448     		ldr	r0, .L11
+ 185 000a FFF7FEFF 		bl	addTask
+ 186              	.LVL12:
+  27:Core/drogui/src/debugTasks.c ****     addTask(&blinkTask, 1000000, 1);
+ 187              		.loc 1 27 5 view .LVU19
+ 188 000e 0122     		movs	r2, #1
+ 189 0010 0349     		ldr	r1, .L11+4
+ 190 0012 0448     		ldr	r0, .L11+8
+ 191 0014 FFF7FEFF 		bl	addTask
+ 192              	.LVL13:
+  28:Core/drogui/src/debugTasks.c ****     //#endif
+  29:Core/drogui/src/debugTasks.c **** 
+  30:Core/drogui/src/debugTasks.c **** }...
+ 193              		.loc 1 30 1 is_stmt 0 view .LVU20
+ 194 0018 08BD     		pop	{r3, pc}
+ 195              	.L12:
+ 196 001a 00BF     		.align	2
+ 197              	.L11:
+ 198 001c 00000000 		.word	debugTask
+ 199 0020 40420F00 		.word	1000000
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s 			page 5
+
+
+ 200 0024 00000000 		.word	blinkTask
+ 201              		.cfi_endproc
+ 202              	.LFE179:
+ 204              		.global	buff
+ 205              		.section	.data.buff,"aw"
+ 206              		.align	2
+ 207              		.set	.LANCHOR0,. + 0
+ 210              	buff:
+ 211 0000 686F6C61 		.ascii	"hola\012\000"
+ 211      0A00
+ 212 0006 00000000 		.space	44
+ 212      00000000 
+ 212      00000000 
+ 212      00000000 
+ 212      00000000 
+ 213              		.text
+ 214              	.Letext0:
+ 215              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 216              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 217              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
+ 218              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
+ 219              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
+ 220              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim.h"
+ 221              		.file 8 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h"
+ 222              		.file 9 "Core/drogui/include/MPU9250.h"
+ 223              		.file 10 "Core/drogui/include/sensorsTasks.h"
+ 224              		.file 11 "Core/Inc/usart.h"
+ 225              		.file 12 "Core/Inc/tim.h"
+ 226              		.file 13 "Core/drogui/include/task.h"
+ 227              		.file 14 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ 228              		.file 15 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ 229              		.file 16 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_gpio.h"
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 debugTasks.c
+C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s:18     .text.blinkTask:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s:26     .text.blinkTask:00000000 blinkTask
+C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s:52     .text.blinkTask:0000000c $d
+C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s:58     .rodata.debugTask.str1.4:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s:62     .text.debugTask:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s:69     .text.debugTask:00000000 debugTask
+C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s:152    .text.debugTask:00000078 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s:163    .text.initDebug:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s:170    .text.initDebug:00000000 initDebug
+C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s:198    .text.initDebug:0000001c $d
+C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s:210    .data.buff:00000000 buff
+C:\Users\USUARIO\AppData\Local\Temp\ccb5zHJd.s:206    .data.buff:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_GPIO_TogglePin
+__aeabi_f2d
+sprintf
+strlen
+HAL_UART_Transmit
+myIMU
+htim5
+ax
+gx
+huart2
+addTask
