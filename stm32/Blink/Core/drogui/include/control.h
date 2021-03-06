@@ -7,7 +7,7 @@
 
 enum TYPES_PID {NORMAL = 0, P2ID = 1, INDEXED = 2, PIDABS = 4, D_FILTER = 8, D_INT = 16};
 /**
- * @brief Structure PID
+ * @brief Struct PID
  * @param Kp Kp Array (float)
  * @param Ki Ki Array (float)
  * @param Kd Kd Array (float)
@@ -36,7 +36,7 @@ typedef struct _pid{
 } pid;
 /**
  * @brief Get control law from PID controller from the error between Reference and Current Value 
- * @param p PID (struct pid)
+ * @param p PID (pointer to struct pid)
  * @param error Current Error (float)
  * @param t Current time (uint32_t)
  * @param h Compensation (float)
@@ -45,7 +45,7 @@ typedef struct _pid{
 float computePid(pid* p, float error, uint32_t t, float h);
 /**
  * @brief Reset PID controller, the error as well as the integral and derivative components become zeros 
- * @param p PID (struct pid) 
+ * @param p PID (pointer to struct pid) 
  * @param ti Time (float)
  * @return u Value of Control law
 */
@@ -65,7 +65,7 @@ void resetPid(pid* p, uint32_t ti);
 void initPid(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float isat,float osat, int tipo );
 /**
  * @brief Initialize PID-(Derivative term Filter) Structure
- * @param p PID (struct pid)
+ * @param p PID (pointer to struct pid)
  * @param kp Proportional constant (float)
  * @param ki Integral constant (float)
  * @param kd Derivative constant (float)

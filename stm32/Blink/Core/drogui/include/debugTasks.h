@@ -3,7 +3,7 @@
 
 
 /**
- * @brief Initialize Debug Taskm usually print data from sensors
+ * @brief Initialize Debug Task usually prints data from sensors and blink led
 */
 void initDebug();
 
