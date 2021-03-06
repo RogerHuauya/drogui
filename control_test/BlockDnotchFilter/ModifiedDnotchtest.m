@@ -16,15 +16,18 @@ a_dn = 1;
 zeta_dn = 5;
 count = 1;
 fc_ant = 0;
+arr_fc = [];
+arr_block =[];
 for i=samples:dim
     y_act = aux(i-samples+1:i);
     if( mod(i,64) == 0 ) 
         block = 1;
     else
         block = 0;
+        
     end
-    block = 1;
     [y,y_ant,x_ant,f_n] = dynamicnotchM(y_act,Fs,zeta,a,x_ant,y_ant,samples,block, fc_ant);
+    arr_fc = [arr_fc,f_n];
     fc_ant = f_n;
     aux(i) = y;
 end

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -36,7 +36,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
    5:Core/drogui/src/filter.c **** #include <usart.h>
    6:Core/drogui/src/filter.c **** #include <string.h>
    7:Core/drogui/src/filter.c **** #include "sensorsTasks.h"
-   8:Core/drogui/src/filter.c **** char bufft[100] = "hi\n";
+   8:Core/drogui/src/filter.c **** float fc;
    9:Core/drogui/src/filter.c **** 
   10:Core/drogui/src/filter.c **** void initFilter(filter* f, int n, float* k, float* v){
   30              		.loc 1 10 54 view -0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
   46 0004 0446     		mov	r4, r0
   47 0006 0D46     		mov	r5, r1
   48 0008 1646     		mov	r6, r2
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 2
 
 
   49 000a 1F46     		mov	r7, r3
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
   99              	.LCFI3:
  100              		.cfi_def_cfa_offset 4
  101              		.cfi_offset 14, -4
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 3
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 3
 
 
  102 0002 85B0     		sub	sp, sp, #20
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  150              		.loc 1 24 13 is_stmt 0 view .LVU19
  151 0006 4160     		str	r1, [r0, #4]
   25:Core/drogui/src/filter.c ****     df -> a = a;
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 4
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 4
 
 
  152              		.loc 1 25 5 is_stmt 1 view .LVU20
@@ -213,546 +213,487 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  175 0024 0362     		str	r3, [r0, #32]	@ float
  176              		.loc 1 31 21 view .LVU34
  177 0026 C361     		str	r3, [r0, #28]	@ float
-  32:Core/drogui/src/filter.c ****     /*df -> coeffs[0] = 0.704604369991410;
-  33:Core/drogui/src/filter.c ****     df -> coeffs[1] = -1.278630876031574;
-  34:Core/drogui/src/filter.c ****     df -> coeffs[2] = 0.704604369991410;
-  35:Core/drogui/src/filter.c ****     df -> coeffs[3] = 1.278926419433284;
-  36:Core/drogui/src/filter.c ****     df -> coeffs[4] = -0.408913196581110;*/
-  37:Core/drogui/src/filter.c ****     df -> state[0] = df -> state[1] = df -> state[2] = df -> state[3] =  0;
- 178              		.loc 1 37 5 is_stmt 1 view .LVU35
- 179              		.loc 1 37 71 is_stmt 0 view .LVU36
+  32:Core/drogui/src/filter.c ****     df -> state[0] = df -> state[1] = df -> state[2] = df -> state[3] =  0;
+ 178              		.loc 1 32 5 is_stmt 1 view .LVU35
+ 179              		.loc 1 32 71 is_stmt 0 view .LVU36
  180 0028 8363     		str	r3, [r0, #56]	@ float
- 181              		.loc 1 37 54 view .LVU37
+ 181              		.loc 1 32 54 view .LVU37
  182 002a 4363     		str	r3, [r0, #52]	@ float
- 183              		.loc 1 37 37 view .LVU38
+ 183              		.loc 1 32 37 view .LVU38
  184 002c 0363     		str	r3, [r0, #48]	@ float
- 185              		.loc 1 37 20 view .LVU39
+ 185              		.loc 1 32 20 view .LVU39
  186 002e C362     		str	r3, [r0, #44]	@ float
-  38:Core/drogui/src/filter.c **** 
-  39:Core/drogui/src/filter.c ****     df -> values = (float*) calloc(n, sizeof(float));
- 187              		.loc 1 39 5 is_stmt 1 view .LVU40
- 188              		.loc 1 39 29 is_stmt 0 view .LVU41
+  33:Core/drogui/src/filter.c **** 
+  34:Core/drogui/src/filter.c ****     df -> values = (float*) calloc(n, sizeof(float));
+ 187              		.loc 1 34 5 is_stmt 1 view .LVU40
+ 188              		.loc 1 34 29 is_stmt 0 view .LVU41
  189 0030 0421     		movs	r1, #4
  190              	.LVL8:
- 191              		.loc 1 39 29 view .LVU42
+ 191              		.loc 1 34 29 view .LVU42
  192 0032 2846     		mov	r0, r5
  193              	.LVL9:
- 194              		.loc 1 39 29 view .LVU43
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 5
-
-
+ 194              		.loc 1 34 29 view .LVU43
  195 0034 FFF7FEFF 		bl	calloc
  196              	.LVL10:
- 197              		.loc 1 39 18 view .LVU44
+ 197              		.loc 1 34 18 view .LVU44
  198 0038 2060     		str	r0, [r4]
-  40:Core/drogui/src/filter.c ****     df -> head = 0;
- 199              		.loc 1 40 5 is_stmt 1 view .LVU45
- 200              		.loc 1 40 16 is_stmt 0 view .LVU46
+  35:Core/drogui/src/filter.c ****     df -> head = 0;
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 5
+
+
+ 199              		.loc 1 35 5 is_stmt 1 view .LVU45
+ 200              		.loc 1 35 16 is_stmt 0 view .LVU46
  201 003a 0023     		movs	r3, #0
  202 003c E363     		str	r3, [r4, #60]
-  41:Core/drogui/src/filter.c ****     arm_rfft_fast_init_f32(&(df->fft), n);
- 203              		.loc 1 41 5 is_stmt 1 view .LVU47
+  36:Core/drogui/src/filter.c ****     arm_rfft_fast_init_f32(&(df->fft), n);
+ 203              		.loc 1 36 5 is_stmt 1 view .LVU47
  204 003e A9B2     		uxth	r1, r5
  205 0040 04F14400 		add	r0, r4, #68
  206 0044 FFF7FEFF 		bl	arm_rfft_fast_init_f32
  207              	.LVL11:
-  42:Core/drogui/src/filter.c ****     arm_biquad_cascade_df2T_init_f32(&(df->f), 1, df->coeffs, df->state);
- 208              		.loc 1 42 5 view .LVU48
+  37:Core/drogui/src/filter.c ****     arm_biquad_cascade_df1_init_f32(&(df->f), 1, df->coeffs, df->state);
+ 208              		.loc 1 37 5 view .LVU48
  209 0048 04F12C03 		add	r3, r4, #44
  210 004c 04F11802 		add	r2, r4, #24
  211 0050 0121     		movs	r1, #1
  212 0052 04F15C00 		add	r0, r4, #92
- 213 0056 FFF7FEFF 		bl	arm_biquad_cascade_df2T_init_f32
+ 213 0056 FFF7FEFF 		bl	arm_biquad_cascade_df1_init_f32
  214              	.LVL12:
-  43:Core/drogui/src/filter.c **** }
- 215              		.loc 1 43 1 is_stmt 0 view .LVU49
+  38:Core/drogui/src/filter.c **** }
+ 215              		.loc 1 38 1 is_stmt 0 view .LVU49
  216 005a 38BD     		pop	{r3, r4, r5, pc}
- 217              		.loc 1 43 1 view .LVU50
+ 217              		.loc 1 38 1 view .LVU50
  218              		.cfi_endproc
  219              	.LFE179:
  221              		.global	__aeabi_f2d
  222              		.global	__aeabi_dmul
  223              		.global	__aeabi_d2f
- 224              		.section	.rodata.updateCoeffNotch.str1.4,"aMS",%progbits,1
- 225              		.align	2
- 226              	.LC0:
- 227 0000 25660925 		.ascii	"%f\011%f\011%f\011%f\011%f\011\000"
- 227      66092566 
- 227      09256609 
- 227      25660900 
- 228              		.section	.text.updateCoeffNotch,"ax",%progbits
- 229              		.align	1
- 230              		.global	updateCoeffNotch
- 231              		.syntax unified
- 232              		.thumb
- 233              		.thumb_func
- 234              		.fpu fpv5-sp-d16
- 236              	updateCoeffNotch:
- 237              	.LVL13:
- 238              	.LFB180:
-  44:Core/drogui/src/filter.c **** 
-  45:Core/drogui/src/filter.c **** void updateCoeffNotch(dNotchFilter *df, float fc){
- 239              		.loc 1 45 50 is_stmt 1 view -0
- 240              		.cfi_startproc
- 241              		@ args = 0, pretend = 0, frame = 0
- 242              		@ frame_needed = 0, uses_anonymous_args = 0
- 243              		.loc 1 45 50 is_stmt 0 view .LVU52
- 244 0000 30B5     		push	{r4, r5, lr}
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 6
+ 224              		.section	.text.updateCoeffNotch,"ax",%progbits
+ 225              		.align	1
+ 226              		.global	updateCoeffNotch
+ 227              		.syntax unified
+ 228              		.thumb
+ 229              		.thumb_func
+ 230              		.fpu fpv5-sp-d16
+ 232              	updateCoeffNotch:
+ 233              	.LVL13:
+ 234              	.LFB180:
+  39:Core/drogui/src/filter.c **** 
+  40:Core/drogui/src/filter.c **** void updateCoeffNotch(dNotchFilter *df, float fc){
+ 235              		.loc 1 40 50 is_stmt 1 view -0
+ 236              		.cfi_startproc
+ 237              		@ args = 0, pretend = 0, frame = 0
+ 238              		@ frame_needed = 0, uses_anonymous_args = 0
+ 239              		.loc 1 40 50 is_stmt 0 view .LVU52
+ 240 0000 10B5     		push	{r4, lr}
+ 241              	.LCFI7:
+ 242              		.cfi_def_cfa_offset 8
+ 243              		.cfi_offset 4, -8
+ 244              		.cfi_offset 14, -4
+ 245 0002 0446     		mov	r4, r0
+ 246 0004 10EE100A 		vmov	r0, s0
+ 247              	.LVL14:
+  41:Core/drogui/src/filter.c ****     
+  42:Core/drogui/src/filter.c ****     float wn = 2*pi*fc;
+ 248              		.loc 1 42 5 is_stmt 1 view .LVU53
+ 249              		.loc 1 42 20 is_stmt 0 view .LVU54
+ 250 0008 FFF7FEFF 		bl	__aeabi_f2d
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 6
 
 
- 245              	.LCFI7:
- 246              		.cfi_def_cfa_offset 12
- 247              		.cfi_offset 4, -12
- 248              		.cfi_offset 5, -8
- 249              		.cfi_offset 14, -4
- 250 0002 2DED048B 		vpush.64	{d8, d9}
- 251              	.LCFI8:
- 252              		.cfi_def_cfa_offset 28
- 253              		.cfi_offset 80, -28
- 254              		.cfi_offset 81, -24
- 255              		.cfi_offset 82, -20
- 256              		.cfi_offset 83, -16
- 257 0006 89B0     		sub	sp, sp, #36
- 258              	.LCFI9:
- 259              		.cfi_def_cfa_offset 64
- 260 0008 0446     		mov	r4, r0
- 261 000a 10EE100A 		vmov	r0, s0
- 262              	.LVL14:
-  46:Core/drogui/src/filter.c ****     
-  47:Core/drogui/src/filter.c ****     float wn = 2*pi*fc;
- 263              		.loc 1 47 5 is_stmt 1 view .LVU53
- 264              		.loc 1 47 20 is_stmt 0 view .LVU54
- 265 000e FFF7FEFF 		bl	__aeabi_f2d
- 266              	.LVL15:
- 267              		.loc 1 47 20 view .LVU55
- 268 0012 45A3     		adr	r3, .L9+8
- 269 0014 D3E90023 		ldrd	r2, [r3]
- 270 0018 FFF7FEFF 		bl	__aeabi_dmul
- 271              	.LVL16:
- 272              		.loc 1 47 11 view .LVU56
- 273 001c FFF7FEFF 		bl	__aeabi_d2f
- 274              	.LVL17:
- 275 0020 05EE100A 		vmov	s10, r0
- 276              	.LVL18:
-  48:Core/drogui/src/filter.c ****     float p = 2*(df->zeta)*wn + wn*wn;
- 277              		.loc 1 48 5 is_stmt 1 view .LVU57
- 278              		.loc 1 48 20 is_stmt 0 view .LVU58
- 279 0024 D4ED057A 		vldr.32	s15, [r4, #20]
- 280              		.loc 1 48 16 view .LVU59
- 281 0028 77EEA77A 		vadd.f32	s15, s15, s15
- 282              		.loc 1 48 27 view .LVU60
- 283 002c 67EE857A 		vmul.f32	s15, s15, s10
- 284              		.loc 1 48 35 view .LVU61
- 285 0030 25EE057A 		vmul.f32	s14, s10, s10
- 286              		.loc 1 48 11 view .LVU62
- 287 0034 77EE877A 		vadd.f32	s15, s15, s14
- 288              	.LVL19:
-  49:Core/drogui/src/filter.c ****     float ts = 1/(df->fs);
- 289              		.loc 1 49 5 is_stmt 1 view .LVU63
- 290              		.loc 1 49 21 is_stmt 0 view .LVU64
- 291 0038 D4ED026A 		vldr.32	s13, [r4, #8]
- 292              		.loc 1 49 11 view .LVU65
- 293 003c F7EE004A 		vmov.f32	s9, #1.0e+0
- 294 0040 C4EEA65A 		vdiv.f32	s11, s9, s13
- 295              	.LVL20:
-  50:Core/drogui/src/filter.c ****     float q = wn*wn;
- 296              		.loc 1 50 5 is_stmt 1 view .LVU66
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 7
+ 251              	.LVL15:
+ 252              		.loc 1 42 20 view .LVU55
+ 253 000c 30A3     		adr	r3, .L9
+ 254 000e D3E90023 		ldrd	r2, [r3]
+ 255 0012 FFF7FEFF 		bl	__aeabi_dmul
+ 256              	.LVL16:
+ 257              		.loc 1 42 11 view .LVU56
+ 258 0016 FFF7FEFF 		bl	__aeabi_d2f
+ 259              	.LVL17:
+ 260 001a 05EE100A 		vmov	s10, r0
+ 261              	.LVL18:
+  43:Core/drogui/src/filter.c ****     float p = 2*(df->zeta)*wn + wn*wn;
+ 262              		.loc 1 43 5 is_stmt 1 view .LVU57
+ 263              		.loc 1 43 20 is_stmt 0 view .LVU58
+ 264 001e D4ED057A 		vldr.32	s15, [r4, #20]
+ 265              		.loc 1 43 16 view .LVU59
+ 266 0022 77EEA77A 		vadd.f32	s15, s15, s15
+ 267              		.loc 1 43 27 view .LVU60
+ 268 0026 67EE857A 		vmul.f32	s15, s15, s10
+ 269              		.loc 1 43 35 view .LVU61
+ 270 002a 25EE057A 		vmul.f32	s14, s10, s10
+ 271              		.loc 1 43 11 view .LVU62
+ 272 002e 77EE877A 		vadd.f32	s15, s15, s14
+ 273              	.LVL19:
+  44:Core/drogui/src/filter.c ****     float ts = 1/(df->fs);
+ 274              		.loc 1 44 5 is_stmt 1 view .LVU63
+ 275              		.loc 1 44 21 is_stmt 0 view .LVU64
+ 276 0032 D4ED026A 		vldr.32	s13, [r4, #8]
+ 277              		.loc 1 44 11 view .LVU65
+ 278 0036 F7EE004A 		vmov.f32	s9, #1.0e+0
+ 279 003a C4EEA65A 		vdiv.f32	s11, s9, s13
+ 280              	.LVL20:
+  45:Core/drogui/src/filter.c ****     float q = wn*wn;
+ 281              		.loc 1 45 5 is_stmt 1 view .LVU66
+  46:Core/drogui/src/filter.c ****     float n = wn*((df->a) +1/(df -> a));
+ 282              		.loc 1 46 5 view .LVU67
+ 283              		.loc 1 46 22 is_stmt 0 view .LVU68
+ 284 003e 94ED046A 		vldr.32	s12, [r4, #16]
+ 285              		.loc 1 46 29 view .LVU69
+ 286 0042 C4EE866A 		vdiv.f32	s13, s9, s12
+ 287              		.loc 1 46 27 view .LVU70
+ 288 0046 76EE266A 		vadd.f32	s13, s12, s13
+ 289              		.loc 1 46 11 view .LVU71
+ 290 004a 66EE856A 		vmul.f32	s13, s13, s10
+ 291              	.LVL21:
+  47:Core/drogui/src/filter.c ****     
+  48:Core/drogui/src/filter.c ****     df -> coeffs[0] = (4+p*ts*ts)/(4+2*n*ts + q*ts*ts);
+ 292              		.loc 1 48 5 is_stmt 1 view .LVU72
+ 293              		.loc 1 48 27 is_stmt 0 view .LVU73
+ 294 004e 27EEA54A 		vmul.f32	s8, s15, s11
+ 295              		.loc 1 48 30 view .LVU74
+ 296 0052 24EE254A 		vmul.f32	s8, s8, s11
+ 297              		.loc 1 48 25 view .LVU75
+ 298 0056 F1EE004A 		vmov.f32	s9, #4.0e+0
+ 299 005a 34EE244A 		vadd.f32	s8, s8, s9
+ 300              		.loc 1 48 39 view .LVU76
+ 301 005e 76EEA66A 		vadd.f32	s13, s13, s13
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 7
 
 
-  51:Core/drogui/src/filter.c ****     float n = wn*((df->a) +1/(df -> a));
- 297              		.loc 1 51 5 view .LVU67
- 298              		.loc 1 51 22 is_stmt 0 view .LVU68
- 299 0044 94ED046A 		vldr.32	s12, [r4, #16]
- 300              		.loc 1 51 29 view .LVU69
- 301 0048 C4EE866A 		vdiv.f32	s13, s9, s12
- 302              		.loc 1 51 27 view .LVU70
- 303 004c 76EE266A 		vadd.f32	s13, s12, s13
- 304              		.loc 1 51 11 view .LVU71
- 305 0050 66EE856A 		vmul.f32	s13, s13, s10
- 306              	.LVL21:
-  52:Core/drogui/src/filter.c ****     
-  53:Core/drogui/src/filter.c ****     df -> coeffs[0] = (4+p*ts*ts)/(4+2*n*ts + q*ts*ts);
- 307              		.loc 1 53 5 is_stmt 1 view .LVU72
- 308              		.loc 1 53 27 is_stmt 0 view .LVU73
- 309 0054 27EEA54A 		vmul.f32	s8, s15, s11
- 310              		.loc 1 53 30 view .LVU74
- 311 0058 24EE254A 		vmul.f32	s8, s8, s11
- 312              		.loc 1 53 25 view .LVU75
- 313 005c F1EE004A 		vmov.f32	s9, #4.0e+0
- 314 0060 34EE244A 		vadd.f32	s8, s8, s9
- 315              		.loc 1 53 39 view .LVU76
- 316 0064 76EEA66A 		vadd.f32	s13, s13, s13
- 317              	.LVL22:
- 318              		.loc 1 53 41 view .LVU77
- 319 0068 66EEA56A 		vmul.f32	s13, s13, s11
- 320              		.loc 1 53 37 view .LVU78
- 321 006c 36EEA45A 		vadd.f32	s10, s13, s9
- 322              		.loc 1 53 48 view .LVU79
- 323 0070 27EE256A 		vmul.f32	s12, s14, s11
- 324              	.LVL23:
- 325              		.loc 1 53 51 view .LVU80
- 326 0074 26EE256A 		vmul.f32	s12, s12, s11
- 327              		.loc 1 53 45 view .LVU81
- 328 0078 35EE065A 		vadd.f32	s10, s10, s12
- 329              		.loc 1 53 34 view .LVU82
- 330 007c C4EE053A 		vdiv.f32	s7, s8, s10
- 331              		.loc 1 53 21 view .LVU83
- 332 0080 C4ED063A 		vstr.32	s7, [r4, #24]
-  54:Core/drogui/src/filter.c ****     df -> coeffs[1] = (2*p*ts*ts-8)/(4+2*n*ts + q*ts*ts);
- 333              		.loc 1 54 5 is_stmt 1 view .LVU84
- 334              		.loc 1 54 25 is_stmt 0 view .LVU85
- 335 0084 77EEA77A 		vadd.f32	s15, s15, s15
- 336              	.LVL24:
- 337              		.loc 1 54 27 view .LVU86
- 338 0088 67EEA57A 		vmul.f32	s15, s15, s11
- 339              		.loc 1 54 30 view .LVU87
- 340 008c 67EEA57A 		vmul.f32	s15, s15, s11
- 341              		.loc 1 54 33 view .LVU88
- 342 0090 B2EE004A 		vmov.f32	s8, #8.0e+0
- 343 0094 77EEC47A 		vsub.f32	s15, s15, s8
- 344              		.loc 1 54 36 view .LVU89
- 345 0098 87EE858A 		vdiv.f32	s16, s15, s10
- 346              		.loc 1 54 21 view .LVU90
- 347 009c 84ED078A 		vstr.32	s16, [r4, #28]
-  55:Core/drogui/src/filter.c ****     df -> coeffs[2] = (4+p*ts*ts)/(4+2*n*ts + q*ts*ts);
- 348              		.loc 1 55 5 is_stmt 1 view .LVU91
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 8
+ 302              	.LVL22:
+ 303              		.loc 1 48 41 view .LVU77
+ 304 0062 66EEA56A 		vmul.f32	s13, s13, s11
+ 305              		.loc 1 48 37 view .LVU78
+ 306 0066 36EEA45A 		vadd.f32	s10, s13, s9
+ 307              		.loc 1 48 48 view .LVU79
+ 308 006a 27EE256A 		vmul.f32	s12, s14, s11
+ 309              	.LVL23:
+ 310              		.loc 1 48 51 view .LVU80
+ 311 006e 26EE256A 		vmul.f32	s12, s12, s11
+ 312              		.loc 1 48 45 view .LVU81
+ 313 0072 35EE065A 		vadd.f32	s10, s10, s12
+ 314              		.loc 1 48 34 view .LVU82
+ 315 0076 C4EE053A 		vdiv.f32	s7, s8, s10
+ 316              		.loc 1 48 21 view .LVU83
+ 317 007a C4ED063A 		vstr.32	s7, [r4, #24]
+  49:Core/drogui/src/filter.c ****     df -> coeffs[1] = (2*p*ts*ts-8)/(4+2*n*ts + q*ts*ts);
+ 318              		.loc 1 49 5 is_stmt 1 view .LVU84
+ 319              		.loc 1 49 25 is_stmt 0 view .LVU85
+ 320 007e 77EEA77A 		vadd.f32	s15, s15, s15
+ 321              	.LVL24:
+ 322              		.loc 1 49 27 view .LVU86
+ 323 0082 67EEA57A 		vmul.f32	s15, s15, s11
+ 324              		.loc 1 49 30 view .LVU87
+ 325 0086 67EEA57A 		vmul.f32	s15, s15, s11
+ 326              		.loc 1 49 33 view .LVU88
+ 327 008a B2EE004A 		vmov.f32	s8, #8.0e+0
+ 328 008e 77EEC47A 		vsub.f32	s15, s15, s8
+ 329              		.loc 1 49 36 view .LVU89
+ 330 0092 87EE853A 		vdiv.f32	s6, s15, s10
+ 331              		.loc 1 49 21 view .LVU90
+ 332 0096 84ED073A 		vstr.32	s6, [r4, #28]
+  50:Core/drogui/src/filter.c ****     df -> coeffs[2] = (4+p*ts*ts)/(4+2*n*ts + q*ts*ts);
+ 333              		.loc 1 50 5 is_stmt 1 view .LVU91
+ 334              		.loc 1 50 21 is_stmt 0 view .LVU92
+ 335 009a C4ED083A 		vstr.32	s7, [r4, #32]
+  51:Core/drogui/src/filter.c ****      
+  52:Core/drogui/src/filter.c ****     df -> coeffs[3] = -(2*q*ts*ts-8)/(4+2*n*ts + q*ts*ts);
+ 336              		.loc 1 52 5 is_stmt 1 view .LVU93
+ 337              		.loc 1 52 26 is_stmt 0 view .LVU94
+ 338 009e 37EE077A 		vadd.f32	s14, s14, s14
+ 339              	.LVL25:
+ 340              		.loc 1 52 28 view .LVU95
+ 341 00a2 67EE257A 		vmul.f32	s15, s14, s11
+ 342              		.loc 1 52 31 view .LVU96
+ 343 00a6 67EEA57A 		vmul.f32	s15, s15, s11
+ 344              		.loc 1 52 34 view .LVU97
+ 345 00aa 77EEC47A 		vsub.f32	s15, s15, s8
+ 346              		.loc 1 52 23 view .LVU98
+ 347 00ae F1EE677A 		vneg.f32	s15, s15
+ 348              		.loc 1 52 37 view .LVU99
+ 349 00b2 87EE857A 		vdiv.f32	s14, s15, s10
+ 350              		.loc 1 52 21 view .LVU100
+ 351 00b6 84ED097A 		vstr.32	s14, [r4, #36]
+  53:Core/drogui/src/filter.c ****     df -> coeffs[4] = -(4-2*n*ts+q*ts*ts)/(4+2*n*ts + q*ts*ts);
+ 352              		.loc 1 53 5 is_stmt 1 view .LVU101
+ 353              		.loc 1 53 26 is_stmt 0 view .LVU102
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 8
 
 
- 349              		.loc 1 55 21 is_stmt 0 view .LVU92
- 350 00a0 C4ED083A 		vstr.32	s7, [r4, #32]
-  56:Core/drogui/src/filter.c ****      
-  57:Core/drogui/src/filter.c ****     df -> coeffs[3] = -(2*q*ts*ts-8)/(4+2*n*ts + q*ts*ts);
- 351              		.loc 1 57 5 is_stmt 1 view .LVU93
- 352              		.loc 1 57 26 is_stmt 0 view .LVU94
- 353 00a4 37EE077A 		vadd.f32	s14, s14, s14
- 354              	.LVL25:
- 355              		.loc 1 57 28 view .LVU95
- 356 00a8 67EE257A 		vmul.f32	s15, s14, s11
- 357              		.loc 1 57 31 view .LVU96
- 358 00ac 67EEA57A 		vmul.f32	s15, s15, s11
- 359              		.loc 1 57 34 view .LVU97
- 360 00b0 77EEC47A 		vsub.f32	s15, s15, s8
- 361              		.loc 1 57 23 view .LVU98
- 362 00b4 F1EE677A 		vneg.f32	s15, s15
- 363              		.loc 1 57 37 view .LVU99
- 364 00b8 C7EE858A 		vdiv.f32	s17, s15, s10
- 365              		.loc 1 57 21 view .LVU100
- 366 00bc C4ED098A 		vstr.32	s17, [r4, #36]
-  58:Core/drogui/src/filter.c ****     df -> coeffs[4] = -(4-2*n*ts+q*ts*ts)/(4+2*n*ts + q*ts*ts);
- 367              		.loc 1 58 5 is_stmt 1 view .LVU101
- 368              		.loc 1 58 26 is_stmt 0 view .LVU102
- 369 00c0 74EEE66A 		vsub.f32	s13, s9, s13
- 370              		.loc 1 58 33 view .LVU103
- 371 00c4 36EE266A 		vadd.f32	s12, s12, s13
- 372              		.loc 1 58 23 view .LVU104
- 373 00c8 B1EE466A 		vneg.f32	s12, s12
- 374              		.loc 1 58 42 view .LVU105
- 375 00cc 86EE059A 		vdiv.f32	s18, s12, s10
- 376              		.loc 1 58 21 view .LVU106
- 377 00d0 84ED0A9A 		vstr.32	s18, [r4, #40]
-  59:Core/drogui/src/filter.c **** 
-  60:Core/drogui/src/filter.c ****     sprintf(bufft, "%f\t%f\t%f\t%f\t%f\t", df->coeffs[0],df->coeffs[1],df->coeffs[2],df->coeffs[3],
- 378              		.loc 1 60 5 is_stmt 1 view .LVU107
- 379 00d4 13EE900A 		vmov	r0, s7
- 380              	.LVL26:
- 381              		.loc 1 60 5 is_stmt 0 view .LVU108
- 382 00d8 FFF7FEFF 		bl	__aeabi_f2d
- 383              	.LVL27:
- 384              		.loc 1 60 5 view .LVU109
- 385 00dc 0446     		mov	r4, r0
- 386              	.LVL28:
- 387              		.loc 1 60 5 view .LVU110
- 388 00de 0D46     		mov	r5, r1
- 389 00e0 19EE100A 		vmov	r0, s18
- 390 00e4 FFF7FEFF 		bl	__aeabi_f2d
- 391              	.LVL29:
- 392 00e8 CDE90601 		strd	r0, [sp, #24]
- 393 00ec 18EE900A 		vmov	r0, s17
- 394 00f0 FFF7FEFF 		bl	__aeabi_f2d
- 395              	.LVL30:
- 396 00f4 CDE90401 		strd	r0, [sp, #16]
- 397 00f8 CDE90245 		strd	r4, [sp, #8]
- 398 00fc 18EE100A 		vmov	r0, s16
- 399 0100 FFF7FEFF 		bl	__aeabi_f2d
- 400              	.LVL31:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 9
+ 354 00ba 74EEE66A 		vsub.f32	s13, s9, s13
+ 355              		.loc 1 53 33 view .LVU103
+ 356 00be 36EE266A 		vadd.f32	s12, s12, s13
+ 357              		.loc 1 53 23 view .LVU104
+ 358 00c2 B1EE466A 		vneg.f32	s12, s12
+ 359              		.loc 1 53 42 view .LVU105
+ 360 00c6 C6EE057A 		vdiv.f32	s15, s12, s10
+ 361              		.loc 1 53 21 view .LVU106
+ 362 00ca C4ED0A7A 		vstr.32	s15, [r4, #40]
+  54:Core/drogui/src/filter.c **** 
+  55:Core/drogui/src/filter.c **** }
+ 363              		.loc 1 55 1 view .LVU107
+ 364 00ce 10BD     		pop	{r4, pc}
+ 365              	.LVL26:
+ 366              	.L10:
+ 367              		.loc 1 55 1 view .LVU108
+ 368              		.align	3
+ 369              	.L9:
+ 370 00d0 182D4454 		.word	1413754136
+ 371 00d4 FB211940 		.word	1075388923
+ 372              		.cfi_endproc
+ 373              	.LFE180:
+ 375              		.global	__aeabi_d2iz
+ 376              		.section	.text.computeDNotch,"ax",%progbits
+ 377              		.align	1
+ 378              		.global	computeDNotch
+ 379              		.syntax unified
+ 380              		.thumb
+ 381              		.thumb_func
+ 382              		.fpu fpv5-sp-d16
+ 384              	computeDNotch:
+ 385              	.LVL27:
+ 386              	.LFB181:
+  56:Core/drogui/src/filter.c **** 
+  57:Core/drogui/src/filter.c **** 
+  58:Core/drogui/src/filter.c **** 
+  59:Core/drogui/src/filter.c **** float computeDNotch(dNotchFilter *df, float val){
+ 387              		.loc 1 59 49 is_stmt 1 view -0
+ 388              		.cfi_startproc
+ 389              		@ args = 0, pretend = 0, frame = 16
+ 390              		@ frame_needed = 1, uses_anonymous_args = 0
+ 391              		.loc 1 59 49 is_stmt 0 view .LVU110
+ 392 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 393              	.LCFI8:
+ 394              		.cfi_def_cfa_offset 28
+ 395              		.cfi_offset 4, -28
+ 396              		.cfi_offset 5, -24
+ 397              		.cfi_offset 6, -20
+ 398              		.cfi_offset 7, -16
+ 399              		.cfi_offset 8, -12
+ 400              		.cfi_offset 9, -8
+ 401              		.cfi_offset 14, -4
+ 402 0004 2DED028B 		vpush.64	{d8}
+ 403              	.LCFI9:
+ 404              		.cfi_def_cfa_offset 36
+ 405              		.cfi_offset 80, -36
+ 406              		.cfi_offset 81, -32
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 9
 
 
- 401 0104 CDE90001 		strd	r0, [sp]
- 402 0108 2246     		mov	r2, r4
- 403 010a 2B46     		mov	r3, r5
- 404 010c 0449     		ldr	r1, .L9
- 405 010e 0548     		ldr	r0, .L9+4
- 406 0110 FFF7FEFF 		bl	sprintf
- 407              	.LVL32:
-  61:Core/drogui/src/filter.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) bufft, strlen(bufft), 100);
-  62:Core/drogui/src/filter.c **** }
- 408              		.loc 1 62 1 view .LVU111
- 409 0114 09B0     		add	sp, sp, #36
- 410              	.LCFI10:
- 411              		.cfi_def_cfa_offset 28
- 412              		@ sp needed
- 413 0116 BDEC048B 		vldm	sp!, {d8-d9}
- 414              	.LCFI11:
- 415              		.cfi_restore 82
- 416              		.cfi_restore 83
- 417              		.cfi_restore 80
- 418              		.cfi_restore 81
- 419              		.cfi_def_cfa_offset 12
- 420 011a 30BD     		pop	{r4, r5, pc}
- 421              	.L10:
- 422 011c AFF30080 		.align	3
- 423              	.L9:
- 424 0120 00000000 		.word	.LC0
- 425 0124 00000000 		.word	.LANCHOR0
- 426 0128 182D4454 		.word	1413754136
- 427 012c FB211940 		.word	1075388923
- 428              		.cfi_endproc
- 429              	.LFE180:
- 431              		.section	.text.computeDNotch,"ax",%progbits
- 432              		.align	1
- 433              		.global	computeDNotch
- 434              		.syntax unified
- 435              		.thumb
- 436              		.thumb_func
- 437              		.fpu fpv5-sp-d16
- 439              	computeDNotch:
- 440              	.LVL33:
- 441              	.LFB181:
-  63:Core/drogui/src/filter.c **** 
-  64:Core/drogui/src/filter.c **** 
-  65:Core/drogui/src/filter.c **** float computeDNotch(dNotchFilter *df, float val){
- 442              		.loc 1 65 49 is_stmt 1 view -0
- 443              		.cfi_startproc
- 444              		@ args = 0, pretend = 0, frame = 16
- 445              		@ frame_needed = 1, uses_anonymous_args = 0
- 446              		.loc 1 65 49 is_stmt 0 view .LVU113
- 447 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
- 448              	.LCFI12:
- 449              		.cfi_def_cfa_offset 28
- 450              		.cfi_offset 4, -28
- 451              		.cfi_offset 5, -24
- 452              		.cfi_offset 6, -20
- 453              		.cfi_offset 7, -16
- 454              		.cfi_offset 8, -12
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 10
+ 407 0008 85B0     		sub	sp, sp, #20
+ 408              	.LCFI10:
+ 409              		.cfi_def_cfa_offset 56
+ 410 000a 00AF     		add	r7, sp, #0
+ 411              	.LCFI11:
+ 412              		.cfi_def_cfa_register 7
+ 413 000c 0446     		mov	r4, r0
+ 414 000e 87ED010A 		vstr.32	s0, [r7, #4]
+  60:Core/drogui/src/filter.c **** 
+  61:Core/drogui/src/filter.c **** 
+  62:Core/drogui/src/filter.c ****     float ans;
+ 415              		.loc 1 62 5 is_stmt 1 view .LVU111
+  63:Core/drogui/src/filter.c ****     
+  64:Core/drogui/src/filter.c ****     arm_biquad_cascade_df1_f32(&(df ->f), &val, &ans, 1);
+ 416              		.loc 1 64 5 view .LVU112
+ 417 0012 0123     		movs	r3, #1
+ 418 0014 07F10C02 		add	r2, r7, #12
+ 419 0018 391D     		adds	r1, r7, #4
+ 420 001a 5C30     		adds	r0, r0, #92
+ 421              	.LVL28:
+ 422              		.loc 1 64 5 is_stmt 0 view .LVU113
+ 423 001c FFF7FEFF 		bl	arm_biquad_cascade_df1_f32
+ 424              	.LVL29:
+  65:Core/drogui/src/filter.c ****     
+  66:Core/drogui/src/filter.c ****     val = ans;
+ 425              		.loc 1 66 5 is_stmt 1 view .LVU114
+ 426              		.loc 1 66 9 is_stmt 0 view .LVU115
+ 427 0020 FA68     		ldr	r2, [r7, #12]	@ float
+ 428 0022 7A60     		str	r2, [r7, #4]	@ float
+  67:Core/drogui/src/filter.c ****     
+  68:Core/drogui/src/filter.c ****     df -> values[df -> head++]  = val;
+ 429              		.loc 1 68 5 is_stmt 1 view .LVU116
+ 430              		.loc 1 68 8 is_stmt 0 view .LVU117
+ 431 0024 2368     		ldr	r3, [r4]
+ 432              		.loc 1 68 21 view .LVU118
+ 433 0026 E16B     		ldr	r1, [r4, #60]
+ 434              		.loc 1 68 28 view .LVU119
+ 435 0028 481C     		adds	r0, r1, #1
+ 436 002a E063     		str	r0, [r4, #60]
+ 437              		.loc 1 68 17 view .LVU120
+ 438 002c 03EB8103 		add	r3, r3, r1, lsl #2
+ 439              		.loc 1 68 33 view .LVU121
+ 440 0030 1A60     		str	r2, [r3]	@ float
+  69:Core/drogui/src/filter.c **** 
+  70:Core/drogui/src/filter.c ****     if(df->head == df->n){
+ 441              		.loc 1 70 5 is_stmt 1 view .LVU122
+ 442              		.loc 1 70 10 is_stmt 0 view .LVU123
+ 443 0032 E26B     		ldr	r2, [r4, #60]
+ 444              		.loc 1 70 22 view .LVU124
+ 445 0034 6368     		ldr	r3, [r4, #4]
+ 446              		.loc 1 70 7 view .LVU125
+ 447 0036 9A42     		cmp	r2, r3
+ 448 0038 07D0     		beq	.L34
+ 449              	.L12:
+  71:Core/drogui/src/filter.c **** 
+  72:Core/drogui/src/filter.c ****         float fft_arr[df->n];
+  73:Core/drogui/src/filter.c ****         float fft_ans[df->n];
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 10
 
 
- 455              		.cfi_offset 9, -8
- 456              		.cfi_offset 14, -4
- 457 0004 85B0     		sub	sp, sp, #20
+  74:Core/drogui/src/filter.c ****         for (uint16_t i = 0; i < (df->n) ; i++) fft_arr[i] = df->values[i]; 
+  75:Core/drogui/src/filter.c ****         
+  76:Core/drogui/src/filter.c ****         arm_rfft_fast_f32(&(df->fft), fft_arr, fft_ans, 0);
+  77:Core/drogui/src/filter.c ****         
+  78:Core/drogui/src/filter.c ****         for(int i = 0; i< (df -> n) ; i += 2) 
+  79:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
+  80:Core/drogui/src/filter.c ****         
+  81:Core/drogui/src/filter.c ****         for(int i = 0; i < (df -> n)/2 ; i ++) 
+  82:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+  83:Core/drogui/src/filter.c **** 
+  84:Core/drogui/src/filter.c ****         int thres_ind = round((df -> threshold)*(df -> n)/(df -> fs));
+  85:Core/drogui/src/filter.c ****         float maxi = 0; fc = 0;
+  86:Core/drogui/src/filter.c **** 
+  87:Core/drogui/src/filter.c ****         for(int i = thres_ind; i < (df -> n)/2 ; i ++) 
+  88:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+  89:Core/drogui/src/filter.c ****         
+  90:Core/drogui/src/filter.c ****         
+  91:Core/drogui/src/filter.c **** 
+  92:Core/drogui/src/filter.c ****         updateCoeffNotch(df, fc);
+  93:Core/drogui/src/filter.c ****         df->head = 0;
+  94:Core/drogui/src/filter.c ****     }
+  95:Core/drogui/src/filter.c **** 
+  96:Core/drogui/src/filter.c ****     return ans;    
+ 450              		.loc 1 96 5 is_stmt 1 view .LVU126
+  97:Core/drogui/src/filter.c **** }
+ 451              		.loc 1 97 1 is_stmt 0 view .LVU127
+ 452 003a 97ED030A 		vldr.32	s0, [r7, #12]
+ 453 003e 1437     		adds	r7, r7, #20
+ 454              	.LCFI12:
+ 455              		.cfi_remember_state
+ 456              		.cfi_def_cfa_offset 36
+ 457 0040 BD46     		mov	sp, r7
  458              	.LCFI13:
- 459              		.cfi_def_cfa_offset 48
- 460 0006 00AF     		add	r7, sp, #0
- 461              	.LCFI14:
- 462              		.cfi_def_cfa_register 7
- 463 0008 0446     		mov	r4, r0
- 464 000a 87ED010A 		vstr.32	s0, [r7, #4]
-  66:Core/drogui/src/filter.c **** 
-  67:Core/drogui/src/filter.c ****     //updateCoeffNotch(df,70);
-  68:Core/drogui/src/filter.c **** 
-  69:Core/drogui/src/filter.c ****     float ans;
- 465              		.loc 1 69 5 is_stmt 1 view .LVU114
-  70:Core/drogui/src/filter.c ****     
-  71:Core/drogui/src/filter.c ****     arm_biquad_cascade_df2T_f32(&(df ->f), &val, &ans, 1);
- 466              		.loc 1 71 5 view .LVU115
- 467 000e 0123     		movs	r3, #1
- 468 0010 07F10C02 		add	r2, r7, #12
- 469 0014 391D     		adds	r1, r7, #4
- 470 0016 5C30     		adds	r0, r0, #92
- 471              	.LVL34:
- 472              		.loc 1 71 5 is_stmt 0 view .LVU116
- 473 0018 FFF7FEFF 		bl	arm_biquad_cascade_df2T_f32
- 474              	.LVL35:
-  72:Core/drogui/src/filter.c ****     
-  73:Core/drogui/src/filter.c ****     val = ans;
- 475              		.loc 1 73 5 is_stmt 1 view .LVU117
- 476              		.loc 1 73 9 is_stmt 0 view .LVU118
- 477 001c FA68     		ldr	r2, [r7, #12]	@ float
- 478 001e 7A60     		str	r2, [r7, #4]	@ float
-  74:Core/drogui/src/filter.c ****     
-  75:Core/drogui/src/filter.c ****     df -> values[df -> head++]  = val;
- 479              		.loc 1 75 5 is_stmt 1 view .LVU119
- 480              		.loc 1 75 8 is_stmt 0 view .LVU120
- 481 0020 2368     		ldr	r3, [r4]
- 482              		.loc 1 75 21 view .LVU121
- 483 0022 E16B     		ldr	r1, [r4, #60]
- 484              		.loc 1 75 28 view .LVU122
- 485 0024 481C     		adds	r0, r1, #1
- 486 0026 E063     		str	r0, [r4, #60]
- 487              		.loc 1 75 17 view .LVU123
- 488 0028 03EB8103 		add	r3, r3, r1, lsl #2
- 489              		.loc 1 75 33 view .LVU124
- 490 002c 1A60     		str	r2, [r3]	@ float
-  76:Core/drogui/src/filter.c **** 
-  77:Core/drogui/src/filter.c ****     if(df->head == df->n){
- 491              		.loc 1 77 5 is_stmt 1 view .LVU125
- 492              		.loc 1 77 10 is_stmt 0 view .LVU126
- 493 002e E26B     		ldr	r2, [r4, #60]
- 494              		.loc 1 77 22 view .LVU127
- 495 0030 6368     		ldr	r3, [r4, #4]
- 496              		.loc 1 77 7 view .LVU128
- 497 0032 9A42     		cmp	r2, r3
- 498 0034 05D0     		beq	.L34
- 499              	.L12:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 11
+ 459              		.cfi_def_cfa_register 13
+ 460              		@ sp needed
+ 461 0042 BDEC028B 		vldm	sp!, {d8}
+ 462              	.LCFI14:
+ 463              		.cfi_restore 80
+ 464              		.cfi_restore 81
+ 465              		.cfi_def_cfa_offset 28
+ 466 0046 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 467              	.LVL30:
+ 468              	.L34:
+ 469              	.LCFI15:
+ 470              		.cfi_restore_state
+ 471              	.LBB9:
+  70:Core/drogui/src/filter.c **** 
+ 472              		.loc 1 70 26 discriminator 1 view .LVU128
+ 473 004a E846     		mov	r8, sp
+  72:Core/drogui/src/filter.c ****         float fft_ans[df->n];
+ 474              		.loc 1 72 9 is_stmt 1 discriminator 1 view .LVU129
+ 475              	.LVL31:
+  72:Core/drogui/src/filter.c ****         float fft_ans[df->n];
+ 476              		.loc 1 72 15 is_stmt 0 discriminator 1 view .LVU130
+ 477 004c 9B00     		lsls	r3, r3, #2
+ 478              	.LVL32:
+  72:Core/drogui/src/filter.c ****         float fft_ans[df->n];
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 11
 
 
-  78:Core/drogui/src/filter.c **** 
-  79:Core/drogui/src/filter.c ****         float fft_arr[df->n];
-  80:Core/drogui/src/filter.c ****         float fft_ans[df->n];
-  81:Core/drogui/src/filter.c ****         for (uint16_t i = 0; i < (df->n) ; i++) fft_arr[i] = df->values[i]; 
-  82:Core/drogui/src/filter.c ****         
-  83:Core/drogui/src/filter.c ****         arm_rfft_fast_f32(&(df->fft), fft_arr, fft_ans, 0);
-  84:Core/drogui/src/filter.c ****         
-  85:Core/drogui/src/filter.c ****         for(int i = 0; i< (df -> n) ; i += 2) 
-  86:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
-  87:Core/drogui/src/filter.c ****         
-  88:Core/drogui/src/filter.c ****         for(int i = 0; i < (df -> n)/2 ; i ++) 
-  89:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
-  90:Core/drogui/src/filter.c **** 
-  91:Core/drogui/src/filter.c ****         int thres_ind = (df -> threshold)*(df -> n)/(df -> fs);
-  92:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
-  93:Core/drogui/src/filter.c **** 
-  94:Core/drogui/src/filter.c ****         for(int i = thres_ind; i < (df -> n)/2 ; i ++) 
-  95:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
-  96:Core/drogui/src/filter.c ****         
-  97:Core/drogui/src/filter.c ****         //char bufft[50] = "hola\n";
-  98:Core/drogui/src/filter.c ****         //sprintf(bufft, "%f\t%f\t%f\t%f;\n", myIMU.ax, ax, ay, fc );
-  99:Core/drogui/src/filter.c ****         //HAL_UART_Transmit(&huart2, (uint8_t*) bufft, strlen(bufft), 100);
- 100:Core/drogui/src/filter.c **** 
- 101:Core/drogui/src/filter.c ****         updateCoeffNotch(df, fc);
- 102:Core/drogui/src/filter.c ****         df->head = 0;
- 103:Core/drogui/src/filter.c ****     }
- 104:Core/drogui/src/filter.c ****     return ans;    
- 500              		.loc 1 104 5 is_stmt 1 view .LVU129
- 105:Core/drogui/src/filter.c **** }
- 501              		.loc 1 105 1 is_stmt 0 view .LVU130
- 502 0036 97ED030A 		vldr.32	s0, [r7, #12]
- 503 003a 1437     		adds	r7, r7, #20
- 504              	.LCFI15:
- 505              		.cfi_remember_state
- 506              		.cfi_def_cfa_offset 28
- 507 003c BD46     		mov	sp, r7
- 508              	.LCFI16:
- 509              		.cfi_def_cfa_register 13
- 510              		@ sp needed
- 511 003e BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
- 512              	.LVL36:
- 513              	.L34:
- 514              	.LCFI17:
- 515              		.cfi_restore_state
- 516              	.LBB9:
-  77:Core/drogui/src/filter.c **** 
- 517              		.loc 1 77 26 discriminator 1 view .LVU131
- 518 0042 E846     		mov	r8, sp
-  79:Core/drogui/src/filter.c ****         float fft_ans[df->n];
- 519              		.loc 1 79 9 is_stmt 1 discriminator 1 view .LVU132
- 520              	.LVL37:
-  79:Core/drogui/src/filter.c ****         float fft_ans[df->n];
- 521              		.loc 1 79 15 is_stmt 0 discriminator 1 view .LVU133
- 522 0044 9B00     		lsls	r3, r3, #2
- 523              	.LVL38:
-  79:Core/drogui/src/filter.c ****         float fft_ans[df->n];
- 524              		.loc 1 79 15 discriminator 1 view .LVU134
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 12
+ 479              		.loc 1 72 15 discriminator 1 view .LVU131
+ 480 004e 0733     		adds	r3, r3, #7
+ 481 0050 23F00703 		bic	r3, r3, #7
+ 482 0054 ADEB030D 		sub	sp, sp, r3
+ 483 0058 6946     		mov	r1, sp
+ 484              	.LVL33:
+  73:Core/drogui/src/filter.c ****         for (uint16_t i = 0; i < (df->n) ; i++) fft_arr[i] = df->values[i]; 
+ 485              		.loc 1 73 9 is_stmt 1 discriminator 1 view .LVU132
+  73:Core/drogui/src/filter.c ****         for (uint16_t i = 0; i < (df->n) ; i++) fft_arr[i] = df->values[i]; 
+ 486              		.loc 1 73 15 is_stmt 0 discriminator 1 view .LVU133
+ 487 005a ADEB030D 		sub	sp, sp, r3
+ 488 005e 6E46     		mov	r6, sp
+ 489              	.LVL34:
+  74:Core/drogui/src/filter.c ****         
+ 490              		.loc 1 74 9 is_stmt 1 discriminator 1 view .LVU134
+ 491              	.LBB10:
+  74:Core/drogui/src/filter.c ****         
+ 492              		.loc 1 74 14 discriminator 1 view .LVU135
+  74:Core/drogui/src/filter.c ****         
+ 493              		.loc 1 74 23 is_stmt 0 discriminator 1 view .LVU136
+ 494 0060 0023     		movs	r3, #0
+  74:Core/drogui/src/filter.c ****         
+ 495              		.loc 1 74 9 discriminator 1 view .LVU137
+ 496 0062 08E0     		b	.L13
+ 497              	.LVL35:
+ 498              	.L14:
+  74:Core/drogui/src/filter.c ****         
+ 499              		.loc 1 74 49 is_stmt 1 discriminator 3 view .LVU138
+  74:Core/drogui/src/filter.c ****         
+ 500              		.loc 1 74 64 is_stmt 0 discriminator 3 view .LVU139
+ 501 0064 2268     		ldr	r2, [r4]
+  74:Core/drogui/src/filter.c ****         
+ 502              		.loc 1 74 72 discriminator 3 view .LVU140
+ 503 0066 02EB8302 		add	r2, r2, r3, lsl #2
+ 504 006a 1068     		ldr	r0, [r2]	@ float
+  74:Core/drogui/src/filter.c ****         
+ 505              		.loc 1 74 60 discriminator 3 view .LVU141
+ 506 006c 01EB8302 		add	r2, r1, r3, lsl #2
+ 507 0070 1060     		str	r0, [r2]	@ float
+  74:Core/drogui/src/filter.c ****         
+ 508              		.loc 1 74 44 is_stmt 1 discriminator 3 view .LVU142
+  74:Core/drogui/src/filter.c ****         
+ 509              		.loc 1 74 45 is_stmt 0 discriminator 3 view .LVU143
+ 510 0072 0133     		adds	r3, r3, #1
+ 511              	.LVL36:
+  74:Core/drogui/src/filter.c ****         
+ 512              		.loc 1 74 45 discriminator 3 view .LVU144
+ 513 0074 9BB2     		uxth	r3, r3
+ 514              	.LVL37:
+ 515              	.L13:
+  74:Core/drogui/src/filter.c ****         
+ 516              		.loc 1 74 30 is_stmt 1 discriminator 1 view .LVU145
+  74:Core/drogui/src/filter.c ****         
+ 517              		.loc 1 74 37 is_stmt 0 discriminator 1 view .LVU146
+ 518 0076 6268     		ldr	r2, [r4, #4]
+  74:Core/drogui/src/filter.c ****         
+ 519              		.loc 1 74 9 discriminator 1 view .LVU147
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 12
 
 
- 525 0046 0733     		adds	r3, r3, #7
- 526 0048 23F00703 		bic	r3, r3, #7
- 527 004c ADEB030D 		sub	sp, sp, r3
- 528 0050 6946     		mov	r1, sp
- 529              	.LVL39:
-  80:Core/drogui/src/filter.c ****         for (uint16_t i = 0; i < (df->n) ; i++) fft_arr[i] = df->values[i]; 
- 530              		.loc 1 80 9 is_stmt 1 discriminator 1 view .LVU135
-  80:Core/drogui/src/filter.c ****         for (uint16_t i = 0; i < (df->n) ; i++) fft_arr[i] = df->values[i]; 
- 531              		.loc 1 80 15 is_stmt 0 discriminator 1 view .LVU136
- 532 0052 ADEB030D 		sub	sp, sp, r3
- 533 0056 6E46     		mov	r6, sp
- 534              	.LVL40:
-  81:Core/drogui/src/filter.c ****         
- 535              		.loc 1 81 9 is_stmt 1 discriminator 1 view .LVU137
- 536              	.LBB10:
-  81:Core/drogui/src/filter.c ****         
- 537              		.loc 1 81 14 discriminator 1 view .LVU138
-  81:Core/drogui/src/filter.c ****         
- 538              		.loc 1 81 23 is_stmt 0 discriminator 1 view .LVU139
- 539 0058 0023     		movs	r3, #0
-  81:Core/drogui/src/filter.c ****         
- 540              		.loc 1 81 9 discriminator 1 view .LVU140
- 541 005a 08E0     		b	.L13
+ 520 0078 9342     		cmp	r3, r2
+ 521 007a F3DB     		blt	.L14
+ 522              	.LBE10:
+  76:Core/drogui/src/filter.c ****         
+ 523              		.loc 1 76 9 is_stmt 1 view .LVU148
+ 524 007c 0023     		movs	r3, #0
+ 525              	.LVL38:
+  76:Core/drogui/src/filter.c ****         
+ 526              		.loc 1 76 9 is_stmt 0 view .LVU149
+ 527 007e 3246     		mov	r2, r6
+ 528 0080 04F14400 		add	r0, r4, #68
+ 529 0084 FFF7FEFF 		bl	arm_rfft_fast_f32
+ 530              	.LVL39:
+  78:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
+ 531              		.loc 1 78 9 is_stmt 1 view .LVU150
+ 532              	.LBB11:
+  78:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
+ 533              		.loc 1 78 13 view .LVU151
+  78:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
+ 534              		.loc 1 78 17 is_stmt 0 view .LVU152
+ 535 0088 0025     		movs	r5, #0
+  78:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
+ 536              		.loc 1 78 9 view .LVU153
+ 537 008a 0DE0     		b	.L15
+ 538              	.LVL40:
+ 539              	.L16:
+  79:Core/drogui/src/filter.c ****         
+ 540              		.loc 1 79 87 discriminator 3 view .LVU154
+ 541 008c 4FEA6309 		asr	r9, r3, #1
  542              	.LVL41:
- 543              	.L14:
-  81:Core/drogui/src/filter.c ****         
- 544              		.loc 1 81 49 is_stmt 1 discriminator 3 view .LVU141
-  81:Core/drogui/src/filter.c ****         
- 545              		.loc 1 81 64 is_stmt 0 discriminator 3 view .LVU142
- 546 005c 2268     		ldr	r2, [r4]
-  81:Core/drogui/src/filter.c ****         
- 547              		.loc 1 81 72 discriminator 3 view .LVU143
- 548 005e 02EB8302 		add	r2, r2, r3, lsl #2
- 549 0062 1068     		ldr	r0, [r2]	@ float
-  81:Core/drogui/src/filter.c ****         
- 550              		.loc 1 81 60 discriminator 3 view .LVU144
- 551 0064 01EB8302 		add	r2, r1, r3, lsl #2
- 552 0068 1060     		str	r0, [r2]	@ float
-  81:Core/drogui/src/filter.c ****         
- 553              		.loc 1 81 44 is_stmt 1 discriminator 3 view .LVU145
-  81:Core/drogui/src/filter.c ****         
- 554              		.loc 1 81 45 is_stmt 0 discriminator 3 view .LVU146
- 555 006a 0133     		adds	r3, r3, #1
- 556              	.LVL42:
-  81:Core/drogui/src/filter.c ****         
- 557              		.loc 1 81 45 discriminator 3 view .LVU147
- 558 006c 9BB2     		uxth	r3, r3
- 559              	.LVL43:
- 560              	.L13:
-  81:Core/drogui/src/filter.c ****         
- 561              		.loc 1 81 30 is_stmt 1 discriminator 1 view .LVU148
-  81:Core/drogui/src/filter.c ****         
- 562              		.loc 1 81 37 is_stmt 0 discriminator 1 view .LVU149
- 563 006e 6268     		ldr	r2, [r4, #4]
-  81:Core/drogui/src/filter.c ****         
- 564              		.loc 1 81 9 discriminator 1 view .LVU150
- 565 0070 9342     		cmp	r3, r2
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 13
-
-
- 566 0072 F3DB     		blt	.L14
- 567              	.LBE10:
-  83:Core/drogui/src/filter.c ****         
- 568              		.loc 1 83 9 is_stmt 1 view .LVU151
- 569 0074 0023     		movs	r3, #0
- 570              	.LVL44:
-  83:Core/drogui/src/filter.c ****         
- 571              		.loc 1 83 9 is_stmt 0 view .LVU152
- 572 0076 3246     		mov	r2, r6
- 573 0078 04F14400 		add	r0, r4, #68
- 574 007c FFF7FEFF 		bl	arm_rfft_fast_f32
- 575              	.LVL45:
-  85:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
- 576              		.loc 1 85 9 is_stmt 1 view .LVU153
- 577              	.LBB11:
-  85:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
- 578              		.loc 1 85 13 view .LVU154
-  85:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
- 579              		.loc 1 85 17 is_stmt 0 view .LVU155
- 580 0080 0025     		movs	r5, #0
-  85:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
- 581              		.loc 1 85 9 view .LVU156
- 582 0082 0DE0     		b	.L15
- 583              	.LVL46:
- 584              	.L16:
-  86:Core/drogui/src/filter.c ****         
- 585              		.loc 1 86 87 discriminator 3 view .LVU157
- 586 0084 4FEA6309 		asr	r9, r3, #1
- 587              	.LVL47:
- 588              	.LBB12:
- 589              	.LBI12:
- 590              		.file 2 "Drivers/CMSIS/DSP/Include/arm_math.h"
+ 543              	.LBB12:
+ 544              	.LBI12:
+ 545              		.file 2 "Drivers/CMSIS/DSP/Include/arm_math.h"
    1:Drivers/CMSIS/DSP/Include/arm_math.h **** /******************************************************************************
    2:Drivers/CMSIS/DSP/Include/arm_math.h ****  * @file     arm_math.h
    3:Drivers/CMSIS/DSP/Include/arm_math.h ****  * @brief    Public header file for CMSIS DSP LibraryU
@@ -777,10 +718,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
   22:Drivers/CMSIS/DSP/Include/arm_math.h ****  * limitations under the License.
   23:Drivers/CMSIS/DSP/Include/arm_math.h ****  */
   24:Drivers/CMSIS/DSP/Include/arm_math.h **** 
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 13
+
+
   25:Drivers/CMSIS/DSP/Include/arm_math.h **** /**
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 14
-
-
   26:Drivers/CMSIS/DSP/Include/arm_math.h ****    \mainpage CMSIS DSP Software Library
   27:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
   28:Drivers/CMSIS/DSP/Include/arm_math.h ****    * Introduction
@@ -837,10 +778,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
   79:Drivers/CMSIS/DSP/Include/arm_math.h ****    * Set preprocessor macro __DSP_PRESENT if Armv8-M Mainline core supports DSP instructions.
   80:Drivers/CMSIS/DSP/Include/arm_math.h ****    * 
   81:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 14
+
+
   82:Drivers/CMSIS/DSP/Include/arm_math.h ****    * Examples
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 15
-
-
   83:Drivers/CMSIS/DSP/Include/arm_math.h ****    * --------
   84:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
   85:Drivers/CMSIS/DSP/Include/arm_math.h ****    * The library ships with a number of examples which demonstrate how to use the library functions
@@ -897,10 +838,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  136:Drivers/CMSIS/DSP/Include/arm_math.h ****    * Initialize macro __FPU_PRESENT = 1 when building on FPU supported Targets. Enable this macro f
  137:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
  138:Drivers/CMSIS/DSP/Include/arm_math.h ****    * - __DSP_PRESENT:
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 15
+
+
  139:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 16
-
-
  140:Drivers/CMSIS/DSP/Include/arm_math.h ****    * Initialize macro __DSP_PRESENT = 1 when Armv8-M Mainline core supports DSP instructions.
  141:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
  142:Drivers/CMSIS/DSP/Include/arm_math.h ****    * <hr>
@@ -957,10 +898,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  193:Drivers/CMSIS/DSP/Include/arm_math.h **** /**
  194:Drivers/CMSIS/DSP/Include/arm_math.h ****  * @defgroup groupMatrix Matrix Functions
  195:Drivers/CMSIS/DSP/Include/arm_math.h ****  *
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 16
+
+
  196:Drivers/CMSIS/DSP/Include/arm_math.h ****  * This set of functions provides basic matrix math operations.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 17
-
-
  197:Drivers/CMSIS/DSP/Include/arm_math.h ****  * The functions operate on matrix data structures.  For example,
  198:Drivers/CMSIS/DSP/Include/arm_math.h ****  * the type
  199:Drivers/CMSIS/DSP/Include/arm_math.h ****  * definition for the floating-point matrix structure is shown
@@ -1017,10 +958,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  250:Drivers/CMSIS/DSP/Include/arm_math.h ****  *     ARM_MATH_SUCCESS
  251:Drivers/CMSIS/DSP/Include/arm_math.h ****  * </pre>
  252:Drivers/CMSIS/DSP/Include/arm_math.h ****  * There is some overhead associated with this matrix size checking.
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 17
+
+
  253:Drivers/CMSIS/DSP/Include/arm_math.h ****  * The matrix size checking is enabled via the \#define
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 18
-
-
  254:Drivers/CMSIS/DSP/Include/arm_math.h ****  * <pre>
  255:Drivers/CMSIS/DSP/Include/arm_math.h ****  *     ARM_MATH_MATRIX_CHECK
  256:Drivers/CMSIS/DSP/Include/arm_math.h ****  * </pre>
@@ -1077,10 +1018,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  307:Drivers/CMSIS/DSP/Include/arm_math.h **** #elif defined ( __CSMC__ )
  308:Drivers/CMSIS/DSP/Include/arm_math.h **** 
  309:Drivers/CMSIS/DSP/Include/arm_math.h **** #elif defined ( __TASKING__ )
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 18
+
+
  310:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 19
-
-
  311:Drivers/CMSIS/DSP/Include/arm_math.h **** #else
  312:Drivers/CMSIS/DSP/Include/arm_math.h ****   #error Unknown compiler
  313:Drivers/CMSIS/DSP/Include/arm_math.h **** #endif
@@ -1137,10 +1078,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  364:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
  365:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Macros required for SINE and COSINE Fast math approximations
  366:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 19
+
+
  367:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 20
-
-
  368:Drivers/CMSIS/DSP/Include/arm_math.h **** #define FAST_MATH_TABLE_SIZE  512
  369:Drivers/CMSIS/DSP/Include/arm_math.h **** #define FAST_MATH_Q31_SHIFT   (32 - 10)
  370:Drivers/CMSIS/DSP/Include/arm_math.h **** #define FAST_MATH_Q15_SHIFT   (16 - 10)
@@ -1197,10 +1138,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  421:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief 32-bit fractional data type in 1.31 format.
  422:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
  423:Drivers/CMSIS/DSP/Include/arm_math.h ****   typedef int32_t q31_t;
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 20
+
+
  424:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 21
-
-
  425:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
  426:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief 64-bit fractional data type in 1.63 format.
  427:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
@@ -1257,10 +1198,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  478:Drivers/CMSIS/DSP/Include/arm_math.h **** #else
  479:Drivers/CMSIS/DSP/Include/arm_math.h ****   #error Unknown compiler
  480:Drivers/CMSIS/DSP/Include/arm_math.h **** #endif
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 21
+
+
  481:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 22
-
-
  482:Drivers/CMSIS/DSP/Include/arm_math.h **** #define __SIMD32(addr)        (*(__SIMD32_TYPE **) & (addr))
  483:Drivers/CMSIS/DSP/Include/arm_math.h **** #define __SIMD32_CONST(addr)  ((__SIMD32_TYPE *)(addr))
  484:Drivers/CMSIS/DSP/Include/arm_math.h **** #define _SIMD32_OFFSET(addr)  (*(__SIMD32_TYPE *)  (addr))
@@ -1317,10 +1258,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  535:Drivers/CMSIS/DSP/Include/arm_math.h ****   }
  536:Drivers/CMSIS/DSP/Include/arm_math.h **** 
  537:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 22
+
+
  538:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Clips Q31 to Q7 values.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 23
-
-
  539:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
  540:Drivers/CMSIS/DSP/Include/arm_math.h ****   CMSIS_INLINE __STATIC_INLINE q7_t clip_q31_to_q7(
  541:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t x)
@@ -1377,10 +1318,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  592:Drivers/CMSIS/DSP/Include/arm_math.h ****     /* Convert input sample to 1.31 format */
  593:Drivers/CMSIS/DSP/Include/arm_math.h ****     in = (in << signBits);
  594:Drivers/CMSIS/DSP/Include/arm_math.h **** 
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 23
+
+
  595:Drivers/CMSIS/DSP/Include/arm_math.h ****     /* calculation of index for initial approximated Val */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 24
-
-
  596:Drivers/CMSIS/DSP/Include/arm_math.h ****     index = (uint32_t)(in >> 24);
  597:Drivers/CMSIS/DSP/Include/arm_math.h ****     index = (index & INDEX_MASK);
  598:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -1437,10 +1378,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  649:Drivers/CMSIS/DSP/Include/arm_math.h **** 
  650:Drivers/CMSIS/DSP/Include/arm_math.h ****     /*      1.15 with exp 1  */
  651:Drivers/CMSIS/DSP/Include/arm_math.h ****     out = pRecipTable[index];
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 24
+
+
  652:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 25
-
-
  653:Drivers/CMSIS/DSP/Include/arm_math.h ****     /* calculation of reciprocal value */
  654:Drivers/CMSIS/DSP/Include/arm_math.h ****     /* running approximation for two iterations */
  655:Drivers/CMSIS/DSP/Include/arm_math.h ****     for (i = 0U; i < 2U; i++)
@@ -1497,10 +1438,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  706:Drivers/CMSIS/DSP/Include/arm_math.h ****     t = __SSAT(((((q31_t)x <<  8) >> 24) - (((q31_t)y <<  8) >> 24)), 8) & (int32_t)0x000000FF;
  707:Drivers/CMSIS/DSP/Include/arm_math.h ****     u = __SSAT(((((q31_t)x      ) >> 24) - (((q31_t)y      ) >> 24)), 8) & (int32_t)0x000000FF;
  708:Drivers/CMSIS/DSP/Include/arm_math.h **** 
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 25
+
+
  709:Drivers/CMSIS/DSP/Include/arm_math.h ****     return ((uint32_t)((u << 24) | (t << 16) | (s <<  8) | (r      )));
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 26
-
-
  710:Drivers/CMSIS/DSP/Include/arm_math.h ****   }
  711:Drivers/CMSIS/DSP/Include/arm_math.h **** 
  712:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -1557,10 +1498,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  763:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief C custom defined SHSUB16 for M3 and M0 processors
  764:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
  765:Drivers/CMSIS/DSP/Include/arm_math.h ****   CMSIS_INLINE __STATIC_INLINE uint32_t __SHSUB16(
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 26
+
+
  766:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t x,
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 27
-
-
  767:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t y)
  768:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
  769:Drivers/CMSIS/DSP/Include/arm_math.h ****     q31_t r, s;
@@ -1617,10 +1558,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  820:Drivers/CMSIS/DSP/Include/arm_math.h ****     s = __SSAT(((((q31_t)x      ) >> 16) - (((q31_t)y << 16) >> 16)), 16) & (int32_t)0x0000FFFF;
  821:Drivers/CMSIS/DSP/Include/arm_math.h **** 
  822:Drivers/CMSIS/DSP/Include/arm_math.h ****     return ((uint32_t)((s << 16) | (r      )));
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 27
+
+
  823:Drivers/CMSIS/DSP/Include/arm_math.h ****   }
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 28
-
-
  824:Drivers/CMSIS/DSP/Include/arm_math.h **** 
  825:Drivers/CMSIS/DSP/Include/arm_math.h **** 
  826:Drivers/CMSIS/DSP/Include/arm_math.h ****   /*
@@ -1677,10 +1618,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  877:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief C custom defined QSUB for M3 and M0 processors
  878:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
  879:Drivers/CMSIS/DSP/Include/arm_math.h ****   CMSIS_INLINE __STATIC_INLINE int32_t __QSUB(
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 28
+
+
  880:Drivers/CMSIS/DSP/Include/arm_math.h ****   int32_t x,
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 29
-
-
  881:Drivers/CMSIS/DSP/Include/arm_math.h ****   int32_t y)
  882:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
  883:Drivers/CMSIS/DSP/Include/arm_math.h ****     return ((int32_t)(clip_q63_to_q31((q63_t)x - (q31_t)y)));
@@ -1737,10 +1678,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  934:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t y,
  935:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint64_t sum)
  936:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 29
+
+
  937:Drivers/CMSIS/DSP/Include/arm_math.h **** /*  return (sum + ((q15_t) (x >> 16) * (q15_t) (y >> 16)) + ((q15_t) x * (q15_t) y)); */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 30
-
-
  938:Drivers/CMSIS/DSP/Include/arm_math.h ****     return ((uint64_t)(((((q31_t)x << 16) >> 16) * (((q31_t)y << 16) >> 16)) +
  939:Drivers/CMSIS/DSP/Include/arm_math.h ****                        ((((q31_t)x      ) >> 16) * (((q31_t)y      ) >> 16)) +
  940:Drivers/CMSIS/DSP/Include/arm_math.h ****                        ( ((q63_t)sum    )                                  )   ));
@@ -1797,10 +1738,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
  991:Drivers/CMSIS/DSP/Include/arm_math.h ****   }
  992:Drivers/CMSIS/DSP/Include/arm_math.h **** 
  993:Drivers/CMSIS/DSP/Include/arm_math.h ****   /*
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 30
+
+
  994:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief C custom defined SMMLA for M3 and M0 processors
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 31
-
-
  995:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
  996:Drivers/CMSIS/DSP/Include/arm_math.h ****   CMSIS_INLINE __STATIC_INLINE int32_t __SMMLA(
  997:Drivers/CMSIS/DSP/Include/arm_math.h ****   int32_t x,
@@ -1857,10 +1798,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1048:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 1049:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Processing function for the Q7 FIR filter.
 1050:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  S          points to an instance of the Q7 FIR filter structure.
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 31
+
+
 1051:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrc       points to the block of input data.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 32
-
-
 1052:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pDst       points to the block of output data.
 1053:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  blockSize  number of samples to process.
 1054:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
@@ -1917,10 +1858,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1105:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 1106:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 1107:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Initialization function for the Q15 FIR filter.
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 32
+
+
 1108:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in,out] S          points to an instance of the Q15 FIR filter structure.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 33
-
-
 1109:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     numTaps    Number of filter coefficients in the filter. Must be even and greate
 1110:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     pCoeffs    points to the filter coefficients.
 1111:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     pState     points to the state buffer.
@@ -1977,10 +1918,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1162:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint16_t numTaps,
 1163:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pCoeffs,
 1164:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pState,
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 33
+
+
 1165:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 34
-
-
 1166:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 1167:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 1168:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
@@ -2037,10 +1978,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1219:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 1220:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 1221:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Instance structure for the floating-point Biquad cascade filter.
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 34
+
+
 1222:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 35
-
-
 1223:Drivers/CMSIS/DSP/Include/arm_math.h ****   typedef struct
 1224:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
 1225:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint32_t numStages;      /**< number of 2nd order stages in the filter.  Overall order is 2*num
@@ -2097,10 +2038,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1276:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Processing function for the Q31 Biquad cascade filter
 1277:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  S          points to an instance of the Q31 Biquad cascade structure.
 1278:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrc       points to the block of input data.
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 35
+
+
 1279:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pDst       points to the block of output data.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 36
-
-
 1280:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  blockSize  number of samples to process.
 1281:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 1282:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_biquad_cascade_df1_q31(
@@ -2157,10 +2098,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1333:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 1334:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Initialization function for the floating-point Biquad cascade filter.
 1335:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in,out] S          points to an instance of the floating-point Biquad cascade structure
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 36
+
+
 1336:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     numStages  number of 2nd order stages in the filter.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 37
-
-
 1337:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     pCoeffs    points to the filter coefficients.
 1338:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     pState     points to the state buffer.
 1339:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
@@ -2217,10 +2158,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1390:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Floating-point matrix addition.
 1391:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcA  points to the first input matrix structure
 1392:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcB  points to the second input matrix structure
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 37
+
+
 1393:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pDst   points to output matrix structure
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 38
-
-
 1394:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @return     The function returns either
 1395:Drivers/CMSIS/DSP/Include/arm_math.h ****    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of s
 1396:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
@@ -2277,10 +2218,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1447:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcA  points to the first input matrix structure
 1448:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcB  points to the second input matrix structure
 1449:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pDst   points to output matrix structure
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 38
+
+
 1450:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @return     The function returns either
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 39
-
-
 1451:Drivers/CMSIS/DSP/Include/arm_math.h ****    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of s
 1452:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 1453:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_status arm_mat_cmplx_mult_q15(
@@ -2337,10 +2278,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1504:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 1505:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_status arm_mat_trans_q31(
 1506:Drivers/CMSIS/DSP/Include/arm_math.h ****   const arm_matrix_instance_q31 * pSrc,
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 39
+
+
 1507:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_matrix_instance_q31 * pDst);
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 40
-
-
 1508:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 1509:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 1510:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
@@ -2397,10 +2338,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1561:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @return     The function returns either
 1562:Drivers/CMSIS/DSP/Include/arm_math.h ****    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of s
 1563:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 40
+
+
 1564:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_status arm_mat_mult_q31(
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 41
-
-
 1565:Drivers/CMSIS/DSP/Include/arm_math.h ****   const arm_matrix_instance_q31 * pSrcA,
 1566:Drivers/CMSIS/DSP/Include/arm_math.h ****   const arm_matrix_instance_q31 * pSrcB,
 1567:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_matrix_instance_q31 * pDst);
@@ -2457,10 +2398,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1618:Drivers/CMSIS/DSP/Include/arm_math.h ****    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of s
 1619:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 1620:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_status arm_mat_sub_q31(
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 41
+
+
 1621:Drivers/CMSIS/DSP/Include/arm_math.h ****   const arm_matrix_instance_q31 * pSrcA,
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 42
-
-
 1622:Drivers/CMSIS/DSP/Include/arm_math.h ****   const arm_matrix_instance_q31 * pSrcB,
 1623:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_matrix_instance_q31 * pDst);
 1624:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -2517,10 +2458,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1675:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     nRows     number of rows in the matrix.
 1676:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     nColumns  number of columns in the matrix.
 1677:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     pData     points to the matrix data array.
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 42
+
+
 1678:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 43
-
-
 1679:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_mat_init_q31(
 1680:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_matrix_instance_q31 * S,
 1681:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint16_t nRows,
@@ -2577,10 +2518,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1732:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 1733:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 1734:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Instance structure for the Q31 PID Control.
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 43
+
+
 1735:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 44
-
-
 1736:Drivers/CMSIS/DSP/Include/arm_math.h ****   typedef struct
 1737:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
 1738:Drivers/CMSIS/DSP/Include/arm_math.h ****     q31_t A0;            /**< The derived gain, A0 = Kp + Ki + Kd . */
@@ -2637,10 +2578,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1789:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 1790:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 1791:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 44
+
+
 1792:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Reset function for the Q31 PID Control.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 45
-
-
 1793:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in,out] S   points to an instance of the Q31 PID Control structure
 1794:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 1795:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -2697,10 +2638,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1846:Drivers/CMSIS/DSP/Include/arm_math.h ****     q31_t *pData;       /**< points to the data table. */
 1847:Drivers/CMSIS/DSP/Include/arm_math.h ****   } arm_bilinear_interp_instance_q31;
 1848:Drivers/CMSIS/DSP/Include/arm_math.h **** 
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 45
+
+
 1849:Drivers/CMSIS/DSP/Include/arm_math.h ****    /**
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 46
-
-
 1850:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Instance structure for the Q15 bilinear interpolation function.
 1851:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 1852:Drivers/CMSIS/DSP/Include/arm_math.h ****   typedef struct
@@ -2757,10 +2698,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1903:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  blockSize  number of samples in each vector
 1904:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 1905:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_mult_q31(
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 46
+
+
 1906:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pSrcA,
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 47
-
-
 1907:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pSrcB,
 1908:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pDst,
 1909:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
@@ -2817,10 +2758,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 1960:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint8_t bitReverseFlag;          /**< flag that enables (bitReverseFlag=1) or disables (bitReve
 1961:Drivers/CMSIS/DSP/Include/arm_math.h ****     q15_t *pTwiddle;                 /**< points to the twiddle factor table. */
 1962:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint16_t *pBitRevTable;          /**< points to the bit reversal table. */
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 47
+
+
 1963:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint16_t twidCoefModifier;       /**< twiddle coefficient modifier that supports different size
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 48
-
-
 1964:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint16_t bitRevFactor;           /**< bit reversal modifier that supports different size FFTs w
 1965:Drivers/CMSIS/DSP/Include/arm_math.h ****   } arm_cfft_radix4_instance_q15;
 1966:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -2877,10 +2818,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2017:Drivers/CMSIS/DSP/Include/arm_math.h ****   } arm_cfft_radix4_instance_q31;
 2018:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2019:Drivers/CMSIS/DSP/Include/arm_math.h **** /* Deprecated */
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 48
+
+
 2020:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_cfft_radix4_q31(
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 49
-
-
 2021:Drivers/CMSIS/DSP/Include/arm_math.h ****   const arm_cfft_radix4_instance_q31 * S,
 2022:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pSrc);
 2023:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -2937,10 +2878,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2074:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_status arm_cfft_radix4_init_f32(
 2075:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_cfft_radix4_instance_f32 * S,
 2076:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint16_t fftLen,
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 49
+
+
 2077:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint8_t ifftFlag,
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 50
-
-
 2078:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint8_t bitReverseFlag);
 2079:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2080:Drivers/CMSIS/DSP/Include/arm_math.h **** /* Deprecated */
@@ -2997,10 +2938,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2131:Drivers/CMSIS/DSP/Include/arm_math.h ****   const arm_cfft_instance_f32 * S,
 2132:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t * p1,
 2133:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint8_t ifftFlag,
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 50
+
+
 2134:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint8_t bitReverseFlag);
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 51
-
-
 2135:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2136:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 2137:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Instance structure for the Q15 RFFT/RIFFT function.
@@ -3057,10 +2998,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2188:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 2189:Drivers/CMSIS/DSP/Include/arm_math.h ****   typedef struct
 2190:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 51
+
+
 2191:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint32_t fftLenReal;                        /**< length of the real FFT. */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 52
-
-
 2192:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint16_t fftLenBy2;                         /**< length of the complex FFT. */
 2193:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint8_t ifftFlagR;                          /**< flag that selects forward (ifftFlagR=0) or inv
 2194:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint8_t bitReverseFlagR;                    /**< flag that enables (bitReverseFlagR=1) or disab
@@ -3117,10 +3058,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2245:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2246:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2247:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 52
+
+
 2248:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Initialization function for the floating-point DCT4/IDCT4.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 53
-
-
 2249:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in,out] S          points to an instance of floating-point DCT4/IDCT4 structure.
 2250:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     S_RFFT     points to an instance of floating-point RFFT/RIFFT structure.
 2251:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     S_CFFT     points to an instance of floating-point CFFT/CIFFT structure.
@@ -3177,10 +3118,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2302:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 2303:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_status arm_dct4_init_q31(
 2304:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_dct4_instance_q31 * S,
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 53
+
+
 2305:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_rfft_instance_q31 * S_RFFT,
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 54
-
-
 2306:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_cfft_radix4_instance_q31 * S_CFFT,
 2307:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint16_t N,
 2308:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint16_t Nby2,
@@ -3237,10 +3178,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2359:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Processing function for the Q15 DCT4/IDCT4.
 2360:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     S              points to an instance of the Q15 DCT4 structure.
 2361:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     pState         points to state buffer.
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 54
+
+
 2362:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in,out] pInlineBuffer  points to the in-place input and output buffer.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 55
-
-
 2363:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 2364:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_dct4_q15(
 2365:Drivers/CMSIS/DSP/Include/arm_math.h ****   const arm_dct4_instance_q15 * S,
@@ -3297,10 +3238,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2416:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pDst       points to the output vector
 2417:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  blockSize  number of samples in each vector
 2418:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 55
+
+
 2419:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_add_q31(
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 56
-
-
 2420:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pSrcA,
 2421:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pSrcB,
 2422:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pDst,
@@ -3357,10 +3298,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2473:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  blockSize  number of samples in each vector
 2474:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 2475:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_sub_q31(
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 56
+
+
 2476:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pSrcA,
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 57
-
-
 2477:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pSrcB,
 2478:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pDst,
 2479:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
@@ -3417,10 +3358,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2530:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrc        points to the input vector
 2531:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  scaleFract  fractional portion of the scale value
 2532:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  shift       number of bits to shift the result by
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 57
+
+
 2533:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pDst        points to the output vector
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 58
-
-
 2534:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  blockSize   number of samples in the vector
 2535:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 2536:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_scale_q31(
@@ -3477,10 +3418,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2587:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pSrc,
 2588:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pDst,
 2589:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 58
+
+
 2590:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 59
-
-
 2591:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2592:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 2593:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Dot product of floating-point vectors.
@@ -3537,10 +3478,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2644:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize,
 2645:Drivers/CMSIS/DSP/Include/arm_math.h ****   q63_t * result);
 2646:Drivers/CMSIS/DSP/Include/arm_math.h **** 
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 59
+
+
 2647:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 60
-
-
 2648:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 2649:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Shifts the elements of a Q7 vector a specified number of bits.
 2650:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrc       points to the input vector
@@ -3597,10 +3538,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2701:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
 2702:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2703:Drivers/CMSIS/DSP/Include/arm_math.h **** 
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 60
+
+
 2704:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 61
-
-
 2705:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Adds a constant offset to a Q7 vector.
 2706:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrc       points to the input vector
 2707:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  offset     is the offset to be added
@@ -3657,10 +3598,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2758:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 2759:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Negates the elements of a Q7 vector.
 2760:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrc       points to the input vector
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 61
+
+
 2761:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pDst       points to the output vector
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 62
-
-
 2762:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  blockSize  number of samples in the vector
 2763:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 2764:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_negate_q7(
@@ -3717,10 +3658,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2815:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
 2816:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2817:Drivers/CMSIS/DSP/Include/arm_math.h **** 
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 62
+
+
 2818:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 63
-
-
 2819:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Copies the elements of a Q15 vector.
 2820:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrc       input pointer
 2821:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pDst       output pointer
@@ -3777,10 +3718,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2872:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_fill_q15(
 2873:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t value,
 2874:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pDst,
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 63
+
+
 2875:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 64
-
-
 2876:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2877:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 2878:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
@@ -3837,10 +3778,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2929:Drivers/CMSIS/DSP/Include/arm_math.h ****  * @param[in]  srcALen  length of the first input sequence.
 2930:Drivers/CMSIS/DSP/Include/arm_math.h ****  * @param[in]  pSrcB    points to the second input sequence.
 2931:Drivers/CMSIS/DSP/Include/arm_math.h ****  * @param[in]  srcBLen  length of the second input sequence.
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 64
+
+
 2932:Drivers/CMSIS/DSP/Include/arm_math.h ****  * @param[out] pDst     points to the location where the output result is written.  Length srcALen+
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 65
-
-
 2933:Drivers/CMSIS/DSP/Include/arm_math.h ****  */
 2934:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_conv_q15(
 2935:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pSrcA,
@@ -3897,10 +3838,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 2986:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_conv_q31(
 2987:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pSrcA,
 2988:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t srcALen,
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 65
+
+
 2989:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pSrcB,
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 66
-
-
 2990:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t srcBLen,
 2991:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pDst);
 2992:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -3957,10 +3898,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3043:Drivers/CMSIS/DSP/Include/arm_math.h ****   q7_t * pDst);
 3044:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3045:Drivers/CMSIS/DSP/Include/arm_math.h **** 
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 66
+
+
 3046:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 67
-
-
 3047:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Partial convolution of floating-point sequences.
 3048:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcA       points to the first input sequence.
 3049:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  srcALen     length of the first input sequence.
@@ -4017,10 +3958,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3100:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  numPoints   is the number of output points to be computed.
 3101:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUM
 3102:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 67
+
+
 3103:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_status arm_conv_partial_q15(
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 68
-
-
 3104:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pSrcA,
 3105:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t srcALen,
 3106:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pSrcB,
@@ -4077,10 +4018,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3157:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3158:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3159:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 68
+
+
 3160:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Partial convolution of Q31 sequences.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 69
-
-
 3161:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcA       points to the first input sequence.
 3162:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  srcALen     length of the first input sequence.
 3163:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcB       points to the second input sequence.
@@ -4137,10 +4078,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3214:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_status arm_conv_partial_opt_q7(
 3215:Drivers/CMSIS/DSP/Include/arm_math.h ****   q7_t * pSrcA,
 3216:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t srcALen,
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 69
+
+
 3217:Drivers/CMSIS/DSP/Include/arm_math.h ****   q7_t * pSrcB,
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 70
-
-
 3218:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t srcBLen,
 3219:Drivers/CMSIS/DSP/Include/arm_math.h ****   q7_t * pDst,
 3220:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t firstIndex,
@@ -4197,10 +4138,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3271:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 3272:Drivers/CMSIS/DSP/Include/arm_math.h ****   typedef struct
 3273:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 70
+
+
 3274:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint8_t M;                  /**< decimation factor. */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 71
-
-
 3275:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint16_t numTaps;           /**< number of coefficients in the filter. */
 3276:Drivers/CMSIS/DSP/Include/arm_math.h ****     float32_t *pCoeffs;         /**< points to the coefficient array. The array is of length numTap
 3277:Drivers/CMSIS/DSP/Include/arm_math.h ****     float32_t *pState;          /**< points to the state variable array. The array is of length num
@@ -4257,10 +4198,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3328:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3329:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 3330:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Processing function for the Q15 FIR decimator (fast variant) for Cortex-M3 and Cortex-M
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 71
+
+
 3331:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  S          points to an instance of the Q15 FIR decimator structure.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 72
-
-
 3332:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrc       points to the block of input data.
 3333:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pDst       points to the block of output data
 3334:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  blockSize  number of input samples to process per call.
@@ -4317,10 +4258,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3385:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pSrc,
 3386:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pDst,
 3387:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 72
+
+
 3388:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 73
-
-
 3389:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3390:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 3391:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Initialization function for the Q31 FIR decimator.
@@ -4377,10 +4318,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3442:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3443:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3444:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 73
+
+
 3445:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Processing function for the Q15 FIR interpolator.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 74
-
-
 3446:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  S          points to an instance of the Q15 FIR interpolator structure.
 3447:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrc       points to the block of input data.
 3448:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pDst       points to the block of output data.
@@ -4437,10 +4378,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3499:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     blockSize  number of input samples to process per call.
 3500:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MA
 3501:Drivers/CMSIS/DSP/Include/arm_math.h ****    * the filter length <code>numTaps</code> is not a multiple of the interpolation factor <code>L</
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 74
+
+
 3502:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 75
-
-
 3503:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_status arm_fir_interpolate_init_q31(
 3504:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_fir_interpolate_instance_q31 * S,
 3505:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint8_t L,
@@ -4497,10 +4438,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3556:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3557:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3558:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 75
+
+
 3559:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  S          points to an instance of the high precision Q31 Biquad cascade filter s
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 76
-
-
 3560:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrc       points to the block of input data.
 3561:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pDst       points to the block of output data
 3562:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  blockSize  number of samples to process.
@@ -4557,10 +4498,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3613:Drivers/CMSIS/DSP/Include/arm_math.h ****     float64_t *pCoeffs;        /**< points to the array of coefficients.  The array is of length 5*
 3614:Drivers/CMSIS/DSP/Include/arm_math.h ****   } arm_biquad_cascade_df2T_instance_f64;
 3615:Drivers/CMSIS/DSP/Include/arm_math.h **** 
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 76
+
+
 3616:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 77
-
-
 3617:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 3618:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Processing function for the floating-point transposed direct form II Biquad cascade fil
 3619:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  S          points to an instance of the filter data structure.
@@ -4617,10 +4558,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3670:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t * pState);
 3671:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3672:Drivers/CMSIS/DSP/Include/arm_math.h **** 
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 77
+
+
 3673:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 78
-
-
 3674:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Initialization function for the floating-point transposed direct form II Biquad cascad
 3675:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in,out] S          points to an instance of the filter data structure.
 3676:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]     numStages  number of 2nd order stages in the filter.
@@ -4677,10 +4618,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3727:Drivers/CMSIS/DSP/Include/arm_math.h ****     float32_t *pState;                   /**< points to the state variable array. The array is of l
 3728:Drivers/CMSIS/DSP/Include/arm_math.h ****     float32_t *pCoeffs;                  /**< points to the coefficient array. The array is of leng
 3729:Drivers/CMSIS/DSP/Include/arm_math.h ****   } arm_fir_lattice_instance_f32;
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 78
+
+
 3730:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 79
-
-
 3731:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3732:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 3733:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Initialization function for the Q15 FIR lattice filter.
@@ -4737,10 +4678,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3784:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pDst,
 3785:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
 3786:Drivers/CMSIS/DSP/Include/arm_math.h **** 
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 79
+
+
 3787:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 80
-
-
 3788:Drivers/CMSIS/DSP/Include/arm_math.h **** /**
 3789:Drivers/CMSIS/DSP/Include/arm_math.h ****  * @brief Initialization function for the floating-point FIR lattice filter.
 3790:Drivers/CMSIS/DSP/Include/arm_math.h ****  * @param[in] S          points to an instance of the floating-point FIR lattice structure.
@@ -4797,10 +4738,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3841:Drivers/CMSIS/DSP/Include/arm_math.h ****   typedef struct
 3842:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
 3843:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint16_t numStages;                  /**< number of stages in the filter. */
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 80
+
+
 3844:Drivers/CMSIS/DSP/Include/arm_math.h ****     float32_t *pState;                   /**< points to the state variable array. The array is of l
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 81
-
-
 3845:Drivers/CMSIS/DSP/Include/arm_math.h ****     float32_t *pkCoeffs;                 /**< points to the reflection coefficient array. The array
 3846:Drivers/CMSIS/DSP/Include/arm_math.h ****     float32_t *pvCoeffs;                 /**< points to the ladder coefficient array. The array is 
 3847:Drivers/CMSIS/DSP/Include/arm_math.h ****   } arm_iir_lattice_instance_f32;
@@ -4857,10 +4798,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3898:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] S          points to an instance of the Q31 IIR lattice structure.
 3899:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] numStages  number of stages in the filter.
 3900:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] pkCoeffs   points to the reflection coefficient buffer.  The array is of length num
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 81
+
+
 3901:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] pvCoeffs   points to the ladder coefficient buffer.  The array is of length numStag
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 82
-
-
 3902:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] pState     points to the state buffer.  The array is of length numStages+blockSize.
 3903:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] blockSize  number of samples to process.
 3904:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
@@ -4917,10 +4858,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 3955:Drivers/CMSIS/DSP/Include/arm_math.h ****   } arm_lms_instance_f32;
 3956:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 3957:Drivers/CMSIS/DSP/Include/arm_math.h **** 
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 82
+
+
 3958:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 83
-
-
 3959:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Processing function for floating-point LMS filter.
 3960:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  S          points to an instance of the floating-point LMS filter structure.
 3961:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrc       points to the block of input data.
@@ -4977,10 +4918,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4012:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] pState     points to the state buffer.
 4013:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] mu         step size that controls filter coefficient updates.
 4014:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] blockSize  number of samples to process.
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 83
+
+
 4015:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] postShift  bit shift applied to coefficients.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 84
-
-
 4016:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 4017:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_lms_init_q15(
 4018:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_lms_instance_q15 * S,
@@ -5037,10 +4978,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4069:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pSrc,
 4070:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pRef,
 4071:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pOut,
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 84
+
+
 4072:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pErr,
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 85
-
-
 4073:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
 4074:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 4075:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -5097,10 +5038,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4126:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 4127:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 4128:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 85
+
+
 4129:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Initialization function for floating-point normalized LMS filter.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 86
-
-
 4130:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] S          points to an instance of the floating-point LMS filter structure.
 4131:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] numTaps    number of filter coefficients.
 4132:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] pCoeffs    points to coefficient buffer.
@@ -5157,10 +5098,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4183:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] numTaps    number of filter coefficients.
 4184:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] pCoeffs    points to coefficient buffer.
 4185:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] pState     points to state buffer.
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 86
+
+
 4186:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] mu         step size that controls filter coefficient updates.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 87
-
-
 4187:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] blockSize  number of samples to process.
 4188:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] postShift  bit shift applied to coefficients.
 4189:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
@@ -5217,10 +5158,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4240:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] mu         step size that controls filter coefficient updates.
 4241:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] blockSize  number of samples to process.
 4242:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in] postShift  bit shift applied to coefficients.
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 87
+
+
 4243:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 88
-
-
 4244:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_lms_norm_init_q15(
 4245:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_lms_norm_instance_q15 * S,
 4246:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint16_t numTaps,
@@ -5277,10 +5218,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4297:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_correlate_q15(
 4298:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pSrcA,
 4299:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t srcALen,
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 88
+
+
 4300:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pSrcB,
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 89
-
-
 4301:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t srcBLen,
 4302:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pDst);
 4303:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -5337,10 +5278,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4354:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 4355:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 4356:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 89
+
+
 4357:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Correlation of Q31 sequences (fast version) for Cortex-M3 and Cortex-M4
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 90
-
-
 4358:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcA    points to the first input sequence.
 4359:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  srcALen  length of the first input sequence.
 4360:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  pSrcB    points to the second input sequence.
@@ -5397,10 +5338,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4411:Drivers/CMSIS/DSP/Include/arm_math.h ****   typedef struct
 4412:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
 4413:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint16_t numTaps;             /**< number of coefficients in the filter. */
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 90
+
+
 4414:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint16_t stateIndex;          /**< state buffer index.  Points to the oldest sample in the stat
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 91
-
-
 4415:Drivers/CMSIS/DSP/Include/arm_math.h ****     float32_t *pState;            /**< points to the state buffer array. The array is of length max
 4416:Drivers/CMSIS/DSP/Include/arm_math.h ****     float32_t *pCoeffs;           /**< points to the coefficient array. The array is of length numT
 4417:Drivers/CMSIS/DSP/Include/arm_math.h ****     uint16_t maxDelay;            /**< maximum offset specified by the pTapDelay array. */
@@ -5457,10 +5398,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4468:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 4469:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_fir_sparse_f32(
 4470:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_fir_sparse_instance_f32 * S,
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 91
+
+
 4471:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t * pSrc,
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 92
-
-
 4472:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t * pDst,
 4473:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t * pScratchIn,
 4474:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
@@ -5517,10 +5458,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4525:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint16_t numTaps,
 4526:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pCoeffs,
 4527:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pState,
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 92
+
+
 4528:Drivers/CMSIS/DSP/Include/arm_math.h ****   int32_t * pTapDelay,
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 93
-
-
 4529:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint16_t maxDelay,
 4530:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
 4531:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -5577,10 +5518,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4582:Drivers/CMSIS/DSP/Include/arm_math.h ****   q7_t * pSrc,
 4583:Drivers/CMSIS/DSP/Include/arm_math.h ****   q7_t * pDst,
 4584:Drivers/CMSIS/DSP/Include/arm_math.h ****   q7_t * pScratchIn,
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 93
+
+
 4585:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pScratchOut,
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 94
-
-
 4586:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t blockSize);
 4587:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 4588:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -5637,10 +5578,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4639:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_cmplx_conj_f32(
 4640:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t * pSrc,
 4641:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t * pDst,
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 94
+
+
 4642:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t numSamples);
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 95
-
-
 4643:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 4644:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 4645:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Q31 complex conjugate.
@@ -5697,10 +5638,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4696:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  numSamples  number of complex samples in the input vector
 4697:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 4698:Drivers/CMSIS/DSP/Include/arm_math.h ****   void arm_cmplx_mag_squared_q15(
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 95
+
+
 4699:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pSrc,
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 96
-
-
 4700:Drivers/CMSIS/DSP/Include/arm_math.h ****   q15_t * pDst,
 4701:Drivers/CMSIS/DSP/Include/arm_math.h ****   uint32_t numSamples);
 4702:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -5757,10 +5698,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4753:Drivers/CMSIS/DSP/Include/arm_math.h ****    * - Initializes the Gains A0, A1, A2 from Kp,Ki, Kd gains.
 4754:Drivers/CMSIS/DSP/Include/arm_math.h ****    * - Zeros out the values in the state buffer.
 4755:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 96
+
+
 4756:Drivers/CMSIS/DSP/Include/arm_math.h ****    * \par
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 97
-
-
 4757:Drivers/CMSIS/DSP/Include/arm_math.h ****    * Instance structure cannot be placed into a const data section and it is recommended to use the
 4758:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
 4759:Drivers/CMSIS/DSP/Include/arm_math.h ****    * \par Fixed-Point Behavior
@@ -5817,10 +5758,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4810:Drivers/CMSIS/DSP/Include/arm_math.h ****   CMSIS_INLINE __STATIC_INLINE q31_t arm_pid_q31(
 4811:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_pid_instance_q31 * S,
 4812:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t in)
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 97
+
+
 4813:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 98
-
-
 4814:Drivers/CMSIS/DSP/Include/arm_math.h ****     q63_t acc;
 4815:Drivers/CMSIS/DSP/Include/arm_math.h ****     q31_t out;
 4816:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -5877,10 +5818,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4867:Drivers/CMSIS/DSP/Include/arm_math.h ****     /* Implementation of PID controller */
 4868:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 4869:Drivers/CMSIS/DSP/Include/arm_math.h ****     /* acc = A0 * x[n]  */
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 98
+
+
 4870:Drivers/CMSIS/DSP/Include/arm_math.h ****     acc = (q31_t) __SMUAD((uint32_t)S->A0, (uint32_t)in);
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 99
-
-
 4871:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 4872:Drivers/CMSIS/DSP/Include/arm_math.h ****     /* acc += A1 * x[n-1] + A2 * x[n-2]  */
 4873:Drivers/CMSIS/DSP/Include/arm_math.h ****     vstate = __SIMD32_CONST(S->state);
@@ -5937,10 +5878,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4924:Drivers/CMSIS/DSP/Include/arm_math.h ****   const arm_matrix_instance_f64 * src,
 4925:Drivers/CMSIS/DSP/Include/arm_math.h ****   arm_matrix_instance_f64 * dst);
 4926:Drivers/CMSIS/DSP/Include/arm_math.h **** 
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 99
+
+
 4927:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 100
-
-
 4928:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 4929:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 4930:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @ingroup groupController
@@ -5997,10 +5938,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 4981:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 4982:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 4983:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief  Clarke transform for Q31 version
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 100
+
+
 4984:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  Ia       input three-phase coordinate <code>a</code>
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 101
-
-
 4985:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[in]  Ib       input three-phase coordinate <code>b</code>
 4986:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pIalpha  points to output two-phase orthogonal vector axis alpha
 4987:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pIbeta   points to output two-phase orthogonal vector axis beta
@@ -6057,10 +5998,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 5038:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @defgroup inv_clarke Vector Inverse Clarke Transform
 5039:Drivers/CMSIS/DSP/Include/arm_math.h ****    * Inverse Clarke transform converts the two-coordinate time invariant vector into instantaneous 
 5040:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 101
+
+
 5041:Drivers/CMSIS/DSP/Include/arm_math.h ****    * The function operates on a single sample of data and each call to the function returns the pro
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 102
-
-
 5042:Drivers/CMSIS/DSP/Include/arm_math.h ****    * The library provides separate functions for Q31 and floating-point data types.
 5043:Drivers/CMSIS/DSP/Include/arm_math.h ****    * \par Algorithm
 5044:Drivers/CMSIS/DSP/Include/arm_math.h ****    * \image html clarkeInvFormula.gif
@@ -6117,10 +6058,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 5095:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pIa,
 5096:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pIb)
 5097:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 102
+
+
 5098:Drivers/CMSIS/DSP/Include/arm_math.h ****     q31_t product1, product2;                    /* Temporary variables used to store intermediate 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 103
-
-
 5099:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 5100:Drivers/CMSIS/DSP/Include/arm_math.h ****     /* Calculating pIa from Ialpha by equation pIa = Ialpha */
 5101:Drivers/CMSIS/DSP/Include/arm_math.h ****     *pIa = Ialpha;
@@ -6177,10 +6118,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 5152:Drivers/CMSIS/DSP/Include/arm_math.h ****    * \par Fixed-Point Behavior
 5153:Drivers/CMSIS/DSP/Include/arm_math.h ****    * Care must be taken when using the Q31 version of the Park transform.
 5154:Drivers/CMSIS/DSP/Include/arm_math.h ****    * In particular, the overflow and saturation behavior of the accumulator used must be considered
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 103
+
+
 5155:Drivers/CMSIS/DSP/Include/arm_math.h ****    * Refer to the function specific documentation below for usage guidelines.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 104
-
-
 5156:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 5157:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 5158:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
@@ -6237,10 +6178,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 5209:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pId,
 5210:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pIq,
 5211:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t sinVal,
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 104
+
+
 5212:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t cosVal)
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 105
-
-
 5213:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
 5214:Drivers/CMSIS/DSP/Include/arm_math.h ****     q31_t product1, product2;                    /* Temporary variables used to store intermediate 
 5215:Drivers/CMSIS/DSP/Include/arm_math.h ****     q31_t product3, product4;                    /* Temporary variables used to store intermediate 
@@ -6297,10 +6238,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 5266:Drivers/CMSIS/DSP/Include/arm_math.h ****    * <code>Id</code> and <code>Iq</code> are rotor vector components and <code>cosVal</code> and <c
 5267:Drivers/CMSIS/DSP/Include/arm_math.h ****    * cosine and sine values of theta (rotor flux position).
 5268:Drivers/CMSIS/DSP/Include/arm_math.h ****    * \par Fixed-Point Behavior
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 105
+
+
 5269:Drivers/CMSIS/DSP/Include/arm_math.h ****    * Care must be taken when using the Q31 version of the Park transform.
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 106
-
-
 5270:Drivers/CMSIS/DSP/Include/arm_math.h ****    * In particular, the overflow and saturation behavior of the accumulator used must be considered
 5271:Drivers/CMSIS/DSP/Include/arm_math.h ****    * Refer to the function specific documentation below for usage guidelines.
 5272:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
@@ -6357,10 +6298,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 5323:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t * pIbeta,
 5324:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t sinVal,
 5325:Drivers/CMSIS/DSP/Include/arm_math.h ****   q31_t cosVal)
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 106
+
+
 5326:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 107
-
-
 5327:Drivers/CMSIS/DSP/Include/arm_math.h ****     q31_t product1, product2;                    /* Temporary variables used to store intermediate 
 5328:Drivers/CMSIS/DSP/Include/arm_math.h ****     q31_t product3, product4;                    /* Temporary variables used to store intermediate 
 5329:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -6417,10 +6358,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 5380:Drivers/CMSIS/DSP/Include/arm_math.h ****    * A  Linear Interpolate function calculates an output value(y), for the input(x)
 5381:Drivers/CMSIS/DSP/Include/arm_math.h ****    * using linear interpolation of the input values x0, x1( nearest input values) and the output va
 5382:Drivers/CMSIS/DSP/Include/arm_math.h ****    *
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 107
+
+
 5383:Drivers/CMSIS/DSP/Include/arm_math.h ****    * \par Algorithm:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 108
-
-
 5384:Drivers/CMSIS/DSP/Include/arm_math.h ****    * <pre>
 5385:Drivers/CMSIS/DSP/Include/arm_math.h ****    *       y = y0 + (x - x0) * ((y1 - y0)/(x1-x0))
 5386:Drivers/CMSIS/DSP/Include/arm_math.h ****    *       where x0, x1 are nearest values of input x
@@ -6477,10 +6418,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 5437:Drivers/CMSIS/DSP/Include/arm_math.h ****     }
 5438:Drivers/CMSIS/DSP/Include/arm_math.h ****     else
 5439:Drivers/CMSIS/DSP/Include/arm_math.h ****     {
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 108
+
+
 5440:Drivers/CMSIS/DSP/Include/arm_math.h ****       /* Calculation of nearest input values */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 109
-
-
 5441:Drivers/CMSIS/DSP/Include/arm_math.h ****       x0 = S->x1 +  i      * xSpacing;
 5442:Drivers/CMSIS/DSP/Include/arm_math.h ****       x1 = S->x1 + (i + 1) * xSpacing;
 5443:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -6537,10 +6478,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 5494:Drivers/CMSIS/DSP/Include/arm_math.h ****     else
 5495:Drivers/CMSIS/DSP/Include/arm_math.h ****     {
 5496:Drivers/CMSIS/DSP/Include/arm_math.h ****       /* 20 bits for the fractional part */
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 109
+
+
 5497:Drivers/CMSIS/DSP/Include/arm_math.h ****       /* shift left by 11 to keep fract in 1.31 format */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 110
-
-
 5498:Drivers/CMSIS/DSP/Include/arm_math.h ****       fract = (x & 0x000FFFFF) << 11;
 5499:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 5500:Drivers/CMSIS/DSP/Include/arm_math.h ****       /* Read two nearest output values from the index in 1.31(q31) format */
@@ -6597,10 +6538,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 5551:Drivers/CMSIS/DSP/Include/arm_math.h ****     }
 5552:Drivers/CMSIS/DSP/Include/arm_math.h ****     else
 5553:Drivers/CMSIS/DSP/Include/arm_math.h ****     {
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 110
+
+
 5554:Drivers/CMSIS/DSP/Include/arm_math.h ****       /* 20 bits for the fractional part */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 111
-
-
 5555:Drivers/CMSIS/DSP/Include/arm_math.h ****       /* fract is in 12.20 format */
 5556:Drivers/CMSIS/DSP/Include/arm_math.h ****       fract = (x & 0x000FFFFF);
 5557:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -6657,10 +6598,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 5608:Drivers/CMSIS/DSP/Include/arm_math.h ****     }
 5609:Drivers/CMSIS/DSP/Include/arm_math.h ****     else
 5610:Drivers/CMSIS/DSP/Include/arm_math.h ****     {
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 111
+
+
 5611:Drivers/CMSIS/DSP/Include/arm_math.h ****       /* 20 bits for the fractional part */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 112
-
-
 5612:Drivers/CMSIS/DSP/Include/arm_math.h ****       /* fract is in 12.20 format */
 5613:Drivers/CMSIS/DSP/Include/arm_math.h ****       fract = (x & 0x000FFFFF);
 5614:Drivers/CMSIS/DSP/Include/arm_math.h **** 
@@ -6717,10 +6658,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 5665:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
 5666:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t arm_cos_f32(
 5667:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t x);
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 112
+
+
 5668:Drivers/CMSIS/DSP/Include/arm_math.h **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 113
-
-
 5669:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 5670:Drivers/CMSIS/DSP/Include/arm_math.h ****   /**
 5671:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @brief Fast approximation to the trigonometric cosine function for Q31 data.
@@ -6777,22 +6718,22 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 5722:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @param[out] pOut  square root of input value.
 5723:Drivers/CMSIS/DSP/Include/arm_math.h ****    * @return The function returns ARM_MATH_SUCCESS if input value is positive value or ARM_MATH_ARG
 5724:Drivers/CMSIS/DSP/Include/arm_math.h ****    * <code>in</code> is negative value and returns zero output for negative values.
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 113
+
+
 5725:Drivers/CMSIS/DSP/Include/arm_math.h ****    */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 114
-
-
 5726:Drivers/CMSIS/DSP/Include/arm_math.h ****   CMSIS_INLINE __STATIC_INLINE arm_status arm_sqrt_f32(
- 591              		.loc 2 5726 43 is_stmt 1 discriminator 3 view .LVU158
- 592              	.LBB13:
+ 546              		.loc 2 5726 43 is_stmt 1 discriminator 3 view .LVU155
+ 547              	.LBB13:
 5727:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t in,
 5728:Drivers/CMSIS/DSP/Include/arm_math.h ****   float32_t * pOut)
 5729:Drivers/CMSIS/DSP/Include/arm_math.h ****   {
 5730:Drivers/CMSIS/DSP/Include/arm_math.h ****     if (in >= 0.0f)
- 593              		.loc 2 5730 5 discriminator 3 view .LVU159
- 594              		.loc 2 5730 8 is_stmt 0 discriminator 3 view .LVU160
- 595 0088 B5EEC00A 		vcmpe.f32	s0, #0
- 596 008c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 597 0090 1DDB     		blt	.L32
+ 548              		.loc 2 5730 5 discriminator 3 view .LVU156
+ 549              		.loc 2 5730 8 is_stmt 0 discriminator 3 view .LVU157
+ 550 0090 B5EEC00A 		vcmpe.f32	s0, #0
+ 551 0094 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 552 0098 1DDB     		blt	.L32
 5731:Drivers/CMSIS/DSP/Include/arm_math.h ****     {
 5732:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 5733:Drivers/CMSIS/DSP/Include/arm_math.h **** #if   (__FPU_USED == 1) && defined ( __CC_ARM   )
@@ -6801,15 +6742,15 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 5736:Drivers/CMSIS/DSP/Include/arm_math.h ****       *pOut = __builtin_sqrtf(in);
 5737:Drivers/CMSIS/DSP/Include/arm_math.h **** #elif (__FPU_USED == 1) && defined(__GNUC__)
 5738:Drivers/CMSIS/DSP/Include/arm_math.h ****       *pOut = __builtin_sqrtf(in);
- 598              		.loc 2 5738 7 is_stmt 1 view .LVU161
- 599              		.loc 2 5738 15 is_stmt 0 view .LVU162
- 600 0092 FFF7FEFF 		bl	sqrtf
- 601              	.LVL48:
- 602              		.loc 2 5738 13 view .LVU163
- 603 0096 06EB8903 		add	r3, r6, r9, lsl #2
- 604              	.LVL49:
- 605              		.loc 2 5738 13 view .LVU164
- 606 009a 83ED000A 		vstr.32	s0, [r3]
+ 553              		.loc 2 5738 7 is_stmt 1 view .LVU158
+ 554              		.loc 2 5738 15 is_stmt 0 view .LVU159
+ 555 009a FFF7FEFF 		bl	sqrtf
+ 556              	.LVL42:
+ 557              		.loc 2 5738 13 view .LVU160
+ 558 009e 06EB8903 		add	r3, r6, r9, lsl #2
+ 559              	.LVL43:
+ 560              		.loc 2 5738 13 view .LVU161
+ 561 00a2 83ED000A 		vstr.32	s0, [r3]
 5739:Drivers/CMSIS/DSP/Include/arm_math.h **** #elif (__FPU_USED == 1) && defined ( __ICCARM__ ) && (__VER__ >= 6040000)
 5740:Drivers/CMSIS/DSP/Include/arm_math.h ****       __ASM("VSQRT.F32 %0,%1" : "=t"(*pOut) : "t"(in));
 5741:Drivers/CMSIS/DSP/Include/arm_math.h **** #else
@@ -6817,321 +6758,329 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 1
 5743:Drivers/CMSIS/DSP/Include/arm_math.h **** #endif
 5744:Drivers/CMSIS/DSP/Include/arm_math.h **** 
 5745:Drivers/CMSIS/DSP/Include/arm_math.h ****       return (ARM_MATH_SUCCESS);
- 607              		.loc 2 5745 7 is_stmt 1 view .LVU165
- 608              	.LVL50:
- 609              	.L19:
- 610              		.loc 2 5745 7 is_stmt 0 view .LVU166
- 611              	.LBE13:
- 612              	.LBE12:
-  85:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
- 613              		.loc 1 85 39 is_stmt 1 view .LVU167
-  85:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
- 614              		.loc 1 85 41 is_stmt 0 view .LVU168
- 615 009e 0235     		adds	r5, r5, #2
- 616              	.LVL51:
- 617              	.L15:
-  85:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
- 618              		.loc 1 85 24 is_stmt 1 discriminator 1 view .LVU169
-  85:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
- 619              		.loc 1 85 31 is_stmt 0 discriminator 1 view .LVU170
- 620 00a0 6368     		ldr	r3, [r4, #4]
-  85:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
- 621              		.loc 1 85 9 discriminator 1 view .LVU171
- 622 00a2 9D42     		cmp	r5, r3
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 115
+ 562              		.loc 2 5745 7 is_stmt 1 view .LVU162
+ 563              	.LVL44:
+ 564              	.L19:
+ 565              		.loc 2 5745 7 is_stmt 0 view .LVU163
+ 566              	.LBE13:
+ 567              	.LBE12:
+  78:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
+ 568              		.loc 1 78 39 is_stmt 1 view .LVU164
+  78:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
+ 569              		.loc 1 78 41 is_stmt 0 view .LVU165
+ 570 00a6 0235     		adds	r5, r5, #2
+ 571              	.LVL45:
+ 572              	.L15:
+  78:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
+ 573              		.loc 1 78 24 is_stmt 1 discriminator 1 view .LVU166
+  78:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
+ 574              		.loc 1 78 31 is_stmt 0 discriminator 1 view .LVU167
+ 575 00a8 6368     		ldr	r3, [r4, #4]
+  78:Core/drogui/src/filter.c ****             arm_sqrt_f32(fft_ans[i]*fft_ans[i] + fft_ans[i+1]*fft_ans[i+1], &fft_ans[i/2]);
+ 576              		.loc 1 78 9 discriminator 1 view .LVU168
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 114
 
 
- 623 00a4 18DA     		bge	.L35
-  86:Core/drogui/src/filter.c ****         
- 624              		.loc 1 86 13 is_stmt 1 discriminator 3 view .LVU172
-  86:Core/drogui/src/filter.c ****         
- 625              		.loc 1 86 33 is_stmt 0 discriminator 3 view .LVU173
- 626 00a6 06EB8503 		add	r3, r6, r5, lsl #2
- 627 00aa 93ED000A 		vldr.32	s0, [r3]
-  86:Core/drogui/src/filter.c ****         
- 628              		.loc 1 86 36 discriminator 3 view .LVU174
- 629 00ae 20EE000A 		vmul.f32	s0, s0, s0
-  86:Core/drogui/src/filter.c ****         
- 630              		.loc 1 86 59 discriminator 3 view .LVU175
- 631 00b2 6B1C     		adds	r3, r5, #1
-  86:Core/drogui/src/filter.c ****         
- 632              		.loc 1 86 57 discriminator 3 view .LVU176
- 633 00b4 06EB8303 		add	r3, r6, r3, lsl #2
- 634 00b8 D3ED007A 		vldr.32	s15, [r3]
-  86:Core/drogui/src/filter.c ****         
- 635              		.loc 1 86 62 discriminator 3 view .LVU177
- 636 00bc 67EEA77A 		vmul.f32	s15, s15, s15
-  86:Core/drogui/src/filter.c ****         
- 637              		.loc 1 86 13 discriminator 3 view .LVU178
- 638 00c0 30EE270A 		vadd.f32	s0, s0, s15
-  86:Core/drogui/src/filter.c ****         
- 639              		.loc 1 86 87 discriminator 3 view .LVU179
- 640 00c4 2B46     		mov	r3, r5
- 641 00c6 002D     		cmp	r5, #0
- 642 00c8 DCDA     		bge	.L16
- 643 00ca 6B1C     		adds	r3, r5, #1
- 644 00cc DAE7     		b	.L16
- 645              	.LVL52:
- 646              	.L32:
- 647              	.LBB15:
- 648              	.LBB14:
+ 577 00aa 9D42     		cmp	r5, r3
+ 578 00ac 18DA     		bge	.L35
+  79:Core/drogui/src/filter.c ****         
+ 579              		.loc 1 79 13 is_stmt 1 discriminator 3 view .LVU169
+  79:Core/drogui/src/filter.c ****         
+ 580              		.loc 1 79 33 is_stmt 0 discriminator 3 view .LVU170
+ 581 00ae 06EB8503 		add	r3, r6, r5, lsl #2
+ 582 00b2 93ED000A 		vldr.32	s0, [r3]
+  79:Core/drogui/src/filter.c ****         
+ 583              		.loc 1 79 36 discriminator 3 view .LVU171
+ 584 00b6 20EE000A 		vmul.f32	s0, s0, s0
+  79:Core/drogui/src/filter.c ****         
+ 585              		.loc 1 79 59 discriminator 3 view .LVU172
+ 586 00ba 6B1C     		adds	r3, r5, #1
+  79:Core/drogui/src/filter.c ****         
+ 587              		.loc 1 79 57 discriminator 3 view .LVU173
+ 588 00bc 06EB8303 		add	r3, r6, r3, lsl #2
+ 589 00c0 D3ED007A 		vldr.32	s15, [r3]
+  79:Core/drogui/src/filter.c ****         
+ 590              		.loc 1 79 62 discriminator 3 view .LVU174
+ 591 00c4 67EEA77A 		vmul.f32	s15, s15, s15
+  79:Core/drogui/src/filter.c ****         
+ 592              		.loc 1 79 13 discriminator 3 view .LVU175
+ 593 00c8 30EE270A 		vadd.f32	s0, s0, s15
+  79:Core/drogui/src/filter.c ****         
+ 594              		.loc 1 79 87 discriminator 3 view .LVU176
+ 595 00cc 2B46     		mov	r3, r5
+ 596 00ce 002D     		cmp	r5, #0
+ 597 00d0 DCDA     		bge	.L16
+ 598 00d2 6B1C     		adds	r3, r5, #1
+ 599 00d4 DAE7     		b	.L16
+ 600              	.LVL46:
+ 601              	.L32:
+ 602              	.LBB15:
+ 603              	.LBB14:
 5746:Drivers/CMSIS/DSP/Include/arm_math.h ****     }
 5747:Drivers/CMSIS/DSP/Include/arm_math.h ****     else
 5748:Drivers/CMSIS/DSP/Include/arm_math.h ****     {
 5749:Drivers/CMSIS/DSP/Include/arm_math.h ****       *pOut = 0.0f;
- 649              		.loc 2 5749 7 is_stmt 1 view .LVU180
- 650              		.loc 2 5749 13 is_stmt 0 view .LVU181
- 651 00ce 06EB8903 		add	r3, r6, r9, lsl #2
- 652 00d2 0022     		movs	r2, #0
- 653 00d4 1A60     		str	r2, [r3]	@ float
+ 604              		.loc 2 5749 7 is_stmt 1 view .LVU177
+ 605              		.loc 2 5749 13 is_stmt 0 view .LVU178
+ 606 00d6 06EB8903 		add	r3, r6, r9, lsl #2
+ 607 00da 0022     		movs	r2, #0
+ 608 00dc 1A60     		str	r2, [r3]	@ float
 5750:Drivers/CMSIS/DSP/Include/arm_math.h ****       return (ARM_MATH_ARGUMENT_ERROR);
- 654              		.loc 2 5750 7 is_stmt 1 view .LVU182
- 655              		.loc 2 5750 14 is_stmt 0 view .LVU183
- 656 00d6 E2E7     		b	.L19
- 657              	.LVL53:
- 658              	.L35:
- 659              		.loc 2 5750 14 view .LVU184
- 660              	.LBE14:
- 661              	.LBE15:
- 662              	.LBE11:
- 663              	.LBB16:
-  88:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
- 664              		.loc 1 88 17 view .LVU185
- 665 00d8 0022     		movs	r2, #0
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 116
+ 609              		.loc 2 5750 7 is_stmt 1 view .LVU179
+ 610              		.loc 2 5750 14 is_stmt 0 view .LVU180
+ 611 00de E2E7     		b	.L19
+ 612              	.LVL47:
+ 613              	.L35:
+ 614              		.loc 2 5750 14 view .LVU181
+ 615              	.LBE14:
+ 616              	.LBE15:
+ 617              	.LBE11:
+ 618              	.LBB16:
+  81:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 619              		.loc 1 81 17 view .LVU182
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 115
 
 
- 666 00da 10E0     		b	.L21
- 667              	.LVL54:
- 668              	.L29:
-  89:Core/drogui/src/filter.c **** 
- 669              		.loc 1 89 42 view .LVU186
- 670 00dc B7EE007A 		vmov.f32	s14, #1.0e+0
- 671              	.L22:
-  89:Core/drogui/src/filter.c **** 
- 672              		.loc 1 89 51 discriminator 4 view .LVU187
- 673 00e0 06EB8201 		add	r1, r6, r2, lsl #2
- 674 00e4 D1ED007A 		vldr.32	s15, [r1]
-  89:Core/drogui/src/filter.c **** 
- 675              		.loc 1 89 42 discriminator 4 view .LVU188
- 676 00e8 27EE277A 		vmul.f32	s14, s14, s15
-  89:Core/drogui/src/filter.c **** 
- 677              		.loc 1 89 55 discriminator 4 view .LVU189
- 678 00ec 07EE903A 		vmov	s15, r3	@ int
- 679 00f0 F8EEE77A 		vcvt.f32.s32	s15, s15
- 680 00f4 C7EE276A 		vdiv.f32	s13, s14, s15
-  89:Core/drogui/src/filter.c **** 
- 681              		.loc 1 89 24 discriminator 4 view .LVU190
- 682 00f8 C1ED006A 		vstr.32	s13, [r1]
-  88:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
- 683              		.loc 1 88 42 is_stmt 1 discriminator 4 view .LVU191
-  88:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
- 684              		.loc 1 88 44 is_stmt 0 discriminator 4 view .LVU192
- 685 00fc 0132     		adds	r2, r2, #1
- 686              	.LVL55:
- 687              	.L21:
-  88:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
- 688              		.loc 1 88 24 is_stmt 1 discriminator 2 view .LVU193
-  88:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
- 689              		.loc 1 88 32 is_stmt 0 discriminator 2 view .LVU194
- 690 00fe 6368     		ldr	r3, [r4, #4]
-  88:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
- 691              		.loc 1 88 37 discriminator 2 view .LVU195
- 692 0100 1946     		mov	r1, r3
- 693 0102 002B     		cmp	r3, #0
- 694 0104 08DB     		blt	.L36
- 695              	.L23:
- 696 0106 4810     		asrs	r0, r1, #1
-  88:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
- 697              		.loc 1 88 9 discriminator 2 view .LVU196
- 698 0108 B2EB610F 		cmp	r2, r1, asr #1
- 699 010c 06DA     		bge	.L37
-  89:Core/drogui/src/filter.c **** 
- 700              		.loc 1 89 13 is_stmt 1 view .LVU197
-  89:Core/drogui/src/filter.c **** 
- 701              		.loc 1 89 42 is_stmt 0 view .LVU198
- 702 010e 002A     		cmp	r2, #0
- 703 0110 E4DD     		ble	.L29
- 704 0112 B0EE007A 		vmov.f32	s14, #2.0e+0
- 705 0116 E3E7     		b	.L22
- 706              	.L36:
-  88:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
- 707              		.loc 1 88 37 discriminator 2 view .LVU199
- 708 0118 591C     		adds	r1, r3, #1
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 117
+ 620 00e0 0022     		movs	r2, #0
+ 621 00e2 10E0     		b	.L21
+ 622              	.LVL48:
+ 623              	.L29:
+  82:Core/drogui/src/filter.c **** 
+ 624              		.loc 1 82 42 view .LVU183
+ 625 00e4 B7EE007A 		vmov.f32	s14, #1.0e+0
+ 626              	.L22:
+  82:Core/drogui/src/filter.c **** 
+ 627              		.loc 1 82 51 discriminator 4 view .LVU184
+ 628 00e8 06EB8201 		add	r1, r6, r2, lsl #2
+ 629 00ec D1ED007A 		vldr.32	s15, [r1]
+  82:Core/drogui/src/filter.c **** 
+ 630              		.loc 1 82 42 discriminator 4 view .LVU185
+ 631 00f0 27EE277A 		vmul.f32	s14, s14, s15
+  82:Core/drogui/src/filter.c **** 
+ 632              		.loc 1 82 55 discriminator 4 view .LVU186
+ 633 00f4 07EE903A 		vmov	s15, r3	@ int
+ 634 00f8 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 635 00fc C7EE276A 		vdiv.f32	s13, s14, s15
+  82:Core/drogui/src/filter.c **** 
+ 636              		.loc 1 82 24 discriminator 4 view .LVU187
+ 637 0100 C1ED006A 		vstr.32	s13, [r1]
+  81:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 638              		.loc 1 81 42 is_stmt 1 discriminator 4 view .LVU188
+  81:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 639              		.loc 1 81 44 is_stmt 0 discriminator 4 view .LVU189
+ 640 0104 0132     		adds	r2, r2, #1
+ 641              	.LVL49:
+ 642              	.L21:
+  81:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 643              		.loc 1 81 24 is_stmt 1 discriminator 2 view .LVU190
+  81:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 644              		.loc 1 81 32 is_stmt 0 discriminator 2 view .LVU191
+ 645 0106 6368     		ldr	r3, [r4, #4]
+  81:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 646              		.loc 1 81 37 discriminator 2 view .LVU192
+ 647 0108 1946     		mov	r1, r3
+ 648 010a 002B     		cmp	r3, #0
+ 649 010c 08DB     		blt	.L36
+ 650              	.L23:
+ 651 010e 4D10     		asrs	r5, r1, #1
+  81:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 652              		.loc 1 81 9 discriminator 2 view .LVU193
+ 653 0110 B2EB610F 		cmp	r2, r1, asr #1
+ 654 0114 06DA     		bge	.L37
+  82:Core/drogui/src/filter.c **** 
+ 655              		.loc 1 82 13 is_stmt 1 view .LVU194
+  82:Core/drogui/src/filter.c **** 
+ 656              		.loc 1 82 42 is_stmt 0 view .LVU195
+ 657 0116 002A     		cmp	r2, #0
+ 658 0118 E4DD     		ble	.L29
+ 659 011a B0EE007A 		vmov.f32	s14, #2.0e+0
+ 660 011e E3E7     		b	.L22
+ 661              	.L36:
+  81:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 662              		.loc 1 81 37 discriminator 2 view .LVU196
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 116
 
 
- 709 011a F4E7     		b	.L23
- 710              	.L37:
-  88:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
- 711              		.loc 1 88 37 discriminator 2 view .LVU200
- 712              	.LBE16:
-  91:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
- 713              		.loc 1 91 9 is_stmt 1 view .LVU201
-  91:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
- 714              		.loc 1 91 29 is_stmt 0 view .LVU202
- 715 011c D4ED036A 		vldr.32	s13, [r4, #12]
-  91:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
- 716              		.loc 1 91 42 view .LVU203
- 717 0120 07EE903A 		vmov	s15, r3	@ int
- 718 0124 F8EEE77A 		vcvt.f32.s32	s15, s15
- 719 0128 66EEA76A 		vmul.f32	s13, s13, s15
-  91:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
- 720              		.loc 1 91 57 view .LVU204
- 721 012c 94ED026A 		vldr.32	s12, [r4, #8]
-  91:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
- 722              		.loc 1 91 52 view .LVU205
- 723 0130 86EE867A 		vdiv.f32	s14, s13, s12
-  91:Core/drogui/src/filter.c ****         float maxi = 0; float fc = 0;
- 724              		.loc 1 91 13 view .LVU206
- 725 0134 BDEEC77A 		vcvt.s32.f32	s14, s14
- 726 0138 17EE103A 		vmov	r3, s14	@ int
- 727              	.LVL56:
-  92:Core/drogui/src/filter.c **** 
- 728              		.loc 1 92 9 is_stmt 1 view .LVU207
-  92:Core/drogui/src/filter.c **** 
- 729              		.loc 1 92 25 view .LVU208
-  94:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
- 730              		.loc 1 94 9 view .LVU209
- 731              	.LBB17:
-  94:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
- 732              		.loc 1 94 13 view .LVU210
-  94:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
- 733              		.loc 1 94 13 is_stmt 0 view .LVU211
- 734              	.LBE17:
-  92:Core/drogui/src/filter.c **** 
- 735              		.loc 1 92 31 view .LVU212
- 736 013c 9FED110A 		vldr.32	s0, .L39
-  92:Core/drogui/src/filter.c **** 
- 737              		.loc 1 92 15 view .LVU213
- 738 0140 F0EE406A 		vmov.f32	s13, s0
- 739              	.LBB18:
-  94:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
- 740              		.loc 1 94 9 view .LVU214
- 741 0144 00E0     		b	.L25
- 742              	.LVL57:
- 743              	.L26:
-  94:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
- 744              		.loc 1 94 50 is_stmt 1 discriminator 2 view .LVU215
-  94:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
- 745              		.loc 1 94 52 is_stmt 0 discriminator 2 view .LVU216
- 746 0146 0133     		adds	r3, r3, #1
- 747              	.LVL58:
- 748              	.L25:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 118
+ 663 0120 591C     		adds	r1, r3, #1
+ 664 0122 F4E7     		b	.L23
+ 665              	.L37:
+  81:Core/drogui/src/filter.c ****             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
+ 666              		.loc 1 81 37 discriminator 2 view .LVU197
+ 667              	.LBE16:
+  84:Core/drogui/src/filter.c ****         float maxi = 0; fc = 0;
+ 668              		.loc 1 84 9 is_stmt 1 view .LVU198
+  84:Core/drogui/src/filter.c ****         float maxi = 0; fc = 0;
+ 669              		.loc 1 84 35 is_stmt 0 view .LVU199
+ 670 0124 D4ED037A 		vldr.32	s15, [r4, #12]
+  84:Core/drogui/src/filter.c ****         float maxi = 0; fc = 0;
+ 671              		.loc 1 84 48 view .LVU200
+ 672 0128 07EE103A 		vmov	s14, r3	@ int
+ 673 012c B8EEC78A 		vcvt.f32.s32	s16, s14
+ 674 0130 67EE887A 		vmul.f32	s15, s15, s16
+  84:Core/drogui/src/filter.c ****         float maxi = 0; fc = 0;
+ 675              		.loc 1 84 63 view .LVU201
+ 676 0134 D4ED028A 		vldr.32	s17, [r4, #8]
+  84:Core/drogui/src/filter.c ****         float maxi = 0; fc = 0;
+ 677              		.loc 1 84 25 view .LVU202
+ 678 0138 C7EEA87A 		vdiv.f32	s15, s15, s17
+ 679 013c 17EE900A 		vmov	r0, s15
+ 680 0140 FFF7FEFF 		bl	__aeabi_f2d
+ 681              	.LVL50:
+  84:Core/drogui/src/filter.c ****         float maxi = 0; fc = 0;
+ 682              		.loc 1 84 25 view .LVU203
+ 683 0144 41EC100B 		vmov	d0, r0, r1
+ 684 0148 FFF7FEFF 		bl	round
+ 685              	.LVL51:
+ 686 014c 51EC100B 		vmov	r0, r1, d0
+  84:Core/drogui/src/filter.c ****         float maxi = 0; fc = 0;
+ 687              		.loc 1 84 13 view .LVU204
+ 688 0150 FFF7FEFF 		bl	__aeabi_d2iz
+ 689              	.LVL52:
+  85:Core/drogui/src/filter.c **** 
+ 690              		.loc 1 85 9 is_stmt 1 view .LVU205
+  85:Core/drogui/src/filter.c **** 
+ 691              		.loc 1 85 25 view .LVU206
+  85:Core/drogui/src/filter.c **** 
+ 692              		.loc 1 85 28 is_stmt 0 view .LVU207
+ 693 0154 9FED147A 		vldr.32	s14, .L39
+ 694 0158 144B     		ldr	r3, .L39+4
+ 695 015a 83ED007A 		vstr.32	s14, [r3]
+  87:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+ 696              		.loc 1 87 9 is_stmt 1 view .LVU208
+ 697              	.LBB17:
+  87:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+ 698              		.loc 1 87 13 view .LVU209
+ 699              	.LVL53:
+  87:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+ 700              		.loc 1 87 9 is_stmt 0 view .LVU210
+ 701 015e 00E0     		b	.L25
+ 702              	.LVL54:
+ 703              	.L26:
+  87:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+ 704              		.loc 1 87 50 is_stmt 1 discriminator 2 view .LVU211
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 117
 
 
-  94:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
- 749              		.loc 1 94 32 is_stmt 1 discriminator 1 view .LVU217
-  94:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
- 750              		.loc 1 94 9 is_stmt 0 discriminator 1 view .LVU218
- 751 0148 8342     		cmp	r3, r0
- 752 014a 13DA     		bge	.L38
-  95:Core/drogui/src/filter.c ****         
- 753              		.loc 1 95 13 is_stmt 1 view .LVU219
-  95:Core/drogui/src/filter.c ****         
- 754              		.loc 1 95 23 is_stmt 0 view .LVU220
- 755 014c 06EB8302 		add	r2, r6, r3, lsl #2
- 756 0150 92ED007A 		vldr.32	s14, [r2]
-  95:Core/drogui/src/filter.c ****         
- 757              		.loc 1 95 15 view .LVU221
- 758 0154 F4EEC76A 		vcmpe.f32	s13, s14
- 759 0158 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 760 015c F3D5     		bpl	.L26
-  95:Core/drogui/src/filter.c ****         
- 761              		.loc 1 95 35 is_stmt 1 discriminator 1 view .LVU222
- 762              	.LVL59:
-  95:Core/drogui/src/filter.c ****         
- 763              		.loc 1 95 62 is_stmt 0 discriminator 1 view .LVU223
- 764 015e 06EE903A 		vmov	s13, r3	@ int
- 765 0162 F8EEE66A 		vcvt.f32.s32	s13, s13
- 766 0166 66EE866A 		vmul.f32	s13, s13, s12
-  95:Core/drogui/src/filter.c ****         
- 767              		.loc 1 95 57 discriminator 1 view .LVU224
- 768 016a 86EEA70A 		vdiv.f32	s0, s13, s15
- 769              	.LVL60:
-  95:Core/drogui/src/filter.c ****         
- 770              		.loc 1 95 40 discriminator 1 view .LVU225
- 771 016e F0EE476A 		vmov.f32	s13, s14
- 772 0172 E8E7     		b	.L26
- 773              	.LVL61:
- 774              	.L38:
-  95:Core/drogui/src/filter.c ****         
- 775              		.loc 1 95 40 discriminator 1 view .LVU226
- 776              	.LBE18:
- 101:Core/drogui/src/filter.c ****         df->head = 0;
- 777              		.loc 1 101 9 is_stmt 1 view .LVU227
- 778 0174 2046     		mov	r0, r4
- 779 0176 FFF7FEFF 		bl	updateCoeffNotch
- 780              	.LVL62:
- 102:Core/drogui/src/filter.c ****     }
- 781              		.loc 1 102 9 view .LVU228
- 102:Core/drogui/src/filter.c ****     }
- 782              		.loc 1 102 18 is_stmt 0 view .LVU229
- 783 017a 0023     		movs	r3, #0
- 784 017c E363     		str	r3, [r4, #60]
- 785 017e C546     		mov	sp, r8
- 786 0180 59E7     		b	.L12
- 787              	.L40:
- 788 0182 00BF     		.align	2
- 789              	.L39:
- 790 0184 00000000 		.word	0
- 791              	.LBE9:
- 792              		.cfi_endproc
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 119
+  87:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+ 705              		.loc 1 87 52 is_stmt 0 discriminator 2 view .LVU212
+ 706 0160 0130     		adds	r0, r0, #1
+ 707              	.LVL55:
+ 708              	.L25:
+  87:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+ 709              		.loc 1 87 32 is_stmt 1 discriminator 1 view .LVU213
+  87:Core/drogui/src/filter.c ****             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
+ 710              		.loc 1 87 9 is_stmt 0 discriminator 1 view .LVU214
+ 711 0162 A842     		cmp	r0, r5
+ 712 0164 16DA     		bge	.L38
+  88:Core/drogui/src/filter.c ****         
+ 713              		.loc 1 88 13 is_stmt 1 view .LVU215
+  88:Core/drogui/src/filter.c ****         
+ 714              		.loc 1 88 23 is_stmt 0 view .LVU216
+ 715 0166 06EB8003 		add	r3, r6, r0, lsl #2
+ 716 016a D3ED007A 		vldr.32	s15, [r3]
+  88:Core/drogui/src/filter.c ****         
+ 717              		.loc 1 88 15 view .LVU217
+ 718 016e B4EEE77A 		vcmpe.f32	s14, s15
+ 719 0172 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 720 0176 F3D5     		bpl	.L26
+  88:Core/drogui/src/filter.c ****         
+ 721              		.loc 1 88 35 is_stmt 1 discriminator 1 view .LVU218
+ 722              	.LVL56:
+  88:Core/drogui/src/filter.c ****         
+ 723              		.loc 1 88 62 is_stmt 0 discriminator 1 view .LVU219
+ 724 0178 07EE100A 		vmov	s14, r0	@ int
+ 725 017c B8EEC77A 		vcvt.f32.s32	s14, s14
+ 726 0180 27EE287A 		vmul.f32	s14, s14, s17
+  88:Core/drogui/src/filter.c ****         
+ 727              		.loc 1 88 71 discriminator 1 view .LVU220
+ 728 0184 C7EE086A 		vdiv.f32	s13, s14, s16
+  88:Core/drogui/src/filter.c ****         
+ 729              		.loc 1 88 57 discriminator 1 view .LVU221
+ 730 0188 084B     		ldr	r3, .L39+4
+ 731 018a C3ED006A 		vstr.32	s13, [r3]
+  88:Core/drogui/src/filter.c ****         
+ 732              		.loc 1 88 40 discriminator 1 view .LVU222
+ 733 018e B0EE677A 		vmov.f32	s14, s15
+ 734 0192 E5E7     		b	.L26
+ 735              	.LVL57:
+ 736              	.L38:
+  88:Core/drogui/src/filter.c ****         
+ 737              		.loc 1 88 40 discriminator 1 view .LVU223
+ 738              	.LBE17:
+  92:Core/drogui/src/filter.c ****         df->head = 0;
+ 739              		.loc 1 92 9 is_stmt 1 view .LVU224
+ 740 0194 054B     		ldr	r3, .L39+4
+ 741 0196 93ED000A 		vldr.32	s0, [r3]
+ 742 019a 2046     		mov	r0, r4
+ 743              	.LVL58:
+  92:Core/drogui/src/filter.c ****         df->head = 0;
+ 744              		.loc 1 92 9 is_stmt 0 view .LVU225
+ 745 019c FFF7FEFF 		bl	updateCoeffNotch
+ 746              	.LVL59:
+  93:Core/drogui/src/filter.c ****     }
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 118
 
 
- 793              	.LFE181:
- 795              		.global	bufft
- 796              		.section	.data.bufft,"aw"
- 797              		.align	2
- 798              		.set	.LANCHOR0,. + 0
- 801              	bufft:
- 802 0000 68690A00 		.ascii	"hi\012\000"
- 803 0004 00000000 		.space	96
- 803      00000000 
- 803      00000000 
- 803      00000000 
- 803      00000000 
- 804              		.text
- 805              	.Letext0:
- 806              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 807              		.file 4 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 808              		.file 5 "Core/drogui/include/filter.h"
- 809              		.file 6 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 810              		.file 7 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 811              		.file 8 "<built-in>"
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s 			page 120
+ 747              		.loc 1 93 9 is_stmt 1 view .LVU226
+  93:Core/drogui/src/filter.c ****     }
+ 748              		.loc 1 93 18 is_stmt 0 view .LVU227
+ 749 01a0 0023     		movs	r3, #0
+ 750 01a2 E363     		str	r3, [r4, #60]
+ 751 01a4 C546     		mov	sp, r8
+ 752 01a6 48E7     		b	.L12
+ 753              	.L40:
+ 754              		.align	2
+ 755              	.L39:
+ 756 01a8 00000000 		.word	0
+ 757 01ac 00000000 		.word	.LANCHOR0
+ 758              	.LBE9:
+ 759              		.cfi_endproc
+ 760              	.LFE181:
+ 762              		.global	fc
+ 763              		.section	.bss.fc,"aw",%nobits
+ 764              		.align	2
+ 765              		.set	.LANCHOR0,. + 0
+ 768              	fc:
+ 769 0000 00000000 		.space	4
+ 770              		.text
+ 771              	.Letext0:
+ 772              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 773              		.file 4 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 774              		.file 5 "Core/drogui/include/filter.h"
+ 775              		.file 6 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 776              		.file 7 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 777              		.file 8 "<built-in>"
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s 			page 119
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 filter.c
-C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s:18     .text.initFilter:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s:26     .text.initFilter:00000000 initFilter
-C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s:83     .text.computeFilter:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s:90     .text.computeFilter:00000000 computeFilter
-C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s:125    .text.initDNotchFilter:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s:132    .text.initDNotchFilter:00000000 initDNotchFilter
-C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s:225    .rodata.updateCoeffNotch.str1.4:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s:229    .text.updateCoeffNotch:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s:236    .text.updateCoeffNotch:00000000 updateCoeffNotch
-C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s:424    .text.updateCoeffNotch:00000120 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s:432    .text.computeDNotch:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s:439    .text.computeDNotch:00000000 computeDNotch
-C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s:790    .text.computeDNotch:00000184 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s:801    .data.bufft:00000000 bufft
-C:\Users\USUARIO\AppData\Local\Temp\ccspxnlU.s:797    .data.bufft:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s:18     .text.initFilter:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s:26     .text.initFilter:00000000 initFilter
+C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s:83     .text.computeFilter:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s:90     .text.computeFilter:00000000 computeFilter
+C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s:125    .text.initDNotchFilter:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s:132    .text.initDNotchFilter:00000000 initDNotchFilter
+C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s:225    .text.updateCoeffNotch:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s:232    .text.updateCoeffNotch:00000000 updateCoeffNotch
+C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s:370    .text.updateCoeffNotch:000000d0 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s:377    .text.computeDNotch:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s:384    .text.computeDNotch:00000000 computeDNotch
+C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s:756    .text.computeDNotch:000001a8 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s:768    .bss.fc:00000000 fc
+C:\Users\USUARIO\AppData\Local\Temp\ccH9hVcI.s:764    .bss.fc:00000000 $d
 
 UNDEFINED SYMBOLS
 calloc
 arm_iir_lattice_init_f32
 arm_iir_lattice_f32
 arm_rfft_fast_init_f32
-arm_biquad_cascade_df2T_init_f32
+arm_biquad_cascade_df1_init_f32
 __aeabi_f2d
 __aeabi_dmul
 __aeabi_d2f
-sprintf
-arm_biquad_cascade_df2T_f32
+__aeabi_d2iz
+arm_biquad_cascade_df1_f32
 arm_rfft_fast_f32
 sqrtf
+round

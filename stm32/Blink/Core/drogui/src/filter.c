@@ -5,7 +5,7 @@
 #include <usart.h>
 #include <string.h>
 #include "sensorsTasks.h"
-char bufft[100] = "hi\n";
+float fc;
 
 void initFilter(filter* f, int n, float* k, float* v){
     f->state = (float*) calloc(n, sizeof(float));
@@ -29,17 +29,12 @@ void initDNotchFilter(dNotchFilter* df, int n, float threshold, float fs, float 
     
     df -> coeffs[0] = 1;
     df -> coeffs[1] = df -> coeffs[2] = df -> coeffs[3] = df -> coeffs[4] = 0;
-    /*df -> coeffs[0] = 0.704604369991410;
-    df -> coeffs[1] = -1.278630876031574;
-    df -> coeffs[2] = 0.704604369991410;
-    df -> coeffs[3] = 1.278926419433284;
-    df -> coeffs[4] = -0.408913196581110;*/
     df -> state[0] = df -> state[1] = df -> state[2] = df -> state[3] =  0;
 
     df -> values = (float*) calloc(n, sizeof(float));
     df -> head = 0;
     arm_rfft_fast_init_f32(&(df->fft), n);
-    arm_biquad_cascade_df2T_init_f32(&(df->f), 1, df->coeffs, df->state);
+    arm_biquad_cascade_df1_init_f32(&(df->f), 1, df->coeffs, df->state);
 }
 
 void updateCoeffNotch(dNotchFilter *df, float fc){
@@ -57,19 +52,16 @@ void updateCoeffNotch(dNotchFilter *df, float fc){
     df -> coeffs[3] = -(2*q*ts*ts-8)/(4+2*n*ts + q*ts*ts);
     df -> coeffs[4] = -(4-2*n*ts+q*ts*ts)/(4+2*n*ts + q*ts*ts);
 
-    sprintf(bufft, "%f\t%f\t%f\t%f\t%f\t", df->coeffs[0],df->coeffs[1],df->coeffs[2],df->coeffs[3],df->coeffs[4]);
-    //HAL_UART_Transmit(&huart2, (uint8_t*) bufft, strlen(bufft), 100);
 }
 
 
 
 float computeDNotch(dNotchFilter *df, float val){
 
-    //updateCoeffNotch(df,70);
 
     float ans;
     
-    arm_biquad_cascade_df2T_f32(&(df ->f), &val, &ans, 1);
+    arm_biquad_cascade_df1_f32(&(df ->f), &val, &ans, 1);
     
     val = ans;
     
@@ -89,18 +81,17 @@ float computeDNotch(dNotchFilter *df, float val){
         for(int i = 0; i < (df -> n)/2 ; i ++) 
             fft_ans[i] = (i > 0 ? 2 : 1) * fft_ans[i] / (df->n);
 
-        int thres_ind = (df -> threshold)*(df -> n)/(df -> fs);
-        float maxi = 0; float fc = 0;
+        int thres_ind = round((df -> threshold)*(df -> n)/(df -> fs));
+        float maxi = 0; fc = 0;
 
         for(int i = thres_ind; i < (df -> n)/2 ; i ++) 
             if(fft_ans[i] > maxi) maxi = fft_ans[i], fc = (i)*(df->fs)/(df -> n);
         
-        //char bufft[50] = "hola\n";
-        //sprintf(bufft, "%f\t%f\t%f\t%f;\n", myIMU.ax, ax, ay, fc );
-        //HAL_UART_Transmit(&huart2, (uint8_t*) bufft, strlen(bufft), 100);
+        
 
         updateCoeffNotch(df, fc);
         df->head = 0;
     }
+
     return ans;    
 }

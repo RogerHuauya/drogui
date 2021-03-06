@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
   28:Core/Src/i2c.c **** 
   29:Core/Src/i2c.c **** I2C_HandleTypeDef hi2c1;
   30:Core/Src/i2c.c **** I2C_HandleTypeDef hi2c4;
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 2
 
 
   31:Core/Src/i2c.c **** 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
   50:Core/Src/i2c.c ****   hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
   64              		.loc 1 50 3 is_stmt 1 view .LVU15
   65              		.loc 1 50 30 is_stmt 0 view .LVU16
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 3
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 3
 
 
   66 001a C361     		str	r3, [r0, #28]
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
   54:Core/Src/i2c.c ****   }
   98              		.loc 1 54 5 is_stmt 1 view .LVU29
   99 003a FFF7FEFF 		bl	Error_Handler
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 4
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 4
 
 
  100              	.LVL3:
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
   79:Core/Src/i2c.c ****   /* USER CODE END I2C4_Init 0 */
   80:Core/Src/i2c.c **** 
   81:Core/Src/i2c.c ****   /* USER CODE BEGIN I2C4_Init 1 */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 5
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 5
 
 
   82:Core/Src/i2c.c **** 
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
   95:Core/Src/i2c.c ****     Error_Handler();
   96:Core/Src/i2c.c ****   }
   97:Core/Src/i2c.c ****   /** Configure Analogue filter
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 6
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 6
 
 
   98:Core/Src/i2c.c ****   */
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
  222 0056 42F00802 		orr	r2, r2, #8
  223 005a 1A60     		str	r2, [r3]
  118:Core/Src/i2c.c ****   I2C4->CR1 |= I2C_CR1_RXIE;
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 7
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 7
 
 
  224              		.loc 1 118 3 is_stmt 1 view .LVU67
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
  270              	.LCFI4:
  271              		.cfi_restore_state
   95:Core/Src/i2c.c ****   }
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 8
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 8
 
 
  272              		.loc 1 95 5 is_stmt 1 view .LVU81
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
  321              		.loc 1 131 3 is_stmt 1 view .LVU86
  322              		.loc 1 131 20 is_stmt 0 view .LVU87
  323 0004 0023     		movs	r3, #0
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 9
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 9
 
 
  324 0006 0593     		str	r3, [sp, #20]
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
  167:Core/Src/i2c.c ****     GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13;
  168:Core/Src/i2c.c ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
  169:Core/Src/i2c.c ****     GPIO_InitStruct.Pull = GPIO_PULLUP;
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 10
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 10
 
 
  170:Core/Src/i2c.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
  144:Core/Src/i2c.c ****     GPIO_InitStruct.Pull = GPIO_PULLUP;
  374              		.loc 1 144 5 is_stmt 1 view .LVU102
  144:Core/Src/i2c.c ****     GPIO_InitStruct.Pull = GPIO_PULLUP;
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 11
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 11
 
 
  375              		.loc 1 144 26 is_stmt 0 view .LVU103
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
  162:Core/Src/i2c.c ****     /**I2C4 GPIO Configuration
  415              		.loc 1 162 5 view .LVU118
  416              	.LBB4:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 12
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 12
 
 
  162:Core/Src/i2c.c ****     /**I2C4 GPIO Configuration
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
  172:Core/Src/i2c.c **** 
  455              		.loc 1 172 5 is_stmt 0 view .LVU135
  456 0094 FFF7FEFF 		bl	HAL_GPIO_Init
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 13
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 13
 
 
  457              	.LVL22:
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
  505              	.LVL25:
  506              	.LFB147:
  185:Core/Src/i2c.c **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 14
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 14
 
 
  186:Core/Src/i2c.c **** void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle)
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
  216:Core/Src/i2c.c **** 
  217:Core/Src/i2c.c ****     /**I2C4 GPIO Configuration
  218:Core/Src/i2c.c ****     PD12     ------> I2C4_SCL
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 15
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 15
 
 
  219:Core/Src/i2c.c ****     PD13     ------> I2C4_SDA
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
  221:Core/Src/i2c.c **** 
  566              		.loc 1 221 5 is_stmt 0 view .LVU159
  567 0046 FFF7FEFF 		bl	HAL_GPIO_DeInit
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 16
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 16
 
 
  568              	.LVL33:
@@ -924,158 +924,68 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 1
  586 0068 000C0240 		.word	1073875968
  587              		.cfi_endproc
  588              	.LFE147:
- 590              		.section	.text.HAL_I2C_SlaveTxCpltCallback,"ax",%progbits
- 591              		.align	1
- 592              		.global	HAL_I2C_SlaveTxCpltCallback
- 593              		.syntax unified
- 594              		.thumb
- 595              		.thumb_func
- 596              		.fpu fpv5-sp-d16
- 598              	HAL_I2C_SlaveTxCpltCallback:
- 599              	.LVL36:
- 600              	.LFB148:
- 232:Core/Src/i2c.c **** 
- 233:Core/Src/i2c.c **** /* USER CODE BEGIN 1 */
- 234:Core/Src/i2c.c **** void HAL_I2C_SlaveTxCpltCallback(I2C_HandleTypeDef *I2cHandle){
- 601              		.loc 1 234 63 is_stmt 1 view -0
- 602              		.cfi_startproc
- 603              		@ args = 0, pretend = 0, frame = 0
- 604              		@ frame_needed = 0, uses_anonymous_args = 0
- 605              		@ link register save eliminated.
- 235:Core/Src/i2c.c ****   //if(I2cHandle->Instance == I2C4)
- 236:Core/Src/i2c.c ****   //HAL_UART_Transmit(&huart2, (uint8_t*)"txCallback\n", 12, 100);
- 237:Core/Src/i2c.c ****   //HAL_I2C_Slave_Receive_IT(&I2cHandle,i2c_slave_recv,I2C_REC_BYTES);
- 238:Core/Src/i2c.c **** 
- 239:Core/Src/i2c.c **** }
- 606              		.loc 1 239 1 view .LVU164
- 607 0000 7047     		bx	lr
- 608              		.cfi_endproc
- 609              	.LFE148:
- 611              		.section	.text.HAL_I2C_AddrCallback,"ax",%progbits
- 612              		.align	1
- 613              		.global	HAL_I2C_AddrCallback
- 614              		.syntax unified
- 615              		.thumb
- 616              		.thumb_func
- 617              		.fpu fpv5-sp-d16
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 17
+ 590              		.global	hi2c4
+ 591              		.global	hi2c1
+ 592              		.section	.bss.hi2c1,"aw",%nobits
+ 593              		.align	2
+ 594              		.set	.LANCHOR0,. + 0
+ 597              	hi2c1:
+ 598 0000 00000000 		.space	76
+ 598      00000000 
+ 598      00000000 
+ 598      00000000 
+ 598      00000000 
+ 599              		.section	.bss.hi2c4,"aw",%nobits
+ 600              		.align	2
+ 601              		.set	.LANCHOR1,. + 0
+ 604              	hi2c4:
+ 605 0000 00000000 		.space	76
+ 605      00000000 
+ 605      00000000 
+ 605      00000000 
+ 605      00000000 
+ 606              		.text
+ 607              	.Letext0:
+ 608              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 609              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 610              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
+ 611              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
+ 612              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_gpio.h"
+ 613              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
+ 614              		.file 8 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_i2c.h"
+ 615              		.file 9 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h"
+ 616              		.file 10 "Core/Inc/i2c.h"
+ 617              		.file 11 "Core/Inc/usart.h"
+ 618              		.file 12 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_cortex.h"
+ 619              		.file 13 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_i2c_ex.h"
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 17
 
 
- 619              	HAL_I2C_AddrCallback:
- 620              	.LVL37:
- 621              	.LFB149:
- 240:Core/Src/i2c.c **** void HAL_I2C_AddrCallback(I2C_HandleTypeDef *hi2c, uint8_t TransferDirection, uint16_t AddrMatchCod
- 241:Core/Src/i2c.c **** {
- 622              		.loc 1 241 1 view -0
- 623              		.cfi_startproc
- 624              		@ args = 0, pretend = 0, frame = 0
- 625              		@ frame_needed = 0, uses_anonymous_args = 0
- 626              		@ link register save eliminated.
- 242:Core/Src/i2c.c ****   /* Prevent unused argument(s) compilation warning */
- 243:Core/Src/i2c.c ****   UNUSED(hi2c);
- 627              		.loc 1 243 3 view .LVU166
- 244:Core/Src/i2c.c ****   UNUSED(TransferDirection);
- 628              		.loc 1 244 3 view .LVU167
- 245:Core/Src/i2c.c ****   UNUSED(AddrMatchCode);
- 629              		.loc 1 245 3 view .LVU168
- 246:Core/Src/i2c.c ****   
- 247:Core/Src/i2c.c **** }
- 630              		.loc 1 247 1 is_stmt 0 view .LVU169
- 631 0000 7047     		bx	lr
- 632              		.cfi_endproc
- 633              	.LFE149:
- 635              		.section	.text.HAL_I2C_SlaveRxCpltCallback,"ax",%progbits
- 636              		.align	1
- 637              		.global	HAL_I2C_SlaveRxCpltCallback
- 638              		.syntax unified
- 639              		.thumb
- 640              		.thumb_func
- 641              		.fpu fpv5-sp-d16
- 643              	HAL_I2C_SlaveRxCpltCallback:
- 644              	.LVL38:
- 645              	.LFB150:
- 248:Core/Src/i2c.c **** void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef *I2cHandle){
- 646              		.loc 1 248 63 is_stmt 1 view -0
- 647              		.cfi_startproc
- 648              		@ args = 0, pretend = 0, frame = 0
- 649              		@ frame_needed = 0, uses_anonymous_args = 0
- 650              		@ link register save eliminated.
- 249:Core/Src/i2c.c ****   //if(I2cHandle->Instance == I2C4)
- 250:Core/Src/i2c.c ****   //HAL_UART_Transmit(&huart2, (uint8_t*)"rxCallback\n", 12, 100);
- 251:Core/Src/i2c.c ****   //HAL_I2C_Slave_Transmit_IT(&I2cHandle,send_buffer,send_cnt);
- 252:Core/Src/i2c.c **** }
- 651              		.loc 1 252 1 view .LVU171
- 652 0000 7047     		bx	lr
- 653              		.cfi_endproc
- 654              	.LFE150:
- 656              		.global	hi2c4
- 657              		.global	hi2c1
- 658              		.section	.bss.hi2c1,"aw",%nobits
- 659              		.align	2
- 660              		.set	.LANCHOR0,. + 0
- 663              	hi2c1:
- 664 0000 00000000 		.space	76
- 664      00000000 
- 664      00000000 
- 664      00000000 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 18
-
-
- 664      00000000 
- 665              		.section	.bss.hi2c4,"aw",%nobits
- 666              		.align	2
- 667              		.set	.LANCHOR1,. + 0
- 670              	hi2c4:
- 671 0000 00000000 		.space	76
- 671      00000000 
- 671      00000000 
- 671      00000000 
- 671      00000000 
- 672              		.text
- 673              	.Letext0:
- 674              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 675              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 676              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
- 677              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
- 678              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_gpio.h"
- 679              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
- 680              		.file 8 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_i2c.h"
- 681              		.file 9 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h"
- 682              		.file 10 "Core/Inc/i2c.h"
- 683              		.file 11 "Core/Inc/usart.h"
- 684              		.file 12 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_cortex.h"
- 685              		.file 13 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_i2c_ex.h"
- 686              		.file 14 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
- 687              		.file 15 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
- 688              		.file 16 "Core/Inc/main.h"
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s 			page 19
+ 620              		.file 14 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ 621              		.file 15 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ 622              		.file 16 "Core/Inc/main.h"
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s 			page 18
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 i2c.c
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:18     .text.MX_I2C1_Init:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:26     .text.MX_I2C1_Init:00000000 MX_I2C1_Init
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:116    .text.MX_I2C1_Init:0000004c $d
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:123    .rodata.MX_I2C4_Init.str1.4:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:127    .text.MX_I2C4_Init:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:134    .text.MX_I2C4_Init:00000000 MX_I2C4_Init
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:289    .text.MX_I2C4_Init:000000ac $d
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:298    .text.HAL_I2C_MspInit:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:305    .text.HAL_I2C_MspInit:00000000 HAL_I2C_MspInit
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:488    .text.HAL_I2C_MspInit:000000bc $d
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:497    .text.HAL_I2C_MspDeInit:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:504    .text.HAL_I2C_MspDeInit:00000000 HAL_I2C_MspDeInit
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:583    .text.HAL_I2C_MspDeInit:0000005c $d
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:591    .text.HAL_I2C_SlaveTxCpltCallback:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:598    .text.HAL_I2C_SlaveTxCpltCallback:00000000 HAL_I2C_SlaveTxCpltCallback
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:612    .text.HAL_I2C_AddrCallback:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:619    .text.HAL_I2C_AddrCallback:00000000 HAL_I2C_AddrCallback
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:636    .text.HAL_I2C_SlaveRxCpltCallback:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:643    .text.HAL_I2C_SlaveRxCpltCallback:00000000 HAL_I2C_SlaveRxCpltCallback
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:670    .bss.hi2c4:00000000 hi2c4
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:663    .bss.hi2c1:00000000 hi2c1
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:659    .bss.hi2c1:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccplOT48.s:666    .bss.hi2c4:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:18     .text.MX_I2C1_Init:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:26     .text.MX_I2C1_Init:00000000 MX_I2C1_Init
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:116    .text.MX_I2C1_Init:0000004c $d
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:123    .rodata.MX_I2C4_Init.str1.4:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:127    .text.MX_I2C4_Init:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:134    .text.MX_I2C4_Init:00000000 MX_I2C4_Init
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:289    .text.MX_I2C4_Init:000000ac $d
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:298    .text.HAL_I2C_MspInit:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:305    .text.HAL_I2C_MspInit:00000000 HAL_I2C_MspInit
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:488    .text.HAL_I2C_MspInit:000000bc $d
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:497    .text.HAL_I2C_MspDeInit:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:504    .text.HAL_I2C_MspDeInit:00000000 HAL_I2C_MspDeInit
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:583    .text.HAL_I2C_MspDeInit:0000005c $d
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:604    .bss.hi2c4:00000000 hi2c4
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:597    .bss.hi2c1:00000000 hi2c1
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:593    .bss.hi2c1:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc8LI1fS.s:600    .bss.hi2c4:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_I2C_Init
