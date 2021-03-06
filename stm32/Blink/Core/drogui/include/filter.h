@@ -4,6 +4,8 @@
 #include "main.h"
 #include "arm_math.h"
 
+extern float fc;
+
 /**
  * @brief Initialize Filter Structure
  * @param f filter (arm_iir_lattice_instance_f32)
@@ -37,7 +39,7 @@ typedef struct _dNotchFilter{
     int head;
     uint8_t exponent;
     arm_rfft_fast_instance_f32 fft;
-    arm_biquad_cascade_df2T_instance_f32 f;
+    arm_biquad_casd_df1_inst_f32 f;
 }dNotchFilter;
 
 /**

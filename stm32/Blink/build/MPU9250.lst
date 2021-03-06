@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
   43              		.cfi_offset 14, -4
   44 0004 84B0     		sub	sp, sp, #16
   45              	.LCFI1:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 2
 
 
   46              		.cfi_def_cfa_offset 40
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
   89              		@ sp needed
   90 0040 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
   91              	.LVL7:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 3
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 3
 
 
   92              	.L4:
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  143 001e 2846     		mov	r0, r5
  144              	.LVL11:
  145              		.loc 1 29 11 view .LVU25
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 4
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 4
 
 
  146 0020 FFF7FEFF 		bl	HAL_I2C_Master_Transmit
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  190              		.cfi_def_cfa_offset 8
  191              		.cfi_offset 4, -8
  192              		.cfi_offset 14, -4
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 5
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 5
 
 
  193 0002 0446     		mov	r4, r0
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  238 0048 4FF07E53 		mov	r3, #1065353216
  239 004c 6365     		str	r3, [r4, #84]	@ float
  240              		.loc 1 50 45 view .LVU43
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 6
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 6
 
 
  241 004e 2365     		str	r3, [r4, #80]	@ float
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  290              		.loc 1 57 30 view .LVU55
  291 0016 9DF80120 		ldrb	r2, [sp, #1]	@ zero_extendqisi2
  292              		.loc 1 57 25 view .LVU56
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 7
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 7
 
 
  293 001a 42EA0322 		orr	r2, r2, r3, lsl #8
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
   73:Core/drogui/src/MPU9250.c ****     m -> raw_az = _az; 
  332              		.loc 1 73 5 is_stmt 1 view .LVU72
  333              		.loc 1 73 17 is_stmt 0 view .LVU73
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 8
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 8
 
 
  334 0064 07EE901A 		vmov	s15, r1	@ int
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  384 000c 6820     		movs	r0, #104
  385              	.LVL28:
  386              		.loc 1 79 5 is_stmt 0 view .LVU80
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 9
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 9
 
 
  387 000e FFF7FEFF 		bl	I2Cread
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  435              		.loc 1 85 17 is_stmt 0 view .LVU101
  436 0064 07EE901A 		vmov	s15, r1	@ int
  437 0068 F8EEE77A 		vcvt.f32.s32	s15, s15
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 10
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 10
 
 
  438 006c C4ED1B7A 		vstr.32	s15, [r4, #108]
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  489 000e FFF7FEFF 		bl	I2Cread
  490              	.LVL33:
   91:Core/drogui/src/MPU9250.c ****     
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 11
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 11
 
 
   92:Core/drogui/src/MPU9250.c ****     char buff[50];
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  531 0052 F8EEE77A 		vcvt.f32.s32	s15, s15
  532 0056 C4ED1C7A 		vstr.32	s15, [r4, #112]
  106:Core/drogui/src/MPU9250.c ****     m -> raw_my = _my;
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 12
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 12
 
 
  533              		.loc 1 106 5 is_stmt 1 view .LVU127
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  111:Core/drogui/src/MPU9250.c ****     uint8_t Buf[6];
  585              		.loc 1 111 5 is_stmt 1 view .LVU135
  112:Core/drogui/src/MPU9250.c ****     I2Cread(MPU9250_ADDRESS, 0x3B, 6, Buf);
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 13
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 13
 
 
  586              		.loc 1 112 5 view .LVU136
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  636 0058 94ED067A 		vldr.32	s14, [r4, #24]
  637              		.loc 1 116 32 view .LVU157
  638 005c C7EE876A 		vdiv.f32	s13, s15, s14
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 14
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 14
 
 
  639              		.loc 1 116 13 view .LVU158
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  692              	.LFB151:
  120:Core/drogui/src/MPU9250.c **** 
  121:Core/drogui/src/MPU9250.c **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 15
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 15
 
 
  122:Core/drogui/src/MPU9250.c **** void readGyro(mpu9250* m){ // degrees/sec
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  128:Core/drogui/src/MPU9250.c ****     _gz =   (Buf[4] << 8) | Buf[5];
  741              		.loc 1 128 5 is_stmt 1 view .LVU186
  742              		.loc 1 128 17 is_stmt 0 view .LVU187
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 16
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 16
 
 
  743 003a 9DF80400 		ldrb	r0, [sp, #4]	@ zero_extendqisi2
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  792 0094 00000000 		.word	.LANCHOR5
  793              		.cfi_endproc
  794              	.LFE151:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 17
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 17
 
 
  796              		.section	.text.readMag,"ax",%progbits
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  844              		.loc 1 140 17 is_stmt 0 view .LVU216
  845 0026 9DF80130 		ldrb	r3, [sp, #1]	@ zero_extendqisi2
  846              		.loc 1 140 30 view .LVU217
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 18
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 18
 
 
  847 002a 9DF80020 		ldrb	r2, [sp]	@ zero_extendqisi2
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  894              		.loc 1 147 23 is_stmt 0 view .LVU238
  895 0086 94ED127A 		vldr.32	s14, [r4, #72]
  896              		.loc 1 147 20 view .LVU239
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 19
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 19
 
 
  897 008a 07EE903A 		vmov	s15, r3	@ int
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  948              		.cfi_offset 14, -4
  949 0002 2DED088B 		vpush.64	{d8, d9, d10, d11}
  950              	.LCFI26:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 20
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 20
 
 
  951              		.cfi_def_cfa_offset 52
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  990 0024 616E     		ldr	r1, [r4, #100]	@ float
  991              		.loc 1 167 25 view .LVU257
  992 0026 0391     		str	r1, [sp, #12]	@ float
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 21
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 21
 
 
  993              		.loc 1 167 53 view .LVU258
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1028 0048 002D     		cmp	r5, #0
  1029 004a EBD0     		beq	.L56
  171:Core/drogui/src/MPU9250.c ****                 max_gyro[1] = fmax(max_gyro[1], m->raw_gy);
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 22
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 22
 
 
  1030              		.loc 1 171 17 is_stmt 1 view .LVU274
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1077 00b0 B0EE481A 		vmov.f32	s2, s16
  1078 00b4 F0EE681A 		vmov.f32	s3, s17
  1079 00b8 41EC100B 		vmov	d0, r0, r1
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 23
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 23
 
 
  1080 00bc FFF7FEFF 		bl	fmax
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1125 011c FFF7FEFF 		bl	fmin
  1126              	.LVL72:
  1127 0120 51EC100B 		vmov	r0, r1, d0
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 24
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 24
 
 
  1128 0124 FFF7FEFF 		bl	__aeabi_d2f
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1170 0174 9FED164A 		vldr.32	s8, .L58+8
  1171 0178 3BEE04BA 		vadd.f32	s22, s22, s8
  1172              	.LVL74:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 25
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 25
 
 
  1173              		.loc 1 189 97 discriminator 2 view .LVU308
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1204              		.loc 1 194 23 view .LVU323
  1205 01b0 C4ED0C7A 		vstr.32	s15, [r4, #48]
  1206              	.L44:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 26
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 26
 
 
  196:Core/drogui/src/MPU9250.c ****     }
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1259              	calibrateGyro:
  1260              	.LVL78:
  1261              	.LFB154:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 27
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 27
 
 
  200:Core/drogui/src/MPU9250.c **** void calibrateGyro(mpu9250* m){
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1309              		.align	2
  1310              	.L63:
  1311 0034 00000000 		.word	0
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 28
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 28
 
 
  1312 0038 0000C842 		.word	1120403456
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1365 0032 51EC100B 		vmov	r0, r1, d0
  1366 0036 FFF7FEFF 		bl	__aeabi_d2f
  1367              	.LVL91:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 29
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 29
 
 
  210:Core/drogui/src/MPU9250.c **** }
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1420 0010 0620     		movs	r0, #6
  1421              	.LVL93:
  1422              		.loc 1 213 5 is_stmt 0 view .LVU358
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 30
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 30
 
 
  1423 0012 FFF7FEFF 		bl	setReg
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  219:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < tot; i++){
  1462              		.loc 1 219 5 is_stmt 0 discriminator 1 view .LVU375
  1463 0034 0529     		cmp	r1, #5
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 31
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 31
 
 
  1464 0036 01DC     		bgt	.L96
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1502 0060 9846     		mov	r8, r3
  1503              		.loc 1 233 10 view .LVU388
  1504 0062 27E0     		b	.L71
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 32
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 32
 
 
  1505              	.LVL102:
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1542 0090 FFF7FEFF 		bl	__aeabi_d2f
  1543              	.LVL108:
  1544 0094 00EE100A 		vmov	s0, r0
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 33
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 33
 
 
  1545 0098 0620     		movs	r0, #6
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1587              	.LVL113:
  1588              	.L73:
  237:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 34
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 34
 
 
  1589              		.loc 1 237 25 is_stmt 1 discriminator 1 view .LVU411
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1632              	.L97:
  237:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
  1633              		.loc 1 237 39 discriminator 2 view .LVU423
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 35
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 35
 
 
  1634              	.LBE9:
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1675              	.LBB11:
  253:Core/drogui/src/MPU9250.c **** 
  254:Core/drogui/src/MPU9250.c ****             for(int i = 1 ; i <= neq-1; i++){
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 36
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 36
 
 
  255:Core/drogui/src/MPU9250.c ****                 aux = 0;
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1725 01dc 38EE278A 		vadd.f32	s16, s16, s15
  1726              	.LVL124:
  256:Core/drogui/src/MPU9250.c ****                     setMatVal(&A, i-1, j, 2*(acc[(head + i-1)%6][j] - acc[(head + i)%6][j]));
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 37
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 37
 
 
  1727              		.loc 1 256 39 is_stmt 1 discriminator 3 view .LVU453
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1768              	.LBE10:
  262:Core/drogui/src/MPU9250.c ****             }
  263:Core/drogui/src/MPU9250.c **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 38
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 38
 
 
  264:Core/drogui/src/MPU9250.c ****             gaussElimination3x3(&A, &b, &ans);
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1818              		.loc 1 267 21 discriminator 3 view .LVU482
  1819 0256 39EE089A 		vadd.f32	s18, s18, s16
  1820              	.LVL134:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 39
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 39
 
 
  266:Core/drogui/src/MPU9250.c ****             for(int i = 0; i < 3; i++){
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  274:Core/drogui/src/MPU9250.c ****                 for(int j= 0; j < 3; j++){
  275:Core/drogui/src/MPU9250.c ****                     aux += (acc[(head+i)%tot][j] + getMatVal(&ans, j, 0))*(acc[(head+i)%tot][j] + g
  1865              		.loc 1 275 21 is_stmt 1 discriminator 3 view .LVU496
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 40
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 40
 
 
  1866              		.loc 1 275 38 is_stmt 0 discriminator 3 view .LVU497
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1914              		.loc 1 277 33 is_stmt 0 view .LVU512
  1915 02e6 C9EE297A 		vdiv.f32	s15, s18, s19
  1916              		.loc 1 277 25 view .LVU513
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 41
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 41
 
 
  1917 02ea C7EEA97A 		vdiv.f32	s15, s15, s19
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  1962 0332 DDF80490 		ldr	r9, [sp, #4]
  1963              	.LVL155:
  1964              	.L85:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 42
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 42
 
 
  1965              		.loc 1 279 27 view .LVU525
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  2009              		.loc 1 289 17 view .LVU535
  2010 0390 86ED040A 		vstr.32	s0, [r6, #16]
  290:Core/drogui/src/MPU9250.c ****     m -> off_az = getMatVal(&ans, 2, 0);
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 43
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 43
 
 
  2011              		.loc 1 290 5 is_stmt 1 view .LVU536
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  2055              		.syntax unified
  2056              		.thumb
  2057              		.thumb_func
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 44
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 44
 
 
  2058              		.fpu fpv5-sp-d16
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  2102              	.LVL168:
  2103              	.L106:
  2104              	.LBB19:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 45
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 45
 
 
  313:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  2142 003c 6420     		movs	r0, #100
  2143 003e FFF7FEFF 		bl	HAL_Delay
  2144              	.LVL172:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 46
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 46
 
 
  320:Core/drogui/src/MPU9250.c ****         readRawMag(m);
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  2213              	_mx:
  2214 0000 0000     		.space	2
  2215              		.section	.bss._my,"aw",%nobits
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 47
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 47
 
 
  2216              		.align	1
@@ -2785,73 +2785,73 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 1
  2241              		.file 12 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h"
  2242              		.file 13 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
  2243              		.file 14 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_gpio.h"
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 48
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 48
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 MPU9250.c
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:18     .text.I2Cread:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:26     .text.I2Cread:00000000 I2Cread
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:96     .text.I2Cread:00000044 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:101    .text.I2CwriteByte:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:108    .text.I2CwriteByte:00000000 I2CwriteByte
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:168    .text.I2CwriteByte:00000038 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:173    .text.initMpu:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:180    .text.initMpu:00000000 initMpu
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:253    .text.readRawAcc:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:260    .text.readRawAcc:00000000 readRawAcc
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:348    .text.readRawAcc:00000074 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:355    .text.readRawGyro:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:362    .text.readRawGyro:00000000 readRawGyro
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:450    .text.readRawGyro:00000074 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:457    .text.readRawMag:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:464    .text.readRawMag:00000000 readRawMag
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:554    .text.readRawMag:00000078 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:561    .text.readAcc:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:568    .text.readAcc:00000000 readAcc
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:676    .text.readAcc:000000a0 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:683    .text.readGyro:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:690    .text.readGyro:00000000 readGyro
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:790    .text.readGyro:0000008c $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:797    .text.readMag:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:804    .text.readMag:00000000 readMag
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:917    .text.readMag:000000a8 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:926    .text.quiet:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:933    .text.quiet:00000000 quiet
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:1245   .text.quiet:000001c8 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:1252   .text.calibrateGyro:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:1259   .text.calibrateGyro:00000000 calibrateGyro
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:1311   .text.calibrateGyro:00000034 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:1318   .text.dis3d:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:1325   .text.dis3d:00000000 dis3d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:1380   .text.calibrateAccel:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:1387   .text.calibrateAccel:00000000 calibrateAccel
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:1979   .text.calibrateAccel:00000348 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:1995   .text.calibrateAccel:00000378 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2053   .text.calibrateMag:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2060   .text.calibrateMag:00000000 calibrateMag
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2153   .text.calibrateMag:0000004c $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2227   .bss._mz:00000000 _mz
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2220   .bss._my:00000000 _my
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2213   .bss._mx:00000000 _mx
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2206   .bss._gz:00000000 _gz
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2199   .bss._gy:00000000 _gy
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2192   .bss._gx:00000000 _gx
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2185   .bss._az:00000000 _az
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2178   .bss._ay:00000000 _ay
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2171   .bss._ax:00000000 _ax
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2167   .bss._ax:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2174   .bss._ay:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2181   .bss._az:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2188   .bss._gx:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2195   .bss._gy:00000000 $d
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s 			page 49
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:18     .text.I2Cread:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:26     .text.I2Cread:00000000 I2Cread
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:96     .text.I2Cread:00000044 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:101    .text.I2CwriteByte:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:108    .text.I2CwriteByte:00000000 I2CwriteByte
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:168    .text.I2CwriteByte:00000038 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:173    .text.initMpu:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:180    .text.initMpu:00000000 initMpu
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:253    .text.readRawAcc:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:260    .text.readRawAcc:00000000 readRawAcc
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:348    .text.readRawAcc:00000074 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:355    .text.readRawGyro:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:362    .text.readRawGyro:00000000 readRawGyro
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:450    .text.readRawGyro:00000074 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:457    .text.readRawMag:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:464    .text.readRawMag:00000000 readRawMag
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:554    .text.readRawMag:00000078 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:561    .text.readAcc:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:568    .text.readAcc:00000000 readAcc
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:676    .text.readAcc:000000a0 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:683    .text.readGyro:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:690    .text.readGyro:00000000 readGyro
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:790    .text.readGyro:0000008c $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:797    .text.readMag:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:804    .text.readMag:00000000 readMag
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:917    .text.readMag:000000a8 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:926    .text.quiet:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:933    .text.quiet:00000000 quiet
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:1245   .text.quiet:000001c8 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:1252   .text.calibrateGyro:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:1259   .text.calibrateGyro:00000000 calibrateGyro
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:1311   .text.calibrateGyro:00000034 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:1318   .text.dis3d:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:1325   .text.dis3d:00000000 dis3d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:1380   .text.calibrateAccel:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:1387   .text.calibrateAccel:00000000 calibrateAccel
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:1979   .text.calibrateAccel:00000348 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:1995   .text.calibrateAccel:00000378 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2053   .text.calibrateMag:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2060   .text.calibrateMag:00000000 calibrateMag
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2153   .text.calibrateMag:0000004c $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2227   .bss._mz:00000000 _mz
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2220   .bss._my:00000000 _my
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2213   .bss._mx:00000000 _mx
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2206   .bss._gz:00000000 _gz
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2199   .bss._gy:00000000 _gy
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2192   .bss._gx:00000000 _gx
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2185   .bss._az:00000000 _az
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2178   .bss._ay:00000000 _ay
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2171   .bss._ax:00000000 _ax
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2167   .bss._ax:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2174   .bss._ay:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2181   .bss._az:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2188   .bss._gx:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2195   .bss._gy:00000000 $d
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s 			page 49
 
 
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2202   .bss._gz:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2209   .bss._mx:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2216   .bss._my:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccN4Xkpm.s:2223   .bss._mz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2202   .bss._gz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2209   .bss._mx:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2216   .bss._my:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5qiF0B.s:2223   .bss._mz:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_I2C_Master_Transmit
