@@ -23,7 +23,7 @@ rasp_I2C rasp_i2c(DSPIC_ADDRESS);
 bool inputReceived = false;
 bool cin_thread = false;
 int id_choosen, value; 
-int id_thread_menu, id_thread_log, id_thread_gps;
+int id_thread_wifi, id_thread_log, id_thread_gps;
 
 void enable_emergency_stop(){
     struct sigaction sigIntHandler;
@@ -36,7 +36,7 @@ void enable_emergency_stop(){
 
 void setup() {
     rasp_i2c.setup();
-	sim7600.PowerOn(POWERKEY);
+    //sim7600.PowerOn(POWERKEY);
 }
 
 void reset(){
@@ -60,6 +60,7 @@ int main(int argc, char** argv ){
 	pthread_t threads[NUM_THREADS];
 	id_thread_log  = pthread_create(&threads[0], NULL, logging, (void *)0);
 	//id_thread_gps = pthread_create(&threads[2], NULL, gps_data, (void *)0);
+	id_thread_wifi = pthread_create(&threads[1], NULL, wifiCheck, (void *)0);
 	//printf("Threads created \n");
 	curmenu();
 

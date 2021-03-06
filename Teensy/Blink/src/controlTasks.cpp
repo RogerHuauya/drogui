@@ -1,4 +1,5 @@
 #include "..\headers\controlTasks.h"
+#include "..\headers\filter.h"
 
 
 pwm m1, m2, m3, m4;
@@ -7,19 +8,20 @@ pid wroll_control, wpitch_control, wyaw_control;
 pid z_control, x_control, y_control;
 
 
-double  H, H_comp, R, P, Y, H_ref, X_C, Y_C, R_MAX = pi/22.0 , P_MAX = pi/22.0;
-double M1,M2,M3,M4;
+float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, R_MAX = pi/22.0 , P_MAX = pi/22.0;
+float M1,M2,M3,M4;
 
-double roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
-double wroll_ref, wpitch_ref, wyaw_ref, roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
+float roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
+float wroll_ref, wpitch_ref, wyaw_ref, roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
+float wroll_err,wpitch_err,wyaw_err; 
 
 timer timer_wcontrol, timer_rpycontrol, timer_xyzcontrol;
 
-void saturateM(double H){
-    double f_max = 1;
-    double arr_M[] = {M1, M2, M3, M4};
+void saturateM(float H){
+    float f_max = 1;
+    float arr_M[] = {M1, M2, M3, M4};
     for(int i = 0; i < 4 ; i++){
-        double delta = max(max(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
+        float delta = max(max(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
         f_max = max(f_max, abs(arr_M[i] / (abs(arr_M[i]) - delta + 0.0000001)) );
     }
 
@@ -70,19 +72,24 @@ void updatePID(){
 }
 
 void wControlInterrupt(){
+
     
-    time += timer_wcontrol.period/1000;
-    
-    R = computePid(&wroll_control, roll_ref - gx, time, 0);
-    P = computePid(&wpitch_control, pitch_ref - gy, time, 0);
-    Y = computePid(&wyaw_control, yaw_ref - gz, time, 0);
+    wroll_err = max( min( wroll_ref - gx , 100), -100);
+    wpitch_err = max( min( wpitch_ref - gy , 100), -100);
+    wyaw_err = max( min( wyaw_ref - gz , 100), -100);
+
+
+    R = computePid(&wroll_control, wroll_err, time, 0);
+    P = computePid(&wpitch_control, wpitch_err, time, 0);
+    Y = computePid(&wyaw_control, wyaw_err, time, 0);
     
     setReg(DER_GYRO_X, wroll_control.errd);
     setReg(DER_GYRO_Y, wpitch_control.errd);
+    
 
-    R = getReg(ROLL_REF);
+    /*R = getReg(ROLL_REF);
     P = getReg(PITCH_REF);
-    Y = getReg(YAW_REF);
+    Y = getReg(YAW_REF);*/
     
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
@@ -118,9 +125,19 @@ void rpyControlInterrupt(){
     
     wroll_ref = computePid(&roll2w, angle_dif(roll_ref, roll), time, 0);
     wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),time, 0);
-    wyaw_ref = computePid(&yaw2w, angle_dif(yaw_ref, yaw),time, 0);
-    
+    wyaw_ref = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),time, 0);
 
+/*
+    Serial.print("\nu values: ");
+    for(int i = 0 ; i < 13; i++) Serial.print(filter_wroll.arr_u.values[i]), Serial.print('\t');
+    Serial.print("\nu coeff: ");
+    for(int i = 0 ; i < 13; i++) Serial.print(filter_wroll.arr_u.coeff[i]), Serial.print('\t');
+    Serial.print("\ny values: ");
+    for(int i = 0 ; i < 12; i++) Serial.print(filter_wroll.arr_y.values[i]), Serial.print('\t');
+    Serial.print("\ny coeff: ");
+    for(int i = 0 ; i < 12; i++) Serial.print(filter_wroll.arr_y.coeff[i]), Serial.print('\t');
+    Serial.println("****************************************************************************");
+*/
     setReg(GYRO_X_REF,wroll_ref);
     setReg(GYRO_Y_REF,wpitch_ref);
     setReg(GYRO_Z_REF,wyaw_ref);
@@ -163,25 +180,24 @@ void initControlTasks(){
     initOneshot125(&m3, 3);
     initOneshot125(&m4, 2);
 
-    initPid(&z_control, 0, 0, 0, 0, 1 , 15, NORMAL);
-    initPid(&x_control, 0, 0, 0, 0, 1 , 0.09, NORMAL);
-    initPid(&y_control, 0, 0, 0, 0, 1 , 0.09, NORMAL);
+    initPid(&z_control, 0, 0, 0, 0, 1 , 100000, 15, NORMAL);
+    initPid(&x_control, 0, 0, 0, 0, 1 , 100000, 0.09, NORMAL);
+    initPid(&y_control, 0, 0, 0, 0, 1 , 100000,0.09, NORMAL);
 
-    initPid(&roll2w, 0, 0, 0, time, 50, 40, NORMAL);
-    initPid(&pitch2w, 0, 0, 0, time, 50, 40, NORMAL);
-    initPid(&yaw2w, 0, 0, 0, time, 50, 40, NORMAL);
+    initPid(&roll2w, 0, 0, 0, time, 50, 1.57*0.5,80, (P2ID & D_INT));
+    initPid(&pitch2w, 0, 0, 0, time, 50, 1.57*0.5,80, (P2ID & D_INT));
+    initPid(&yaw2w, 0, 0, 0, time, 50, 1.57*0.5,80, (P2ID & D_INT));
 
-    initPid(&wroll_control, 0, 0, 0, time, 50, 10000, (D_FILTER & P2ID & D_INT), 13 , coeffA_10Hz, coeffB_10Hz);
-    initPid(&wpitch_control, 0, 0, 0, time, 50, 10000, (D_FILTER & P2ID & D_INT), 13 , coeffA_10Hz, coeffB_10Hz);
-    initPid(&wyaw_control, 0, 0, 0, time, 50, 10000, (D_FILTER & P2ID & D_INT), 13 , coeffA_10Hz, coeffB_10Hz);
-
+    initPid(&wroll_control, 0, 0, 0, time, 50,  80, 3000, (P2ID & D_INT) );
+    initPid(&wpitch_control, 0, 0, 0, time, 50, 80, 3000, (P2ID & D_INT ) );
+    initPid(&wyaw_control, 0, 0, 0, time, 50, 80, 3000, (P2ID & D_INT) );
     
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
     setReg(N_FILTER, 50);
     
     initTimer(&timer_wcontrol, &wControlInterrupt, 1000);
-    initTimer(&timer_rpycontrol, &rpyControlInterrupt, 100);
+    initTimer(&timer_rpycontrol, &rpyControlInterrupt, 500);
     initTimer(&timer_xyzcontrol, &xyzControlInterrupt, 100);
 }
 

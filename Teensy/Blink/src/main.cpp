@@ -29,8 +29,8 @@ extern pid roll_control, pitch_control, yaw_control;
 IntervalTimer readSensors;
 IntervalTimer milli;
 
-volatile double roll, pitch, yaw;
-double x, y, z;
+volatile float roll, pitch, yaw;
+float x, y, z;
 volatile unsigned long long time = 0;
 bool led_state;
 
@@ -127,11 +127,11 @@ int dig = 0;
 
 
 
-double  H,R,P,Y, H_ref;
-double M1,M2,M3,M4;
+float  H,R,P,Y, H_ref;
+float M1,M2,M3,M4;
 uint8_t haux = 0;
-double roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
-double roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
+float roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
+float roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
 long long pm = 0;
 
 

@@ -26,10 +26,12 @@ bool readData(PANEL* pan, string title, string* names, float* arr, int sz){
     
     for(int i = 0 ; i < sz; i++){ 
         if(i == selected) wattron(win, COLOR_PAIR(1));
-        mvwprintw(win, sz_y/2 - 1, pos[i] + form/2 - values[i].size()/2, values[i].c_str());
+        else wattron(win, COLOR_PAIR(5));
+	mvwprintw(win, sz_y/2 - 1, pos[i] + form/2 - values[i].size()/2, values[i].c_str());
         mvwprintw(win, sz_y/2, pos[i], string(form, '_').c_str());
         mvwprintw(win, sz_y/2 + 1, pos[i] + form/2 - names[i].size()/2, names[i].c_str());      
         if(i == selected) wattroff(win, COLOR_PAIR(1));
+	else wattroff(win, COLOR_PAIR(5));
     }
     wattron(win, COLOR_PAIR(2));
     mvwprintw(win, sz_y - 8, 8, "[A] Accept");
@@ -62,7 +64,7 @@ bool readData(PANEL* pan, string title, string* names, float* arr, int sz){
             break;
 
             case KEY_BACKSPACE:
-                values[selected].pop_back();
+                if(!values[selected].empty()) values[selected].pop_back();
             break;
 
             case 'a':
@@ -110,10 +112,12 @@ bool readData(PANEL* pan, string title, string* names, float* arr, int sz){
             mvwprintw(win, sz_y/2 - 1, pos[i], string(form, ' ').c_str());
              
             if(i == selected) wattron(win, COLOR_PAIR(1));
-            mvwprintw(win, sz_y/2 - 1, pos[i] + form/2 - values[i].size()/2, values[i].c_str());
+            else wattron(win, COLOR_PAIR(5));
+		mvwprintw(win, sz_y/2 - 1, pos[i] + form/2 - values[i].size()/2, values[i].c_str());
             mvwprintw(win, sz_y/2, pos[i], string(form, '_').c_str());
             mvwprintw(win, sz_y/2 + 1, pos[i] + form/2 - names[i].size()/2, names[i].c_str());      
             if(i == selected) wattroff(win, COLOR_PAIR(1));
+		else wattroff(win, COLOR_PAIR(5));
         }
         
         cur = pos[selected] + form/2 - values[selected].size()/2 + values[selected].size();
@@ -146,12 +150,13 @@ bool writeData(PANEL* pan, string title, string* names, float* arr, int sz){
     
     mvwprintw(win, 8, sz_x/2 - title.size()/2, title.c_str());
     for(int i = 0 ; i < sz; i++){ 
-        
+        wattron(win, COLOR_PAIR(5));
         sprintf(buff, "%.3f", arr[i]);
         values[i] = string(buff);
         mvwprintw(win, sz_y/2 - 1, pos[i] + form/2 - values[i].size()/2, values[i].c_str());
         mvwprintw(win, sz_y/2, pos[i], string(form, '_').c_str());
         mvwprintw(win, sz_y/2 + 1, pos[i] + form/2 - names[i].size()/2, names[i].c_str());    
+	wattroff(win, COLOR_PAIR(5));
     }
 
     wattron(win, COLOR_PAIR(2));

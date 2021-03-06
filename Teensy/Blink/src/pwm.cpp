@@ -10,16 +10,13 @@ void initPwmPin(pwm* p, int n){
 }
 
 
-
-void setPwmFrecuency(pwm* p, double freq){
+void setPwmFrecuency(pwm* p, float freq){
     analogWriteFrequency(p->n,3500);
     p->period = 1000000.0/freq;
 }
 
 
-
-
-void setPwmDuty(pwm* p, double percent){
+void setPwmDuty(pwm* p, float percent){
     analogWrite(p->n, ((1 << 16)-1)*(percent/100)  );
 }
 
@@ -28,8 +25,8 @@ void setPwmDutyLimits(pwm *p, int min_time,int max_time){
     p->range_time = max_time - min_time;
 }
 
-void setPwmDutyTime(pwm *p, double percent){
-    double time = (p->range_time)*percent/100.0 + p -> min_time;
+void setPwmDutyTime(pwm *p, float percent){
+    float time = (p->range_time)*percent/100.0 + p -> min_time;
     analogWrite(p->n, time/(p->period) * ((1 << 16)-1));
 
 }

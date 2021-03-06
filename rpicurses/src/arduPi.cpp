@@ -1519,8 +1519,9 @@ pthread_t *getThreadIdFromPin(int pin){
 		case 11: return &idThread11; break;
 		case 12: return &idThread12; break;
 		case 13: return &idThread13; break;
+		
 	}
-    
+	return NULL;    
 }
 
 /* This is the function that will be running in a thread if

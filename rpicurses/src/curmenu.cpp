@@ -44,7 +44,7 @@ void handler_stop(int s){
 }
 
 
-string pid_op[] = {"PID ROLL", "PID PITCH", "PID YAW" ,"PID X" ,"PID Y" , "PID Z"};
+string pid_op[] = {"PID ROLL", "PID PITCH", "PID YAW" ,"PID X" ,"PID Y" , "PID Z", "N FILTER"};
 bool pidOp(PANEL* pan, int index){
     if(index < 3){    
         string names[] = {"index", "KP", "KI", "KD"};
@@ -73,7 +73,7 @@ bool pidOp(PANEL* pan, int index){
             }
         }
     }
-    else{
+    else if(index < 6){
         string names[] = {"KP", "KI", "KD"};
         float arr[3]; 
         if(readData(pan, pid_op[index], names, arr, 3)){
@@ -97,6 +97,14 @@ bool pidOp(PANEL* pan, int index){
 
         }
     }
+    else{
+	string names[] = {"N FILTER"};
+        float arr[1];
+        if(readData(pan, pid_op[index], names, arr, 1)){
+            rasp_i2c.sendFloat(N_FILTER, arr[0]);
+        }
+    }
+
     return true;
 }
 
@@ -198,19 +206,65 @@ bool variousOp(PANEL* pan, int index){
         rasp_i2c.sendFloat(START, start);
         various_op[index] = (start ? "Stop  Kalman":"Start Kalman");
     }
-    else{
+    else if (index == 0){
 	string names[] = {"register"};
 	float arr[1];
 	if(readData(pan, various_op[index], names, arr, 1)){
 		arr[0] = rasp_i2c.readFloat((uint8_t) arr[0]);
-		names[0] = "--value--";
+		names[0] = "value";
 		writeData(pan, various_op[index], names, arr, 1);
 	}
+    }
+    else{
+	
+	string names[] = {"register"};
+	float arr[1];
+	if(readData(pan, various_op[index], names, arr, 1)){
+		float reg = arr[0];
+		names[0] = "value";
+		if(readData(pan, various_op[index], names, arr, 1)){
+			rasp_i2c.sendFloat(reg,arr[0]);
+		}
+	}
+
+
     }
 
 
     return true;
 }
+
+
+
+
+string calibration_op[] = {"GYRO", "ACC", "MAG"};
+
+bool calibrationOp(PANEL* pan, int index){
+    float arr[1];
+    if(index == 0){
+        string names[] = {"trigger"};
+        if(readData(pan, calibration_op[index], names, arr, 1)){
+            rasp_i2c.sendFloat(CAL_GYR_TRG,arr[0]);
+        }
+    }
+    else if(index == 1){
+	string names[] = {"trigger"};
+        if(readData(pan, calibration_op[index], names, arr, 1)){
+            rasp_i2c.sendFloat(CAL_ACC_TRG,arr[0]);
+        }
+    }
+    else if(index == 2){
+	string names[] = {"trigger"};
+        if(readData(pan, calibration_op[index], names, arr, 1)){
+            rasp_i2c.sendFloat(CAL_MAG_TRG,arr[0]);
+        }
+    }
+
+    return true;
+}
+
+
+
 
 
  
@@ -228,9 +282,13 @@ int curmenu(void) {
 		return -1;
 	}	
 	start_color();
-
-	init_pair(1, COLOR_GREEN, COLOR_BLACK);
-	init_pair(2, COLOR_BLUE, COLOR_BLACK);
+	init_pair(1, COLOR_MAGENTA, COLOR_WHITE);
+	init_pair(2, COLOR_RED, COLOR_WHITE);
+	init_pair(3, COLOR_BLACK, COLOR_WHITE);
+	init_pair(4, COLOR_MAGENTA, COLOR_WHITE);
+	init_pair(5, COLOR_BLACK, COLOR_WHITE);
+	
+	bkgd(COLOR_PAIR(3));
 
 	int height = 20, width = 20, padd_x = 5, padd_y = 5;
 	int max_x, max_y;
@@ -240,10 +298,12 @@ int curmenu(void) {
 	//WINDOW * mainwin = newwin(max_y-2*padd_y, max_x - 2*padd_x, padd_y, padd_x);
 	PANEL * mainpanel = new_panel(newwin(max_y-2*padd_y, max_x - 2*padd_x, padd_y, padd_x)); 
     WINDOW * mainwin = panel_window(mainpanel);
+	wbkgd(mainwin, COLOR_PAIR(3));
 
     WINDOW * workwin = newwin(max_y-2*padd_y -2, max_x - 2*padd_x - 2, padd_y + 1, padd_x + 1);
 	PANEL * workpanel = new_panel(workwin); 
-    hide_panel(workpanel);
+    	wbkgd(workwin, COLOR_PAIR(3));
+	hide_panel(workpanel);
     
     keypad(stdscr, true);
     
@@ -254,29 +314,31 @@ int curmenu(void) {
     std::string title = "Menu Principal";
     
     
-    attron(COLOR_PAIR(2));
+    attron(COLOR_PAIR(4));
     mvprintw(padd_y - 3, max_x/2  - title.length()/2, title.c_str());
     mvprintw(max_y - padd_y + 1, padd_x + 5, "[S] Start");
     mvprintw(max_y - padd_y + 1, max_x - padd_x - 5 - 13, "[E] Emergency");
 
-    attroff(COLOR_PAIR(2));
+    attroff(COLOR_PAIR(4));
     
     
     
     menu arr_menu[] = {
-        menu("SendPID", pid_op, 6, &pidOp),
+        menu("SendPID", pid_op, 7, &pidOp),
         menu("SensorData", sensor_data_op, 5, &sensorDataOp),
+        menu("Calibration", calibration_op, 3, &calibrationOp),
         menu("Setpoint", setpoint_op, 6, &setpointOp),
-        menu("Various", various_op, 5, &variousOp)
+	menu("Various", various_op, 5, &variousOp)
     };
 
-    scrollMenu scm = scrollMenu(mainpanel, workpanel, arr_menu, 4);
+    scrollMenu scm = scrollMenu(mainpanel, workpanel, arr_menu, 5);
 
     scm.draw();
-    
+    wattron(mainwin, COLOR_PAIR(5));
     for(int i = 0 ; i < 6; i++){
         mvwprintw(mainwin, max_y/2 - padd_y + i - 3, max_x/2 - name[i].length()/2 - padd_x, name[i].c_str());
     }
+	wattroff(mainwin, COLOR_PAIR(5));
 
     refresh();
     wrefresh(mainwin);
@@ -296,28 +358,28 @@ int curmenu(void) {
         if(c == 'q') break;
 
         if(c == 's'){
-            attron(COLOR_PAIR(2));
+            attron(COLOR_PAIR(4));
             attron(A_REVERSE);
             mvprintw(max_y - padd_y + 1, padd_x + 5, "[S] Start");
             attroff(A_REVERSE);
             mvprintw(max_y - padd_y + 1, max_x - padd_x - 5 - 13, "[E] Emergency");
-            attroff(COLOR_PAIR(2));
+            attroff(COLOR_PAIR(4));
         }
         else if(c == 'e'){
         
-            attron(COLOR_PAIR(2));
+            attron(COLOR_PAIR(4));
             mvprintw(max_y - padd_y + 1, padd_x + 5, "[S] Start");
             attron(A_REVERSE);
             mvprintw(max_y - padd_y + 1, max_x - padd_x - 5 - 13, "[E] Emergency");
             attroff(A_REVERSE);
-            attroff(COLOR_PAIR(2));
+            attroff(COLOR_PAIR(4));
         }
         else{
             
-            attron(COLOR_PAIR(2));
+            attron(COLOR_PAIR(4));
             mvprintw(max_y - padd_y + 1, padd_x + 5, "[S] Start");
             mvprintw(max_y - padd_y + 1, max_x - padd_x - 5 - 13, "[E] Emergency");
-            attroff(COLOR_PAIR(2));
+            attroff(COLOR_PAIR(4));
         }
         
 
