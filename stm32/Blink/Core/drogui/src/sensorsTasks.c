@@ -24,14 +24,14 @@ float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
 void accelTask(){   
     readAcc(&myIMU);
 
-    //ax = computeFilter(&filter_ax, myIMU.ax);
-    /*ay = computeFilter(&filter_ay, myIMU.ay);
-    az = computeFilter(&filter_az, myIMU.az);*/
+    ax = computeFilter(&filter_ax, myIMU.ax);
+    ay = computeFilter(&filter_ay, myIMU.ay);
+    az = computeFilter(&filter_az, myIMU.az);
 
 
-    ax = computeDNotch(&dnotch_ax, myIMU.ax);
-    /*ay = computeDNotch(&dnotch_ay, ay);
-    az = computeDNotch(&dnotch_az, az);*/
+    ax = computeDNotch(&dnotch_ax, ax);
+    ay = computeDNotch(&dnotch_ay, ay);
+    az = computeDNotch(&dnotch_az, az);
 
     setReg(ACC_X,(float)(ax));
     setReg(ACC_Y,(float)(ay));
@@ -40,24 +40,24 @@ void accelTask(){
 
 char buff2[50] = "hola\n";
 void gyroTask(){
-    //sprintf(buff2, "%lu;\n",TIME);
-    //HAL_UART_Transmit(&huart2, (uint8_t*) buff2, strlen(buff2), 100);
+
     readGyro(&myIMU);
 
     gx = computeFilter(&filter_gx, myIMU.gx);
-    /*gy = computeFilter(&filter_gy, myIMU.gy);
-    gz = computeFilter(&filter_gz, myIMU.gz);*/
+    gy = computeFilter(&filter_gy, myIMU.gy);
+    gz = computeFilter(&filter_gz, myIMU.gz);
 
     gx = computeFilter(&filter_gx2, gx);
-    /*gy = computeFilter(&filter_gy2, gy);
-    gz = computeFilter(&filter_gz2, gz);*/
-    gy = computeDNotch(&dnotch_gx, gx);
-/*    gy = computeDNotch(&dnotch_gy, gy);
-    gz = computeDNotch(&dnotch_gz, gz);*/
+    gy = computeFilter(&filter_gy2, gy);
+    gz = computeFilter(&filter_gz2, gz);
+
+    gx = computeDNotch(&dnotch_gx, gx);
+    gy = computeDNotch(&dnotch_gy, gy);
+    gz = computeDNotch(&dnotch_gz, gz);
 
     gy = computeDNotch(&dnotch_gx2, gy);
- /*   gy = computeDNotch(&dnotch_gy2, gy);
-    gz = computeDNotch(&dnotch_gz2, gz);*/
+    gy = computeDNotch(&dnotch_gy2, gy);
+    gz = computeDNotch(&dnotch_gz2, gz);
     
     gx /= 5;
     gy /= 5;
@@ -76,13 +76,13 @@ void magTask(){
     mz = myIMU.mz;
 }
 
-float Kdfilt = 0.001;
+float Kdfilt = 0.01;
 void rpyTask(){
     
     float rpy[3];
     mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, 0, 0, 0);
     getMahonyEuler(rpy);
-    //roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
+    roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
     roll += fmax(fmin(Kdfilt, (rpy[0] - roll)),-Kdfilt);
     pitch += fmax(fmin(Kdfilt, (rpy[1] - pitch)),-Kdfilt);
     yaw += fmax(fmin(Kdfilt,(rpy[2] - yaw)),-Kdfilt);
@@ -126,7 +126,7 @@ void initSensorsTasks(){
     initDNotchFilter(&dnotch_ay, 64, 40, 1000, 1, 1);
     initDNotchFilter(&dnotch_az, 64, 40, 1000, 1, 1);
     
-    
+
     initFilter(&filter_roll, 4, k_1_10, v_1_10);
     initFilter(&filter_pitch, 4, k_1_10, v_1_10);
     initFilter(&filter_yaw, 4, k_1_10, v_1_10);
@@ -136,9 +136,8 @@ void initSensorsTasks(){
     calibrateAccel(&myIMU);
     //calibrateMag(&myIMU);
     
-    //accelHandle = osThreadNew(accelTask, NULL, &accelAttributes);
     addTask(&gyroTask, 1000, 2);
     addTask(&accelTask, 1000, 3);
-    addTask(&magTask, 100000, 2);
+    addTask(&magTask, 10, 2);
     addTask(&rpyTask, 2000, 2);
 }
