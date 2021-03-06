@@ -16,6 +16,7 @@ a_dn = 1;
 zeta_dn = 5;
 count = 1;
 fc_ant = 0;
+block = 0;
 for i=samples:dim
     y_act = aux(i-samples+1:i);
     if( mod(i,64) == 0 ) 
