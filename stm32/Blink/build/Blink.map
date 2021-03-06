@@ -2353,11 +2353,11 @@ LOAD c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../l
                 0x080020ac                gyroTask
  .text.magTask  0x080021e4       0x30 build/sensorsTasks.o
                 0x080021e4                magTask
- .text.rpyTask  0x08002214      0x204 build/sensorsTasks.o
+ .text.rpyTask  0x08002214      0x208 build/sensorsTasks.o
                 0x08002214                rpyTask
  .text.initSensorsTasks
-                0x08002418      0x268 build/sensorsTasks.o
-                0x08002418                initSensorsTasks
+                0x0800241c      0x264 build/sensorsTasks.o
+                0x0800241c                initSensorsTasks
  .text.I2Cread  0x08002680       0x48 build/MPU9250.o
                 0x08002680                I2Cread
  .text.I2CwriteByte
@@ -3764,46 +3764,46 @@ LOAD c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../l
 LOAD c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a
 LOAD c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a
 
-.debug_info     0x00000000    0x20c39
+.debug_info     0x00000000    0x20c35
  .debug_info    0x00000000      0x9c7 build/debugTasks.o
  .debug_info    0x000009c7      0x975 build/filter.o
  .debug_info    0x0000133c      0x848 build/mahony.o
  .debug_info    0x00001b84      0x734 build/utils.o
  .debug_info    0x000022b8      0x9b7 build/task.o
  .debug_info    0x00002c6f      0xff4 build/matlib.o
- .debug_info    0x00003c63     0x1480 build/sensorsTasks.o
- .debug_info    0x000050e3     0x1c09 build/MPU9250.o
- .debug_info    0x00006cec      0xc61 build/drogui.o
- .debug_info    0x0000794d      0xf49 build/main.o
- .debug_info    0x00008896      0x32c build/stm32f7xx_it.o
- .debug_info    0x00008bc2      0x31e build/stm32f7xx_hal_msp.o
- .debug_info    0x00008ee0     0x13f0 build/stm32f7xx_hal_cortex.o
- .debug_info    0x0000a2d0     0x3ff5 build/stm32f7xx_hal_tim.o
- .debug_info    0x0000e2c5     0x1cda build/stm32f7xx_hal_tim_ex.o
- .debug_info    0x0000ff9f      0xca8 build/stm32f7xx_hal_rcc.o
- .debug_info    0x00010c47      0x956 build/stm32f7xx_hal_rcc_ex.o
- .debug_info    0x0001159d      0x87b build/stm32f7xx_hal_gpio.o
- .debug_info    0x00011e18      0xb1b build/stm32f7xx_hal_pwr_ex.o
- .debug_info    0x00012933      0xbf2 build/stm32f7xx_hal.o
- .debug_info    0x00013525     0x41b5 build/stm32f7xx_hal_i2c.o
- .debug_info    0x000176da      0xaba build/stm32f7xx_hal_i2c_ex.o
- .debug_info    0x00018194      0x802 build/system_stm32f7xx.o
- .debug_info    0x00018996     0x228c build/stm32f7xx_hal_uart.o
- .debug_info    0x0001ac22      0x511 build/gpio.o
- .debug_info    0x0001b133     0x146c build/i2c.o
- .debug_info    0x0001c59f      0xbfb build/usart.o
- .debug_info    0x0001d19a     0x1171 build/tim.o
- .debug_info    0x0001e30b       0x22 build/startup_stm32f746xx.o
- .debug_info    0x0001e32d      0x4c7 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_rfft_fast_init_f32.o)
- .debug_info    0x0001e7f4      0x70d Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_rfft_fast_f32.o)
- .debug_info    0x0001ef01      0x685 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_f32.o)
- .debug_info    0x0001f586      0x1c2 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_iir_lattice_init_f32.o)
- .debug_info    0x0001f748      0x2ae Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_iir_lattice_f32.o)
- .debug_info    0x0001f9f6      0x18f Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_init_f32.o)
- .debug_info    0x0001fb85      0x252 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_f32.o)
- .debug_info    0x0001fdd7      0x9b1 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_common_tables.o)
- .debug_info    0x00020788       0x98 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_bitreversal2.o)
- .debug_info    0x00020820      0x419 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_radix8_f32.o)
+ .debug_info    0x00003c63     0x147c build/sensorsTasks.o
+ .debug_info    0x000050df     0x1c09 build/MPU9250.o
+ .debug_info    0x00006ce8      0xc61 build/drogui.o
+ .debug_info    0x00007949      0xf49 build/main.o
+ .debug_info    0x00008892      0x32c build/stm32f7xx_it.o
+ .debug_info    0x00008bbe      0x31e build/stm32f7xx_hal_msp.o
+ .debug_info    0x00008edc     0x13f0 build/stm32f7xx_hal_cortex.o
+ .debug_info    0x0000a2cc     0x3ff5 build/stm32f7xx_hal_tim.o
+ .debug_info    0x0000e2c1     0x1cda build/stm32f7xx_hal_tim_ex.o
+ .debug_info    0x0000ff9b      0xca8 build/stm32f7xx_hal_rcc.o
+ .debug_info    0x00010c43      0x956 build/stm32f7xx_hal_rcc_ex.o
+ .debug_info    0x00011599      0x87b build/stm32f7xx_hal_gpio.o
+ .debug_info    0x00011e14      0xb1b build/stm32f7xx_hal_pwr_ex.o
+ .debug_info    0x0001292f      0xbf2 build/stm32f7xx_hal.o
+ .debug_info    0x00013521     0x41b5 build/stm32f7xx_hal_i2c.o
+ .debug_info    0x000176d6      0xaba build/stm32f7xx_hal_i2c_ex.o
+ .debug_info    0x00018190      0x802 build/system_stm32f7xx.o
+ .debug_info    0x00018992     0x228c build/stm32f7xx_hal_uart.o
+ .debug_info    0x0001ac1e      0x511 build/gpio.o
+ .debug_info    0x0001b12f     0x146c build/i2c.o
+ .debug_info    0x0001c59b      0xbfb build/usart.o
+ .debug_info    0x0001d196     0x1171 build/tim.o
+ .debug_info    0x0001e307       0x22 build/startup_stm32f746xx.o
+ .debug_info    0x0001e329      0x4c7 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_rfft_fast_init_f32.o)
+ .debug_info    0x0001e7f0      0x70d Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_rfft_fast_f32.o)
+ .debug_info    0x0001eefd      0x685 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_f32.o)
+ .debug_info    0x0001f582      0x1c2 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_iir_lattice_init_f32.o)
+ .debug_info    0x0001f744      0x2ae Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_iir_lattice_f32.o)
+ .debug_info    0x0001f9f2      0x18f Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_init_f32.o)
+ .debug_info    0x0001fb81      0x252 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_f32.o)
+ .debug_info    0x0001fdd3      0x9b1 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_common_tables.o)
+ .debug_info    0x00020784       0x98 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_bitreversal2.o)
+ .debug_info    0x0002081c      0x419 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_radix8_f32.o)
 
 .debug_abbrev   0x00000000     0x4298
  .debug_abbrev  0x00000000      0x1e9 build/debugTasks.o
@@ -3846,43 +3846,43 @@ LOAD c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../l
  .debug_abbrev  0x000041dc       0x14 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_bitreversal2.o)
  .debug_abbrev  0x000041f0       0xa8 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_radix8_f32.o)
 
-.debug_loc      0x00000000    0x192cd
+.debug_loc      0x00000000    0x192cf
  .debug_loc     0x00000000       0xc2 build/debugTasks.o
  .debug_loc     0x000000c2      0x646 build/filter.o
  .debug_loc     0x00000708      0xc6c build/mahony.o
  .debug_loc     0x00001374      0x74e build/utils.o
  .debug_loc     0x00001ac2      0x1af build/task.o
  .debug_loc     0x00001c71      0xdfe build/matlib.o
- .debug_loc     0x00002a6f       0xe9 build/sensorsTasks.o
- .debug_loc     0x00002b58      0xb71 build/MPU9250.o
- .debug_loc     0x000036c9       0x20 build/drogui.o
- .debug_loc     0x000036e9       0xe8 build/main.o
- .debug_loc     0x000037d1       0x57 build/stm32f7xx_it.o
- .debug_loc     0x00003828       0x2c build/stm32f7xx_hal_msp.o
- .debug_loc     0x00003854      0x794 build/stm32f7xx_hal_cortex.o
- .debug_loc     0x00003fe8     0x58ba build/stm32f7xx_hal_tim.o
- .debug_loc     0x000098a2     0x2417 build/stm32f7xx_hal_tim_ex.o
- .debug_loc     0x0000bcb9      0x7e0 build/stm32f7xx_hal_rcc.o
- .debug_loc     0x0000c499      0x8d2 build/stm32f7xx_hal_rcc_ex.o
- .debug_loc     0x0000cd6b      0x5dc build/stm32f7xx_hal_gpio.o
- .debug_loc     0x0000d347      0x3dd build/stm32f7xx_hal_pwr_ex.o
- .debug_loc     0x0000d724      0x1e1 build/stm32f7xx_hal.o
- .debug_loc     0x0000d905     0x50f8 build/stm32f7xx_hal_i2c.o
- .debug_loc     0x000129fd      0x19c build/stm32f7xx_hal_i2c_ex.o
- .debug_loc     0x00012b99      0x158 build/system_stm32f7xx.o
- .debug_loc     0x00012cf1     0x21d3 build/stm32f7xx_hal_uart.o
- .debug_loc     0x00014ec4       0x38 build/gpio.o
- .debug_loc     0x00014efc      0x188 build/i2c.o
- .debug_loc     0x00015084      0x108 build/usart.o
- .debug_loc     0x0001518c      0x1ab build/tim.o
- .debug_loc     0x00015337      0x4cd Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_rfft_fast_init_f32.o)
- .debug_loc     0x00015804     0x1129 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_rfft_fast_f32.o)
- .debug_loc     0x0001692d     0x142b Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_f32.o)
- .debug_loc     0x00017d58       0xad Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_iir_lattice_init_f32.o)
- .debug_loc     0x00017e05      0x655 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_iir_lattice_f32.o)
- .debug_loc     0x0001845a       0xaa Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_init_f32.o)
- .debug_loc     0x00018504      0x4c5 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_f32.o)
- .debug_loc     0x000189c9      0x904 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_radix8_f32.o)
+ .debug_loc     0x00002a6f       0xeb build/sensorsTasks.o
+ .debug_loc     0x00002b5a      0xb71 build/MPU9250.o
+ .debug_loc     0x000036cb       0x20 build/drogui.o
+ .debug_loc     0x000036eb       0xe8 build/main.o
+ .debug_loc     0x000037d3       0x57 build/stm32f7xx_it.o
+ .debug_loc     0x0000382a       0x2c build/stm32f7xx_hal_msp.o
+ .debug_loc     0x00003856      0x794 build/stm32f7xx_hal_cortex.o
+ .debug_loc     0x00003fea     0x58ba build/stm32f7xx_hal_tim.o
+ .debug_loc     0x000098a4     0x2417 build/stm32f7xx_hal_tim_ex.o
+ .debug_loc     0x0000bcbb      0x7e0 build/stm32f7xx_hal_rcc.o
+ .debug_loc     0x0000c49b      0x8d2 build/stm32f7xx_hal_rcc_ex.o
+ .debug_loc     0x0000cd6d      0x5dc build/stm32f7xx_hal_gpio.o
+ .debug_loc     0x0000d349      0x3dd build/stm32f7xx_hal_pwr_ex.o
+ .debug_loc     0x0000d726      0x1e1 build/stm32f7xx_hal.o
+ .debug_loc     0x0000d907     0x50f8 build/stm32f7xx_hal_i2c.o
+ .debug_loc     0x000129ff      0x19c build/stm32f7xx_hal_i2c_ex.o
+ .debug_loc     0x00012b9b      0x158 build/system_stm32f7xx.o
+ .debug_loc     0x00012cf3     0x21d3 build/stm32f7xx_hal_uart.o
+ .debug_loc     0x00014ec6       0x38 build/gpio.o
+ .debug_loc     0x00014efe      0x188 build/i2c.o
+ .debug_loc     0x00015086      0x108 build/usart.o
+ .debug_loc     0x0001518e      0x1ab build/tim.o
+ .debug_loc     0x00015339      0x4cd Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_rfft_fast_init_f32.o)
+ .debug_loc     0x00015806     0x1129 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_rfft_fast_f32.o)
+ .debug_loc     0x0001692f     0x142b Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_f32.o)
+ .debug_loc     0x00017d5a       0xad Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_iir_lattice_init_f32.o)
+ .debug_loc     0x00017e07      0x655 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_iir_lattice_f32.o)
+ .debug_loc     0x0001845c       0xaa Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_init_f32.o)
+ .debug_loc     0x00018506      0x4c5 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_f32.o)
+ .debug_loc     0x000189cb      0x904 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_radix8_f32.o)
 
 .debug_aranges  0x00000000     0x13b8
  .debug_aranges
@@ -4003,46 +4003,46 @@ LOAD c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../l
  .debug_ranges  0x000013f8       0x10 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_f32.o)
  .debug_ranges  0x00001408       0x10 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_radix8_f32.o)
 
-.debug_line     0x00000000    0x17b29
+.debug_line     0x00000000    0x17b37
  .debug_line    0x00000000      0x2e5 build/debugTasks.o
  .debug_line    0x000002e5      0x5fa build/filter.o
  .debug_line    0x000008df      0x758 build/mahony.o
  .debug_line    0x00001037      0x47f build/utils.o
  .debug_line    0x000014b6      0x32f build/task.o
  .debug_line    0x000017e5      0xeb7 build/matlib.o
- .debug_line    0x0000269c      0x403 build/sensorsTasks.o
- .debug_line    0x00002a9f      0xc12 build/MPU9250.o
- .debug_line    0x000036b1      0x2c5 build/drogui.o
- .debug_line    0x00003976      0x51b build/main.o
- .debug_line    0x00003e91      0x395 build/stm32f7xx_it.o
- .debug_line    0x00004226      0x17b build/stm32f7xx_hal_msp.o
- .debug_line    0x000043a1      0x797 build/stm32f7xx_hal_cortex.o
- .debug_line    0x00004b38     0x4bf7 build/stm32f7xx_hal_tim.o
- .debug_line    0x0000972f     0x1cea build/stm32f7xx_hal_tim_ex.o
- .debug_line    0x0000b419      0xcaf build/stm32f7xx_hal_rcc.o
- .debug_line    0x0000c0c8      0xbb1 build/stm32f7xx_hal_rcc_ex.o
- .debug_line    0x0000cc79      0x6fb build/stm32f7xx_hal_gpio.o
- .debug_line    0x0000d374      0x57d build/stm32f7xx_hal_pwr_ex.o
- .debug_line    0x0000d8f1      0x5af build/stm32f7xx_hal.o
- .debug_line    0x0000dea0     0x47f4 build/stm32f7xx_hal_i2c.o
- .debug_line    0x00012694      0x3a1 build/stm32f7xx_hal_i2c_ex.o
- .debug_line    0x00012a35      0x26e build/system_stm32f7xx.o
- .debug_line    0x00012ca3     0x231c build/stm32f7xx_hal_uart.o
- .debug_line    0x00014fbf      0x1dc build/gpio.o
- .debug_line    0x0001519b      0x4fb build/i2c.o
- .debug_line    0x00015696      0x2f5 build/usart.o
- .debug_line    0x0001598b      0x5b3 build/tim.o
- .debug_line    0x00015f3e       0x76 build/startup_stm32f746xx.o
- .debug_line    0x00015fb4      0x206 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_rfft_fast_init_f32.o)
- .debug_line    0x000161ba      0x2d9 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_rfft_fast_f32.o)
- .debug_line    0x00016493      0x765 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_f32.o)
- .debug_line    0x00016bf8      0x162 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_iir_lattice_init_f32.o)
- .debug_line    0x00016d5a      0x1fc Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_iir_lattice_f32.o)
- .debug_line    0x00016f56      0x162 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_init_f32.o)
- .debug_line    0x000170b8      0x1d5 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_f32.o)
- .debug_line    0x0001728d      0x135 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_common_tables.o)
- .debug_line    0x000173c2       0xa2 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_bitreversal2.o)
- .debug_line    0x00017464      0x6c5 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_radix8_f32.o)
+ .debug_line    0x0000269c      0x411 build/sensorsTasks.o
+ .debug_line    0x00002aad      0xc12 build/MPU9250.o
+ .debug_line    0x000036bf      0x2c5 build/drogui.o
+ .debug_line    0x00003984      0x51b build/main.o
+ .debug_line    0x00003e9f      0x395 build/stm32f7xx_it.o
+ .debug_line    0x00004234      0x17b build/stm32f7xx_hal_msp.o
+ .debug_line    0x000043af      0x797 build/stm32f7xx_hal_cortex.o
+ .debug_line    0x00004b46     0x4bf7 build/stm32f7xx_hal_tim.o
+ .debug_line    0x0000973d     0x1cea build/stm32f7xx_hal_tim_ex.o
+ .debug_line    0x0000b427      0xcaf build/stm32f7xx_hal_rcc.o
+ .debug_line    0x0000c0d6      0xbb1 build/stm32f7xx_hal_rcc_ex.o
+ .debug_line    0x0000cc87      0x6fb build/stm32f7xx_hal_gpio.o
+ .debug_line    0x0000d382      0x57d build/stm32f7xx_hal_pwr_ex.o
+ .debug_line    0x0000d8ff      0x5af build/stm32f7xx_hal.o
+ .debug_line    0x0000deae     0x47f4 build/stm32f7xx_hal_i2c.o
+ .debug_line    0x000126a2      0x3a1 build/stm32f7xx_hal_i2c_ex.o
+ .debug_line    0x00012a43      0x26e build/system_stm32f7xx.o
+ .debug_line    0x00012cb1     0x231c build/stm32f7xx_hal_uart.o
+ .debug_line    0x00014fcd      0x1dc build/gpio.o
+ .debug_line    0x000151a9      0x4fb build/i2c.o
+ .debug_line    0x000156a4      0x2f5 build/usart.o
+ .debug_line    0x00015999      0x5b3 build/tim.o
+ .debug_line    0x00015f4c       0x76 build/startup_stm32f746xx.o
+ .debug_line    0x00015fc2      0x206 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_rfft_fast_init_f32.o)
+ .debug_line    0x000161c8      0x2d9 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_rfft_fast_f32.o)
+ .debug_line    0x000164a1      0x765 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_f32.o)
+ .debug_line    0x00016c06      0x162 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_iir_lattice_init_f32.o)
+ .debug_line    0x00016d68      0x1fc Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_iir_lattice_f32.o)
+ .debug_line    0x00016f64      0x162 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_init_f32.o)
+ .debug_line    0x000170c6      0x1d5 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_f32.o)
+ .debug_line    0x0001729b      0x135 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_common_tables.o)
+ .debug_line    0x000173d0       0xa2 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_bitreversal2.o)
+ .debug_line    0x00017472      0x6c5 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_radix8_f32.o)
 
 .debug_str      0x00000000     0x645c
  .debug_str     0x00000000      0x618 build/debugTasks.o
@@ -4163,121 +4163,121 @@ LOAD c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../l
  .comment       0x000000bb       0x6f Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_common_tables.o)
  .comment       0x000000bb       0x6f Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_radix8_f32.o)
 
-.debug_frame    0x00000000     0x4e74
+.debug_frame    0x00000000     0x4e80
  .debug_frame   0x00000000       0x64 build/debugTasks.o
  .debug_frame   0x00000064       0xc4 build/filter.o
  .debug_frame   0x00000128      0x138 build/mahony.o
  .debug_frame   0x00000260      0x144 build/utils.o
  .debug_frame   0x000003a4       0x74 build/task.o
  .debug_frame   0x00000418      0x2ac build/matlib.o
- .debug_frame   0x000006c4       0xe4 build/sensorsTasks.o
- .debug_frame   0x000007a8      0x224 build/MPU9250.o
- .debug_frame   0x000009cc       0x2c build/drogui.o
- .debug_frame   0x000009f8       0x5c build/main.o
- .debug_frame   0x00000a54       0xb8 build/stm32f7xx_it.o
- .debug_frame   0x00000b0c       0x28 build/stm32f7xx_hal_msp.o
- .debug_frame   0x00000b34      0x148 build/stm32f7xx_hal_cortex.o
- .debug_frame   0x00000c7c      0xb68 build/stm32f7xx_hal_tim.o
- .debug_frame   0x000017e4      0x444 build/stm32f7xx_hal_tim_ex.o
- .debug_frame   0x00001c28      0x178 build/stm32f7xx_hal_rcc.o
- .debug_frame   0x00001da0       0xc0 build/stm32f7xx_hal_rcc_ex.o
- .debug_frame   0x00001e60       0xd8 build/stm32f7xx_hal_gpio.o
- .debug_frame   0x00001f38      0x134 build/stm32f7xx_hal_pwr_ex.o
- .debug_frame   0x0000206c      0x20c build/stm32f7xx_hal.o
- .debug_frame   0x00002278      0x938 build/stm32f7xx_hal_i2c.o
- .debug_frame   0x00002bb0       0x60 build/stm32f7xx_hal_i2c_ex.o
- .debug_frame   0x00002c10       0x30 build/system_stm32f7xx.o
- .debug_frame   0x00002c40      0x5f8 build/stm32f7xx_hal_uart.o
- .debug_frame   0x00003238       0x30 build/gpio.o
- .debug_frame   0x00003268       0x80 build/i2c.o
- .debug_frame   0x000032e8       0x60 build/usart.o
- .debug_frame   0x00003348       0xbc build/tim.o
- .debug_frame   0x00003404       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-calloc.o)
- .debug_frame   0x00003424       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-init.o)
- .debug_frame   0x00003450       0x30 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-malloc.o)
- .debug_frame   0x00003480       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memset.o)
- .debug_frame   0x000034a0       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-callocr.o)
- .debug_frame   0x000034cc       0x38 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-freer.o)
- .debug_frame   0x00003504       0x30 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-mallocr.o)
- .debug_frame   0x00003534       0xa0 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-vfprintf_float.o)
- .debug_frame   0x000035d4       0x60 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-vfprintf_i.o)
- .debug_frame   0x00003634       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-sbrkr.o)
- .debug_frame   0x00003660       0x6c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-sprintf.o)
- .debug_frame   0x000036cc       0x88 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-dtoa.o)
- .debug_frame   0x00003754       0x40 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-localeconv.o)
- .debug_frame   0x00003794       0x28 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memcpy-stub.o)
- .debug_frame   0x000037bc       0x30 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-mlock.o)
- .debug_frame   0x000037ec      0x25c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-mprec.o)
- .debug_frame   0x00003a48       0x90 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-svfprintf.o)
- .debug_frame   0x00003ad8       0x5c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-reent.o)
- .debug_frame   0x00003b34       0x40 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-assert.o)
- .debug_frame   0x00003b74       0x64 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-fprintf.o)
- .debug_frame   0x00003bd8       0x48 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-locale.o)
- .debug_frame   0x00003c20       0xb0 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-lock.o)
- .debug_frame   0x00003cd0       0x48 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-mbtowc_r.o)
- .debug_frame   0x00003d18       0x28 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memmove.o)
- .debug_frame   0x00003d40       0x3c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-reallocr.o)
- .debug_frame   0x00003d7c       0xac c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-vfprintf.o)
- .debug_frame   0x00003e28       0x40 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-wbuf.o)
- .debug_frame   0x00003e68       0x3c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-wctomb_r.o)
- .debug_frame   0x00003ea4       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-wsetup.o)
- .debug_frame   0x00003ed0       0x28 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-abort.o)
- .debug_frame   0x00003ef8       0x5c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-fflush.o)
- .debug_frame   0x00003f54      0x14c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-findfp.o)
- .debug_frame   0x000040a0       0x54 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-fwalk.o)
- .debug_frame   0x000040f4       0x58 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-makebuf.o)
- .debug_frame   0x0000414c       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-msizer.o)
- .debug_frame   0x0000416c       0xcc c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-signal.o)
- .debug_frame   0x00004238       0x3c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-signalr.o)
- .debug_frame   0x00004274       0x88 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-stdio.o)
- .debug_frame   0x000042fc       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-writer.o)
- .debug_frame   0x00004328       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-closer.o)
- .debug_frame   0x00004354       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-fstatr.o)
- .debug_frame   0x00004380       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-isattyr.o)
- .debug_frame   0x000043ac       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-lseekr.o)
- .debug_frame   0x000043d8       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-readr.o)
- .debug_frame   0x00004404       0x48 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_fmax.o)
- .debug_frame   0x0000444c       0x48 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_fmin.o)
- .debug_frame   0x00004494       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_fpclassify.o)
- .debug_frame   0x000044b4       0x28 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_round.o)
- .debug_frame   0x000044dc       0x4c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-w_asin.o)
- .debug_frame   0x00004528       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-w_atan2.o)
- .debug_frame   0x00004548       0x48 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-w_sqrt.o)
- .debug_frame   0x00004590       0x44 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-wf_sqrt.o)
- .debug_frame   0x000045d4       0x80 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-e_asin.o)
- .debug_frame   0x00004654       0x44 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-e_atan2.o)
- .debug_frame   0x00004698       0x30 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-e_sqrt.o)
- .debug_frame   0x000046c8       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-ef_sqrt.o)
- .debug_frame   0x000046e8       0x38 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_atan.o)
- .debug_frame   0x00004720       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_fabs.o)
- .debug_frame   0x00004740       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_nan.o)
- .debug_frame   0x00004760       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(close.o)
- .debug_frame   0x00004780       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(fstat.o)
- .debug_frame   0x000047a0       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(getpid.o)
- .debug_frame   0x000047c0       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(isatty.o)
- .debug_frame   0x000047e0       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(kill.o)
- .debug_frame   0x00004800       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(lseek.o)
- .debug_frame   0x00004820       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(read.o)
- .debug_frame   0x00004840       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(sbrk.o)
- .debug_frame   0x00004860       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(write.o)
- .debug_frame   0x00004880       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(_exit.o)
- .debug_frame   0x000048a0       0x6c Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_rfft_fast_init_f32.o)
- .debug_frame   0x0000490c       0x7c Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_rfft_fast_f32.o)
- .debug_frame   0x00004988       0xe0 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_f32.o)
- .debug_frame   0x00004a68       0x30 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_iir_lattice_init_f32.o)
- .debug_frame   0x00004a98       0x40 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_iir_lattice_f32.o)
- .debug_frame   0x00004ad8       0x2c Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_init_f32.o)
- .debug_frame   0x00004b04       0x34 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_f32.o)
- .debug_frame   0x00004b38       0x94 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_radix8_f32.o)
- .debug_frame   0x00004bcc       0xac c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
- .debug_frame   0x00004c78       0x50 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
- .debug_frame   0x00004cc8       0xc4 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_cmpdf2.o)
- .debug_frame   0x00004d8c       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_unorddf2.o)
- .debug_frame   0x00004dac       0x24 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_fixdfsi.o)
- .debug_frame   0x00004dd0       0x24 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
- .debug_frame   0x00004df4       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x00004e20       0x34 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
- .debug_frame   0x00004e54       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-errno.o)
+ .debug_frame   0x000006c4       0xf0 build/sensorsTasks.o
+ .debug_frame   0x000007b4      0x224 build/MPU9250.o
+ .debug_frame   0x000009d8       0x2c build/drogui.o
+ .debug_frame   0x00000a04       0x5c build/main.o
+ .debug_frame   0x00000a60       0xb8 build/stm32f7xx_it.o
+ .debug_frame   0x00000b18       0x28 build/stm32f7xx_hal_msp.o
+ .debug_frame   0x00000b40      0x148 build/stm32f7xx_hal_cortex.o
+ .debug_frame   0x00000c88      0xb68 build/stm32f7xx_hal_tim.o
+ .debug_frame   0x000017f0      0x444 build/stm32f7xx_hal_tim_ex.o
+ .debug_frame   0x00001c34      0x178 build/stm32f7xx_hal_rcc.o
+ .debug_frame   0x00001dac       0xc0 build/stm32f7xx_hal_rcc_ex.o
+ .debug_frame   0x00001e6c       0xd8 build/stm32f7xx_hal_gpio.o
+ .debug_frame   0x00001f44      0x134 build/stm32f7xx_hal_pwr_ex.o
+ .debug_frame   0x00002078      0x20c build/stm32f7xx_hal.o
+ .debug_frame   0x00002284      0x938 build/stm32f7xx_hal_i2c.o
+ .debug_frame   0x00002bbc       0x60 build/stm32f7xx_hal_i2c_ex.o
+ .debug_frame   0x00002c1c       0x30 build/system_stm32f7xx.o
+ .debug_frame   0x00002c4c      0x5f8 build/stm32f7xx_hal_uart.o
+ .debug_frame   0x00003244       0x30 build/gpio.o
+ .debug_frame   0x00003274       0x80 build/i2c.o
+ .debug_frame   0x000032f4       0x60 build/usart.o
+ .debug_frame   0x00003354       0xbc build/tim.o
+ .debug_frame   0x00003410       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-calloc.o)
+ .debug_frame   0x00003430       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-init.o)
+ .debug_frame   0x0000345c       0x30 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-malloc.o)
+ .debug_frame   0x0000348c       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memset.o)
+ .debug_frame   0x000034ac       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-callocr.o)
+ .debug_frame   0x000034d8       0x38 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-freer.o)
+ .debug_frame   0x00003510       0x30 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x00003540       0xa0 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-vfprintf_float.o)
+ .debug_frame   0x000035e0       0x60 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-vfprintf_i.o)
+ .debug_frame   0x00003640       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-sbrkr.o)
+ .debug_frame   0x0000366c       0x6c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-sprintf.o)
+ .debug_frame   0x000036d8       0x88 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-dtoa.o)
+ .debug_frame   0x00003760       0x40 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-localeconv.o)
+ .debug_frame   0x000037a0       0x28 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x000037c8       0x30 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-mlock.o)
+ .debug_frame   0x000037f8      0x25c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-mprec.o)
+ .debug_frame   0x00003a54       0x90 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-svfprintf.o)
+ .debug_frame   0x00003ae4       0x5c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-reent.o)
+ .debug_frame   0x00003b40       0x40 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-assert.o)
+ .debug_frame   0x00003b80       0x64 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-fprintf.o)
+ .debug_frame   0x00003be4       0x48 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-locale.o)
+ .debug_frame   0x00003c2c       0xb0 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-lock.o)
+ .debug_frame   0x00003cdc       0x48 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-mbtowc_r.o)
+ .debug_frame   0x00003d24       0x28 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memmove.o)
+ .debug_frame   0x00003d4c       0x3c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-reallocr.o)
+ .debug_frame   0x00003d88       0xac c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-vfprintf.o)
+ .debug_frame   0x00003e34       0x40 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-wbuf.o)
+ .debug_frame   0x00003e74       0x3c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-wctomb_r.o)
+ .debug_frame   0x00003eb0       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-wsetup.o)
+ .debug_frame   0x00003edc       0x28 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-abort.o)
+ .debug_frame   0x00003f04       0x5c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-fflush.o)
+ .debug_frame   0x00003f60      0x14c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-findfp.o)
+ .debug_frame   0x000040ac       0x54 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-fwalk.o)
+ .debug_frame   0x00004100       0x58 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-makebuf.o)
+ .debug_frame   0x00004158       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-msizer.o)
+ .debug_frame   0x00004178       0xcc c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-signal.o)
+ .debug_frame   0x00004244       0x3c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-signalr.o)
+ .debug_frame   0x00004280       0x88 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-stdio.o)
+ .debug_frame   0x00004308       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-writer.o)
+ .debug_frame   0x00004334       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-closer.o)
+ .debug_frame   0x00004360       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-fstatr.o)
+ .debug_frame   0x0000438c       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-isattyr.o)
+ .debug_frame   0x000043b8       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-lseekr.o)
+ .debug_frame   0x000043e4       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-readr.o)
+ .debug_frame   0x00004410       0x48 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_fmax.o)
+ .debug_frame   0x00004458       0x48 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_fmin.o)
+ .debug_frame   0x000044a0       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_fpclassify.o)
+ .debug_frame   0x000044c0       0x28 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_round.o)
+ .debug_frame   0x000044e8       0x4c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-w_asin.o)
+ .debug_frame   0x00004534       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-w_atan2.o)
+ .debug_frame   0x00004554       0x48 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-w_sqrt.o)
+ .debug_frame   0x0000459c       0x44 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-wf_sqrt.o)
+ .debug_frame   0x000045e0       0x80 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-e_asin.o)
+ .debug_frame   0x00004660       0x44 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-e_atan2.o)
+ .debug_frame   0x000046a4       0x30 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-e_sqrt.o)
+ .debug_frame   0x000046d4       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-ef_sqrt.o)
+ .debug_frame   0x000046f4       0x38 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_atan.o)
+ .debug_frame   0x0000472c       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_fabs.o)
+ .debug_frame   0x0000474c       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(lib_a-s_nan.o)
+ .debug_frame   0x0000476c       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(close.o)
+ .debug_frame   0x0000478c       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(fstat.o)
+ .debug_frame   0x000047ac       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(getpid.o)
+ .debug_frame   0x000047cc       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(isatty.o)
+ .debug_frame   0x000047ec       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(kill.o)
+ .debug_frame   0x0000480c       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(lseek.o)
+ .debug_frame   0x0000482c       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(read.o)
+ .debug_frame   0x0000484c       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(sbrk.o)
+ .debug_frame   0x0000486c       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(write.o)
+ .debug_frame   0x0000488c       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(_exit.o)
+ .debug_frame   0x000048ac       0x6c Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_rfft_fast_init_f32.o)
+ .debug_frame   0x00004918       0x7c Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_rfft_fast_f32.o)
+ .debug_frame   0x00004994       0xe0 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_f32.o)
+ .debug_frame   0x00004a74       0x30 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_iir_lattice_init_f32.o)
+ .debug_frame   0x00004aa4       0x40 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_iir_lattice_f32.o)
+ .debug_frame   0x00004ae4       0x2c Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_init_f32.o)
+ .debug_frame   0x00004b10       0x34 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_biquad_cascade_df1_f32.o)
+ .debug_frame   0x00004b44       0x94 Drivers/CMSIS/Lib/GCC\libarm_cortexM7lfdp_math.a(arm_cfft_radix8_f32.o)
+ .debug_frame   0x00004bd8       0xac c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
+ .debug_frame   0x00004c84       0x50 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
+ .debug_frame   0x00004cd4       0xc4 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_cmpdf2.o)
+ .debug_frame   0x00004d98       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_unorddf2.o)
+ .debug_frame   0x00004db8       0x24 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_fixdfsi.o)
+ .debug_frame   0x00004ddc       0x24 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
+ .debug_frame   0x00004e00       0x2c c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x00004e2c       0x34 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+ .debug_frame   0x00004e60       0x20 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-errno.o)
 
 .stab           0x00000000       0xcc
  .stab          0x00000000       0x24 c:/program files (x86)/gnu arm embedded toolchain/10 2020-q4-major/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(close.o)

@@ -1,5 +1,20 @@
 function [y_filt,y_ant,x_ant,fc_ant] = dynamicnotchM(y_act,Fs,zeta,a,x_ant,y_ant,samples, block,fc_ant)
-
+   if (block == 1 )
+    L = samples;
+    ffty = computefft(y_act,Fs);
+    max_fft = 0;
+    index = 0;
+    x = (40*L/Fs);
+    x = floor(x);
+    for j = x:length(ffty) 
+        if  ffty(j)> max_fft
+            max_fft = ffty(j);
+            index = j;
+        end
+    end
+    fc = double(Fs*index/L);
+       fc_ant = fc;
+   end
     [num, den] = arr_notch(zeta, a, fc_ant, Fs); 
     den = den(2:end);
     y = num * x_ant' - den*y_ant'; 

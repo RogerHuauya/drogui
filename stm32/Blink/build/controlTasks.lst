@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
   35              		.loc 1 21 24 view -0
   36              		.cfi_startproc
   37              		@ args = 0, pretend = 0, frame = 16
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 2
 
 
   38              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
   89              	.LBE2:
   22:Core/drogui/src/controlTasks.c ****     float f_max = 1;
   90              		.loc 1 22 11 view .LVU8
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 3
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 3
 
 
   91 002e B7EE008A 		vmov.f32	s16, #1.0e+0
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  143 0094 F0EEE87A 		vabs.f32	s15, s17
  144 0098 17EE900A 		vmov	r0, s15
  145 009c FFF7FEFF 		bl	__aeabi_f2d
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 4
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 4
 
 
  146              	.LVL12:
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  196 00f6 BAF1030F 		cmp	r10, #3
  197 00fa 9BDD     		ble	.L3
  198              	.LBE4:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 5
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 5
 
 
   27:Core/drogui/src/controlTasks.c ****     }
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  248 016a FFF7FEFF 		bl	__aeabi_d2f
  249              	.LVL30:
  250              		.loc 1 31 8 view .LVU42
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 6
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 6
 
 
  251 016e 2060     		str	r0, [r4]	@ float
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  302 01c8 00401C46 		.word	1176256512
  303              		.cfi_endproc
  304              	.LFE174:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 7
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 7
 
 
  306              		.section	.text.updatePID,"ax",%progbits
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  355 0031 6C       		.byte	(.L10-.L11)/2
  356              		.p2align 1
  357              	.L14:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 8
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 8
 
 
   40:Core/drogui/src/controlTasks.c **** 
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  406              		.loc 1 45 121 view .LVU75
  407 0072 84ED050A 		vstr.32	s0, [r4, #20]
  408 0076 55E0     		b	.L9
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 9
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 9
 
 
  409              	.LVL49:
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  455              		.loc 1 53 128 view .LVU92
  456 00b2 1420     		movs	r0, #20
  457 00b4 FFF7FEFF 		bl	getReg
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 10
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 10
 
 
  458              	.LVL58:
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  504 00f0 FFF7FEFF 		bl	getReg
  505              	.LVL67:
  506              		.loc 1 61 78 view .LVU109
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 11
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 11
 
 
  507 00f4 84ED0A0A 		vstr.32	s0, [r4, #40]
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  551              		.loc 1 71 102 view .LVU126
  552 0130 0A4B     		ldr	r3, .L19+12
  553 0132 83ED260A 		vstr.32	s0, [r3, #152]
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 12
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 12
 
 
  554              		.loc 1 71 78 view .LVU127
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  603              		.cfi_offset 7, -16
  604              		.cfi_offset 8, -12
  605              		.cfi_offset 9, -8
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 13
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 13
 
 
  606              		.cfi_offset 14, -4
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  657 0070 F0EE6A1A 		vmov.f32	s3, s21
  658 0074 41EC100B 		vmov	d0, r0, r1
  659 0078 FFF7FEFF 		bl	fmin
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 14
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 14
 
 
  660              	.LVL80:
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  710              		.loc 1 85 7 view .LVU148
  711 00f4 964E     		ldr	r6, .L25+64
  712 00f6 86ED000A 		vstr.32	s0, [r6]
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 15
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 15
 
 
   86:Core/drogui/src/controlTasks.c ****     P = computePid(&wpitch_control, wpitch_err, TIME, 0);
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
   98:Core/drogui/src/controlTasks.c ****     setReg(PITCH_U, P);
  755              		.loc 1 98 5 view .LVU160
  756 014a 95ED000A 		vldr.32	s0, [r5]
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 16
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 16
 
 
  757 014e 3C20     		movs	r0, #60
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  804 01aa 77EEE67A 		vsub.f32	s15, s15, s13
  805              		.loc 1 105 8 view .LVU179
  806 01ae 704C     		ldr	r4, .L25+96
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 17
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 17
 
 
  807 01b0 C4ED007A 		vstr.32	s15, [r4]
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  845 01f6 1868     		ldr	r0, [r3]	@ float
  846 01f8 FFF7FEFF 		bl	__aeabi_f2d
  847              	.LVL101:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 18
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 18
 
 
  848 01fc B0EE491A 		vmov.f32	s2, s18
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  900 027c B0EE481A 		vmov.f32	s2, s16
  901 0280 F0EE681A 		vmov.f32	s3, s17
  902 0284 FFF7FEFF 		bl	fmin
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 19
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 19
 
 
  903              	.LVL113:
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  115:Core/drogui/src/controlTasks.c ****         resetPid(&wroll_control, TIME);
  953              		.loc 1 115 22 view .LVU203
  954 02dc C5ED008A 		vstr.32	s17, [r5]
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 20
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 20
 
 
  115:Core/drogui/src/controlTasks.c ****         resetPid(&wroll_control, TIME);
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  997 0334 00000000 		.word	.LANCHOR13
  998 0338 00000000 		.word	gy
  999 033c 00000000 		.word	.LANCHOR14
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 21
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 21
 
 
  1000 0340 00000000 		.word	.LANCHOR15
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  1052 0006 304B     		ldr	r3, .L31
  1053 0008 D3ED000A 		vldr.32	s1, [r3]
  1054 000c 2F4B     		ldr	r3, .L31+4
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 22
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 22
 
 
  1055 000e 93ED000A 		vldr.32	s0, [r3]
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  1107 0072 B1EE400A 		vneg.f32	s0, s0
  1108              		.loc 1 131 14 view .LVU231
  1109 0076 214C     		ldr	r4, .L31+52
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 23
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 23
 
 
  1110 0078 84ED000A 		vstr.32	s0, [r4]
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  1142              	.LCFI13:
  1143              		.cfi_restore_state
  149:Core/drogui/src/controlTasks.c ****         resetPid(&roll2w, TIME);
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 24
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 24
 
 
  1144              		.loc 1 149 9 is_stmt 1 view .LVU239
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  1190              	.LFE177:
  1192              		.section	.text.xyzControlTask,"ax",%progbits
  1193              		.align	1
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 25
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 25
 
 
  1194              		.global	xyzControlTask
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  1245 003c FFF7FEFF 		bl	computePid
  1246              	.LVL137:
  1247              		.loc 1 157 9 view .LVU257
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 26
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 26
 
 
  1248 0040 404B     		ldr	r3, .L37+28
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  1295 00a2 2F4B     		ldr	r3, .L37+56
  1296 00a4 1A60     		str	r2, [r3]	@ float
  165:Core/drogui/src/controlTasks.c **** 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 27
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 27
 
 
  166:Core/drogui/src/controlTasks.c ****     rampValue(&roll_ref, getReg(ROLL_REF) + roll_off, 0.015);
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  174:Core/drogui/src/controlTasks.c ****         resetPid(&z_control, TIME);
  175:Core/drogui/src/controlTasks.c ****     }
  176:Core/drogui/src/controlTasks.c **** }
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 28
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 28
 
 
  1343              		.loc 1 176 1 view .LVU281
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  1384              	.LVL151:
  1385              		.loc 1 176 1 view .LVU295
  1386 0124 E9E7     		b	.L33
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 29
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 29
 
 
  1387              	.L38:
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  1440              		.cfi_offset 80, -32
  1441              		.cfi_offset 81, -28
  1442              		.cfi_offset 82, -24
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 30
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 30
 
 
  1443              		.cfi_offset 83, -20
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  1491 0050 B0EE682A 		vmov.f32	s4, s17
  1492 0054 F7EE001A 		vmov.f32	s3, #1.0e+0
  1493 0058 1146     		mov	r1, r2
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 31
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 31
 
 
  1494 005a B0EE481A 		vmov.f32	s2, s16
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  190:Core/drogui/src/controlTasks.c ****     initPid(&pitch2w, 0, 0, 0, TIME, 50, 1.57*0.5,80, (P2ID & D_INT));
  1544              		.loc 1 190 5 is_stmt 1 view .LVU315
  1545              		.loc 1 190 32 is_stmt 0 view .LVU316
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 32
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 32
 
 
  1546 00e6 2368     		ldr	r3, [r4]
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  1596 015c F0EE692A 		vmov.f32	s5, s19
  1597 0160 B0EE492A 		vmov.f32	s4, s18
  1598 0164 F0EE681A 		vmov.f32	s3, s17
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 33
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 33
 
 
  1599 0168 B0EE481A 		vmov.f32	s2, s16
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  1644              	.L42:
  1645 01c2 00BF     		.align	2
  1646              	.L41:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 34
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 34
 
 
  1647 01c4 00000000 		.word	htim3
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  1702              		.global	R
  1703              		.global	H_comp
  1704              		.global	H
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 35
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 35
 
 
  1705              		.global	y_control
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  1775              		.align	2
  1776              		.set	.LANCHOR17,. + 0
  1779              	R:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 36
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 36
 
 
  1780 0000 00000000 		.space	4
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  1838              		.align	2
  1839              		.set	.LANCHOR36,. + 0
  1842              	pitch_off:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 37
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 37
 
 
  1843 0000 00000000 		.space	4
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  1901              		.align	2
  1902              		.set	.LANCHOR12,. + 0
  1905              	wroll_err:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 38
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 38
 
 
  1906 0000 00000000 		.space	4
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  1966 0000 00000000 		.space	4
  1967              		.section	.bss.y_ref,"aw",%nobits
  1968              		.align	2
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 39
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 39
 
 
  1971              	y_ref:
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  2033              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim.h"
  2034              		.file 8 "Drivers/CMSIS/DSP/Include/arm_math.h"
  2035              		.file 9 "Core/drogui/include/filter.h"
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 40
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 40
 
 
  2036              		.file 10 "Core/drogui/include/control.h"
@@ -2349,127 +2349,127 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 1
  2041              		.file 15 "Core/Inc/tim.h"
  2042              		.file 16 "Core/drogui/include/pwm.h"
  2043              		.file 17 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 41
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 41
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 controlTasks.c
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:23     .text.saturateM:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:31     .text.saturateM:00000000 saturateM
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:294    .text.saturateM:000001a8 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:307    .text.updatePID:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:314    .text.updatePID:00000000 updatePID
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:350    .text.updatePID:0000002c $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:356    .text.updatePID:00000032 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:572    .text.updatePID:00000150 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:583    .text.wControlTask:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:590    .text.wControlTask:00000000 wControlTask
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:988    .text.wControlTask:00000310 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1025   .text.rpyControlTask:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1032   .text.rpyControlTask:00000000 rpyControlTask
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1174   .text.rpyControlTask:000000c8 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1193   .text.xyzControlTask:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1200   .text.xyzControlTask:00000000 xyzControlTask
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1390   .text.xyzControlTask:00000128 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1417   .text.initControlTasks:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1424   .text.initControlTasks:00000000 initControlTasks
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1647   .text.initControlTasks:000001c4 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1926   .bss.wyaw_err:00000000 wyaw_err
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1884   .bss.wpitch_err:00000000 wpitch_err
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1905   .bss.wroll_err:00000000 wroll_err
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:2012   .bss.z_ref:00000000 z_ref
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1971   .bss.y_ref:00000000 y_ref
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1952   .bss.x_ref:00000000 x_ref
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1992   .bss.yaw_ref:00000000 yaw_ref
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1849   .bss.pitch_ref:00000000 pitch_ref
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1870   .bss.roll_ref:00000000 roll_ref
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1933   .bss.wyaw_ref:00000000 wyaw_ref
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1891   .bss.wpitch_ref:00000000 wpitch_ref
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1912   .bss.wroll_ref:00000000 wroll_ref
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:2005   .bss.z_off:00000000 z_off
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1965   .bss.y_off:00000000 y_off
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1946   .bss.x_off:00000000 x_off
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1985   .bss.yaw_off:00000000 yaw_off
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1842   .bss.pitch_off:00000000 pitch_off
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1863   .bss.roll_off:00000000 roll_off
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1765   .bss.M4:00000000 M4
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1758   .bss.M3:00000000 M3
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1751   .bss.M2:00000000 M2
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1744   .bss.M1:00000000 M1
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:2018   .data.P_MAX:00000000 P_MAX
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:2024   .data.R_MAX:00000000 R_MAX
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1800   .bss.Y_C:00000000 Y_C
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1786   .bss.X_C:00000000 X_C
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1737   .bss.H_ref:00000000 H_ref
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1793   .bss.Y:00000000 Y
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1772   .bss.P:00000000 P
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1779   .bss.R:00000000 R
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1730   .bss.H_comp:00000000 H_comp
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1723   .bss.H:00000000 H
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1959   .bss.y_control:00000000 y_control
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1940   .bss.x_control:00000000 x_control
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1999   .bss.z_control:00000000 z_control
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 42
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:23     .text.saturateM:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:31     .text.saturateM:00000000 saturateM
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:294    .text.saturateM:000001a8 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:307    .text.updatePID:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:314    .text.updatePID:00000000 updatePID
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:350    .text.updatePID:0000002c $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:356    .text.updatePID:00000032 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:572    .text.updatePID:00000150 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:583    .text.wControlTask:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:590    .text.wControlTask:00000000 wControlTask
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:988    .text.wControlTask:00000310 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1025   .text.rpyControlTask:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1032   .text.rpyControlTask:00000000 rpyControlTask
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1174   .text.rpyControlTask:000000c8 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1193   .text.xyzControlTask:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1200   .text.xyzControlTask:00000000 xyzControlTask
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1390   .text.xyzControlTask:00000128 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1417   .text.initControlTasks:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1424   .text.initControlTasks:00000000 initControlTasks
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1647   .text.initControlTasks:000001c4 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1926   .bss.wyaw_err:00000000 wyaw_err
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1884   .bss.wpitch_err:00000000 wpitch_err
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1905   .bss.wroll_err:00000000 wroll_err
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:2012   .bss.z_ref:00000000 z_ref
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1971   .bss.y_ref:00000000 y_ref
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1952   .bss.x_ref:00000000 x_ref
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1992   .bss.yaw_ref:00000000 yaw_ref
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1849   .bss.pitch_ref:00000000 pitch_ref
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1870   .bss.roll_ref:00000000 roll_ref
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1933   .bss.wyaw_ref:00000000 wyaw_ref
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1891   .bss.wpitch_ref:00000000 wpitch_ref
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1912   .bss.wroll_ref:00000000 wroll_ref
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:2005   .bss.z_off:00000000 z_off
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1965   .bss.y_off:00000000 y_off
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1946   .bss.x_off:00000000 x_off
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1985   .bss.yaw_off:00000000 yaw_off
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1842   .bss.pitch_off:00000000 pitch_off
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1863   .bss.roll_off:00000000 roll_off
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1765   .bss.M4:00000000 M4
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1758   .bss.M3:00000000 M3
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1751   .bss.M2:00000000 M2
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1744   .bss.M1:00000000 M1
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:2018   .data.P_MAX:00000000 P_MAX
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:2024   .data.R_MAX:00000000 R_MAX
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1800   .bss.Y_C:00000000 Y_C
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1786   .bss.X_C:00000000 X_C
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1737   .bss.H_ref:00000000 H_ref
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1793   .bss.Y:00000000 Y
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1772   .bss.P:00000000 P
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1779   .bss.R:00000000 R
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1730   .bss.H_comp:00000000 H_comp
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1723   .bss.H:00000000 H
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1959   .bss.y_control:00000000 y_control
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1940   .bss.x_control:00000000 x_control
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1999   .bss.z_control:00000000 z_control
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 42
 
 
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1919   .bss.wyaw_control:00000000 wyaw_control
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1877   .bss.wpitch_control:00000000 wpitch_control
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1898   .bss.wroll_control:00000000 wroll_control
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1978   .bss.yaw2w:00000000 yaw2w
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1835   .bss.pitch2w:00000000 pitch2w
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1856   .bss.roll2w:00000000 roll2w
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1828   .bss.m4:00000000 m4
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1821   .bss.m3:00000000 m3
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1814   .bss.m2:00000000 m2
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1807   .bss.m1:00000000 m1
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1719   .bss.H:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1726   .bss.H_comp:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1733   .bss.H_ref:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1740   .bss.M1:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1747   .bss.M2:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1754   .bss.M3:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1761   .bss.M4:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1768   .bss.P:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1775   .bss.R:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1782   .bss.X_C:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1789   .bss.Y:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1796   .bss.Y_C:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1803   .bss.m1:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1810   .bss.m2:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1817   .bss.m3:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1824   .bss.m4:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1831   .bss.pitch2w:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1838   .bss.pitch_off:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1845   .bss.pitch_ref:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1852   .bss.roll2w:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1859   .bss.roll_off:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1866   .bss.roll_ref:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1873   .bss.wpitch_control:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1880   .bss.wpitch_err:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1887   .bss.wpitch_ref:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1894   .bss.wroll_control:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1901   .bss.wroll_err:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1908   .bss.wroll_ref:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1915   .bss.wyaw_control:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1922   .bss.wyaw_err:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1929   .bss.wyaw_ref:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1936   .bss.x_control:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1943   .bss.x_off:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1949   .bss.x_ref:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1955   .bss.y_control:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1962   .bss.y_off:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1968   .bss.y_ref:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1974   .bss.yaw2w:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1981   .bss.yaw_off:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1988   .bss.yaw_ref:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:1995   .bss.z_control:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:2002   .bss.z_off:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:2008   .bss.z_ref:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:2015   .data.P_MAX:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s:2021   .data.R_MAX:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1919   .bss.wyaw_control:00000000 wyaw_control
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1877   .bss.wpitch_control:00000000 wpitch_control
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1898   .bss.wroll_control:00000000 wroll_control
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1978   .bss.yaw2w:00000000 yaw2w
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1835   .bss.pitch2w:00000000 pitch2w
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1856   .bss.roll2w:00000000 roll2w
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1828   .bss.m4:00000000 m4
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1821   .bss.m3:00000000 m3
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1814   .bss.m2:00000000 m2
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1807   .bss.m1:00000000 m1
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1719   .bss.H:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1726   .bss.H_comp:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1733   .bss.H_ref:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1740   .bss.M1:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1747   .bss.M2:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1754   .bss.M3:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1761   .bss.M4:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1768   .bss.P:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1775   .bss.R:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1782   .bss.X_C:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1789   .bss.Y:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1796   .bss.Y_C:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1803   .bss.m1:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1810   .bss.m2:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1817   .bss.m3:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1824   .bss.m4:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1831   .bss.pitch2w:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1838   .bss.pitch_off:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1845   .bss.pitch_ref:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1852   .bss.roll2w:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1859   .bss.roll_off:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1866   .bss.roll_ref:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1873   .bss.wpitch_control:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1880   .bss.wpitch_err:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1887   .bss.wpitch_ref:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1894   .bss.wroll_control:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1901   .bss.wroll_err:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1908   .bss.wroll_ref:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1915   .bss.wyaw_control:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1922   .bss.wyaw_err:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1929   .bss.wyaw_ref:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1936   .bss.x_control:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1943   .bss.x_off:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1949   .bss.x_ref:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1955   .bss.y_control:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1962   .bss.y_off:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1968   .bss.y_ref:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1974   .bss.yaw2w:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1981   .bss.yaw_off:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1988   .bss.yaw_ref:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:1995   .bss.z_control:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:2002   .bss.z_off:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:2008   .bss.z_ref:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:2015   .data.P_MAX:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s:2021   .data.R_MAX:00000000 $d
 
 UNDEFINED SYMBOLS
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccFPP7c0.s 			page 43
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccHfGsZ3.s 			page 43
 
 
 __aeabi_f2d

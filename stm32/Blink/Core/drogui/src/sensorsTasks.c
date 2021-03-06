@@ -40,7 +40,7 @@ void accelTask(){
 
 char buff2[50] = "hola\n";
 void gyroTask(){
-    
+
     readGyro(&myIMU);
 
     gx = computeFilter(&filter_gx, myIMU.gx);
@@ -76,13 +76,13 @@ void magTask(){
     mz = myIMU.mz;
 }
 
-float Kdfilt = 0.001;
+float Kdfilt = 0.01;
 void rpyTask(){
     
     float rpy[3];
     mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, 0, 0, 0);
     getMahonyEuler(rpy);
-    //roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
+    roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
     roll += fmax(fmin(Kdfilt, (rpy[0] - roll)),-Kdfilt);
     pitch += fmax(fmin(Kdfilt, (rpy[1] - pitch)),-Kdfilt);
     yaw += fmax(fmin(Kdfilt,(rpy[2] - yaw)),-Kdfilt);
@@ -138,6 +138,6 @@ void initSensorsTasks(){
     
     addTask(&gyroTask, 1000, 2);
     addTask(&accelTask, 1000, 3);
-    addTask(&magTask, 100000, 2);
+    addTask(&magTask, 10, 2);
     addTask(&rpyTask, 2000, 2);
 }
