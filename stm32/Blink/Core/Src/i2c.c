@@ -231,25 +231,7 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle)
 }
 
 /* USER CODE BEGIN 1 */
-void HAL_I2C_SlaveTxCpltCallback(I2C_HandleTypeDef *I2cHandle){
-  //if(I2cHandle->Instance == I2C4)
-  //HAL_UART_Transmit(&huart2, (uint8_t*)"txCallback\n", 12, 100);
-  //HAL_I2C_Slave_Receive_IT(&I2cHandle,i2c_slave_recv,I2C_REC_BYTES);
 
-}
-void HAL_I2C_AddrCallback(I2C_HandleTypeDef *hi2c, uint8_t TransferDirection, uint16_t AddrMatchCode)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(hi2c);
-  UNUSED(TransferDirection);
-  UNUSED(AddrMatchCode);
-  
-}
-void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef *I2cHandle){
-  //if(I2cHandle->Instance == I2C4)
-  //HAL_UART_Transmit(&huart2, (uint8_t*)"rxCallback\n", 12, 100);
-  //HAL_I2C_Slave_Transmit_IT(&I2cHandle,send_buffer,send_cnt);
-}
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

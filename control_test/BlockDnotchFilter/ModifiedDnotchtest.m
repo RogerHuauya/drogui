@@ -23,6 +23,8 @@ for i=samples:dim
     else
         block = 0;
     end
-    [y,y_ant,x_ant,fc_ant] = dynamicnotchM(y_act,Fs,zeta,a,x_ant,y_ant,samples,block, fc_ant);
+    block = 1;
+    [y,y_ant,x_ant,f_n] = dynamicnotchM(y_act,Fs,zeta,a,x_ant,y_ant,samples,block, fc_ant);
+    fc_ant = f_n;
     aux(i) = y;
 end
