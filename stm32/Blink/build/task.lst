@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 1
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 1
   38              		.cfi_offset 3, -8
   39              		.cfi_offset 14, -4
   19:Core/drogui/src/task.c ****     t->last_time = TIME;
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s 			page 2
 
 
   40              		.loc 1 19 5 is_stmt 1 view .LVU2
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 1
   90              		.loc 1 25 1 view .LVU15
   91 000c 8342     		cmp	r3, r0
   92 000e 94BF     		ite	ls
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 3
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s 			page 3
 
 
   93 0010 0020     		movls	r0, #0
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 1
  143              		.loc 1 31 5 is_stmt 1 view .LVU26
  144              		.loc 1 31 22 is_stmt 0 view .LVU27
  145 001e 5A1C     		adds	r2, r3, #1
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 4
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s 			page 4
 
 
  146 0020 2A60     		str	r2, [r5]
@@ -235,10 +235,10 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 1
  191              	.L13:
  192              		.loc 1 39 24 is_stmt 1 discriminator 1 view .LVU33
  193              		.loc 1 39 26 is_stmt 0 discriminator 1 view .LVU34
- 194 0006 244B     		ldr	r3, .L27
+ 194 0006 224B     		ldr	r3, .L27
  195 0008 1B68     		ldr	r3, [r3]
  196              		.loc 1 39 9 discriminator 1 view .LVU35
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 5
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s 			page 5
 
 
  197 000a A342     		cmp	r3, r4
@@ -248,7 +248,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 1
  200              		.loc 1 40 13 is_stmt 1 view .LVU36
  201              		.loc 1 40 33 is_stmt 0 view .LVU37
  202 000e 04EB8400 		add	r0, r4, r4, lsl #2
- 203 0012 224B     		ldr	r3, .L27+4
+ 203 0012 204B     		ldr	r3, .L27+4
  204 0014 03EB8000 		add	r0, r3, r0, lsl #2
  205 0018 8368     		ldr	r3, [r0, #8]
  206              		.loc 1 40 53 view .LVU38
@@ -297,8 +297,8 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 1
  242              		.loc 1 47 17 is_stmt 1 view .LVU50
  243              		.loc 1 47 25 is_stmt 0 view .LVU51
  244 0034 04EB8403 		add	r3, r4, r4, lsl #2
- 245 0038 184A     		ldr	r2, .L27+4
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 6
+ 245 0038 164A     		ldr	r2, .L27+4
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s 			page 6
 
 
  246 003a 02EB8303 		add	r3, r2, r3, lsl #2
@@ -318,7 +318,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 1
  257              		.loc 1 45 24 is_stmt 1 discriminator 1 view .LVU55
   45:Core/drogui/src/task.c ****             if(isTaskReady(&Tasks[i]) && i != id)
  258              		.loc 1 45 26 is_stmt 0 discriminator 1 view .LVU56
- 259 0046 144B     		ldr	r3, .L27
+ 259 0046 124B     		ldr	r3, .L27
  260 0048 1B68     		ldr	r3, [r3]
   45:Core/drogui/src/task.c ****             if(isTaskReady(&Tasks[i]) && i != id)
  261              		.loc 1 45 9 discriminator 1 view .LVU57
@@ -329,7 +329,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 1
   46:Core/drogui/src/task.c ****             if(isTaskReady(&Tasks[i]) && i != id)
  265              		.loc 1 46 16 is_stmt 0 view .LVU59
  266 004e 04EB8403 		add	r3, r4, r4, lsl #2
- 267 0052 1248     		ldr	r0, .L27+4
+ 267 0052 1048     		ldr	r0, .L27+4
  268 0054 00EB8300 		add	r0, r0, r3, lsl #2
  269 0058 FFF7FEFF 		bl	isTaskReady
  270              	.LVL16:
@@ -358,11 +358,11 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 1
  287              		.loc 1 50 11 view .LVU65
  288              	.LBE2:
   35:Core/drogui/src/task.c ****         
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 7
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s 			page 7
 
 
  289              		.loc 1 35 5 is_stmt 1 view .LVU66
- 290              	.LBB9:
+ 290              	.LBB8:
   37:Core/drogui/src/task.c ****         
  291              		.loc 1 37 9 view .LVU67
   39:Core/drogui/src/task.c ****             int score = Tasks[i].priority + Tasks[i].ignored;
@@ -389,104 +389,95 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 1
   39:Core/drogui/src/task.c ****             int score = Tasks[i].priority + Tasks[i].ignored;
  307              		.loc 1 39 9 view .LVU74
  308              	.LBE7:
- 309              	.LBB8:
-  51:Core/drogui/src/task.c ****             uint32_t aux=TIME;
- 310              		.loc 1 51 13 is_stmt 1 view .LVU75
- 311              		.loc 1 51 26 is_stmt 0 view .LVU76
- 312 0074 0A4B     		ldr	r3, .L27+8
- 313 0076 1B68     		ldr	r3, [r3]
- 314              		.loc 1 51 22 view .LVU77
- 315 0078 5B6A     		ldr	r3, [r3, #36]
+  51:Core/drogui/src/task.c ****             //sprintf(buffer3, "Init %d\t%lu;\n",id,TIME - Tasks[id].last_time);
   52:Core/drogui/src/task.c ****             executeTask(&Tasks[id]), Tasks[id].ignored = 0;
- 316              		.loc 1 52 13 is_stmt 1 view .LVU78
- 317 007a 084C     		ldr	r4, .L27+4
- 318              	.LVL19:
- 319              		.loc 1 52 13 is_stmt 0 view .LVU79
- 320 007c AE00     		lsls	r6, r5, #2
- 321              	.LVL20:
- 322              		.loc 1 52 13 view .LVU80
- 323 007e 05EB8500 		add	r0, r5, r5, lsl #2
- 324 0082 04EB8000 		add	r0, r4, r0, lsl #2
- 325 0086 FFF7FEFF 		bl	executeTask
- 326              	.LVL21:
- 327              		.loc 1 52 56 view .LVU81
- 328 008a 3544     		add	r5, r5, r6
- 329              	.LVL22:
- 330              		.loc 1 52 56 view .LVU82
- 331 008c 04EB8504 		add	r4, r4, r5, lsl #2
- 332 0090 0023     		movs	r3, #0
- 333 0092 E360     		str	r3, [r4, #12]
- 334 0094 E9E7     		b	.L19
- 335              	.L28:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 8
+ 309              		.loc 1 52 13 is_stmt 1 view .LVU75
+ 310 0074 074C     		ldr	r4, .L27+4
+ 311              	.LVL19:
+ 312              		.loc 1 52 13 is_stmt 0 view .LVU76
+ 313 0076 AE00     		lsls	r6, r5, #2
+ 314              	.LVL20:
+ 315              		.loc 1 52 13 view .LVU77
+ 316 0078 05EB8500 		add	r0, r5, r5, lsl #2
+ 317 007c 04EB8000 		add	r0, r4, r0, lsl #2
+ 318 0080 FFF7FEFF 		bl	executeTask
+ 319              	.LVL21:
+ 320              		.loc 1 52 56 view .LVU78
+ 321 0084 3544     		add	r5, r5, r6
+ 322              	.LVL22:
+ 323              		.loc 1 52 56 view .LVU79
+ 324 0086 04EB8504 		add	r4, r4, r5, lsl #2
+ 325 008a 0023     		movs	r3, #0
+ 326 008c E360     		str	r3, [r4, #12]
+ 327 008e ECE7     		b	.L19
+ 328              	.L28:
+ 329              		.align	2
+ 330              	.L27:
+ 331 0090 00000000 		.word	.LANCHOR0
+ 332 0094 00000000 		.word	.LANCHOR1
+ 333              	.LBE8:
+ 334              		.cfi_endproc
+ 335              	.LFE147:
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s 			page 8
 
 
- 336 0096 00BF     		.align	2
- 337              	.L27:
- 338 0098 00000000 		.word	.LANCHOR0
- 339 009c 00000000 		.word	.LANCHOR1
- 340 00a0 00000000 		.word	htim5
- 341              	.LBE8:
- 342              	.LBE9:
- 343              		.cfi_endproc
- 344              	.LFE147:
- 346              		.global	buffer3
- 347              		.global	Tasks
- 348              		.global	tasks_count
- 349              		.section	.bss.Tasks,"aw",%nobits
- 350              		.align	2
- 351              		.set	.LANCHOR1,. + 0
- 354              	Tasks:
- 355 0000 00000000 		.space	2000
- 355      00000000 
- 355      00000000 
- 355      00000000 
- 355      00000000 
- 356              		.section	.bss.buffer3,"aw",%nobits
- 357              		.align	2
- 360              	buffer3:
- 361 0000 00000000 		.space	100
- 361      00000000 
- 361      00000000 
- 361      00000000 
- 361      00000000 
- 362              		.section	.bss.tasks_count,"aw",%nobits
- 363              		.align	2
- 364              		.set	.LANCHOR0,. + 0
- 367              	tasks_count:
- 368 0000 00000000 		.space	4
- 369              		.text
- 370              	.Letext0:
- 371              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 372              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 373              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
- 374              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
- 375              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
- 376              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim.h"
- 377              		.file 8 "Core/Inc/tim.h"
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s 			page 9
+ 337              		.global	buffer3
+ 338              		.global	Tasks
+ 339              		.global	tasks_count
+ 340              		.section	.bss.Tasks,"aw",%nobits
+ 341              		.align	2
+ 342              		.set	.LANCHOR1,. + 0
+ 345              	Tasks:
+ 346 0000 00000000 		.space	2000
+ 346      00000000 
+ 346      00000000 
+ 346      00000000 
+ 346      00000000 
+ 347              		.section	.bss.buffer3,"aw",%nobits
+ 348              		.align	2
+ 351              	buffer3:
+ 352 0000 00000000 		.space	100
+ 352      00000000 
+ 352      00000000 
+ 352      00000000 
+ 352      00000000 
+ 353              		.section	.bss.tasks_count,"aw",%nobits
+ 354              		.align	2
+ 355              		.set	.LANCHOR0,. + 0
+ 358              	tasks_count:
+ 359 0000 00000000 		.space	4
+ 360              		.text
+ 361              	.Letext0:
+ 362              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 363              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 364              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
+ 365              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
+ 366              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
+ 367              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim.h"
+ 368              		.file 8 "Core/Inc/tim.h"
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s 			page 9
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 task.c
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:18     .text.executeTask:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:26     .text.executeTask:00000000 executeTask
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:58     .text.executeTask:00000010 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:63     .text.isTaskReady:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:70     .text.isTaskReady:00000000 isTaskReady
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:99     .text.isTaskReady:00000018 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:104    .text.addTask:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:111    .text.addTask:00000000 addTask
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:154    .text.addTask:00000028 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:160    .text.initRTOS:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:167    .text.initRTOS:00000000 initRTOS
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:338    .text.initRTOS:00000098 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:360    .bss.buffer3:00000000 buffer3
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:354    .bss.Tasks:00000000 Tasks
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:367    .bss.tasks_count:00000000 tasks_count
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:350    .bss.Tasks:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:357    .bss.buffer3:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccaxB2OC.s:363    .bss.tasks_count:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:18     .text.executeTask:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:26     .text.executeTask:00000000 executeTask
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:58     .text.executeTask:00000010 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:63     .text.isTaskReady:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:70     .text.isTaskReady:00000000 isTaskReady
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:99     .text.isTaskReady:00000018 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:104    .text.addTask:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:111    .text.addTask:00000000 addTask
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:154    .text.addTask:00000028 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:160    .text.initRTOS:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:167    .text.initRTOS:00000000 initRTOS
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:331    .text.initRTOS:00000090 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:351    .bss.buffer3:00000000 buffer3
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:345    .bss.Tasks:00000000 Tasks
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:358    .bss.tasks_count:00000000 tasks_count
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:341    .bss.Tasks:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:348    .bss.buffer3:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccfGJKO1.s:354    .bss.tasks_count:00000000 $d
 
 UNDEFINED SYMBOLS
 htim5

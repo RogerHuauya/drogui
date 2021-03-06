@@ -15,14 +15,13 @@ void _main(){
     HAL_TIM_Base_Start(&htim5);
     
     
-    HAL_UART_Transmit(&huart2, (uint8_t*) "start system\n", 14, 100);
+    HAL_UART_Transmit(&huart2, (uint8_t*) "Start System\n", 14, 100);
     initDebug();
-    //initSensorsTasks();
-    initControlTasks();
-    sprintf(auxbuff, "%f\n", getReg(N_FILTER));
+    initSensorsTasks();
+    //initControlTasks();
+    sprintf(auxbuff, "%d\n", __FPU_USED);
     HAL_UART_Transmit(&huart2, (uint8_t*) auxbuff, strlen(auxbuff), 100);
     initRTOS();
-
 }
 
 #endif

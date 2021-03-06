@@ -5,20 +5,35 @@
 #include "utils.h"
 #include <stdio.h>
 #include <string.h>
+#include "usart.h"
 
 #define G 9.81
 int16_t _ax, _ay, _az, _gx, _gy, _gz, _mx, _my, _mz;
 
 void I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t* Data){
-    
-    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 100);
-    HAL_I2C_Master_Receive(&hi2c1, (Address << 1) | 1, Data, Nbytes, 100);
+    int x;
+    char aux_buff[50];
+    if((x = HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 1000)) != HAL_OK){
+        //sprintf(aux_buff, "read write %d\n", x);
+        //HAL_UART_Transmit(&huart2, (uint8_t *)aux_buff, strlen(aux_buff), 1000);
+    }
+    if((x=HAL_I2C_Master_Receive(&hi2c1, (Address << 1) | 1, Data, Nbytes, 1000)) != HAL_OK){
+        //sprintf(aux_buff, "read read %d\n", x);
+        //HAL_UART_Transmit(&huart2, (uint8_t *)aux_buff, strlen(aux_buff), 1000);
+    }
 }
  
 void I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data){
-
-    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 100);
-    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Data, 1, 100);
+    int x;
+    char aux_buff[50];
+    if((x=HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 10000))!=HAL_OK){
+        //sprintf(aux_buff, "write reg %d\n", x);
+        //HAL_UART_Transmit(&huart2, (uint8_t *)aux_buff, strlen(aux_buff), 1000);
+    }   
+    if((x=HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Data, 1, 10000))!= HAL_OK){
+        //sprintf(aux_buff, "write value %d\n", x);
+        //HAL_UART_Transmit(&huart2, (uint8_t *)aux_buff, strlen(aux_buff), 1000);
+    }
 }
 
 
@@ -30,6 +45,7 @@ void initMpu(mpu9250* m){
     I2CwriteByte(MPU9250_ADDRESS, ACCEL_CONFIG1, ACC_FULL_SCALE_16_G);
     I2CwriteByte(MPU9250_ADDRESS, ACCEL_CONFIG2, 4);
     I2CwriteByte(MPU9250_ADDRESS, 0x37, 0x02);
+    HAL_Delay(1000);
     I2CwriteByte(MAG_ADDRESS, 0x0A, 0x16);
     m->scl_acc = m->scl_magx = m-> scl_magy = m-> scl_magz = 1;
     
@@ -72,6 +88,17 @@ void readRawGyro(mpu9250* m){ // degrees/sec
 void readRawMag(mpu9250* m){ // m/s^2
     uint8_t Buf[7];
     I2Cread(MAG_ADDRESS, 0x03, 7, Buf);
+    
+    char buff[50];
+
+    /*for(int i = 0; i < 6 ; i++){
+
+        sprintf(buff, "%x\t", Buf[i]);
+        HAL_UART_Transmit(&huart2, (uint8_t *)buff, strlen(buff), 100);
+    }*/
+
+    //sprintf(buff, "\n");
+    //HAL_UART_Transmit(&huart2, (uint8_t *)buff, strlen(buff), 100);
     _mx = -((Buf[3]<<8) | Buf[2]);
     _my = -((Buf[1]<<8) | Buf[0]);
     _mz = -((Buf[5]<<8) | Buf[4]);
@@ -281,7 +308,6 @@ void calibrateMag(mpu9250* m){
     bool done = false, valid;
     const int n = 100;
     float magX, magY, magZ, scaleGlobal = 0.01;
-
     float mag[n][3];
     for(int i = 0; i < n; i++){
         for(int j = 0; j < 3; j++){
@@ -292,24 +318,27 @@ void calibrateMag(mpu9250* m){
     while (!done){
         HAL_Delay(100);
         readRawMag(m);
-        magX = m->raw_mx*scaleGlobal;
+        /*magX = m->raw_mx*scaleGlobal;
         magY = m->raw_my*scaleGlobal;
         magZ = m->raw_mz*scaleGlobal;
-
-        valid = true;
+        */
+        //sprintf(aux_buff, "%f %f %f\n", m->raw_mx, m->raw_my, m->raw_mz);
+        //HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
+       /* valid = true;
         for(int i = 1 ; i <= cnt ; i++){
-            int j = (head - i + n) % n;
-            if(dis3d(magX, magY, magZ, mag[j][0], mag[j][1], mag[j][2]) < 20*scaleGlobal){
+            //int j = (head - i + n) % n;
+            float d = 0;//dis3d(magX, magY, magZ, mag[j][0], mag[j][1], mag[j][2]);
+            if(d < 5*scaleGlobal){
                 valid = false; break;
             } 
         }
         if(valid){
             HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-            mag[head][0] = magX, mag[head][1] = magY, mag[head][2] = magZ;
+            //mag[head][0] = magX, mag[head][1] = magY, mag[head][2] = magZ;
             head++, cnt++, head%= n; 
         }
         setReg(CAL_MAG, cnt);
-        if(cnt == n){done = true;}
+        if(cnt == n){done = true;}*/
     }
 
     mat H, Ht, w, prod, prod2, X, inverse;

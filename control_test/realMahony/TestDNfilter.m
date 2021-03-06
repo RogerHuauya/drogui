@@ -1,0 +1,24 @@
+dim = length(accel(:,1));
+Fs = 1000;
+samples = 64;
+L = samples;
+f = Fs*(0:(L/2))/L;
+arr_ans = [];
+y_ant = [0 0];
+x_ant = [0 0 0];
+y_ant_dn = [0 0];
+x_ant_dn = [0 0 0];
+a = 1;
+zeta = 1;
+aux = accel(:,1);
+aux_dn = zeros(1,length(accel(:,1)));
+a_dn = 1;
+zeta_dn = 5;
+for i=samples:dim
+    y_act = aux(i-samples+1:i);
+    [y,y_ant,x_ant] = dynamicnotch(y_act,Fs,zeta,a,x_ant,y_ant,samples);
+    aux(i) = y;
+    y_act_dn = aux(i-samples+1:i);
+    [y_dn, y_ant_dn, x_ant_dn] = dynamicnotch(y_act_dn,Fs,zeta_dn,a_dn,x_ant_dn,y_ant_dn,samples);
+    aux_dn(i) = y_dn;  
+end
