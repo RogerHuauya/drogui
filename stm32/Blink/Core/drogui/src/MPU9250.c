@@ -14,12 +14,12 @@ void I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t* Data){
     int x;
     char aux_buff[50];
     if((x = HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 1000)) != HAL_OK){
-        sprintf(aux_buff, "read write %d\n", x);
-        HAL_UART_Transmit(&huart2, (uint8_t *)aux_buff, strlen(aux_buff), 1000);
+        //sprintf(aux_buff, "read write %d\n", x);
+        //HAL_UART_Transmit(&huart2, (uint8_t *)aux_buff, strlen(aux_buff), 1000);
     }
     if((x=HAL_I2C_Master_Receive(&hi2c1, (Address << 1) | 1, Data, Nbytes, 1000)) != HAL_OK){
-        sprintf(aux_buff, "read read %d\n", x);
-        HAL_UART_Transmit(&huart2, (uint8_t *)aux_buff, strlen(aux_buff), 1000);
+        //sprintf(aux_buff, "read read %d\n", x);
+        //HAL_UART_Transmit(&huart2, (uint8_t *)aux_buff, strlen(aux_buff), 1000);
     }
 }
  
@@ -27,12 +27,12 @@ void I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data){
     int x;
     char aux_buff[50];
     if((x=HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 10000))!=HAL_OK){
-        sprintf(aux_buff, "write reg %d\n", x);
-        HAL_UART_Transmit(&huart2, (uint8_t *)aux_buff, strlen(aux_buff), 1000);
+        //sprintf(aux_buff, "write reg %d\n", x);
+        //HAL_UART_Transmit(&huart2, (uint8_t *)aux_buff, strlen(aux_buff), 1000);
     }   
     if((x=HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Data, 1, 10000))!= HAL_OK){
-        sprintf(aux_buff, "write value %d\n", x);
-        HAL_UART_Transmit(&huart2, (uint8_t *)aux_buff, strlen(aux_buff), 1000);
+        //sprintf(aux_buff, "write value %d\n", x);
+        //HAL_UART_Transmit(&huart2, (uint8_t *)aux_buff, strlen(aux_buff), 1000);
     }
 }
 
@@ -91,14 +91,14 @@ void readRawMag(mpu9250* m){ // m/s^2
     
     char buff[50];
 
-    for(int i = 0; i < 6 ; i++){
+    /*for(int i = 0; i < 6 ; i++){
 
         sprintf(buff, "%x\t", Buf[i]);
         HAL_UART_Transmit(&huart2, (uint8_t *)buff, strlen(buff), 100);
-    }
+    }*/
 
-    sprintf(buff, "\n");
-    HAL_UART_Transmit(&huart2, (uint8_t *)buff, strlen(buff), 100);
+    //sprintf(buff, "\n");
+    //HAL_UART_Transmit(&huart2, (uint8_t *)buff, strlen(buff), 100);
     _mx = -((Buf[3]<<8) | Buf[2]);
     _my = -((Buf[1]<<8) | Buf[0]);
     _mz = -((Buf[5]<<8) | Buf[4]);
