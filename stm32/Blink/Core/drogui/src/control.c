@@ -1,10 +1,13 @@
 #include "control.h"
 #include <math.h>
-
+#include "usart.h"
+#include <stdio.h>
+#include <string.h>
+char buffct[50]="";
 
 float computePid(pid* p, float error, uint32_t t, float h){
+    
     float kp = 1, kd = 1, ki = 1;
-
 
     p->dt = (t - p->tant)/1000000.0;
     p->tant = t;
@@ -47,6 +50,8 @@ float computePid(pid* p, float error, uint32_t t, float h){
         p->u = fmax(fmin(kp*error + ki*p->erri + kd*p->errd, p->osat), -p->osat);
     }
     p->u_ant = p->u;
+
+   
     return p->u;
 }
 

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 1
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 1
   28:Core/Src/stm32f7xx_it.c **** /* Private includes ----------------------------------------------------------*/
   29:Core/Src/stm32f7xx_it.c **** /* USER CODE BEGIN Includes */
   30:Core/Src/stm32f7xx_it.c **** /* USER CODE END Includes */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s 			page 2
 
 
   31:Core/Src/stm32f7xx_it.c **** 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 1
   78:Core/Src/stm32f7xx_it.c ****   /* USER CODE END NonMaskableInt_IRQn 0 */
   79:Core/Src/stm32f7xx_it.c ****   /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
   80:Core/Src/stm32f7xx_it.c ****   while (1)
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 3
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s 			page 3
 
 
   36              		.loc 1 80 3 discriminator 1 view .LVU1
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 1
   73              		.fpu fpv5-sp-d16
   75              	MemManage_Handler:
   76              	.LFB146:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 4
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s 			page 4
 
 
   99:Core/Src/stm32f7xx_it.c **** }
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 1
  123:Core/Src/stm32f7xx_it.c ****   /* USER CODE END BusFault_IRQn 0 */
  124:Core/Src/stm32f7xx_it.c ****   while (1)
  108              		.loc 1 124 3 discriminator 1 view .LVU13
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 5
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s 			page 5
 
 
  125:Core/Src/stm32f7xx_it.c ****   {
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 1
  145              		.fpu fpv5-sp-d16
  147              	SVC_Handler:
  148              	.LFB149:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 6
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s 			page 6
 
 
  144:Core/Src/stm32f7xx_it.c **** }
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 1
  179              		.section	.text.PendSV_Handler,"ax",%progbits
  180              		.align	1
  181              		.global	PendSV_Handler
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 7
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s 			page 7
 
 
  182              		.syntax unified
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 1
  192:Core/Src/stm32f7xx_it.c ****   /* USER CODE END SysTick_IRQn 0 */
  193:Core/Src/stm32f7xx_it.c ****   HAL_IncTick();
  218              		.loc 1 193 3 view .LVU27
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 8
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s 			page 8
 
 
  219 0002 FFF7FEFF 		bl	HAL_IncTick
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 1
  219:Core/Src/stm32f7xx_it.c ****     if(index1 != -1){
  250              		.loc 1 219 5 is_stmt 1 view .LVU34
  251              		.loc 1 219 15 is_stmt 0 view .LVU35
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 9
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s 			page 9
 
 
  252 000a 2D4A     		ldr	r2, .L27+4
@@ -487,7 +487,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 1
  255 000e B1F1FF3F 		cmp	r1, #-1
  256 0012 10D0     		beq	.L18
  220:Core/Src/stm32f7xx_it.c ****       
- 221:Core/Src/stm32f7xx_it.c ****       //sprintf(buffer, "%u %d %d\n", i2cReg[index1][index2+1], index1, index2);
+ 221:Core/Src/stm32f7xx_it.c ****       //sprintf(buffer, "Trans %u %d %d\n", i2cReg[index1][index2+1], index1, index2);
  222:Core/Src/stm32f7xx_it.c ****       //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
  223:Core/Src/stm32f7xx_it.c ****       I2C4->TXDR = i2cReg[index1][++index2];
  257              		.loc 1 223 7 is_stmt 1 view .LVU37
@@ -513,59 +513,62 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 1
  229:Core/Src/stm32f7xx_it.c ****   {
  230:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "RX\n", 4, 100);
  231:Core/Src/stm32f7xx_it.c ****     uint8_t a = (I2C4->RXDR);
- 232:Core/Src/stm32f7xx_it.c ****     if(index1 == -1)
+ 232:Core/Src/stm32f7xx_it.c ****     if(index1 == -1){
  233:Core/Src/stm32f7xx_it.c ****       index1 = a;
- 234:Core/Src/stm32f7xx_it.c ****     else{
- 235:Core/Src/stm32f7xx_it.c ****       i2cReg[index1][++index2] = a; 
+ 234:Core/Src/stm32f7xx_it.c ****       //sprintf(buffer, "Trans %u %d %d\n", i2cReg[index1][index2+1], index1, index2);
+ 235:Core/Src/stm32f7xx_it.c ****       //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
  236:Core/Src/stm32f7xx_it.c ****     }
- 237:Core/Src/stm32f7xx_it.c ****     
- 238:Core/Src/stm32f7xx_it.c ****     //printf(buffer, "%d %d\n", index1, index2);
- 239:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
- 240:Core/Src/stm32f7xx_it.c ****   }
- 241:Core/Src/stm32f7xx_it.c ****   else if ( isr & I2C_ISR_STOPF )
- 242:Core/Src/stm32f7xx_it.c ****   {
- 243:Core/Src/stm32f7xx_it.c ****     if(index2 != -1) index1 = index2 = -1;
- 244:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
- 245:Core/Src/stm32f7xx_it.c ****     I2C4->ISR |= I2C_ISR_TXE;
- 246:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_STOPCF;
- 247:Core/Src/stm32f7xx_it.c ****   }
- 248:Core/Src/stm32f7xx_it.c ****   else if ( isr & I2C_ISR_NACKF )
- 249:Core/Src/stm32f7xx_it.c ****   {
- 250:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "NACK\n", 6, 100);
- 251:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_NACKCF;
- 252:Core/Src/stm32f7xx_it.c ****   }
- 253:Core/Src/stm32f7xx_it.c ****   else if ( isr & I2C_ISR_ADDR )
- 254:Core/Src/stm32f7xx_it.c ****   {
- 255:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "ADDR\n", 6, 100);
- 256:Core/Src/stm32f7xx_it.c ****     /* not required, the addr match interrupt is not enabled */
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 10
+ 237:Core/Src/stm32f7xx_it.c ****     else{
+ 238:Core/Src/stm32f7xx_it.c ****       i2cReg[index1][++index2] = a; 
+ 239:Core/Src/stm32f7xx_it.c ****     }
+ 240:Core/Src/stm32f7xx_it.c ****     
+ 241:Core/Src/stm32f7xx_it.c ****     //printf(buffer, "Rece %d %d\n", index1, index2);
+ 242:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
+ 243:Core/Src/stm32f7xx_it.c ****   }
+ 244:Core/Src/stm32f7xx_it.c ****   else if ( isr & I2C_ISR_STOPF )
+ 245:Core/Src/stm32f7xx_it.c ****   {
+ 246:Core/Src/stm32f7xx_it.c ****     if(index2 != -1) index1 = index2 = -1;
+ 247:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
+ 248:Core/Src/stm32f7xx_it.c ****     I2C4->ISR |= I2C_ISR_TXE;
+ 249:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_STOPCF;
+ 250:Core/Src/stm32f7xx_it.c ****   }
+ 251:Core/Src/stm32f7xx_it.c ****   else if ( isr & I2C_ISR_NACKF )
+ 252:Core/Src/stm32f7xx_it.c ****   {
+ 253:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "NACK\n", 6, 100);
+ 254:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_NACKCF;
+ 255:Core/Src/stm32f7xx_it.c ****   }
+ 256:Core/Src/stm32f7xx_it.c ****   else if ( isr & I2C_ISR_ADDR )
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s 			page 10
 
 
- 257:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_ADDRCF;
- 258:Core/Src/stm32f7xx_it.c ****   }
- 259:Core/Src/stm32f7xx_it.c ****  
- 260:Core/Src/stm32f7xx_it.c ****   /* if at any time the addr match is set, clear the flag */
- 261:Core/Src/stm32f7xx_it.c ****   /* not sure, whether this is required */
- 262:Core/Src/stm32f7xx_it.c ****   if ( isr & I2C_ISR_ADDR )
- 272              		.loc 1 262 3 is_stmt 1 view .LVU42
- 273              		.loc 1 262 6 is_stmt 0 view .LVU43
+ 257:Core/Src/stm32f7xx_it.c ****   {
+ 258:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "ADDR\n", 6, 100);
+ 259:Core/Src/stm32f7xx_it.c ****     /* not required, the addr match interrupt is not enabled */
+ 260:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_ADDRCF;
+ 261:Core/Src/stm32f7xx_it.c ****   }
+ 262:Core/Src/stm32f7xx_it.c ****  
+ 263:Core/Src/stm32f7xx_it.c ****   /* if at any time the addr match is set, clear the flag */
+ 264:Core/Src/stm32f7xx_it.c ****   /* not sure, whether this is required */
+ 265:Core/Src/stm32f7xx_it.c ****   if ( isr & I2C_ISR_ADDR )
+ 272              		.loc 1 265 3 is_stmt 1 view .LVU42
+ 273              		.loc 1 265 6 is_stmt 0 view .LVU43
  274 0028 13F0080F 		tst	r3, #8
  275 002c 02D0     		beq	.L16
- 263:Core/Src/stm32f7xx_it.c ****   {
- 264:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_ADDRCF;
- 276              		.loc 1 264 5 is_stmt 1 view .LVU44
- 277              		.loc 1 264 15 is_stmt 0 view .LVU45
+ 266:Core/Src/stm32f7xx_it.c ****   {
+ 267:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_ADDRCF;
+ 276              		.loc 1 267 5 is_stmt 1 view .LVU44
+ 277              		.loc 1 267 15 is_stmt 0 view .LVU45
  278 002e 234B     		ldr	r3, .L27
  279              	.LVL2:
- 280              		.loc 1 264 15 view .LVU46
+ 280              		.loc 1 267 15 view .LVU46
  281 0030 0822     		movs	r2, #8
  282 0032 DA61     		str	r2, [r3, #28]
  283              	.L16:
- 265:Core/Src/stm32f7xx_it.c ****   }
- 266:Core/Src/stm32f7xx_it.c ****    
- 267:Core/Src/stm32f7xx_it.c **** 
- 268:Core/Src/stm32f7xx_it.c **** }
- 284              		.loc 1 268 1 view .LVU47
+ 268:Core/Src/stm32f7xx_it.c ****   }
+ 269:Core/Src/stm32f7xx_it.c ****    
+ 270:Core/Src/stm32f7xx_it.c **** 
+ 271:Core/Src/stm32f7xx_it.c **** }
+ 284              		.loc 1 271 1 view .LVU47
  285 0034 7047     		bx	lr
  286              	.LVL3:
  287              	.L18:
@@ -586,21 +589,21 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 1
  298 0040 13F0040F 		tst	r3, #4
  299 0044 16D0     		beq	.L20
  300              	.LBB2:
- 231:Core/Src/stm32f7xx_it.c ****     if(index1 == -1)
+ 231:Core/Src/stm32f7xx_it.c ****     if(index1 == -1){
  301              		.loc 1 231 5 is_stmt 1 view .LVU52
- 231:Core/Src/stm32f7xx_it.c ****     if(index1 == -1)
+ 231:Core/Src/stm32f7xx_it.c ****     if(index1 == -1){
  302              		.loc 1 231 22 is_stmt 0 view .LVU53
  303 0046 1D4A     		ldr	r2, .L27
  304 0048 526A     		ldr	r2, [r2, #36]
- 231:Core/Src/stm32f7xx_it.c ****     if(index1 == -1)
+ 231:Core/Src/stm32f7xx_it.c ****     if(index1 == -1){
  305              		.loc 1 231 13 view .LVU54
  306 004a 5FFA82FC 		uxtb	ip, r2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s 			page 11
+
+
  307              	.LVL4:
  232:Core/Src/stm32f7xx_it.c ****       index1 = a;
  308              		.loc 1 232 5 is_stmt 1 view .LVU55
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 11
-
-
  232:Core/Src/stm32f7xx_it.c ****       index1 = a;
  309              		.loc 1 232 15 is_stmt 0 view .LVU56
  310 004e 1C49     		ldr	r1, .L27+4
@@ -609,105 +612,105 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 1
  312              		.loc 1 232 7 view .LVU57
  313 0052 B1F1FF3F 		cmp	r1, #-1
  314 0056 09D0     		beq	.L26
- 235:Core/Src/stm32f7xx_it.c ****     }
- 315              		.loc 1 235 7 is_stmt 1 view .LVU58
- 235:Core/Src/stm32f7xx_it.c ****     }
- 316              		.loc 1 235 22 is_stmt 0 view .LVU59
+ 238:Core/Src/stm32f7xx_it.c ****     }
+ 315              		.loc 1 238 7 is_stmt 1 view .LVU58
+ 238:Core/Src/stm32f7xx_it.c ****     }
+ 316              		.loc 1 238 22 is_stmt 0 view .LVU59
  317 0058 1A48     		ldr	r0, .L27+8
  318 005a 0268     		ldr	r2, [r0]
  319 005c 0132     		adds	r2, r2, #1
- 235:Core/Src/stm32f7xx_it.c ****     }
- 320              		.loc 1 235 32 view .LVU60
+ 238:Core/Src/stm32f7xx_it.c ****     }
+ 320              		.loc 1 238 32 view .LVU60
  321 005e 0260     		str	r2, [r0]
  322 0060 1948     		ldr	r0, .L27+12
  323 0062 00EB8101 		add	r1, r0, r1, lsl #2
  324 0066 01F802C0 		strb	ip, [r1, r2]
  325 006a DDE7     		b	.L19
  326              	.L26:
- 233:Core/Src/stm32f7xx_it.c ****     else{
+ 233:Core/Src/stm32f7xx_it.c ****       //sprintf(buffer, "Trans %u %d %d\n", i2cReg[index1][index2+1], index1, index2);
  327              		.loc 1 233 7 is_stmt 1 view .LVU61
- 233:Core/Src/stm32f7xx_it.c ****     else{
+ 233:Core/Src/stm32f7xx_it.c ****       //sprintf(buffer, "Trans %u %d %d\n", i2cReg[index1][index2+1], index1, index2);
  328              		.loc 1 233 14 is_stmt 0 view .LVU62
  329 006c 1449     		ldr	r1, .L27+4
  330 006e C1F800C0 		str	ip, [r1]
  331 0072 D9E7     		b	.L19
  332              	.LVL5:
  333              	.L20:
- 233:Core/Src/stm32f7xx_it.c ****     else{
+ 233:Core/Src/stm32f7xx_it.c ****       //sprintf(buffer, "Trans %u %d %d\n", i2cReg[index1][index2+1], index1, index2);
  334              		.loc 1 233 14 view .LVU63
  335              	.LBE2:
- 241:Core/Src/stm32f7xx_it.c ****   {
- 336              		.loc 1 241 8 is_stmt 1 view .LVU64
- 241:Core/Src/stm32f7xx_it.c ****   {
- 337              		.loc 1 241 11 is_stmt 0 view .LVU65
+ 244:Core/Src/stm32f7xx_it.c ****   {
+ 336              		.loc 1 244 8 is_stmt 1 view .LVU64
+ 244:Core/Src/stm32f7xx_it.c ****   {
+ 337              		.loc 1 244 11 is_stmt 0 view .LVU65
  338 0074 13F0200F 		tst	r3, #32
  339 0078 12D0     		beq	.L22
- 243:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
- 340              		.loc 1 243 5 is_stmt 1 view .LVU66
- 243:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
- 341              		.loc 1 243 15 is_stmt 0 view .LVU67
+ 246:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
+ 340              		.loc 1 246 5 is_stmt 1 view .LVU66
+ 246:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
+ 341              		.loc 1 246 15 is_stmt 0 view .LVU67
  342 007a 124A     		ldr	r2, .L27+8
  343 007c 1268     		ldr	r2, [r2]
- 243:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
- 344              		.loc 1 243 7 view .LVU68
+ 246:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
+ 344              		.loc 1 246 7 view .LVU68
  345 007e B2F1FF3F 		cmp	r2, #-1
  346 0082 05D0     		beq	.L23
- 243:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
- 347              		.loc 1 243 22 is_stmt 1 discriminator 1 view .LVU69
- 243:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
- 348              		.loc 1 243 38 is_stmt 0 discriminator 1 view .LVU70
+ 246:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
+ 347              		.loc 1 246 22 is_stmt 1 discriminator 1 view .LVU69
+ 246:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s 			page 12
+
+
+ 348              		.loc 1 246 38 is_stmt 0 discriminator 1 view .LVU70
  349 0084 4FF0FF32 		mov	r2, #-1
  350 0088 0E49     		ldr	r1, .L27+8
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 12
-
-
  351 008a 0A60     		str	r2, [r1]
- 243:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
- 352              		.loc 1 243 29 discriminator 1 view .LVU71
+ 246:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
+ 352              		.loc 1 246 29 discriminator 1 view .LVU71
  353 008c 0C49     		ldr	r1, .L27+4
  354 008e 0A60     		str	r2, [r1]
  355              	.L23:
- 245:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_STOPCF;
- 356              		.loc 1 245 5 is_stmt 1 view .LVU72
- 245:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_STOPCF;
- 357              		.loc 1 245 15 is_stmt 0 view .LVU73
+ 248:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_STOPCF;
+ 356              		.loc 1 248 5 is_stmt 1 view .LVU72
+ 248:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_STOPCF;
+ 357              		.loc 1 248 15 is_stmt 0 view .LVU73
  358 0090 0A4A     		ldr	r2, .L27
  359 0092 9169     		ldr	r1, [r2, #24]
  360 0094 41F00101 		orr	r1, r1, #1
  361 0098 9161     		str	r1, [r2, #24]
- 246:Core/Src/stm32f7xx_it.c ****   }
- 362              		.loc 1 246 5 is_stmt 1 view .LVU74
- 246:Core/Src/stm32f7xx_it.c ****   }
- 363              		.loc 1 246 15 is_stmt 0 view .LVU75
+ 249:Core/Src/stm32f7xx_it.c ****   }
+ 362              		.loc 1 249 5 is_stmt 1 view .LVU74
+ 249:Core/Src/stm32f7xx_it.c ****   }
+ 363              		.loc 1 249 15 is_stmt 0 view .LVU75
  364 009a 2021     		movs	r1, #32
  365 009c D161     		str	r1, [r2, #28]
  366 009e C3E7     		b	.L19
  367              	.L22:
- 248:Core/Src/stm32f7xx_it.c ****   {
- 368              		.loc 1 248 8 is_stmt 1 view .LVU76
- 248:Core/Src/stm32f7xx_it.c ****   {
- 369              		.loc 1 248 11 is_stmt 0 view .LVU77
+ 251:Core/Src/stm32f7xx_it.c ****   {
+ 368              		.loc 1 251 8 is_stmt 1 view .LVU76
+ 251:Core/Src/stm32f7xx_it.c ****   {
+ 369              		.loc 1 251 11 is_stmt 0 view .LVU77
  370 00a0 13F0100F 		tst	r3, #16
  371 00a4 03D0     		beq	.L24
- 251:Core/Src/stm32f7xx_it.c ****   }
- 372              		.loc 1 251 5 is_stmt 1 view .LVU78
- 251:Core/Src/stm32f7xx_it.c ****   }
- 373              		.loc 1 251 15 is_stmt 0 view .LVU79
+ 254:Core/Src/stm32f7xx_it.c ****   }
+ 372              		.loc 1 254 5 is_stmt 1 view .LVU78
+ 254:Core/Src/stm32f7xx_it.c ****   }
+ 373              		.loc 1 254 15 is_stmt 0 view .LVU79
  374 00a6 054A     		ldr	r2, .L27
  375 00a8 1021     		movs	r1, #16
  376 00aa D161     		str	r1, [r2, #28]
  377 00ac BCE7     		b	.L19
  378              	.L24:
- 253:Core/Src/stm32f7xx_it.c ****   {
- 379              		.loc 1 253 8 is_stmt 1 view .LVU80
- 253:Core/Src/stm32f7xx_it.c ****   {
- 380              		.loc 1 253 11 is_stmt 0 view .LVU81
+ 256:Core/Src/stm32f7xx_it.c ****   {
+ 379              		.loc 1 256 8 is_stmt 1 view .LVU80
+ 256:Core/Src/stm32f7xx_it.c ****   {
+ 380              		.loc 1 256 11 is_stmt 0 view .LVU81
  381 00ae 13F0080F 		tst	r3, #8
  382 00b2 B9D0     		beq	.L19
- 257:Core/Src/stm32f7xx_it.c ****   }
- 383              		.loc 1 257 5 is_stmt 1 view .LVU82
- 257:Core/Src/stm32f7xx_it.c ****   }
- 384              		.loc 1 257 15 is_stmt 0 view .LVU83
+ 260:Core/Src/stm32f7xx_it.c ****   }
+ 383              		.loc 1 260 5 is_stmt 1 view .LVU82
+ 260:Core/Src/stm32f7xx_it.c ****   }
+ 384              		.loc 1 260 15 is_stmt 0 view .LVU83
  385 00b4 014A     		ldr	r2, .L27
  386 00b6 0821     		movs	r1, #8
  387 00b8 D161     		str	r1, [r2, #28]
@@ -715,12 +718,12 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 1
  389              	.L28:
  390              		.align	2
  391              	.L27:
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s 			page 13
+
+
  392 00bc 00600040 		.word	1073766400
  393 00c0 00000000 		.word	.LANCHOR0
  394 00c4 00000000 		.word	.LANCHOR1
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 13
-
-
  395 00c8 00000000 		.word	i2cReg
  396              		.cfi_endproc
  397              	.LFE153:
@@ -752,38 +755,38 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 1
  426              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
  427              		.file 5 "Core/drogui/include/utils.h"
  428              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h"
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s 			page 14
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s 			page 14
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f7xx_it.c
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:18     .text.NMI_Handler:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:26     .text.NMI_Handler:00000000 NMI_Handler
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:44     .text.HardFault_Handler:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:51     .text.HardFault_Handler:00000000 HardFault_Handler
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:68     .text.MemManage_Handler:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:75     .text.MemManage_Handler:00000000 MemManage_Handler
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:92     .text.BusFault_Handler:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:99     .text.BusFault_Handler:00000000 BusFault_Handler
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:116    .text.UsageFault_Handler:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:123    .text.UsageFault_Handler:00000000 UsageFault_Handler
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:140    .text.SVC_Handler:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:147    .text.SVC_Handler:00000000 SVC_Handler
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:160    .text.DebugMon_Handler:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:167    .text.DebugMon_Handler:00000000 DebugMon_Handler
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:180    .text.PendSV_Handler:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:187    .text.PendSV_Handler:00000000 PendSV_Handler
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:200    .text.SysTick_Handler:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:207    .text.SysTick_Handler:00000000 SysTick_Handler
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:227    .text.I2C4_EV_IRQHandler:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:234    .text.I2C4_EV_IRQHandler:00000000 I2C4_EV_IRQHandler
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:392    .text.I2C4_EV_IRQHandler:000000bc $d
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:420    .data.index2:00000000 index2
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:413    .data.index1:00000000 index1
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:406    .bss.buffer:00000000 buffer
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:403    .bss.buffer:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:409    .data.index1:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccZlWiMp.s:416    .data.index2:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:18     .text.NMI_Handler:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:26     .text.NMI_Handler:00000000 NMI_Handler
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:44     .text.HardFault_Handler:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:51     .text.HardFault_Handler:00000000 HardFault_Handler
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:68     .text.MemManage_Handler:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:75     .text.MemManage_Handler:00000000 MemManage_Handler
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:92     .text.BusFault_Handler:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:99     .text.BusFault_Handler:00000000 BusFault_Handler
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:116    .text.UsageFault_Handler:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:123    .text.UsageFault_Handler:00000000 UsageFault_Handler
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:140    .text.SVC_Handler:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:147    .text.SVC_Handler:00000000 SVC_Handler
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:160    .text.DebugMon_Handler:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:167    .text.DebugMon_Handler:00000000 DebugMon_Handler
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:180    .text.PendSV_Handler:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:187    .text.PendSV_Handler:00000000 PendSV_Handler
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:200    .text.SysTick_Handler:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:207    .text.SysTick_Handler:00000000 SysTick_Handler
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:227    .text.I2C4_EV_IRQHandler:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:234    .text.I2C4_EV_IRQHandler:00000000 I2C4_EV_IRQHandler
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:392    .text.I2C4_EV_IRQHandler:000000bc $d
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:420    .data.index2:00000000 index2
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:413    .data.index1:00000000 index1
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:406    .bss.buffer:00000000 buffer
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:403    .bss.buffer:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:409    .data.index1:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cciCzbpL.s:416    .data.index2:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_IncTick

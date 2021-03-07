@@ -15,5 +15,6 @@ extern pid wroll_control, wpitch_control, wyaw_control;
  * @brief Initialize Control Task
 */
 void initControlTasks();
+void updatePID();
 
 #endif

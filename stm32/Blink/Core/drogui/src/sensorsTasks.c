@@ -134,6 +134,7 @@ void initSensorsTasks(){
 
     calibrateGyro(&myIMU);
     calibrateAccel(&myIMU);
+
     //calibrateMag(&myIMU);
     
     addTask(&gyroTask, 1000, 2);

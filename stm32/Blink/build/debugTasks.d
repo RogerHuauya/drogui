@@ -32,7 +32,9 @@ build/debugTasks.o: Core/drogui/src/debugTasks.c \
  Core/drogui/include/sensorsTasks.h Core/drogui/include/filter.h \
  Drivers/CMSIS/DSP/Include/arm_math.h Core/drogui/include/MPU9250.h \
  Core/drogui/include/registerMap.h Core/drogui/include/utils.h \
- Core/drogui/include/task.h Core/Inc/tim.h Core/drogui/include/filter.h
+ Core/drogui/include/controlTasks.h Core/drogui/include/control.h \
+ Core/drogui/include/sensorsTasks.h Core/drogui/include/task.h \
+ Core/Inc/tim.h Core/drogui/include/filter.h
 Core/drogui/include/debugTasks.h:
 Core/drogui/include/utils.h:
 Core/Inc/main.h:
@@ -75,6 +77,9 @@ Drivers/CMSIS/DSP/Include/arm_math.h:
 Core/drogui/include/MPU9250.h:
 Core/drogui/include/registerMap.h:
 Core/drogui/include/utils.h:
+Core/drogui/include/controlTasks.h:
+Core/drogui/include/control.h:
+Core/drogui/include/sensorsTasks.h:
 Core/drogui/include/task.h:
 Core/Inc/tim.h:
 Core/drogui/include/filter.h:

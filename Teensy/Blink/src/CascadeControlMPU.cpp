@@ -118,7 +118,7 @@ int _main(void){
         if(timerReady(&timer_blink)) executeTimer(&timer_blink);
         if(timerReady(&timer_debug)) executeTimer(&timer_debug);
         //if(timerReady(&timer_security)) executeTimer(&timer_security);  
-        //executeControlTasks();
+        executeControlTasks();
         executeSensorsTasks();   
     }
     return 0;
