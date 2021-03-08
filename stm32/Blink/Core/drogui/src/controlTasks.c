@@ -107,9 +107,6 @@ void wControlTask(){
     setReg(MOTOR_3, M3);
     setReg(MOTOR_4, M4);
 
-    //sprintf(buffc, "ACCEL c %f\t%f\t%f\t%f;\n", M1,M2,M3,M4);
-    //HAL_UART_Transmit(&huart2, (uint8_t*) buffc, strlen(buffc), 100);
-
     if(security){
         M1 = M2 = M3 = M4 = 0;
         resetPid(&wroll_control, TIME);
@@ -130,17 +127,7 @@ void rpyControlTask(){
     wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0);
     wyaw_ref = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);
 
-/*
-    Serial.print("\nu values: ");
-    for(int i = 0 ; i < 13; i++) Serial.print(filter_wroll.arr_u.values[i]), Serial.print('\t');
-    Serial.print("\nu coeff: ");
-    for(int i = 0 ; i < 13; i++) Serial.print(filter_wroll.arr_u.coeff[i]), Serial.print('\t');
-    Serial.print("\ny values: ");
-    for(int i = 0 ; i < 12; i++) Serial.print(filter_wroll.arr_y.values[i]), Serial.print('\t');
-    Serial.print("\ny coeff: ");
-    for(int i = 0 ; i < 12; i++) Serial.print(filter_wroll.arr_y.coeff[i]), Serial.print('\t');
-    Serial.println("****************************************************************************");
-*/
+
     float aux1 = angle_dif(roll_ref, roll);
     float aux2 = angle_dif(pitch_ref, pitch);  
     float aux3 = angle_dif(yaw_ref, yaw);
@@ -206,12 +193,6 @@ void initControlTasks(){
     setReg(PID_VAR, -1);
     setReg(N_FILTER, 50);
 
-    /*HAL_Delay(10000);
-
-    setPwm(&m3,10);
-    setPwm(&m1,10);
-    setPwm(&m2,10);
-    setPwm(&m4,10);*/
     addTask(&wControlTask, 1000, 1);
     addTask(&rpyControlTask, 2000, 1);
     addTask(&xyzControlTask, 10000, 1);
