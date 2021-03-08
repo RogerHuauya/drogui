@@ -201,6 +201,7 @@ void initControlTasks(){
     initPid(&wpitch_control, 0, 0, 0, TIME, 50, 80, 3000, (P2ID & D_INT));
     initPid(&wyaw_control, 0, 0, 0, TIME, 50, 80, 3000, (P2ID & D_INT));
     
+    
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
     setReg(N_FILTER, 50);
