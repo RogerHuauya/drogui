@@ -19,7 +19,6 @@ float roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0
 float wroll_ref, wpitch_ref, wyaw_ref, roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
 float wroll_err,wpitch_err,wyaw_err; 
 
-//TIMEr TIMEr_wcontrol, TIMEr_rpycontrol, TIMEr_xyzcontrol;
 char buffc[50] = "hola\n";
 void saturateM(float H){
     float f_max = 1;
