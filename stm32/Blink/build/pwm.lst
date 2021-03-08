@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc4XRO7g.s 			page 1
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5Qxe1r.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -53,25 +53,25 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc4XRO7g.s 			page 1
   45 0002 0446     		mov	r4, r0
   46 0004 10EE100A 		vmov	r0, s0
   47              	.LVL1:
-   7:Core/drogui/src/pwm.c ****     *(p->duty) = 125000.0 + 125000.0*(percent)/100.0; 
+   7:Core/drogui/src/pwm.c ****     *(p->duty) = 12500.0 + 12500.0*(percent)/100.0; 
   48              		.loc 1 7 5 is_stmt 1 view .LVU2
-  49              		.loc 1 7 37 is_stmt 0 view .LVU3
+  49              		.loc 1 7 35 is_stmt 0 view .LVU3
   50 0008 FFF7FEFF 		bl	__aeabi_f2d
   51              	.LVL2:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc4XRO7g.s 			page 2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5Qxe1r.s 			page 2
 
 
-  52              		.loc 1 7 37 view .LVU4
+  52              		.loc 1 7 35 view .LVU4
   53 000c 0AA3     		adr	r3, .L3
   54 000e D3E90023 		ldrd	r2, [r3]
   55 0012 FFF7FEFF 		bl	__aeabi_dmul
   56              	.LVL3:
-  57              		.loc 1 7 47 view .LVU5
+  57              		.loc 1 7 45 view .LVU5
   58 0016 0022     		movs	r2, #0
   59 0018 094B     		ldr	r3, .L3+8
   60 001a FFF7FEFF 		bl	__aeabi_ddiv
   61              	.LVL4:
-  62              		.loc 1 7 27 view .LVU6
+  62              		.loc 1 7 26 view .LVU6
   63 001e 06A3     		adr	r3, .L3
   64 0020 D3E90023 		ldrd	r2, [r3]
   65 0024 FFF7FEFF 		bl	__aeabi_dadd
@@ -91,7 +91,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc4XRO7g.s 			page 1
   77      0080
   78              	.L3:
   79 0038 00000000 		.word	0
-  80 003c 8084FE40 		.word	1090421888
+  80 003c 006AC840 		.word	1086876160
   81 0040 00005940 		.word	1079574528
   82              		.cfi_endproc
   83              	.LFE141:
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc4XRO7g.s 			page 1
  104              		.cfi_offset 4, -8
  105              		.cfi_offset 14, -4
  106 0002 0446     		mov	r4, r0
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc4XRO7g.s 			page 3
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5Qxe1r.s 			page 3
 
 
  107 0004 0846     		mov	r0, r1
@@ -168,17 +168,17 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc4XRO7g.s 			page 1
  146              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
  147              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim.h"
  148              		.file 8 "Core/drogui/include/pwm.h"
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc4XRO7g.s 			page 4
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc5Qxe1r.s 			page 4
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 pwm.c
-C:\Users\USUARIO\AppData\Local\Temp\cc4XRO7g.s:23     .text.setPwm:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\cc4XRO7g.s:31     .text.setPwm:00000000 setPwm
-C:\Users\USUARIO\AppData\Local\Temp\cc4XRO7g.s:79     .text.setPwm:00000038 $d
-C:\Users\USUARIO\AppData\Local\Temp\cc4XRO7g.s:86     .text.initPwm:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\cc4XRO7g.s:93     .text.initPwm:00000000 initPwm
-C:\Users\USUARIO\AppData\Local\Temp\cc4XRO7g.s:136    .text.initPwm:00000020 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5Qxe1r.s:23     .text.setPwm:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5Qxe1r.s:31     .text.setPwm:00000000 setPwm
+C:\Users\USUARIO\AppData\Local\Temp\cc5Qxe1r.s:79     .text.setPwm:00000038 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc5Qxe1r.s:86     .text.initPwm:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc5Qxe1r.s:93     .text.initPwm:00000000 initPwm
+C:\Users\USUARIO\AppData\Local\Temp\cc5Qxe1r.s:136    .text.initPwm:00000020 $d
 
 UNDEFINED SYMBOLS
 __aeabi_f2d

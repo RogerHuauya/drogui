@@ -103,7 +103,7 @@ int main(void)
   MX_TIM4_Init();
   MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
-  _main();
+ 
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -111,7 +111,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    
+       _main();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
