@@ -108,7 +108,7 @@ void wControlTask(){
     setReg(MOTOR_3, M3);
     setReg(MOTOR_4, M4);
 
-    //sprintf(buffc, "ACCEL c %f\t%f\t%f\t%f;\n", M1,M2,M3,M4);
+    //sprintf(buffc, "RPY c %f\t%f\t%f;\n", R, P, Y);
     //HAL_UART_Transmit(&huart2, (uint8_t*) buffc, strlen(buffc), 100);
 
     if(security){
@@ -142,9 +142,7 @@ void rpyControlTask(){
     for(int i = 0 ; i < 12; i++) Serial.print(filter_wroll.arr_y.coeff[i]), Serial.print('\t');
     Serial.println("****************************************************************************");
 */
-    float aux1 = angle_dif(roll_ref, roll);
-    float aux2 = angle_dif(pitch_ref, pitch);  
-    float aux3 = angle_dif(yaw_ref, yaw);
+
 
     setReg(GYRO_X_REF,wroll_ref);
     setReg(GYRO_Y_REF,wpitch_ref);
