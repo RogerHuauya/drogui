@@ -21,6 +21,8 @@
         "math.h": "c",
         "control.h": "c",
         "random": "c",
-        "mahony.h": "c"
+        "mahony.h": "c",
+        "matlib.h": "c",
+        "bmp388.h": "c"
     }
 }

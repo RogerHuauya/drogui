@@ -1,0 +1,142 @@
+#include "BMP388.h"
+#include "i2c.h"
+#include "matlib.h"
+#include "registerMap.h"
+#include "utils.h"
+#include <stdio.h>
+#include <string.h>
+#include "usart.h"
+
+typedef struct _calib{
+    uint16_t T1, T2;
+    int8_t T3;
+    
+    int16_t P1, P2, P9;
+    int8_t P3, P4, P7, P8, P10, P11;
+    uint16_t P5, P6;
+    
+    int64_t T_fine;
+} calib;
+
+
+void buildCalib(uint8_t* buff, calib * cal){
+    int c = 0;
+
+    cal -> T1 = (uint16_t) (buff[c++] << 8 | buff[c++]);
+    cal -> T2 = (uint16_t) (buff[c++] << 8 | buff[c++]);
+    cal -> T3 = (int8_t) (buff[c++]);
+
+    cal -> P1 =  (int16_t) (buff[c++] << 8 | buff[c++]);
+    cal -> P2 =  (int16_t) (buff[c++] << 8 | buff[c++]);
+    cal -> P3 =  (int8_t) (buff[c++]);
+    cal -> P4 =  (int8_t) (buff[c++]);
+    cal -> P5 =  (uint16_t) (buff[c++] << 8 | buff[c++]);
+    cal -> P6 =  (uint16_t) (buff[c++] << 8 | buff[c++]);
+    cal -> P7 =  (int8_t) (buff[c++]);
+    cal -> P8 =  (int8_t) (buff[c++]);
+    cal -> P9 =  (int16_t) (buff[c++] << 8 | buff[c++]);
+    cal -> P10 = (int8_t) (buff[c++]);
+    cal -> P11 = (int8_t) (buff[c++]);    
+}
+
+calib calib_bmp;
+
+
+void I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t* Data){
+    int x;
+    char aux_buff[50];
+    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 1000);
+    HAL_I2C_Master_Receive(&hi2c1, (Address << 1) | 1, Data, Nbytes, 1000);
+}
+ 
+void I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data){
+    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 10000);
+    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Data, 1, 10000);
+}
+
+void initBmp388(){
+    uint8_t buff[21];
+    I2CwriteByte(BMP388_DEFAULT_ADDRESS, BMP388_REG_PWR_CTRL, 0x33);
+    HAL_Delay(10);
+    I2CwriteByte(BMP388_DEFAULT_ADDRESS, BMP388_REG_OSR, 0x00);
+    HAL_Delay(10);
+    I2CwriteByte(BMP388_DEFAULT_ADDRESS, BMP388_REG_ODR, 0x00);
+    HAL_Delay(10);
+    I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_CALIB_DATA, 21, buff);
+    buildCalib(buff, &calib_bmp);
+}
+
+uint32_t bmpReadTemperature(){
+    uint8_t dat[3];
+    I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_TEMP, 3, dat);
+    return (uint32_t)(((dat[0] << 8) | (dat[1]) ) << 4)  | (dat[2] >> 4);
+}
+
+uint32_t bmpReadPressure(){
+    uint8_t dat[3];
+    I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_PRESS, 3, dat);
+    return (uint32_t)(((dat[0] << 8) | (dat[1]) ) << 4)  | (dat[2] >> 4);
+}
+
+static int64_t bmp388CompensateTemp(uint32_t u32RegData){
+
+  uint64_t partial_data1;
+  uint64_t partial_data2;
+  uint64_t partial_data3;
+  int64_t partial_data4;
+  int64_t partial_data5;
+  int64_t partial_data6;
+  int64_t comp_temp;
+
+  partial_data1 = (uint64_t)(u32RegData - (256 * (uint64_t)(calib_bmp.T1)));
+  partial_data2 = (uint64_t)(calib_bmp.T2 * partial_data1);
+  partial_data3 = (uint64_t)(partial_data1 * partial_data1);
+  partial_data4 = (int64_t)(((int64_t)partial_data3) * ((int64_t)calib_bmp.T3));
+  partial_data5 = ((int64_t)(((int64_t)partial_data2) * 262144) + (int64_t)partial_data4);
+  partial_data6 = (int64_t)(((int64_t)partial_data5) / 4294967296);
+
+  calib_bmp.T_fine = partial_data6;
+  comp_temp = (int64_t)((partial_data6 * 25)  / 16384);
+  return comp_temp;   
+}
+
+static int64_t bmp388CompensatePress(uint32_t u32RegData){
+
+  int64_t partial_data1;
+  int64_t partial_data2;
+  int64_t partial_data3;
+  int64_t partial_data4;
+  int64_t partial_data5;
+  int64_t partial_data6;
+  int64_t offset;
+  int64_t sensitivity;
+  uint64_t comp_press;
+
+  partial_data1 = calib_bmp.T_fine * calib_bmp.T_fine;
+  partial_data2 = partial_data1 / 64;
+  partial_data3 = (partial_data2 * calib_bmp.T_fine) / 256;
+  partial_data4 = (calib_bmp.P8 * partial_data3) / 32;
+  partial_data5 = (calib_bmp.P7 * partial_data1) * 16;
+  partial_data6 = (calib_bmp.P6 * calib_bmp.T_fine) * 4194304;
+  offset = (int64_t)((int64_t)(calib_bmp.P5) * (int64_t)140737488355328) + 
+            partial_data4 + partial_data5 + partial_data6;
+
+  partial_data2 = (((int64_t)calib_bmp.P4) * partial_data3) / 32;
+  partial_data4 = (calib_bmp.P3 * partial_data1) * 4;
+  partial_data5 = ((int64_t)(calib_bmp.P2) - 16384) * ((int64_t)calib_bmp.T_fine) * 2097152;
+  sensitivity = (((int64_t)(calib_bmp.P1) - 16384) * (int64_t)70368744177664) + 
+                partial_data2 + partial_data4 + partial_data5;
+
+  partial_data1 = (sensitivity / 16777216) * u32RegData;
+  partial_data2 = (int64_t)(calib_bmp.P10) * (int64_t)(calib_bmp.T_fine);
+  partial_data3 = partial_data2 + (65536 * (int64_t)(calib_bmp.P9));
+  partial_data4 = (partial_data3 * u32RegData) / 8192;
+  partial_data5 = (partial_data4 * u32RegData) / 512;
+  partial_data6 = (int64_t)((uint64_t)u32RegData * (uint64_t)u32RegData);
+  partial_data2 = ((int64_t)(calib_bmp.P11) * (int64_t)(partial_data6)) / 65536;
+  partial_data3 = (partial_data2 * u32RegData) / 128;
+  partial_data4 = (offset / 4) + partial_data1 + partial_data5 + partial_data3;
+  comp_press = (((uint64_t)partial_data4 * 25) / (uint64_t)1099511627776);
+
+  return comp_press;
+}
