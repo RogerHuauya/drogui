@@ -55,13 +55,13 @@ void gyroTask(){
     gy = computeDNotch(&dnotch_gy, gy);
     gz = computeDNotch(&dnotch_gz, gz);
 
-    gy = computeDNotch(&dnotch_gx2, gy);
+    gx = computeDNotch(&dnotch_gx2, gx);
     gy = computeDNotch(&dnotch_gy2, gy);
     gz = computeDNotch(&dnotch_gz2, gz);
     
-    gx /= 5;
-    gy /= 5;
-    gz /= 5; 
+    gx /= 50;
+    gy /= 50;
+    gz /= 50; 
 
 
     setReg(GYRO_X, gx);
@@ -83,13 +83,15 @@ void rpyTask(){
     mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, 0, 0, 0);
     getMahonyEuler(rpy);
     roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
-    roll += fmax(fmin(Kdfilt, (rpy[0] - roll)),-Kdfilt);
+    
+    /*roll += fmax(fmin(Kdfilt, (rpy[0] - roll)),-Kdfilt);
     pitch += fmax(fmin(Kdfilt, (rpy[1] - pitch)),-Kdfilt);
-    yaw += fmax(fmin(Kdfilt,(rpy[2] - yaw)),-Kdfilt);
+    yaw += fmax(fmin(Kdfilt,(rpy[2] - yaw)),-Kdfilt);*/
 
     roll = computeFilter(&filter_roll, roll);
     pitch = computeFilter(&filter_pitch, pitch);
     yaw = computeFilter(&filter_yaw, yaw);
+
 
     setReg(ROLL_VAL, roll);
     setReg(PITCH_VAL, pitch);
@@ -139,6 +141,6 @@ void initSensorsTasks(){
     
     addTask(&gyroTask, 1000, 2);
     addTask(&accelTask, 1000, 3);
-    addTask(&magTask, 10, 2);
+    //addTask(&magTask, 10, 2);
     addTask(&rpyTask, 2000, 2);
 }

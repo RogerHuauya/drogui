@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s 			page 1
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s 			page 1
   42 0004 0148     		ldr	r0, .L3
   43              	.LVL1:
   44              		.loc 1 14 5 is_stmt 0 view .LVU3
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s 			page 2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s 			page 2
 
 
   45 0006 FFF7FEFF 		bl	HAL_GPIO_TogglePin
@@ -85,7 +85,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s 			page 1
   17:Core/drogui/src/debugTasks.c **** char buff[50] = "hola\n";
   18:Core/drogui/src/debugTasks.c **** void debugTask(void *argument){
   19:Core/drogui/src/debugTasks.c ****     
-  20:Core/drogui/src/debugTasks.c ****     sprintf(buff, "%f\t%f\t%f;\n", roll, pitch, yaw);
+  20:Core/drogui/src/debugTasks.c ****     sprintf(buff, "%f\t%f\t%f \n", roll, pitch, yaw);
   21:Core/drogui/src/debugTasks.c ****     HAL_UART_Transmit(&huart2, (uint8_t*) buff, strlen(buff), 100);
   22:Core/drogui/src/debugTasks.c **** }
   23:Core/drogui/src/debugTasks.c **** void securityTask(){
@@ -107,18 +107,18 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s 			page 1
   80              		.loc 1 24 7 view .LVU8
   81 0008 B5EE400A 		vcmp.f32	s0, #0
   82 000c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
-  83 0010 03D0     		beq	.L9
+  83 0010 03D0     		beq	.L11
   25:Core/drogui/src/debugTasks.c ****         updatePID();
-  26:Core/drogui/src/debugTasks.c ****         //if(getReg(CAL_GYR_TRG) == 1) calibrateGyro(&myIMU), setReg(CAL_GYR_TRG, 0);
-  27:Core/drogui/src/debugTasks.c ****         //if(getReg(CAL_ACC_TRG) == 1) calibrateAccel(&myIMU), setReg(CAL_ACC_TRG, 0);
+  26:Core/drogui/src/debugTasks.c ****         if(getReg(CAL_GYR_TRG) == 1) calibrateGyro(&myIMU), setReg(CAL_GYR_TRG, 0);
+  27:Core/drogui/src/debugTasks.c ****         if(getReg(CAL_ACC_TRG) == 1) calibrateAccel(&myIMU), setReg(CAL_ACC_TRG, 0);
   28:Core/drogui/src/debugTasks.c ****         //if(getReg(CAL_MAG_TRG) == 1) calibrateMag(&myIMU), setReg(CAL_MAG_TRG, 0);
   29:Core/drogui/src/debugTasks.c ****         security = true;
   30:Core/drogui/src/debugTasks.c ****     }
   31:Core/drogui/src/debugTasks.c ****     else security = false;
   84              		.loc 1 31 10 is_stmt 1 view .LVU9
   85              		.loc 1 31 19 is_stmt 0 view .LVU10
-  86 0012 054B     		ldr	r3, .L10
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s 			page 3
+  86 0012 184B     		ldr	r3, .L14
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s 			page 3
 
 
   87 0014 0022     		movs	r2, #0
@@ -127,230 +127,293 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s 			page 1
   32:Core/drogui/src/debugTasks.c **** }
   90              		.loc 1 32 1 view .LVU11
   91 0018 08BD     		pop	{r3, pc}
-  92              	.L9:
+  92              	.L11:
   25:Core/drogui/src/debugTasks.c ****         updatePID();
   93              		.loc 1 25 9 is_stmt 1 view .LVU12
   94 001a FFF7FEFF 		bl	updatePID
   95              	.LVL4:
+  26:Core/drogui/src/debugTasks.c ****         if(getReg(CAL_ACC_TRG) == 1) calibrateAccel(&myIMU), setReg(CAL_ACC_TRG, 0);
+  96              		.loc 1 26 9 view .LVU13
+  26:Core/drogui/src/debugTasks.c ****         if(getReg(CAL_ACC_TRG) == 1) calibrateAccel(&myIMU), setReg(CAL_ACC_TRG, 0);
+  97              		.loc 1 26 12 is_stmt 0 view .LVU14
+  98 001e 9420     		movs	r0, #148
+  99 0020 FFF7FEFF 		bl	getReg
+ 100              	.LVL5:
+  26:Core/drogui/src/debugTasks.c ****         if(getReg(CAL_ACC_TRG) == 1) calibrateAccel(&myIMU), setReg(CAL_ACC_TRG, 0);
+ 101              		.loc 1 26 11 view .LVU15
+ 102 0024 F7EE007A 		vmov.f32	s15, #1.0e+0
+ 103 0028 B4EE670A 		vcmp.f32	s0, s15
+ 104 002c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 105 0030 0DD0     		beq	.L12
+ 106              	.L7:
+  27:Core/drogui/src/debugTasks.c ****         //if(getReg(CAL_MAG_TRG) == 1) calibrateMag(&myIMU), setReg(CAL_MAG_TRG, 0);
+ 107              		.loc 1 27 9 is_stmt 1 view .LVU16
+  27:Core/drogui/src/debugTasks.c ****         //if(getReg(CAL_MAG_TRG) == 1) calibrateMag(&myIMU), setReg(CAL_MAG_TRG, 0);
+ 108              		.loc 1 27 12 is_stmt 0 view .LVU17
+ 109 0032 9620     		movs	r0, #150
+ 110 0034 FFF7FEFF 		bl	getReg
+ 111              	.LVL6:
+  27:Core/drogui/src/debugTasks.c ****         //if(getReg(CAL_MAG_TRG) == 1) calibrateMag(&myIMU), setReg(CAL_MAG_TRG, 0);
+ 112              		.loc 1 27 11 view .LVU18
+ 113 0038 F7EE007A 		vmov.f32	s15, #1.0e+0
+ 114 003c B4EE670A 		vcmp.f32	s0, s15
+ 115 0040 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 116 0044 0CD0     		beq	.L13
+ 117              	.L8:
   29:Core/drogui/src/debugTasks.c ****     }
-  96              		.loc 1 29 9 view .LVU13
+ 118              		.loc 1 29 9 is_stmt 1 view .LVU19
   29:Core/drogui/src/debugTasks.c ****     }
-  97              		.loc 1 29 18 is_stmt 0 view .LVU14
-  98 001e 024B     		ldr	r3, .L10
-  99 0020 0122     		movs	r2, #1
- 100 0022 1A70     		strb	r2, [r3]
- 101 0024 F8E7     		b	.L5
- 102              	.L11:
- 103 0026 00BF     		.align	2
- 104              	.L10:
- 105 0028 00000000 		.word	security
- 106              		.cfi_endproc
- 107              	.LFE179:
- 109              		.global	__aeabi_f2d
- 110              		.section	.rodata.debugTask.str1.4,"aMS",%progbits,1
- 111              		.align	2
- 112              	.LC0:
- 113 0000 25660925 		.ascii	"%f\011%f\011%f;\012\000"
- 113      66092566 
- 113      3B0A00
- 114              		.section	.text.debugTask,"ax",%progbits
- 115              		.align	1
- 116              		.global	debugTask
- 117              		.syntax unified
- 118              		.thumb
- 119              		.thumb_func
- 120              		.fpu fpv5-sp-d16
- 122              	debugTask:
- 123              	.LVL5:
- 124              	.LFB178:
-  18:Core/drogui/src/debugTasks.c ****     
- 125              		.loc 1 18 31 is_stmt 1 view -0
- 126              		.cfi_startproc
- 127              		@ args = 0, pretend = 0, frame = 0
- 128              		@ frame_needed = 0, uses_anonymous_args = 0
-  18:Core/drogui/src/debugTasks.c ****     
- 129              		.loc 1 18 31 is_stmt 0 view .LVU16
- 130 0000 D0B5     		push	{r4, r6, r7, lr}
- 131              	.LCFI2:
- 132              		.cfi_def_cfa_offset 16
- 133              		.cfi_offset 4, -16
- 134              		.cfi_offset 6, -12
- 135              		.cfi_offset 7, -8
- 136              		.cfi_offset 14, -4
- 137 0002 84B0     		sub	sp, sp, #16
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s 			page 4
+ 119              		.loc 1 29 18 is_stmt 0 view .LVU20
+ 120 0046 0B4B     		ldr	r3, .L14
+ 121 0048 0122     		movs	r2, #1
+ 122 004a 1A70     		strb	r2, [r3]
+ 123 004c E4E7     		b	.L5
+ 124              	.L12:
+  26:Core/drogui/src/debugTasks.c ****         if(getReg(CAL_ACC_TRG) == 1) calibrateAccel(&myIMU), setReg(CAL_ACC_TRG, 0);
+ 125              		.loc 1 26 38 is_stmt 1 discriminator 1 view .LVU21
+ 126 004e 0A48     		ldr	r0, .L14+4
+ 127 0050 FFF7FEFF 		bl	calibrateGyro
+ 128              	.LVL7:
+  26:Core/drogui/src/debugTasks.c ****         if(getReg(CAL_ACC_TRG) == 1) calibrateAccel(&myIMU), setReg(CAL_ACC_TRG, 0);
+ 129              		.loc 1 26 61 is_stmt 0 discriminator 1 view .LVU22
+ 130 0054 9FED090A 		vldr.32	s0, .L14+8
+ 131 0058 9420     		movs	r0, #148
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s 			page 4
 
 
- 138              	.LCFI3:
- 139              		.cfi_def_cfa_offset 32
+ 132 005a FFF7FEFF 		bl	setReg
+ 133              	.LVL8:
+ 134 005e E8E7     		b	.L7
+ 135              	.L13:
+  27:Core/drogui/src/debugTasks.c ****         //if(getReg(CAL_MAG_TRG) == 1) calibrateMag(&myIMU), setReg(CAL_MAG_TRG, 0);
+ 136              		.loc 1 27 38 is_stmt 1 discriminator 1 view .LVU23
+ 137 0060 0548     		ldr	r0, .L14+4
+ 138 0062 FFF7FEFF 		bl	calibrateAccel
+ 139              	.LVL9:
+  27:Core/drogui/src/debugTasks.c ****         //if(getReg(CAL_MAG_TRG) == 1) calibrateMag(&myIMU), setReg(CAL_MAG_TRG, 0);
+ 140              		.loc 1 27 62 is_stmt 0 discriminator 1 view .LVU24
+ 141 0066 9FED050A 		vldr.32	s0, .L14+8
+ 142 006a 9620     		movs	r0, #150
+ 143 006c FFF7FEFF 		bl	setReg
+ 144              	.LVL10:
+ 145 0070 E9E7     		b	.L8
+ 146              	.L15:
+ 147 0072 00BF     		.align	2
+ 148              	.L14:
+ 149 0074 00000000 		.word	security
+ 150 0078 00000000 		.word	myIMU
+ 151 007c 00000000 		.word	0
+ 152              		.cfi_endproc
+ 153              	.LFE179:
+ 155              		.global	__aeabi_f2d
+ 156              		.section	.rodata.debugTask.str1.4,"aMS",%progbits,1
+ 157              		.align	2
+ 158              	.LC0:
+ 159 0000 25660925 		.ascii	"%f\011%f\011%f \012\000"
+ 159      66092566 
+ 159      200A00
+ 160              		.section	.text.debugTask,"ax",%progbits
+ 161              		.align	1
+ 162              		.global	debugTask
+ 163              		.syntax unified
+ 164              		.thumb
+ 165              		.thumb_func
+ 166              		.fpu fpv5-sp-d16
+ 168              	debugTask:
+ 169              	.LVL11:
+ 170              	.LFB178:
+  18:Core/drogui/src/debugTasks.c ****     
+ 171              		.loc 1 18 31 is_stmt 1 view -0
+ 172              		.cfi_startproc
+ 173              		@ args = 0, pretend = 0, frame = 0
+ 174              		@ frame_needed = 0, uses_anonymous_args = 0
+  18:Core/drogui/src/debugTasks.c ****     
+ 175              		.loc 1 18 31 is_stmt 0 view .LVU26
+ 176 0000 D0B5     		push	{r4, r6, r7, lr}
+ 177              	.LCFI2:
+ 178              		.cfi_def_cfa_offset 16
+ 179              		.cfi_offset 4, -16
+ 180              		.cfi_offset 6, -12
+ 181              		.cfi_offset 7, -8
+ 182              		.cfi_offset 14, -4
+ 183 0002 84B0     		sub	sp, sp, #16
+ 184              	.LCFI3:
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s 			page 5
+
+
+ 185              		.cfi_def_cfa_offset 32
   20:Core/drogui/src/debugTasks.c ****     HAL_UART_Transmit(&huart2, (uint8_t*) buff, strlen(buff), 100);
- 140              		.loc 1 20 5 is_stmt 1 view .LVU17
- 141 0004 114B     		ldr	r3, .L14
- 142 0006 1868     		ldr	r0, [r3]	@ float
- 143              	.LVL6:
+ 186              		.loc 1 20 5 is_stmt 1 view .LVU27
+ 187 0004 114B     		ldr	r3, .L18
+ 188 0006 1868     		ldr	r0, [r3]	@ float
+ 189              	.LVL12:
   20:Core/drogui/src/debugTasks.c ****     HAL_UART_Transmit(&huart2, (uint8_t*) buff, strlen(buff), 100);
- 144              		.loc 1 20 5 is_stmt 0 view .LVU18
- 145 0008 FFF7FEFF 		bl	__aeabi_f2d
- 146              	.LVL7:
- 147 000c 0646     		mov	r6, r0
- 148 000e 0F46     		mov	r7, r1
- 149 0010 0F4C     		ldr	r4, .L14+4
- 150 0012 104B     		ldr	r3, .L14+8
- 151 0014 1868     		ldr	r0, [r3]	@ float
- 152 0016 FFF7FEFF 		bl	__aeabi_f2d
- 153              	.LVL8:
- 154 001a CDE90201 		strd	r0, [sp, #8]
- 155 001e 0E4B     		ldr	r3, .L14+12
- 156 0020 1868     		ldr	r0, [r3]	@ float
- 157 0022 FFF7FEFF 		bl	__aeabi_f2d
- 158              	.LVL9:
- 159 0026 CDE90001 		strd	r0, [sp]
- 160 002a 3246     		mov	r2, r6
- 161 002c 3B46     		mov	r3, r7
- 162 002e 0B49     		ldr	r1, .L14+16
- 163 0030 2046     		mov	r0, r4
- 164 0032 FFF7FEFF 		bl	sprintf
- 165              	.LVL10:
+ 190              		.loc 1 20 5 is_stmt 0 view .LVU28
+ 191 0008 FFF7FEFF 		bl	__aeabi_f2d
+ 192              	.LVL13:
+ 193 000c 0646     		mov	r6, r0
+ 194 000e 0F46     		mov	r7, r1
+ 195 0010 0F4C     		ldr	r4, .L18+4
+ 196 0012 104B     		ldr	r3, .L18+8
+ 197 0014 1868     		ldr	r0, [r3]	@ float
+ 198 0016 FFF7FEFF 		bl	__aeabi_f2d
+ 199              	.LVL14:
+ 200 001a CDE90201 		strd	r0, [sp, #8]
+ 201 001e 0E4B     		ldr	r3, .L18+12
+ 202 0020 1868     		ldr	r0, [r3]	@ float
+ 203 0022 FFF7FEFF 		bl	__aeabi_f2d
+ 204              	.LVL15:
+ 205 0026 CDE90001 		strd	r0, [sp]
+ 206 002a 3246     		mov	r2, r6
+ 207 002c 3B46     		mov	r3, r7
+ 208 002e 0B49     		ldr	r1, .L18+16
+ 209 0030 2046     		mov	r0, r4
+ 210 0032 FFF7FEFF 		bl	sprintf
+ 211              	.LVL16:
   21:Core/drogui/src/debugTasks.c **** }
- 166              		.loc 1 21 5 is_stmt 1 view .LVU19
+ 212              		.loc 1 21 5 is_stmt 1 view .LVU29
   21:Core/drogui/src/debugTasks.c **** }
- 167              		.loc 1 21 49 is_stmt 0 view .LVU20
- 168 0036 2046     		mov	r0, r4
- 169 0038 FFF7FEFF 		bl	strlen
- 170              	.LVL11:
+ 213              		.loc 1 21 49 is_stmt 0 view .LVU30
+ 214 0036 2046     		mov	r0, r4
+ 215 0038 FFF7FEFF 		bl	strlen
+ 216              	.LVL17:
   21:Core/drogui/src/debugTasks.c **** }
- 171              		.loc 1 21 5 view .LVU21
- 172 003c 6423     		movs	r3, #100
- 173 003e 82B2     		uxth	r2, r0
- 174 0040 2146     		mov	r1, r4
- 175 0042 0748     		ldr	r0, .L14+20
- 176 0044 FFF7FEFF 		bl	HAL_UART_Transmit
- 177              	.LVL12:
+ 217              		.loc 1 21 5 view .LVU31
+ 218 003c 6423     		movs	r3, #100
+ 219 003e 82B2     		uxth	r2, r0
+ 220 0040 2146     		mov	r1, r4
+ 221 0042 0748     		ldr	r0, .L18+20
+ 222 0044 FFF7FEFF 		bl	HAL_UART_Transmit
+ 223              	.LVL18:
   22:Core/drogui/src/debugTasks.c **** void securityTask(){
- 178              		.loc 1 22 1 view .LVU22
- 179 0048 04B0     		add	sp, sp, #16
- 180              	.LCFI4:
- 181              		.cfi_def_cfa_offset 16
- 182              		@ sp needed
- 183 004a D0BD     		pop	{r4, r6, r7, pc}
- 184              	.L15:
- 185              		.align	2
- 186              	.L14:
- 187 004c 00000000 		.word	roll
- 188 0050 00000000 		.word	.LANCHOR0
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s 			page 5
+ 224              		.loc 1 22 1 view .LVU32
+ 225 0048 04B0     		add	sp, sp, #16
+ 226              	.LCFI4:
+ 227              		.cfi_def_cfa_offset 16
+ 228              		@ sp needed
+ 229 004a D0BD     		pop	{r4, r6, r7, pc}
+ 230              	.L19:
+ 231              		.align	2
+ 232              	.L18:
+ 233 004c 00000000 		.word	roll
+ 234 0050 00000000 		.word	.LANCHOR0
+ 235 0054 00000000 		.word	yaw
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s 			page 6
 
 
- 189 0054 00000000 		.word	yaw
- 190 0058 00000000 		.word	pitch
- 191 005c 00000000 		.word	.LC0
- 192 0060 00000000 		.word	huart2
- 193              		.cfi_endproc
- 194              	.LFE178:
- 196              		.section	.text.initDebug,"ax",%progbits
- 197              		.align	1
- 198              		.global	initDebug
- 199              		.syntax unified
- 200              		.thumb
- 201              		.thumb_func
- 202              		.fpu fpv5-sp-d16
- 204              	initDebug:
- 205              	.LFB180:
+ 236 0058 00000000 		.word	pitch
+ 237 005c 00000000 		.word	.LC0
+ 238 0060 00000000 		.word	huart2
+ 239              		.cfi_endproc
+ 240              	.LFE178:
+ 242              		.section	.text.initDebug,"ax",%progbits
+ 243              		.align	1
+ 244              		.global	initDebug
+ 245              		.syntax unified
+ 246              		.thumb
+ 247              		.thumb_func
+ 248              		.fpu fpv5-sp-d16
+ 250              	initDebug:
+ 251              	.LFB180:
   33:Core/drogui/src/debugTasks.c **** 
   34:Core/drogui/src/debugTasks.c **** void initDebug(){
- 206              		.loc 1 34 17 is_stmt 1 view -0
- 207              		.cfi_startproc
- 208              		@ args = 0, pretend = 0, frame = 0
- 209              		@ frame_needed = 0, uses_anonymous_args = 0
- 210 0000 08B5     		push	{r3, lr}
- 211              	.LCFI5:
- 212              		.cfi_def_cfa_offset 8
- 213              		.cfi_offset 3, -8
- 214              		.cfi_offset 14, -4
+ 252              		.loc 1 34 17 is_stmt 1 view -0
+ 253              		.cfi_startproc
+ 254              		@ args = 0, pretend = 0, frame = 0
+ 255              		@ frame_needed = 0, uses_anonymous_args = 0
+ 256 0000 08B5     		push	{r3, lr}
+ 257              	.LCFI5:
+ 258              		.cfi_def_cfa_offset 8
+ 259              		.cfi_offset 3, -8
+ 260              		.cfi_offset 14, -4
   35:Core/drogui/src/debugTasks.c ****     
-  36:Core/drogui/src/debugTasks.c ****     //addTask(&debugTask, 1000, 1);
-  37:Core/drogui/src/debugTasks.c ****     addTask(&blinkTask, 1000000, 1);
- 215              		.loc 1 37 5 view .LVU24
- 216 0002 0122     		movs	r2, #1
- 217 0004 0549     		ldr	r1, .L18
- 218 0006 0648     		ldr	r0, .L18+4
- 219 0008 FFF7FEFF 		bl	addTask
- 220              	.LVL13:
+  36:Core/drogui/src/debugTasks.c ****     //addTask(&debugTask, 10000, 1);
+  37:Core/drogui/src/debugTasks.c ****     addTask(&blinkTask, 10, 1);
+ 261              		.loc 1 37 5 view .LVU34
+ 262 0002 0122     		movs	r2, #1
+ 263 0004 0A21     		movs	r1, #10
+ 264 0006 0548     		ldr	r0, .L22
+ 265 0008 FFF7FEFF 		bl	addTask
+ 266              	.LVL19:
   38:Core/drogui/src/debugTasks.c ****     addTask(&securityTask, 1000, 1);
- 221              		.loc 1 38 5 view .LVU25
- 222 000c 0122     		movs	r2, #1
- 223 000e 4FF47A71 		mov	r1, #1000
- 224 0012 0448     		ldr	r0, .L18+8
- 225 0014 FFF7FEFF 		bl	addTask
- 226              	.LVL14:
+ 267              		.loc 1 38 5 view .LVU35
+ 268 000c 0122     		movs	r2, #1
+ 269 000e 4FF47A71 		mov	r1, #1000
+ 270 0012 0348     		ldr	r0, .L22+4
+ 271 0014 FFF7FEFF 		bl	addTask
+ 272              	.LVL20:
   39:Core/drogui/src/debugTasks.c **** }...
- 227              		.loc 1 39 1 is_stmt 0 view .LVU26
- 228 0018 08BD     		pop	{r3, pc}
- 229              	.L19:
- 230 001a 00BF     		.align	2
- 231              	.L18:
- 232 001c 40420F00 		.word	1000000
- 233 0020 00000000 		.word	blinkTask
- 234 0024 00000000 		.word	securityTask
- 235              		.cfi_endproc
- 236              	.LFE180:
- 238              		.global	buff
- 239              		.section	.data.buff,"aw"
- 240              		.align	2
- 241              		.set	.LANCHOR0,. + 0
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s 			page 6
+ 273              		.loc 1 39 1 is_stmt 0 view .LVU36
+ 274 0018 08BD     		pop	{r3, pc}
+ 275              	.L23:
+ 276 001a 00BF     		.align	2
+ 277              	.L22:
+ 278 001c 00000000 		.word	blinkTask
+ 279 0020 00000000 		.word	securityTask
+ 280              		.cfi_endproc
+ 281              	.LFE180:
+ 283              		.global	buff
+ 284              		.section	.data.buff,"aw"
+ 285              		.align	2
+ 286              		.set	.LANCHOR0,. + 0
+ 289              	buff:
+ 290 0000 686F6C61 		.ascii	"hola\012\000"
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s 			page 7
 
 
- 244              	buff:
- 245 0000 686F6C61 		.ascii	"hola\012\000"
- 245      0A00
- 246 0006 00000000 		.space	44
- 246      00000000 
- 246      00000000 
- 246      00000000 
- 246      00000000 
- 247              		.text
- 248              	.Letext0:
- 249              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 250              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 251              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
- 252              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
- 253              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
- 254              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h"
- 255              		.file 8 "Core/drogui/include/utils.h"
- 256              		.file 9 "Core/Inc/usart.h"
- 257              		.file 10 "Core/drogui/include/sensorsTasks.h"
- 258              		.file 11 "Core/drogui/include/task.h"
- 259              		.file 12 "Core/drogui/include/controlTasks.h"
- 260              		.file 13 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
- 261              		.file 14 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
- 262              		.file 15 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_gpio.h"
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s 			page 7
+ 290      0A00
+ 291 0006 00000000 		.space	44
+ 291      00000000 
+ 291      00000000 
+ 291      00000000 
+ 291      00000000 
+ 292              		.text
+ 293              	.Letext0:
+ 294              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 295              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 296              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
+ 297              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
+ 298              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
+ 299              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h"
+ 300              		.file 8 "Core/drogui/include/utils.h"
+ 301              		.file 9 "Core/Inc/usart.h"
+ 302              		.file 10 "Core/drogui/include/MPU9250.h"
+ 303              		.file 11 "Core/drogui/include/sensorsTasks.h"
+ 304              		.file 12 "Core/drogui/include/task.h"
+ 305              		.file 13 "Core/drogui/include/controlTasks.h"
+ 306              		.file 14 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ 307              		.file 15 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ 308              		.file 16 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_gpio.h"
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s 			page 8
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 debugTasks.c
-C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s:18     .text.blinkTask:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s:26     .text.blinkTask:00000000 blinkTask
-C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s:52     .text.blinkTask:0000000c $d
-C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s:57     .text.securityTask:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s:64     .text.securityTask:00000000 securityTask
-C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s:105    .text.securityTask:00000028 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s:111    .rodata.debugTask.str1.4:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s:115    .text.debugTask:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s:122    .text.debugTask:00000000 debugTask
-C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s:187    .text.debugTask:0000004c $d
-C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s:197    .text.initDebug:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s:204    .text.initDebug:00000000 initDebug
-C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s:232    .text.initDebug:0000001c $d
-C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s:244    .data.buff:00000000 buff
-C:\Users\USUARIO\AppData\Local\Temp\ccOnzlix.s:240    .data.buff:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s:18     .text.blinkTask:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s:26     .text.blinkTask:00000000 blinkTask
+C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s:52     .text.blinkTask:0000000c $d
+C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s:57     .text.securityTask:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s:64     .text.securityTask:00000000 securityTask
+C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s:149    .text.securityTask:00000074 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s:157    .rodata.debugTask.str1.4:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s:161    .text.debugTask:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s:168    .text.debugTask:00000000 debugTask
+C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s:233    .text.debugTask:0000004c $d
+C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s:243    .text.initDebug:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s:250    .text.initDebug:00000000 initDebug
+C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s:278    .text.initDebug:0000001c $d
+C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s:289    .data.buff:00000000 buff
+C:\Users\USUARIO\AppData\Local\Temp\cc7VjiLY.s:285    .data.buff:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_TogglePin
 getReg
 updatePID
+calibrateGyro
+setReg
+calibrateAccel
 security
+myIMU
 __aeabi_f2d
 sprintf
 strlen

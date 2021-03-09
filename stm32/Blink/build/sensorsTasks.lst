@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 1
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 1
   32              		@ frame_needed = 0, uses_anonymous_args = 0
   33 0000 70B5     		push	{r4, r5, r6, lr}
   34              	.LCFI0:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 2
 
 
   35              		.cfi_def_cfa_offset 16
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 1
   80              		.loc 1 33 5 is_stmt 1 view .LVU14
   81              		.loc 1 33 10 is_stmt 0 view .LVU15
   82 0048 95ED000A 		vldr.32	s0, [r5]
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 3
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 3
 
 
   83 004c 1548     		ldr	r0, .L3+32
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 1
  132              		.syntax unified
  133              		.thumb
  134              		.thumb_func
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 4
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 4
 
 
  135              		.fpu fpv5-sp-d16
@@ -201,7 +201,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 1
   43:Core/drogui/src/sensorsTasks.c **** 
   44:Core/drogui/src/sensorsTasks.c ****     readGyro(&myIMU);
  150              		.loc 1 44 5 view .LVU25
- 151 0002 3D4D     		ldr	r5, .L7
+ 151 0002 3E4D     		ldr	r5, .L7
  152 0004 2846     		mov	r0, r5
  153 0006 FFF7FEFF 		bl	readGyro
  154              	.LVL10:
@@ -210,41 +210,41 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 1
  155              		.loc 1 46 5 view .LVU26
  156              		.loc 1 46 10 is_stmt 0 view .LVU27
  157 000a 95ED070A 		vldr.32	s0, [r5, #28]
- 158 000e 3B48     		ldr	r0, .L7+4
+ 158 000e 3C48     		ldr	r0, .L7+4
  159 0010 FFF7FEFF 		bl	computeFilter
  160              	.LVL11:
  161              		.loc 1 46 8 view .LVU28
- 162 0014 3A4E     		ldr	r6, .L7+8
+ 162 0014 3B4E     		ldr	r6, .L7+8
  163 0016 86ED000A 		vstr.32	s0, [r6]
   47:Core/drogui/src/sensorsTasks.c ****     gy = computeFilter(&filter_gy, myIMU.gy);
  164              		.loc 1 47 5 is_stmt 1 view .LVU29
  165              		.loc 1 47 10 is_stmt 0 view .LVU30
  166 001a 95ED080A 		vldr.32	s0, [r5, #32]
- 167 001e 3948     		ldr	r0, .L7+12
+ 167 001e 3A48     		ldr	r0, .L7+12
  168 0020 FFF7FEFF 		bl	computeFilter
  169              	.LVL12:
  170              		.loc 1 47 8 view .LVU31
- 171 0024 384C     		ldr	r4, .L7+16
+ 171 0024 394C     		ldr	r4, .L7+16
  172 0026 84ED000A 		vstr.32	s0, [r4]
   48:Core/drogui/src/sensorsTasks.c ****     gz = computeFilter(&filter_gz, myIMU.gz);
  173              		.loc 1 48 5 is_stmt 1 view .LVU32
  174              		.loc 1 48 10 is_stmt 0 view .LVU33
  175 002a 95ED090A 		vldr.32	s0, [r5, #36]
- 176 002e 3748     		ldr	r0, .L7+20
+ 176 002e 3848     		ldr	r0, .L7+20
  177 0030 FFF7FEFF 		bl	computeFilter
  178              	.LVL13:
  179              		.loc 1 48 8 view .LVU34
- 180 0034 364D     		ldr	r5, .L7+24
+ 180 0034 374D     		ldr	r5, .L7+24
  181 0036 85ED000A 		vstr.32	s0, [r5]
   49:Core/drogui/src/sensorsTasks.c **** 
   50:Core/drogui/src/sensorsTasks.c ****     gx = computeFilter(&filter_gx2, gx);
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 5
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 5
 
 
  182              		.loc 1 50 5 is_stmt 1 view .LVU35
  183              		.loc 1 50 10 is_stmt 0 view .LVU36
  184 003a 96ED000A 		vldr.32	s0, [r6]
- 185 003e 3548     		ldr	r0, .L7+28
+ 185 003e 3648     		ldr	r0, .L7+28
  186 0040 FFF7FEFF 		bl	computeFilter
  187              	.LVL14:
  188              		.loc 1 50 8 view .LVU37
@@ -253,7 +253,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 1
  190              		.loc 1 51 5 is_stmt 1 view .LVU38
  191              		.loc 1 51 10 is_stmt 0 view .LVU39
  192 0048 94ED000A 		vldr.32	s0, [r4]
- 193 004c 3248     		ldr	r0, .L7+32
+ 193 004c 3348     		ldr	r0, .L7+32
  194 004e FFF7FEFF 		bl	computeFilter
  195              	.LVL15:
  196              		.loc 1 51 8 view .LVU40
@@ -262,7 +262,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 1
  198              		.loc 1 52 5 is_stmt 1 view .LVU41
  199              		.loc 1 52 10 is_stmt 0 view .LVU42
  200 0056 95ED000A 		vldr.32	s0, [r5]
- 201 005a 3048     		ldr	r0, .L7+36
+ 201 005a 3148     		ldr	r0, .L7+36
  202 005c FFF7FEFF 		bl	computeFilter
  203              	.LVL16:
  204              		.loc 1 52 8 view .LVU43
@@ -272,7 +272,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 1
  206              		.loc 1 54 5 is_stmt 1 view .LVU44
  207              		.loc 1 54 10 is_stmt 0 view .LVU45
  208 0064 96ED000A 		vldr.32	s0, [r6]
- 209 0068 2D48     		ldr	r0, .L7+40
+ 209 0068 2E48     		ldr	r0, .L7+40
  210 006a FFF7FEFF 		bl	computeDNotch
  211              	.LVL17:
  212              		.loc 1 54 8 view .LVU46
@@ -281,7 +281,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 1
  214              		.loc 1 55 5 is_stmt 1 view .LVU47
  215              		.loc 1 55 10 is_stmt 0 view .LVU48
  216 0072 94ED000A 		vldr.32	s0, [r4]
- 217 0076 2B48     		ldr	r0, .L7+44
+ 217 0076 2C48     		ldr	r0, .L7+44
  218 0078 FFF7FEFF 		bl	computeDNotch
  219              	.LVL18:
  220              		.loc 1 55 8 view .LVU49
@@ -290,1275 +290,1146 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 1
  222              		.loc 1 56 5 is_stmt 1 view .LVU50
  223              		.loc 1 56 10 is_stmt 0 view .LVU51
  224 0080 95ED000A 		vldr.32	s0, [r5]
- 225 0084 2848     		ldr	r0, .L7+48
+ 225 0084 2948     		ldr	r0, .L7+48
  226 0086 FFF7FEFF 		bl	computeDNotch
  227              	.LVL19:
  228              		.loc 1 56 8 view .LVU52
  229 008a 85ED000A 		vstr.32	s0, [r5]
   57:Core/drogui/src/sensorsTasks.c **** 
-  58:Core/drogui/src/sensorsTasks.c ****     gy = computeDNotch(&dnotch_gx2, gy);
+  58:Core/drogui/src/sensorsTasks.c ****     gx = computeDNotch(&dnotch_gx2, gx);
  230              		.loc 1 58 5 is_stmt 1 view .LVU53
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 6
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 6
 
 
  231              		.loc 1 58 10 is_stmt 0 view .LVU54
- 232 008e 94ED000A 		vldr.32	s0, [r4]
- 233 0092 2648     		ldr	r0, .L7+52
+ 232 008e 96ED000A 		vldr.32	s0, [r6]
+ 233 0092 2748     		ldr	r0, .L7+52
  234 0094 FFF7FEFF 		bl	computeDNotch
  235              	.LVL20:
  236              		.loc 1 58 8 view .LVU55
- 237 0098 84ED000A 		vstr.32	s0, [r4]
+ 237 0098 86ED000A 		vstr.32	s0, [r6]
   59:Core/drogui/src/sensorsTasks.c ****     gy = computeDNotch(&dnotch_gy2, gy);
  238              		.loc 1 59 5 is_stmt 1 view .LVU56
  239              		.loc 1 59 10 is_stmt 0 view .LVU57
- 240 009c 2448     		ldr	r0, .L7+56
- 241 009e FFF7FEFF 		bl	computeDNotch
- 242              	.LVL21:
- 243              		.loc 1 59 8 view .LVU58
- 244 00a2 84ED000A 		vstr.32	s0, [r4]
+ 240 009c 94ED000A 		vldr.32	s0, [r4]
+ 241 00a0 2448     		ldr	r0, .L7+56
+ 242 00a2 FFF7FEFF 		bl	computeDNotch
+ 243              	.LVL21:
+ 244              		.loc 1 59 8 view .LVU58
+ 245 00a6 84ED000A 		vstr.32	s0, [r4]
   60:Core/drogui/src/sensorsTasks.c ****     gz = computeDNotch(&dnotch_gz2, gz);
- 245              		.loc 1 60 5 is_stmt 1 view .LVU59
- 246              		.loc 1 60 10 is_stmt 0 view .LVU60
- 247 00a6 95ED000A 		vldr.32	s0, [r5]
- 248 00aa 2248     		ldr	r0, .L7+60
- 249 00ac FFF7FEFF 		bl	computeDNotch
- 250              	.LVL22:
- 251 00b0 F0EE407A 		vmov.f32	s15, s0
- 252              		.loc 1 60 8 view .LVU61
- 253 00b4 85ED000A 		vstr.32	s0, [r5]
+ 246              		.loc 1 60 5 is_stmt 1 view .LVU59
+ 247              		.loc 1 60 10 is_stmt 0 view .LVU60
+ 248 00aa 95ED000A 		vldr.32	s0, [r5]
+ 249 00ae 2248     		ldr	r0, .L7+60
+ 250 00b0 FFF7FEFF 		bl	computeDNotch
+ 251              	.LVL22:
+ 252 00b4 F0EE407A 		vmov.f32	s15, s0
+ 253              		.loc 1 60 8 view .LVU61
+ 254 00b8 85ED000A 		vstr.32	s0, [r5]
   61:Core/drogui/src/sensorsTasks.c ****     
-  62:Core/drogui/src/sensorsTasks.c ****     gx /= 5;
- 254              		.loc 1 62 5 is_stmt 1 view .LVU62
- 255              		.loc 1 62 8 is_stmt 0 view .LVU63
- 256 00b8 D6ED006A 		vldr.32	s13, [r6]
- 257 00bc B1EE047A 		vmov.f32	s14, #5.0e+0
- 258 00c0 86EE870A 		vdiv.f32	s0, s13, s14
- 259 00c4 86ED000A 		vstr.32	s0, [r6]
-  63:Core/drogui/src/sensorsTasks.c ****     gy /= 5;
- 260              		.loc 1 63 5 is_stmt 1 view .LVU64
- 261              		.loc 1 63 8 is_stmt 0 view .LVU65
- 262 00c8 94ED006A 		vldr.32	s12, [r4]
- 263 00cc C6EE076A 		vdiv.f32	s13, s12, s14
- 264 00d0 C4ED006A 		vstr.32	s13, [r4]
-  64:Core/drogui/src/sensorsTasks.c ****     gz /= 5; 
- 265              		.loc 1 64 5 is_stmt 1 view .LVU66
- 266              		.loc 1 64 8 is_stmt 0 view .LVU67
- 267 00d4 C7EE876A 		vdiv.f32	s13, s15, s14
- 268 00d8 C5ED006A 		vstr.32	s13, [r5]
+  62:Core/drogui/src/sensorsTasks.c ****     gx /= 50;
+ 255              		.loc 1 62 5 is_stmt 1 view .LVU62
+ 256              		.loc 1 62 8 is_stmt 0 view .LVU63
+ 257 00bc D6ED006A 		vldr.32	s13, [r6]
+ 258 00c0 9FED1E7A 		vldr.32	s14, .L7+64
+ 259 00c4 86EE870A 		vdiv.f32	s0, s13, s14
+ 260 00c8 86ED000A 		vstr.32	s0, [r6]
+  63:Core/drogui/src/sensorsTasks.c ****     gy /= 50;
+ 261              		.loc 1 63 5 is_stmt 1 view .LVU64
+ 262              		.loc 1 63 8 is_stmt 0 view .LVU65
+ 263 00cc 94ED006A 		vldr.32	s12, [r4]
+ 264 00d0 C6EE076A 		vdiv.f32	s13, s12, s14
+ 265 00d4 C4ED006A 		vstr.32	s13, [r4]
+  64:Core/drogui/src/sensorsTasks.c ****     gz /= 50; 
+ 266              		.loc 1 64 5 is_stmt 1 view .LVU66
+ 267              		.loc 1 64 8 is_stmt 0 view .LVU67
+ 268 00d8 C7EE876A 		vdiv.f32	s13, s15, s14
+ 269 00dc C5ED006A 		vstr.32	s13, [r5]
   65:Core/drogui/src/sensorsTasks.c **** 
   66:Core/drogui/src/sensorsTasks.c **** 
   67:Core/drogui/src/sensorsTasks.c ****     setReg(GYRO_X, gx);
- 269              		.loc 1 67 5 is_stmt 1 view .LVU68
- 270 00dc 7C20     		movs	r0, #124
- 271 00de FFF7FEFF 		bl	setReg
- 272              	.LVL23:
+ 270              		.loc 1 67 5 is_stmt 1 view .LVU68
+ 271 00e0 7C20     		movs	r0, #124
+ 272 00e2 FFF7FEFF 		bl	setReg
+ 273              	.LVL23:
   68:Core/drogui/src/sensorsTasks.c ****     setReg(GYRO_Y, gy);
- 273              		.loc 1 68 5 view .LVU69
- 274 00e2 94ED000A 		vldr.32	s0, [r4]
- 275 00e6 7E20     		movs	r0, #126
- 276 00e8 FFF7FEFF 		bl	setReg
- 277              	.LVL24:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 7
+ 274              		.loc 1 68 5 view .LVU69
+ 275 00e6 94ED000A 		vldr.32	s0, [r4]
+ 276 00ea 7E20     		movs	r0, #126
+ 277 00ec FFF7FEFF 		bl	setReg
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 7
 
 
+ 278              	.LVL24:
   69:Core/drogui/src/sensorsTasks.c ****     setReg(GYRO_Z, gz);
- 278              		.loc 1 69 5 view .LVU70
- 279 00ec 95ED000A 		vldr.32	s0, [r5]
- 280 00f0 8020     		movs	r0, #128
- 281 00f2 FFF7FEFF 		bl	setReg
- 282              	.LVL25:
+ 279              		.loc 1 69 5 view .LVU70
+ 280 00f0 95ED000A 		vldr.32	s0, [r5]
+ 281 00f4 8020     		movs	r0, #128
+ 282 00f6 FFF7FEFF 		bl	setReg
+ 283              	.LVL25:
   70:Core/drogui/src/sensorsTasks.c **** }
- 283              		.loc 1 70 1 is_stmt 0 view .LVU71
- 284 00f6 70BD     		pop	{r4, r5, r6, pc}
- 285              	.L8:
- 286              		.align	2
- 287              	.L7:
- 288 00f8 00000000 		.word	.LANCHOR0
- 289 00fc 00000000 		.word	.LANCHOR10
- 290 0100 00000000 		.word	.LANCHOR11
- 291 0104 00000000 		.word	.LANCHOR12
- 292 0108 00000000 		.word	.LANCHOR13
- 293 010c 00000000 		.word	.LANCHOR14
- 294 0110 00000000 		.word	.LANCHOR15
- 295 0114 00000000 		.word	.LANCHOR16
- 296 0118 00000000 		.word	.LANCHOR17
- 297 011c 00000000 		.word	.LANCHOR18
- 298 0120 00000000 		.word	.LANCHOR19
- 299 0124 00000000 		.word	.LANCHOR20
- 300 0128 00000000 		.word	.LANCHOR21
- 301 012c 00000000 		.word	.LANCHOR22
- 302 0130 00000000 		.word	.LANCHOR23
- 303 0134 00000000 		.word	.LANCHOR24
- 304              		.cfi_endproc
- 305              	.LFE178:
- 307              		.section	.text.magTask,"ax",%progbits
- 308              		.align	1
- 309              		.global	magTask
- 310              		.syntax unified
- 311              		.thumb
- 312              		.thumb_func
- 313              		.fpu fpv5-sp-d16
- 315              	magTask:
- 316              	.LFB179:
+ 284              		.loc 1 70 1 is_stmt 0 view .LVU71
+ 285 00fa 70BD     		pop	{r4, r5, r6, pc}
+ 286              	.L8:
+ 287              		.align	2
+ 288              	.L7:
+ 289 00fc 00000000 		.word	.LANCHOR0
+ 290 0100 00000000 		.word	.LANCHOR10
+ 291 0104 00000000 		.word	.LANCHOR11
+ 292 0108 00000000 		.word	.LANCHOR12
+ 293 010c 00000000 		.word	.LANCHOR13
+ 294 0110 00000000 		.word	.LANCHOR14
+ 295 0114 00000000 		.word	.LANCHOR15
+ 296 0118 00000000 		.word	.LANCHOR16
+ 297 011c 00000000 		.word	.LANCHOR17
+ 298 0120 00000000 		.word	.LANCHOR18
+ 299 0124 00000000 		.word	.LANCHOR19
+ 300 0128 00000000 		.word	.LANCHOR20
+ 301 012c 00000000 		.word	.LANCHOR21
+ 302 0130 00000000 		.word	.LANCHOR22
+ 303 0134 00000000 		.word	.LANCHOR23
+ 304 0138 00000000 		.word	.LANCHOR24
+ 305 013c 00004842 		.word	1112014848
+ 306              		.cfi_endproc
+ 307              	.LFE178:
+ 309              		.section	.text.rpyTask,"ax",%progbits
+ 310              		.align	1
+ 311              		.global	rpyTask
+ 312              		.syntax unified
+ 313              		.thumb
+ 314              		.thumb_func
+ 315              		.fpu fpv5-sp-d16
+ 317              	rpyTask:
+ 318              	.LFB180:
   71:Core/drogui/src/sensorsTasks.c **** 
   72:Core/drogui/src/sensorsTasks.c **** void magTask(){
- 317              		.loc 1 72 15 is_stmt 1 view -0
- 318              		.cfi_startproc
- 319              		@ args = 0, pretend = 0, frame = 0
- 320              		@ frame_needed = 0, uses_anonymous_args = 0
- 321 0000 10B5     		push	{r4, lr}
- 322              	.LCFI2:
- 323              		.cfi_def_cfa_offset 8
- 324              		.cfi_offset 4, -8
- 325              		.cfi_offset 14, -4
   73:Core/drogui/src/sensorsTasks.c ****     readMag(&myIMU);
- 326              		.loc 1 73 5 view .LVU73
- 327 0002 074C     		ldr	r4, .L11
- 328 0004 2046     		mov	r0, r4
- 329 0006 FFF7FEFF 		bl	readMag
- 330              	.LVL26:
   74:Core/drogui/src/sensorsTasks.c ****     mx = myIMU.mx;
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 8
-
-
- 331              		.loc 1 74 5 view .LVU74
- 332              		.loc 1 74 15 is_stmt 0 view .LVU75
- 333 000a 626B     		ldr	r2, [r4, #52]	@ float
- 334              		.loc 1 74 8 view .LVU76
- 335 000c 054B     		ldr	r3, .L11+4
- 336 000e 1A60     		str	r2, [r3]	@ float
   75:Core/drogui/src/sensorsTasks.c ****     my = myIMU.my;
- 337              		.loc 1 75 5 is_stmt 1 view .LVU77
- 338              		.loc 1 75 15 is_stmt 0 view .LVU78
- 339 0010 A26B     		ldr	r2, [r4, #56]	@ float
- 340              		.loc 1 75 8 view .LVU79
- 341 0012 054B     		ldr	r3, .L11+8
- 342 0014 1A60     		str	r2, [r3]	@ float
   76:Core/drogui/src/sensorsTasks.c ****     mz = myIMU.mz;
- 343              		.loc 1 76 5 is_stmt 1 view .LVU80
- 344              		.loc 1 76 15 is_stmt 0 view .LVU81
- 345 0016 E26B     		ldr	r2, [r4, #60]	@ float
- 346              		.loc 1 76 8 view .LVU82
- 347 0018 044B     		ldr	r3, .L11+12
- 348 001a 1A60     		str	r2, [r3]	@ float
   77:Core/drogui/src/sensorsTasks.c **** }
- 349              		.loc 1 77 1 view .LVU83
- 350 001c 10BD     		pop	{r4, pc}
- 351              	.L12:
- 352 001e 00BF     		.align	2
- 353              	.L11:
- 354 0020 00000000 		.word	.LANCHOR0
- 355 0024 00000000 		.word	.LANCHOR25
- 356 0028 00000000 		.word	.LANCHOR26
- 357 002c 00000000 		.word	.LANCHOR27
- 358              		.cfi_endproc
- 359              	.LFE179:
- 361              		.global	__aeabi_f2d
- 362              		.global	__aeabi_dadd
- 363              		.global	__aeabi_d2f
- 364              		.section	.text.rpyTask,"ax",%progbits
- 365              		.align	1
- 366              		.global	rpyTask
- 367              		.syntax unified
- 368              		.thumb
- 369              		.thumb_func
- 370              		.fpu fpv5-sp-d16
- 372              	rpyTask:
- 373              	.LFB180:
   78:Core/drogui/src/sensorsTasks.c **** 
   79:Core/drogui/src/sensorsTasks.c **** float Kdfilt = 0.01;
   80:Core/drogui/src/sensorsTasks.c **** void rpyTask(){
- 374              		.loc 1 80 15 is_stmt 1 view -0
- 375              		.cfi_startproc
- 376              		@ args = 0, pretend = 0, frame = 16
- 377              		@ frame_needed = 0, uses_anonymous_args = 0
- 378 0000 2DE97043 		push	{r4, r5, r6, r8, r9, lr}
- 379              	.LCFI3:
- 380              		.cfi_def_cfa_offset 24
- 381              		.cfi_offset 4, -24
- 382              		.cfi_offset 5, -20
- 383              		.cfi_offset 6, -16
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 9
+ 319              		.loc 1 80 15 is_stmt 1 view -0
+ 320              		.cfi_startproc
+ 321              		@ args = 0, pretend = 0, frame = 16
+ 322              		@ frame_needed = 0, uses_anonymous_args = 0
+ 323 0000 70B5     		push	{r4, r5, r6, lr}
+ 324              	.LCFI2:
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 8
 
 
- 384              		.cfi_offset 8, -12
- 385              		.cfi_offset 9, -8
- 386              		.cfi_offset 14, -4
- 387 0004 2DED0A8B 		vpush.64	{d8, d9, d10, d11, d12}
- 388              	.LCFI4:
- 389              		.cfi_def_cfa_offset 64
- 390              		.cfi_offset 80, -64
- 391              		.cfi_offset 81, -60
- 392              		.cfi_offset 82, -56
- 393              		.cfi_offset 83, -52
- 394              		.cfi_offset 84, -48
- 395              		.cfi_offset 85, -44
- 396              		.cfi_offset 86, -40
- 397              		.cfi_offset 87, -36
- 398              		.cfi_offset 88, -32
- 399              		.cfi_offset 89, -28
- 400 0008 84B0     		sub	sp, sp, #16
- 401              	.LCFI5:
- 402              		.cfi_def_cfa_offset 80
+ 325              		.cfi_def_cfa_offset 16
+ 326              		.cfi_offset 4, -16
+ 327              		.cfi_offset 5, -12
+ 328              		.cfi_offset 6, -8
+ 329              		.cfi_offset 14, -4
+ 330 0002 84B0     		sub	sp, sp, #16
+ 331              	.LCFI3:
+ 332              		.cfi_def_cfa_offset 32
   81:Core/drogui/src/sensorsTasks.c ****     
   82:Core/drogui/src/sensorsTasks.c ****     float rpy[3];
- 403              		.loc 1 82 5 view .LVU85
+ 333              		.loc 1 82 5 view .LVU73
   83:Core/drogui/src/sensorsTasks.c ****     mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, 0, 0, 0);
- 404              		.loc 1 83 5 view .LVU86
- 405              		.loc 1 83 20 is_stmt 0 view .LVU87
- 406 000a 6F4B     		ldr	r3, .L15
- 407 000c 93ED000A 		vldr.32	s0, [r3]
- 408 0010 DFED6E7A 		vldr.32	s15, .L15+4
- 409 0014 20EE270A 		vmul.f32	s0, s0, s15
- 410              		.loc 1 83 34 view .LVU88
- 411 0018 6D4B     		ldr	r3, .L15+8
- 412 001a D3ED000A 		vldr.32	s1, [r3]
- 413 001e 60EEA70A 		vmul.f32	s1, s1, s15
- 414              		.loc 1 83 48 view .LVU89
- 415 0022 6C4B     		ldr	r3, .L15+12
- 416 0024 93ED001A 		vldr.32	s2, [r3]
- 417 0028 21EE271A 		vmul.f32	s2, s2, s15
- 418              		.loc 1 83 5 view .LVU90
- 419 002c 9FED6A3A 		vldr.32	s6, .L15+16
- 420 0030 DFED6A7A 		vldr.32	s15, .L15+20
- 421 0034 B0EE434A 		vmov.f32	s8, s6
- 422 0038 F0EE433A 		vmov.f32	s7, s6
- 423 003c 684B     		ldr	r3, .L15+24
- 424 003e D3ED002A 		vldr.32	s5, [r3]
- 425 0042 684B     		ldr	r3, .L15+28
- 426 0044 93ED002A 		vldr.32	s4, [r3]
- 427 0048 674B     		ldr	r3, .L15+32
- 428 004a D3ED001A 		vldr.32	s3, [r3]
- 429 004e 81EE271A 		vdiv.f32	s2, s2, s15
- 430 0052 C0EEA70A 		vdiv.f32	s1, s1, s15
- 431 0056 80EE270A 		vdiv.f32	s0, s0, s15
- 432 005a FFF7FEFF 		bl	mahonyUpdate
- 433              	.LVL27:
+ 334              		.loc 1 83 5 view .LVU74
+ 335              		.loc 1 83 20 is_stmt 0 view .LVU75
+ 336 0004 2D4B     		ldr	r3, .L11
+ 337 0006 93ED000A 		vldr.32	s0, [r3]
+ 338 000a DFED2D7A 		vldr.32	s15, .L11+4
+ 339 000e 20EE270A 		vmul.f32	s0, s0, s15
+ 340              		.loc 1 83 34 view .LVU76
+ 341 0012 2C4B     		ldr	r3, .L11+8
+ 342 0014 D3ED000A 		vldr.32	s1, [r3]
+ 343 0018 60EEA70A 		vmul.f32	s1, s1, s15
+ 344              		.loc 1 83 48 view .LVU77
+ 345 001c 2A4B     		ldr	r3, .L11+12
+ 346 001e 93ED001A 		vldr.32	s2, [r3]
+ 347 0022 21EE271A 		vmul.f32	s2, s2, s15
+ 348              		.loc 1 83 5 view .LVU78
+ 349 0026 9FED293A 		vldr.32	s6, .L11+16
+ 350 002a DFED297A 		vldr.32	s15, .L11+20
+ 351 002e B0EE434A 		vmov.f32	s8, s6
+ 352 0032 F0EE433A 		vmov.f32	s7, s6
+ 353 0036 274B     		ldr	r3, .L11+24
+ 354 0038 D3ED002A 		vldr.32	s5, [r3]
+ 355 003c 264B     		ldr	r3, .L11+28
+ 356 003e 93ED002A 		vldr.32	s4, [r3]
+ 357 0042 264B     		ldr	r3, .L11+32
+ 358 0044 D3ED001A 		vldr.32	s3, [r3]
+ 359 0048 81EE271A 		vdiv.f32	s2, s2, s15
+ 360 004c C0EEA70A 		vdiv.f32	s1, s1, s15
+ 361 0050 80EE270A 		vdiv.f32	s0, s0, s15
+ 362 0054 FFF7FEFF 		bl	mahonyUpdate
+ 363              	.LVL26:
   84:Core/drogui/src/sensorsTasks.c ****     getMahonyEuler(rpy);
- 434              		.loc 1 84 5 is_stmt 1 view .LVU91
- 435 005e 01A8     		add	r0, sp, #4
- 436 0060 FFF7FEFF 		bl	getMahonyEuler
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 10
-
-
- 437              	.LVL28:
+ 364              		.loc 1 84 5 is_stmt 1 view .LVU79
+ 365 0058 01A8     		add	r0, sp, #4
+ 366 005a FFF7FEFF 		bl	getMahonyEuler
+ 367              	.LVL27:
   85:Core/drogui/src/sensorsTasks.c ****     roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
- 438              		.loc 1 85 5 view .LVU92
- 439              		.loc 1 85 15 is_stmt 0 view .LVU93
- 440 0064 9DED01AA 		vldr.32	s20, [sp, #4]
- 441              		.loc 1 85 10 view .LVU94
- 442 0068 604E     		ldr	r6, .L15+36
- 443 006a 86ED00AA 		vstr.32	s20, [r6]
- 444              		.loc 1 85 31 view .LVU95
- 445 006e 9DED02BA 		vldr.32	s22, [sp, #8]
- 446              		.loc 1 85 26 view .LVU96
- 447 0072 5F4D     		ldr	r5, .L15+40
- 448 0074 85ED00BA 		vstr.32	s22, [r5]
- 449              		.loc 1 85 45 view .LVU97
- 450 0078 DDED03AA 		vldr.32	s21, [sp, #12]
- 451              		.loc 1 85 40 view .LVU98
- 452 007c 5D4C     		ldr	r4, .L15+44
- 453 007e C4ED00AA 		vstr.32	s21, [r4]
-  86:Core/drogui/src/sensorsTasks.c ****     roll += fmax(fmin(Kdfilt, (rpy[0] - roll)),-Kdfilt);
- 454              		.loc 1 86 5 is_stmt 1 view .LVU99
- 455              		.loc 1 86 13 is_stmt 0 view .LVU100
- 456 0082 5D4B     		ldr	r3, .L15+48
- 457 0084 D3F80080 		ldr	r8, [r3]	@ float
- 458 0088 4046     		mov	r0, r8	@ float
- 459 008a FFF7FEFF 		bl	__aeabi_f2d
- 460              	.LVL29:
- 461 008e 41EC190B 		vmov	d9, r0, r1
- 462 0092 7AEE4A7A 		vsub.f32	s15, s20, s20
- 463 0096 17EE900A 		vmov	r0, s15
- 464 009a FFF7FEFF 		bl	__aeabi_f2d
- 465              	.LVL30:
- 466 009e 41EC110B 		vmov	d1, r0, r1
- 467 00a2 B0EE490A 		vmov.f32	s0, s18
- 468 00a6 F0EE690A 		vmov.f32	s1, s19
- 469 00aa FFF7FEFF 		bl	fmin
- 470              	.LVL31:
- 471 00ae B0EE40CA 		vmov.f32	s24, s0
- 472 00b2 F0EE60CA 		vmov.f32	s25, s1
- 473 00b6 88F00040 		eor	r0, r8, #-2147483648
- 474 00ba FFF7FEFF 		bl	__aeabi_f2d
- 475              	.LVL32:
- 476 00be 41EC180B 		vmov	d8, r0, r1
- 477 00c2 41EC110B 		vmov	d1, r0, r1
- 478 00c6 B0EE4C0A 		vmov.f32	s0, s24
- 479 00ca F0EE6C0A 		vmov.f32	s1, s25
- 480 00ce FFF7FEFF 		bl	fmax
- 481              	.LVL33:
- 482 00d2 59EC108B 		vmov	r8, r9, d0
- 483              		.loc 1 86 10 view .LVU101
- 484 00d6 1AEE100A 		vmov	r0, s20
- 485 00da FFF7FEFF 		bl	__aeabi_f2d
- 486              	.LVL34:
- 487 00de 4246     		mov	r2, r8
- 488 00e0 4B46     		mov	r3, r9
- 489 00e2 FFF7FEFF 		bl	__aeabi_dadd
- 490              	.LVL35:
- 491 00e6 FFF7FEFF 		bl	__aeabi_d2f
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 11
+ 368              		.loc 1 85 5 view .LVU80
+ 369              		.loc 1 85 15 is_stmt 0 view .LVU81
+ 370 005e 9DED010A 		vldr.32	s0, [sp, #4]
+ 371              		.loc 1 85 10 view .LVU82
+ 372 0062 1F4E     		ldr	r6, .L11+36
+ 373 0064 86ED000A 		vstr.32	s0, [r6]
+ 374              		.loc 1 85 26 view .LVU83
+ 375 0068 1E4D     		ldr	r5, .L11+40
+ 376 006a 029B     		ldr	r3, [sp, #8]	@ float
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 9
 
 
- 492              	.LVL36:
- 493 00ea 0AEE100A 		vmov	s20, r0
- 494 00ee 3060     		str	r0, [r6]	@ float
-  87:Core/drogui/src/sensorsTasks.c ****     pitch += fmax(fmin(Kdfilt, (rpy[1] - pitch)),-Kdfilt);
- 495              		.loc 1 87 5 is_stmt 1 view .LVU102
- 496              		.loc 1 87 14 is_stmt 0 view .LVU103
- 497 00f0 7BEE4B7A 		vsub.f32	s15, s22, s22
- 498 00f4 17EE900A 		vmov	r0, s15
- 499 00f8 FFF7FEFF 		bl	__aeabi_f2d
- 500              	.LVL37:
- 501 00fc 41EC110B 		vmov	d1, r0, r1
- 502 0100 B0EE490A 		vmov.f32	s0, s18
- 503 0104 F0EE690A 		vmov.f32	s1, s19
- 504 0108 FFF7FEFF 		bl	fmin
- 505              	.LVL38:
- 506 010c B0EE481A 		vmov.f32	s2, s16
- 507 0110 F0EE681A 		vmov.f32	s3, s17
- 508 0114 FFF7FEFF 		bl	fmax
- 509              	.LVL39:
- 510 0118 59EC108B 		vmov	r8, r9, d0
- 511              		.loc 1 87 11 view .LVU104
- 512 011c 1BEE100A 		vmov	r0, s22
- 513 0120 FFF7FEFF 		bl	__aeabi_f2d
- 514              	.LVL40:
- 515 0124 4246     		mov	r2, r8
- 516 0126 4B46     		mov	r3, r9
- 517 0128 FFF7FEFF 		bl	__aeabi_dadd
- 518              	.LVL41:
- 519 012c FFF7FEFF 		bl	__aeabi_d2f
- 520              	.LVL42:
- 521 0130 2860     		str	r0, [r5]	@ float
-  88:Core/drogui/src/sensorsTasks.c ****     yaw += fmax(fmin(Kdfilt,(rpy[2] - yaw)),-Kdfilt);
- 522              		.loc 1 88 5 is_stmt 1 view .LVU105
- 523              		.loc 1 88 12 is_stmt 0 view .LVU106
- 524 0132 7AEEEA7A 		vsub.f32	s15, s21, s21
- 525 0136 17EE900A 		vmov	r0, s15
- 526 013a FFF7FEFF 		bl	__aeabi_f2d
- 527              	.LVL43:
- 528 013e 41EC110B 		vmov	d1, r0, r1
- 529 0142 B0EE490A 		vmov.f32	s0, s18
- 530 0146 F0EE690A 		vmov.f32	s1, s19
- 531 014a FFF7FEFF 		bl	fmin
- 532              	.LVL44:
- 533 014e B0EE481A 		vmov.f32	s2, s16
- 534 0152 F0EE681A 		vmov.f32	s3, s17
- 535 0156 FFF7FEFF 		bl	fmax
- 536              	.LVL45:
- 537 015a 59EC108B 		vmov	r8, r9, d0
- 538              		.loc 1 88 9 view .LVU107
- 539 015e 1AEE900A 		vmov	r0, s21
- 540 0162 FFF7FEFF 		bl	__aeabi_f2d
- 541              	.LVL46:
- 542 0166 4246     		mov	r2, r8
- 543 0168 4B46     		mov	r3, r9
- 544 016a FFF7FEFF 		bl	__aeabi_dadd
- 545              	.LVL47:
- 546 016e FFF7FEFF 		bl	__aeabi_d2f
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 12
+ 377 006c 2B60     		str	r3, [r5]	@ float
+ 378              		.loc 1 85 40 view .LVU84
+ 379 006e 1E4C     		ldr	r4, .L11+44
+ 380 0070 039B     		ldr	r3, [sp, #12]	@ float
+ 381 0072 2360     		str	r3, [r4]	@ float
+  86:Core/drogui/src/sensorsTasks.c ****     
+  87:Core/drogui/src/sensorsTasks.c ****     /*roll += fmax(fmin(Kdfilt, (rpy[0] - roll)),-Kdfilt);
+  88:Core/drogui/src/sensorsTasks.c ****     pitch += fmax(fmin(Kdfilt, (rpy[1] - pitch)),-Kdfilt);
+  89:Core/drogui/src/sensorsTasks.c ****     yaw += fmax(fmin(Kdfilt,(rpy[2] - yaw)),-Kdfilt);*/
+  90:Core/drogui/src/sensorsTasks.c **** 
+  91:Core/drogui/src/sensorsTasks.c ****     roll = computeFilter(&filter_roll, roll);
+ 382              		.loc 1 91 5 is_stmt 1 view .LVU85
+ 383              		.loc 1 91 12 is_stmt 0 view .LVU86
+ 384 0074 1D48     		ldr	r0, .L11+48
+ 385 0076 FFF7FEFF 		bl	computeFilter
+ 386              	.LVL28:
+ 387              		.loc 1 91 10 view .LVU87
+ 388 007a 86ED000A 		vstr.32	s0, [r6]
+  92:Core/drogui/src/sensorsTasks.c ****     pitch = computeFilter(&filter_pitch, pitch);
+ 389              		.loc 1 92 5 is_stmt 1 view .LVU88
+ 390              		.loc 1 92 13 is_stmt 0 view .LVU89
+ 391 007e 95ED000A 		vldr.32	s0, [r5]
+ 392 0082 1B48     		ldr	r0, .L11+52
+ 393 0084 FFF7FEFF 		bl	computeFilter
+ 394              	.LVL29:
+ 395              		.loc 1 92 11 view .LVU90
+ 396 0088 85ED000A 		vstr.32	s0, [r5]
+  93:Core/drogui/src/sensorsTasks.c ****     yaw = computeFilter(&filter_yaw, yaw);
+ 397              		.loc 1 93 5 is_stmt 1 view .LVU91
+ 398              		.loc 1 93 11 is_stmt 0 view .LVU92
+ 399 008c 94ED000A 		vldr.32	s0, [r4]
+ 400 0090 1848     		ldr	r0, .L11+56
+ 401 0092 FFF7FEFF 		bl	computeFilter
+ 402              	.LVL30:
+ 403              		.loc 1 93 9 view .LVU93
+ 404 0096 84ED000A 		vstr.32	s0, [r4]
+  94:Core/drogui/src/sensorsTasks.c **** 
+  95:Core/drogui/src/sensorsTasks.c **** 
+  96:Core/drogui/src/sensorsTasks.c ****     setReg(ROLL_VAL, roll);
+ 405              		.loc 1 96 5 is_stmt 1 view .LVU94
+ 406 009a 96ED000A 		vldr.32	s0, [r6]
+ 407 009e 2E20     		movs	r0, #46
+ 408 00a0 FFF7FEFF 		bl	setReg
+ 409              	.LVL31:
+  97:Core/drogui/src/sensorsTasks.c ****     setReg(PITCH_VAL, pitch);
+ 410              		.loc 1 97 5 view .LVU95
+ 411 00a4 95ED000A 		vldr.32	s0, [r5]
+ 412 00a8 3020     		movs	r0, #48
+ 413 00aa FFF7FEFF 		bl	setReg
+ 414              	.LVL32:
+  98:Core/drogui/src/sensorsTasks.c ****     setReg(YAW_VAL, yaw);
+ 415              		.loc 1 98 5 view .LVU96
+ 416 00ae 94ED000A 		vldr.32	s0, [r4]
+ 417 00b2 3220     		movs	r0, #50
+ 418 00b4 FFF7FEFF 		bl	setReg
+ 419              	.LVL33:
+  99:Core/drogui/src/sensorsTasks.c **** }
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 10
 
 
- 547              	.LVL48:
- 548 0172 2060     		str	r0, [r4]	@ float
-  89:Core/drogui/src/sensorsTasks.c **** 
-  90:Core/drogui/src/sensorsTasks.c ****     roll = computeFilter(&filter_roll, roll);
- 549              		.loc 1 90 5 is_stmt 1 view .LVU108
- 550              		.loc 1 90 12 is_stmt 0 view .LVU109
- 551 0174 B0EE4A0A 		vmov.f32	s0, s20
- 552 0178 2048     		ldr	r0, .L15+52
- 553 017a FFF7FEFF 		bl	computeFilter
- 554              	.LVL49:
- 555              		.loc 1 90 10 view .LVU110
- 556 017e 86ED000A 		vstr.32	s0, [r6]
-  91:Core/drogui/src/sensorsTasks.c ****     pitch = computeFilter(&filter_pitch, pitch);
- 557              		.loc 1 91 5 is_stmt 1 view .LVU111
- 558              		.loc 1 91 13 is_stmt 0 view .LVU112
- 559 0182 95ED000A 		vldr.32	s0, [r5]
- 560 0186 1E48     		ldr	r0, .L15+56
- 561 0188 FFF7FEFF 		bl	computeFilter
- 562              	.LVL50:
- 563              		.loc 1 91 11 view .LVU113
- 564 018c 85ED000A 		vstr.32	s0, [r5]
-  92:Core/drogui/src/sensorsTasks.c ****     yaw = computeFilter(&filter_yaw, yaw);
- 565              		.loc 1 92 5 is_stmt 1 view .LVU114
- 566              		.loc 1 92 11 is_stmt 0 view .LVU115
- 567 0190 94ED000A 		vldr.32	s0, [r4]
- 568 0194 1B48     		ldr	r0, .L15+60
- 569 0196 FFF7FEFF 		bl	computeFilter
- 570              	.LVL51:
- 571              		.loc 1 92 9 view .LVU116
- 572 019a 84ED000A 		vstr.32	s0, [r4]
-  93:Core/drogui/src/sensorsTasks.c **** 
-  94:Core/drogui/src/sensorsTasks.c ****     setReg(ROLL_VAL, roll);
- 573              		.loc 1 94 5 is_stmt 1 view .LVU117
- 574 019e 96ED000A 		vldr.32	s0, [r6]
- 575 01a2 2E20     		movs	r0, #46
- 576 01a4 FFF7FEFF 		bl	setReg
- 577              	.LVL52:
-  95:Core/drogui/src/sensorsTasks.c ****     setReg(PITCH_VAL, pitch);
- 578              		.loc 1 95 5 view .LVU118
- 579 01a8 95ED000A 		vldr.32	s0, [r5]
- 580 01ac 3020     		movs	r0, #48
- 581 01ae FFF7FEFF 		bl	setReg
- 582              	.LVL53:
-  96:Core/drogui/src/sensorsTasks.c ****     setReg(YAW_VAL, yaw);
- 583              		.loc 1 96 5 view .LVU119
- 584 01b2 94ED000A 		vldr.32	s0, [r4]
- 585 01b6 3220     		movs	r0, #50
- 586 01b8 FFF7FEFF 		bl	setReg
- 587              	.LVL54:
-  97:Core/drogui/src/sensorsTasks.c **** }
- 588              		.loc 1 97 1 is_stmt 0 view .LVU120
- 589 01bc 04B0     		add	sp, sp, #16
- 590              	.LCFI6:
- 591              		.cfi_def_cfa_offset 64
- 592              		@ sp needed
- 593 01be BDEC0A8B 		vldm	sp!, {d8-d12}
- 594              	.LCFI7:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 13
+ 420              		.loc 1 99 1 is_stmt 0 view .LVU97
+ 421 00b8 04B0     		add	sp, sp, #16
+ 422              	.LCFI4:
+ 423              		.cfi_def_cfa_offset 16
+ 424              		@ sp needed
+ 425 00ba 70BD     		pop	{r4, r5, r6, pc}
+ 426              	.L12:
+ 427              		.align	2
+ 428              	.L11:
+ 429 00bc 00000000 		.word	.LANCHOR11
+ 430 00c0 DB0F4940 		.word	1078530011
+ 431 00c4 00000000 		.word	.LANCHOR13
+ 432 00c8 00000000 		.word	.LANCHOR15
+ 433 00cc 00000000 		.word	0
+ 434 00d0 0000B443 		.word	1135869952
+ 435 00d4 00000000 		.word	.LANCHOR6
+ 436 00d8 00000000 		.word	.LANCHOR4
+ 437 00dc 00000000 		.word	.LANCHOR2
+ 438 00e0 00000000 		.word	.LANCHOR25
+ 439 00e4 00000000 		.word	.LANCHOR26
+ 440 00e8 00000000 		.word	.LANCHOR27
+ 441 00ec 00000000 		.word	.LANCHOR28
+ 442 00f0 00000000 		.word	.LANCHOR29
+ 443 00f4 00000000 		.word	.LANCHOR30
+ 444              		.cfi_endproc
+ 445              	.LFE180:
+ 447              		.section	.text.magTask,"ax",%progbits
+ 448              		.align	1
+ 449              		.global	magTask
+ 450              		.syntax unified
+ 451              		.thumb
+ 452              		.thumb_func
+ 453              		.fpu fpv5-sp-d16
+ 455              	magTask:
+ 456              	.LFB179:
+  72:Core/drogui/src/sensorsTasks.c ****     readMag(&myIMU);
+ 457              		.loc 1 72 15 is_stmt 1 view -0
+ 458              		.cfi_startproc
+ 459              		@ args = 0, pretend = 0, frame = 0
+ 460              		@ frame_needed = 0, uses_anonymous_args = 0
+ 461 0000 10B5     		push	{r4, lr}
+ 462              	.LCFI5:
+ 463              		.cfi_def_cfa_offset 8
+ 464              		.cfi_offset 4, -8
+ 465              		.cfi_offset 14, -4
+  73:Core/drogui/src/sensorsTasks.c ****     mx = myIMU.mx;
+ 466              		.loc 1 73 5 view .LVU99
+ 467 0002 074C     		ldr	r4, .L15
+ 468 0004 2046     		mov	r0, r4
+ 469 0006 FFF7FEFF 		bl	readMag
+ 470              	.LVL34:
+  74:Core/drogui/src/sensorsTasks.c ****     my = myIMU.my;
+ 471              		.loc 1 74 5 view .LVU100
+  74:Core/drogui/src/sensorsTasks.c ****     my = myIMU.my;
+ 472              		.loc 1 74 15 is_stmt 0 view .LVU101
+ 473 000a 626B     		ldr	r2, [r4, #52]	@ float
+  74:Core/drogui/src/sensorsTasks.c ****     my = myIMU.my;
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 11
 
 
- 595              		.cfi_restore 88
- 596              		.cfi_restore 89
- 597              		.cfi_restore 86
- 598              		.cfi_restore 87
- 599              		.cfi_restore 84
- 600              		.cfi_restore 85
- 601              		.cfi_restore 82
- 602              		.cfi_restore 83
- 603              		.cfi_restore 80
- 604              		.cfi_restore 81
- 605              		.cfi_def_cfa_offset 24
- 606 01c2 BDE87083 		pop	{r4, r5, r6, r8, r9, pc}
- 607              	.L16:
- 608 01c6 00BF     		.align	2
- 609              	.L15:
- 610 01c8 00000000 		.word	.LANCHOR11
- 611 01cc DB0F4940 		.word	1078530011
- 612 01d0 00000000 		.word	.LANCHOR13
- 613 01d4 00000000 		.word	.LANCHOR15
- 614 01d8 00000000 		.word	0
- 615 01dc 0000B443 		.word	1135869952
- 616 01e0 00000000 		.word	.LANCHOR6
- 617 01e4 00000000 		.word	.LANCHOR4
- 618 01e8 00000000 		.word	.LANCHOR2
- 619 01ec 00000000 		.word	.LANCHOR28
- 620 01f0 00000000 		.word	.LANCHOR29
- 621 01f4 00000000 		.word	.LANCHOR30
- 622 01f8 00000000 		.word	.LANCHOR31
- 623 01fc 00000000 		.word	.LANCHOR32
- 624 0200 00000000 		.word	.LANCHOR33
- 625 0204 00000000 		.word	.LANCHOR34
- 626              		.cfi_endproc
- 627              	.LFE180:
- 629              		.section	.text.initSensorsTasks,"ax",%progbits
- 630              		.align	1
- 631              		.global	initSensorsTasks
- 632              		.syntax unified
- 633              		.thumb
- 634              		.thumb_func
- 635              		.fpu fpv5-sp-d16
- 637              	initSensorsTasks:
- 638              	.LFB181:
-  98:Core/drogui/src/sensorsTasks.c **** 
-  99:Core/drogui/src/sensorsTasks.c **** 
- 100:Core/drogui/src/sensorsTasks.c **** void initSensorsTasks(){
- 639              		.loc 1 100 24 is_stmt 1 view -0
- 640              		.cfi_startproc
- 641              		@ args = 0, pretend = 0, frame = 0
- 642              		@ frame_needed = 0, uses_anonymous_args = 0
- 643 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
- 644              	.LCFI8:
- 645              		.cfi_def_cfa_offset 24
- 646              		.cfi_offset 4, -24
- 647              		.cfi_offset 5, -20
- 648              		.cfi_offset 6, -16
- 649              		.cfi_offset 7, -12
- 650              		.cfi_offset 8, -8
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 14
+ 474              		.loc 1 74 8 view .LVU102
+ 475 000c 054B     		ldr	r3, .L15+4
+ 476 000e 1A60     		str	r2, [r3]	@ float
+  75:Core/drogui/src/sensorsTasks.c ****     mz = myIMU.mz;
+ 477              		.loc 1 75 5 is_stmt 1 view .LVU103
+  75:Core/drogui/src/sensorsTasks.c ****     mz = myIMU.mz;
+ 478              		.loc 1 75 15 is_stmt 0 view .LVU104
+ 479 0010 A26B     		ldr	r2, [r4, #56]	@ float
+  75:Core/drogui/src/sensorsTasks.c ****     mz = myIMU.mz;
+ 480              		.loc 1 75 8 view .LVU105
+ 481 0012 054B     		ldr	r3, .L15+8
+ 482 0014 1A60     		str	r2, [r3]	@ float
+  76:Core/drogui/src/sensorsTasks.c **** }
+ 483              		.loc 1 76 5 is_stmt 1 view .LVU106
+  76:Core/drogui/src/sensorsTasks.c **** }
+ 484              		.loc 1 76 15 is_stmt 0 view .LVU107
+ 485 0016 E26B     		ldr	r2, [r4, #60]	@ float
+  76:Core/drogui/src/sensorsTasks.c **** }
+ 486              		.loc 1 76 8 view .LVU108
+ 487 0018 044B     		ldr	r3, .L15+12
+ 488 001a 1A60     		str	r2, [r3]	@ float
+  77:Core/drogui/src/sensorsTasks.c **** 
+ 489              		.loc 1 77 1 view .LVU109
+ 490 001c 10BD     		pop	{r4, pc}
+ 491              	.L16:
+ 492 001e 00BF     		.align	2
+ 493              	.L15:
+ 494 0020 00000000 		.word	.LANCHOR0
+ 495 0024 00000000 		.word	.LANCHOR31
+ 496 0028 00000000 		.word	.LANCHOR32
+ 497 002c 00000000 		.word	.LANCHOR33
+ 498              		.cfi_endproc
+ 499              	.LFE179:
+ 501              		.section	.text.initSensorsTasks,"ax",%progbits
+ 502              		.align	1
+ 503              		.global	initSensorsTasks
+ 504              		.syntax unified
+ 505              		.thumb
+ 506              		.thumb_func
+ 507              		.fpu fpv5-sp-d16
+ 509              	initSensorsTasks:
+ 510              	.LFB181:
+ 100:Core/drogui/src/sensorsTasks.c **** 
+ 101:Core/drogui/src/sensorsTasks.c **** 
+ 102:Core/drogui/src/sensorsTasks.c **** void initSensorsTasks(){
+ 511              		.loc 1 102 24 is_stmt 1 view -0
+ 512              		.cfi_startproc
+ 513              		@ args = 0, pretend = 0, frame = 0
+ 514              		@ frame_needed = 0, uses_anonymous_args = 0
+ 515 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 516              	.LCFI6:
+ 517              		.cfi_def_cfa_offset 24
+ 518              		.cfi_offset 4, -24
+ 519              		.cfi_offset 5, -20
+ 520              		.cfi_offset 6, -16
+ 521              		.cfi_offset 7, -12
+ 522              		.cfi_offset 8, -8
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 12
 
 
- 651              		.cfi_offset 14, -4
- 652 0004 2DED028B 		vpush.64	{d8}
- 653              	.LCFI9:
- 654              		.cfi_def_cfa_offset 32
- 655              		.cfi_offset 80, -32
- 656              		.cfi_offset 81, -28
- 101:Core/drogui/src/sensorsTasks.c ****     
- 102:Core/drogui/src/sensorsTasks.c ****     initMpu(&myIMU);
- 657              		.loc 1 102 5 view .LVU122
- 658 0008 734E     		ldr	r6, .L19
- 659 000a 3046     		mov	r0, r6
- 660 000c FFF7FEFF 		bl	initMpu
- 661              	.LVL55:
- 103:Core/drogui/src/sensorsTasks.c **** 
- 104:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gx, 4 , k_1_10, v_1_10);
- 662              		.loc 1 104 5 view .LVU123
- 663 0010 724D     		ldr	r5, .L19+4
- 664 0012 734C     		ldr	r4, .L19+8
- 665 0014 2B46     		mov	r3, r5
- 666 0016 2246     		mov	r2, r4
- 667 0018 0421     		movs	r1, #4
- 668 001a 7248     		ldr	r0, .L19+12
- 669 001c FFF7FEFF 		bl	initFilter
- 670              	.LVL56:
- 105:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gy, 4 , k_1_10, v_1_10);
- 671              		.loc 1 105 5 view .LVU124
- 672 0020 2B46     		mov	r3, r5
- 673 0022 2246     		mov	r2, r4
- 674 0024 0421     		movs	r1, #4
- 675 0026 7048     		ldr	r0, .L19+16
- 676 0028 FFF7FEFF 		bl	initFilter
- 677              	.LVL57:
- 106:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gz, 4 , k_1_10, v_1_10);
- 678              		.loc 1 106 5 view .LVU125
- 679 002c 2B46     		mov	r3, r5
- 680 002e 2246     		mov	r2, r4
- 681 0030 0421     		movs	r1, #4
- 682 0032 6E48     		ldr	r0, .L19+20
- 683 0034 FFF7FEFF 		bl	initFilter
- 684              	.LVL58:
- 107:Core/drogui/src/sensorsTasks.c **** 
- 108:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gx2, 5 , k_3_10, v_3_10);
- 685              		.loc 1 108 5 view .LVU126
- 686 0038 DFF82082 		ldr	r8, .L19+132
- 687 003c 6C4F     		ldr	r7, .L19+24
- 688 003e 4346     		mov	r3, r8
- 689 0040 3A46     		mov	r2, r7
- 690 0042 0521     		movs	r1, #5
- 691 0044 6B48     		ldr	r0, .L19+28
- 692 0046 FFF7FEFF 		bl	initFilter
- 693              	.LVL59:
- 109:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gy2, 5 , k_3_10, v_3_10);
- 694              		.loc 1 109 5 view .LVU127
- 695 004a 4346     		mov	r3, r8
- 696 004c 3A46     		mov	r2, r7
- 697 004e 0521     		movs	r1, #5
- 698 0050 6948     		ldr	r0, .L19+32
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 15
+ 523              		.cfi_offset 14, -4
+ 524 0004 2DED028B 		vpush.64	{d8}
+ 525              	.LCFI7:
+ 526              		.cfi_def_cfa_offset 32
+ 527              		.cfi_offset 80, -32
+ 528              		.cfi_offset 81, -28
+ 103:Core/drogui/src/sensorsTasks.c ****     
+ 104:Core/drogui/src/sensorsTasks.c ****     initMpu(&myIMU);
+ 529              		.loc 1 104 5 view .LVU111
+ 530 0008 704E     		ldr	r6, .L19
+ 531 000a 3046     		mov	r0, r6
+ 532 000c FFF7FEFF 		bl	initMpu
+ 533              	.LVL35:
+ 105:Core/drogui/src/sensorsTasks.c **** 
+ 106:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gx, 4 , k_1_10, v_1_10);
+ 534              		.loc 1 106 5 view .LVU112
+ 535 0010 6F4D     		ldr	r5, .L19+4
+ 536 0012 704C     		ldr	r4, .L19+8
+ 537 0014 2B46     		mov	r3, r5
+ 538 0016 2246     		mov	r2, r4
+ 539 0018 0421     		movs	r1, #4
+ 540 001a 6F48     		ldr	r0, .L19+12
+ 541 001c FFF7FEFF 		bl	initFilter
+ 542              	.LVL36:
+ 107:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gy, 4 , k_1_10, v_1_10);
+ 543              		.loc 1 107 5 view .LVU113
+ 544 0020 2B46     		mov	r3, r5
+ 545 0022 2246     		mov	r2, r4
+ 546 0024 0421     		movs	r1, #4
+ 547 0026 6D48     		ldr	r0, .L19+16
+ 548 0028 FFF7FEFF 		bl	initFilter
+ 549              	.LVL37:
+ 108:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gz, 4 , k_1_10, v_1_10);
+ 550              		.loc 1 108 5 view .LVU114
+ 551 002c 2B46     		mov	r3, r5
+ 552 002e 2246     		mov	r2, r4
+ 553 0030 0421     		movs	r1, #4
+ 554 0032 6B48     		ldr	r0, .L19+20
+ 555 0034 FFF7FEFF 		bl	initFilter
+ 556              	.LVL38:
+ 109:Core/drogui/src/sensorsTasks.c **** 
+ 110:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gx2, 5 , k_3_10, v_3_10);
+ 557              		.loc 1 110 5 view .LVU115
+ 558 0038 DFF81082 		ldr	r8, .L19+128
+ 559 003c 694F     		ldr	r7, .L19+24
+ 560 003e 4346     		mov	r3, r8
+ 561 0040 3A46     		mov	r2, r7
+ 562 0042 0521     		movs	r1, #5
+ 563 0044 6848     		ldr	r0, .L19+28
+ 564 0046 FFF7FEFF 		bl	initFilter
+ 565              	.LVL39:
+ 111:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gy2, 5 , k_3_10, v_3_10);
+ 566              		.loc 1 111 5 view .LVU116
+ 567 004a 4346     		mov	r3, r8
+ 568 004c 3A46     		mov	r2, r7
+ 569 004e 0521     		movs	r1, #5
+ 570 0050 6648     		ldr	r0, .L19+32
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 13
 
 
- 699 0052 FFF7FEFF 		bl	initFilter
- 700              	.LVL60:
- 110:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gz2, 5 , k_3_10, v_3_10);
- 701              		.loc 1 110 5 view .LVU128
- 702 0056 4346     		mov	r3, r8
- 703 0058 3A46     		mov	r2, r7
- 704 005a 0521     		movs	r1, #5
- 705 005c 6748     		ldr	r0, .L19+36
- 706 005e FFF7FEFF 		bl	initFilter
- 707              	.LVL61:
- 111:Core/drogui/src/sensorsTasks.c **** 
- 112:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_gx, 64, 50, 1000, 1, 10);
- 708              		.loc 1 112 5 view .LVU129
- 709 0062 9FED678A 		vldr.32	s16, .L19+40
- 710 0066 DFED678A 		vldr.32	s17, .L19+44
- 711 006a F2EE041A 		vmov.f32	s3, #1.0e+1
- 712 006e B7EE001A 		vmov.f32	s2, #1.0e+0
- 713 0072 F0EE480A 		vmov.f32	s1, s16
- 714 0076 B0EE680A 		vmov.f32	s0, s17
- 715 007a 4021     		movs	r1, #64
- 716 007c 6248     		ldr	r0, .L19+48
- 717 007e FFF7FEFF 		bl	initDNotchFilter
- 718              	.LVL62:
- 113:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_gy, 64, 50, 1000, 1, 10);
- 719              		.loc 1 113 5 view .LVU130
- 720 0082 F2EE041A 		vmov.f32	s3, #1.0e+1
- 721 0086 B7EE001A 		vmov.f32	s2, #1.0e+0
- 722 008a F0EE480A 		vmov.f32	s1, s16
- 723 008e B0EE680A 		vmov.f32	s0, s17
- 724 0092 4021     		movs	r1, #64
- 725 0094 5D48     		ldr	r0, .L19+52
- 726 0096 FFF7FEFF 		bl	initDNotchFilter
- 727              	.LVL63:
- 114:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_gz, 64, 50, 1000, 1, 10);
- 728              		.loc 1 114 5 view .LVU131
- 729 009a F2EE041A 		vmov.f32	s3, #1.0e+1
- 730 009e B7EE001A 		vmov.f32	s2, #1.0e+0
- 731 00a2 F0EE480A 		vmov.f32	s1, s16
- 732 00a6 B0EE680A 		vmov.f32	s0, s17
- 733 00aa 4021     		movs	r1, #64
- 734 00ac 5848     		ldr	r0, .L19+56
- 735 00ae FFF7FEFF 		bl	initDNotchFilter
- 736              	.LVL64:
- 115:Core/drogui/src/sensorsTasks.c **** 
- 116:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_gx2, 64, 50, 1000, 1, 5);
- 737              		.loc 1 116 5 view .LVU132
- 738 00b2 F1EE041A 		vmov.f32	s3, #5.0e+0
- 739 00b6 B7EE001A 		vmov.f32	s2, #1.0e+0
- 740 00ba F0EE480A 		vmov.f32	s1, s16
- 741 00be B0EE680A 		vmov.f32	s0, s17
- 742 00c2 4021     		movs	r1, #64
- 743 00c4 5348     		ldr	r0, .L19+60
- 744 00c6 FFF7FEFF 		bl	initDNotchFilter
- 745              	.LVL65:
- 117:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_gy2, 64, 50, 1000, 1, 5);
- 746              		.loc 1 117 5 view .LVU133
- 747 00ca F1EE041A 		vmov.f32	s3, #5.0e+0
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 16
+ 571 0052 FFF7FEFF 		bl	initFilter
+ 572              	.LVL40:
+ 112:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_gz2, 5 , k_3_10, v_3_10);
+ 573              		.loc 1 112 5 view .LVU117
+ 574 0056 4346     		mov	r3, r8
+ 575 0058 3A46     		mov	r2, r7
+ 576 005a 0521     		movs	r1, #5
+ 577 005c 6448     		ldr	r0, .L19+36
+ 578 005e FFF7FEFF 		bl	initFilter
+ 579              	.LVL41:
+ 113:Core/drogui/src/sensorsTasks.c **** 
+ 114:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_gx, 64, 50, 1000, 1, 10);
+ 580              		.loc 1 114 5 view .LVU118
+ 581 0062 9FED648A 		vldr.32	s16, .L19+40
+ 582 0066 DFED648A 		vldr.32	s17, .L19+44
+ 583 006a F2EE041A 		vmov.f32	s3, #1.0e+1
+ 584 006e B7EE001A 		vmov.f32	s2, #1.0e+0
+ 585 0072 F0EE480A 		vmov.f32	s1, s16
+ 586 0076 B0EE680A 		vmov.f32	s0, s17
+ 587 007a 4021     		movs	r1, #64
+ 588 007c 5F48     		ldr	r0, .L19+48
+ 589 007e FFF7FEFF 		bl	initDNotchFilter
+ 590              	.LVL42:
+ 115:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_gy, 64, 50, 1000, 1, 10);
+ 591              		.loc 1 115 5 view .LVU119
+ 592 0082 F2EE041A 		vmov.f32	s3, #1.0e+1
+ 593 0086 B7EE001A 		vmov.f32	s2, #1.0e+0
+ 594 008a F0EE480A 		vmov.f32	s1, s16
+ 595 008e B0EE680A 		vmov.f32	s0, s17
+ 596 0092 4021     		movs	r1, #64
+ 597 0094 5A48     		ldr	r0, .L19+52
+ 598 0096 FFF7FEFF 		bl	initDNotchFilter
+ 599              	.LVL43:
+ 116:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_gz, 64, 50, 1000, 1, 10);
+ 600              		.loc 1 116 5 view .LVU120
+ 601 009a F2EE041A 		vmov.f32	s3, #1.0e+1
+ 602 009e B7EE001A 		vmov.f32	s2, #1.0e+0
+ 603 00a2 F0EE480A 		vmov.f32	s1, s16
+ 604 00a6 B0EE680A 		vmov.f32	s0, s17
+ 605 00aa 4021     		movs	r1, #64
+ 606 00ac 5548     		ldr	r0, .L19+56
+ 607 00ae FFF7FEFF 		bl	initDNotchFilter
+ 608              	.LVL44:
+ 117:Core/drogui/src/sensorsTasks.c **** 
+ 118:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_gx2, 64, 50, 1000, 1, 5);
+ 609              		.loc 1 118 5 view .LVU121
+ 610 00b2 F1EE041A 		vmov.f32	s3, #5.0e+0
+ 611 00b6 B7EE001A 		vmov.f32	s2, #1.0e+0
+ 612 00ba F0EE480A 		vmov.f32	s1, s16
+ 613 00be B0EE680A 		vmov.f32	s0, s17
+ 614 00c2 4021     		movs	r1, #64
+ 615 00c4 5048     		ldr	r0, .L19+60
+ 616 00c6 FFF7FEFF 		bl	initDNotchFilter
+ 617              	.LVL45:
+ 119:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_gy2, 64, 50, 1000, 1, 5);
+ 618              		.loc 1 119 5 view .LVU122
+ 619 00ca F1EE041A 		vmov.f32	s3, #5.0e+0
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 14
 
 
- 748 00ce B7EE001A 		vmov.f32	s2, #1.0e+0
- 749 00d2 F0EE480A 		vmov.f32	s1, s16
- 750 00d6 B0EE680A 		vmov.f32	s0, s17
- 751 00da 4021     		movs	r1, #64
- 752 00dc 4E48     		ldr	r0, .L19+64
- 753 00de FFF7FEFF 		bl	initDNotchFilter
- 754              	.LVL66:
- 118:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_gz2, 64, 50, 1000, 1, 5);
- 755              		.loc 1 118 5 view .LVU134
- 756 00e2 F1EE041A 		vmov.f32	s3, #5.0e+0
- 757 00e6 B7EE001A 		vmov.f32	s2, #1.0e+0
- 758 00ea F0EE480A 		vmov.f32	s1, s16
- 759 00ee B0EE680A 		vmov.f32	s0, s17
- 760 00f2 4021     		movs	r1, #64
- 761 00f4 4948     		ldr	r0, .L19+68
- 762 00f6 FFF7FEFF 		bl	initDNotchFilter
- 763              	.LVL67:
- 119:Core/drogui/src/sensorsTasks.c **** 
- 120:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_ax, 4 , k_5_100, v_5_100);
- 764              		.loc 1 120 5 view .LVU135
- 765 00fa DFF86481 		ldr	r8, .L19+136
- 766 00fe 484F     		ldr	r7, .L19+72
- 767 0100 4346     		mov	r3, r8
- 768 0102 3A46     		mov	r2, r7
- 769 0104 0421     		movs	r1, #4
- 770 0106 4748     		ldr	r0, .L19+76
- 771 0108 FFF7FEFF 		bl	initFilter
- 772              	.LVL68:
- 121:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_ay, 4 , k_5_100, v_5_100);
- 773              		.loc 1 121 5 view .LVU136
- 774 010c 4346     		mov	r3, r8
- 775 010e 3A46     		mov	r2, r7
- 776 0110 0421     		movs	r1, #4
- 777 0112 4548     		ldr	r0, .L19+80
- 778 0114 FFF7FEFF 		bl	initFilter
- 779              	.LVL69:
- 122:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_az, 4 , k_5_100, v_5_100);
- 780              		.loc 1 122 5 view .LVU137
- 781 0118 4346     		mov	r3, r8
- 782 011a 3A46     		mov	r2, r7
- 783 011c 0421     		movs	r1, #4
- 784 011e 4348     		ldr	r0, .L19+84
- 785 0120 FFF7FEFF 		bl	initFilter
- 786              	.LVL70:
- 123:Core/drogui/src/sensorsTasks.c **** 
- 124:Core/drogui/src/sensorsTasks.c **** 
- 125:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_ax, 64, 40, 1000, 1, 1);
- 787              		.loc 1 125 5 view .LVU138
- 788 0124 DFED428A 		vldr.32	s17, .L19+88
- 789 0128 F7EE001A 		vmov.f32	s3, #1.0e+0
- 790 012c B0EE611A 		vmov.f32	s2, s3
- 791 0130 F0EE480A 		vmov.f32	s1, s16
- 792 0134 B0EE680A 		vmov.f32	s0, s17
- 793 0138 4021     		movs	r1, #64
- 794 013a 3E48     		ldr	r0, .L19+92
- 795 013c FFF7FEFF 		bl	initDNotchFilter
- 796              	.LVL71:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 17
+ 620 00ce B7EE001A 		vmov.f32	s2, #1.0e+0
+ 621 00d2 F0EE480A 		vmov.f32	s1, s16
+ 622 00d6 B0EE680A 		vmov.f32	s0, s17
+ 623 00da 4021     		movs	r1, #64
+ 624 00dc 4B48     		ldr	r0, .L19+64
+ 625 00de FFF7FEFF 		bl	initDNotchFilter
+ 626              	.LVL46:
+ 120:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_gz2, 64, 50, 1000, 1, 5);
+ 627              		.loc 1 120 5 view .LVU123
+ 628 00e2 F1EE041A 		vmov.f32	s3, #5.0e+0
+ 629 00e6 B7EE001A 		vmov.f32	s2, #1.0e+0
+ 630 00ea F0EE480A 		vmov.f32	s1, s16
+ 631 00ee B0EE680A 		vmov.f32	s0, s17
+ 632 00f2 4021     		movs	r1, #64
+ 633 00f4 4648     		ldr	r0, .L19+68
+ 634 00f6 FFF7FEFF 		bl	initDNotchFilter
+ 635              	.LVL47:
+ 121:Core/drogui/src/sensorsTasks.c **** 
+ 122:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_ax, 4 , k_5_100, v_5_100);
+ 636              		.loc 1 122 5 view .LVU124
+ 637 00fa DFF85481 		ldr	r8, .L19+132
+ 638 00fe 454F     		ldr	r7, .L19+72
+ 639 0100 4346     		mov	r3, r8
+ 640 0102 3A46     		mov	r2, r7
+ 641 0104 0421     		movs	r1, #4
+ 642 0106 4448     		ldr	r0, .L19+76
+ 643 0108 FFF7FEFF 		bl	initFilter
+ 644              	.LVL48:
+ 123:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_ay, 4 , k_5_100, v_5_100);
+ 645              		.loc 1 123 5 view .LVU125
+ 646 010c 4346     		mov	r3, r8
+ 647 010e 3A46     		mov	r2, r7
+ 648 0110 0421     		movs	r1, #4
+ 649 0112 4248     		ldr	r0, .L19+80
+ 650 0114 FFF7FEFF 		bl	initFilter
+ 651              	.LVL49:
+ 124:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_az, 4 , k_5_100, v_5_100);
+ 652              		.loc 1 124 5 view .LVU126
+ 653 0118 4346     		mov	r3, r8
+ 654 011a 3A46     		mov	r2, r7
+ 655 011c 0421     		movs	r1, #4
+ 656 011e 4048     		ldr	r0, .L19+84
+ 657 0120 FFF7FEFF 		bl	initFilter
+ 658              	.LVL50:
+ 125:Core/drogui/src/sensorsTasks.c **** 
+ 126:Core/drogui/src/sensorsTasks.c **** 
+ 127:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_ax, 64, 40, 1000, 1, 1);
+ 659              		.loc 1 127 5 view .LVU127
+ 660 0124 DFED3F8A 		vldr.32	s17, .L19+88
+ 661 0128 F7EE001A 		vmov.f32	s3, #1.0e+0
+ 662 012c B0EE611A 		vmov.f32	s2, s3
+ 663 0130 F0EE480A 		vmov.f32	s1, s16
+ 664 0134 B0EE680A 		vmov.f32	s0, s17
+ 665 0138 4021     		movs	r1, #64
+ 666 013a 3B48     		ldr	r0, .L19+92
+ 667 013c FFF7FEFF 		bl	initDNotchFilter
+ 668              	.LVL51:
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 15
 
 
- 126:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_ay, 64, 40, 1000, 1, 1);
- 797              		.loc 1 126 5 view .LVU139
- 798 0140 F7EE001A 		vmov.f32	s3, #1.0e+0
- 799 0144 B0EE611A 		vmov.f32	s2, s3
- 800 0148 F0EE480A 		vmov.f32	s1, s16
- 801 014c B0EE680A 		vmov.f32	s0, s17
- 802 0150 4021     		movs	r1, #64
- 803 0152 3948     		ldr	r0, .L19+96
- 804 0154 FFF7FEFF 		bl	initDNotchFilter
- 805              	.LVL72:
- 127:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_az, 64, 40, 1000, 1, 1);
- 806              		.loc 1 127 5 view .LVU140
- 807 0158 F7EE001A 		vmov.f32	s3, #1.0e+0
- 808 015c B0EE611A 		vmov.f32	s2, s3
- 809 0160 F0EE480A 		vmov.f32	s1, s16
- 810 0164 B0EE680A 		vmov.f32	s0, s17
- 811 0168 4021     		movs	r1, #64
- 812 016a 3448     		ldr	r0, .L19+100
- 813 016c FFF7FEFF 		bl	initDNotchFilter
- 814              	.LVL73:
- 128:Core/drogui/src/sensorsTasks.c ****     
- 129:Core/drogui/src/sensorsTasks.c **** 
- 130:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_roll, 4, k_1_10, v_1_10);
- 815              		.loc 1 130 5 view .LVU141
- 816 0170 2B46     		mov	r3, r5
- 817 0172 2246     		mov	r2, r4
- 818 0174 0421     		movs	r1, #4
- 819 0176 3248     		ldr	r0, .L19+104
- 820 0178 FFF7FEFF 		bl	initFilter
- 821              	.LVL74:
- 131:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_pitch, 4, k_1_10, v_1_10);
- 822              		.loc 1 131 5 view .LVU142
- 823 017c 2B46     		mov	r3, r5
- 824 017e 2246     		mov	r2, r4
- 825 0180 0421     		movs	r1, #4
- 826 0182 3048     		ldr	r0, .L19+108
- 827 0184 FFF7FEFF 		bl	initFilter
- 828              	.LVL75:
- 132:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_yaw, 4, k_1_10, v_1_10);
- 829              		.loc 1 132 5 view .LVU143
- 830 0188 2B46     		mov	r3, r5
- 831 018a 2246     		mov	r2, r4
- 832 018c 0421     		movs	r1, #4
- 833 018e 2E48     		ldr	r0, .L19+112
- 834 0190 FFF7FEFF 		bl	initFilter
- 835              	.LVL76:
- 133:Core/drogui/src/sensorsTasks.c **** 
- 134:Core/drogui/src/sensorsTasks.c **** 
- 135:Core/drogui/src/sensorsTasks.c ****     calibrateGyro(&myIMU);
- 836              		.loc 1 135 5 view .LVU144
- 837 0194 3046     		mov	r0, r6
- 838 0196 FFF7FEFF 		bl	calibrateGyro
- 839              	.LVL77:
- 136:Core/drogui/src/sensorsTasks.c ****     calibrateAccel(&myIMU);
- 840              		.loc 1 136 5 view .LVU145
- 841 019a 3046     		mov	r0, r6
- 842 019c FFF7FEFF 		bl	calibrateAccel
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 18
+ 128:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_ay, 64, 40, 1000, 1, 1);
+ 669              		.loc 1 128 5 view .LVU128
+ 670 0140 F7EE001A 		vmov.f32	s3, #1.0e+0
+ 671 0144 B0EE611A 		vmov.f32	s2, s3
+ 672 0148 F0EE480A 		vmov.f32	s1, s16
+ 673 014c B0EE680A 		vmov.f32	s0, s17
+ 674 0150 4021     		movs	r1, #64
+ 675 0152 3648     		ldr	r0, .L19+96
+ 676 0154 FFF7FEFF 		bl	initDNotchFilter
+ 677              	.LVL52:
+ 129:Core/drogui/src/sensorsTasks.c ****     initDNotchFilter(&dnotch_az, 64, 40, 1000, 1, 1);
+ 678              		.loc 1 129 5 view .LVU129
+ 679 0158 F7EE001A 		vmov.f32	s3, #1.0e+0
+ 680 015c B0EE611A 		vmov.f32	s2, s3
+ 681 0160 F0EE480A 		vmov.f32	s1, s16
+ 682 0164 B0EE680A 		vmov.f32	s0, s17
+ 683 0168 4021     		movs	r1, #64
+ 684 016a 3148     		ldr	r0, .L19+100
+ 685 016c FFF7FEFF 		bl	initDNotchFilter
+ 686              	.LVL53:
+ 130:Core/drogui/src/sensorsTasks.c ****     
+ 131:Core/drogui/src/sensorsTasks.c **** 
+ 132:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_roll, 4, k_1_10, v_1_10);
+ 687              		.loc 1 132 5 view .LVU130
+ 688 0170 2B46     		mov	r3, r5
+ 689 0172 2246     		mov	r2, r4
+ 690 0174 0421     		movs	r1, #4
+ 691 0176 2F48     		ldr	r0, .L19+104
+ 692 0178 FFF7FEFF 		bl	initFilter
+ 693              	.LVL54:
+ 133:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_pitch, 4, k_1_10, v_1_10);
+ 694              		.loc 1 133 5 view .LVU131
+ 695 017c 2B46     		mov	r3, r5
+ 696 017e 2246     		mov	r2, r4
+ 697 0180 0421     		movs	r1, #4
+ 698 0182 2D48     		ldr	r0, .L19+108
+ 699 0184 FFF7FEFF 		bl	initFilter
+ 700              	.LVL55:
+ 134:Core/drogui/src/sensorsTasks.c ****     initFilter(&filter_yaw, 4, k_1_10, v_1_10);
+ 701              		.loc 1 134 5 view .LVU132
+ 702 0188 2B46     		mov	r3, r5
+ 703 018a 2246     		mov	r2, r4
+ 704 018c 0421     		movs	r1, #4
+ 705 018e 2B48     		ldr	r0, .L19+112
+ 706 0190 FFF7FEFF 		bl	initFilter
+ 707              	.LVL56:
+ 135:Core/drogui/src/sensorsTasks.c **** 
+ 136:Core/drogui/src/sensorsTasks.c **** 
+ 137:Core/drogui/src/sensorsTasks.c ****     calibrateGyro(&myIMU);
+ 708              		.loc 1 137 5 view .LVU133
+ 709 0194 3046     		mov	r0, r6
+ 710 0196 FFF7FEFF 		bl	calibrateGyro
+ 711              	.LVL57:
+ 138:Core/drogui/src/sensorsTasks.c ****     calibrateAccel(&myIMU);
+ 712              		.loc 1 138 5 view .LVU134
+ 713 019a 3046     		mov	r0, r6
+ 714 019c FFF7FEFF 		bl	calibrateAccel
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 16
 
 
- 843              	.LVL78:
- 137:Core/drogui/src/sensorsTasks.c **** 
- 138:Core/drogui/src/sensorsTasks.c ****     //calibrateMag(&myIMU);
- 139:Core/drogui/src/sensorsTasks.c ****     
- 140:Core/drogui/src/sensorsTasks.c ****     addTask(&gyroTask, 1000, 2);
- 844              		.loc 1 140 5 view .LVU146
- 845 01a0 0222     		movs	r2, #2
- 846 01a2 4FF47A71 		mov	r1, #1000
- 847 01a6 2948     		ldr	r0, .L19+116
- 848 01a8 FFF7FEFF 		bl	addTask
- 849              	.LVL79:
- 141:Core/drogui/src/sensorsTasks.c ****     addTask(&accelTask, 1000, 3);
- 850              		.loc 1 141 5 view .LVU147
- 851 01ac 0322     		movs	r2, #3
- 852 01ae 4FF47A71 		mov	r1, #1000
- 853 01b2 2748     		ldr	r0, .L19+120
- 854 01b4 FFF7FEFF 		bl	addTask
- 855              	.LVL80:
- 142:Core/drogui/src/sensorsTasks.c ****     addTask(&magTask, 10, 2);
- 856              		.loc 1 142 5 view .LVU148
- 857 01b8 0222     		movs	r2, #2
- 858 01ba 0A21     		movs	r1, #10
- 859 01bc 2548     		ldr	r0, .L19+124
- 860 01be FFF7FEFF 		bl	addTask
- 861              	.LVL81:
- 143:Core/drogui/src/sensorsTasks.c ****     addTask(&rpyTask, 2000, 2);
- 862              		.loc 1 143 5 view .LVU149
- 863 01c2 0222     		movs	r2, #2
- 864 01c4 4FF4FA61 		mov	r1, #2000
- 865 01c8 2348     		ldr	r0, .L19+128
- 866 01ca FFF7FEFF 		bl	addTask
- 867              	.LVL82:
- 144:Core/drogui/src/sensorsTasks.c **** }...
- 868              		.loc 1 144 1 is_stmt 0 view .LVU150
- 869 01ce BDEC028B 		vldm	sp!, {d8}
- 870              	.LCFI10:
- 871              		.cfi_restore 80
- 872              		.cfi_restore 81
- 873              		.cfi_def_cfa_offset 24
- 874 01d2 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
- 875              	.L20:
- 876 01d6 00BF     		.align	2
- 877              	.L19:
- 878 01d8 00000000 		.word	.LANCHOR0
- 879 01dc 00000000 		.word	v_1_10
- 880 01e0 00000000 		.word	k_1_10
- 881 01e4 00000000 		.word	.LANCHOR10
- 882 01e8 00000000 		.word	.LANCHOR12
- 883 01ec 00000000 		.word	.LANCHOR14
- 884 01f0 00000000 		.word	k_3_10
- 885 01f4 00000000 		.word	.LANCHOR16
- 886 01f8 00000000 		.word	.LANCHOR17
- 887 01fc 00000000 		.word	.LANCHOR18
- 888 0200 00007A44 		.word	1148846080
- 889 0204 00004842 		.word	1112014848
- 890 0208 00000000 		.word	.LANCHOR19
- 891 020c 00000000 		.word	.LANCHOR20
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 19
+ 715              	.LVL58:
+ 139:Core/drogui/src/sensorsTasks.c **** 
+ 140:Core/drogui/src/sensorsTasks.c ****     //calibrateMag(&myIMU);
+ 141:Core/drogui/src/sensorsTasks.c ****     
+ 142:Core/drogui/src/sensorsTasks.c ****     addTask(&gyroTask, 1000, 2);
+ 716              		.loc 1 142 5 view .LVU135
+ 717 01a0 0222     		movs	r2, #2
+ 718 01a2 4FF47A71 		mov	r1, #1000
+ 719 01a6 2648     		ldr	r0, .L19+116
+ 720 01a8 FFF7FEFF 		bl	addTask
+ 721              	.LVL59:
+ 143:Core/drogui/src/sensorsTasks.c ****     addTask(&accelTask, 1000, 3);
+ 722              		.loc 1 143 5 view .LVU136
+ 723 01ac 0322     		movs	r2, #3
+ 724 01ae 4FF47A71 		mov	r1, #1000
+ 725 01b2 2448     		ldr	r0, .L19+120
+ 726 01b4 FFF7FEFF 		bl	addTask
+ 727              	.LVL60:
+ 144:Core/drogui/src/sensorsTasks.c ****     //addTask(&magTask, 10, 2);
+ 145:Core/drogui/src/sensorsTasks.c ****     addTask(&rpyTask, 2000, 2);
+ 728              		.loc 1 145 5 view .LVU137
+ 729 01b8 0222     		movs	r2, #2
+ 730 01ba 4FF4FA61 		mov	r1, #2000
+ 731 01be 2248     		ldr	r0, .L19+124
+ 732 01c0 FFF7FEFF 		bl	addTask
+ 733              	.LVL61:
+ 146:Core/drogui/src/sensorsTasks.c **** }...
+ 734              		.loc 1 146 1 is_stmt 0 view .LVU138
+ 735 01c4 BDEC028B 		vldm	sp!, {d8}
+ 736              	.LCFI8:
+ 737              		.cfi_restore 80
+ 738              		.cfi_restore 81
+ 739              		.cfi_def_cfa_offset 24
+ 740 01c8 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 741              	.L20:
+ 742              		.align	2
+ 743              	.L19:
+ 744 01cc 00000000 		.word	.LANCHOR0
+ 745 01d0 00000000 		.word	v_1_10
+ 746 01d4 00000000 		.word	k_1_10
+ 747 01d8 00000000 		.word	.LANCHOR10
+ 748 01dc 00000000 		.word	.LANCHOR12
+ 749 01e0 00000000 		.word	.LANCHOR14
+ 750 01e4 00000000 		.word	k_3_10
+ 751 01e8 00000000 		.word	.LANCHOR16
+ 752 01ec 00000000 		.word	.LANCHOR17
+ 753 01f0 00000000 		.word	.LANCHOR18
+ 754 01f4 00007A44 		.word	1148846080
+ 755 01f8 00004842 		.word	1112014848
+ 756 01fc 00000000 		.word	.LANCHOR19
+ 757 0200 00000000 		.word	.LANCHOR20
+ 758 0204 00000000 		.word	.LANCHOR21
+ 759 0208 00000000 		.word	.LANCHOR22
+ 760 020c 00000000 		.word	.LANCHOR23
+ 761 0210 00000000 		.word	.LANCHOR24
+ 762 0214 00000000 		.word	k_5_100
+ 763 0218 00000000 		.word	.LANCHOR1
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 17
 
 
- 892 0210 00000000 		.word	.LANCHOR21
- 893 0214 00000000 		.word	.LANCHOR22
- 894 0218 00000000 		.word	.LANCHOR23
- 895 021c 00000000 		.word	.LANCHOR24
- 896 0220 00000000 		.word	k_5_100
- 897 0224 00000000 		.word	.LANCHOR1
- 898 0228 00000000 		.word	.LANCHOR3
- 899 022c 00000000 		.word	.LANCHOR5
- 900 0230 00002042 		.word	1109393408
- 901 0234 00000000 		.word	.LANCHOR7
- 902 0238 00000000 		.word	.LANCHOR8
- 903 023c 00000000 		.word	.LANCHOR9
- 904 0240 00000000 		.word	.LANCHOR32
- 905 0244 00000000 		.word	.LANCHOR33
- 906 0248 00000000 		.word	.LANCHOR34
- 907 024c 00000000 		.word	gyroTask
- 908 0250 00000000 		.word	accelTask
- 909 0254 00000000 		.word	magTask
- 910 0258 00000000 		.word	rpyTask
- 911 025c 00000000 		.word	v_3_10
- 912 0260 00000000 		.word	v_5_100
- 913              		.cfi_endproc
- 914              	.LFE181:
- 916              		.global	Kdfilt
- 917              		.global	buff2
- 918              		.global	z
- 919              		.global	y
- 920              		.global	x
- 921              		.global	mz
- 922              		.global	my
- 923              		.global	mx
- 924              		.global	gz
- 925              		.global	gy
- 926              		.global	gx
- 927              		.global	az
- 928              		.global	ay
- 929              		.global	ax
- 930              		.global	yaw
- 931              		.global	pitch
- 932              		.global	roll
- 933              		.global	filter_yaw
- 934              		.global	filter_pitch
- 935              		.global	filter_roll
- 936              		.global	dnotch_az
- 937              		.global	dnotch_ay
- 938              		.global	dnotch_ax
- 939              		.global	filter_az
- 940              		.global	filter_ay
- 941              		.global	filter_ax
- 942              		.global	dnotch_gz2
- 943              		.global	dnotch_gy2
- 944              		.global	dnotch_gx2
- 945              		.global	dnotch_gz
- 946              		.global	dnotch_gy
- 947              		.global	dnotch_gx
- 948              		.global	filter_gz2
- 949              		.global	filter_gy2
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 20
+ 764 021c 00000000 		.word	.LANCHOR3
+ 765 0220 00000000 		.word	.LANCHOR5
+ 766 0224 00002042 		.word	1109393408
+ 767 0228 00000000 		.word	.LANCHOR7
+ 768 022c 00000000 		.word	.LANCHOR8
+ 769 0230 00000000 		.word	.LANCHOR9
+ 770 0234 00000000 		.word	.LANCHOR28
+ 771 0238 00000000 		.word	.LANCHOR29
+ 772 023c 00000000 		.word	.LANCHOR30
+ 773 0240 00000000 		.word	gyroTask
+ 774 0244 00000000 		.word	accelTask
+ 775 0248 00000000 		.word	rpyTask
+ 776 024c 00000000 		.word	v_3_10
+ 777 0250 00000000 		.word	v_5_100
+ 778              		.cfi_endproc
+ 779              	.LFE181:
+ 781              		.global	Kdfilt
+ 782              		.global	buff2
+ 783              		.global	z
+ 784              		.global	y
+ 785              		.global	x
+ 786              		.global	mz
+ 787              		.global	my
+ 788              		.global	mx
+ 789              		.global	gz
+ 790              		.global	gy
+ 791              		.global	gx
+ 792              		.global	az
+ 793              		.global	ay
+ 794              		.global	ax
+ 795              		.global	yaw
+ 796              		.global	pitch
+ 797              		.global	roll
+ 798              		.global	filter_yaw
+ 799              		.global	filter_pitch
+ 800              		.global	filter_roll
+ 801              		.global	dnotch_az
+ 802              		.global	dnotch_ay
+ 803              		.global	dnotch_ax
+ 804              		.global	filter_az
+ 805              		.global	filter_ay
+ 806              		.global	filter_ax
+ 807              		.global	dnotch_gz2
+ 808              		.global	dnotch_gy2
+ 809              		.global	dnotch_gx2
+ 810              		.global	dnotch_gz
+ 811              		.global	dnotch_gy
+ 812              		.global	dnotch_gx
+ 813              		.global	filter_gz2
+ 814              		.global	filter_gy2
+ 815              		.global	filter_gx2
+ 816              		.global	filter_gz
+ 817              		.global	filter_gy
+ 818              		.global	filter_gx
+ 819              		.global	myIMU
+ 820              		.section	.bss.ax,"aw",%nobits
+ 821              		.align	2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 18
 
 
- 950              		.global	filter_gx2
- 951              		.global	filter_gz
- 952              		.global	filter_gy
- 953              		.global	filter_gx
- 954              		.global	myIMU
- 955              		.section	.bss.ax,"aw",%nobits
- 956              		.align	2
- 957              		.set	.LANCHOR2,. + 0
- 960              	ax:
- 961 0000 00000000 		.space	4
- 962              		.section	.bss.ay,"aw",%nobits
- 963              		.align	2
- 964              		.set	.LANCHOR4,. + 0
- 967              	ay:
- 968 0000 00000000 		.space	4
- 969              		.section	.bss.az,"aw",%nobits
- 970              		.align	2
- 971              		.set	.LANCHOR6,. + 0
- 974              	az:
- 975 0000 00000000 		.space	4
- 976              		.section	.bss.dnotch_ax,"aw",%nobits
- 977              		.align	2
- 978              		.set	.LANCHOR7,. + 0
- 981              	dnotch_ax:
- 982 0000 00000000 		.space	104
- 982      00000000 
- 982      00000000 
- 982      00000000 
- 982      00000000 
- 983              		.section	.bss.dnotch_ay,"aw",%nobits
- 984              		.align	2
- 985              		.set	.LANCHOR8,. + 0
- 988              	dnotch_ay:
- 989 0000 00000000 		.space	104
- 989      00000000 
- 989      00000000 
- 989      00000000 
- 989      00000000 
- 990              		.section	.bss.dnotch_az,"aw",%nobits
- 991              		.align	2
- 992              		.set	.LANCHOR9,. + 0
- 995              	dnotch_az:
- 996 0000 00000000 		.space	104
- 996      00000000 
- 996      00000000 
- 996      00000000 
- 996      00000000 
- 997              		.section	.bss.dnotch_gx,"aw",%nobits
- 998              		.align	2
- 999              		.set	.LANCHOR19,. + 0
- 1002              	dnotch_gx:
- 1003 0000 00000000 		.space	104
- 1003      00000000 
- 1003      00000000 
- 1003      00000000 
- 1003      00000000 
- 1004              		.section	.bss.dnotch_gx2,"aw",%nobits
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 21
+ 822              		.set	.LANCHOR2,. + 0
+ 825              	ax:
+ 826 0000 00000000 		.space	4
+ 827              		.section	.bss.ay,"aw",%nobits
+ 828              		.align	2
+ 829              		.set	.LANCHOR4,. + 0
+ 832              	ay:
+ 833 0000 00000000 		.space	4
+ 834              		.section	.bss.az,"aw",%nobits
+ 835              		.align	2
+ 836              		.set	.LANCHOR6,. + 0
+ 839              	az:
+ 840 0000 00000000 		.space	4
+ 841              		.section	.bss.dnotch_ax,"aw",%nobits
+ 842              		.align	2
+ 843              		.set	.LANCHOR7,. + 0
+ 846              	dnotch_ax:
+ 847 0000 00000000 		.space	104
+ 847      00000000 
+ 847      00000000 
+ 847      00000000 
+ 847      00000000 
+ 848              		.section	.bss.dnotch_ay,"aw",%nobits
+ 849              		.align	2
+ 850              		.set	.LANCHOR8,. + 0
+ 853              	dnotch_ay:
+ 854 0000 00000000 		.space	104
+ 854      00000000 
+ 854      00000000 
+ 854      00000000 
+ 854      00000000 
+ 855              		.section	.bss.dnotch_az,"aw",%nobits
+ 856              		.align	2
+ 857              		.set	.LANCHOR9,. + 0
+ 860              	dnotch_az:
+ 861 0000 00000000 		.space	104
+ 861      00000000 
+ 861      00000000 
+ 861      00000000 
+ 861      00000000 
+ 862              		.section	.bss.dnotch_gx,"aw",%nobits
+ 863              		.align	2
+ 864              		.set	.LANCHOR19,. + 0
+ 867              	dnotch_gx:
+ 868 0000 00000000 		.space	104
+ 868      00000000 
+ 868      00000000 
+ 868      00000000 
+ 868      00000000 
+ 869              		.section	.bss.dnotch_gx2,"aw",%nobits
+ 870              		.align	2
+ 871              		.set	.LANCHOR22,. + 0
+ 874              	dnotch_gx2:
+ 875 0000 00000000 		.space	104
+ 875      00000000 
+ 875      00000000 
+ 875      00000000 
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 19
 
 
- 1005              		.align	2
- 1006              		.set	.LANCHOR22,. + 0
- 1009              	dnotch_gx2:
- 1010 0000 00000000 		.space	104
- 1010      00000000 
- 1010      00000000 
- 1010      00000000 
- 1010      00000000 
- 1011              		.section	.bss.dnotch_gy,"aw",%nobits
- 1012              		.align	2
- 1013              		.set	.LANCHOR20,. + 0
- 1016              	dnotch_gy:
- 1017 0000 00000000 		.space	104
- 1017      00000000 
- 1017      00000000 
- 1017      00000000 
- 1017      00000000 
- 1018              		.section	.bss.dnotch_gy2,"aw",%nobits
- 1019              		.align	2
- 1020              		.set	.LANCHOR23,. + 0
- 1023              	dnotch_gy2:
- 1024 0000 00000000 		.space	104
- 1024      00000000 
- 1024      00000000 
- 1024      00000000 
- 1024      00000000 
- 1025              		.section	.bss.dnotch_gz,"aw",%nobits
- 1026              		.align	2
- 1027              		.set	.LANCHOR21,. + 0
- 1030              	dnotch_gz:
- 1031 0000 00000000 		.space	104
- 1031      00000000 
- 1031      00000000 
- 1031      00000000 
- 1031      00000000 
- 1032              		.section	.bss.dnotch_gz2,"aw",%nobits
- 1033              		.align	2
- 1034              		.set	.LANCHOR24,. + 0
- 1037              	dnotch_gz2:
- 1038 0000 00000000 		.space	104
- 1038      00000000 
- 1038      00000000 
- 1038      00000000 
- 1038      00000000 
- 1039              		.section	.bss.filter_ax,"aw",%nobits
- 1040              		.align	2
- 1041              		.set	.LANCHOR1,. + 0
- 1044              	filter_ax:
- 1045 0000 00000000 		.space	20
- 1045      00000000 
- 1045      00000000 
- 1045      00000000 
- 1045      00000000 
- 1046              		.section	.bss.filter_ay,"aw",%nobits
- 1047              		.align	2
- 1048              		.set	.LANCHOR3,. + 0
- 1051              	filter_ay:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 22
+ 875      00000000 
+ 876              		.section	.bss.dnotch_gy,"aw",%nobits
+ 877              		.align	2
+ 878              		.set	.LANCHOR20,. + 0
+ 881              	dnotch_gy:
+ 882 0000 00000000 		.space	104
+ 882      00000000 
+ 882      00000000 
+ 882      00000000 
+ 882      00000000 
+ 883              		.section	.bss.dnotch_gy2,"aw",%nobits
+ 884              		.align	2
+ 885              		.set	.LANCHOR23,. + 0
+ 888              	dnotch_gy2:
+ 889 0000 00000000 		.space	104
+ 889      00000000 
+ 889      00000000 
+ 889      00000000 
+ 889      00000000 
+ 890              		.section	.bss.dnotch_gz,"aw",%nobits
+ 891              		.align	2
+ 892              		.set	.LANCHOR21,. + 0
+ 895              	dnotch_gz:
+ 896 0000 00000000 		.space	104
+ 896      00000000 
+ 896      00000000 
+ 896      00000000 
+ 896      00000000 
+ 897              		.section	.bss.dnotch_gz2,"aw",%nobits
+ 898              		.align	2
+ 899              		.set	.LANCHOR24,. + 0
+ 902              	dnotch_gz2:
+ 903 0000 00000000 		.space	104
+ 903      00000000 
+ 903      00000000 
+ 903      00000000 
+ 903      00000000 
+ 904              		.section	.bss.filter_ax,"aw",%nobits
+ 905              		.align	2
+ 906              		.set	.LANCHOR1,. + 0
+ 909              	filter_ax:
+ 910 0000 00000000 		.space	20
+ 910      00000000 
+ 910      00000000 
+ 910      00000000 
+ 910      00000000 
+ 911              		.section	.bss.filter_ay,"aw",%nobits
+ 912              		.align	2
+ 913              		.set	.LANCHOR3,. + 0
+ 916              	filter_ay:
+ 917 0000 00000000 		.space	20
+ 917      00000000 
+ 917      00000000 
+ 917      00000000 
+ 917      00000000 
+ 918              		.section	.bss.filter_az,"aw",%nobits
+ 919              		.align	2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 20
 
 
- 1052 0000 00000000 		.space	20
- 1052      00000000 
- 1052      00000000 
- 1052      00000000 
- 1052      00000000 
- 1053              		.section	.bss.filter_az,"aw",%nobits
- 1054              		.align	2
- 1055              		.set	.LANCHOR5,. + 0
- 1058              	filter_az:
- 1059 0000 00000000 		.space	20
- 1059      00000000 
- 1059      00000000 
- 1059      00000000 
- 1059      00000000 
- 1060              		.section	.bss.filter_gx,"aw",%nobits
- 1061              		.align	2
- 1062              		.set	.LANCHOR10,. + 0
- 1065              	filter_gx:
- 1066 0000 00000000 		.space	20
- 1066      00000000 
- 1066      00000000 
- 1066      00000000 
- 1066      00000000 
- 1067              		.section	.bss.filter_gx2,"aw",%nobits
- 1068              		.align	2
- 1069              		.set	.LANCHOR16,. + 0
- 1072              	filter_gx2:
- 1073 0000 00000000 		.space	20
- 1073      00000000 
- 1073      00000000 
- 1073      00000000 
- 1073      00000000 
- 1074              		.section	.bss.filter_gy,"aw",%nobits
- 1075              		.align	2
- 1076              		.set	.LANCHOR12,. + 0
- 1079              	filter_gy:
- 1080 0000 00000000 		.space	20
- 1080      00000000 
- 1080      00000000 
- 1080      00000000 
- 1080      00000000 
- 1081              		.section	.bss.filter_gy2,"aw",%nobits
- 1082              		.align	2
- 1083              		.set	.LANCHOR17,. + 0
- 1086              	filter_gy2:
- 1087 0000 00000000 		.space	20
- 1087      00000000 
- 1087      00000000 
- 1087      00000000 
- 1087      00000000 
- 1088              		.section	.bss.filter_gz,"aw",%nobits
- 1089              		.align	2
- 1090              		.set	.LANCHOR14,. + 0
- 1093              	filter_gz:
- 1094 0000 00000000 		.space	20
- 1094      00000000 
- 1094      00000000 
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 23
+ 920              		.set	.LANCHOR5,. + 0
+ 923              	filter_az:
+ 924 0000 00000000 		.space	20
+ 924      00000000 
+ 924      00000000 
+ 924      00000000 
+ 924      00000000 
+ 925              		.section	.bss.filter_gx,"aw",%nobits
+ 926              		.align	2
+ 927              		.set	.LANCHOR10,. + 0
+ 930              	filter_gx:
+ 931 0000 00000000 		.space	20
+ 931      00000000 
+ 931      00000000 
+ 931      00000000 
+ 931      00000000 
+ 932              		.section	.bss.filter_gx2,"aw",%nobits
+ 933              		.align	2
+ 934              		.set	.LANCHOR16,. + 0
+ 937              	filter_gx2:
+ 938 0000 00000000 		.space	20
+ 938      00000000 
+ 938      00000000 
+ 938      00000000 
+ 938      00000000 
+ 939              		.section	.bss.filter_gy,"aw",%nobits
+ 940              		.align	2
+ 941              		.set	.LANCHOR12,. + 0
+ 944              	filter_gy:
+ 945 0000 00000000 		.space	20
+ 945      00000000 
+ 945      00000000 
+ 945      00000000 
+ 945      00000000 
+ 946              		.section	.bss.filter_gy2,"aw",%nobits
+ 947              		.align	2
+ 948              		.set	.LANCHOR17,. + 0
+ 951              	filter_gy2:
+ 952 0000 00000000 		.space	20
+ 952      00000000 
+ 952      00000000 
+ 952      00000000 
+ 952      00000000 
+ 953              		.section	.bss.filter_gz,"aw",%nobits
+ 954              		.align	2
+ 955              		.set	.LANCHOR14,. + 0
+ 958              	filter_gz:
+ 959 0000 00000000 		.space	20
+ 959      00000000 
+ 959      00000000 
+ 959      00000000 
+ 959      00000000 
+ 960              		.section	.bss.filter_gz2,"aw",%nobits
+ 961              		.align	2
+ 962              		.set	.LANCHOR18,. + 0
+ 965              	filter_gz2:
+ 966 0000 00000000 		.space	20
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 21
 
 
- 1094      00000000 
- 1094      00000000 
- 1095              		.section	.bss.filter_gz2,"aw",%nobits
- 1096              		.align	2
- 1097              		.set	.LANCHOR18,. + 0
- 1100              	filter_gz2:
- 1101 0000 00000000 		.space	20
- 1101      00000000 
- 1101      00000000 
- 1101      00000000 
- 1101      00000000 
- 1102              		.section	.bss.filter_pitch,"aw",%nobits
- 1103              		.align	2
- 1104              		.set	.LANCHOR33,. + 0
- 1107              	filter_pitch:
- 1108 0000 00000000 		.space	20
- 1108      00000000 
- 1108      00000000 
- 1108      00000000 
- 1108      00000000 
- 1109              		.section	.bss.filter_roll,"aw",%nobits
- 1110              		.align	2
- 1111              		.set	.LANCHOR32,. + 0
- 1114              	filter_roll:
- 1115 0000 00000000 		.space	20
- 1115      00000000 
- 1115      00000000 
- 1115      00000000 
- 1115      00000000 
- 1116              		.section	.bss.filter_yaw,"aw",%nobits
- 1117              		.align	2
- 1118              		.set	.LANCHOR34,. + 0
- 1121              	filter_yaw:
- 1122 0000 00000000 		.space	20
- 1122      00000000 
- 1122      00000000 
- 1122      00000000 
- 1122      00000000 
- 1123              		.section	.bss.gx,"aw",%nobits
- 1124              		.align	2
- 1125              		.set	.LANCHOR11,. + 0
- 1128              	gx:
- 1129 0000 00000000 		.space	4
- 1130              		.section	.bss.gy,"aw",%nobits
- 1131              		.align	2
- 1132              		.set	.LANCHOR13,. + 0
- 1135              	gy:
- 1136 0000 00000000 		.space	4
- 1137              		.section	.bss.gz,"aw",%nobits
- 1138              		.align	2
- 1139              		.set	.LANCHOR15,. + 0
- 1142              	gz:
- 1143 0000 00000000 		.space	4
- 1144              		.section	.bss.mx,"aw",%nobits
- 1145              		.align	2
- 1146              		.set	.LANCHOR25,. + 0
- 1149              	mx:
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 24
+ 966      00000000 
+ 966      00000000 
+ 966      00000000 
+ 966      00000000 
+ 967              		.section	.bss.filter_pitch,"aw",%nobits
+ 968              		.align	2
+ 969              		.set	.LANCHOR29,. + 0
+ 972              	filter_pitch:
+ 973 0000 00000000 		.space	20
+ 973      00000000 
+ 973      00000000 
+ 973      00000000 
+ 973      00000000 
+ 974              		.section	.bss.filter_roll,"aw",%nobits
+ 975              		.align	2
+ 976              		.set	.LANCHOR28,. + 0
+ 979              	filter_roll:
+ 980 0000 00000000 		.space	20
+ 980      00000000 
+ 980      00000000 
+ 980      00000000 
+ 980      00000000 
+ 981              		.section	.bss.filter_yaw,"aw",%nobits
+ 982              		.align	2
+ 983              		.set	.LANCHOR30,. + 0
+ 986              	filter_yaw:
+ 987 0000 00000000 		.space	20
+ 987      00000000 
+ 987      00000000 
+ 987      00000000 
+ 987      00000000 
+ 988              		.section	.bss.gx,"aw",%nobits
+ 989              		.align	2
+ 990              		.set	.LANCHOR11,. + 0
+ 993              	gx:
+ 994 0000 00000000 		.space	4
+ 995              		.section	.bss.gy,"aw",%nobits
+ 996              		.align	2
+ 997              		.set	.LANCHOR13,. + 0
+ 1000              	gy:
+ 1001 0000 00000000 		.space	4
+ 1002              		.section	.bss.gz,"aw",%nobits
+ 1003              		.align	2
+ 1004              		.set	.LANCHOR15,. + 0
+ 1007              	gz:
+ 1008 0000 00000000 		.space	4
+ 1009              		.section	.bss.mx,"aw",%nobits
+ 1010              		.align	2
+ 1011              		.set	.LANCHOR31,. + 0
+ 1014              	mx:
+ 1015 0000 00000000 		.space	4
+ 1016              		.section	.bss.my,"aw",%nobits
+ 1017              		.align	2
+ 1018              		.set	.LANCHOR32,. + 0
+ 1021              	my:
+ 1022 0000 00000000 		.space	4
+ 1023              		.section	.bss.myIMU,"aw",%nobits
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 22
 
 
- 1150 0000 00000000 		.space	4
- 1151              		.section	.bss.my,"aw",%nobits
- 1152              		.align	2
- 1153              		.set	.LANCHOR26,. + 0
- 1156              	my:
- 1157 0000 00000000 		.space	4
- 1158              		.section	.bss.myIMU,"aw",%nobits
- 1159              		.align	2
- 1160              		.set	.LANCHOR0,. + 0
- 1163              	myIMU:
- 1164 0000 00000000 		.space	140
- 1164      00000000 
- 1164      00000000 
- 1164      00000000 
- 1164      00000000 
- 1165              		.section	.bss.mz,"aw",%nobits
- 1166              		.align	2
- 1167              		.set	.LANCHOR27,. + 0
- 1170              	mz:
- 1171 0000 00000000 		.space	4
- 1172              		.section	.bss.pitch,"aw",%nobits
- 1173              		.align	2
- 1174              		.set	.LANCHOR29,. + 0
- 1177              	pitch:
- 1178 0000 00000000 		.space	4
- 1179              		.section	.bss.roll,"aw",%nobits
- 1180              		.align	2
- 1181              		.set	.LANCHOR28,. + 0
- 1184              	roll:
- 1185 0000 00000000 		.space	4
- 1186              		.section	.bss.x,"aw",%nobits
- 1187              		.align	2
- 1190              	x:
- 1191 0000 00000000 		.space	4
- 1192              		.section	.bss.y,"aw",%nobits
- 1193              		.align	2
- 1196              	y:
- 1197 0000 00000000 		.space	4
- 1198              		.section	.bss.yaw,"aw",%nobits
- 1199              		.align	2
- 1200              		.set	.LANCHOR30,. + 0
- 1203              	yaw:
- 1204 0000 00000000 		.space	4
- 1205              		.section	.bss.z,"aw",%nobits
- 1206              		.align	2
- 1209              	z:
- 1210 0000 00000000 		.space	4
- 1211              		.section	.data.Kdfilt,"aw"
- 1212              		.align	2
- 1213              		.set	.LANCHOR31,. + 0
- 1216              	Kdfilt:
- 1217 0000 0AD7233C 		.word	1008981770
- 1218              		.section	.data.buff2,"aw"
- 1219              		.align	2
- 1222              	buff2:
- 1223 0000 686F6C61 		.ascii	"hola\012\000"
- 1223      0A00
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 25
+ 1024              		.align	2
+ 1025              		.set	.LANCHOR0,. + 0
+ 1028              	myIMU:
+ 1029 0000 00000000 		.space	140
+ 1029      00000000 
+ 1029      00000000 
+ 1029      00000000 
+ 1029      00000000 
+ 1030              		.section	.bss.mz,"aw",%nobits
+ 1031              		.align	2
+ 1032              		.set	.LANCHOR33,. + 0
+ 1035              	mz:
+ 1036 0000 00000000 		.space	4
+ 1037              		.section	.bss.pitch,"aw",%nobits
+ 1038              		.align	2
+ 1039              		.set	.LANCHOR26,. + 0
+ 1042              	pitch:
+ 1043 0000 00000000 		.space	4
+ 1044              		.section	.bss.roll,"aw",%nobits
+ 1045              		.align	2
+ 1046              		.set	.LANCHOR25,. + 0
+ 1049              	roll:
+ 1050 0000 00000000 		.space	4
+ 1051              		.section	.bss.x,"aw",%nobits
+ 1052              		.align	2
+ 1055              	x:
+ 1056 0000 00000000 		.space	4
+ 1057              		.section	.bss.y,"aw",%nobits
+ 1058              		.align	2
+ 1061              	y:
+ 1062 0000 00000000 		.space	4
+ 1063              		.section	.bss.yaw,"aw",%nobits
+ 1064              		.align	2
+ 1065              		.set	.LANCHOR27,. + 0
+ 1068              	yaw:
+ 1069 0000 00000000 		.space	4
+ 1070              		.section	.bss.z,"aw",%nobits
+ 1071              		.align	2
+ 1074              	z:
+ 1075 0000 00000000 		.space	4
+ 1076              		.section	.data.Kdfilt,"aw"
+ 1077              		.align	2
+ 1080              	Kdfilt:
+ 1081 0000 0AD7233C 		.word	1008981770
+ 1082              		.section	.data.buff2,"aw"
+ 1083              		.align	2
+ 1086              	buff2:
+ 1087 0000 686F6C61 		.ascii	"hola\012\000"
+ 1087      0A00
+ 1088 0006 00000000 		.space	44
+ 1088      00000000 
+ 1088      00000000 
+ 1088      00000000 
+ 1088      00000000 
+ 1089              		.text
+ 1090              	.Letext0:
+ 1091              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 23
 
 
- 1224 0006 00000000 		.space	44
- 1224      00000000 
- 1224      00000000 
- 1224      00000000 
- 1224      00000000 
- 1225              		.text
- 1226              	.Letext0:
- 1227              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 1228              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 1229              		.file 4 "Drivers/CMSIS/DSP/Include/arm_math.h"
- 1230              		.file 5 "Core/drogui/include/filter.h"
- 1231              		.file 6 "Core/drogui/include/MPU9250.h"
- 1232              		.file 7 "Core/drogui/include/utils.h"
- 1233              		.file 8 "Core/drogui/include/sensorsTasks.h"
- 1234              		.file 9 "Core/drogui/include/task.h"
- 1235              		.file 10 "Core/drogui/include/mahony.h"
- 1236              		.file 11 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 26
+ 1092              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 1093              		.file 4 "Drivers/CMSIS/DSP/Include/arm_math.h"
+ 1094              		.file 5 "Core/drogui/include/filter.h"
+ 1095              		.file 6 "Core/drogui/include/MPU9250.h"
+ 1096              		.file 7 "Core/drogui/include/utils.h"
+ 1097              		.file 8 "Core/drogui/include/sensorsTasks.h"
+ 1098              		.file 9 "Core/drogui/include/task.h"
+ 1099              		.file 10 "Core/drogui/include/mahony.h"
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 24
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 sensorsTasks.c
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:18     .text.accelTask:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:26     .text.accelTask:00000000 accelTask
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:116    .text.accelTask:00000084 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:130    .text.gyroTask:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:137    .text.gyroTask:00000000 gyroTask
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:288    .text.gyroTask:000000f8 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:308    .text.magTask:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:315    .text.magTask:00000000 magTask
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:354    .text.magTask:00000020 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:365    .text.rpyTask:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:372    .text.rpyTask:00000000 rpyTask
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:610    .text.rpyTask:000001c8 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:630    .text.initSensorsTasks:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:637    .text.initSensorsTasks:00000000 initSensorsTasks
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:878    .text.initSensorsTasks:000001d8 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1216   .data.Kdfilt:00000000 Kdfilt
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1222   .data.buff2:00000000 buff2
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1209   .bss.z:00000000 z
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1196   .bss.y:00000000 y
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1190   .bss.x:00000000 x
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1170   .bss.mz:00000000 mz
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1156   .bss.my:00000000 my
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1149   .bss.mx:00000000 mx
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1142   .bss.gz:00000000 gz
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1135   .bss.gy:00000000 gy
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1128   .bss.gx:00000000 gx
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:974    .bss.az:00000000 az
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:967    .bss.ay:00000000 ay
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:960    .bss.ax:00000000 ax
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1203   .bss.yaw:00000000 yaw
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1177   .bss.pitch:00000000 pitch
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1184   .bss.roll:00000000 roll
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1121   .bss.filter_yaw:00000000 filter_yaw
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1107   .bss.filter_pitch:00000000 filter_pitch
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1114   .bss.filter_roll:00000000 filter_roll
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:995    .bss.dnotch_az:00000000 dnotch_az
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:988    .bss.dnotch_ay:00000000 dnotch_ay
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:981    .bss.dnotch_ax:00000000 dnotch_ax
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1058   .bss.filter_az:00000000 filter_az
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1051   .bss.filter_ay:00000000 filter_ay
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1044   .bss.filter_ax:00000000 filter_ax
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1037   .bss.dnotch_gz2:00000000 dnotch_gz2
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1023   .bss.dnotch_gy2:00000000 dnotch_gy2
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1009   .bss.dnotch_gx2:00000000 dnotch_gx2
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1030   .bss.dnotch_gz:00000000 dnotch_gz
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1016   .bss.dnotch_gy:00000000 dnotch_gy
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1002   .bss.dnotch_gx:00000000 dnotch_gx
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1100   .bss.filter_gz2:00000000 filter_gz2
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1086   .bss.filter_gy2:00000000 filter_gy2
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1072   .bss.filter_gx2:00000000 filter_gx2
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1093   .bss.filter_gz:00000000 filter_gz
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1079   .bss.filter_gy:00000000 filter_gy
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1065   .bss.filter_gx:00000000 filter_gx
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1163   .bss.myIMU:00000000 myIMU
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:956    .bss.ax:00000000 $d
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 27
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:18     .text.accelTask:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:26     .text.accelTask:00000000 accelTask
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:116    .text.accelTask:00000084 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:130    .text.gyroTask:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:137    .text.gyroTask:00000000 gyroTask
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:289    .text.gyroTask:000000fc $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:310    .text.rpyTask:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:317    .text.rpyTask:00000000 rpyTask
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:429    .text.rpyTask:000000bc $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:448    .text.magTask:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:455    .text.magTask:00000000 magTask
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:494    .text.magTask:00000020 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:502    .text.initSensorsTasks:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:509    .text.initSensorsTasks:00000000 initSensorsTasks
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:744    .text.initSensorsTasks:000001cc $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1080   .data.Kdfilt:00000000 Kdfilt
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1086   .data.buff2:00000000 buff2
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1074   .bss.z:00000000 z
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1061   .bss.y:00000000 y
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1055   .bss.x:00000000 x
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1035   .bss.mz:00000000 mz
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1021   .bss.my:00000000 my
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1014   .bss.mx:00000000 mx
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1007   .bss.gz:00000000 gz
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1000   .bss.gy:00000000 gy
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:993    .bss.gx:00000000 gx
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:839    .bss.az:00000000 az
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:832    .bss.ay:00000000 ay
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:825    .bss.ax:00000000 ax
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1068   .bss.yaw:00000000 yaw
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1042   .bss.pitch:00000000 pitch
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1049   .bss.roll:00000000 roll
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:986    .bss.filter_yaw:00000000 filter_yaw
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:972    .bss.filter_pitch:00000000 filter_pitch
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:979    .bss.filter_roll:00000000 filter_roll
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:860    .bss.dnotch_az:00000000 dnotch_az
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:853    .bss.dnotch_ay:00000000 dnotch_ay
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:846    .bss.dnotch_ax:00000000 dnotch_ax
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:923    .bss.filter_az:00000000 filter_az
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:916    .bss.filter_ay:00000000 filter_ay
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:909    .bss.filter_ax:00000000 filter_ax
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:902    .bss.dnotch_gz2:00000000 dnotch_gz2
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:888    .bss.dnotch_gy2:00000000 dnotch_gy2
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:874    .bss.dnotch_gx2:00000000 dnotch_gx2
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:895    .bss.dnotch_gz:00000000 dnotch_gz
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:881    .bss.dnotch_gy:00000000 dnotch_gy
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:867    .bss.dnotch_gx:00000000 dnotch_gx
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:965    .bss.filter_gz2:00000000 filter_gz2
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:951    .bss.filter_gy2:00000000 filter_gy2
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:937    .bss.filter_gx2:00000000 filter_gx2
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:958    .bss.filter_gz:00000000 filter_gz
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:944    .bss.filter_gy:00000000 filter_gy
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:930    .bss.filter_gx:00000000 filter_gx
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1028   .bss.myIMU:00000000 myIMU
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:821    .bss.ax:00000000 $d
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 25
 
 
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:963    .bss.ay:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:970    .bss.az:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:977    .bss.dnotch_ax:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:984    .bss.dnotch_ay:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:991    .bss.dnotch_az:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:998    .bss.dnotch_gx:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1005   .bss.dnotch_gx2:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1012   .bss.dnotch_gy:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1019   .bss.dnotch_gy2:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1026   .bss.dnotch_gz:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1033   .bss.dnotch_gz2:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1040   .bss.filter_ax:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1047   .bss.filter_ay:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1054   .bss.filter_az:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1061   .bss.filter_gx:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1068   .bss.filter_gx2:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1075   .bss.filter_gy:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1082   .bss.filter_gy2:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1089   .bss.filter_gz:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1096   .bss.filter_gz2:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1103   .bss.filter_pitch:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1110   .bss.filter_roll:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1117   .bss.filter_yaw:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1124   .bss.gx:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1131   .bss.gy:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1138   .bss.gz:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1145   .bss.mx:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1152   .bss.my:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1159   .bss.myIMU:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1166   .bss.mz:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1173   .bss.pitch:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1180   .bss.roll:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1187   .bss.x:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1193   .bss.y:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1199   .bss.yaw:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1206   .bss.z:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1212   .data.Kdfilt:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s:1219   .data.buff2:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:828    .bss.ay:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:835    .bss.az:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:842    .bss.dnotch_ax:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:849    .bss.dnotch_ay:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:856    .bss.dnotch_az:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:863    .bss.dnotch_gx:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:870    .bss.dnotch_gx2:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:877    .bss.dnotch_gy:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:884    .bss.dnotch_gy2:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:891    .bss.dnotch_gz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:898    .bss.dnotch_gz2:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:905    .bss.filter_ax:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:912    .bss.filter_ay:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:919    .bss.filter_az:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:926    .bss.filter_gx:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:933    .bss.filter_gx2:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:940    .bss.filter_gy:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:947    .bss.filter_gy2:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:954    .bss.filter_gz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:961    .bss.filter_gz2:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:968    .bss.filter_pitch:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:975    .bss.filter_roll:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:982    .bss.filter_yaw:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:989    .bss.gx:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:996    .bss.gy:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1003   .bss.gz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1010   .bss.mx:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1017   .bss.my:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1024   .bss.myIMU:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1031   .bss.mz:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1038   .bss.pitch:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1045   .bss.roll:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1052   .bss.x:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1058   .bss.y:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1064   .bss.yaw:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1071   .bss.z:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1077   .data.Kdfilt:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s:1083   .data.buff2:00000000 $d
 
 UNDEFINED SYMBOLS
 readAcc
@@ -1566,26 +1437,21 @@ computeFilter
 computeDNotch
 setReg
 readGyro
-readMag
-__aeabi_f2d
-__aeabi_dadd
-__aeabi_d2f
 mahonyUpdate
 getMahonyEuler
-fmin
-fmax
+readMag
 initMpu
 initFilter
 initDNotchFilter
 calibrateGyro
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccx47ev2.s 			page 28
-
-
 calibrateAccel
 addTask
 v_1_10
 k_1_10
 k_3_10
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDWdou2.s 			page 26
+
+
 k_5_100
 v_3_10
 v_5_100

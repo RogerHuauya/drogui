@@ -20,6 +20,7 @@
         "utils.h": "c",
         "math.h": "c",
         "control.h": "c",
-        "random": "c"
+        "random": "c",
+        "mahony.h": "c"
     }
 }

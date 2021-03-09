@@ -128,9 +128,6 @@ void rpyControlTask(){
     wyaw_ref = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);
 
 
-    float aux1 = angle_dif(roll_ref, roll);
-    float aux2 = angle_dif(pitch_ref, pitch);  
-    float aux3 = angle_dif(yaw_ref, yaw);
 
     setReg(GYRO_X_REF,wroll_ref);
     setReg(GYRO_Y_REF,wpitch_ref);
