@@ -26,6 +26,7 @@ void buildCalib(uint8_t* buff, calib * cal){
     cal -> T3 = (int8_t) (buff[4]);
 
 
+
     cal -> P1 =  (int16_t) (buff[6]<< 8 | buff[5]);
     cal -> P2 =  (int16_t) (buff[8] << 8 | buff[7]);
     cal -> P3 =  (int8_t) (buff[9]);
@@ -128,3 +129,27 @@ int64_t bmp388CompensatePress(uint32_t u32RegData){
 
   return comp_press;
 }
+
+float bmp388ReadAltitude(){
+
+    static bool zlevel = false;
+    static int cont = 0;
+    float zerolevel,altitude;
+
+    if( cont == 10 ){
+        int64_t temp = bmp388CompensateTemp(bmpReadTemperature());
+        cont = 0;
+    }
+    
+    int64_t press = bmp388CompensatePress(bmpReadPressure());
+
+    if( !zlevel ){
+      zerolevel = bmp388CompensatePress(bmpReadPressure());
+      zlevel = true; 
+    } 
+    
+    altitude = 44330.0 * (1.0 -  pow( (1.0*press / zerolevel),0.1903));
+
+    return altitude;
+}
+
