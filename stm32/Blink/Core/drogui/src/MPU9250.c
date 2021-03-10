@@ -30,17 +30,7 @@ void readRawAcc(mpu9250* m){ // m/s^2
     _ax = -((Buf[0]<<8) | Buf[1]);
     _ay = -((Buf[2]<<8) | Buf[3]);
     _az =   (Buf[4]<<8) | Buf[5];
-    /*
-    char buff[50];
-
-    for(int i = 0; i < 6 ; i++){
-
-        sprintf(buff, "%x\t", Buf[i]);
-        HAL_UART_Transmit(&huart1, (uint8_t *)buff, strlen(buff), 100);
-    }
-
-    sprintf(buff, "\n");
-    HAL_UART_Transmit(&huart1, (uint8_t *)buff, strlen(buff), 100);*/
+    
     m -> raw_ax = _ax;
     m -> raw_ay = _ay;
     m -> raw_az = _az; 

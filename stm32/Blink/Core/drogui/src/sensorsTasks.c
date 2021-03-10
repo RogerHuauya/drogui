@@ -59,9 +59,9 @@ void gyroTask(){
     gy = computeDNotch(&dnotch_gy2, gy);
     gz = computeDNotch(&dnotch_gz2, gz);
     
-    gx /= 50;
-    gy /= 50;
-    gz /= 50; 
+    gx /= 5;
+    gy /= 5;
+    gz /= 5; 
 
 
     setReg(GYRO_X, gx);

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -17,18 +17,93 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 1
   14              		.text
   15              	.Ltext0:
   16              		.cfi_sections	.debug_frame
-  17              		.section	.text.buildCalib,"ax",%progbits
-  18              		.align	1
-  19              		.global	buildCalib
-  20              		.arch armv7e-m
-  21              		.syntax unified
-  22              		.thumb
-  23              		.thumb_func
-  24              		.fpu fpv5-sp-d16
-  26              	buildCalib:
-  27              	.LVL0:
-  28              	.LFB144:
-  29              		.file 1 "Core/drogui/src/BMP388.c"
+  17              		.section	.rodata.buildCalib.str1.4,"aMS",%progbits,1
+  18              		.align	2
+  19              	.LC0:
+  20 0000 20202020 		.ascii	"    T1 = %u\012\000"
+  20      5431203D 
+  20      2025750A 
+  20      00
+  21 000d 000000   		.align	2
+  22              	.LC1:
+  23 0010 5432203D 		.ascii	"T2 = %u\012\000"
+  23      2025750A 
+  23      00
+  24 0019 000000   		.align	2
+  25              	.LC2:
+  26 001c 5433203D 		.ascii	"T3 = %d\012\000"
+  26      2025640A 
+  26      00
+  27 0025 000000   		.align	2
+  28              	.LC3:
+  29 0028 5031203D 		.ascii	"P1 = %d\012\000"
+  29      2025640A 
+  29      00
+  30 0031 000000   		.align	2
+  31              	.LC4:
+  32 0034 5032203D 		.ascii	"P2 = %d\012\000"
+  32      2025640A 
+  32      00
+  33 003d 000000   		.align	2
+  34              	.LC5:
+  35 0040 5033203D 		.ascii	"P3 = %d\012\000"
+  35      2025640A 
+  35      00
+  36 0049 000000   		.align	2
+  37              	.LC6:
+  38 004c 5034203D 		.ascii	"P4 = %d\012\000"
+  38      2025640A 
+  38      00
+  39 0055 000000   		.align	2
+  40              	.LC7:
+  41 0058 5035203D 		.ascii	"P5 = %u\012\000"
+  41      2025750A 
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 2
+
+
+  41      00
+  42 0061 000000   		.align	2
+  43              	.LC8:
+  44 0064 5036203D 		.ascii	"P6 = %u\012\000"
+  44      2025750A 
+  44      00
+  45 006d 000000   		.align	2
+  46              	.LC9:
+  47 0070 5037203D 		.ascii	"P7 = %d\012\000"
+  47      2025640A 
+  47      00
+  48 0079 000000   		.align	2
+  49              	.LC10:
+  50 007c 5038203D 		.ascii	"P8 = %d\012\000"
+  50      2025640A 
+  50      00
+  51 0085 000000   		.align	2
+  52              	.LC11:
+  53 0088 5039203D 		.ascii	"P9 = %d\012\000"
+  53      2025640A 
+  53      00
+  54 0091 000000   		.align	2
+  55              	.LC12:
+  56 0094 50313020 		.ascii	"P10 = %d\012\000"
+  56      3D202564 
+  56      0A00
+  57 009e 0000     		.align	2
+  58              	.LC13:
+  59 00a0 50313120 		.ascii	"P11 = %d\012\000"
+  59      3D202564 
+  59      0A00
+  60              		.section	.text.buildCalib,"ax",%progbits
+  61              		.align	1
+  62              		.global	buildCalib
+  63              		.arch armv7e-m
+  64              		.syntax unified
+  65              		.thumb
+  66              		.thumb_func
+  67              		.fpu fpv5-sp-d16
+  69              	buildCalib:
+  70              	.LVL0:
+  71              	.LFB144:
+  72              		.file 1 "Core/drogui/src/BMP388.c"
    1:Core/drogui/src/BMP388.c **** #include "BMP388.h"
    2:Core/drogui/src/BMP388.c **** #include "i2c.h"
    3:Core/drogui/src/BMP388.c **** #include "matlib.h"
@@ -43,6 +118,9 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 1
   12:Core/drogui/src/BMP388.c ****     int8_t T3;
   13:Core/drogui/src/BMP388.c ****     
   14:Core/drogui/src/BMP388.c ****     int16_t P1, P2, P9;
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 3
+
+
   15:Core/drogui/src/BMP388.c ****     int8_t P3, P4, P7, P8, P10, P11;
   16:Core/drogui/src/BMP388.c ****     uint16_t P5, P6;
   17:Core/drogui/src/BMP388.c ****     
@@ -51,1174 +129,1643 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 1
   20:Core/drogui/src/BMP388.c **** 
   21:Core/drogui/src/BMP388.c **** 
   22:Core/drogui/src/BMP388.c **** void buildCalib(uint8_t* buff, calib * cal){
-  30              		.loc 1 22 44 view -0
-  31              		.cfi_startproc
-  32              		@ args = 0, pretend = 0, frame = 0
-  33              		@ frame_needed = 0, uses_anonymous_args = 0
-  34              		@ link register save eliminated.
-  23:Core/drogui/src/BMP388.c ****     
-  24:Core/drogui/src/BMP388.c ****     cal -> T1 = (uint16_t) (buff[0] << 8 | buff[1]);
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 2
+  73              		.loc 1 22 44 view -0
+  74              		.cfi_startproc
+  75              		@ args = 0, pretend = 0, frame = 56
+  76              		@ frame_needed = 0, uses_anonymous_args = 0
+  77              		.loc 1 22 44 is_stmt 0 view .LVU1
+  78 0000 70B5     		push	{r4, r5, r6, lr}
+  79              	.LCFI0:
+  80              		.cfi_def_cfa_offset 16
+  81              		.cfi_offset 4, -16
+  82              		.cfi_offset 5, -12
+  83              		.cfi_offset 6, -8
+  84              		.cfi_offset 14, -4
+  85 0002 8EB0     		sub	sp, sp, #56
+  86              	.LCFI1:
+  87              		.cfi_def_cfa_offset 72
+  88 0004 0446     		mov	r4, r0
+  89 0006 0D46     		mov	r5, r1
+  23:Core/drogui/src/BMP388.c ****     char aux[50];
+  90              		.loc 1 23 5 is_stmt 1 view .LVU2
+  24:Core/drogui/src/BMP388.c ****     cal -> T1 = (uint16_t) (buff[1] << 8 | buff[0]);
+  91              		.loc 1 24 5 view .LVU3
+  92              		.loc 1 24 33 is_stmt 0 view .LVU4
+  93 0008 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+  94              		.loc 1 24 48 view .LVU5
+  95 000a 0278     		ldrb	r2, [r0]	@ zero_extendqisi2
+  96              		.loc 1 24 17 view .LVU6
+  97 000c 42EA0322 		orr	r2, r2, r3, lsl #8
+  98              		.loc 1 24 15 view .LVU7
+  99 0010 0A80     		strh	r2, [r1]	@ movhi
+  25:Core/drogui/src/BMP388.c ****     sprintf(aux, "    T1 = %u\n", cal -> T1);
+ 100              		.loc 1 25 5 is_stmt 1 view .LVU8
+ 101 0012 7E49     		ldr	r1, .L3
+ 102              	.LVL1:
+ 103              		.loc 1 25 5 is_stmt 0 view .LVU9
+ 104 0014 01A8     		add	r0, sp, #4
+ 105              	.LVL2:
+ 106              		.loc 1 25 5 view .LVU10
+ 107 0016 FFF7FEFF 		bl	sprintf
+ 108              	.LVL3:
+  26:Core/drogui/src/BMP388.c ****     HAL_UART_Transmit(&huart2, (uint8_t *) aux, strlen(aux), 1000);
+ 109              		.loc 1 26 5 is_stmt 1 view .LVU11
+ 110              		.loc 1 26 49 is_stmt 0 view .LVU12
+ 111 001a 01A8     		add	r0, sp, #4
+ 112 001c FFF7FEFF 		bl	strlen
+ 113              	.LVL4:
+ 114              		.loc 1 26 5 view .LVU13
+ 115 0020 7B4E     		ldr	r6, .L3+4
+ 116 0022 4FF47A73 		mov	r3, #1000
+ 117 0026 82B2     		uxth	r2, r0
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 4
 
 
-  35              		.loc 1 24 5 view .LVU1
-  36              		.loc 1 24 33 is_stmt 0 view .LVU2
-  37 0000 0278     		ldrb	r2, [r0]	@ zero_extendqisi2
-  38              		.loc 1 24 48 view .LVU3
-  39 0002 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
-  40              		.loc 1 24 17 view .LVU4
-  41 0004 43EA0223 		orr	r3, r3, r2, lsl #8
-  42              		.loc 1 24 15 view .LVU5
-  43 0008 0B80     		strh	r3, [r1]	@ movhi
-  25:Core/drogui/src/BMP388.c ****     cal -> T2 = (uint16_t) (buff[2] << 8 | buff[3]);
-  44              		.loc 1 25 5 is_stmt 1 view .LVU6
-  45              		.loc 1 25 33 is_stmt 0 view .LVU7
-  46 000a 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
-  47              		.loc 1 25 48 view .LVU8
-  48 000c C378     		ldrb	r3, [r0, #3]	@ zero_extendqisi2
-  49              		.loc 1 25 17 view .LVU9
-  50 000e 43EA0223 		orr	r3, r3, r2, lsl #8
-  51              		.loc 1 25 15 view .LVU10
-  52 0012 4B80     		strh	r3, [r1, #2]	@ movhi
-  26:Core/drogui/src/BMP388.c ****     cal -> T3 = (int8_t) (buff[4]);
-  53              		.loc 1 26 5 is_stmt 1 view .LVU11
-  54              		.loc 1 26 17 is_stmt 0 view .LVU12
-  55 0014 90F90430 		ldrsb	r3, [r0, #4]
-  56              		.loc 1 26 15 view .LVU13
-  57 0018 0B71     		strb	r3, [r1, #4]
-  27:Core/drogui/src/BMP388.c **** 
-  28:Core/drogui/src/BMP388.c ****     cal -> P1 =  (int16_t) (buff[5]<< 8 | buff[6]);
-  58              		.loc 1 28 5 is_stmt 1 view .LVU14
-  59              		.loc 1 28 33 is_stmt 0 view .LVU15
-  60 001a 4279     		ldrb	r2, [r0, #5]	@ zero_extendqisi2
-  61              		.loc 1 28 47 view .LVU16
-  62 001c 8379     		ldrb	r3, [r0, #6]	@ zero_extendqisi2
-  63              		.loc 1 28 18 view .LVU17
-  64 001e 43EA0223 		orr	r3, r3, r2, lsl #8
-  65              		.loc 1 28 15 view .LVU18
-  66 0022 CB80     		strh	r3, [r1, #6]	@ movhi
-  29:Core/drogui/src/BMP388.c ****     cal -> P2 =  (int16_t) (buff[7] << 8 | buff[8]);
-  67              		.loc 1 29 5 is_stmt 1 view .LVU19
-  68              		.loc 1 29 33 is_stmt 0 view .LVU20
-  69 0024 C279     		ldrb	r2, [r0, #7]	@ zero_extendqisi2
-  70              		.loc 1 29 48 view .LVU21
-  71 0026 037A     		ldrb	r3, [r0, #8]	@ zero_extendqisi2
-  72              		.loc 1 29 18 view .LVU22
-  73 0028 43EA0223 		orr	r3, r3, r2, lsl #8
-  74              		.loc 1 29 15 view .LVU23
-  75 002c 0B81     		strh	r3, [r1, #8]	@ movhi
-  30:Core/drogui/src/BMP388.c ****     cal -> P3 =  (int8_t) (buff[9]);
-  76              		.loc 1 30 5 is_stmt 1 view .LVU24
-  77              		.loc 1 30 18 is_stmt 0 view .LVU25
-  78 002e 90F90930 		ldrsb	r3, [r0, #9]
-  79              		.loc 1 30 15 view .LVU26
-  80 0032 0B73     		strb	r3, [r1, #12]
-  31:Core/drogui/src/BMP388.c ****     cal -> P4 =  (int8_t) (buff[10]);
-  81              		.loc 1 31 5 is_stmt 1 view .LVU27
-  82              		.loc 1 31 18 is_stmt 0 view .LVU28
-  83 0034 90F90A30 		ldrsb	r3, [r0, #10]
-  84              		.loc 1 31 15 view .LVU29
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 3
+ 118 0028 01A9     		add	r1, sp, #4
+ 119 002a 3046     		mov	r0, r6
+ 120 002c FFF7FEFF 		bl	HAL_UART_Transmit
+ 121              	.LVL5:
+  27:Core/drogui/src/BMP388.c ****     cal -> T2 = (uint16_t) (buff[3] << 8 | buff[2]);
+ 122              		.loc 1 27 5 is_stmt 1 view .LVU14
+ 123              		.loc 1 27 33 is_stmt 0 view .LVU15
+ 124 0030 E378     		ldrb	r3, [r4, #3]	@ zero_extendqisi2
+ 125              		.loc 1 27 48 view .LVU16
+ 126 0032 A278     		ldrb	r2, [r4, #2]	@ zero_extendqisi2
+ 127              		.loc 1 27 17 view .LVU17
+ 128 0034 42EA0322 		orr	r2, r2, r3, lsl #8
+ 129              		.loc 1 27 15 view .LVU18
+ 130 0038 6A80     		strh	r2, [r5, #2]	@ movhi
+  28:Core/drogui/src/BMP388.c ****     sprintf(aux, "T2 = %u\n", cal -> T2);
+ 131              		.loc 1 28 5 is_stmt 1 view .LVU19
+ 132 003a 7649     		ldr	r1, .L3+8
+ 133 003c 01A8     		add	r0, sp, #4
+ 134 003e FFF7FEFF 		bl	sprintf
+ 135              	.LVL6:
+  29:Core/drogui/src/BMP388.c ****     HAL_UART_Transmit(&huart2, (uint8_t *) aux, strlen(aux), 1000);
+ 136              		.loc 1 29 5 view .LVU20
+ 137              		.loc 1 29 49 is_stmt 0 view .LVU21
+ 138 0042 01A8     		add	r0, sp, #4
+ 139 0044 FFF7FEFF 		bl	strlen
+ 140              	.LVL7:
+ 141              		.loc 1 29 5 view .LVU22
+ 142 0048 4FF47A73 		mov	r3, #1000
+ 143 004c 82B2     		uxth	r2, r0
+ 144 004e 01A9     		add	r1, sp, #4
+ 145 0050 3046     		mov	r0, r6
+ 146 0052 FFF7FEFF 		bl	HAL_UART_Transmit
+ 147              	.LVL8:
+  30:Core/drogui/src/BMP388.c ****     cal -> T3 = (int8_t) (buff[4]);
+ 148              		.loc 1 30 5 is_stmt 1 view .LVU23
+ 149              		.loc 1 30 17 is_stmt 0 view .LVU24
+ 150 0056 94F90420 		ldrsb	r2, [r4, #4]
+ 151              		.loc 1 30 15 view .LVU25
+ 152 005a 2A71     		strb	r2, [r5, #4]
+  31:Core/drogui/src/BMP388.c ****     sprintf(aux, "T3 = %d\n", cal -> T3);
+ 153              		.loc 1 31 5 is_stmt 1 view .LVU26
+ 154 005c 6E49     		ldr	r1, .L3+12
+ 155 005e 01A8     		add	r0, sp, #4
+ 156 0060 FFF7FEFF 		bl	sprintf
+ 157              	.LVL9:
+  32:Core/drogui/src/BMP388.c ****     HAL_UART_Transmit(&huart2, (uint8_t *) aux, strlen(aux), 1000);
+ 158              		.loc 1 32 5 view .LVU27
+ 159              		.loc 1 32 49 is_stmt 0 view .LVU28
+ 160 0064 01A8     		add	r0, sp, #4
+ 161 0066 FFF7FEFF 		bl	strlen
+ 162              	.LVL10:
+ 163              		.loc 1 32 5 view .LVU29
+ 164 006a 4FF47A73 		mov	r3, #1000
+ 165 006e 82B2     		uxth	r2, r0
+ 166 0070 01A9     		add	r1, sp, #4
+ 167 0072 3046     		mov	r0, r6
+ 168 0074 FFF7FEFF 		bl	HAL_UART_Transmit
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 5
 
 
-  85 0038 4B73     		strb	r3, [r1, #13]
-  32:Core/drogui/src/BMP388.c ****     cal -> P5 =  (uint16_t) (buff[11] << 8 | buff[13]);
-  86              		.loc 1 32 5 is_stmt 1 view .LVU30
-  87              		.loc 1 32 34 is_stmt 0 view .LVU31
-  88 003a C27A     		ldrb	r2, [r0, #11]	@ zero_extendqisi2
-  89              		.loc 1 32 50 view .LVU32
-  90 003c 437B     		ldrb	r3, [r0, #13]	@ zero_extendqisi2
-  91              		.loc 1 32 18 view .LVU33
-  92 003e 43EA0223 		orr	r3, r3, r2, lsl #8
-  93              		.loc 1 32 15 view .LVU34
-  94 0042 4B82     		strh	r3, [r1, #18]	@ movhi
-  33:Core/drogui/src/BMP388.c ****     cal -> P6 =  (uint16_t) (buff[13] << 8 | buff[14]);
-  95              		.loc 1 33 5 is_stmt 1 view .LVU35
-  96              		.loc 1 33 34 is_stmt 0 view .LVU36
-  97 0044 427B     		ldrb	r2, [r0, #13]	@ zero_extendqisi2
-  98              		.loc 1 33 50 view .LVU37
-  99 0046 837B     		ldrb	r3, [r0, #14]	@ zero_extendqisi2
- 100              		.loc 1 33 18 view .LVU38
- 101 0048 43EA0223 		orr	r3, r3, r2, lsl #8
- 102              		.loc 1 33 15 view .LVU39
- 103 004c 8B82     		strh	r3, [r1, #20]	@ movhi
-  34:Core/drogui/src/BMP388.c ****     cal -> P7 =  (int8_t) (buff[15]);
- 104              		.loc 1 34 5 is_stmt 1 view .LVU40
- 105              		.loc 1 34 18 is_stmt 0 view .LVU41
- 106 004e 90F90F30 		ldrsb	r3, [r0, #15]
- 107              		.loc 1 34 15 view .LVU42
- 108 0052 8B73     		strb	r3, [r1, #14]
-  35:Core/drogui/src/BMP388.c ****     cal -> P8 =  (int8_t) (buff[16]);
- 109              		.loc 1 35 5 is_stmt 1 view .LVU43
- 110              		.loc 1 35 18 is_stmt 0 view .LVU44
- 111 0054 90F91030 		ldrsb	r3, [r0, #16]
- 112              		.loc 1 35 15 view .LVU45
- 113 0058 CB73     		strb	r3, [r1, #15]
-  36:Core/drogui/src/BMP388.c ****     cal -> P9 =  (int16_t) (buff[17] << 8 | buff[18]);
- 114              		.loc 1 36 5 is_stmt 1 view .LVU46
- 115              		.loc 1 36 33 is_stmt 0 view .LVU47
- 116 005a 427C     		ldrb	r2, [r0, #17]	@ zero_extendqisi2
- 117              		.loc 1 36 49 view .LVU48
- 118 005c 837C     		ldrb	r3, [r0, #18]	@ zero_extendqisi2
- 119              		.loc 1 36 18 view .LVU49
- 120 005e 43EA0223 		orr	r3, r3, r2, lsl #8
- 121              		.loc 1 36 15 view .LVU50
- 122 0062 4B81     		strh	r3, [r1, #10]	@ movhi
-  37:Core/drogui/src/BMP388.c ****     cal -> P10 = (int8_t) (buff[19]);
- 123              		.loc 1 37 5 is_stmt 1 view .LVU51
- 124              		.loc 1 37 18 is_stmt 0 view .LVU52
- 125 0064 90F91330 		ldrsb	r3, [r0, #19]
- 126              		.loc 1 37 16 view .LVU53
- 127 0068 0B74     		strb	r3, [r1, #16]
-  38:Core/drogui/src/BMP388.c ****     cal -> P11 = (int8_t) (buff[20]);    
- 128              		.loc 1 38 5 is_stmt 1 view .LVU54
- 129              		.loc 1 38 18 is_stmt 0 view .LVU55
- 130 006a 90F91430 		ldrsb	r3, [r0, #20]
- 131              		.loc 1 38 16 view .LVU56
- 132 006e 4B74     		strb	r3, [r1, #17]
-  39:Core/drogui/src/BMP388.c **** }
- 133              		.loc 1 39 1 view .LVU57
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 4
+ 169              	.LVL11:
+  33:Core/drogui/src/BMP388.c **** 
+  34:Core/drogui/src/BMP388.c **** 
+  35:Core/drogui/src/BMP388.c ****     cal -> P1 =  (int16_t) (buff[6]<< 8 | buff[5]);
+ 170              		.loc 1 35 5 is_stmt 1 view .LVU30
+ 171              		.loc 1 35 33 is_stmt 0 view .LVU31
+ 172 0078 A379     		ldrb	r3, [r4, #6]	@ zero_extendqisi2
+ 173              		.loc 1 35 47 view .LVU32
+ 174 007a 6279     		ldrb	r2, [r4, #5]	@ zero_extendqisi2
+ 175              		.loc 1 35 18 view .LVU33
+ 176 007c 42EA0322 		orr	r2, r2, r3, lsl #8
+ 177 0080 12B2     		sxth	r2, r2
+ 178              		.loc 1 35 15 view .LVU34
+ 179 0082 EA80     		strh	r2, [r5, #6]	@ movhi
+  36:Core/drogui/src/BMP388.c ****     sprintf(aux, "P1 = %d\n", cal -> P1);
+ 180              		.loc 1 36 5 is_stmt 1 view .LVU35
+ 181 0084 6549     		ldr	r1, .L3+16
+ 182 0086 01A8     		add	r0, sp, #4
+ 183 0088 FFF7FEFF 		bl	sprintf
+ 184              	.LVL12:
+  37:Core/drogui/src/BMP388.c ****     HAL_UART_Transmit(&huart2, (uint8_t *) aux, strlen(aux), 1000);
+ 185              		.loc 1 37 5 view .LVU36
+ 186              		.loc 1 37 49 is_stmt 0 view .LVU37
+ 187 008c 01A8     		add	r0, sp, #4
+ 188 008e FFF7FEFF 		bl	strlen
+ 189              	.LVL13:
+ 190              		.loc 1 37 5 view .LVU38
+ 191 0092 4FF47A73 		mov	r3, #1000
+ 192 0096 82B2     		uxth	r2, r0
+ 193 0098 01A9     		add	r1, sp, #4
+ 194 009a 3046     		mov	r0, r6
+ 195 009c FFF7FEFF 		bl	HAL_UART_Transmit
+ 196              	.LVL14:
+  38:Core/drogui/src/BMP388.c ****     cal -> P2 =  (int16_t) (buff[8] << 8 | buff[7]);
+ 197              		.loc 1 38 5 is_stmt 1 view .LVU39
+ 198              		.loc 1 38 33 is_stmt 0 view .LVU40
+ 199 00a0 237A     		ldrb	r3, [r4, #8]	@ zero_extendqisi2
+ 200              		.loc 1 38 48 view .LVU41
+ 201 00a2 E279     		ldrb	r2, [r4, #7]	@ zero_extendqisi2
+ 202              		.loc 1 38 18 view .LVU42
+ 203 00a4 42EA0322 		orr	r2, r2, r3, lsl #8
+ 204 00a8 12B2     		sxth	r2, r2
+ 205              		.loc 1 38 15 view .LVU43
+ 206 00aa 2A81     		strh	r2, [r5, #8]	@ movhi
+  39:Core/drogui/src/BMP388.c ****     sprintf(aux, "P2 = %d\n", cal -> P2);
+ 207              		.loc 1 39 5 is_stmt 1 view .LVU44
+ 208 00ac 5C49     		ldr	r1, .L3+20
+ 209 00ae 01A8     		add	r0, sp, #4
+ 210 00b0 FFF7FEFF 		bl	sprintf
+ 211              	.LVL15:
+  40:Core/drogui/src/BMP388.c ****     HAL_UART_Transmit(&huart2, (uint8_t *) aux, strlen(aux), 1000);
+ 212              		.loc 1 40 5 view .LVU45
+ 213              		.loc 1 40 49 is_stmt 0 view .LVU46
+ 214 00b4 01A8     		add	r0, sp, #4
+ 215 00b6 FFF7FEFF 		bl	strlen
+ 216              	.LVL16:
+ 217              		.loc 1 40 5 view .LVU47
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 6
 
 
- 134 0070 7047     		bx	lr
- 135              		.cfi_endproc
- 136              	.LFE144:
- 138              		.section	.text.initBmp388,"ax",%progbits
- 139              		.align	1
- 140              		.global	initBmp388
- 141              		.syntax unified
- 142              		.thumb
- 143              		.thumb_func
- 144              		.fpu fpv5-sp-d16
- 146              	initBmp388:
- 147              	.LFB145:
-  40:Core/drogui/src/BMP388.c **** 
-  41:Core/drogui/src/BMP388.c **** calib calib_bmp;
-  42:Core/drogui/src/BMP388.c **** 
-  43:Core/drogui/src/BMP388.c **** void initBmp388(){
- 148              		.loc 1 43 18 is_stmt 1 view -0
- 149              		.cfi_startproc
- 150              		@ args = 0, pretend = 0, frame = 24
- 151              		@ frame_needed = 0, uses_anonymous_args = 0
- 152 0000 00B5     		push	{lr}
- 153              	.LCFI0:
- 154              		.cfi_def_cfa_offset 4
- 155              		.cfi_offset 14, -4
- 156 0002 87B0     		sub	sp, sp, #28
- 157              	.LCFI1:
- 158              		.cfi_def_cfa_offset 32
-  44:Core/drogui/src/BMP388.c ****     uint8_t buff[21];
- 159              		.loc 1 44 5 view .LVU59
-  45:Core/drogui/src/BMP388.c ****     I2CwriteByte(BMP388_DEFAULT_ADDRESS, BMP388_REG_PWR_CTRL, 0x33);
- 160              		.loc 1 45 5 view .LVU60
- 161 0004 3322     		movs	r2, #51
- 162 0006 1B21     		movs	r1, #27
- 163 0008 7720     		movs	r0, #119
- 164 000a FFF7FEFF 		bl	I2CwriteByte
- 165              	.LVL1:
-  46:Core/drogui/src/BMP388.c ****     HAL_Delay(10);
- 166              		.loc 1 46 5 view .LVU61
- 167 000e 0A20     		movs	r0, #10
- 168 0010 FFF7FEFF 		bl	HAL_Delay
- 169              	.LVL2:
-  47:Core/drogui/src/BMP388.c ****     I2CwriteByte(BMP388_DEFAULT_ADDRESS, BMP388_REG_OSR, 0x00);
- 170              		.loc 1 47 5 view .LVU62
- 171 0014 0022     		movs	r2, #0
- 172 0016 1C21     		movs	r1, #28
- 173 0018 7720     		movs	r0, #119
- 174 001a FFF7FEFF 		bl	I2CwriteByte
- 175              	.LVL3:
-  48:Core/drogui/src/BMP388.c ****     HAL_Delay(10);
- 176              		.loc 1 48 5 view .LVU63
- 177 001e 0A20     		movs	r0, #10
- 178 0020 FFF7FEFF 		bl	HAL_Delay
- 179              	.LVL4:
-  49:Core/drogui/src/BMP388.c ****     I2CwriteByte(BMP388_DEFAULT_ADDRESS, BMP388_REG_ODR, 0x00);
- 180              		.loc 1 49 5 view .LVU64
- 181 0024 0022     		movs	r2, #0
- 182 0026 1D21     		movs	r1, #29
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 5
+ 218 00ba 4FF47A73 		mov	r3, #1000
+ 219 00be 82B2     		uxth	r2, r0
+ 220 00c0 01A9     		add	r1, sp, #4
+ 221 00c2 3046     		mov	r0, r6
+ 222 00c4 FFF7FEFF 		bl	HAL_UART_Transmit
+ 223              	.LVL17:
+  41:Core/drogui/src/BMP388.c ****     cal -> P3 =  (int8_t) (buff[9]);
+ 224              		.loc 1 41 5 is_stmt 1 view .LVU48
+ 225              		.loc 1 41 18 is_stmt 0 view .LVU49
+ 226 00c8 94F90920 		ldrsb	r2, [r4, #9]
+ 227              		.loc 1 41 15 view .LVU50
+ 228 00cc 2A73     		strb	r2, [r5, #12]
+  42:Core/drogui/src/BMP388.c ****     sprintf(aux, "P3 = %d\n", cal -> P3);
+ 229              		.loc 1 42 5 is_stmt 1 view .LVU51
+ 230 00ce 5549     		ldr	r1, .L3+24
+ 231 00d0 01A8     		add	r0, sp, #4
+ 232 00d2 FFF7FEFF 		bl	sprintf
+ 233              	.LVL18:
+  43:Core/drogui/src/BMP388.c ****     HAL_UART_Transmit(&huart2, (uint8_t *) aux, strlen(aux), 1000);
+ 234              		.loc 1 43 5 view .LVU52
+ 235              		.loc 1 43 49 is_stmt 0 view .LVU53
+ 236 00d6 01A8     		add	r0, sp, #4
+ 237 00d8 FFF7FEFF 		bl	strlen
+ 238              	.LVL19:
+ 239              		.loc 1 43 5 view .LVU54
+ 240 00dc 4FF47A73 		mov	r3, #1000
+ 241 00e0 82B2     		uxth	r2, r0
+ 242 00e2 01A9     		add	r1, sp, #4
+ 243 00e4 3046     		mov	r0, r6
+ 244 00e6 FFF7FEFF 		bl	HAL_UART_Transmit
+ 245              	.LVL20:
+  44:Core/drogui/src/BMP388.c ****     cal -> P4 =  (int8_t) (buff[10]);
+ 246              		.loc 1 44 5 is_stmt 1 view .LVU55
+ 247              		.loc 1 44 18 is_stmt 0 view .LVU56
+ 248 00ea 94F90A20 		ldrsb	r2, [r4, #10]
+ 249              		.loc 1 44 15 view .LVU57
+ 250 00ee 6A73     		strb	r2, [r5, #13]
+  45:Core/drogui/src/BMP388.c ****     sprintf(aux, "P4 = %d\n", cal -> P4);
+ 251              		.loc 1 45 5 is_stmt 1 view .LVU58
+ 252 00f0 4D49     		ldr	r1, .L3+28
+ 253 00f2 01A8     		add	r0, sp, #4
+ 254 00f4 FFF7FEFF 		bl	sprintf
+ 255              	.LVL21:
+  46:Core/drogui/src/BMP388.c ****     HAL_UART_Transmit(&huart2, (uint8_t *) aux, strlen(aux), 1000);
+ 256              		.loc 1 46 5 view .LVU59
+ 257              		.loc 1 46 49 is_stmt 0 view .LVU60
+ 258 00f8 01A8     		add	r0, sp, #4
+ 259 00fa FFF7FEFF 		bl	strlen
+ 260              	.LVL22:
+ 261              		.loc 1 46 5 view .LVU61
+ 262 00fe 4FF47A73 		mov	r3, #1000
+ 263 0102 82B2     		uxth	r2, r0
+ 264 0104 01A9     		add	r1, sp, #4
+ 265 0106 3046     		mov	r0, r6
+ 266 0108 FFF7FEFF 		bl	HAL_UART_Transmit
+ 267              	.LVL23:
+  47:Core/drogui/src/BMP388.c ****     cal -> P5 =  (uint16_t) (buff[12] << 8 | buff[11]);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 7
 
 
- 183 0028 7720     		movs	r0, #119
- 184 002a FFF7FEFF 		bl	I2CwriteByte
- 185              	.LVL5:
-  50:Core/drogui/src/BMP388.c ****     HAL_Delay(10);
- 186              		.loc 1 50 5 view .LVU65
- 187 002e 0A20     		movs	r0, #10
- 188 0030 FFF7FEFF 		bl	HAL_Delay
- 189              	.LVL6:
-  51:Core/drogui/src/BMP388.c ****     I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_CALIB_DATA, 21, buff);
- 190              		.loc 1 51 5 view .LVU66
- 191 0034 6B46     		mov	r3, sp
- 192 0036 1522     		movs	r2, #21
- 193 0038 3121     		movs	r1, #49
- 194 003a 7720     		movs	r0, #119
- 195 003c FFF7FEFF 		bl	I2Cread
- 196              	.LVL7:
-  52:Core/drogui/src/BMP388.c ****     buildCalib(buff, &calib_bmp);
- 197              		.loc 1 52 5 view .LVU67
- 198 0040 0349     		ldr	r1, .L4
- 199 0042 6846     		mov	r0, sp
- 200 0044 FFF7FEFF 		bl	buildCalib
- 201              	.LVL8:
-  53:Core/drogui/src/BMP388.c **** }
- 202              		.loc 1 53 1 is_stmt 0 view .LVU68
- 203 0048 07B0     		add	sp, sp, #28
- 204              	.LCFI2:
- 205              		.cfi_def_cfa_offset 4
- 206              		@ sp needed
- 207 004a 5DF804FB 		ldr	pc, [sp], #4
- 208              	.L5:
- 209 004e 00BF     		.align	2
- 210              	.L4:
- 211 0050 00000000 		.word	.LANCHOR0
- 212              		.cfi_endproc
- 213              	.LFE145:
- 215              		.section	.text.bmpReadTemperature,"ax",%progbits
- 216              		.align	1
- 217              		.global	bmpReadTemperature
- 218              		.syntax unified
- 219              		.thumb
- 220              		.thumb_func
- 221              		.fpu fpv5-sp-d16
- 223              	bmpReadTemperature:
- 224              	.LFB146:
-  54:Core/drogui/src/BMP388.c **** 
-  55:Core/drogui/src/BMP388.c **** uint32_t bmpReadTemperature(){
- 225              		.loc 1 55 30 is_stmt 1 view -0
- 226              		.cfi_startproc
- 227              		@ args = 0, pretend = 0, frame = 8
- 228              		@ frame_needed = 0, uses_anonymous_args = 0
- 229 0000 00B5     		push	{lr}
- 230              	.LCFI3:
- 231              		.cfi_def_cfa_offset 4
- 232              		.cfi_offset 14, -4
- 233 0002 83B0     		sub	sp, sp, #12
- 234              	.LCFI4:
- 235              		.cfi_def_cfa_offset 16
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 6
+ 268              		.loc 1 47 5 is_stmt 1 view .LVU62
+ 269              		.loc 1 47 34 is_stmt 0 view .LVU63
+ 270 010c 237B     		ldrb	r3, [r4, #12]	@ zero_extendqisi2
+ 271              		.loc 1 47 50 view .LVU64
+ 272 010e E27A     		ldrb	r2, [r4, #11]	@ zero_extendqisi2
+ 273              		.loc 1 47 18 view .LVU65
+ 274 0110 42EA0322 		orr	r2, r2, r3, lsl #8
+ 275              		.loc 1 47 15 view .LVU66
+ 276 0114 6A82     		strh	r2, [r5, #18]	@ movhi
+  48:Core/drogui/src/BMP388.c ****     sprintf(aux, "P5 = %u\n", cal -> P5);
+ 277              		.loc 1 48 5 is_stmt 1 view .LVU67
+ 278 0116 4549     		ldr	r1, .L3+32
+ 279 0118 01A8     		add	r0, sp, #4
+ 280 011a FFF7FEFF 		bl	sprintf
+ 281              	.LVL24:
+  49:Core/drogui/src/BMP388.c ****     HAL_UART_Transmit(&huart2, (uint8_t *) aux, strlen(aux), 1000);
+ 282              		.loc 1 49 5 view .LVU68
+ 283              		.loc 1 49 49 is_stmt 0 view .LVU69
+ 284 011e 01A8     		add	r0, sp, #4
+ 285 0120 FFF7FEFF 		bl	strlen
+ 286              	.LVL25:
+ 287              		.loc 1 49 5 view .LVU70
+ 288 0124 4FF47A73 		mov	r3, #1000
+ 289 0128 82B2     		uxth	r2, r0
+ 290 012a 01A9     		add	r1, sp, #4
+ 291 012c 3046     		mov	r0, r6
+ 292 012e FFF7FEFF 		bl	HAL_UART_Transmit
+ 293              	.LVL26:
+  50:Core/drogui/src/BMP388.c ****     cal -> P6 =  (uint16_t) (buff[14] << 8 | buff[13]);
+ 294              		.loc 1 50 5 is_stmt 1 view .LVU71
+ 295              		.loc 1 50 34 is_stmt 0 view .LVU72
+ 296 0132 A37B     		ldrb	r3, [r4, #14]	@ zero_extendqisi2
+ 297              		.loc 1 50 50 view .LVU73
+ 298 0134 627B     		ldrb	r2, [r4, #13]	@ zero_extendqisi2
+ 299              		.loc 1 50 18 view .LVU74
+ 300 0136 42EA0322 		orr	r2, r2, r3, lsl #8
+ 301              		.loc 1 50 15 view .LVU75
+ 302 013a AA82     		strh	r2, [r5, #20]	@ movhi
+  51:Core/drogui/src/BMP388.c ****     sprintf(aux, "P6 = %u\n", cal -> P6);
+ 303              		.loc 1 51 5 is_stmt 1 view .LVU76
+ 304 013c 3C49     		ldr	r1, .L3+36
+ 305 013e 01A8     		add	r0, sp, #4
+ 306 0140 FFF7FEFF 		bl	sprintf
+ 307              	.LVL27:
+  52:Core/drogui/src/BMP388.c ****     HAL_UART_Transmit(&huart2, (uint8_t *) aux, strlen(aux), 1000);
+ 308              		.loc 1 52 5 view .LVU77
+ 309              		.loc 1 52 49 is_stmt 0 view .LVU78
+ 310 0144 01A8     		add	r0, sp, #4
+ 311 0146 FFF7FEFF 		bl	strlen
+ 312              	.LVL28:
+ 313              		.loc 1 52 5 view .LVU79
+ 314 014a 4FF47A73 		mov	r3, #1000
+ 315 014e 82B2     		uxth	r2, r0
+ 316 0150 01A9     		add	r1, sp, #4
+ 317 0152 3046     		mov	r0, r6
+ 318 0154 FFF7FEFF 		bl	HAL_UART_Transmit
+ 319              	.LVL29:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 8
 
 
-  56:Core/drogui/src/BMP388.c ****     uint8_t dat[3];
- 236              		.loc 1 56 5 view .LVU70
-  57:Core/drogui/src/BMP388.c ****     I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_TEMP, 3, dat);
- 237              		.loc 1 57 5 view .LVU71
- 238 0004 01AB     		add	r3, sp, #4
- 239 0006 0322     		movs	r2, #3
- 240 0008 0721     		movs	r1, #7
- 241 000a 7720     		movs	r0, #119
- 242 000c FFF7FEFF 		bl	I2Cread
- 243              	.LVL9:
-  58:Core/drogui/src/BMP388.c ****     return (uint32_t)(((dat[0] << 8) | (dat[1]) ) << 4)  | (dat[2] >> 4);
- 244              		.loc 1 58 5 view .LVU72
- 245              		.loc 1 58 28 is_stmt 0 view .LVU73
- 246 0010 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
- 247              		.loc 1 58 44 view .LVU74
- 248 0014 9DF80500 		ldrb	r0, [sp, #5]	@ zero_extendqisi2
- 249              		.loc 1 58 38 view .LVU75
- 250 0018 40EA0320 		orr	r0, r0, r3, lsl #8
- 251              		.loc 1 58 64 view .LVU76
- 252 001c 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
- 253              		.loc 1 58 68 view .LVU77
- 254 0020 1B09     		lsrs	r3, r3, #4
-  59:Core/drogui/src/BMP388.c **** }
- 255              		.loc 1 59 1 view .LVU78
- 256 0022 43EA0010 		orr	r0, r3, r0, lsl #4
- 257 0026 03B0     		add	sp, sp, #12
- 258              	.LCFI5:
- 259              		.cfi_def_cfa_offset 4
- 260              		@ sp needed
- 261 0028 5DF804FB 		ldr	pc, [sp], #4
- 262              		.cfi_endproc
- 263              	.LFE146:
- 265              		.section	.text.bmpReadPressure,"ax",%progbits
- 266              		.align	1
- 267              		.global	bmpReadPressure
- 268              		.syntax unified
- 269              		.thumb
- 270              		.thumb_func
- 271              		.fpu fpv5-sp-d16
- 273              	bmpReadPressure:
- 274              	.LFB147:
-  60:Core/drogui/src/BMP388.c **** 
-  61:Core/drogui/src/BMP388.c **** uint32_t bmpReadPressure(){
- 275              		.loc 1 61 27 is_stmt 1 view -0
- 276              		.cfi_startproc
- 277              		@ args = 0, pretend = 0, frame = 8
- 278              		@ frame_needed = 0, uses_anonymous_args = 0
- 279 0000 00B5     		push	{lr}
- 280              	.LCFI6:
- 281              		.cfi_def_cfa_offset 4
- 282              		.cfi_offset 14, -4
- 283 0002 83B0     		sub	sp, sp, #12
- 284              	.LCFI7:
- 285              		.cfi_def_cfa_offset 16
-  62:Core/drogui/src/BMP388.c ****     uint8_t dat[3];
- 286              		.loc 1 62 5 view .LVU80
-  63:Core/drogui/src/BMP388.c ****     I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_PRESS, 3, dat);
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 7
+  53:Core/drogui/src/BMP388.c ****     cal -> P7 =  (int8_t) (buff[15]);
+ 320              		.loc 1 53 5 is_stmt 1 view .LVU80
+ 321              		.loc 1 53 18 is_stmt 0 view .LVU81
+ 322 0158 94F90F20 		ldrsb	r2, [r4, #15]
+ 323              		.loc 1 53 15 view .LVU82
+ 324 015c AA73     		strb	r2, [r5, #14]
+  54:Core/drogui/src/BMP388.c ****     sprintf(aux, "P7 = %d\n", cal -> P7);
+ 325              		.loc 1 54 5 is_stmt 1 view .LVU83
+ 326 015e 3549     		ldr	r1, .L3+40
+ 327 0160 01A8     		add	r0, sp, #4
+ 328 0162 FFF7FEFF 		bl	sprintf
+ 329              	.LVL30:
+  55:Core/drogui/src/BMP388.c ****     HAL_UART_Transmit(&huart2, (uint8_t *) aux, strlen(aux), 1000);
+ 330              		.loc 1 55 5 view .LVU84
+ 331              		.loc 1 55 49 is_stmt 0 view .LVU85
+ 332 0166 01A8     		add	r0, sp, #4
+ 333 0168 FFF7FEFF 		bl	strlen
+ 334              	.LVL31:
+ 335              		.loc 1 55 5 view .LVU86
+ 336 016c 4FF47A73 		mov	r3, #1000
+ 337 0170 82B2     		uxth	r2, r0
+ 338 0172 01A9     		add	r1, sp, #4
+ 339 0174 3046     		mov	r0, r6
+ 340 0176 FFF7FEFF 		bl	HAL_UART_Transmit
+ 341              	.LVL32:
+  56:Core/drogui/src/BMP388.c ****     cal -> P8 =  (int8_t) (buff[16]);
+ 342              		.loc 1 56 5 is_stmt 1 view .LVU87
+ 343              		.loc 1 56 18 is_stmt 0 view .LVU88
+ 344 017a 94F91020 		ldrsb	r2, [r4, #16]
+ 345              		.loc 1 56 15 view .LVU89
+ 346 017e EA73     		strb	r2, [r5, #15]
+  57:Core/drogui/src/BMP388.c ****     sprintf(aux, "P8 = %d\n", cal -> P8);
+ 347              		.loc 1 57 5 is_stmt 1 view .LVU90
+ 348 0180 2D49     		ldr	r1, .L3+44
+ 349 0182 01A8     		add	r0, sp, #4
+ 350 0184 FFF7FEFF 		bl	sprintf
+ 351              	.LVL33:
+  58:Core/drogui/src/BMP388.c ****     HAL_UART_Transmit(&huart2, (uint8_t *) aux, strlen(aux), 1000);
+ 352              		.loc 1 58 5 view .LVU91
+ 353              		.loc 1 58 49 is_stmt 0 view .LVU92
+ 354 0188 01A8     		add	r0, sp, #4
+ 355 018a FFF7FEFF 		bl	strlen
+ 356              	.LVL34:
+ 357              		.loc 1 58 5 view .LVU93
+ 358 018e 4FF47A73 		mov	r3, #1000
+ 359 0192 82B2     		uxth	r2, r0
+ 360 0194 01A9     		add	r1, sp, #4
+ 361 0196 3046     		mov	r0, r6
+ 362 0198 FFF7FEFF 		bl	HAL_UART_Transmit
+ 363              	.LVL35:
+  59:Core/drogui/src/BMP388.c ****     cal -> P9 =  (int16_t) (buff[18] << 8 | buff[17]);
+ 364              		.loc 1 59 5 is_stmt 1 view .LVU94
+ 365              		.loc 1 59 33 is_stmt 0 view .LVU95
+ 366 019c A37C     		ldrb	r3, [r4, #18]	@ zero_extendqisi2
+ 367              		.loc 1 59 49 view .LVU96
+ 368 019e 627C     		ldrb	r2, [r4, #17]	@ zero_extendqisi2
+ 369              		.loc 1 59 18 view .LVU97
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 9
 
 
- 287              		.loc 1 63 5 view .LVU81
- 288 0004 01AB     		add	r3, sp, #4
- 289 0006 0322     		movs	r2, #3
- 290 0008 0421     		movs	r1, #4
- 291 000a 7720     		movs	r0, #119
- 292 000c FFF7FEFF 		bl	I2Cread
- 293              	.LVL10:
-  64:Core/drogui/src/BMP388.c ****     return (uint32_t)(((dat[0] << 8) | (dat[1]) ) << 4)  | (dat[2] >> 4);
- 294              		.loc 1 64 5 view .LVU82
- 295              		.loc 1 64 28 is_stmt 0 view .LVU83
- 296 0010 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
- 297              		.loc 1 64 44 view .LVU84
- 298 0014 9DF80500 		ldrb	r0, [sp, #5]	@ zero_extendqisi2
- 299              		.loc 1 64 38 view .LVU85
- 300 0018 40EA0320 		orr	r0, r0, r3, lsl #8
- 301              		.loc 1 64 64 view .LVU86
- 302 001c 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
- 303              		.loc 1 64 68 view .LVU87
- 304 0020 1B09     		lsrs	r3, r3, #4
-  65:Core/drogui/src/BMP388.c **** }
- 305              		.loc 1 65 1 view .LVU88
- 306 0022 43EA0010 		orr	r0, r3, r0, lsl #4
- 307 0026 03B0     		add	sp, sp, #12
- 308              	.LCFI8:
- 309              		.cfi_def_cfa_offset 4
- 310              		@ sp needed
- 311 0028 5DF804FB 		ldr	pc, [sp], #4
- 312              		.cfi_endproc
- 313              	.LFE147:
- 315              		.section	.text.bmp388CompensateTemp,"ax",%progbits
- 316              		.align	1
- 317              		.global	bmp388CompensateTemp
- 318              		.syntax unified
- 319              		.thumb
- 320              		.thumb_func
- 321              		.fpu fpv5-sp-d16
- 323              	bmp388CompensateTemp:
- 324              	.LVL11:
- 325              	.LFB148:
-  66:Core/drogui/src/BMP388.c **** 
-  67:Core/drogui/src/BMP388.c **** int64_t bmp388CompensateTemp(uint32_t u32RegData){
- 326              		.loc 1 67 50 is_stmt 1 view -0
- 327              		.cfi_startproc
- 328              		@ args = 0, pretend = 0, frame = 0
- 329              		@ frame_needed = 0, uses_anonymous_args = 0
- 330              		@ link register save eliminated.
- 331              		.loc 1 67 50 is_stmt 0 view .LVU90
- 332 0000 10B4     		push	{r4}
- 333              	.LCFI9:
- 334              		.cfi_def_cfa_offset 4
- 335              		.cfi_offset 4, -4
-  68:Core/drogui/src/BMP388.c **** 
-  69:Core/drogui/src/BMP388.c ****   uint64_t partial_data1;
- 336              		.loc 1 69 3 is_stmt 1 view .LVU91
-  70:Core/drogui/src/BMP388.c ****   uint64_t partial_data2;
- 337              		.loc 1 70 3 view .LVU92
-  71:Core/drogui/src/BMP388.c ****   uint64_t partial_data3;
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 8
+ 370 01a0 42EA0322 		orr	r2, r2, r3, lsl #8
+ 371 01a4 12B2     		sxth	r2, r2
+ 372              		.loc 1 59 15 view .LVU98
+ 373 01a6 6A81     		strh	r2, [r5, #10]	@ movhi
+  60:Core/drogui/src/BMP388.c ****     sprintf(aux, "P9 = %d\n", cal -> P9);
+ 374              		.loc 1 60 5 is_stmt 1 view .LVU99
+ 375 01a8 2449     		ldr	r1, .L3+48
+ 376 01aa 01A8     		add	r0, sp, #4
+ 377 01ac FFF7FEFF 		bl	sprintf
+ 378              	.LVL36:
+  61:Core/drogui/src/BMP388.c ****     HAL_UART_Transmit(&huart2, (uint8_t *) aux, strlen(aux), 1000);
+ 379              		.loc 1 61 5 view .LVU100
+ 380              		.loc 1 61 49 is_stmt 0 view .LVU101
+ 381 01b0 01A8     		add	r0, sp, #4
+ 382 01b2 FFF7FEFF 		bl	strlen
+ 383              	.LVL37:
+ 384              		.loc 1 61 5 view .LVU102
+ 385 01b6 4FF47A73 		mov	r3, #1000
+ 386 01ba 82B2     		uxth	r2, r0
+ 387 01bc 01A9     		add	r1, sp, #4
+ 388 01be 3046     		mov	r0, r6
+ 389 01c0 FFF7FEFF 		bl	HAL_UART_Transmit
+ 390              	.LVL38:
+  62:Core/drogui/src/BMP388.c ****     cal -> P10 = (int8_t) (buff[19]);
+ 391              		.loc 1 62 5 is_stmt 1 view .LVU103
+ 392              		.loc 1 62 18 is_stmt 0 view .LVU104
+ 393 01c4 94F91320 		ldrsb	r2, [r4, #19]
+ 394              		.loc 1 62 16 view .LVU105
+ 395 01c8 2A74     		strb	r2, [r5, #16]
+  63:Core/drogui/src/BMP388.c ****     sprintf(aux, "P10 = %d\n", cal -> P10);
+ 396              		.loc 1 63 5 is_stmt 1 view .LVU106
+ 397 01ca 1D49     		ldr	r1, .L3+52
+ 398 01cc 01A8     		add	r0, sp, #4
+ 399 01ce FFF7FEFF 		bl	sprintf
+ 400              	.LVL39:
+  64:Core/drogui/src/BMP388.c ****     HAL_UART_Transmit(&huart2, (uint8_t *) aux, strlen(aux), 1000);
+ 401              		.loc 1 64 5 view .LVU107
+ 402              		.loc 1 64 49 is_stmt 0 view .LVU108
+ 403 01d2 01A8     		add	r0, sp, #4
+ 404 01d4 FFF7FEFF 		bl	strlen
+ 405              	.LVL40:
+ 406              		.loc 1 64 5 view .LVU109
+ 407 01d8 4FF47A73 		mov	r3, #1000
+ 408 01dc 82B2     		uxth	r2, r0
+ 409 01de 01A9     		add	r1, sp, #4
+ 410 01e0 3046     		mov	r0, r6
+ 411 01e2 FFF7FEFF 		bl	HAL_UART_Transmit
+ 412              	.LVL41:
+  65:Core/drogui/src/BMP388.c ****     cal -> P11 = (int8_t) (buff[20]);    
+ 413              		.loc 1 65 5 is_stmt 1 view .LVU110
+ 414              		.loc 1 65 18 is_stmt 0 view .LVU111
+ 415 01e6 94F91420 		ldrsb	r2, [r4, #20]
+ 416              		.loc 1 65 16 view .LVU112
+ 417 01ea 6A74     		strb	r2, [r5, #17]
+  66:Core/drogui/src/BMP388.c ****     sprintf(aux, "P11 = %d\n", cal -> P11);
+ 418              		.loc 1 66 5 is_stmt 1 view .LVU113
+ 419 01ec 1549     		ldr	r1, .L3+56
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 10
 
 
- 338              		.loc 1 71 3 view .LVU93
-  72:Core/drogui/src/BMP388.c ****   int64_t partial_data4;
- 339              		.loc 1 72 3 view .LVU94
-  73:Core/drogui/src/BMP388.c ****   int64_t partial_data5;
- 340              		.loc 1 73 3 view .LVU95
-  74:Core/drogui/src/BMP388.c ****   int64_t partial_data6;
- 341              		.loc 1 74 3 view .LVU96
-  75:Core/drogui/src/BMP388.c ****   int64_t comp_temp;
- 342              		.loc 1 75 3 view .LVU97
-  76:Core/drogui/src/BMP388.c **** 
-  77:Core/drogui/src/BMP388.c ****   partial_data1 = (uint64_t)(u32RegData - (256 * (uint64_t)(calib_bmp.T1)));
- 343              		.loc 1 77 3 view .LVU98
- 344              		.loc 1 77 70 is_stmt 0 view .LVU99
- 345 0002 264C     		ldr	r4, .L16
- 346 0004 2388     		ldrh	r3, [r4]
- 347              		.loc 1 77 48 view .LVU100
- 348 0006 1B02     		lsls	r3, r3, #8
- 349              		.loc 1 77 17 view .LVU101
- 350 0008 C01A     		subs	r0, r0, r3
- 351              	.LVL12:
- 352              		.loc 1 77 17 view .LVU102
- 353 000a 61EB0101 		sbc	r1, r1, r1
- 354              	.LVL13:
-  78:Core/drogui/src/BMP388.c ****   partial_data2 = (uint64_t)(calib_bmp.T2 * partial_data1);
- 355              		.loc 1 78 3 is_stmt 1 view .LVU103
- 356              		.loc 1 78 39 is_stmt 0 view .LVU104
- 357 000e 6388     		ldrh	r3, [r4, #2]
- 358              		.loc 1 78 17 view .LVU105
- 359 0010 A3FB002C 		umull	r2, ip, r3, r0
- 360 0014 03FB01CC 		mla	ip, r3, r1, ip
- 361              	.LVL14:
-  79:Core/drogui/src/BMP388.c ****   partial_data3 = (uint64_t)(partial_data1 * partial_data1);
- 362              		.loc 1 79 3 is_stmt 1 view .LVU106
- 363              		.loc 1 79 17 is_stmt 0 view .LVU107
- 364 0018 00FB01F1 		mul	r1, r0, r1
- 365              	.LVL15:
- 366              		.loc 1 79 17 view .LVU108
- 367 001c A0FB0003 		umull	r0, r3, r0, r0
- 368              	.LVL16:
- 369              		.loc 1 79 17 view .LVU109
- 370 0020 03EB4103 		add	r3, r3, r1, lsl #1
- 371              	.LVL17:
-  80:Core/drogui/src/BMP388.c ****   partial_data4 = (int64_t)(((int64_t)partial_data3) * ((int64_t)calib_bmp.T3));
- 372              		.loc 1 80 3 is_stmt 1 view .LVU110
- 373              		.loc 1 80 75 is_stmt 0 view .LVU111
- 374 0024 94F90410 		ldrsb	r1, [r4, #4]
- 375              		.loc 1 80 57 view .LVU112
- 376 0028 CC17     		asrs	r4, r1, #31
- 377              		.loc 1 80 17 view .LVU113
- 378 002a 01FB03F3 		mul	r3, r1, r3
- 379              	.LVL18:
- 380              		.loc 1 80 17 view .LVU114
- 381 002e 00FB0433 		mla	r3, r0, r4, r3
- 382 0032 A1FB0010 		umull	r1, r0, r1, r0
- 383              	.LVL19:
- 384              		.loc 1 80 17 view .LVU115
- 385 0036 1844     		add	r0, r0, r3
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 9
+ 420 01ee 01A8     		add	r0, sp, #4
+ 421 01f0 FFF7FEFF 		bl	sprintf
+ 422              	.LVL42:
+  67:Core/drogui/src/BMP388.c ****     HAL_UART_Transmit(&huart2, (uint8_t *) aux, strlen(aux), 1000);
+ 423              		.loc 1 67 5 view .LVU114
+ 424              		.loc 1 67 49 is_stmt 0 view .LVU115
+ 425 01f4 01A8     		add	r0, sp, #4
+ 426 01f6 FFF7FEFF 		bl	strlen
+ 427              	.LVL43:
+ 428              		.loc 1 67 5 view .LVU116
+ 429 01fa 4FF47A73 		mov	r3, #1000
+ 430 01fe 82B2     		uxth	r2, r0
+ 431 0200 01A9     		add	r1, sp, #4
+ 432 0202 3046     		mov	r0, r6
+ 433 0204 FFF7FEFF 		bl	HAL_UART_Transmit
+ 434              	.LVL44:
+  68:Core/drogui/src/BMP388.c **** }
+ 435              		.loc 1 68 1 view .LVU117
+ 436 0208 0EB0     		add	sp, sp, #56
+ 437              	.LCFI2:
+ 438              		.cfi_def_cfa_offset 16
+ 439              		@ sp needed
+ 440 020a 70BD     		pop	{r4, r5, r6, pc}
+ 441              	.LVL45:
+ 442              	.L4:
+ 443              		.loc 1 68 1 view .LVU118
+ 444              		.align	2
+ 445              	.L3:
+ 446 020c 00000000 		.word	.LC0
+ 447 0210 00000000 		.word	huart2
+ 448 0214 10000000 		.word	.LC1
+ 449 0218 1C000000 		.word	.LC2
+ 450 021c 28000000 		.word	.LC3
+ 451 0220 34000000 		.word	.LC4
+ 452 0224 40000000 		.word	.LC5
+ 453 0228 4C000000 		.word	.LC6
+ 454 022c 58000000 		.word	.LC7
+ 455 0230 64000000 		.word	.LC8
+ 456 0234 70000000 		.word	.LC9
+ 457 0238 7C000000 		.word	.LC10
+ 458 023c 88000000 		.word	.LC11
+ 459 0240 94000000 		.word	.LC12
+ 460 0244 A0000000 		.word	.LC13
+ 461              		.cfi_endproc
+ 462              	.LFE144:
+ 464              		.section	.rodata.initBmp388.str1.4,"aMS",%progbits,1
+ 465              		.align	2
+ 466              	.LC14:
+ 467 0000 5057525F 		.ascii	"PWR_MODE = %x\012\000"
+ 467      4D4F4445 
+ 467      203D2025 
+ 467      780A00
+ 468              		.section	.text.initBmp388,"ax",%progbits
+ 469              		.align	1
+ 470              		.global	initBmp388
+ 471              		.syntax unified
+ 472              		.thumb
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 11
 
 
- 386              	.LVL20:
-  81:Core/drogui/src/BMP388.c ****   partial_data5 = ((int64_t)(((int64_t)partial_data2) * 262144) + (int64_t)partial_data4);
- 387              		.loc 1 81 3 is_stmt 1 view .LVU116
- 388              		.loc 1 81 20 is_stmt 0 view .LVU117
- 389 0038 4FEA8C43 		lsl	r3, ip, #18
- 390 003c 43EA9233 		orr	r3, r3, r2, lsr #14
- 391 0040 9204     		lsls	r2, r2, #18
- 392              	.LVL21:
- 393              		.loc 1 81 17 view .LVU118
- 394 0042 5218     		adds	r2, r2, r1
- 395              	.LVL22:
- 396              		.loc 1 81 17 view .LVU119
- 397 0044 40EB0303 		adc	r3, r0, r3
- 398              	.LVL23:
-  82:Core/drogui/src/BMP388.c ****   partial_data6 = (int64_t)(((int64_t)partial_data5) / 4294967296);
- 399              		.loc 1 82 3 is_stmt 1 view .LVU120
- 400              		.loc 1 82 17 is_stmt 0 view .LVU121
- 401 0048 1046     		mov	r0, r2
- 402              	.LVL24:
- 403              		.loc 1 82 17 view .LVU122
- 404 004a 1A46     		mov	r2, r3
- 405              	.LVL25:
- 406              		.loc 1 82 17 view .LVU123
- 407 004c 002B     		cmp	r3, #0
- 408 004e 1ADB     		blt	.L14
- 409              	.LVL26:
- 410              	.L11:
- 411              		.loc 1 82 17 view .LVU124
- 412 0050 D317     		asrs	r3, r2, #31
- 413              	.LVL27:
-  83:Core/drogui/src/BMP388.c **** 
-  84:Core/drogui/src/BMP388.c ****   calib_bmp.T_fine = partial_data6;
- 414              		.loc 1 84 3 is_stmt 1 view .LVU125
- 415              		.loc 1 84 20 is_stmt 0 view .LVU126
- 416 0052 1249     		ldr	r1, .L16
- 417              	.LVL28:
- 418              		.loc 1 84 20 view .LVU127
- 419 0054 8A61     		str	r2, [r1, #24]
- 420 0056 CB61     		str	r3, [r1, #28]
-  85:Core/drogui/src/BMP388.c ****   comp_temp = (int64_t)((partial_data6 * 25)  / 16384);
- 421              		.loc 1 85 3 is_stmt 1 view .LVU128
- 422              		.loc 1 85 40 is_stmt 0 view .LVU129
- 423 0058 9018     		adds	r0, r2, r2
- 424 005a 43EB0301 		adc	r1, r3, r3
- 425 005e 8018     		adds	r0, r0, r2
- 426 0060 43EB0101 		adc	r1, r3, r1
- 427 0064 C900     		lsls	r1, r1, #3
- 428 0066 41EA5071 		orr	r1, r1, r0, lsr #29
- 429 006a C000     		lsls	r0, r0, #3
- 430 006c 8018     		adds	r0, r0, r2
- 431 006e 43EB0103 		adc	r3, r3, r1
- 432              	.LVL29:
- 433              		.loc 1 85 13 view .LVU130
- 434 0072 1946     		mov	r1, r3
- 435 0074 002B     		cmp	r3, #0
- 436 0076 0ADB     		blt	.L15
- 437              	.LVL30:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 10
+ 473              		.thumb_func
+ 474              		.fpu fpv5-sp-d16
+ 476              	initBmp388:
+ 477              	.LFB145:
+  69:Core/drogui/src/BMP388.c **** 
+  70:Core/drogui/src/BMP388.c **** calib calib_bmp;
+  71:Core/drogui/src/BMP388.c **** 
+  72:Core/drogui/src/BMP388.c **** void initBmp388(){
+ 478              		.loc 1 72 18 is_stmt 1 view -0
+ 479              		.cfi_startproc
+ 480              		@ args = 0, pretend = 0, frame = 80
+ 481              		@ frame_needed = 0, uses_anonymous_args = 0
+ 482 0000 00B5     		push	{lr}
+ 483              	.LCFI3:
+ 484              		.cfi_def_cfa_offset 4
+ 485              		.cfi_offset 14, -4
+ 486 0002 95B0     		sub	sp, sp, #84
+ 487              	.LCFI4:
+ 488              		.cfi_def_cfa_offset 88
+  73:Core/drogui/src/BMP388.c ****     char aux[50];
+ 489              		.loc 1 73 5 view .LVU120
+  74:Core/drogui/src/BMP388.c ****     uint8_t buff[21];
+ 490              		.loc 1 74 5 view .LVU121
+  75:Core/drogui/src/BMP388.c ****     I2CwriteByte(BMP388_DEFAULT_ADDRESS, BMP388_REG_PWR_CTRL, 0x33);
+ 491              		.loc 1 75 5 view .LVU122
+ 492 0004 3322     		movs	r2, #51
+ 493 0006 1B21     		movs	r1, #27
+ 494 0008 7720     		movs	r0, #119
+ 495 000a FFF7FEFF 		bl	I2CwriteByte
+ 496              	.LVL46:
+  76:Core/drogui/src/BMP388.c ****     HAL_Delay(10);
+ 497              		.loc 1 76 5 view .LVU123
+ 498 000e 0A20     		movs	r0, #10
+ 499 0010 FFF7FEFF 		bl	HAL_Delay
+ 500              	.LVL47:
+  77:Core/drogui/src/BMP388.c ****     I2CwriteByte(BMP388_DEFAULT_ADDRESS, BMP388_REG_OSR, 0x00);
+ 501              		.loc 1 77 5 view .LVU124
+ 502 0014 0022     		movs	r2, #0
+ 503 0016 1C21     		movs	r1, #28
+ 504 0018 7720     		movs	r0, #119
+ 505 001a FFF7FEFF 		bl	I2CwriteByte
+ 506              	.LVL48:
+  78:Core/drogui/src/BMP388.c ****     HAL_Delay(10);
+ 507              		.loc 1 78 5 view .LVU125
+ 508 001e 0A20     		movs	r0, #10
+ 509 0020 FFF7FEFF 		bl	HAL_Delay
+ 510              	.LVL49:
+  79:Core/drogui/src/BMP388.c ****     I2CwriteByte(BMP388_DEFAULT_ADDRESS, BMP388_REG_ODR, 0x00);
+ 511              		.loc 1 79 5 view .LVU126
+ 512 0024 0022     		movs	r2, #0
+ 513 0026 1D21     		movs	r1, #29
+ 514 0028 7720     		movs	r0, #119
+ 515 002a FFF7FEFF 		bl	I2CwriteByte
+ 516              	.LVL50:
+  80:Core/drogui/src/BMP388.c ****     HAL_Delay(10);
+ 517              		.loc 1 80 5 view .LVU127
+ 518 002e 0A20     		movs	r0, #10
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 12
 
 
- 438              	.L12:
- 439              		.loc 1 85 13 view .LVU131
- 440 0078 800B     		lsrs	r0, r0, #14
- 441              	.LVL31:
-  86:Core/drogui/src/BMP388.c ****   return comp_temp;   
- 442              		.loc 1 86 3 is_stmt 1 view .LVU132
-  87:Core/drogui/src/BMP388.c **** }
- 443              		.loc 1 87 1 is_stmt 0 view .LVU133
- 444 007a 40EA8140 		orr	r0, r0, r1, lsl #18
- 445              	.LVL32:
- 446              		.loc 1 87 1 view .LVU134
- 447 007e 8913     		asrs	r1, r1, #14
- 448              	.LVL33:
- 449              		.loc 1 87 1 view .LVU135
- 450 0080 5DF8044B 		ldr	r4, [sp], #4
- 451              	.LCFI10:
- 452              		.cfi_remember_state
- 453              		.cfi_restore 4
- 454              		.cfi_def_cfa_offset 0
- 455              	.LVL34:
- 456              		.loc 1 87 1 view .LVU136
- 457 0084 7047     		bx	lr
- 458              	.LVL35:
- 459              	.L14:
- 460              	.LCFI11:
- 461              		.cfi_restore_state
-  82:Core/drogui/src/BMP388.c **** 
- 462              		.loc 1 82 17 view .LVU137
- 463 0086 0138     		subs	r0, r0, #1
- 464              	.LVL36:
-  82:Core/drogui/src/BMP388.c **** 
- 465              		.loc 1 82 17 view .LVU138
- 466 0088 43F10002 		adc	r2, r3, #0
- 467              	.LVL37:
-  82:Core/drogui/src/BMP388.c **** 
- 468              		.loc 1 82 17 view .LVU139
- 469 008c E0E7     		b	.L11
- 470              	.LVL38:
- 471              	.L15:
-  85:Core/drogui/src/BMP388.c ****   return comp_temp;   
- 472              		.loc 1 85 13 view .LVU140
- 473 008e 43F6FF72 		movw	r2, #16383
- 474              	.LVL39:
-  85:Core/drogui/src/BMP388.c ****   return comp_temp;   
- 475              		.loc 1 85 13 view .LVU141
- 476 0092 8018     		adds	r0, r0, r2
- 477 0094 43F10001 		adc	r1, r3, #0
- 478 0098 EEE7     		b	.L12
- 479              	.L17:
- 480 009a 00BF     		.align	2
- 481              	.L16:
- 482 009c 00000000 		.word	.LANCHOR0
- 483              		.cfi_endproc
- 484              	.LFE148:
- 486              		.section	.text.bmp388CompensatePress,"ax",%progbits
- 487              		.align	1
- 488              		.global	bmp388CompensatePress
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 11
+ 519 0030 FFF7FEFF 		bl	HAL_Delay
+ 520              	.LVL51:
+  81:Core/drogui/src/BMP388.c ****     I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_CALIB_DATA, 21, buff);
+ 521              		.loc 1 81 5 view .LVU128
+ 522 0034 01AB     		add	r3, sp, #4
+ 523 0036 1522     		movs	r2, #21
+ 524 0038 3121     		movs	r1, #49
+ 525 003a 7720     		movs	r0, #119
+ 526 003c FFF7FEFF 		bl	I2Cread
+ 527              	.LVL52:
+  82:Core/drogui/src/BMP388.c ****     buildCalib(buff, &calib_bmp);
+ 528              		.loc 1 82 5 view .LVU129
+ 529 0040 0F49     		ldr	r1, .L7
+ 530 0042 01A8     		add	r0, sp, #4
+ 531 0044 FFF7FEFF 		bl	buildCalib
+ 532              	.LVL53:
+  83:Core/drogui/src/BMP388.c ****     HAL_Delay(10);
+ 533              		.loc 1 83 5 view .LVU130
+ 534 0048 0A20     		movs	r0, #10
+ 535 004a FFF7FEFF 		bl	HAL_Delay
+ 536              	.LVL54:
+  84:Core/drogui/src/BMP388.c ****     I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_PWR_CTRL, 1, buff);
+ 537              		.loc 1 84 5 view .LVU131
+ 538 004e 01AB     		add	r3, sp, #4
+ 539 0050 0122     		movs	r2, #1
+ 540 0052 1B21     		movs	r1, #27
+ 541 0054 7720     		movs	r0, #119
+ 542 0056 FFF7FEFF 		bl	I2Cread
+ 543              	.LVL55:
+  85:Core/drogui/src/BMP388.c ****     sprintf(aux, "PWR_MODE = %x\n", buff[0]);
+ 544              		.loc 1 85 5 view .LVU132
+ 545 005a 9DF80420 		ldrb	r2, [sp, #4]	@ zero_extendqisi2
+ 546 005e 0949     		ldr	r1, .L7+4
+ 547 0060 07A8     		add	r0, sp, #28
+ 548 0062 FFF7FEFF 		bl	sprintf
+ 549              	.LVL56:
+  86:Core/drogui/src/BMP388.c ****     HAL_UART_Transmit(&huart2, (uint8_t *) aux, strlen(aux), 1000);
+ 550              		.loc 1 86 5 view .LVU133
+ 551              		.loc 1 86 49 is_stmt 0 view .LVU134
+ 552 0066 07A8     		add	r0, sp, #28
+ 553 0068 FFF7FEFF 		bl	strlen
+ 554              	.LVL57:
+ 555              		.loc 1 86 5 view .LVU135
+ 556 006c 4FF47A73 		mov	r3, #1000
+ 557 0070 82B2     		uxth	r2, r0
+ 558 0072 07A9     		add	r1, sp, #28
+ 559 0074 0448     		ldr	r0, .L7+8
+ 560 0076 FFF7FEFF 		bl	HAL_UART_Transmit
+ 561              	.LVL58:
+  87:Core/drogui/src/BMP388.c ****     
+  88:Core/drogui/src/BMP388.c **** }
+ 562              		.loc 1 88 1 view .LVU136
+ 563 007a 15B0     		add	sp, sp, #84
+ 564              	.LCFI5:
+ 565              		.cfi_def_cfa_offset 4
+ 566              		@ sp needed
+ 567 007c 5DF804FB 		ldr	pc, [sp], #4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 13
 
 
- 489              		.syntax unified
- 490              		.thumb
- 491              		.thumb_func
- 492              		.fpu fpv5-sp-d16
- 494              	bmp388CompensatePress:
- 495              	.LVL40:
- 496              	.LFB149:
-  88:Core/drogui/src/BMP388.c **** 
-  89:Core/drogui/src/BMP388.c **** int64_t bmp388CompensatePress(uint32_t u32RegData){
- 497              		.loc 1 89 51 is_stmt 1 view -0
- 498              		.cfi_startproc
- 499              		@ args = 0, pretend = 0, frame = 8
- 500              		@ frame_needed = 0, uses_anonymous_args = 0
- 501              		.loc 1 89 51 is_stmt 0 view .LVU143
- 502 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
- 503              	.LCFI12:
- 504              		.cfi_def_cfa_offset 36
- 505              		.cfi_offset 4, -36
- 506              		.cfi_offset 5, -32
- 507              		.cfi_offset 6, -28
- 508              		.cfi_offset 7, -24
- 509              		.cfi_offset 8, -20
- 510              		.cfi_offset 9, -16
- 511              		.cfi_offset 10, -12
- 512              		.cfi_offset 11, -8
- 513              		.cfi_offset 14, -4
- 514 0004 83B0     		sub	sp, sp, #12
- 515              	.LCFI13:
- 516              		.cfi_def_cfa_offset 48
-  90:Core/drogui/src/BMP388.c **** 
-  91:Core/drogui/src/BMP388.c ****   int64_t partial_data1;
- 517              		.loc 1 91 3 is_stmt 1 view .LVU144
-  92:Core/drogui/src/BMP388.c ****   int64_t partial_data2;
- 518              		.loc 1 92 3 view .LVU145
-  93:Core/drogui/src/BMP388.c ****   int64_t partial_data3;
- 519              		.loc 1 93 3 view .LVU146
-  94:Core/drogui/src/BMP388.c ****   int64_t partial_data4;
- 520              		.loc 1 94 3 view .LVU147
-  95:Core/drogui/src/BMP388.c ****   int64_t partial_data5;
- 521              		.loc 1 95 3 view .LVU148
-  96:Core/drogui/src/BMP388.c ****   int64_t partial_data6;
- 522              		.loc 1 96 3 view .LVU149
-  97:Core/drogui/src/BMP388.c ****   int64_t offset;
- 523              		.loc 1 97 3 view .LVU150
-  98:Core/drogui/src/BMP388.c ****   int64_t sensitivity;
- 524              		.loc 1 98 3 view .LVU151
-  99:Core/drogui/src/BMP388.c ****   uint64_t comp_press;
- 525              		.loc 1 99 3 view .LVU152
- 100:Core/drogui/src/BMP388.c **** 
- 101:Core/drogui/src/BMP388.c ****   partial_data1 = calib_bmp.T_fine * calib_bmp.T_fine;
- 526              		.loc 1 101 3 view .LVU153
- 527              		.loc 1 101 28 is_stmt 0 view .LVU154
- 528 0006 AD4B     		ldr	r3, .L40
- 529 0008 9A69     		ldr	r2, [r3, #24]
- 530 000a D3F81C80 		ldr	r8, [r3, #28]
- 531              		.loc 1 101 17 view .LVU155
- 532 000e 02FB08F3 		mul	r3, r2, r8
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 12
+ 568              	.L8:
+ 569              		.align	2
+ 570              	.L7:
+ 571 0080 00000000 		.word	.LANCHOR0
+ 572 0084 00000000 		.word	.LC14
+ 573 0088 00000000 		.word	huart2
+ 574              		.cfi_endproc
+ 575              	.LFE145:
+ 577              		.section	.rodata.bmpReadTemperature.str1.4,"aMS",%progbits,1
+ 578              		.align	2
+ 579              	.LC15:
+ 580 0000 25780900 		.ascii	"%x\011\000"
+ 581              		.align	2
+ 582              	.LC16:
+ 583 0004 0A00     		.ascii	"\012\000"
+ 584              		.section	.text.bmpReadTemperature,"ax",%progbits
+ 585              		.align	1
+ 586              		.global	bmpReadTemperature
+ 587              		.syntax unified
+ 588              		.thumb
+ 589              		.thumb_func
+ 590              		.fpu fpv5-sp-d16
+ 592              	bmpReadTemperature:
+ 593              	.LFB146:
+  89:Core/drogui/src/BMP388.c **** 
+  90:Core/drogui/src/BMP388.c **** uint32_t bmpReadTemperature(){
+ 594              		.loc 1 90 30 is_stmt 1 view -0
+ 595              		.cfi_startproc
+ 596              		@ args = 0, pretend = 0, frame = 56
+ 597              		@ frame_needed = 0, uses_anonymous_args = 0
+ 598 0000 10B5     		push	{r4, lr}
+ 599              	.LCFI6:
+ 600              		.cfi_def_cfa_offset 8
+ 601              		.cfi_offset 4, -8
+ 602              		.cfi_offset 14, -4
+ 603 0002 8EB0     		sub	sp, sp, #56
+ 604              	.LCFI7:
+ 605              		.cfi_def_cfa_offset 64
+  91:Core/drogui/src/BMP388.c ****     uint8_t dat[3];
+ 606              		.loc 1 91 5 view .LVU138
+  92:Core/drogui/src/BMP388.c ****     char aux[50];
+ 607              		.loc 1 92 5 view .LVU139
+  93:Core/drogui/src/BMP388.c ****     I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_TEMP, 3, dat);
+ 608              		.loc 1 93 5 view .LVU140
+ 609 0004 0DAB     		add	r3, sp, #52
+ 610 0006 0322     		movs	r2, #3
+ 611 0008 0721     		movs	r1, #7
+ 612 000a 7720     		movs	r0, #119
+ 613 000c FFF7FEFF 		bl	I2Cread
+ 614              	.LVL59:
+  94:Core/drogui/src/BMP388.c ****     for(int i = 0 ; i < 3; i++){
+ 615              		.loc 1 94 5 view .LVU141
+ 616              	.LBB2:
+ 617              		.loc 1 94 9 view .LVU142
+ 618              		.loc 1 94 13 is_stmt 0 view .LVU143
+ 619 0010 0024     		movs	r4, #0
+ 620              		.loc 1 94 5 view .LVU144
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 14
 
 
- 533 0012 A2FB0241 		umull	r4, r1, r2, r2
- 534 0016 01EB4301 		add	r1, r1, r3, lsl #1
- 535              	.LVL41:
- 102:Core/drogui/src/BMP388.c ****   partial_data2 = partial_data1 / 64;
- 536              		.loc 1 102 3 is_stmt 1 view .LVU156
- 537              		.loc 1 102 17 is_stmt 0 view .LVU157
- 538 001a 2346     		mov	r3, r4
- 539 001c 0D46     		mov	r5, r1
- 540 001e 0029     		cmp	r1, #0
- 541 0020 C0F21A81 		blt	.L30
- 542              	.L19:
- 543              		.loc 1 102 17 view .LVU158
- 544 0024 9B09     		lsrs	r3, r3, #6
- 545 0026 43EA8563 		orr	r3, r3, r5, lsl #26
- 546 002a AD11     		asrs	r5, r5, #6
- 547              	.LVL42:
- 103:Core/drogui/src/BMP388.c ****   partial_data3 = (partial_data2 * calib_bmp.T_fine) / 256;
- 548              		.loc 1 103 3 is_stmt 1 view .LVU159
- 549              		.loc 1 103 34 is_stmt 0 view .LVU160
- 550 002c 02FB05F5 		mul	r5, r2, r5
- 551              	.LVL43:
- 552              		.loc 1 103 34 view .LVU161
- 553 0030 03FB0855 		mla	r5, r3, r8, r5
- 554 0034 A2FB0336 		umull	r3, r6, r2, r3
- 555              		.loc 1 103 34 view .LVU162
- 556 0038 3544     		add	r5, r5, r6
- 557              		.loc 1 103 17 view .LVU163
- 558 003a AC46     		mov	ip, r5
- 559 003c 002D     		cmp	r5, #0
- 560 003e C0F20F81 		blt	.L31
- 561              	.L20:
- 562 0042 1D0A     		lsrs	r5, r3, #8
- 563 0044 45EA0C65 		orr	r5, r5, ip, lsl #24
- 564 0048 4FEA2C2C 		asr	ip, ip, #8
- 565 004c 2E46     		mov	r6, r5
- 566              	.LVL44:
- 104:Core/drogui/src/BMP388.c ****   partial_data4 = (calib_bmp.P8 * partial_data3) / 32;
- 567              		.loc 1 104 3 is_stmt 1 view .LVU164
- 568              		.loc 1 104 29 is_stmt 0 view .LVU165
- 569 004e 9B4B     		ldr	r3, .L40
- 570 0050 93F90F30 		ldrsb	r3, [r3, #15]
- 571 0054 4FEAE37E 		asr	lr, r3, #31
- 572              		.loc 1 104 33 view .LVU166
- 573 0058 03FB0CF7 		mul	r7, r3, ip
- 574 005c 05FB0E75 		mla	r5, r5, lr, r7
- 575              	.LVL45:
- 576              		.loc 1 104 33 view .LVU167
- 577 0060 A3FB0637 		umull	r3, r7, r3, r6
- 578 0064 3D44     		add	r5, r5, r7
- 579              		.loc 1 104 17 view .LVU168
- 580 0066 AB46     		mov	fp, r5
- 581 0068 002D     		cmp	r5, #0
- 582 006a C0F2FD80 		blt	.L32
- 583              	.L21:
- 584 006e 5B09     		lsrs	r3, r3, #5
- 585              	.LVL46:
- 105:Core/drogui/src/BMP388.c ****   partial_data5 = (calib_bmp.P7 * partial_data1) * 16;
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 13
+ 621 0012 12E0     		b	.L10
+ 622              	.LVL60:
+ 623              	.L11:
+  95:Core/drogui/src/BMP388.c ****         sprintf(aux, "%x\t", dat[i]);
+ 624              		.loc 1 95 9 is_stmt 1 discriminator 3 view .LVU145
+ 625              		.loc 1 95 33 is_stmt 0 discriminator 3 view .LVU146
+ 626 0014 0EAB     		add	r3, sp, #56
+ 627 0016 2344     		add	r3, r3, r4
+ 628              		.loc 1 95 9 discriminator 3 view .LVU147
+ 629 0018 13F8042C 		ldrb	r2, [r3, #-4]	@ zero_extendqisi2
+ 630 001c 1149     		ldr	r1, .L13
+ 631 001e 6846     		mov	r0, sp
+ 632 0020 FFF7FEFF 		bl	sprintf
+ 633              	.LVL61:
+  96:Core/drogui/src/BMP388.c ****         HAL_UART_Transmit(&huart2, (uint8_t *) aux, strlen(aux), 1000);
+ 634              		.loc 1 96 9 is_stmt 1 discriminator 3 view .LVU148
+ 635              		.loc 1 96 53 is_stmt 0 discriminator 3 view .LVU149
+ 636 0024 6846     		mov	r0, sp
+ 637 0026 FFF7FEFF 		bl	strlen
+ 638              	.LVL62:
+ 639              		.loc 1 96 9 discriminator 3 view .LVU150
+ 640 002a 4FF47A73 		mov	r3, #1000
+ 641 002e 82B2     		uxth	r2, r0
+ 642 0030 6946     		mov	r1, sp
+ 643 0032 0D48     		ldr	r0, .L13+4
+ 644 0034 FFF7FEFF 		bl	HAL_UART_Transmit
+ 645              	.LVL63:
+  94:Core/drogui/src/BMP388.c ****     for(int i = 0 ; i < 3; i++){
+ 646              		.loc 1 94 28 is_stmt 1 discriminator 3 view .LVU151
+  94:Core/drogui/src/BMP388.c ****     for(int i = 0 ; i < 3; i++){
+ 647              		.loc 1 94 29 is_stmt 0 discriminator 3 view .LVU152
+ 648 0038 0134     		adds	r4, r4, #1
+ 649              	.LVL64:
+ 650              	.L10:
+  94:Core/drogui/src/BMP388.c ****     for(int i = 0 ; i < 3; i++){
+ 651              		.loc 1 94 21 is_stmt 1 discriminator 1 view .LVU153
+  94:Core/drogui/src/BMP388.c ****     for(int i = 0 ; i < 3; i++){
+ 652              		.loc 1 94 5 is_stmt 0 discriminator 1 view .LVU154
+ 653 003a 022C     		cmp	r4, #2
+ 654 003c EADD     		ble	.L11
+ 655              	.LBE2:
+  97:Core/drogui/src/BMP388.c ****     }
+  98:Core/drogui/src/BMP388.c ****     HAL_UART_Transmit(&huart2, (uint8_t *) "\n", 2, 1000);
+ 656              		.loc 1 98 5 is_stmt 1 view .LVU155
+ 657 003e 4FF47A73 		mov	r3, #1000
+ 658 0042 0222     		movs	r2, #2
+ 659 0044 0949     		ldr	r1, .L13+8
+ 660 0046 0848     		ldr	r0, .L13+4
+ 661 0048 FFF7FEFF 		bl	HAL_UART_Transmit
+ 662              	.LVL65:
+  99:Core/drogui/src/BMP388.c ****     return (uint32_t) (dat[2] << 16) | (dat[1]  << 8)  | (dat[0]);
+ 663              		.loc 1 99 5 view .LVU156
+ 664              		.loc 1 99 27 is_stmt 0 view .LVU157
+ 665 004c 9DF83600 		ldrb	r0, [sp, #54]	@ zero_extendqisi2
+ 666              		.loc 1 99 44 view .LVU158
+ 667 0050 9DF83530 		ldrb	r3, [sp, #53]	@ zero_extendqisi2
+ 668              		.loc 1 99 49 view .LVU159
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 15
 
 
- 586              		.loc 1 105 3 is_stmt 1 view .LVU169
- 587              		.loc 1 105 29 is_stmt 0 view .LVU170
- 588 0070 DFF848A2 		ldr	r10, .L40
- 589 0074 9AF90E70 		ldrsb	r7, [r10, #14]
- 590 0078 4FEAE77E 		asr	lr, r7, #31
- 591              		.loc 1 105 33 view .LVU171
- 592 007c 07FB01F5 		mul	r5, r7, r1
- 593 0080 04FB0E55 		mla	r5, r4, lr, r5
- 594 0084 A7FB04E7 		umull	lr, r7, r7, r4
- 595 0088 2F44     		add	r7, r7, r5
- 596              		.loc 1 105 17 view .LVU172
- 597 008a 3D01     		lsls	r5, r7, #4
- 598 008c 45EA1E75 		orr	r5, r5, lr, lsr #28
- 599 0090 0195     		str	r5, [sp, #4]
- 600 0092 4FEA0E17 		lsl	r7, lr, #4
- 601 0096 3D46     		mov	r5, r7
- 602              	.LVL47:
- 106:Core/drogui/src/BMP388.c ****   partial_data6 = (calib_bmp.P6 * calib_bmp.T_fine) * 4194304;
- 603              		.loc 1 106 3 is_stmt 1 view .LVU173
- 604              		.loc 1 106 29 is_stmt 0 view .LVU174
- 605 0098 BAF814E0 		ldrh	lr, [r10, #20]
- 606              		.loc 1 106 33 view .LVU175
- 607 009c A2FB0E97 		umull	r9, r7, r2, lr
- 608 00a0 0EFB0877 		mla	r7, lr, r8, r7
- 609              		.loc 1 106 17 view .LVU176
- 610 00a4 BF05     		lsls	r7, r7, #22
- 611 00a6 47EA9927 		orr	r7, r7, r9, lsr #10
- 612 00aa 4FEA8959 		lsl	r9, r9, #22
- 613              	.LVL48:
- 107:Core/drogui/src/BMP388.c ****   offset = (int64_t)((int64_t)(calib_bmp.P5) * (int64_t)140737488355328) + 
- 614              		.loc 1 107 3 is_stmt 1 view .LVU177
- 615              		.loc 1 107 41 is_stmt 0 view .LVU178
- 616 00ae BAF812E0 		ldrh	lr, [r10, #18]
- 617              		.loc 1 107 12 view .LVU179
- 618 00b2 4FEACE3E 		lsl	lr, lr, #15
- 619              		.loc 1 107 74 view .LVU180
- 620 00b6 43EACB63 		orr	r3, r3, fp, lsl #27
- 621              	.LVL49:
- 622              		.loc 1 107 74 view .LVU181
- 623 00ba 0EEB6B1B 		add	fp, lr, fp, asr #5
- 624              	.LVL50:
- 108:Core/drogui/src/BMP388.c ****             partial_data4 + partial_data5 + partial_data6;
- 625              		.loc 1 108 27 view .LVU182
- 626 00be 5B19     		adds	r3, r3, r5
- 627              		.loc 1 108 27 view .LVU183
- 628 00c0 019D     		ldr	r5, [sp, #4]
- 629              	.LVL51:
- 630              		.loc 1 108 27 view .LVU184
- 631 00c2 4BEB050B 		adc	fp, fp, r5
- 107:Core/drogui/src/BMP388.c ****   offset = (int64_t)((int64_t)(calib_bmp.P5) * (int64_t)140737488355328) + 
- 632              		.loc 1 107 10 view .LVU185
- 633 00c6 13EB0909 		adds	r9, r3, r9
- 634              	.LVL52:
- 107:Core/drogui/src/BMP388.c ****   offset = (int64_t)((int64_t)(calib_bmp.P5) * (int64_t)140737488355328) + 
- 635              		.loc 1 107 10 view .LVU186
- 636 00ca 4BEB0707 		adc	r7, fp, r7
- 637              	.LVL53:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 14
+ 669 0054 1B02     		lsls	r3, r3, #8
+ 670              		.loc 1 99 38 view .LVU160
+ 671 0056 43EA0043 		orr	r3, r3, r0, lsl #16
+ 672              		.loc 1 99 62 view .LVU161
+ 673 005a 9DF83400 		ldrb	r0, [sp, #52]	@ zero_extendqisi2
+ 100:Core/drogui/src/BMP388.c **** }
+ 674              		.loc 1 100 1 view .LVU162
+ 675 005e 1843     		orrs	r0, r0, r3
+ 676 0060 0EB0     		add	sp, sp, #56
+ 677              	.LCFI8:
+ 678              		.cfi_def_cfa_offset 8
+ 679              		@ sp needed
+ 680 0062 10BD     		pop	{r4, pc}
+ 681              	.LVL66:
+ 682              	.L14:
+ 683              		.loc 1 100 1 view .LVU163
+ 684              		.align	2
+ 685              	.L13:
+ 686 0064 00000000 		.word	.LC15
+ 687 0068 00000000 		.word	huart2
+ 688 006c 04000000 		.word	.LC16
+ 689              		.cfi_endproc
+ 690              	.LFE146:
+ 692              		.section	.text.bmpReadPressure,"ax",%progbits
+ 693              		.align	1
+ 694              		.global	bmpReadPressure
+ 695              		.syntax unified
+ 696              		.thumb
+ 697              		.thumb_func
+ 698              		.fpu fpv5-sp-d16
+ 700              	bmpReadPressure:
+ 701              	.LFB147:
+ 101:Core/drogui/src/BMP388.c **** 
+ 102:Core/drogui/src/BMP388.c **** uint32_t bmpReadPressure(){
+ 702              		.loc 1 102 27 is_stmt 1 view -0
+ 703              		.cfi_startproc
+ 704              		@ args = 0, pretend = 0, frame = 8
+ 705              		@ frame_needed = 0, uses_anonymous_args = 0
+ 706 0000 00B5     		push	{lr}
+ 707              	.LCFI9:
+ 708              		.cfi_def_cfa_offset 4
+ 709              		.cfi_offset 14, -4
+ 710 0002 83B0     		sub	sp, sp, #12
+ 711              	.LCFI10:
+ 712              		.cfi_def_cfa_offset 16
+ 103:Core/drogui/src/BMP388.c ****     uint8_t dat[3];
+ 713              		.loc 1 103 5 view .LVU165
+ 104:Core/drogui/src/BMP388.c ****     I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_PRESS, 3, dat);
+ 714              		.loc 1 104 5 view .LVU166
+ 715 0004 01AB     		add	r3, sp, #4
+ 716 0006 0322     		movs	r2, #3
+ 717 0008 0421     		movs	r1, #4
+ 718 000a 7720     		movs	r0, #119
+ 719 000c FFF7FEFF 		bl	I2Cread
+ 720              	.LVL67:
+ 105:Core/drogui/src/BMP388.c ****     return (uint32_t)(dat[2] << 16) | (dat[1]  << 8)  | (dat[0]);
+ 721              		.loc 1 105 5 view .LVU167
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 16
 
 
+ 722              		.loc 1 105 26 is_stmt 0 view .LVU168
+ 723 0010 9DF80600 		ldrb	r0, [sp, #6]	@ zero_extendqisi2
+ 724              		.loc 1 105 43 view .LVU169
+ 725 0014 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+ 726              		.loc 1 105 48 view .LVU170
+ 727 0018 1B02     		lsls	r3, r3, #8
+ 728              		.loc 1 105 37 view .LVU171
+ 729 001a 43EA0043 		orr	r3, r3, r0, lsl #16
+ 730              		.loc 1 105 61 view .LVU172
+ 731 001e 9DF80400 		ldrb	r0, [sp, #4]	@ zero_extendqisi2
+ 106:Core/drogui/src/BMP388.c **** }
+ 732              		.loc 1 106 1 view .LVU173
+ 733 0022 1843     		orrs	r0, r0, r3
+ 734 0024 03B0     		add	sp, sp, #12
+ 735              	.LCFI11:
+ 736              		.cfi_def_cfa_offset 4
+ 737              		@ sp needed
+ 738 0026 5DF804FB 		ldr	pc, [sp], #4
+ 739              		.cfi_endproc
+ 740              	.LFE147:
+ 742              		.section	.text.bmp388CompensateTemp,"ax",%progbits
+ 743              		.align	1
+ 744              		.global	bmp388CompensateTemp
+ 745              		.syntax unified
+ 746              		.thumb
+ 747              		.thumb_func
+ 748              		.fpu fpv5-sp-d16
+ 750              	bmp388CompensateTemp:
+ 751              	.LVL68:
+ 752              	.LFB148:
+ 107:Core/drogui/src/BMP388.c **** 
+ 108:Core/drogui/src/BMP388.c **** int64_t bmp388CompensateTemp(uint32_t u32RegData){
+ 753              		.loc 1 108 50 is_stmt 1 view -0
+ 754              		.cfi_startproc
+ 755              		@ args = 0, pretend = 0, frame = 0
+ 756              		@ frame_needed = 0, uses_anonymous_args = 0
+ 757              		@ link register save eliminated.
+ 758              		.loc 1 108 50 is_stmt 0 view .LVU175
+ 759 0000 10B4     		push	{r4}
+ 760              	.LCFI12:
+ 761              		.cfi_def_cfa_offset 4
+ 762              		.cfi_offset 4, -4
  109:Core/drogui/src/BMP388.c **** 
- 110:Core/drogui/src/BMP388.c ****   partial_data2 = (((int64_t)calib_bmp.P4) * partial_data3) / 32;
- 638              		.loc 1 110 3 is_stmt 1 view .LVU187
- 639              		.loc 1 110 39 is_stmt 0 view .LVU188
- 640 00ce 9AF90D50 		ldrsb	r5, [r10, #13]
- 641              		.loc 1 110 21 view .LVU189
- 642 00d2 EB17     		asrs	r3, r5, #31
- 643              		.loc 1 110 44 view .LVU190
- 644 00d4 05FB0CFC 		mul	ip, r5, ip
- 645              	.LVL54:
- 646              		.loc 1 110 44 view .LVU191
- 647 00d8 06FB03CC 		mla	ip, r6, r3, ip
- 648 00dc A5FB0656 		umull	r5, r6, r5, r6
- 649              		.loc 1 110 44 view .LVU192
- 650 00e0 6644     		add	r6, r6, ip
- 651              		.loc 1 110 17 view .LVU193
- 652 00e2 B646     		mov	lr, r6
- 653 00e4 002E     		cmp	r6, #0
- 654 00e6 C0F2C380 		blt	.L33
- 655              	.L22:
- 656 00ea 6D09     		lsrs	r5, r5, #5
- 657              	.LVL55:
- 111:Core/drogui/src/BMP388.c ****   partial_data4 = (calib_bmp.P3 * partial_data1) * 4;
- 658              		.loc 1 111 3 is_stmt 1 view .LVU194
- 659              		.loc 1 111 29 is_stmt 0 view .LVU195
- 660 00ec 734E     		ldr	r6, .L40
- 661 00ee 96F90CC0 		ldrsb	ip, [r6, #12]
- 662 00f2 4FEAEC7A 		asr	r10, ip, #31
- 663              		.loc 1 111 33 view .LVU196
- 664 00f6 0CFB01F3 		mul	r3, ip, r1
- 665 00fa 04FB0A33 		mla	r3, r4, r10, r3
- 666 00fe ACFB0441 		umull	r4, r1, ip, r4
- 667              	.LVL56:
- 668              		.loc 1 111 33 view .LVU197
- 669 0102 0B44     		add	r3, r3, r1
- 670              		.loc 1 111 17 view .LVU198
- 671 0104 9B00     		lsls	r3, r3, #2
- 672 0106 43EA9473 		orr	r3, r3, r4, lsr #30
- 673 010a A400     		lsls	r4, r4, #2
- 674              	.LVL57:
- 112:Core/drogui/src/BMP388.c ****   partial_data5 = ((int64_t)(calib_bmp.P2) - 16384) * ((int64_t)calib_bmp.T_fine) * 2097152;
- 675              		.loc 1 112 3 is_stmt 1 view .LVU199
- 676              		.loc 1 112 39 is_stmt 0 view .LVU200
- 677 010c B6F90810 		ldrsh	r1, [r6, #8]
- 678              		.loc 1 112 20 view .LVU201
- 679 0110 4FEAE17C 		asr	ip, r1, #31
- 680              		.loc 1 112 44 view .LVU202
- 681 0114 B1F58041 		subs	r1, r1, #16384
- 682 0118 4CF1FF3C 		adc	ip, ip, #-1
- 683              		.loc 1 112 53 view .LVU203
- 684 011c 02FB0CFC 		mul	ip, r2, ip
- 685 0120 01FB08CC 		mla	ip, r1, r8, ip
- 686 0124 A2FB011A 		umull	r1, r10, r2, r1
- 687 0128 D444     		add	ip, ip, r10
- 688              		.loc 1 112 17 view .LVU204
- 689 012a 4FEA4C5C 		lsl	ip, ip, #21
- 690 012e 4CEAD12C 		orr	ip, ip, r1, lsr #11
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 15
+ 110:Core/drogui/src/BMP388.c ****   uint64_t partial_data1;
+ 763              		.loc 1 110 3 is_stmt 1 view .LVU176
+ 111:Core/drogui/src/BMP388.c ****   uint64_t partial_data2;
+ 764              		.loc 1 111 3 view .LVU177
+ 112:Core/drogui/src/BMP388.c ****   uint64_t partial_data3;
+ 765              		.loc 1 112 3 view .LVU178
+ 113:Core/drogui/src/BMP388.c ****   int64_t partial_data4;
+ 766              		.loc 1 113 3 view .LVU179
+ 114:Core/drogui/src/BMP388.c ****   int64_t partial_data5;
+ 767              		.loc 1 114 3 view .LVU180
+ 115:Core/drogui/src/BMP388.c ****   int64_t partial_data6;
+ 768              		.loc 1 115 3 view .LVU181
+ 116:Core/drogui/src/BMP388.c ****   int64_t comp_temp;
+ 769              		.loc 1 116 3 view .LVU182
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 17
 
 
- 691 0132 4905     		lsls	r1, r1, #21
- 692              	.LVL58:
- 113:Core/drogui/src/BMP388.c ****   sensitivity = (((int64_t)(calib_bmp.P1) - 16384) * (int64_t)70368744177664) + 
- 693              		.loc 1 113 3 is_stmt 1 view .LVU205
- 694              		.loc 1 113 38 is_stmt 0 view .LVU206
- 695 0134 B6F90660 		ldrsh	r6, [r6, #6]
- 696              		.loc 1 113 43 view .LVU207
- 697 0138 B6F58046 		subs	r6, r6, #16384
- 698              		.loc 1 113 52 view .LVU208
- 699 013c B603     		lsls	r6, r6, #14
- 700              		.loc 1 113 79 view .LVU209
- 701 013e 45EACE65 		orr	r5, r5, lr, lsl #27
- 702              	.LVL59:
- 703              		.loc 1 113 79 view .LVU210
- 704 0142 06EB6E16 		add	r6, r6, lr, asr #5
- 114:Core/drogui/src/BMP388.c ****                 partial_data2 + partial_data4 + partial_data5;
- 705              		.loc 1 114 31 view .LVU211
- 706 0146 2D19     		adds	r5, r5, r4
- 707              	.LVL60:
- 708              		.loc 1 114 31 view .LVU212
- 709 0148 46EB0303 		adc	r3, r6, r3
- 710              	.LVL61:
- 113:Core/drogui/src/BMP388.c ****   sensitivity = (((int64_t)(calib_bmp.P1) - 16384) * (int64_t)70368744177664) + 
- 711              		.loc 1 113 15 view .LVU213
- 712 014c 6D18     		adds	r5, r5, r1
- 713 014e 43EB0C03 		adc	r3, r3, ip
- 714              	.LVL62:
- 115:Core/drogui/src/BMP388.c **** 
- 116:Core/drogui/src/BMP388.c ****   partial_data1 = (sensitivity / 16777216) * u32RegData;
- 715              		.loc 1 116 3 is_stmt 1 view .LVU214
- 716              		.loc 1 116 32 is_stmt 0 view .LVU215
- 717 0152 1C46     		mov	r4, r3
- 718              	.LVL63:
- 719              		.loc 1 116 32 view .LVU216
- 720 0154 002B     		cmp	r3, #0
- 721 0156 C0F28F80 		blt	.L34
- 722              	.LVL64:
- 723              	.L23:
- 724              		.loc 1 116 32 view .LVU217
- 725 015a 290E     		lsrs	r1, r5, #24
- 726 015c 41EA0421 		orr	r1, r1, r4, lsl #8
- 727 0160 2316     		asrs	r3, r4, #24
- 728              		.loc 1 116 44 view .LVU218
- 729 0162 0446     		mov	r4, r0
- 730              		.loc 1 116 17 view .LVU219
- 731 0164 A1FB0051 		umull	r5, r1, r1, r0
- 732 0168 00FB0311 		mla	r1, r0, r3, r1
- 733              	.LVL65:
- 117:Core/drogui/src/BMP388.c ****   partial_data2 = (int64_t)(calib_bmp.P10) * (int64_t)(calib_bmp.T_fine);
- 734              		.loc 1 117 3 is_stmt 1 view .LVU220
- 735              		.loc 1 117 38 is_stmt 0 view .LVU221
- 736 016c 534B     		ldr	r3, .L40
- 737 016e 93F910C0 		ldrsb	ip, [r3, #16]
- 738              	.LVL66:
- 739              		.loc 1 117 19 view .LVU222
- 740 0172 4FEAEC76 		asr	r6, ip, #31
- 741              		.loc 1 117 17 view .LVU223
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 16
+ 117:Core/drogui/src/BMP388.c **** 
+ 118:Core/drogui/src/BMP388.c ****   partial_data1 = (uint64_t)(u32RegData - (256 * (uint64_t)(calib_bmp.T1)));
+ 770              		.loc 1 118 3 view .LVU183
+ 771              		.loc 1 118 70 is_stmt 0 view .LVU184
+ 772 0002 264C     		ldr	r4, .L23
+ 773 0004 2388     		ldrh	r3, [r4]
+ 774              		.loc 1 118 48 view .LVU185
+ 775 0006 1B02     		lsls	r3, r3, #8
+ 776              		.loc 1 118 17 view .LVU186
+ 777 0008 C01A     		subs	r0, r0, r3
+ 778              	.LVL69:
+ 779              		.loc 1 118 17 view .LVU187
+ 780 000a 61EB0101 		sbc	r1, r1, r1
+ 781              	.LVL70:
+ 119:Core/drogui/src/BMP388.c ****   partial_data2 = (uint64_t)(calib_bmp.T2 * partial_data1);
+ 782              		.loc 1 119 3 is_stmt 1 view .LVU188
+ 783              		.loc 1 119 39 is_stmt 0 view .LVU189
+ 784 000e 6388     		ldrh	r3, [r4, #2]
+ 785              		.loc 1 119 17 view .LVU190
+ 786 0010 A3FB002C 		umull	r2, ip, r3, r0
+ 787 0014 03FB01CC 		mla	ip, r3, r1, ip
+ 788              	.LVL71:
+ 120:Core/drogui/src/BMP388.c ****   partial_data3 = (uint64_t)(partial_data1 * partial_data1);
+ 789              		.loc 1 120 3 is_stmt 1 view .LVU191
+ 790              		.loc 1 120 17 is_stmt 0 view .LVU192
+ 791 0018 00FB01F1 		mul	r1, r0, r1
+ 792              	.LVL72:
+ 793              		.loc 1 120 17 view .LVU193
+ 794 001c A0FB0003 		umull	r0, r3, r0, r0
+ 795              	.LVL73:
+ 796              		.loc 1 120 17 view .LVU194
+ 797 0020 03EB4103 		add	r3, r3, r1, lsl #1
+ 798              	.LVL74:
+ 121:Core/drogui/src/BMP388.c ****   partial_data4 = (int64_t)(((int64_t)partial_data3) * ((int64_t)calib_bmp.T3));
+ 799              		.loc 1 121 3 is_stmt 1 view .LVU195
+ 800              		.loc 1 121 75 is_stmt 0 view .LVU196
+ 801 0024 94F90410 		ldrsb	r1, [r4, #4]
+ 802              		.loc 1 121 57 view .LVU197
+ 803 0028 CC17     		asrs	r4, r1, #31
+ 804              		.loc 1 121 17 view .LVU198
+ 805 002a 01FB03F3 		mul	r3, r1, r3
+ 806              	.LVL75:
+ 807              		.loc 1 121 17 view .LVU199
+ 808 002e 00FB0433 		mla	r3, r0, r4, r3
+ 809 0032 A1FB0010 		umull	r1, r0, r1, r0
+ 810              	.LVL76:
+ 811              		.loc 1 121 17 view .LVU200
+ 812 0036 1844     		add	r0, r0, r3
+ 813              	.LVL77:
+ 122:Core/drogui/src/BMP388.c ****   partial_data5 = ((int64_t)(((int64_t)partial_data2) * 262144) + (int64_t)partial_data4);
+ 814              		.loc 1 122 3 is_stmt 1 view .LVU201
+ 815              		.loc 1 122 20 is_stmt 0 view .LVU202
+ 816 0038 4FEA8C43 		lsl	r3, ip, #18
+ 817 003c 43EA9233 		orr	r3, r3, r2, lsr #14
+ 818 0040 9204     		lsls	r2, r2, #18
+ 819              	.LVL78:
+ 820              		.loc 1 122 17 view .LVU203
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 18
 
 
- 742 0176 02FB06F6 		mul	r6, r2, r6
- 743 017a 0CFB0868 		mla	r8, ip, r8, r6
- 744              	.LVL67:
- 745              		.loc 1 117 17 view .LVU224
- 746 017e A2FB0C62 		umull	r6, r2, r2, ip
- 747              	.LVL68:
- 748              		.loc 1 117 17 view .LVU225
- 749 0182 4244     		add	r2, r2, r8
- 750              	.LVL69:
- 118:Core/drogui/src/BMP388.c ****   partial_data3 = partial_data2 + (65536 * (int64_t)(calib_bmp.P9));
- 751              		.loc 1 118 3 is_stmt 1 view .LVU226
- 752              		.loc 1 118 63 is_stmt 0 view .LVU227
- 753 0184 B3F90A30 		ldrsh	r3, [r3, #10]
- 754              	.LVL70:
- 755              		.loc 1 118 44 view .LVU228
- 756 0188 4FEAE378 		asr	r8, r3, #31
- 757              		.loc 1 118 42 view .LVU229
- 758 018c 4FEA0848 		lsl	r8, r8, #16
- 759 0190 48EA1348 		orr	r8, r8, r3, lsr #16
- 760 0194 1B04     		lsls	r3, r3, #16
- 761              		.loc 1 118 17 view .LVU230
- 762 0196 9B19     		adds	r3, r3, r6
- 763 0198 42EB0802 		adc	r2, r2, r8
- 764              	.LVL71:
- 119:Core/drogui/src/BMP388.c ****   partial_data4 = (partial_data3 * u32RegData) / 8192;
- 765              		.loc 1 119 3 is_stmt 1 view .LVU231
- 766              		.loc 1 119 34 is_stmt 0 view .LVU232
- 767 019c A0FB0338 		umull	r3, r8, r0, r3
- 768              	.LVL72:
- 769              		.loc 1 119 34 view .LVU233
- 770 01a0 00FB0282 		mla	r2, r0, r2, r8
- 771              	.LVL73:
- 772              		.loc 1 119 17 view .LVU234
- 773 01a4 1646     		mov	r6, r2
- 774              	.LVL74:
- 775              		.loc 1 119 17 view .LVU235
- 776 01a6 002A     		cmp	r2, #0
- 777              	.LVL75:
- 778              		.loc 1 119 17 view .LVU236
- 779 01a8 6CDB     		blt	.L35
- 780              	.L24:
- 781              		.loc 1 119 17 view .LVU237
- 782 01aa 5B0B     		lsrs	r3, r3, #13
- 783 01ac 43EAC643 		orr	r3, r3, r6, lsl #19
- 784 01b0 7213     		asrs	r2, r6, #13
- 785              	.LVL76:
- 120:Core/drogui/src/BMP388.c ****   partial_data5 = (partial_data4 * u32RegData) / 512;
- 786              		.loc 1 120 3 is_stmt 1 view .LVU238
- 787              		.loc 1 120 34 is_stmt 0 view .LVU239
- 788 01b2 A4FB0336 		umull	r3, r6, r4, r3
- 789              	.LVL77:
- 790              		.loc 1 120 34 view .LVU240
- 791 01b6 00FB0266 		mla	r6, r0, r2, r6
- 792              		.loc 1 120 17 view .LVU241
- 793 01ba 3246     		mov	r2, r6
- 794 01bc 002E     		cmp	r6, #0
- 795 01be 67DB     		blt	.L36
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 17
+ 821 0042 5218     		adds	r2, r2, r1
+ 822              	.LVL79:
+ 823              		.loc 1 122 17 view .LVU204
+ 824 0044 40EB0303 		adc	r3, r0, r3
+ 825              	.LVL80:
+ 123:Core/drogui/src/BMP388.c ****   partial_data6 = (int64_t)(((int64_t)partial_data5) / 4294967296);
+ 826              		.loc 1 123 3 is_stmt 1 view .LVU205
+ 827              		.loc 1 123 17 is_stmt 0 view .LVU206
+ 828 0048 1046     		mov	r0, r2
+ 829              	.LVL81:
+ 830              		.loc 1 123 17 view .LVU207
+ 831 004a 1A46     		mov	r2, r3
+ 832              	.LVL82:
+ 833              		.loc 1 123 17 view .LVU208
+ 834 004c 002B     		cmp	r3, #0
+ 835 004e 1ADB     		blt	.L21
+ 836              	.LVL83:
+ 837              	.L18:
+ 838              		.loc 1 123 17 view .LVU209
+ 839 0050 D317     		asrs	r3, r2, #31
+ 840              	.LVL84:
+ 124:Core/drogui/src/BMP388.c **** 
+ 125:Core/drogui/src/BMP388.c ****   calib_bmp.T_fine = partial_data6;
+ 841              		.loc 1 125 3 is_stmt 1 view .LVU210
+ 842              		.loc 1 125 20 is_stmt 0 view .LVU211
+ 843 0052 1249     		ldr	r1, .L23
+ 844              	.LVL85:
+ 845              		.loc 1 125 20 view .LVU212
+ 846 0054 8A61     		str	r2, [r1, #24]
+ 847 0056 CB61     		str	r3, [r1, #28]
+ 126:Core/drogui/src/BMP388.c ****   comp_temp = (int64_t)((partial_data6 * 25)  / 16384);
+ 848              		.loc 1 126 3 is_stmt 1 view .LVU213
+ 849              		.loc 1 126 40 is_stmt 0 view .LVU214
+ 850 0058 9018     		adds	r0, r2, r2
+ 851 005a 43EB0301 		adc	r1, r3, r3
+ 852 005e 8018     		adds	r0, r0, r2
+ 853 0060 43EB0101 		adc	r1, r3, r1
+ 854 0064 C900     		lsls	r1, r1, #3
+ 855 0066 41EA5071 		orr	r1, r1, r0, lsr #29
+ 856 006a C000     		lsls	r0, r0, #3
+ 857 006c 8018     		adds	r0, r0, r2
+ 858 006e 43EB0103 		adc	r3, r3, r1
+ 859              	.LVL86:
+ 860              		.loc 1 126 13 view .LVU215
+ 861 0072 1946     		mov	r1, r3
+ 862 0074 002B     		cmp	r3, #0
+ 863 0076 0ADB     		blt	.L22
+ 864              	.LVL87:
+ 865              	.L19:
+ 866              		.loc 1 126 13 view .LVU216
+ 867 0078 800B     		lsrs	r0, r0, #14
+ 868              	.LVL88:
+ 127:Core/drogui/src/BMP388.c ****   return comp_temp;   
+ 869              		.loc 1 127 3 is_stmt 1 view .LVU217
+ 128:Core/drogui/src/BMP388.c **** }
+ 870              		.loc 1 128 1 is_stmt 0 view .LVU218
+ 871 007a 40EA8140 		orr	r0, r0, r1, lsl #18
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 19
 
 
- 796              	.L25:
- 797 01c0 5B0A     		lsrs	r3, r3, #9
- 798 01c2 5612     		asrs	r6, r2, #9
- 799 01c4 43EAC252 		orr	r2, r3, r2, lsl #23
- 800              	.LVL78:
- 121:Core/drogui/src/BMP388.c ****   partial_data6 = (int64_t)((uint64_t)u32RegData * (uint64_t)u32RegData);
- 801              		.loc 1 121 3 is_stmt 1 view .LVU242
- 802              		.loc 1 121 50 is_stmt 0 view .LVU243
- 803 01c8 A0FB00EC 		umull	lr, ip, r0, r0
- 804              	.LVL79:
- 122:Core/drogui/src/BMP388.c ****   partial_data2 = ((int64_t)(calib_bmp.P11) * (int64_t)(partial_data6)) / 65536;
- 805              		.loc 1 122 3 is_stmt 1 view .LVU244
- 806              		.loc 1 122 39 is_stmt 0 view .LVU245
- 807 01cc 3B4B     		ldr	r3, .L40
- 808              	.LVL80:
- 809              		.loc 1 122 39 view .LVU246
- 810 01ce 93F91130 		ldrsb	r3, [r3, #17]
- 811              	.LVL81:
- 812              		.loc 1 122 20 view .LVU247
- 813 01d2 4FEAE378 		asr	r8, r3, #31
- 814              		.loc 1 122 45 view .LVU248
- 815 01d6 03FB0CFC 		mul	ip, r3, ip
- 816              	.LVL82:
- 817              		.loc 1 122 45 view .LVU249
- 818 01da 0EFB08CC 		mla	ip, lr, r8, ip
- 819 01de A3FB0E3E 		umull	r3, lr, r3, lr
- 820              	.LVL83:
- 821              		.loc 1 122 45 view .LVU250
- 822 01e2 F444     		add	ip, ip, lr
- 823              		.loc 1 122 17 view .LVU251
- 824 01e4 E646     		mov	lr, ip
- 825 01e6 BCF1000F 		cmp	ip, #0
- 826 01ea 57DB     		blt	.L37
- 827              	.L26:
- 828 01ec 1B0C     		lsrs	r3, r3, #16
- 829 01ee 43EA0E43 		orr	r3, r3, lr, lsl #16
- 830 01f2 4FEA2E4E 		asr	lr, lr, #16
- 831              	.LVL84:
- 123:Core/drogui/src/BMP388.c ****   partial_data3 = (partial_data2 * u32RegData) / 128;
- 832              		.loc 1 123 3 is_stmt 1 view .LVU252
- 833              		.loc 1 123 34 is_stmt 0 view .LVU253
- 834 01f6 A4FB0343 		umull	r4, r3, r4, r3
- 835              	.LVL85:
- 836              		.loc 1 123 34 view .LVU254
- 837 01fa 00FB0E30 		mla	r0, r0, lr, r3
- 838              	.LVL86:
- 839              		.loc 1 123 17 view .LVU255
- 840 01fe 2346     		mov	r3, r4
- 841 0200 0446     		mov	r4, r0
- 842 0202 0028     		cmp	r0, #0
- 843 0204 51DB     		blt	.L38
- 844              	.L27:
- 845 0206 DB09     		lsrs	r3, r3, #7
- 846 0208 4FEAE41C 		asr	ip, r4, #7
- 847 020c 43EA4463 		orr	r3, r3, r4, lsl #25
- 848              	.LVL87:
- 124:Core/drogui/src/BMP388.c ****   partial_data4 = (offset / 4) + partial_data1 + partial_data5 + partial_data3;
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 18
-
-
- 849              		.loc 1 124 3 is_stmt 1 view .LVU256
- 850              		.loc 1 124 27 is_stmt 0 view .LVU257
- 851 0210 3846     		mov	r0, r7
- 852 0212 002F     		cmp	r7, #0
- 853 0214 4DDB     		blt	.L39
- 854              	.LVL88:
- 855              	.L28:
- 856              		.loc 1 124 27 view .LVU258
- 857 0216 4FEA9909 		lsr	r9, r9, #2
- 858 021a 49EA8079 		orr	r9, r9, r0, lsl #30
- 859              		.loc 1 124 32 view .LVU259
- 860 021e 19EB0509 		adds	r9, r9, r5
- 861 0222 41EBA000 		adc	r0, r1, r0, asr #2
- 862              		.loc 1 124 48 view .LVU260
- 863 0226 19EB0202 		adds	r2, r9, r2
- 864              	.LVL89:
- 865              		.loc 1 124 48 view .LVU261
- 866 022a 40EB0600 		adc	r0, r0, r6
- 867              		.loc 1 124 17 view .LVU262
- 868 022e D218     		adds	r2, r2, r3
- 869 0230 40EB0C00 		adc	r0, r0, ip
- 870              	.LVL90:
- 125:Core/drogui/src/BMP388.c ****   comp_press = (((uint64_t)partial_data4 * 25) / (uint64_t)1099511627776);
- 871              		.loc 1 125 3 is_stmt 1 view .LVU263
- 872              		.loc 1 125 42 is_stmt 0 view .LVU264
- 873 0234 9318     		adds	r3, r2, r2
- 874              	.LVL91:
- 875              		.loc 1 125 42 view .LVU265
- 876 0236 40EB0006 		adc	r6, r0, r0
- 877 023a 9B18     		adds	r3, r3, r2
- 878 023c 40EB0606 		adc	r6, r0, r6
- 879 0240 F600     		lsls	r6, r6, #3
- 880 0242 46EA5376 		orr	r6, r6, r3, lsr #29
- 881 0246 DB00     		lsls	r3, r3, #3
- 882 0248 9A18     		adds	r2, r3, r2
- 883              	.LVL92:
- 884              		.loc 1 125 42 view .LVU266
- 885 024a 40EB0600 		adc	r0, r0, r6
- 886              	.LVL93:
- 126:Core/drogui/src/BMP388.c **** 
- 127:Core/drogui/src/BMP388.c ****   return comp_press;
- 887              		.loc 1 127 3 is_stmt 1 view .LVU267
- 128:Core/drogui/src/BMP388.c **** }...
- 888              		.loc 1 128 1 is_stmt 0 view .LVU268
- 889 024e 000A     		lsrs	r0, r0, #8
- 890              	.LVL94:
- 891              		.loc 1 128 1 view .LVU269
- 892 0250 0021     		movs	r1, #0
- 893              	.LVL95:
- 894              		.loc 1 128 1 view .LVU270
- 895 0252 03B0     		add	sp, sp, #12
- 896              	.LCFI14:
- 897              		.cfi_remember_state
- 898              		.cfi_def_cfa_offset 36
- 899              		@ sp needed
- 900 0254 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 872              	.LVL89:
+ 873              		.loc 1 128 1 view .LVU219
+ 874 007e 8913     		asrs	r1, r1, #14
+ 875              	.LVL90:
+ 876              		.loc 1 128 1 view .LVU220
+ 877 0080 5DF8044B 		ldr	r4, [sp], #4
+ 878              	.LCFI13:
+ 879              		.cfi_remember_state
+ 880              		.cfi_restore 4
+ 881              		.cfi_def_cfa_offset 0
+ 882              	.LVL91:
+ 883              		.loc 1 128 1 view .LVU221
+ 884 0084 7047     		bx	lr
+ 885              	.LVL92:
+ 886              	.L21:
+ 887              	.LCFI14:
+ 888              		.cfi_restore_state
+ 123:Core/drogui/src/BMP388.c **** 
+ 889              		.loc 1 123 17 view .LVU222
+ 890 0086 0138     		subs	r0, r0, #1
+ 891              	.LVL93:
+ 123:Core/drogui/src/BMP388.c **** 
+ 892              		.loc 1 123 17 view .LVU223
+ 893 0088 43F10002 		adc	r2, r3, #0
+ 894              	.LVL94:
+ 123:Core/drogui/src/BMP388.c **** 
+ 895              		.loc 1 123 17 view .LVU224
+ 896 008c E0E7     		b	.L18
+ 897              	.LVL95:
+ 898              	.L22:
+ 126:Core/drogui/src/BMP388.c ****   return comp_temp;   
+ 899              		.loc 1 126 13 view .LVU225
+ 900 008e 43F6FF72 		movw	r2, #16383
  901              	.LVL96:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 19
+ 126:Core/drogui/src/BMP388.c ****   return comp_temp;   
+ 902              		.loc 1 126 13 view .LVU226
+ 903 0092 8018     		adds	r0, r0, r2
+ 904 0094 43F10001 		adc	r1, r3, #0
+ 905 0098 EEE7     		b	.L19
+ 906              	.L24:
+ 907 009a 00BF     		.align	2
+ 908              	.L23:
+ 909 009c 00000000 		.word	.LANCHOR0
+ 910              		.cfi_endproc
+ 911              	.LFE148:
+ 913              		.section	.text.bmp388CompensatePress,"ax",%progbits
+ 914              		.align	1
+ 915              		.global	bmp388CompensatePress
+ 916              		.syntax unified
+ 917              		.thumb
+ 918              		.thumb_func
+ 919              		.fpu fpv5-sp-d16
+ 921              	bmp388CompensatePress:
+ 922              	.LVL97:
+ 923              	.LFB149:
+ 129:Core/drogui/src/BMP388.c **** 
+ 130:Core/drogui/src/BMP388.c **** int64_t bmp388CompensatePress(uint32_t u32RegData){
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 20
 
 
- 902              	.L30:
- 903              	.LCFI15:
- 904              		.cfi_restore_state
- 102:Core/drogui/src/BMP388.c ****   partial_data2 = partial_data1 / 64;
- 905              		.loc 1 102 17 view .LVU271
- 906 0258 3F33     		adds	r3, r3, #63
- 907              	.LVL97:
- 102:Core/drogui/src/BMP388.c ****   partial_data2 = partial_data1 / 64;
- 908              		.loc 1 102 17 view .LVU272
- 909 025a 41F10005 		adc	r5, r1, #0
- 910 025e E1E6     		b	.L19
- 911              	.L31:
- 103:Core/drogui/src/BMP388.c ****   partial_data3 = (partial_data2 * calib_bmp.T_fine) / 256;
- 912              		.loc 1 103 17 view .LVU273
- 913 0260 FF33     		adds	r3, r3, #255
- 914 0262 45F1000C 		adc	ip, r5, #0
- 915 0266 ECE6     		b	.L20
- 916              	.LVL98:
- 917              	.L32:
- 104:Core/drogui/src/BMP388.c ****   partial_data4 = (calib_bmp.P8 * partial_data3) / 32;
- 918              		.loc 1 104 17 view .LVU274
- 919 0268 1F33     		adds	r3, r3, #31
- 920 026a 45F1000B 		adc	fp, r5, #0
- 921 026e FEE6     		b	.L21
- 922              	.LVL99:
- 923              	.L33:
- 110:Core/drogui/src/BMP388.c ****   partial_data2 = (((int64_t)calib_bmp.P4) * partial_data3) / 32;
- 924              		.loc 1 110 17 view .LVU275
- 925 0270 1F35     		adds	r5, r5, #31
- 926 0272 46F1000E 		adc	lr, r6, #0
- 927 0276 38E7     		b	.L22
- 928              	.LVL100:
- 929              	.L34:
- 116:Core/drogui/src/BMP388.c ****   partial_data1 = (sensitivity / 16777216) * u32RegData;
- 930              		.loc 1 116 32 view .LVU276
- 931 0278 6FF07F41 		mvn	r1, #-16777216
- 932              	.LVL101:
- 116:Core/drogui/src/BMP388.c ****   partial_data1 = (sensitivity / 16777216) * u32RegData;
- 933              		.loc 1 116 32 view .LVU277
- 934 027c 6D18     		adds	r5, r5, r1
- 935              	.LVL102:
- 116:Core/drogui/src/BMP388.c ****   partial_data1 = (sensitivity / 16777216) * u32RegData;
- 936              		.loc 1 116 32 view .LVU278
- 937 027e 43F10004 		adc	r4, r3, #0
- 938 0282 6AE7     		b	.L23
- 939              	.LVL103:
- 940              	.L35:
- 119:Core/drogui/src/BMP388.c ****   partial_data4 = (partial_data3 * u32RegData) / 8192;
- 941              		.loc 1 119 17 view .LVU279
- 942 0284 41F6FF76 		movw	r6, #8191
- 943 0288 9B19     		adds	r3, r3, r6
- 944 028a 42F10006 		adc	r6, r2, #0
- 945 028e 8CE7     		b	.L24
- 946              	.LVL104:
- 947              	.L36:
- 120:Core/drogui/src/BMP388.c ****   partial_data5 = (partial_data4 * u32RegData) / 512;
- 948              		.loc 1 120 17 view .LVU280
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 20
+ 924              		.loc 1 130 51 is_stmt 1 view -0
+ 925              		.cfi_startproc
+ 926              		@ args = 0, pretend = 0, frame = 8
+ 927              		@ frame_needed = 0, uses_anonymous_args = 0
+ 928              		.loc 1 130 51 is_stmt 0 view .LVU228
+ 929 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 930              	.LCFI15:
+ 931              		.cfi_def_cfa_offset 36
+ 932              		.cfi_offset 4, -36
+ 933              		.cfi_offset 5, -32
+ 934              		.cfi_offset 6, -28
+ 935              		.cfi_offset 7, -24
+ 936              		.cfi_offset 8, -20
+ 937              		.cfi_offset 9, -16
+ 938              		.cfi_offset 10, -12
+ 939              		.cfi_offset 11, -8
+ 940              		.cfi_offset 14, -4
+ 941 0004 83B0     		sub	sp, sp, #12
+ 942              	.LCFI16:
+ 943              		.cfi_def_cfa_offset 48
+ 131:Core/drogui/src/BMP388.c **** 
+ 132:Core/drogui/src/BMP388.c ****   int64_t partial_data1;
+ 944              		.loc 1 132 3 is_stmt 1 view .LVU229
+ 133:Core/drogui/src/BMP388.c ****   int64_t partial_data2;
+ 945              		.loc 1 133 3 view .LVU230
+ 134:Core/drogui/src/BMP388.c ****   int64_t partial_data3;
+ 946              		.loc 1 134 3 view .LVU231
+ 135:Core/drogui/src/BMP388.c ****   int64_t partial_data4;
+ 947              		.loc 1 135 3 view .LVU232
+ 136:Core/drogui/src/BMP388.c ****   int64_t partial_data5;
+ 948              		.loc 1 136 3 view .LVU233
+ 137:Core/drogui/src/BMP388.c ****   int64_t partial_data6;
+ 949              		.loc 1 137 3 view .LVU234
+ 138:Core/drogui/src/BMP388.c ****   int64_t offset;
+ 950              		.loc 1 138 3 view .LVU235
+ 139:Core/drogui/src/BMP388.c ****   int64_t sensitivity;
+ 951              		.loc 1 139 3 view .LVU236
+ 140:Core/drogui/src/BMP388.c ****   uint64_t comp_press;
+ 952              		.loc 1 140 3 view .LVU237
+ 141:Core/drogui/src/BMP388.c **** 
+ 142:Core/drogui/src/BMP388.c ****   partial_data1 = calib_bmp.T_fine * calib_bmp.T_fine;
+ 953              		.loc 1 142 3 view .LVU238
+ 954              		.loc 1 142 28 is_stmt 0 view .LVU239
+ 955 0006 AD4B     		ldr	r3, .L47
+ 956 0008 9A69     		ldr	r2, [r3, #24]
+ 957 000a D3F81C80 		ldr	r8, [r3, #28]
+ 958              		.loc 1 142 17 view .LVU240
+ 959 000e 02FB08F3 		mul	r3, r2, r8
+ 960 0012 A2FB0241 		umull	r4, r1, r2, r2
+ 961 0016 01EB4301 		add	r1, r1, r3, lsl #1
+ 962              	.LVL98:
+ 143:Core/drogui/src/BMP388.c ****   partial_data2 = partial_data1 / 64;
+ 963              		.loc 1 143 3 is_stmt 1 view .LVU241
+ 964              		.loc 1 143 17 is_stmt 0 view .LVU242
+ 965 001a 2346     		mov	r3, r4
+ 966 001c 0D46     		mov	r5, r1
+ 967 001e 0029     		cmp	r1, #0
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 21
 
 
- 949 0290 40F2FF12 		movw	r2, #511
- 950 0294 9B18     		adds	r3, r3, r2
- 951 0296 46F10002 		adc	r2, r6, #0
- 952 029a 91E7     		b	.L25
- 953              	.LVL105:
- 954              	.L37:
- 122:Core/drogui/src/BMP388.c ****   partial_data2 = ((int64_t)(calib_bmp.P11) * (int64_t)(partial_data6)) / 65536;
- 955              		.loc 1 122 17 view .LVU281
- 956 029c 4FF6FF7E 		movw	lr, #65535
- 957 02a0 13EB0E03 		adds	r3, r3, lr
- 958 02a4 4CF1000E 		adc	lr, ip, #0
- 959 02a8 A0E7     		b	.L26
- 960              	.LVL106:
- 961              	.L38:
- 123:Core/drogui/src/BMP388.c ****   partial_data3 = (partial_data2 * u32RegData) / 128;
- 962              		.loc 1 123 17 view .LVU282
- 963 02aa 7F33     		adds	r3, r3, #127
- 964 02ac 40F10004 		adc	r4, r0, #0
- 965 02b0 A9E7     		b	.L27
- 966              	.LVL107:
- 967              	.L39:
- 124:Core/drogui/src/BMP388.c ****   partial_data4 = (offset / 4) + partial_data1 + partial_data5 + partial_data3;
- 968              		.loc 1 124 27 view .LVU283
- 969 02b2 19F10309 		adds	r9, r9, #3
- 970              	.LVL108:
- 124:Core/drogui/src/BMP388.c ****   partial_data4 = (offset / 4) + partial_data1 + partial_data5 + partial_data3;
- 971              		.loc 1 124 27 view .LVU284
- 972 02b6 47F10000 		adc	r0, r7, #0
- 973              	.LVL109:
- 124:Core/drogui/src/BMP388.c ****   partial_data4 = (offset / 4) + partial_data1 + partial_data5 + partial_data3;
- 974              		.loc 1 124 27 view .LVU285
- 975 02ba ACE7     		b	.L28
- 976              	.L41:
- 977              		.align	2
- 978              	.L40:
- 979 02bc 00000000 		.word	.LANCHOR0
- 980              		.cfi_endproc
- 981              	.LFE149:
- 983              		.global	calib_bmp
- 984              		.section	.bss.calib_bmp,"aw",%nobits
- 985              		.align	3
- 986              		.set	.LANCHOR0,. + 0
- 989              	calib_bmp:
- 990 0000 00000000 		.space	32
- 990      00000000 
- 990      00000000 
- 990      00000000 
- 990      00000000 
- 991              		.text
- 992              	.Letext0:
- 993              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 994              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 995              		.file 4 "Core/drogui/include/utils.h"
- 996              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s 			page 21
+ 968 0020 C0F21A81 		blt	.L37
+ 969              	.L26:
+ 970              		.loc 1 143 17 view .LVU243
+ 971 0024 9B09     		lsrs	r3, r3, #6
+ 972 0026 43EA8563 		orr	r3, r3, r5, lsl #26
+ 973 002a AD11     		asrs	r5, r5, #6
+ 974              	.LVL99:
+ 144:Core/drogui/src/BMP388.c ****   partial_data3 = (partial_data2 * calib_bmp.T_fine) / 256;
+ 975              		.loc 1 144 3 is_stmt 1 view .LVU244
+ 976              		.loc 1 144 34 is_stmt 0 view .LVU245
+ 977 002c 02FB05F5 		mul	r5, r2, r5
+ 978              	.LVL100:
+ 979              		.loc 1 144 34 view .LVU246
+ 980 0030 03FB0855 		mla	r5, r3, r8, r5
+ 981 0034 A2FB0336 		umull	r3, r6, r2, r3
+ 982              		.loc 1 144 34 view .LVU247
+ 983 0038 3544     		add	r5, r5, r6
+ 984              		.loc 1 144 17 view .LVU248
+ 985 003a AC46     		mov	ip, r5
+ 986 003c 002D     		cmp	r5, #0
+ 987 003e C0F20F81 		blt	.L38
+ 988              	.L27:
+ 989 0042 1D0A     		lsrs	r5, r3, #8
+ 990 0044 45EA0C65 		orr	r5, r5, ip, lsl #24
+ 991 0048 4FEA2C2C 		asr	ip, ip, #8
+ 992 004c 2E46     		mov	r6, r5
+ 993              	.LVL101:
+ 145:Core/drogui/src/BMP388.c ****   partial_data4 = (calib_bmp.P8 * partial_data3) / 32;
+ 994              		.loc 1 145 3 is_stmt 1 view .LVU249
+ 995              		.loc 1 145 29 is_stmt 0 view .LVU250
+ 996 004e 9B4B     		ldr	r3, .L47
+ 997 0050 93F90F30 		ldrsb	r3, [r3, #15]
+ 998 0054 4FEAE37E 		asr	lr, r3, #31
+ 999              		.loc 1 145 33 view .LVU251
+ 1000 0058 03FB0CF7 		mul	r7, r3, ip
+ 1001 005c 05FB0E75 		mla	r5, r5, lr, r7
+ 1002              	.LVL102:
+ 1003              		.loc 1 145 33 view .LVU252
+ 1004 0060 A3FB0637 		umull	r3, r7, r3, r6
+ 1005 0064 3D44     		add	r5, r5, r7
+ 1006              		.loc 1 145 17 view .LVU253
+ 1007 0066 AB46     		mov	fp, r5
+ 1008 0068 002D     		cmp	r5, #0
+ 1009 006a C0F2FD80 		blt	.L39
+ 1010              	.L28:
+ 1011 006e 5B09     		lsrs	r3, r3, #5
+ 1012              	.LVL103:
+ 146:Core/drogui/src/BMP388.c ****   partial_data5 = (calib_bmp.P7 * partial_data1) * 16;
+ 1013              		.loc 1 146 3 is_stmt 1 view .LVU254
+ 1014              		.loc 1 146 29 is_stmt 0 view .LVU255
+ 1015 0070 DFF848A2 		ldr	r10, .L47
+ 1016 0074 9AF90E70 		ldrsb	r7, [r10, #14]
+ 1017 0078 4FEAE77E 		asr	lr, r7, #31
+ 1018              		.loc 1 146 33 view .LVU256
+ 1019 007c 07FB01F5 		mul	r5, r7, r1
+ 1020 0080 04FB0E55 		mla	r5, r4, lr, r5
+ 1021 0084 A7FB04E7 		umull	lr, r7, r7, r4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 22
+
+
+ 1022 0088 2F44     		add	r7, r7, r5
+ 1023              		.loc 1 146 17 view .LVU257
+ 1024 008a 3D01     		lsls	r5, r7, #4
+ 1025 008c 45EA1E75 		orr	r5, r5, lr, lsr #28
+ 1026 0090 0195     		str	r5, [sp, #4]
+ 1027 0092 4FEA0E17 		lsl	r7, lr, #4
+ 1028 0096 3D46     		mov	r5, r7
+ 1029              	.LVL104:
+ 147:Core/drogui/src/BMP388.c ****   partial_data6 = (calib_bmp.P6 * calib_bmp.T_fine) * 4194304;
+ 1030              		.loc 1 147 3 is_stmt 1 view .LVU258
+ 1031              		.loc 1 147 29 is_stmt 0 view .LVU259
+ 1032 0098 BAF814E0 		ldrh	lr, [r10, #20]
+ 1033              		.loc 1 147 33 view .LVU260
+ 1034 009c A2FB0E97 		umull	r9, r7, r2, lr
+ 1035 00a0 0EFB0877 		mla	r7, lr, r8, r7
+ 1036              		.loc 1 147 17 view .LVU261
+ 1037 00a4 BF05     		lsls	r7, r7, #22
+ 1038 00a6 47EA9927 		orr	r7, r7, r9, lsr #10
+ 1039 00aa 4FEA8959 		lsl	r9, r9, #22
+ 1040              	.LVL105:
+ 148:Core/drogui/src/BMP388.c ****   offset = (int64_t)((int64_t)(calib_bmp.P5) * (int64_t)140737488355328) + 
+ 1041              		.loc 1 148 3 is_stmt 1 view .LVU262
+ 1042              		.loc 1 148 41 is_stmt 0 view .LVU263
+ 1043 00ae BAF812E0 		ldrh	lr, [r10, #18]
+ 1044              		.loc 1 148 12 view .LVU264
+ 1045 00b2 4FEACE3E 		lsl	lr, lr, #15
+ 1046              		.loc 1 148 74 view .LVU265
+ 1047 00b6 43EACB63 		orr	r3, r3, fp, lsl #27
+ 1048              	.LVL106:
+ 1049              		.loc 1 148 74 view .LVU266
+ 1050 00ba 0EEB6B1B 		add	fp, lr, fp, asr #5
+ 1051              	.LVL107:
+ 149:Core/drogui/src/BMP388.c ****             partial_data4 + partial_data5 + partial_data6;
+ 1052              		.loc 1 149 27 view .LVU267
+ 1053 00be 5B19     		adds	r3, r3, r5
+ 1054              		.loc 1 149 27 view .LVU268
+ 1055 00c0 019D     		ldr	r5, [sp, #4]
+ 1056              	.LVL108:
+ 1057              		.loc 1 149 27 view .LVU269
+ 1058 00c2 4BEB050B 		adc	fp, fp, r5
+ 148:Core/drogui/src/BMP388.c ****   offset = (int64_t)((int64_t)(calib_bmp.P5) * (int64_t)140737488355328) + 
+ 1059              		.loc 1 148 10 view .LVU270
+ 1060 00c6 13EB0909 		adds	r9, r3, r9
+ 1061              	.LVL109:
+ 148:Core/drogui/src/BMP388.c ****   offset = (int64_t)((int64_t)(calib_bmp.P5) * (int64_t)140737488355328) + 
+ 1062              		.loc 1 148 10 view .LVU271
+ 1063 00ca 4BEB0707 		adc	r7, fp, r7
+ 1064              	.LVL110:
+ 150:Core/drogui/src/BMP388.c **** 
+ 151:Core/drogui/src/BMP388.c ****   partial_data2 = (((int64_t)calib_bmp.P4) * partial_data3) / 32;
+ 1065              		.loc 1 151 3 is_stmt 1 view .LVU272
+ 1066              		.loc 1 151 39 is_stmt 0 view .LVU273
+ 1067 00ce 9AF90D50 		ldrsb	r5, [r10, #13]
+ 1068              		.loc 1 151 21 view .LVU274
+ 1069 00d2 EB17     		asrs	r3, r5, #31
+ 1070              		.loc 1 151 44 view .LVU275
+ 1071 00d4 05FB0CFC 		mul	ip, r5, ip
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 23
+
+
+ 1072              	.LVL111:
+ 1073              		.loc 1 151 44 view .LVU276
+ 1074 00d8 06FB03CC 		mla	ip, r6, r3, ip
+ 1075 00dc A5FB0656 		umull	r5, r6, r5, r6
+ 1076              		.loc 1 151 44 view .LVU277
+ 1077 00e0 6644     		add	r6, r6, ip
+ 1078              		.loc 1 151 17 view .LVU278
+ 1079 00e2 B646     		mov	lr, r6
+ 1080 00e4 002E     		cmp	r6, #0
+ 1081 00e6 C0F2C380 		blt	.L40
+ 1082              	.L29:
+ 1083 00ea 6D09     		lsrs	r5, r5, #5
+ 1084              	.LVL112:
+ 152:Core/drogui/src/BMP388.c ****   partial_data4 = (calib_bmp.P3 * partial_data1) * 4;
+ 1085              		.loc 1 152 3 is_stmt 1 view .LVU279
+ 1086              		.loc 1 152 29 is_stmt 0 view .LVU280
+ 1087 00ec 734E     		ldr	r6, .L47
+ 1088 00ee 96F90CC0 		ldrsb	ip, [r6, #12]
+ 1089 00f2 4FEAEC7A 		asr	r10, ip, #31
+ 1090              		.loc 1 152 33 view .LVU281
+ 1091 00f6 0CFB01F3 		mul	r3, ip, r1
+ 1092 00fa 04FB0A33 		mla	r3, r4, r10, r3
+ 1093 00fe ACFB0441 		umull	r4, r1, ip, r4
+ 1094              	.LVL113:
+ 1095              		.loc 1 152 33 view .LVU282
+ 1096 0102 0B44     		add	r3, r3, r1
+ 1097              		.loc 1 152 17 view .LVU283
+ 1098 0104 9B00     		lsls	r3, r3, #2
+ 1099 0106 43EA9473 		orr	r3, r3, r4, lsr #30
+ 1100 010a A400     		lsls	r4, r4, #2
+ 1101              	.LVL114:
+ 153:Core/drogui/src/BMP388.c ****   partial_data5 = ((int64_t)(calib_bmp.P2) - 16384) * ((int64_t)calib_bmp.T_fine) * 2097152;
+ 1102              		.loc 1 153 3 is_stmt 1 view .LVU284
+ 1103              		.loc 1 153 39 is_stmt 0 view .LVU285
+ 1104 010c B6F90810 		ldrsh	r1, [r6, #8]
+ 1105              		.loc 1 153 20 view .LVU286
+ 1106 0110 4FEAE17C 		asr	ip, r1, #31
+ 1107              		.loc 1 153 44 view .LVU287
+ 1108 0114 B1F58041 		subs	r1, r1, #16384
+ 1109 0118 4CF1FF3C 		adc	ip, ip, #-1
+ 1110              		.loc 1 153 53 view .LVU288
+ 1111 011c 02FB0CFC 		mul	ip, r2, ip
+ 1112 0120 01FB08CC 		mla	ip, r1, r8, ip
+ 1113 0124 A2FB011A 		umull	r1, r10, r2, r1
+ 1114 0128 D444     		add	ip, ip, r10
+ 1115              		.loc 1 153 17 view .LVU289
+ 1116 012a 4FEA4C5C 		lsl	ip, ip, #21
+ 1117 012e 4CEAD12C 		orr	ip, ip, r1, lsr #11
+ 1118 0132 4905     		lsls	r1, r1, #21
+ 1119              	.LVL115:
+ 154:Core/drogui/src/BMP388.c ****   sensitivity = (((int64_t)(calib_bmp.P1) - 16384) * (int64_t)70368744177664) + 
+ 1120              		.loc 1 154 3 is_stmt 1 view .LVU290
+ 1121              		.loc 1 154 38 is_stmt 0 view .LVU291
+ 1122 0134 B6F90660 		ldrsh	r6, [r6, #6]
+ 1123              		.loc 1 154 43 view .LVU292
+ 1124 0138 B6F58046 		subs	r6, r6, #16384
+ 1125              		.loc 1 154 52 view .LVU293
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 24
+
+
+ 1126 013c B603     		lsls	r6, r6, #14
+ 1127              		.loc 1 154 79 view .LVU294
+ 1128 013e 45EACE65 		orr	r5, r5, lr, lsl #27
+ 1129              	.LVL116:
+ 1130              		.loc 1 154 79 view .LVU295
+ 1131 0142 06EB6E16 		add	r6, r6, lr, asr #5
+ 155:Core/drogui/src/BMP388.c ****                 partial_data2 + partial_data4 + partial_data5;
+ 1132              		.loc 1 155 31 view .LVU296
+ 1133 0146 2D19     		adds	r5, r5, r4
+ 1134              	.LVL117:
+ 1135              		.loc 1 155 31 view .LVU297
+ 1136 0148 46EB0303 		adc	r3, r6, r3
+ 1137              	.LVL118:
+ 154:Core/drogui/src/BMP388.c ****   sensitivity = (((int64_t)(calib_bmp.P1) - 16384) * (int64_t)70368744177664) + 
+ 1138              		.loc 1 154 15 view .LVU298
+ 1139 014c 6D18     		adds	r5, r5, r1
+ 1140 014e 43EB0C03 		adc	r3, r3, ip
+ 1141              	.LVL119:
+ 156:Core/drogui/src/BMP388.c **** 
+ 157:Core/drogui/src/BMP388.c ****   partial_data1 = (sensitivity / 16777216) * u32RegData;
+ 1142              		.loc 1 157 3 is_stmt 1 view .LVU299
+ 1143              		.loc 1 157 32 is_stmt 0 view .LVU300
+ 1144 0152 1C46     		mov	r4, r3
+ 1145              	.LVL120:
+ 1146              		.loc 1 157 32 view .LVU301
+ 1147 0154 002B     		cmp	r3, #0
+ 1148 0156 C0F28F80 		blt	.L41
+ 1149              	.LVL121:
+ 1150              	.L30:
+ 1151              		.loc 1 157 32 view .LVU302
+ 1152 015a 290E     		lsrs	r1, r5, #24
+ 1153 015c 41EA0421 		orr	r1, r1, r4, lsl #8
+ 1154 0160 2316     		asrs	r3, r4, #24
+ 1155              		.loc 1 157 44 view .LVU303
+ 1156 0162 0446     		mov	r4, r0
+ 1157              		.loc 1 157 17 view .LVU304
+ 1158 0164 A1FB0051 		umull	r5, r1, r1, r0
+ 1159 0168 00FB0311 		mla	r1, r0, r3, r1
+ 1160              	.LVL122:
+ 158:Core/drogui/src/BMP388.c ****   partial_data2 = (int64_t)(calib_bmp.P10) * (int64_t)(calib_bmp.T_fine);
+ 1161              		.loc 1 158 3 is_stmt 1 view .LVU305
+ 1162              		.loc 1 158 38 is_stmt 0 view .LVU306
+ 1163 016c 534B     		ldr	r3, .L47
+ 1164 016e 93F910C0 		ldrsb	ip, [r3, #16]
+ 1165              	.LVL123:
+ 1166              		.loc 1 158 19 view .LVU307
+ 1167 0172 4FEAEC76 		asr	r6, ip, #31
+ 1168              		.loc 1 158 17 view .LVU308
+ 1169 0176 02FB06F6 		mul	r6, r2, r6
+ 1170 017a 0CFB0868 		mla	r8, ip, r8, r6
+ 1171              	.LVL124:
+ 1172              		.loc 1 158 17 view .LVU309
+ 1173 017e A2FB0C62 		umull	r6, r2, r2, ip
+ 1174              	.LVL125:
+ 1175              		.loc 1 158 17 view .LVU310
+ 1176 0182 4244     		add	r2, r2, r8
+ 1177              	.LVL126:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 25
+
+
+ 159:Core/drogui/src/BMP388.c ****   partial_data3 = partial_data2 + (65536 * (int64_t)(calib_bmp.P9));
+ 1178              		.loc 1 159 3 is_stmt 1 view .LVU311
+ 1179              		.loc 1 159 63 is_stmt 0 view .LVU312
+ 1180 0184 B3F90A30 		ldrsh	r3, [r3, #10]
+ 1181              	.LVL127:
+ 1182              		.loc 1 159 44 view .LVU313
+ 1183 0188 4FEAE378 		asr	r8, r3, #31
+ 1184              		.loc 1 159 42 view .LVU314
+ 1185 018c 4FEA0848 		lsl	r8, r8, #16
+ 1186 0190 48EA1348 		orr	r8, r8, r3, lsr #16
+ 1187 0194 1B04     		lsls	r3, r3, #16
+ 1188              		.loc 1 159 17 view .LVU315
+ 1189 0196 9B19     		adds	r3, r3, r6
+ 1190 0198 42EB0802 		adc	r2, r2, r8
+ 1191              	.LVL128:
+ 160:Core/drogui/src/BMP388.c ****   partial_data4 = (partial_data3 * u32RegData) / 8192;
+ 1192              		.loc 1 160 3 is_stmt 1 view .LVU316
+ 1193              		.loc 1 160 34 is_stmt 0 view .LVU317
+ 1194 019c A0FB0338 		umull	r3, r8, r0, r3
+ 1195              	.LVL129:
+ 1196              		.loc 1 160 34 view .LVU318
+ 1197 01a0 00FB0282 		mla	r2, r0, r2, r8
+ 1198              	.LVL130:
+ 1199              		.loc 1 160 17 view .LVU319
+ 1200 01a4 1646     		mov	r6, r2
+ 1201              	.LVL131:
+ 1202              		.loc 1 160 17 view .LVU320
+ 1203 01a6 002A     		cmp	r2, #0
+ 1204              	.LVL132:
+ 1205              		.loc 1 160 17 view .LVU321
+ 1206 01a8 6CDB     		blt	.L42
+ 1207              	.L31:
+ 1208              		.loc 1 160 17 view .LVU322
+ 1209 01aa 5B0B     		lsrs	r3, r3, #13
+ 1210 01ac 43EAC643 		orr	r3, r3, r6, lsl #19
+ 1211 01b0 7213     		asrs	r2, r6, #13
+ 1212              	.LVL133:
+ 161:Core/drogui/src/BMP388.c ****   partial_data5 = (partial_data4 * u32RegData) / 512;
+ 1213              		.loc 1 161 3 is_stmt 1 view .LVU323
+ 1214              		.loc 1 161 34 is_stmt 0 view .LVU324
+ 1215 01b2 A4FB0336 		umull	r3, r6, r4, r3
+ 1216              	.LVL134:
+ 1217              		.loc 1 161 34 view .LVU325
+ 1218 01b6 00FB0266 		mla	r6, r0, r2, r6
+ 1219              		.loc 1 161 17 view .LVU326
+ 1220 01ba 3246     		mov	r2, r6
+ 1221 01bc 002E     		cmp	r6, #0
+ 1222 01be 67DB     		blt	.L43
+ 1223              	.L32:
+ 1224 01c0 5B0A     		lsrs	r3, r3, #9
+ 1225 01c2 5612     		asrs	r6, r2, #9
+ 1226 01c4 43EAC252 		orr	r2, r3, r2, lsl #23
+ 1227              	.LVL135:
+ 162:Core/drogui/src/BMP388.c ****   partial_data6 = (int64_t)((uint64_t)u32RegData * (uint64_t)u32RegData);
+ 1228              		.loc 1 162 3 is_stmt 1 view .LVU327
+ 1229              		.loc 1 162 50 is_stmt 0 view .LVU328
+ 1230 01c8 A0FB00EC 		umull	lr, ip, r0, r0
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 26
+
+
+ 1231              	.LVL136:
+ 163:Core/drogui/src/BMP388.c ****   partial_data2 = ((int64_t)(calib_bmp.P11) * (int64_t)(partial_data6)) / 65536;
+ 1232              		.loc 1 163 3 is_stmt 1 view .LVU329
+ 1233              		.loc 1 163 39 is_stmt 0 view .LVU330
+ 1234 01cc 3B4B     		ldr	r3, .L47
+ 1235              	.LVL137:
+ 1236              		.loc 1 163 39 view .LVU331
+ 1237 01ce 93F91130 		ldrsb	r3, [r3, #17]
+ 1238              	.LVL138:
+ 1239              		.loc 1 163 20 view .LVU332
+ 1240 01d2 4FEAE378 		asr	r8, r3, #31
+ 1241              		.loc 1 163 45 view .LVU333
+ 1242 01d6 03FB0CFC 		mul	ip, r3, ip
+ 1243              	.LVL139:
+ 1244              		.loc 1 163 45 view .LVU334
+ 1245 01da 0EFB08CC 		mla	ip, lr, r8, ip
+ 1246 01de A3FB0E3E 		umull	r3, lr, r3, lr
+ 1247              	.LVL140:
+ 1248              		.loc 1 163 45 view .LVU335
+ 1249 01e2 F444     		add	ip, ip, lr
+ 1250              		.loc 1 163 17 view .LVU336
+ 1251 01e4 E646     		mov	lr, ip
+ 1252 01e6 BCF1000F 		cmp	ip, #0
+ 1253 01ea 57DB     		blt	.L44
+ 1254              	.L33:
+ 1255 01ec 1B0C     		lsrs	r3, r3, #16
+ 1256 01ee 43EA0E43 		orr	r3, r3, lr, lsl #16
+ 1257 01f2 4FEA2E4E 		asr	lr, lr, #16
+ 1258              	.LVL141:
+ 164:Core/drogui/src/BMP388.c ****   partial_data3 = (partial_data2 * u32RegData) / 128;
+ 1259              		.loc 1 164 3 is_stmt 1 view .LVU337
+ 1260              		.loc 1 164 34 is_stmt 0 view .LVU338
+ 1261 01f6 A4FB0343 		umull	r4, r3, r4, r3
+ 1262              	.LVL142:
+ 1263              		.loc 1 164 34 view .LVU339
+ 1264 01fa 00FB0E30 		mla	r0, r0, lr, r3
+ 1265              	.LVL143:
+ 1266              		.loc 1 164 17 view .LVU340
+ 1267 01fe 2346     		mov	r3, r4
+ 1268 0200 0446     		mov	r4, r0
+ 1269 0202 0028     		cmp	r0, #0
+ 1270 0204 51DB     		blt	.L45
+ 1271              	.L34:
+ 1272 0206 DB09     		lsrs	r3, r3, #7
+ 1273 0208 4FEAE41C 		asr	ip, r4, #7
+ 1274 020c 43EA4463 		orr	r3, r3, r4, lsl #25
+ 1275              	.LVL144:
+ 165:Core/drogui/src/BMP388.c ****   partial_data4 = (offset / 4) + partial_data1 + partial_data5 + partial_data3;
+ 1276              		.loc 1 165 3 is_stmt 1 view .LVU341
+ 1277              		.loc 1 165 27 is_stmt 0 view .LVU342
+ 1278 0210 3846     		mov	r0, r7
+ 1279 0212 002F     		cmp	r7, #0
+ 1280 0214 4DDB     		blt	.L46
+ 1281              	.LVL145:
+ 1282              	.L35:
+ 1283              		.loc 1 165 27 view .LVU343
+ 1284 0216 4FEA9909 		lsr	r9, r9, #2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 27
+
+
+ 1285 021a 49EA8079 		orr	r9, r9, r0, lsl #30
+ 1286              		.loc 1 165 32 view .LVU344
+ 1287 021e 19EB0509 		adds	r9, r9, r5
+ 1288 0222 41EBA000 		adc	r0, r1, r0, asr #2
+ 1289              		.loc 1 165 48 view .LVU345
+ 1290 0226 19EB0202 		adds	r2, r9, r2
+ 1291              	.LVL146:
+ 1292              		.loc 1 165 48 view .LVU346
+ 1293 022a 40EB0600 		adc	r0, r0, r6
+ 1294              		.loc 1 165 17 view .LVU347
+ 1295 022e D218     		adds	r2, r2, r3
+ 1296 0230 40EB0C00 		adc	r0, r0, ip
+ 1297              	.LVL147:
+ 166:Core/drogui/src/BMP388.c ****   comp_press = (((uint64_t)partial_data4 * 25) / (uint64_t)1099511627776);
+ 1298              		.loc 1 166 3 is_stmt 1 view .LVU348
+ 1299              		.loc 1 166 42 is_stmt 0 view .LVU349
+ 1300 0234 9318     		adds	r3, r2, r2
+ 1301              	.LVL148:
+ 1302              		.loc 1 166 42 view .LVU350
+ 1303 0236 40EB0006 		adc	r6, r0, r0
+ 1304 023a 9B18     		adds	r3, r3, r2
+ 1305 023c 40EB0606 		adc	r6, r0, r6
+ 1306 0240 F600     		lsls	r6, r6, #3
+ 1307 0242 46EA5376 		orr	r6, r6, r3, lsr #29
+ 1308 0246 DB00     		lsls	r3, r3, #3
+ 1309 0248 9A18     		adds	r2, r3, r2
+ 1310              	.LVL149:
+ 1311              		.loc 1 166 42 view .LVU351
+ 1312 024a 40EB0600 		adc	r0, r0, r6
+ 1313              	.LVL150:
+ 167:Core/drogui/src/BMP388.c **** 
+ 168:Core/drogui/src/BMP388.c ****   return comp_press;
+ 1314              		.loc 1 168 3 is_stmt 1 view .LVU352
+ 169:Core/drogui/src/BMP388.c **** }...
+ 1315              		.loc 1 169 1 is_stmt 0 view .LVU353
+ 1316 024e 000A     		lsrs	r0, r0, #8
+ 1317              	.LVL151:
+ 1318              		.loc 1 169 1 view .LVU354
+ 1319 0250 0021     		movs	r1, #0
+ 1320              	.LVL152:
+ 1321              		.loc 1 169 1 view .LVU355
+ 1322 0252 03B0     		add	sp, sp, #12
+ 1323              	.LCFI17:
+ 1324              		.cfi_remember_state
+ 1325              		.cfi_def_cfa_offset 36
+ 1326              		@ sp needed
+ 1327 0254 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1328              	.LVL153:
+ 1329              	.L37:
+ 1330              	.LCFI18:
+ 1331              		.cfi_restore_state
+ 143:Core/drogui/src/BMP388.c ****   partial_data2 = partial_data1 / 64;
+ 1332              		.loc 1 143 17 view .LVU356
+ 1333 0258 3F33     		adds	r3, r3, #63
+ 1334              	.LVL154:
+ 143:Core/drogui/src/BMP388.c ****   partial_data2 = partial_data1 / 64;
+ 1335              		.loc 1 143 17 view .LVU357
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 28
+
+
+ 1336 025a 41F10005 		adc	r5, r1, #0
+ 1337 025e E1E6     		b	.L26
+ 1338              	.L38:
+ 144:Core/drogui/src/BMP388.c ****   partial_data3 = (partial_data2 * calib_bmp.T_fine) / 256;
+ 1339              		.loc 1 144 17 view .LVU358
+ 1340 0260 FF33     		adds	r3, r3, #255
+ 1341 0262 45F1000C 		adc	ip, r5, #0
+ 1342 0266 ECE6     		b	.L27
+ 1343              	.LVL155:
+ 1344              	.L39:
+ 145:Core/drogui/src/BMP388.c ****   partial_data4 = (calib_bmp.P8 * partial_data3) / 32;
+ 1345              		.loc 1 145 17 view .LVU359
+ 1346 0268 1F33     		adds	r3, r3, #31
+ 1347 026a 45F1000B 		adc	fp, r5, #0
+ 1348 026e FEE6     		b	.L28
+ 1349              	.LVL156:
+ 1350              	.L40:
+ 151:Core/drogui/src/BMP388.c ****   partial_data2 = (((int64_t)calib_bmp.P4) * partial_data3) / 32;
+ 1351              		.loc 1 151 17 view .LVU360
+ 1352 0270 1F35     		adds	r5, r5, #31
+ 1353 0272 46F1000E 		adc	lr, r6, #0
+ 1354 0276 38E7     		b	.L29
+ 1355              	.LVL157:
+ 1356              	.L41:
+ 157:Core/drogui/src/BMP388.c ****   partial_data1 = (sensitivity / 16777216) * u32RegData;
+ 1357              		.loc 1 157 32 view .LVU361
+ 1358 0278 6FF07F41 		mvn	r1, #-16777216
+ 1359              	.LVL158:
+ 157:Core/drogui/src/BMP388.c ****   partial_data1 = (sensitivity / 16777216) * u32RegData;
+ 1360              		.loc 1 157 32 view .LVU362
+ 1361 027c 6D18     		adds	r5, r5, r1
+ 1362              	.LVL159:
+ 157:Core/drogui/src/BMP388.c ****   partial_data1 = (sensitivity / 16777216) * u32RegData;
+ 1363              		.loc 1 157 32 view .LVU363
+ 1364 027e 43F10004 		adc	r4, r3, #0
+ 1365 0282 6AE7     		b	.L30
+ 1366              	.LVL160:
+ 1367              	.L42:
+ 160:Core/drogui/src/BMP388.c ****   partial_data4 = (partial_data3 * u32RegData) / 8192;
+ 1368              		.loc 1 160 17 view .LVU364
+ 1369 0284 41F6FF76 		movw	r6, #8191
+ 1370 0288 9B19     		adds	r3, r3, r6
+ 1371 028a 42F10006 		adc	r6, r2, #0
+ 1372 028e 8CE7     		b	.L31
+ 1373              	.LVL161:
+ 1374              	.L43:
+ 161:Core/drogui/src/BMP388.c ****   partial_data5 = (partial_data4 * u32RegData) / 512;
+ 1375              		.loc 1 161 17 view .LVU365
+ 1376 0290 40F2FF12 		movw	r2, #511
+ 1377 0294 9B18     		adds	r3, r3, r2
+ 1378 0296 46F10002 		adc	r2, r6, #0
+ 1379 029a 91E7     		b	.L32
+ 1380              	.LVL162:
+ 1381              	.L44:
+ 163:Core/drogui/src/BMP388.c ****   partial_data2 = ((int64_t)(calib_bmp.P11) * (int64_t)(partial_data6)) / 65536;
+ 1382              		.loc 1 163 17 view .LVU366
+ 1383 029c 4FF6FF7E 		movw	lr, #65535
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 29
+
+
+ 1384 02a0 13EB0E03 		adds	r3, r3, lr
+ 1385 02a4 4CF1000E 		adc	lr, ip, #0
+ 1386 02a8 A0E7     		b	.L33
+ 1387              	.LVL163:
+ 1388              	.L45:
+ 164:Core/drogui/src/BMP388.c ****   partial_data3 = (partial_data2 * u32RegData) / 128;
+ 1389              		.loc 1 164 17 view .LVU367
+ 1390 02aa 7F33     		adds	r3, r3, #127
+ 1391 02ac 40F10004 		adc	r4, r0, #0
+ 1392 02b0 A9E7     		b	.L34
+ 1393              	.LVL164:
+ 1394              	.L46:
+ 165:Core/drogui/src/BMP388.c ****   partial_data4 = (offset / 4) + partial_data1 + partial_data5 + partial_data3;
+ 1395              		.loc 1 165 27 view .LVU368
+ 1396 02b2 19F10309 		adds	r9, r9, #3
+ 1397              	.LVL165:
+ 165:Core/drogui/src/BMP388.c ****   partial_data4 = (offset / 4) + partial_data1 + partial_data5 + partial_data3;
+ 1398              		.loc 1 165 27 view .LVU369
+ 1399 02b6 47F10000 		adc	r0, r7, #0
+ 1400              	.LVL166:
+ 165:Core/drogui/src/BMP388.c ****   partial_data4 = (offset / 4) + partial_data1 + partial_data5 + partial_data3;
+ 1401              		.loc 1 165 27 view .LVU370
+ 1402 02ba ACE7     		b	.L35
+ 1403              	.L48:
+ 1404              		.align	2
+ 1405              	.L47:
+ 1406 02bc 00000000 		.word	.LANCHOR0
+ 1407              		.cfi_endproc
+ 1408              	.LFE149:
+ 1410              		.global	calib_bmp
+ 1411              		.section	.bss.calib_bmp,"aw",%nobits
+ 1412              		.align	3
+ 1413              		.set	.LANCHOR0,. + 0
+ 1416              	calib_bmp:
+ 1417 0000 00000000 		.space	32
+ 1417      00000000 
+ 1417      00000000 
+ 1417      00000000 
+ 1417      00000000 
+ 1418              		.text
+ 1419              	.Letext0:
+ 1420              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 1421              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 1422              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
+ 1423              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
+ 1424              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
+ 1425              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h"
+ 1426              		.file 8 "Core/Inc/usart.h"
+ 1427              		.file 9 "Core/drogui/include/utils.h"
+ 1428              		.file 10 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ 1429              		.file 11 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ 1430              		.file 12 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h"
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s 			page 30
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 BMP388.c
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:18     .text.buildCalib:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:26     .text.buildCalib:00000000 buildCalib
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:139    .text.initBmp388:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:146    .text.initBmp388:00000000 initBmp388
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:211    .text.initBmp388:00000050 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:216    .text.bmpReadTemperature:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:223    .text.bmpReadTemperature:00000000 bmpReadTemperature
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:266    .text.bmpReadPressure:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:273    .text.bmpReadPressure:00000000 bmpReadPressure
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:316    .text.bmp388CompensateTemp:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:323    .text.bmp388CompensateTemp:00000000 bmp388CompensateTemp
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:482    .text.bmp388CompensateTemp:0000009c $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:487    .text.bmp388CompensatePress:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:494    .text.bmp388CompensatePress:00000000 bmp388CompensatePress
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:979    .text.bmp388CompensatePress:000002bc $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:989    .bss.calib_bmp:00000000 calib_bmp
-C:\Users\GUILLE~1\AppData\Local\Temp\ccYChlFF.s:985    .bss.calib_bmp:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:18     .rodata.buildCalib.str1.4:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:61     .text.buildCalib:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:69     .text.buildCalib:00000000 buildCalib
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:446    .text.buildCalib:0000020c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:465    .rodata.initBmp388.str1.4:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:469    .text.initBmp388:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:476    .text.initBmp388:00000000 initBmp388
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:571    .text.initBmp388:00000080 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:578    .rodata.bmpReadTemperature.str1.4:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:585    .text.bmpReadTemperature:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:592    .text.bmpReadTemperature:00000000 bmpReadTemperature
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:686    .text.bmpReadTemperature:00000064 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:693    .text.bmpReadPressure:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:700    .text.bmpReadPressure:00000000 bmpReadPressure
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:743    .text.bmp388CompensateTemp:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:750    .text.bmp388CompensateTemp:00000000 bmp388CompensateTemp
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:909    .text.bmp388CompensateTemp:0000009c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:914    .text.bmp388CompensatePress:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:921    .text.bmp388CompensatePress:00000000 bmp388CompensatePress
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:1406   .text.bmp388CompensatePress:000002bc $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:1416   .bss.calib_bmp:00000000 calib_bmp
+C:\Users\GUILLE~1\AppData\Local\Temp\cc81LTri.s:1412   .bss.calib_bmp:00000000 $d
 
 UNDEFINED SYMBOLS
+sprintf
+strlen
+HAL_UART_Transmit
+huart2
 I2CwriteByte
 HAL_Delay
 I2Cread

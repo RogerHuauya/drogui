@@ -102,6 +102,6 @@ void I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t* Data){
 }
  
 void I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data){
-    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 10000);
-    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Data, 1, 10000);
+    uint8_t data[] = {Register, Data};
+    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), data, 2, 10000);
 }

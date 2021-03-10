@@ -20,20 +20,21 @@ typedef struct _calib{
 
 
 void buildCalib(uint8_t* buff, calib * cal){
-    
-    cal -> T1 = (uint16_t) (buff[0] << 8 | buff[1]);
-    cal -> T2 = (uint16_t) (buff[2] << 8 | buff[3]);
+    char aux[50];
+    cal -> T1 = (uint16_t) (buff[1] << 8 | buff[0]);
+    cal -> T2 = (uint16_t) (buff[3] << 8 | buff[2]);
     cal -> T3 = (int8_t) (buff[4]);
 
-    cal -> P1 =  (int16_t) (buff[5]<< 8 | buff[6]);
-    cal -> P2 =  (int16_t) (buff[7] << 8 | buff[8]);
+
+    cal -> P1 =  (int16_t) (buff[6]<< 8 | buff[5]);
+    cal -> P2 =  (int16_t) (buff[8] << 8 | buff[7]);
     cal -> P3 =  (int8_t) (buff[9]);
     cal -> P4 =  (int8_t) (buff[10]);
-    cal -> P5 =  (uint16_t) (buff[11] << 8 | buff[13]);
-    cal -> P6 =  (uint16_t) (buff[13] << 8 | buff[14]);
+    cal -> P5 =  (uint16_t) (buff[12] << 8 | buff[11]);
+    cal -> P6 =  (uint16_t) (buff[14] << 8 | buff[13]);
     cal -> P7 =  (int8_t) (buff[15]);
     cal -> P8 =  (int8_t) (buff[16]);
-    cal -> P9 =  (int16_t) (buff[17] << 8 | buff[18]);
+    cal -> P9 =  (int16_t) (buff[18] << 8 | buff[17]);
     cal -> P10 = (int8_t) (buff[19]);
     cal -> P11 = (int8_t) (buff[20]);    
 }
@@ -41,6 +42,7 @@ void buildCalib(uint8_t* buff, calib * cal){
 calib calib_bmp;
 
 void initBmp388(){
+    char aux[50];
     uint8_t buff[21];
     I2CwriteByte(BMP388_DEFAULT_ADDRESS, BMP388_REG_PWR_CTRL, 0x33);
     HAL_Delay(10);
@@ -55,13 +57,13 @@ void initBmp388(){
 uint32_t bmpReadTemperature(){
     uint8_t dat[3];
     I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_TEMP, 3, dat);
-    return (uint32_t)(((dat[0] << 8) | (dat[1]) ) << 4)  | (dat[2] >> 4);
+    return (uint32_t) (dat[2] << 16) | (dat[1]  << 8)  | (dat[0]);
 }
 
 uint32_t bmpReadPressure(){
     uint8_t dat[3];
     I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_PRESS, 3, dat);
-    return (uint32_t)(((dat[0] << 8) | (dat[1]) ) << 4)  | (dat[2] >> 4);
+    return (uint32_t)(dat[2] << 16) | (dat[1]  << 8)  | (dat[0]);
 }
 
 int64_t bmp388CompensateTemp(uint32_t u32RegData){

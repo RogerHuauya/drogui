@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
   38              		.loc 1 18 33 view .LVU3
   39 0002 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
   40              		.loc 1 18 38 view .LVU4
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 2
 
 
   41 0004 1B04     		lsls	r3, r3, #16
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
   86              		.loc 1 27 5 is_stmt 1 view .LVU19
   87              		.loc 1 27 20 is_stmt 0 view .LVU20
   88 000a C0F30723 		ubfx	r3, r0, #8, #8
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 3
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 3
 
 
   89              		.loc 1 27 19 view .LVU21
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
  139              		.loc 1 35 40 is_stmt 0 view .LVU29
  140 0000 82B0     		sub	sp, sp, #8
  141              	.LCFI0:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 4
 
 
  142              		.cfi_def_cfa_offset 8
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
  188              		.loc 1 45 13 is_stmt 0 view .LVU41
  189 0004 0023     		movs	r3, #0
  190              		.loc 1 45 5 view .LVU42
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 5
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 5
 
 
  191 0006 08E0     		b	.L7
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
  237              		.syntax unified
  238              		.thumb
  239              		.thumb_func
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 6
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 6
 
 
  240              		.fpu fpv5-sp-d16
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
  288              	.L13:
  289              		.loc 1 57 20 is_stmt 1 discriminator 1 view .LVU69
  290              		.loc 1 57 5 is_stmt 0 discriminator 1 view .LVU70
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 7
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 7
 
 
  291 0022 032B     		cmp	r3, #3
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
  342              	.LCFI9:
  343              		.cfi_def_cfa_offset 56
  344              		.cfi_offset 80, -56
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 8
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 8
 
 
  345              		.cfi_offset 81, -52
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
  397 006c 70B1     		cbz	r0, .L18
  398              		.loc 1 64 58 is_stmt 1 discriminator 1 view .LVU82
  399              		.loc 1 64 71 is_stmt 0 discriminator 1 view .LVU83
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 9
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 9
 
 
  400 006e 22A3     		adr	r3, .L31
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
  443 00ac FFF7FEFF 		bl	__aeabi_f2d
  444              	.LVL30:
  445 00b0 0246     		mov	r2, r0
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 10
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 10
 
 
  446 00b2 0B46     		mov	r3, r1
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
  495              		.syntax unified
  496              		.thumb
  497              		.thumb_func
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 11
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 11
 
 
  498              		.fpu fpv5-sp-d16
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
  547 002c 60EEA07A 		vmul.f32	s15, s1, s1
  548              		.loc 1 77 45 view .LVU106
  549 0030 61EE019A 		vmul.f32	s19, s2, s2
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 12
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 12
 
 
  550              		.loc 1 77 40 view .LVU107
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
   83:Core/drogui/src/utils.c ****         *pitch = copysign(pi / 2, sinp); // use 90 degrees if out of range
  599              		.loc 1 83 9 is_stmt 1 view .LVU124
  600              		.loc 1 83 18 is_stmt 0 view .LVU125
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 13
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 13
 
 
  601 0090 F5EEC07A 		vcmpe.f32	s15, #0
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
  648 00e2 FFF7FEFF 		bl	atan2
  649              	.LVL55:
  650 00e6 51EC100B 		vmov	r0, r1, d0
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 14
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 14
 
 
  651 00ea FFF7FEFF 		bl	__aeabi_d2f
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
  699 0118 DB0FC93F 		.word	1070141403
  700 011c DB0FC9BF 		.word	-1077342245
  701              		.cfi_endproc
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 15
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 15
 
 
  702              	.LFE148:
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
  752 0040 7047     		bx	lr
  753              	.L63:
   96:Core/drogui/src/utils.c **** }  
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 16
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 16
 
 
  754              		.loc 1 96 50 discriminator 7 view .LVU160
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
  805 001a 0123     		movs	r3, #1
  806              	.LVL65:
  807              		.loc 1 100 5 is_stmt 0 view .LVU166
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 17
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 17
 
 
  808 001c 0DF10F02 		add	r2, sp, #15
@@ -1016,194 +1016,183 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 1
  858              		@ args = 0, pretend = 0, frame = 8
  859              		@ frame_needed = 0, uses_anonymous_args = 0
  860              		.loc 1 104 67 is_stmt 0 view .LVU176
- 861 0000 70B5     		push	{r4, r5, r6, lr}
+ 861 0000 00B5     		push	{lr}
  862              	.LCFI19:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 18
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 18
 
 
- 863              		.cfi_def_cfa_offset 16
- 864              		.cfi_offset 4, -16
- 865              		.cfi_offset 5, -12
- 866              		.cfi_offset 6, -8
- 867              		.cfi_offset 14, -4
- 868 0002 84B0     		sub	sp, sp, #16
- 869              	.LCFI20:
- 870              		.cfi_def_cfa_offset 32
- 871 0004 8DF80F10 		strb	r1, [sp, #15]
- 872 0008 8DF80E20 		strb	r2, [sp, #14]
- 105:Core/drogui/src/utils.c ****     HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 10000);
- 873              		.loc 1 105 5 is_stmt 1 view .LVU177
- 874 000c 4400     		lsls	r4, r0, #1
- 875 000e 0A4D     		ldr	r5, .L70
- 876 0010 42F21076 		movw	r6, #10000
- 877 0014 0096     		str	r6, [sp]
- 878 0016 0123     		movs	r3, #1
- 879 0018 0DF10F02 		add	r2, sp, #15
- 880              	.LVL73:
- 881              		.loc 1 105 5 is_stmt 0 view .LVU178
- 882 001c 2146     		mov	r1, r4
- 883              	.LVL74:
- 884              		.loc 1 105 5 view .LVU179
- 885 001e 2846     		mov	r0, r5
- 886              	.LVL75:
- 887              		.loc 1 105 5 view .LVU180
- 888 0020 FFF7FEFF 		bl	HAL_I2C_Master_Transmit
- 889              	.LVL76:
- 106:Core/drogui/src/utils.c ****     HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Data, 1, 10000);
- 890              		.loc 1 106 5 is_stmt 1 view .LVU181
- 891 0024 0096     		str	r6, [sp]
- 892 0026 0123     		movs	r3, #1
- 893 0028 0DF10E02 		add	r2, sp, #14
- 894 002c 2146     		mov	r1, r4
- 895 002e 2846     		mov	r0, r5
- 896 0030 FFF7FEFF 		bl	HAL_I2C_Master_Transmit
- 897              	.LVL77:
+ 863              		.cfi_def_cfa_offset 4
+ 864              		.cfi_offset 14, -4
+ 865 0002 85B0     		sub	sp, sp, #20
+ 866              	.LCFI20:
+ 867              		.cfi_def_cfa_offset 24
+ 105:Core/drogui/src/utils.c ****     uint8_t data[] = {Register, Data};
+ 868              		.loc 1 105 5 is_stmt 1 view .LVU177
+ 869              		.loc 1 105 13 is_stmt 0 view .LVU178
+ 870 0004 8DF80C10 		strb	r1, [sp, #12]
+ 871 0008 8DF80D20 		strb	r2, [sp, #13]
+ 106:Core/drogui/src/utils.c ****     HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), data, 2, 10000);
+ 872              		.loc 1 106 5 is_stmt 1 view .LVU179
+ 873 000c 42F21073 		movw	r3, #10000
+ 874 0010 0093     		str	r3, [sp]
+ 875 0012 0223     		movs	r3, #2
+ 876 0014 03AA     		add	r2, sp, #12
+ 877              	.LVL73:
+ 878              		.loc 1 106 5 is_stmt 0 view .LVU180
+ 879 0016 4100     		lsls	r1, r0, #1
+ 880              	.LVL74:
+ 881              		.loc 1 106 5 view .LVU181
+ 882 0018 0248     		ldr	r0, .L70
+ 883              	.LVL75:
+ 884              		.loc 1 106 5 view .LVU182
+ 885 001a FFF7FEFF 		bl	HAL_I2C_Master_Transmit
+ 886              	.LVL76:
  107:Core/drogui/src/utils.c **** }...
- 898              		.loc 1 107 1 is_stmt 0 view .LVU182
- 899 0034 04B0     		add	sp, sp, #16
- 900              	.LCFI21:
- 901              		.cfi_def_cfa_offset 16
- 902              		@ sp needed
- 903 0036 70BD     		pop	{r4, r5, r6, pc}
- 904              	.L71:
- 905              		.align	2
- 906              	.L70:
- 907 0038 00000000 		.word	hi2c1
- 908              		.cfi_endproc
- 909              	.LFE151:
- 911              		.global	v_5_100
- 912              		.global	k_5_100
- 913              		.global	v_3_10
- 914              		.global	k_3_10
- 915              		.global	v_1_10
- 916              		.global	k_1_10
- 917              		.global	security
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 19
+ 887              		.loc 1 107 1 view .LVU183
+ 888 001e 05B0     		add	sp, sp, #20
+ 889              	.LCFI21:
+ 890              		.cfi_def_cfa_offset 4
+ 891              		@ sp needed
+ 892 0020 5DF804FB 		ldr	pc, [sp], #4
+ 893              	.L71:
+ 894              		.align	2
+ 895              	.L70:
+ 896 0024 00000000 		.word	hi2c1
+ 897              		.cfi_endproc
+ 898              	.LFE151:
+ 900              		.global	v_5_100
+ 901              		.global	k_5_100
+ 902              		.global	v_3_10
+ 903              		.global	k_3_10
+ 904              		.global	v_1_10
+ 905              		.global	k_1_10
+ 906              		.global	security
+ 907              		.global	i2cReg
+ 908              		.section	.bss.i2cReg,"aw",%nobits
+ 909              		.align	2
+ 910              		.set	.LANCHOR0,. + 0
+ 913              	i2cReg:
+ 914 0000 00000000 		.space	1200
+ 914      00000000 
+ 914      00000000 
+ 914      00000000 
+ 914      00000000 
+ 915              		.section	.bss.security,"aw",%nobits
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 19
 
 
- 918              		.global	i2cReg
- 919              		.section	.bss.i2cReg,"aw",%nobits
- 920              		.align	2
- 921              		.set	.LANCHOR0,. + 0
- 924              	i2cReg:
- 925 0000 00000000 		.space	1200
- 925      00000000 
- 925      00000000 
- 925      00000000 
- 925      00000000 
- 926              		.section	.bss.security,"aw",%nobits
- 929              	security:
- 930 0000 00       		.space	1
- 931              		.section	.data.k_1_10,"aw"
- 932              		.align	2
- 935              	k_1_10:
- 936 0000 EE67A73E 		.word	1051158510
- 937 0004 470E41BF 		.word	-1086255545
- 938 0008 BF42653F 		.word	1063600831
- 939 000c A0DE5EBF 		.word	-1084301664
- 940              		.section	.data.k_3_10,"aw"
- 941              		.align	2
- 944              	k_3_10:
- 945 0000 7804DDBC 		.word	-1126366088
- 946 0004 5A37743E 		.word	1047803738
- 947 0008 9E5ABB3D 		.word	1035688606
- 948 000c 8A465F3F 		.word	1063208586
- 949 0010 AA96B53E 		.word	1052087978
- 950              		.section	.data.k_5_100,"aw"
- 951              		.align	2
- 954              	k_5_100:
- 955 0000 A0EB113F 		.word	1058139040
- 956 0004 8F1D6EBF 		.word	-1083302513
- 957 0008 B817793F 		.word	1064900536
- 958 000c C85E78BF 		.word	-1082630456
- 959              		.section	.data.v_1_10,"aw"
- 960              		.align	2
- 963              	v_1_10:
- 964 0000 8396223C 		.word	1008899715
- 965 0004 BE1E313D 		.word	1026629310
- 966 0008 F510C53D 		.word	1036325109
- 967 000c D2BFCA3D 		.word	1036697554
- 968 0010 A6FB203D 		.word	1025571750
- 969              		.section	.data.v_3_10,"aw"
+ 918              	security:
+ 919 0000 00       		.space	1
+ 920              		.section	.data.k_1_10,"aw"
+ 921              		.align	2
+ 924              	k_1_10:
+ 925 0000 EE67A73E 		.word	1051158510
+ 926 0004 470E41BF 		.word	-1086255545
+ 927 0008 BF42653F 		.word	1063600831
+ 928 000c A0DE5EBF 		.word	-1084301664
+ 929              		.section	.data.k_3_10,"aw"
+ 930              		.align	2
+ 933              	k_3_10:
+ 934 0000 7804DDBC 		.word	-1126366088
+ 935 0004 5A37743E 		.word	1047803738
+ 936 0008 9E5ABB3D 		.word	1035688606
+ 937 000c 8A465F3F 		.word	1063208586
+ 938 0010 AA96B53E 		.word	1052087978
+ 939              		.section	.data.k_5_100,"aw"
+ 940              		.align	2
+ 943              	k_5_100:
+ 944 0000 A0EB113F 		.word	1058139040
+ 945 0004 8F1D6EBF 		.word	-1083302513
+ 946 0008 B817793F 		.word	1064900536
+ 947 000c C85E78BF 		.word	-1082630456
+ 948              		.section	.data.v_1_10,"aw"
+ 949              		.align	2
+ 952              	v_1_10:
+ 953 0000 8396223C 		.word	1008899715
+ 954 0004 BE1E313D 		.word	1026629310
+ 955 0008 F510C53D 		.word	1036325109
+ 956 000c D2BFCA3D 		.word	1036697554
+ 957 0010 A6FB203D 		.word	1025571750
+ 958              		.section	.data.v_3_10,"aw"
+ 959              		.align	2
+ 962              	v_3_10:
+ 963 0000 0A87F93D 		.word	1039763210
+ 964 0004 0F58E33E 		.word	1055086607
+ 965 0008 349C073F 		.word	1057463348
+ 966 000c 7BAB963D 		.word	1033284475
+ 967 0010 C9181CBE 		.word	-1105454903
+ 968 0014 771A21BD 		.word	-1121904009
+ 969              		.section	.data.v_5_100,"aw"
  970              		.align	2
- 973              	v_3_10:
- 974 0000 0A87F93D 		.word	1039763210
- 975 0004 0F58E33E 		.word	1055086607
- 976 0008 349C073F 		.word	1057463348
- 977 000c 7BAB963D 		.word	1033284475
- 978 0010 C9181CBE 		.word	-1105454903
- 979 0014 771A21BD 		.word	-1121904009
- 980              		.section	.data.v_5_100,"aw"
- 981              		.align	2
- 984              	v_5_100:
- 985 0000 5F8C2D3B 		.word	992840799
- 986 0004 A860F63B 		.word	1006002344
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 20
+ 973              	v_5_100:
+ 974 0000 5F8C2D3B 		.word	992840799
+ 975 0004 A860F63B 		.word	1006002344
+ 976 0008 83B15D3C 		.word	1012773251
+ 977 000c E01C2D3C 		.word	1009589472
+ 978 0010 1BF6AA3B 		.word	1001059867
+ 979              		.text
+ 980              	.Letext0:
+ 981              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 982              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 983              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
+ 984              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
+ 985              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
+ 986              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_i2c.h"
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 20
 
 
- 987 0008 83B15D3C 		.word	1012773251
- 988 000c E01C2D3C 		.word	1009589472
- 989 0010 1BF6AA3B 		.word	1001059867
- 990              		.text
- 991              	.Letext0:
- 992              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 993              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 994              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
- 995              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
- 996              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
- 997              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_i2c.h"
- 998              		.file 8 "Core/drogui/include/utils.h"
- 999              		.file 9 "Core/Inc/i2c.h"
- 1000              		.file 10 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 21
+ 987              		.file 8 "Core/drogui/include/utils.h"
+ 988              		.file 9 "Core/Inc/i2c.h"
+ 989              		.file 10 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 21
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 utils.c
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:18     .text.bytestoint32:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:26     .text.bytestoint32:00000000 bytestoint32
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:61     .text.int32tobytes:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:68     .text.int32tobytes:00000000 int32tobytes
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:100    .text.floattobytes:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:107    .text.floattobytes:00000000 floattobytes
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:124    .text.bytestofloat:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:131    .text.bytestofloat:00000000 bytestofloat
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:160    .text.getReg:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:167    .text.getReg:00000000 getReg
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:230    .text.getReg:0000002c $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:235    .text.setReg:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:242    .text.setReg:00000000 setReg
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:303    .text.setReg:0000002c $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:313    .text.angle_dif:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:320    .text.angle_dif:00000000 angle_dif
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:487    .text.angle_dif:000000f8 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:493    .text.getEuler:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:500    .text.getEuler:00000000 getEuler
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:699    .text.getEuler:00000118 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:705    .text.rampValue:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:712    .text.rampValue:00000000 rampValue
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:770    .text.I2Cread:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:777    .text.I2Cread:00000000 I2Cread
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:841    .text.I2Cread:00000044 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:846    .text.I2CwriteByte:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:853    .text.I2CwriteByte:00000000 I2CwriteByte
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:907    .text.I2CwriteByte:00000038 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:984    .data.v_5_100:00000000 v_5_100
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:954    .data.k_5_100:00000000 k_5_100
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:973    .data.v_3_10:00000000 v_3_10
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:944    .data.k_3_10:00000000 k_3_10
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:963    .data.v_1_10:00000000 v_1_10
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:935    .data.k_1_10:00000000 k_1_10
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:929    .bss.security:00000000 security
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:924    .bss.i2cReg:00000000 i2cReg
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:920    .bss.i2cReg:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:930    .bss.security:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:932    .data.k_1_10:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:941    .data.k_3_10:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:951    .data.k_5_100:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:960    .data.v_1_10:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:970    .data.v_3_10:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s:981    .data.v_5_100:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:18     .text.bytestoint32:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:26     .text.bytestoint32:00000000 bytestoint32
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:61     .text.int32tobytes:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:68     .text.int32tobytes:00000000 int32tobytes
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:100    .text.floattobytes:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:107    .text.floattobytes:00000000 floattobytes
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:124    .text.bytestofloat:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:131    .text.bytestofloat:00000000 bytestofloat
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:160    .text.getReg:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:167    .text.getReg:00000000 getReg
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:230    .text.getReg:0000002c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:235    .text.setReg:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:242    .text.setReg:00000000 setReg
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:303    .text.setReg:0000002c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:313    .text.angle_dif:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:320    .text.angle_dif:00000000 angle_dif
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:487    .text.angle_dif:000000f8 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:493    .text.getEuler:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:500    .text.getEuler:00000000 getEuler
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:699    .text.getEuler:00000118 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:705    .text.rampValue:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:712    .text.rampValue:00000000 rampValue
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:770    .text.I2Cread:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:777    .text.I2Cread:00000000 I2Cread
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:841    .text.I2Cread:00000044 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:846    .text.I2CwriteByte:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:853    .text.I2CwriteByte:00000000 I2CwriteByte
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:896    .text.I2CwriteByte:00000024 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:973    .data.v_5_100:00000000 v_5_100
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:943    .data.k_5_100:00000000 k_5_100
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:962    .data.v_3_10:00000000 v_3_10
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:933    .data.k_3_10:00000000 k_3_10
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:952    .data.v_1_10:00000000 v_1_10
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:924    .data.k_1_10:00000000 k_1_10
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:918    .bss.security:00000000 security
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:913    .bss.i2cReg:00000000 i2cReg
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:909    .bss.i2cReg:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:919    .bss.security:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:921    .data.k_1_10:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:930    .data.k_3_10:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:940    .data.k_5_100:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:949    .data.v_1_10:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:959    .data.v_3_10:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s:970    .data.v_5_100:00000000 $d
 
 UNDEFINED SYMBOLS
 __aeabi_f2d
@@ -1215,7 +1204,7 @@ atan2
 asin
 HAL_I2C_Master_Transmit
 HAL_I2C_Master_Receive
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccGHUDxe.s 			page 22
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccH4gYt1.s 			page 22
 
 
 hi2c1

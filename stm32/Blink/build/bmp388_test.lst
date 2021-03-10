@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccRoXERM.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTElPPd.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -20,21 +20,25 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccRoXERM.s 			page 1
   17              		.section	.rodata._main.str1.4,"aMS",%progbits,1
   18              		.align	2
   19              	.LC0:
-  20 0000 256C6C64 		.ascii	"%lld \011 %lld\012\000"
-  20      20092025 
-  20      6C6C640A 
-  20      00
-  21              		.section	.text._main,"ax",%progbits
-  22              		.align	1
-  23              		.global	_main
-  24              		.arch armv7e-m
-  25              		.syntax unified
-  26              		.thumb
-  27              		.thumb_func
-  28              		.fpu fpv5-sp-d16
-  30              	_main:
-  31              	.LFB144:
-  32              		.file 1 "Core/drogui/test/bmp388_test.c"
+  20 0000 686F6C61 		.ascii	"hola mundo\012\000"
+  20      206D756E 
+  20      646F0A00 
+  21              		.align	2
+  22              	.LC1:
+  23 000c 256C6420 		.ascii	"%ld \011 %ld \012\000"
+  23      0920256C 
+  23      64200A00 
+  24              		.section	.text._main,"ax",%progbits
+  25              		.align	1
+  26              		.global	_main
+  27              		.arch armv7e-m
+  28              		.syntax unified
+  29              		.thumb
+  30              		.thumb_func
+  31              		.fpu fpv5-sp-d16
+  33              	_main:
+  34              	.LFB144:
+  35              		.file 1 "Core/drogui/test/bmp388_test.c"
    1:Core/drogui/test/bmp388_test.c **** #define BMP388_TEST
    2:Core/drogui/test/bmp388_test.c **** #ifdef BMP388_TEST
    3:Core/drogui/test/bmp388_test.c **** 
@@ -45,143 +49,162 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccRoXERM.s 			page 1
    8:Core/drogui/test/bmp388_test.c **** #include "usart.h"
    9:Core/drogui/test/bmp388_test.c **** #include "utils.h"
   10:Core/drogui/test/bmp388_test.c **** 
-  11:Core/drogui/test/bmp388_test.c **** char buffer_bmp[50];
+  11:Core/drogui/test/bmp388_test.c **** char buffer_bmp[500];
   12:Core/drogui/test/bmp388_test.c **** 
   13:Core/drogui/test/bmp388_test.c **** void _main(){
-  33              		.loc 1 13 13 view -0
-  34              		.cfi_startproc
-  35              		@ args = 0, pretend = 0, frame = 0
-  36              		@ frame_needed = 0, uses_anonymous_args = 0
-  37 0000 70B5     		push	{r4, r5, r6, lr}
-  38              	.LCFI0:
-  39              		.cfi_def_cfa_offset 16
-  40              		.cfi_offset 4, -16
-  41              		.cfi_offset 5, -12
-  42              		.cfi_offset 6, -8
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccRoXERM.s 			page 2
+  36              		.loc 1 13 13 view -0
+  37              		.cfi_startproc
+  38              		@ args = 0, pretend = 0, frame = 0
+  39              		@ frame_needed = 0, uses_anonymous_args = 0
+  40 0000 38B5     		push	{r3, r4, r5, lr}
+  41              	.LCFI0:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTElPPd.s 			page 2
 
 
-  43              		.cfi_offset 14, -4
-  44 0002 82B0     		sub	sp, sp, #8
-  45              	.LCFI1:
-  46              		.cfi_def_cfa_offset 24
-  14:Core/drogui/test/bmp388_test.c **** 
-  15:Core/drogui/test/bmp388_test.c ****     initBmp388();
+  42              		.cfi_def_cfa_offset 16
+  43              		.cfi_offset 3, -16
+  44              		.cfi_offset 4, -12
+  45              		.cfi_offset 5, -8
+  46              		.cfi_offset 14, -4
+  14:Core/drogui/test/bmp388_test.c ****     
+  15:Core/drogui/test/bmp388_test.c ****     HAL_UART_Transmit(&huart2,(uint8_t *)"hola mundo\n",12,1000);
   47              		.loc 1 15 5 view .LVU1
-  48 0004 FFF7FEFF 		bl	initBmp388
-  49              	.LVL0:
-  50              	.L2:
-  16:Core/drogui/test/bmp388_test.c ****     while(1){
-  51              		.loc 1 16 5 discriminator 1 view .LVU2
-  52              	.LBB2:
-  17:Core/drogui/test/bmp388_test.c ****         
-  18:Core/drogui/test/bmp388_test.c ****         int64_t temp = bmp388CompensateTemp(bmpReadTemperature());
-  53              		.loc 1 18 9 discriminator 1 view .LVU3
-  54              		.loc 1 18 24 is_stmt 0 discriminator 1 view .LVU4
-  55 0008 FFF7FEFF 		bl	bmpReadTemperature
+  48 0002 4FF47A73 		mov	r3, #1000
+  49 0006 0C22     		movs	r2, #12
+  50 0008 1349     		ldr	r1, .L4
+  51 000a 1448     		ldr	r0, .L4+4
+  52 000c FFF7FEFF 		bl	HAL_UART_Transmit
+  53              	.LVL0:
+  16:Core/drogui/test/bmp388_test.c ****     initBmp388();
+  54              		.loc 1 16 5 view .LVU2
+  55 0010 FFF7FEFF 		bl	initBmp388
   56              	.LVL1:
-  57 000c FFF7FEFF 		bl	bmp388CompensateTemp
-  58              	.LVL2:
-  59 0010 0646     		mov	r6, r0
-  60 0012 0D46     		mov	r5, r1
-  61              	.LVL3:
-  19:Core/drogui/test/bmp388_test.c ****         int64_t press = bmp388CompensatePress(bmpReadPressure());
-  62              		.loc 1 19 9 is_stmt 1 discriminator 1 view .LVU5
-  63              		.loc 1 19 25 is_stmt 0 discriminator 1 view .LVU6
-  64 0014 FFF7FEFF 		bl	bmpReadPressure
-  65              	.LVL4:
-  66              		.loc 1 19 25 discriminator 1 view .LVU7
-  67 0018 FFF7FEFF 		bl	bmp388CompensatePress
-  68              	.LVL5:
-  20:Core/drogui/test/bmp388_test.c **** 
-  21:Core/drogui/test/bmp388_test.c ****         sprintf(buffer_bmp,"%lld \t %lld\n", temp, press);
-  69              		.loc 1 21 9 is_stmt 1 discriminator 1 view .LVU8
-  70 001c 0B4C     		ldr	r4, .L4
-  71 001e CDE90001 		strd	r0, [sp]
-  72 0022 3246     		mov	r2, r6
-  73 0024 2B46     		mov	r3, r5
-  74 0026 0A49     		ldr	r1, .L4+4
-  75 0028 2046     		mov	r0, r4
+  57              	.L2:
+  17:Core/drogui/test/bmp388_test.c ****     
+  18:Core/drogui/test/bmp388_test.c ****     while(1){
+  58              		.loc 1 18 5 discriminator 1 view .LVU3
+  59              	.LBB2:
+  19:Core/drogui/test/bmp388_test.c ****         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+  60              		.loc 1 19 9 discriminator 1 view .LVU4
+  61 0014 0221     		movs	r1, #2
+  62 0016 1248     		ldr	r0, .L4+8
+  63 0018 FFF7FEFF 		bl	HAL_GPIO_TogglePin
+  64              	.LVL2:
+  20:Core/drogui/test/bmp388_test.c ****         
+  21:Core/drogui/test/bmp388_test.c ****         int64_t temp = bmp388CompensateTemp(bmpReadTemperature());
+  65              		.loc 1 21 9 discriminator 1 view .LVU5
+  66              		.loc 1 21 24 is_stmt 0 discriminator 1 view .LVU6
+  67 001c FFF7FEFF 		bl	bmpReadTemperature
+  68              	.LVL3:
+  69 0020 FFF7FEFF 		bl	bmp388CompensateTemp
+  70              	.LVL4:
+  71 0024 0546     		mov	r5, r0
+  72              	.LVL5:
+  22:Core/drogui/test/bmp388_test.c ****         int64_t press = bmp388CompensatePress(bmpReadPressure());
+  73              		.loc 1 22 9 is_stmt 1 discriminator 1 view .LVU7
+  74              		.loc 1 22 25 is_stmt 0 discriminator 1 view .LVU8
+  75 0026 FFF7FEFF 		bl	bmpReadPressure
   76              	.LVL6:
-  77              		.loc 1 21 9 is_stmt 0 discriminator 1 view .LVU9
-  78 002a FFF7FEFF 		bl	sprintf
+  77              		.loc 1 22 25 discriminator 1 view .LVU9
+  78 002a FFF7FEFF 		bl	bmp388CompensatePress
   79              	.LVL7:
-  22:Core/drogui/test/bmp388_test.c ****         HAL_UART_Transmit(&huart2,(uint8_t *)buffer_bmp,strlen(buffer_bmp),1000);
-  80              		.loc 1 22 9 is_stmt 1 discriminator 1 view .LVU10
-  81              		.loc 1 22 57 is_stmt 0 discriminator 1 view .LVU11
-  82 002e 2046     		mov	r0, r4
-  83 0030 FFF7FEFF 		bl	strlen
-  84              	.LVL8:
-  85              		.loc 1 22 9 discriminator 1 view .LVU12
-  86 0034 4FF47A73 		mov	r3, #1000
-  87 0038 82B2     		uxth	r2, r0
-  88 003a 2146     		mov	r1, r4
-  89 003c 0548     		ldr	r0, .L4+8
-  90 003e FFF7FEFF 		bl	HAL_UART_Transmit
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccRoXERM.s 			page 3
+  80 002e 0346     		mov	r3, r0
+  81              	.LVL8:
+  23:Core/drogui/test/bmp388_test.c **** 
+  24:Core/drogui/test/bmp388_test.c ****         sprintf(buffer_bmp,"%ld \t %ld \n", (int32_t)temp, (int32_t)press);
+  82              		.loc 1 24 9 is_stmt 1 discriminator 1 view .LVU10
+  83 0030 0C4C     		ldr	r4, .L4+12
+  84 0032 2A46     		mov	r2, r5
+  85 0034 0C49     		ldr	r1, .L4+16
+  86              	.LVL9:
+  87              		.loc 1 24 9 is_stmt 0 discriminator 1 view .LVU11
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTElPPd.s 			page 3
 
 
-  91              	.LVL9:
-  23:Core/drogui/test/bmp388_test.c ****         HAL_Delay(1000);
-  92              		.loc 1 23 9 is_stmt 1 discriminator 1 view .LVU13
-  93 0042 4FF47A70 		mov	r0, #1000
-  94 0046 FFF7FEFF 		bl	HAL_Delay
-  95              	.LVL10:
-  96              	.LBE2:
-  16:Core/drogui/test/bmp388_test.c ****         
-  97              		.loc 1 16 10 discriminator 1 view .LVU14
-  98 004a DDE7     		b	.L2
-  99              	.L5:
- 100              		.align	2
- 101              	.L4:
- 102 004c 00000000 		.word	.LANCHOR0
- 103 0050 00000000 		.word	.LC0
- 104 0054 00000000 		.word	huart2
- 105              		.cfi_endproc
- 106              	.LFE144:
- 108              		.global	buffer_bmp
- 109              		.section	.bss.buffer_bmp,"aw",%nobits
- 110              		.align	2
- 111              		.set	.LANCHOR0,. + 0
- 114              	buffer_bmp:
- 115 0000 00000000 		.space	50
- 115      00000000 
- 115      00000000 
- 115      00000000 
- 115      00000000 
- 116              		.text
- 117              	.Letext0:
- 118              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 119              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 120              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
- 121              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
- 122              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
- 123              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h"
- 124              		.file 8 "Core/Inc/usart.h"
- 125              		.file 9 "Core/drogui/include/BMP388.h"
- 126              		.file 10 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
- 127              		.file 11 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
- 128              		.file 12 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccRoXERM.s 			page 4
+  88 0036 2046     		mov	r0, r4
+  89              		.loc 1 24 9 discriminator 1 view .LVU12
+  90 0038 FFF7FEFF 		bl	sprintf
+  91              	.LVL10:
+  25:Core/drogui/test/bmp388_test.c ****         HAL_UART_Transmit(&huart2,(uint8_t *)buffer_bmp,strlen(buffer_bmp),1000);
+  92              		.loc 1 25 9 is_stmt 1 discriminator 1 view .LVU13
+  93              		.loc 1 25 57 is_stmt 0 discriminator 1 view .LVU14
+  94 003c 2046     		mov	r0, r4
+  95 003e FFF7FEFF 		bl	strlen
+  96              	.LVL11:
+  97              		.loc 1 25 9 discriminator 1 view .LVU15
+  98 0042 4FF47A73 		mov	r3, #1000
+  99 0046 82B2     		uxth	r2, r0
+ 100 0048 2146     		mov	r1, r4
+ 101 004a 0448     		ldr	r0, .L4+4
+ 102 004c FFF7FEFF 		bl	HAL_UART_Transmit
+ 103              	.LVL12:
+  26:Core/drogui/test/bmp388_test.c ****         HAL_Delay(50);
+ 104              		.loc 1 26 9 is_stmt 1 discriminator 1 view .LVU16
+ 105 0050 3220     		movs	r0, #50
+ 106 0052 FFF7FEFF 		bl	HAL_Delay
+ 107              	.LVL13:
+ 108              	.LBE2:
+  18:Core/drogui/test/bmp388_test.c ****         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+ 109              		.loc 1 18 10 discriminator 1 view .LVU17
+ 110 0056 DDE7     		b	.L2
+ 111              	.L5:
+ 112              		.align	2
+ 113              	.L4:
+ 114 0058 00000000 		.word	.LC0
+ 115 005c 00000000 		.word	huart2
+ 116 0060 00100240 		.word	1073876992
+ 117 0064 00000000 		.word	.LANCHOR0
+ 118 0068 0C000000 		.word	.LC1
+ 119              		.cfi_endproc
+ 120              	.LFE144:
+ 122              		.global	buffer_bmp
+ 123              		.section	.bss.buffer_bmp,"aw",%nobits
+ 124              		.align	2
+ 125              		.set	.LANCHOR0,. + 0
+ 128              	buffer_bmp:
+ 129 0000 00000000 		.space	500
+ 129      00000000 
+ 129      00000000 
+ 129      00000000 
+ 129      00000000 
+ 130              		.text
+ 131              	.Letext0:
+ 132              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 133              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 134              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
+ 135              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
+ 136              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
+ 137              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h"
+ 138              		.file 8 "Core/Inc/usart.h"
+ 139              		.file 9 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_gpio.h"
+ 140              		.file 10 "Core/drogui/include/BMP388.h"
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTElPPd.s 			page 4
+
+
+ 141              		.file 11 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ 142              		.file 12 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ 143              		.file 13 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h"
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccTElPPd.s 			page 5
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 bmp388_test.c
-C:\Users\GUILLE~1\AppData\Local\Temp\ccRoXERM.s:18     .rodata._main.str1.4:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccRoXERM.s:22     .text._main:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccRoXERM.s:30     .text._main:00000000 _main
-C:\Users\GUILLE~1\AppData\Local\Temp\ccRoXERM.s:102    .text._main:0000004c $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccRoXERM.s:114    .bss.buffer_bmp:00000000 buffer_bmp
-C:\Users\GUILLE~1\AppData\Local\Temp\ccRoXERM.s:110    .bss.buffer_bmp:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTElPPd.s:18     .rodata._main.str1.4:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTElPPd.s:25     .text._main:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTElPPd.s:33     .text._main:00000000 _main
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTElPPd.s:114    .text._main:00000058 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTElPPd.s:128    .bss.buffer_bmp:00000000 buffer_bmp
+C:\Users\GUILLE~1\AppData\Local\Temp\ccTElPPd.s:124    .bss.buffer_bmp:00000000 $d
 
 UNDEFINED SYMBOLS
+HAL_UART_Transmit
 initBmp388
+HAL_GPIO_TogglePin
 bmpReadTemperature
 bmp388CompensateTemp
 bmpReadPressure
 bmp388CompensatePress
 sprintf
 strlen
-HAL_UART_Transmit
 HAL_Delay
 huart2

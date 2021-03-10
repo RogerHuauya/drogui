@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
   16:Core/drogui/src/MPU9250.c ****     I2CwriteByte(MPU9250_ADDRESS, MASTER_CONFIG, 0x06);
   41              		.loc 1 16 5 is_stmt 1 view .LVU2
   42 0004 0622     		movs	r2, #6
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 2
 
 
   43 0006 1A21     		movs	r1, #26
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
   90 0050 E364     		str	r3, [r4, #76]	@ float
   91              		.loc 1 23 16 view .LVU14
   92 0052 A361     		str	r3, [r4, #24]	@ float
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 3
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 3
 
 
   24:Core/drogui/src/MPU9250.c ****     
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  142 001e 5242     		rsbs	r2, r2, #0
  143 0020 12B2     		sxth	r2, r2
  144 0022 144B     		ldr	r3, .L5
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 4
 
 
  145 0024 1A80     		strh	r2, [r3]	@ movhi
@@ -207,40 +207,27 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  166              		.loc 1 32 9 view .LVU36
  167 0048 0C48     		ldr	r0, .L5+8
  168 004a 0180     		strh	r1, [r0]	@ movhi
-  33:Core/drogui/src/MPU9250.c ****     /*
-  34:Core/drogui/src/MPU9250.c ****     char buff[50];
-  35:Core/drogui/src/MPU9250.c **** 
-  36:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < 6 ; i++){
-  37:Core/drogui/src/MPU9250.c **** 
-  38:Core/drogui/src/MPU9250.c ****         sprintf(buff, "%x\t", Buf[i]);
-  39:Core/drogui/src/MPU9250.c ****         HAL_UART_Transmit(&huart1, (uint8_t *)buff, strlen(buff), 100);
-  40:Core/drogui/src/MPU9250.c ****     }
-  41:Core/drogui/src/MPU9250.c **** 
-  42:Core/drogui/src/MPU9250.c ****     sprintf(buff, "\n");
-  43:Core/drogui/src/MPU9250.c ****     HAL_UART_Transmit(&huart1, (uint8_t *)buff, strlen(buff), 100);*/
-  44:Core/drogui/src/MPU9250.c ****     m -> raw_ax = _ax;
- 169              		.loc 1 44 5 is_stmt 1 view .LVU37
- 170              		.loc 1 44 17 is_stmt 0 view .LVU38
+  33:Core/drogui/src/MPU9250.c ****     
+  34:Core/drogui/src/MPU9250.c ****     m -> raw_ax = _ax;
+ 169              		.loc 1 34 5 is_stmt 1 view .LVU37
+ 170              		.loc 1 34 17 is_stmt 0 view .LVU38
  171 004c 07EE902A 		vmov	s15, r2	@ int
  172 0050 F8EEE77A 		vcvt.f32.s32	s15, s15
  173 0054 C4ED167A 		vstr.32	s15, [r4, #88]
-  45:Core/drogui/src/MPU9250.c ****     m -> raw_ay = _ay;
- 174              		.loc 1 45 5 is_stmt 1 view .LVU39
- 175              		.loc 1 45 17 is_stmt 0 view .LVU40
+  35:Core/drogui/src/MPU9250.c ****     m -> raw_ay = _ay;
+ 174              		.loc 1 35 5 is_stmt 1 view .LVU39
+ 175              		.loc 1 35 17 is_stmt 0 view .LVU40
  176 0058 07EE903A 		vmov	s15, r3	@ int
  177 005c F8EEE77A 		vcvt.f32.s32	s15, s15
  178 0060 C4ED177A 		vstr.32	s15, [r4, #92]
-  46:Core/drogui/src/MPU9250.c ****     m -> raw_az = _az; 
- 179              		.loc 1 46 5 is_stmt 1 view .LVU41
- 180              		.loc 1 46 17 is_stmt 0 view .LVU42
+  36:Core/drogui/src/MPU9250.c ****     m -> raw_az = _az; 
+ 179              		.loc 1 36 5 is_stmt 1 view .LVU41
+ 180              		.loc 1 36 17 is_stmt 0 view .LVU42
  181 0064 07EE901A 		vmov	s15, r1	@ int
  182 0068 F8EEE77A 		vcvt.f32.s32	s15, s15
  183 006c C4ED187A 		vstr.32	s15, [r4, #96]
-  47:Core/drogui/src/MPU9250.c **** }
- 184              		.loc 1 47 1 view .LVU43
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 5
-
-
+  37:Core/drogui/src/MPU9250.c **** }
+ 184              		.loc 1 37 1 view .LVU43
  185 0070 02B0     		add	sp, sp, #8
  186              	.LCFI3:
  187              		.cfi_def_cfa_offset 8
@@ -248,9 +235,12 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  189 0072 10BD     		pop	{r4, pc}
  190              	.LVL12:
  191              	.L6:
- 192              		.loc 1 47 1 view .LVU44
+ 192              		.loc 1 37 1 view .LVU44
  193              		.align	2
  194              	.L5:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 5
+
+
  195 0074 00000000 		.word	.LANCHOR0
  196 0078 00000000 		.word	.LANCHOR1
  197 007c 00000000 		.word	.LANCHOR2
@@ -266,13 +256,13 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  209              	readRawGyro:
  210              	.LVL13:
  211              	.LFB146:
-  48:Core/drogui/src/MPU9250.c **** 
-  49:Core/drogui/src/MPU9250.c **** void readRawGyro(mpu9250* m){ // degrees/sec
- 212              		.loc 1 49 29 is_stmt 1 view -0
+  38:Core/drogui/src/MPU9250.c **** 
+  39:Core/drogui/src/MPU9250.c **** void readRawGyro(mpu9250* m){ // degrees/sec
+ 212              		.loc 1 39 29 is_stmt 1 view -0
  213              		.cfi_startproc
  214              		@ args = 0, pretend = 0, frame = 8
  215              		@ frame_needed = 0, uses_anonymous_args = 0
- 216              		.loc 1 49 29 is_stmt 0 view .LVU46
+ 216              		.loc 1 39 29 is_stmt 0 view .LVU46
  217 0000 10B5     		push	{r4, lr}
  218              	.LCFI4:
  219              		.cfi_def_cfa_offset 8
@@ -282,95 +272,95 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  223              	.LCFI5:
  224              		.cfi_def_cfa_offset 16
  225 0004 0446     		mov	r4, r0
-  50:Core/drogui/src/MPU9250.c ****     
-  51:Core/drogui/src/MPU9250.c ****     uint8_t Buf[6];
- 226              		.loc 1 51 5 is_stmt 1 view .LVU47
-  52:Core/drogui/src/MPU9250.c ****     I2Cread(MPU9250_ADDRESS, 0x43, 6, Buf);
- 227              		.loc 1 52 5 view .LVU48
+  40:Core/drogui/src/MPU9250.c ****     
+  41:Core/drogui/src/MPU9250.c ****     uint8_t Buf[6];
+ 226              		.loc 1 41 5 is_stmt 1 view .LVU47
+  42:Core/drogui/src/MPU9250.c ****     I2Cread(MPU9250_ADDRESS, 0x43, 6, Buf);
+ 227              		.loc 1 42 5 view .LVU48
  228 0006 6B46     		mov	r3, sp
  229 0008 0622     		movs	r2, #6
  230 000a 4321     		movs	r1, #67
  231 000c 6820     		movs	r0, #104
  232              	.LVL14:
- 233              		.loc 1 52 5 is_stmt 0 view .LVU49
+ 233              		.loc 1 42 5 is_stmt 0 view .LVU49
  234 000e FFF7FEFF 		bl	I2Cread
  235              	.LVL15:
-  53:Core/drogui/src/MPU9250.c ****     _gx = -((Buf[0] << 8) | Buf[1]);
- 236              		.loc 1 53 5 is_stmt 1 view .LVU50
- 237              		.loc 1 53 17 is_stmt 0 view .LVU51
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 6
-
-
+  43:Core/drogui/src/MPU9250.c ****     _gx = -((Buf[0] << 8) | Buf[1]);
+ 236              		.loc 1 43 5 is_stmt 1 view .LVU50
+ 237              		.loc 1 43 17 is_stmt 0 view .LVU51
  238 0012 9DF80030 		ldrb	r3, [sp]	@ zero_extendqisi2
- 239              		.loc 1 53 32 view .LVU52
+ 239              		.loc 1 43 32 view .LVU52
  240 0016 9DF80120 		ldrb	r2, [sp, #1]	@ zero_extendqisi2
- 241              		.loc 1 53 27 view .LVU53
+ 241              		.loc 1 43 27 view .LVU53
  242 001a 42EA0322 		orr	r2, r2, r3, lsl #8
- 243              		.loc 1 53 9 view .LVU54
+ 243              		.loc 1 43 9 view .LVU54
  244 001e 5242     		rsbs	r2, r2, #0
  245 0020 12B2     		sxth	r2, r2
  246 0022 144B     		ldr	r3, .L9
  247 0024 1A80     		strh	r2, [r3]	@ movhi
-  54:Core/drogui/src/MPU9250.c ****     _gy = -((Buf[2] << 8) | Buf[3]);
- 248              		.loc 1 54 5 is_stmt 1 view .LVU55
- 249              		.loc 1 54 17 is_stmt 0 view .LVU56
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 6
+
+
+  44:Core/drogui/src/MPU9250.c ****     _gy = -((Buf[2] << 8) | Buf[3]);
+ 248              		.loc 1 44 5 is_stmt 1 view .LVU55
+ 249              		.loc 1 44 17 is_stmt 0 view .LVU56
  250 0026 9DF80210 		ldrb	r1, [sp, #2]	@ zero_extendqisi2
- 251              		.loc 1 54 32 view .LVU57
+ 251              		.loc 1 44 32 view .LVU57
  252 002a 9DF80330 		ldrb	r3, [sp, #3]	@ zero_extendqisi2
- 253              		.loc 1 54 27 view .LVU58
+ 253              		.loc 1 44 27 view .LVU58
  254 002e 43EA0123 		orr	r3, r3, r1, lsl #8
- 255              		.loc 1 54 9 view .LVU59
+ 255              		.loc 1 44 9 view .LVU59
  256 0032 5B42     		rsbs	r3, r3, #0
  257 0034 1BB2     		sxth	r3, r3
  258 0036 1049     		ldr	r1, .L9+4
  259 0038 0B80     		strh	r3, [r1]	@ movhi
-  55:Core/drogui/src/MPU9250.c ****     _gz =   (Buf[4] << 8) | Buf[5];
- 260              		.loc 1 55 5 is_stmt 1 view .LVU60
- 261              		.loc 1 55 17 is_stmt 0 view .LVU61
+  45:Core/drogui/src/MPU9250.c ****     _gz =   (Buf[4] << 8) | Buf[5];
+ 260              		.loc 1 45 5 is_stmt 1 view .LVU60
+ 261              		.loc 1 45 17 is_stmt 0 view .LVU61
  262 003a 9DF80400 		ldrb	r0, [sp, #4]	@ zero_extendqisi2
- 263              		.loc 1 55 32 view .LVU62
+ 263              		.loc 1 45 32 view .LVU62
  264 003e 9DF80510 		ldrb	r1, [sp, #5]	@ zero_extendqisi2
- 265              		.loc 1 55 27 view .LVU63
+ 265              		.loc 1 45 27 view .LVU63
  266 0042 41EA0021 		orr	r1, r1, r0, lsl #8
  267 0046 09B2     		sxth	r1, r1
- 268              		.loc 1 55 9 view .LVU64
+ 268              		.loc 1 45 9 view .LVU64
  269 0048 0C48     		ldr	r0, .L9+8
  270 004a 0180     		strh	r1, [r0]	@ movhi
-  56:Core/drogui/src/MPU9250.c ****     m -> raw_gx = _gx;
- 271              		.loc 1 56 5 is_stmt 1 view .LVU65
- 272              		.loc 1 56 17 is_stmt 0 view .LVU66
+  46:Core/drogui/src/MPU9250.c ****     m -> raw_gx = _gx;
+ 271              		.loc 1 46 5 is_stmt 1 view .LVU65
+ 272              		.loc 1 46 17 is_stmt 0 view .LVU66
  273 004c 07EE902A 		vmov	s15, r2	@ int
  274 0050 F8EEE77A 		vcvt.f32.s32	s15, s15
  275 0054 C4ED197A 		vstr.32	s15, [r4, #100]
-  57:Core/drogui/src/MPU9250.c ****     m -> raw_gy = _gy;
- 276              		.loc 1 57 5 is_stmt 1 view .LVU67
- 277              		.loc 1 57 17 is_stmt 0 view .LVU68
+  47:Core/drogui/src/MPU9250.c ****     m -> raw_gy = _gy;
+ 276              		.loc 1 47 5 is_stmt 1 view .LVU67
+ 277              		.loc 1 47 17 is_stmt 0 view .LVU68
  278 0058 07EE903A 		vmov	s15, r3	@ int
  279 005c F8EEE77A 		vcvt.f32.s32	s15, s15
  280 0060 C4ED1A7A 		vstr.32	s15, [r4, #104]
-  58:Core/drogui/src/MPU9250.c ****     m -> raw_gz = _gz; 
- 281              		.loc 1 58 5 is_stmt 1 view .LVU69
- 282              		.loc 1 58 17 is_stmt 0 view .LVU70
+  48:Core/drogui/src/MPU9250.c ****     m -> raw_gz = _gz; 
+ 281              		.loc 1 48 5 is_stmt 1 view .LVU69
+ 282              		.loc 1 48 17 is_stmt 0 view .LVU70
  283 0064 07EE901A 		vmov	s15, r1	@ int
  284 0068 F8EEE77A 		vcvt.f32.s32	s15, s15
  285 006c C4ED1B7A 		vstr.32	s15, [r4, #108]
-  59:Core/drogui/src/MPU9250.c **** }
- 286              		.loc 1 59 1 view .LVU71
+  49:Core/drogui/src/MPU9250.c **** }
+ 286              		.loc 1 49 1 view .LVU71
  287 0070 02B0     		add	sp, sp, #8
  288              	.LCFI6:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 7
-
-
  289              		.cfi_def_cfa_offset 8
  290              		@ sp needed
  291 0072 10BD     		pop	{r4, pc}
  292              	.LVL16:
  293              	.L10:
- 294              		.loc 1 59 1 view .LVU72
+ 294              		.loc 1 49 1 view .LVU72
  295              		.align	2
  296              	.L9:
  297 0074 00000000 		.word	.LANCHOR3
  298 0078 00000000 		.word	.LANCHOR4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 7
+
+
  299 007c 00000000 		.word	.LANCHOR5
  300              		.cfi_endproc
  301              	.LFE146:
@@ -384,13 +374,13 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  311              	readRawMag:
  312              	.LVL17:
  313              	.LFB147:
-  60:Core/drogui/src/MPU9250.c **** 
-  61:Core/drogui/src/MPU9250.c **** void readRawMag(mpu9250* m){ // m/s^2
- 314              		.loc 1 61 28 is_stmt 1 view -0
+  50:Core/drogui/src/MPU9250.c **** 
+  51:Core/drogui/src/MPU9250.c **** void readRawMag(mpu9250* m){ // m/s^2
+ 314              		.loc 1 51 28 is_stmt 1 view -0
  315              		.cfi_startproc
  316              		@ args = 0, pretend = 0, frame = 8
  317              		@ frame_needed = 0, uses_anonymous_args = 0
- 318              		.loc 1 61 28 is_stmt 0 view .LVU74
+ 318              		.loc 1 51 28 is_stmt 0 view .LVU74
  319 0000 10B5     		push	{r4, lr}
  320              	.LCFI7:
  321              		.cfi_def_cfa_offset 8
@@ -400,103 +390,103 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  325              	.LCFI8:
  326              		.cfi_def_cfa_offset 16
  327 0004 0446     		mov	r4, r0
-  62:Core/drogui/src/MPU9250.c ****     uint8_t Buf[7];
- 328              		.loc 1 62 5 is_stmt 1 view .LVU75
-  63:Core/drogui/src/MPU9250.c ****     I2Cread(MAG_ADDRESS, 0x03, 7, Buf);
- 329              		.loc 1 63 5 view .LVU76
+  52:Core/drogui/src/MPU9250.c ****     uint8_t Buf[7];
+ 328              		.loc 1 52 5 is_stmt 1 view .LVU75
+  53:Core/drogui/src/MPU9250.c ****     I2Cread(MAG_ADDRESS, 0x03, 7, Buf);
+ 329              		.loc 1 53 5 view .LVU76
  330 0006 6B46     		mov	r3, sp
  331 0008 0722     		movs	r2, #7
  332 000a 0321     		movs	r1, #3
  333 000c 0C20     		movs	r0, #12
  334              	.LVL18:
- 335              		.loc 1 63 5 is_stmt 0 view .LVU77
+ 335              		.loc 1 53 5 is_stmt 0 view .LVU77
  336 000e FFF7FEFF 		bl	I2Cread
  337              	.LVL19:
-  64:Core/drogui/src/MPU9250.c ****     
-  65:Core/drogui/src/MPU9250.c ****     char buff[50];
- 338              		.loc 1 65 5 is_stmt 1 view .LVU78
-  66:Core/drogui/src/MPU9250.c **** 
-  67:Core/drogui/src/MPU9250.c ****     /*for(int i = 0; i < 6 ; i++){
-  68:Core/drogui/src/MPU9250.c **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 8
-
-
-  69:Core/drogui/src/MPU9250.c ****         sprintf(buff, "%x\t", Buf[i]);
-  70:Core/drogui/src/MPU9250.c ****         HAL_UART_Transmit(&huart2, (uint8_t *)buff, strlen(buff), 100);
-  71:Core/drogui/src/MPU9250.c ****     }*/
-  72:Core/drogui/src/MPU9250.c **** 
-  73:Core/drogui/src/MPU9250.c ****     //sprintf(buff, "\n");
-  74:Core/drogui/src/MPU9250.c ****     //HAL_UART_Transmit(&huart2, (uint8_t *)buff, strlen(buff), 100);
-  75:Core/drogui/src/MPU9250.c ****     _mx = -((Buf[3]<<8) | Buf[2]);
- 339              		.loc 1 75 5 view .LVU79
- 340              		.loc 1 75 17 is_stmt 0 view .LVU80
+  54:Core/drogui/src/MPU9250.c ****     
+  55:Core/drogui/src/MPU9250.c ****     char buff[50];
+ 338              		.loc 1 55 5 is_stmt 1 view .LVU78
+  56:Core/drogui/src/MPU9250.c **** 
+  57:Core/drogui/src/MPU9250.c ****     /*for(int i = 0; i < 6 ; i++){
+  58:Core/drogui/src/MPU9250.c **** 
+  59:Core/drogui/src/MPU9250.c ****         sprintf(buff, "%x\t", Buf[i]);
+  60:Core/drogui/src/MPU9250.c ****         HAL_UART_Transmit(&huart2, (uint8_t *)buff, strlen(buff), 100);
+  61:Core/drogui/src/MPU9250.c ****     }*/
+  62:Core/drogui/src/MPU9250.c **** 
+  63:Core/drogui/src/MPU9250.c ****     //sprintf(buff, "\n");
+  64:Core/drogui/src/MPU9250.c ****     //HAL_UART_Transmit(&huart2, (uint8_t *)buff, strlen(buff), 100);
+  65:Core/drogui/src/MPU9250.c ****     _mx = -((Buf[3]<<8) | Buf[2]);
+ 339              		.loc 1 65 5 view .LVU79
+ 340              		.loc 1 65 17 is_stmt 0 view .LVU80
  341 0012 9DF80330 		ldrb	r3, [sp, #3]	@ zero_extendqisi2
- 342              		.loc 1 75 30 view .LVU81
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 8
+
+
+ 342              		.loc 1 65 30 view .LVU81
  343 0016 9DF80210 		ldrb	r1, [sp, #2]	@ zero_extendqisi2
- 344              		.loc 1 75 25 view .LVU82
+ 344              		.loc 1 65 25 view .LVU82
  345 001a 41EA0321 		orr	r1, r1, r3, lsl #8
- 346              		.loc 1 75 9 view .LVU83
+ 346              		.loc 1 65 9 view .LVU83
  347 001e 4942     		rsbs	r1, r1, #0
  348 0020 09B2     		sxth	r1, r1
  349 0022 154B     		ldr	r3, .L13
  350 0024 1980     		strh	r1, [r3]	@ movhi
-  76:Core/drogui/src/MPU9250.c ****     _my = -((Buf[1]<<8) | Buf[0]);
- 351              		.loc 1 76 5 is_stmt 1 view .LVU84
- 352              		.loc 1 76 17 is_stmt 0 view .LVU85
+  66:Core/drogui/src/MPU9250.c ****     _my = -((Buf[1]<<8) | Buf[0]);
+ 351              		.loc 1 66 5 is_stmt 1 view .LVU84
+ 352              		.loc 1 66 17 is_stmt 0 view .LVU85
  353 0026 9DF80130 		ldrb	r3, [sp, #1]	@ zero_extendqisi2
- 354              		.loc 1 76 30 view .LVU86
+ 354              		.loc 1 66 30 view .LVU86
  355 002a 9DF80020 		ldrb	r2, [sp]	@ zero_extendqisi2
- 356              		.loc 1 76 25 view .LVU87
+ 356              		.loc 1 66 25 view .LVU87
  357 002e 42EA0322 		orr	r2, r2, r3, lsl #8
- 358              		.loc 1 76 9 view .LVU88
+ 358              		.loc 1 66 9 view .LVU88
  359 0032 5242     		rsbs	r2, r2, #0
  360 0034 12B2     		sxth	r2, r2
  361 0036 114B     		ldr	r3, .L13+4
  362 0038 1A80     		strh	r2, [r3]	@ movhi
-  77:Core/drogui/src/MPU9250.c ****     _mz = -((Buf[5]<<8) | Buf[4]);
- 363              		.loc 1 77 5 is_stmt 1 view .LVU89
- 364              		.loc 1 77 17 is_stmt 0 view .LVU90
+  67:Core/drogui/src/MPU9250.c ****     _mz = -((Buf[5]<<8) | Buf[4]);
+ 363              		.loc 1 67 5 is_stmt 1 view .LVU89
+ 364              		.loc 1 67 17 is_stmt 0 view .LVU90
  365 003a 9DF80500 		ldrb	r0, [sp, #5]	@ zero_extendqisi2
- 366              		.loc 1 77 30 view .LVU91
+ 366              		.loc 1 67 30 view .LVU91
  367 003e 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
- 368              		.loc 1 77 25 view .LVU92
+ 368              		.loc 1 67 25 view .LVU92
  369 0042 43EA0023 		orr	r3, r3, r0, lsl #8
- 370              		.loc 1 77 9 view .LVU93
+ 370              		.loc 1 67 9 view .LVU93
  371 0046 5B42     		rsbs	r3, r3, #0
  372 0048 1BB2     		sxth	r3, r3
  373 004a 0D48     		ldr	r0, .L13+8
  374 004c 0380     		strh	r3, [r0]	@ movhi
-  78:Core/drogui/src/MPU9250.c ****     m -> raw_mx = _mx;
- 375              		.loc 1 78 5 is_stmt 1 view .LVU94
- 376              		.loc 1 78 17 is_stmt 0 view .LVU95
+  68:Core/drogui/src/MPU9250.c ****     m -> raw_mx = _mx;
+ 375              		.loc 1 68 5 is_stmt 1 view .LVU94
+ 376              		.loc 1 68 17 is_stmt 0 view .LVU95
  377 004e 07EE901A 		vmov	s15, r1	@ int
  378 0052 F8EEE77A 		vcvt.f32.s32	s15, s15
  379 0056 C4ED1C7A 		vstr.32	s15, [r4, #112]
-  79:Core/drogui/src/MPU9250.c ****     m -> raw_my = _my;
- 380              		.loc 1 79 5 is_stmt 1 view .LVU96
- 381              		.loc 1 79 17 is_stmt 0 view .LVU97
+  69:Core/drogui/src/MPU9250.c ****     m -> raw_my = _my;
+ 380              		.loc 1 69 5 is_stmt 1 view .LVU96
+ 381              		.loc 1 69 17 is_stmt 0 view .LVU97
  382 005a 07EE902A 		vmov	s15, r2	@ int
  383 005e F8EEE77A 		vcvt.f32.s32	s15, s15
  384 0062 C4ED1D7A 		vstr.32	s15, [r4, #116]
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 9
-
-
-  80:Core/drogui/src/MPU9250.c ****     m -> raw_mz = _mz; 
- 385              		.loc 1 80 5 is_stmt 1 view .LVU98
- 386              		.loc 1 80 17 is_stmt 0 view .LVU99
+  70:Core/drogui/src/MPU9250.c ****     m -> raw_mz = _mz; 
+ 385              		.loc 1 70 5 is_stmt 1 view .LVU98
+ 386              		.loc 1 70 17 is_stmt 0 view .LVU99
  387 0066 07EE903A 		vmov	s15, r3	@ int
  388 006a F8EEE77A 		vcvt.f32.s32	s15, s15
  389 006e C4ED1E7A 		vstr.32	s15, [r4, #120]
-  81:Core/drogui/src/MPU9250.c **** }
- 390              		.loc 1 81 1 view .LVU100
+  71:Core/drogui/src/MPU9250.c **** }
+ 390              		.loc 1 71 1 view .LVU100
  391 0072 02B0     		add	sp, sp, #8
  392              	.LCFI9:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 9
+
+
  393              		.cfi_def_cfa_offset 8
  394              		@ sp needed
  395 0074 10BD     		pop	{r4, pc}
  396              	.LVL20:
  397              	.L14:
- 398              		.loc 1 81 1 view .LVU101
+ 398              		.loc 1 71 1 view .LVU101
  399 0076 00BF     		.align	2
  400              	.L13:
  401 0078 00000000 		.word	.LANCHOR6
@@ -514,13 +504,13 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  415              	readAcc:
  416              	.LVL21:
  417              	.LFB148:
-  82:Core/drogui/src/MPU9250.c **** 
-  83:Core/drogui/src/MPU9250.c **** void readAcc(mpu9250* m){ // m/s^2
- 418              		.loc 1 83 25 is_stmt 1 view -0
+  72:Core/drogui/src/MPU9250.c **** 
+  73:Core/drogui/src/MPU9250.c **** void readAcc(mpu9250* m){ // m/s^2
+ 418              		.loc 1 73 25 is_stmt 1 view -0
  419              		.cfi_startproc
  420              		@ args = 0, pretend = 0, frame = 8
  421              		@ frame_needed = 0, uses_anonymous_args = 0
- 422              		.loc 1 83 25 is_stmt 0 view .LVU103
+ 422              		.loc 1 73 25 is_stmt 0 view .LVU103
  423 0000 10B5     		push	{r4, lr}
  424              	.LCFI10:
  425              		.cfi_def_cfa_offset 8
@@ -530,102 +520,102 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  429              	.LCFI11:
  430              		.cfi_def_cfa_offset 16
  431 0004 0446     		mov	r4, r0
-  84:Core/drogui/src/MPU9250.c ****     uint8_t Buf[6];
- 432              		.loc 1 84 5 is_stmt 1 view .LVU104
-  85:Core/drogui/src/MPU9250.c ****     I2Cread(MPU9250_ADDRESS, 0x3B, 6, Buf);
- 433              		.loc 1 85 5 view .LVU105
+  74:Core/drogui/src/MPU9250.c ****     uint8_t Buf[6];
+ 432              		.loc 1 74 5 is_stmt 1 view .LVU104
+  75:Core/drogui/src/MPU9250.c ****     I2Cread(MPU9250_ADDRESS, 0x3B, 6, Buf);
+ 433              		.loc 1 75 5 view .LVU105
  434 0006 6B46     		mov	r3, sp
  435 0008 0622     		movs	r2, #6
  436 000a 3B21     		movs	r1, #59
  437 000c 6820     		movs	r0, #104
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 10
-
-
  438              	.LVL22:
- 439              		.loc 1 85 5 is_stmt 0 view .LVU106
+ 439              		.loc 1 75 5 is_stmt 0 view .LVU106
  440 000e FFF7FEFF 		bl	I2Cread
  441              	.LVL23:
-  86:Core/drogui/src/MPU9250.c ****     _ax = -((Buf[0]<<8) | Buf[1]);
- 442              		.loc 1 86 5 is_stmt 1 view .LVU107
- 443              		.loc 1 86 17 is_stmt 0 view .LVU108
+  76:Core/drogui/src/MPU9250.c ****     _ax = -((Buf[0]<<8) | Buf[1]);
+ 442              		.loc 1 76 5 is_stmt 1 view .LVU107
+ 443              		.loc 1 76 17 is_stmt 0 view .LVU108
  444 0012 9DF80020 		ldrb	r2, [sp]	@ zero_extendqisi2
- 445              		.loc 1 86 30 view .LVU109
+ 445              		.loc 1 76 30 view .LVU109
  446 0016 9DF80130 		ldrb	r3, [sp, #1]	@ zero_extendqisi2
- 447              		.loc 1 86 25 view .LVU110
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 10
+
+
+ 447              		.loc 1 76 25 view .LVU110
  448 001a 43EA0223 		orr	r3, r3, r2, lsl #8
- 449              		.loc 1 86 9 view .LVU111
+ 449              		.loc 1 76 9 view .LVU111
  450 001e 5B42     		rsbs	r3, r3, #0
  451 0020 1BB2     		sxth	r3, r3
  452 0022 1F4A     		ldr	r2, .L17
  453 0024 1380     		strh	r3, [r2]	@ movhi
-  87:Core/drogui/src/MPU9250.c ****     _ay = -((Buf[2]<<8) | Buf[3]);
- 454              		.loc 1 87 5 is_stmt 1 view .LVU112
- 455              		.loc 1 87 17 is_stmt 0 view .LVU113
+  77:Core/drogui/src/MPU9250.c ****     _ay = -((Buf[2]<<8) | Buf[3]);
+ 454              		.loc 1 77 5 is_stmt 1 view .LVU112
+ 455              		.loc 1 77 17 is_stmt 0 view .LVU113
  456 0026 9DF80210 		ldrb	r1, [sp, #2]	@ zero_extendqisi2
- 457              		.loc 1 87 30 view .LVU114
+ 457              		.loc 1 77 30 view .LVU114
  458 002a 9DF80320 		ldrb	r2, [sp, #3]	@ zero_extendqisi2
- 459              		.loc 1 87 25 view .LVU115
+ 459              		.loc 1 77 25 view .LVU115
  460 002e 42EA0122 		orr	r2, r2, r1, lsl #8
- 461              		.loc 1 87 9 view .LVU116
+ 461              		.loc 1 77 9 view .LVU116
  462 0032 1C48     		ldr	r0, .L17+4
  463 0034 5242     		rsbs	r2, r2, #0
  464 0036 0280     		strh	r2, [r0]	@ movhi
-  88:Core/drogui/src/MPU9250.c ****     _az =   (Buf[4]<<8) | Buf[5];
- 465              		.loc 1 88 5 is_stmt 1 view .LVU117
- 466              		.loc 1 88 17 is_stmt 0 view .LVU118
+  78:Core/drogui/src/MPU9250.c ****     _az =   (Buf[4]<<8) | Buf[5];
+ 465              		.loc 1 78 5 is_stmt 1 view .LVU117
+ 466              		.loc 1 78 17 is_stmt 0 view .LVU118
  467 0038 9DF80410 		ldrb	r1, [sp, #4]	@ zero_extendqisi2
- 468              		.loc 1 88 30 view .LVU119
+ 468              		.loc 1 78 30 view .LVU119
  469 003c 9DF80520 		ldrb	r2, [sp, #5]	@ zero_extendqisi2
- 470              		.loc 1 88 25 view .LVU120
+ 470              		.loc 1 78 25 view .LVU120
  471 0040 42EA0122 		orr	r2, r2, r1, lsl #8
- 472              		.loc 1 88 9 view .LVU121
+ 472              		.loc 1 78 9 view .LVU121
  473 0044 1849     		ldr	r1, .L17+8
  474 0046 0A80     		strh	r2, [r1]	@ movhi
-  89:Core/drogui/src/MPU9250.c ****     m -> ax = (_ax + m->off_ax)/m->scl_acc;
- 475              		.loc 1 89 5 is_stmt 1 view .LVU122
- 476              		.loc 1 89 23 is_stmt 0 view .LVU123
+  79:Core/drogui/src/MPU9250.c ****     m -> ax = (_ax + m->off_ax)/m->scl_acc;
+ 475              		.loc 1 79 5 is_stmt 1 view .LVU122
+ 476              		.loc 1 79 23 is_stmt 0 view .LVU123
  477 0048 94ED037A 		vldr.32	s14, [r4, #12]
- 478              		.loc 1 89 20 view .LVU124
+ 478              		.loc 1 79 20 view .LVU124
  479 004c 07EE903A 		vmov	s15, r3	@ int
  480 0050 F8EEE77A 		vcvt.f32.s32	s15, s15
  481 0054 77EE877A 		vadd.f32	s15, s15, s14
- 482              		.loc 1 89 34 view .LVU125
+ 482              		.loc 1 79 34 view .LVU125
  483 0058 94ED067A 		vldr.32	s14, [r4, #24]
- 484              		.loc 1 89 32 view .LVU126
+ 484              		.loc 1 79 32 view .LVU126
  485 005c C7EE876A 		vdiv.f32	s13, s15, s14
- 486              		.loc 1 89 13 view .LVU127
+ 486              		.loc 1 79 13 view .LVU127
  487 0060 C4ED006A 		vstr.32	s13, [r4]
-  90:Core/drogui/src/MPU9250.c ****     m -> ay = (_ay + m->off_ay)/m->scl_acc;
- 488              		.loc 1 90 5 is_stmt 1 view .LVU128
- 489              		.loc 1 90 23 is_stmt 0 view .LVU129
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 11
-
-
+  80:Core/drogui/src/MPU9250.c ****     m -> ay = (_ay + m->off_ay)/m->scl_acc;
+ 488              		.loc 1 80 5 is_stmt 1 view .LVU128
+ 489              		.loc 1 80 23 is_stmt 0 view .LVU129
  490 0064 D4ED046A 		vldr.32	s13, [r4, #16]
- 491              		.loc 1 90 20 view .LVU130
+ 491              		.loc 1 80 20 view .LVU130
  492 0068 B0F90030 		ldrsh	r3, [r0]
  493 006c 07EE903A 		vmov	s15, r3	@ int
  494 0070 F8EEE77A 		vcvt.f32.s32	s15, s15
  495 0074 77EEA67A 		vadd.f32	s15, s15, s13
- 496              		.loc 1 90 32 view .LVU131
+ 496              		.loc 1 80 32 view .LVU131
  497 0078 C7EE876A 		vdiv.f32	s13, s15, s14
- 498              		.loc 1 90 13 view .LVU132
+ 498              		.loc 1 80 13 view .LVU132
  499 007c C4ED016A 		vstr.32	s13, [r4, #4]
-  91:Core/drogui/src/MPU9250.c ****     m -> az = (_az + m->off_az)/m->scl_acc; 
- 500              		.loc 1 91 5 is_stmt 1 view .LVU133
- 501              		.loc 1 91 23 is_stmt 0 view .LVU134
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 11
+
+
+  81:Core/drogui/src/MPU9250.c ****     m -> az = (_az + m->off_az)/m->scl_acc; 
+ 500              		.loc 1 81 5 is_stmt 1 view .LVU133
+ 501              		.loc 1 81 23 is_stmt 0 view .LVU134
  502 0080 D4ED056A 		vldr.32	s13, [r4, #20]
- 503              		.loc 1 91 20 view .LVU135
+ 503              		.loc 1 81 20 view .LVU135
  504 0084 B1F90030 		ldrsh	r3, [r1]
  505 0088 07EE903A 		vmov	s15, r3	@ int
  506 008c F8EEE77A 		vcvt.f32.s32	s15, s15
  507 0090 77EEA67A 		vadd.f32	s15, s15, s13
- 508              		.loc 1 91 32 view .LVU136
+ 508              		.loc 1 81 32 view .LVU136
  509 0094 C7EE876A 		vdiv.f32	s13, s15, s14
- 510              		.loc 1 91 13 view .LVU137
+ 510              		.loc 1 81 13 view .LVU137
  511 0098 C4ED026A 		vstr.32	s13, [r4, #8]
-  92:Core/drogui/src/MPU9250.c **** }
- 512              		.loc 1 92 1 view .LVU138
+  82:Core/drogui/src/MPU9250.c **** }
+ 512              		.loc 1 82 1 view .LVU138
  513 009c 02B0     		add	sp, sp, #8
  514              	.LCFI12:
  515              		.cfi_def_cfa_offset 8
@@ -633,7 +623,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  517 009e 10BD     		pop	{r4, pc}
  518              	.LVL24:
  519              	.L18:
- 520              		.loc 1 92 1 view .LVU139
+ 520              		.loc 1 82 1 view .LVU139
  521              		.align	2
  522              	.L17:
  523 00a0 00000000 		.word	.LANCHOR0
@@ -651,17 +641,14 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  537              	readGyro:
  538              	.LVL25:
  539              	.LFB149:
-  93:Core/drogui/src/MPU9250.c **** 
-  94:Core/drogui/src/MPU9250.c **** 
-  95:Core/drogui/src/MPU9250.c **** void readGyro(mpu9250* m){ // degrees/sec
- 540              		.loc 1 95 26 is_stmt 1 view -0
+  83:Core/drogui/src/MPU9250.c **** 
+  84:Core/drogui/src/MPU9250.c **** 
+  85:Core/drogui/src/MPU9250.c **** void readGyro(mpu9250* m){ // degrees/sec
+ 540              		.loc 1 85 26 is_stmt 1 view -0
  541              		.cfi_startproc
  542              		@ args = 0, pretend = 0, frame = 8
  543              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 12
-
-
- 544              		.loc 1 95 26 is_stmt 0 view .LVU141
+ 544              		.loc 1 85 26 is_stmt 0 view .LVU141
  545 0000 10B5     		push	{r4, lr}
  546              	.LCFI13:
  547              		.cfi_def_cfa_offset 8
@@ -671,93 +658,96 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  551              	.LCFI14:
  552              		.cfi_def_cfa_offset 16
  553 0004 0446     		mov	r4, r0
-  96:Core/drogui/src/MPU9250.c ****     
-  97:Core/drogui/src/MPU9250.c ****     uint8_t Buf[6];
- 554              		.loc 1 97 5 is_stmt 1 view .LVU142
-  98:Core/drogui/src/MPU9250.c ****     I2Cread(MPU9250_ADDRESS, 0x43, 6, Buf);
- 555              		.loc 1 98 5 view .LVU143
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 12
+
+
+  86:Core/drogui/src/MPU9250.c ****     
+  87:Core/drogui/src/MPU9250.c ****     uint8_t Buf[6];
+ 554              		.loc 1 87 5 is_stmt 1 view .LVU142
+  88:Core/drogui/src/MPU9250.c ****     I2Cread(MPU9250_ADDRESS, 0x43, 6, Buf);
+ 555              		.loc 1 88 5 view .LVU143
  556 0006 6B46     		mov	r3, sp
  557 0008 0622     		movs	r2, #6
  558 000a 4321     		movs	r1, #67
  559 000c 6820     		movs	r0, #104
  560              	.LVL26:
- 561              		.loc 1 98 5 is_stmt 0 view .LVU144
+ 561              		.loc 1 88 5 is_stmt 0 view .LVU144
  562 000e FFF7FEFF 		bl	I2Cread
  563              	.LVL27:
-  99:Core/drogui/src/MPU9250.c ****     _gx = -((Buf[0] << 8) | Buf[1]);
- 564              		.loc 1 99 5 is_stmt 1 view .LVU145
- 565              		.loc 1 99 17 is_stmt 0 view .LVU146
+  89:Core/drogui/src/MPU9250.c ****     _gx = -((Buf[0] << 8) | Buf[1]);
+ 564              		.loc 1 89 5 is_stmt 1 view .LVU145
+ 565              		.loc 1 89 17 is_stmt 0 view .LVU146
  566 0012 9DF80030 		ldrb	r3, [sp]	@ zero_extendqisi2
- 567              		.loc 1 99 32 view .LVU147
+ 567              		.loc 1 89 32 view .LVU147
  568 0016 9DF80120 		ldrb	r2, [sp, #1]	@ zero_extendqisi2
- 569              		.loc 1 99 27 view .LVU148
+ 569              		.loc 1 89 27 view .LVU148
  570 001a 42EA0322 		orr	r2, r2, r3, lsl #8
- 571              		.loc 1 99 9 view .LVU149
+ 571              		.loc 1 89 9 view .LVU149
  572 001e 5242     		rsbs	r2, r2, #0
  573 0020 12B2     		sxth	r2, r2
  574 0022 1A4B     		ldr	r3, .L21
  575 0024 1A80     		strh	r2, [r3]	@ movhi
- 100:Core/drogui/src/MPU9250.c ****     _gy = -((Buf[2] << 8) | Buf[3]);
- 576              		.loc 1 100 5 is_stmt 1 view .LVU150
- 577              		.loc 1 100 17 is_stmt 0 view .LVU151
+  90:Core/drogui/src/MPU9250.c ****     _gy = -((Buf[2] << 8) | Buf[3]);
+ 576              		.loc 1 90 5 is_stmt 1 view .LVU150
+ 577              		.loc 1 90 17 is_stmt 0 view .LVU151
  578 0026 9DF80210 		ldrb	r1, [sp, #2]	@ zero_extendqisi2
- 579              		.loc 1 100 32 view .LVU152
+ 579              		.loc 1 90 32 view .LVU152
  580 002a 9DF80330 		ldrb	r3, [sp, #3]	@ zero_extendqisi2
- 581              		.loc 1 100 27 view .LVU153
+ 581              		.loc 1 90 27 view .LVU153
  582 002e 43EA0123 		orr	r3, r3, r1, lsl #8
- 583              		.loc 1 100 9 view .LVU154
+ 583              		.loc 1 90 9 view .LVU154
  584 0032 5B42     		rsbs	r3, r3, #0
  585 0034 1BB2     		sxth	r3, r3
  586 0036 1649     		ldr	r1, .L21+4
  587 0038 0B80     		strh	r3, [r1]	@ movhi
- 101:Core/drogui/src/MPU9250.c ****     _gz =   (Buf[4] << 8) | Buf[5];
- 588              		.loc 1 101 5 is_stmt 1 view .LVU155
- 589              		.loc 1 101 17 is_stmt 0 view .LVU156
+  91:Core/drogui/src/MPU9250.c ****     _gz =   (Buf[4] << 8) | Buf[5];
+ 588              		.loc 1 91 5 is_stmt 1 view .LVU155
+ 589              		.loc 1 91 17 is_stmt 0 view .LVU156
  590 003a 9DF80400 		ldrb	r0, [sp, #4]	@ zero_extendqisi2
- 591              		.loc 1 101 32 view .LVU157
+ 591              		.loc 1 91 32 view .LVU157
  592 003e 9DF80510 		ldrb	r1, [sp, #5]	@ zero_extendqisi2
- 593              		.loc 1 101 27 view .LVU158
+ 593              		.loc 1 91 27 view .LVU158
  594 0042 41EA0021 		orr	r1, r1, r0, lsl #8
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 13
-
-
  595 0046 09B2     		sxth	r1, r1
- 596              		.loc 1 101 9 view .LVU159
+ 596              		.loc 1 91 9 view .LVU159
  597 0048 1248     		ldr	r0, .L21+8
  598 004a 0180     		strh	r1, [r0]	@ movhi
- 102:Core/drogui/src/MPU9250.c ****     
- 103:Core/drogui/src/MPU9250.c ****     m -> gx = _gx + m->off_gx;
- 599              		.loc 1 103 5 is_stmt 1 view .LVU160
- 600              		.loc 1 103 22 is_stmt 0 view .LVU161
+  92:Core/drogui/src/MPU9250.c ****     
+  93:Core/drogui/src/MPU9250.c ****     m -> gx = _gx + m->off_gx;
+ 599              		.loc 1 93 5 is_stmt 1 view .LVU160
+ 600              		.loc 1 93 22 is_stmt 0 view .LVU161
  601 004c 94ED0A7A 		vldr.32	s14, [r4, #40]
- 602              		.loc 1 103 19 view .LVU162
+ 602              		.loc 1 93 19 view .LVU162
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 13
+
+
  603 0050 07EE902A 		vmov	s15, r2	@ int
  604 0054 F8EEE77A 		vcvt.f32.s32	s15, s15
  605 0058 77EE877A 		vadd.f32	s15, s15, s14
- 606              		.loc 1 103 13 view .LVU163
+ 606              		.loc 1 93 13 view .LVU163
  607 005c C4ED077A 		vstr.32	s15, [r4, #28]
- 104:Core/drogui/src/MPU9250.c ****     m -> gy = _gy + m->off_gy;
- 608              		.loc 1 104 5 is_stmt 1 view .LVU164
- 609              		.loc 1 104 22 is_stmt 0 view .LVU165
+  94:Core/drogui/src/MPU9250.c ****     m -> gy = _gy + m->off_gy;
+ 608              		.loc 1 94 5 is_stmt 1 view .LVU164
+ 609              		.loc 1 94 22 is_stmt 0 view .LVU165
  610 0060 94ED0B7A 		vldr.32	s14, [r4, #44]
- 611              		.loc 1 104 19 view .LVU166
+ 611              		.loc 1 94 19 view .LVU166
  612 0064 07EE903A 		vmov	s15, r3	@ int
  613 0068 F8EEE77A 		vcvt.f32.s32	s15, s15
  614 006c 77EE877A 		vadd.f32	s15, s15, s14
- 615              		.loc 1 104 13 view .LVU167
+ 615              		.loc 1 94 13 view .LVU167
  616 0070 C4ED087A 		vstr.32	s15, [r4, #32]
- 105:Core/drogui/src/MPU9250.c ****     m -> gz = _gz + m->off_gz; 
- 617              		.loc 1 105 5 is_stmt 1 view .LVU168
- 618              		.loc 1 105 22 is_stmt 0 view .LVU169
+  95:Core/drogui/src/MPU9250.c ****     m -> gz = _gz + m->off_gz; 
+ 617              		.loc 1 95 5 is_stmt 1 view .LVU168
+ 618              		.loc 1 95 22 is_stmt 0 view .LVU169
  619 0074 94ED0C7A 		vldr.32	s14, [r4, #48]
- 620              		.loc 1 105 19 view .LVU170
+ 620              		.loc 1 95 19 view .LVU170
  621 0078 07EE901A 		vmov	s15, r1	@ int
  622 007c F8EEE77A 		vcvt.f32.s32	s15, s15
  623 0080 77EE877A 		vadd.f32	s15, s15, s14
- 624              		.loc 1 105 13 view .LVU171
+ 624              		.loc 1 95 13 view .LVU171
  625 0084 C4ED097A 		vstr.32	s15, [r4, #36]
- 106:Core/drogui/src/MPU9250.c **** }
- 626              		.loc 1 106 1 view .LVU172
+  96:Core/drogui/src/MPU9250.c **** }
+ 626              		.loc 1 96 1 view .LVU172
  627 0088 02B0     		add	sp, sp, #8
  628              	.LCFI15:
  629              		.cfi_def_cfa_offset 8
@@ -765,7 +755,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  631 008a 10BD     		pop	{r4, pc}
  632              	.LVL28:
  633              	.L22:
- 634              		.loc 1 106 1 view .LVU173
+ 634              		.loc 1 96 1 view .LVU173
  635              		.align	2
  636              	.L21:
  637 008c 00000000 		.word	.LANCHOR3
@@ -778,21 +768,21 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  645              		.global	readMag
  646              		.syntax unified
  647              		.thumb
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 14
-
-
  648              		.thumb_func
  649              		.fpu fpv5-sp-d16
  651              	readMag:
  652              	.LVL29:
  653              	.LFB150:
- 107:Core/drogui/src/MPU9250.c **** 
- 108:Core/drogui/src/MPU9250.c **** void readMag(mpu9250* m){ // m/s^2
- 654              		.loc 1 108 25 is_stmt 1 view -0
+  97:Core/drogui/src/MPU9250.c **** 
+  98:Core/drogui/src/MPU9250.c **** void readMag(mpu9250* m){ // m/s^2
+ 654              		.loc 1 98 25 is_stmt 1 view -0
  655              		.cfi_startproc
  656              		@ args = 0, pretend = 0, frame = 8
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 14
+
+
  657              		@ frame_needed = 0, uses_anonymous_args = 0
- 658              		.loc 1 108 25 is_stmt 0 view .LVU175
+ 658              		.loc 1 98 25 is_stmt 0 view .LVU175
  659 0000 10B5     		push	{r4, lr}
  660              	.LCFI16:
  661              		.cfi_def_cfa_offset 8
@@ -802,119 +792,119 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  665              	.LCFI17:
  666              		.cfi_def_cfa_offset 16
  667 0004 0446     		mov	r4, r0
- 109:Core/drogui/src/MPU9250.c ****     uint8_t Buf[7];
- 668              		.loc 1 109 5 is_stmt 1 view .LVU176
- 110:Core/drogui/src/MPU9250.c ****     I2Cread(MAG_ADDRESS, 0x03, 7, Buf);
- 669              		.loc 1 110 5 view .LVU177
+  99:Core/drogui/src/MPU9250.c ****     uint8_t Buf[7];
+ 668              		.loc 1 99 5 is_stmt 1 view .LVU176
+ 100:Core/drogui/src/MPU9250.c ****     I2Cread(MAG_ADDRESS, 0x03, 7, Buf);
+ 669              		.loc 1 100 5 view .LVU177
  670 0006 6B46     		mov	r3, sp
  671 0008 0722     		movs	r2, #7
  672 000a 0321     		movs	r1, #3
  673 000c 0C20     		movs	r0, #12
  674              	.LVL30:
- 675              		.loc 1 110 5 is_stmt 0 view .LVU178
+ 675              		.loc 1 100 5 is_stmt 0 view .LVU178
  676 000e FFF7FEFF 		bl	I2Cread
  677              	.LVL31:
- 111:Core/drogui/src/MPU9250.c ****     
- 112:Core/drogui/src/MPU9250.c ****     _mx = -((Buf[3]<<8) | Buf[2]);
- 678              		.loc 1 112 5 is_stmt 1 view .LVU179
- 679              		.loc 1 112 17 is_stmt 0 view .LVU180
+ 101:Core/drogui/src/MPU9250.c ****     
+ 102:Core/drogui/src/MPU9250.c ****     _mx = -((Buf[3]<<8) | Buf[2]);
+ 678              		.loc 1 102 5 is_stmt 1 view .LVU179
+ 679              		.loc 1 102 17 is_stmt 0 view .LVU180
  680 0012 9DF80330 		ldrb	r3, [sp, #3]	@ zero_extendqisi2
- 681              		.loc 1 112 30 view .LVU181
+ 681              		.loc 1 102 30 view .LVU181
  682 0016 9DF80210 		ldrb	r1, [sp, #2]	@ zero_extendqisi2
- 683              		.loc 1 112 25 view .LVU182
+ 683              		.loc 1 102 25 view .LVU182
  684 001a 41EA0321 		orr	r1, r1, r3, lsl #8
- 685              		.loc 1 112 9 view .LVU183
+ 685              		.loc 1 102 9 view .LVU183
  686 001e 4942     		rsbs	r1, r1, #0
  687 0020 09B2     		sxth	r1, r1
  688 0022 214B     		ldr	r3, .L25
  689 0024 1980     		strh	r1, [r3]	@ movhi
- 113:Core/drogui/src/MPU9250.c ****     _my = -((Buf[1]<<8) | Buf[0]);
- 690              		.loc 1 113 5 is_stmt 1 view .LVU184
- 691              		.loc 1 113 17 is_stmt 0 view .LVU185
+ 103:Core/drogui/src/MPU9250.c ****     _my = -((Buf[1]<<8) | Buf[0]);
+ 690              		.loc 1 103 5 is_stmt 1 view .LVU184
+ 691              		.loc 1 103 17 is_stmt 0 view .LVU185
  692 0026 9DF80130 		ldrb	r3, [sp, #1]	@ zero_extendqisi2
- 693              		.loc 1 113 30 view .LVU186
+ 693              		.loc 1 103 30 view .LVU186
  694 002a 9DF80020 		ldrb	r2, [sp]	@ zero_extendqisi2
- 695              		.loc 1 113 25 view .LVU187
+ 695              		.loc 1 103 25 view .LVU187
  696 002e 42EA0322 		orr	r2, r2, r3, lsl #8
- 697              		.loc 1 113 9 view .LVU188
+ 697              		.loc 1 103 9 view .LVU188
  698 0032 5242     		rsbs	r2, r2, #0
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 15
-
-
  699 0034 12B2     		sxth	r2, r2
  700 0036 1D4B     		ldr	r3, .L25+4
  701 0038 1A80     		strh	r2, [r3]	@ movhi
- 114:Core/drogui/src/MPU9250.c ****     _mz = -((Buf[5]<<8) | Buf[4]);
- 702              		.loc 1 114 5 is_stmt 1 view .LVU189
- 703              		.loc 1 114 17 is_stmt 0 view .LVU190
+ 104:Core/drogui/src/MPU9250.c ****     _mz = -((Buf[5]<<8) | Buf[4]);
+ 702              		.loc 1 104 5 is_stmt 1 view .LVU189
+ 703              		.loc 1 104 17 is_stmt 0 view .LVU190
  704 003a 9DF80500 		ldrb	r0, [sp, #5]	@ zero_extendqisi2
- 705              		.loc 1 114 30 view .LVU191
+ 705              		.loc 1 104 30 view .LVU191
  706 003e 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
- 707              		.loc 1 114 25 view .LVU192
+ 707              		.loc 1 104 25 view .LVU192
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 15
+
+
  708 0042 43EA0023 		orr	r3, r3, r0, lsl #8
- 709              		.loc 1 114 9 view .LVU193
+ 709              		.loc 1 104 9 view .LVU193
  710 0046 5B42     		rsbs	r3, r3, #0
  711 0048 1BB2     		sxth	r3, r3
  712 004a 1948     		ldr	r0, .L25+8
  713 004c 0380     		strh	r3, [r0]	@ movhi
- 115:Core/drogui/src/MPU9250.c ****     //-226.43	-112.81	131.13	119.36	127.29  129.95
- 116:Core/drogui/src/MPU9250.c **** 
- 117:Core/drogui/src/MPU9250.c **** 
- 118:Core/drogui/src/MPU9250.c ****     m -> mx = (_mx - m->off_mx)/m->scl_magx;
- 714              		.loc 1 118 5 is_stmt 1 view .LVU194
- 715              		.loc 1 118 23 is_stmt 0 view .LVU195
+ 105:Core/drogui/src/MPU9250.c ****     //-226.43	-112.81	131.13	119.36	127.29  129.95
+ 106:Core/drogui/src/MPU9250.c **** 
+ 107:Core/drogui/src/MPU9250.c **** 
+ 108:Core/drogui/src/MPU9250.c ****     m -> mx = (_mx - m->off_mx)/m->scl_magx;
+ 714              		.loc 1 108 5 is_stmt 1 view .LVU194
+ 715              		.loc 1 108 23 is_stmt 0 view .LVU195
  716 004e 94ED107A 		vldr.32	s14, [r4, #64]
- 717              		.loc 1 118 20 view .LVU196
+ 717              		.loc 1 108 20 view .LVU196
  718 0052 07EE901A 		vmov	s15, r1	@ int
  719 0056 F8EEE77A 		vcvt.f32.s32	s15, s15
  720 005a 77EEC77A 		vsub.f32	s15, s15, s14
- 721              		.loc 1 118 34 view .LVU197
+ 721              		.loc 1 108 34 view .LVU197
  722 005e D4ED136A 		vldr.32	s13, [r4, #76]
- 723              		.loc 1 118 32 view .LVU198
+ 723              		.loc 1 108 32 view .LVU198
  724 0062 87EEA67A 		vdiv.f32	s14, s15, s13
- 725              		.loc 1 118 13 view .LVU199
+ 725              		.loc 1 108 13 view .LVU199
  726 0066 84ED0D7A 		vstr.32	s14, [r4, #52]
- 119:Core/drogui/src/MPU9250.c ****     m -> my = (_my - m->off_my)/m->scl_magy;
- 727              		.loc 1 119 5 is_stmt 1 view .LVU200
- 728              		.loc 1 119 23 is_stmt 0 view .LVU201
+ 109:Core/drogui/src/MPU9250.c ****     m -> my = (_my - m->off_my)/m->scl_magy;
+ 727              		.loc 1 109 5 is_stmt 1 view .LVU200
+ 728              		.loc 1 109 23 is_stmt 0 view .LVU201
  729 006a 94ED117A 		vldr.32	s14, [r4, #68]
- 730              		.loc 1 119 20 view .LVU202
+ 730              		.loc 1 109 20 view .LVU202
  731 006e 07EE902A 		vmov	s15, r2	@ int
  732 0072 F8EEE77A 		vcvt.f32.s32	s15, s15
  733 0076 77EEC77A 		vsub.f32	s15, s15, s14
- 734              		.loc 1 119 34 view .LVU203
+ 734              		.loc 1 109 34 view .LVU203
  735 007a D4ED146A 		vldr.32	s13, [r4, #80]
- 736              		.loc 1 119 32 view .LVU204
+ 736              		.loc 1 109 32 view .LVU204
  737 007e 87EEA67A 		vdiv.f32	s14, s15, s13
- 738              		.loc 1 119 13 view .LVU205
+ 738              		.loc 1 109 13 view .LVU205
  739 0082 84ED0E7A 		vstr.32	s14, [r4, #56]
- 120:Core/drogui/src/MPU9250.c ****     m -> mz = (_mz - m->off_mz)/m->scl_magz; 
- 740              		.loc 1 120 5 is_stmt 1 view .LVU206
- 741              		.loc 1 120 23 is_stmt 0 view .LVU207
+ 110:Core/drogui/src/MPU9250.c ****     m -> mz = (_mz - m->off_mz)/m->scl_magz; 
+ 740              		.loc 1 110 5 is_stmt 1 view .LVU206
+ 741              		.loc 1 110 23 is_stmt 0 view .LVU207
  742 0086 94ED127A 		vldr.32	s14, [r4, #72]
- 743              		.loc 1 120 20 view .LVU208
+ 743              		.loc 1 110 20 view .LVU208
  744 008a 07EE903A 		vmov	s15, r3	@ int
  745 008e F8EEE77A 		vcvt.f32.s32	s15, s15
  746 0092 77EEC77A 		vsub.f32	s15, s15, s14
- 747              		.loc 1 120 34 view .LVU209
+ 747              		.loc 1 110 34 view .LVU209
  748 0096 D4ED156A 		vldr.32	s13, [r4, #84]
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 16
-
-
- 749              		.loc 1 120 32 view .LVU210
+ 749              		.loc 1 110 32 view .LVU210
  750 009a 87EEA67A 		vdiv.f32	s14, s15, s13
- 751              		.loc 1 120 13 view .LVU211
+ 751              		.loc 1 110 13 view .LVU211
  752 009e 84ED0F7A 		vstr.32	s14, [r4, #60]
- 121:Core/drogui/src/MPU9250.c **** }
- 753              		.loc 1 121 1 view .LVU212
+ 111:Core/drogui/src/MPU9250.c **** }
+ 753              		.loc 1 111 1 view .LVU212
  754 00a2 02B0     		add	sp, sp, #8
  755              	.LCFI18:
  756              		.cfi_def_cfa_offset 8
  757              		@ sp needed
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 16
+
+
  758 00a4 10BD     		pop	{r4, pc}
  759              	.LVL32:
  760              	.L26:
- 761              		.loc 1 121 1 view .LVU213
+ 761              		.loc 1 111 1 view .LVU213
  762 00a6 00BF     		.align	2
  763              	.L25:
  764 00a8 00000000 		.word	.LANCHOR6
@@ -934,15 +924,15 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  780              	quiet:
  781              	.LVL33:
  782              	.LFB151:
- 122:Core/drogui/src/MPU9250.c **** 
- 123:Core/drogui/src/MPU9250.c **** // 120 260 380
- 124:Core/drogui/src/MPU9250.c **** 
- 125:Core/drogui/src/MPU9250.c **** bool quiet(mpu9250* m, int n, float treshold, bool cal){
- 783              		.loc 1 125 56 is_stmt 1 view -0
+ 112:Core/drogui/src/MPU9250.c **** 
+ 113:Core/drogui/src/MPU9250.c **** // 120 260 380
+ 114:Core/drogui/src/MPU9250.c **** 
+ 115:Core/drogui/src/MPU9250.c **** bool quiet(mpu9250* m, int n, float treshold, bool cal){
+ 783              		.loc 1 115 56 is_stmt 1 view -0
  784              		.cfi_startproc
  785              		@ args = 0, pretend = 0, frame = 24
  786              		@ frame_needed = 0, uses_anonymous_args = 0
- 787              		.loc 1 125 56 is_stmt 0 view .LVU215
+ 787              		.loc 1 115 56 is_stmt 0 view .LVU215
  788 0000 F0B5     		push	{r4, r5, r6, r7, lr}
  789              	.LCFI19:
  790              		.cfi_def_cfa_offset 20
@@ -958,9 +948,6 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  800              		.cfi_offset 81, -48
  801              		.cfi_offset 82, -44
  802              		.cfi_offset 83, -40
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 17
-
-
  803              		.cfi_offset 84, -36
  804              		.cfi_offset 85, -32
  805              		.cfi_offset 86, -28
@@ -971,116 +958,116 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  810 0008 0446     		mov	r4, r0
  811 000a 0E46     		mov	r6, r1
  812 000c B0EE40BA 		vmov.f32	s22, s0
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 17
+
+
  813 0010 1746     		mov	r7, r2
- 126:Core/drogui/src/MPU9250.c ****     float max_gyro[3] = {0,0,0};
- 814              		.loc 1 126 5 is_stmt 1 view .LVU216
- 815              		.loc 1 126 11 is_stmt 0 view .LVU217
+ 116:Core/drogui/src/MPU9250.c ****     float max_gyro[3] = {0,0,0};
+ 814              		.loc 1 116 5 is_stmt 1 view .LVU216
+ 815              		.loc 1 116 11 is_stmt 0 view .LVU217
  816 0012 0023     		movs	r3, #0
  817 0014 0393     		str	r3, [sp, #12]	@ float
  818 0016 0493     		str	r3, [sp, #16]	@ float
  819 0018 0593     		str	r3, [sp, #20]	@ float
- 127:Core/drogui/src/MPU9250.c ****     float min_gyro[3] = {0,0,0};
- 820              		.loc 1 127 5 is_stmt 1 view .LVU218
- 821              		.loc 1 127 11 is_stmt 0 view .LVU219
+ 117:Core/drogui/src/MPU9250.c ****     float min_gyro[3] = {0,0,0};
+ 820              		.loc 1 117 5 is_stmt 1 view .LVU218
+ 821              		.loc 1 117 11 is_stmt 0 view .LVU219
  822 001a 0093     		str	r3, [sp]	@ float
  823 001c 0193     		str	r3, [sp, #4]	@ float
  824 001e 0293     		str	r3, [sp, #8]	@ float
- 128:Core/drogui/src/MPU9250.c ****     
- 129:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < n; i++){
- 825              		.loc 1 129 5 is_stmt 1 view .LVU220
+ 118:Core/drogui/src/MPU9250.c ****     
+ 119:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < n; i++){
+ 825              		.loc 1 119 5 is_stmt 1 view .LVU220
  826              	.LBB2:
- 827              		.loc 1 129 9 view .LVU221
+ 827              		.loc 1 119 9 view .LVU221
  828              	.LVL34:
- 829              		.loc 1 129 13 is_stmt 0 view .LVU222
+ 829              		.loc 1 119 13 is_stmt 0 view .LVU222
  830 0020 0025     		movs	r5, #0
- 831              		.loc 1 129 5 view .LVU223
+ 831              		.loc 1 119 5 view .LVU223
  832 0022 0CE0     		b	.L28
  833              	.LVL35:
  834              	.L48:
- 130:Core/drogui/src/MPU9250.c ****         
- 131:Core/drogui/src/MPU9250.c ****         readRawGyro(m);   /*
- 132:Core/drogui/src/MPU9250.c ****         Serial.print(m->gx);
- 133:Core/drogui/src/MPU9250.c ****         Serial.print("\t");
- 134:Core/drogui/src/MPU9250.c ****         Serial.print(m->gy);
- 135:Core/drogui/src/MPU9250.c ****         Serial.print("\t");
- 136:Core/drogui/src/MPU9250.c ****         Serial.print(m->gz);
- 137:Core/drogui/src/MPU9250.c ****         Serial.print("\n");*/
- 138:Core/drogui/src/MPU9250.c **** 
- 139:Core/drogui/src/MPU9250.c ****         if(i == 0){
- 140:Core/drogui/src/MPU9250.c ****             max_gyro[0] = m->raw_gx, max_gyro[1] = m->raw_gy, max_gyro[2] = m->raw_gz;
- 835              		.loc 1 140 13 is_stmt 1 view .LVU224
- 836              		.loc 1 140 28 is_stmt 0 view .LVU225
+ 120:Core/drogui/src/MPU9250.c ****         
+ 121:Core/drogui/src/MPU9250.c ****         readRawGyro(m);   /*
+ 122:Core/drogui/src/MPU9250.c ****         Serial.print(m->gx);
+ 123:Core/drogui/src/MPU9250.c ****         Serial.print("\t");
+ 124:Core/drogui/src/MPU9250.c ****         Serial.print(m->gy);
+ 125:Core/drogui/src/MPU9250.c ****         Serial.print("\t");
+ 126:Core/drogui/src/MPU9250.c ****         Serial.print(m->gz);
+ 127:Core/drogui/src/MPU9250.c ****         Serial.print("\n");*/
+ 128:Core/drogui/src/MPU9250.c **** 
+ 129:Core/drogui/src/MPU9250.c ****         if(i == 0){
+ 130:Core/drogui/src/MPU9250.c ****             max_gyro[0] = m->raw_gx, max_gyro[1] = m->raw_gy, max_gyro[2] = m->raw_gz;
+ 835              		.loc 1 130 13 is_stmt 1 view .LVU224
+ 836              		.loc 1 130 28 is_stmt 0 view .LVU225
  837 0024 616E     		ldr	r1, [r4, #100]	@ float
- 838              		.loc 1 140 25 view .LVU226
+ 838              		.loc 1 130 25 view .LVU226
  839 0026 0391     		str	r1, [sp, #12]	@ float
- 840              		.loc 1 140 53 view .LVU227
+ 840              		.loc 1 130 53 view .LVU227
  841 0028 A26E     		ldr	r2, [r4, #104]	@ float
- 842              		.loc 1 140 50 view .LVU228
+ 842              		.loc 1 130 50 view .LVU228
  843 002a 0492     		str	r2, [sp, #16]	@ float
- 844              		.loc 1 140 78 view .LVU229
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 18
-
-
+ 844              		.loc 1 130 78 view .LVU229
  845 002c E36E     		ldr	r3, [r4, #108]	@ float
- 846              		.loc 1 140 75 view .LVU230
+ 846              		.loc 1 130 75 view .LVU230
  847 002e 0593     		str	r3, [sp, #20]	@ float
- 141:Core/drogui/src/MPU9250.c ****             min_gyro[0] = m->raw_gx, min_gyro[1] = m->raw_gy, min_gyro[2] = m->raw_gz;
- 848              		.loc 1 141 13 is_stmt 1 view .LVU231
- 849              		.loc 1 141 25 is_stmt 0 view .LVU232
+ 131:Core/drogui/src/MPU9250.c ****             min_gyro[0] = m->raw_gx, min_gyro[1] = m->raw_gy, min_gyro[2] = m->raw_gz;
+ 848              		.loc 1 131 13 is_stmt 1 view .LVU231
+ 849              		.loc 1 131 25 is_stmt 0 view .LVU232
  850 0030 0091     		str	r1, [sp]	@ float
- 851              		.loc 1 141 50 view .LVU233
+ 851              		.loc 1 131 50 view .LVU233
  852 0032 0192     		str	r2, [sp, #4]	@ float
- 853              		.loc 1 141 75 view .LVU234
+ 853              		.loc 1 131 75 view .LVU234
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 18
+
+
  854 0034 0293     		str	r3, [sp, #8]	@ float
  855              	.L30:
- 142:Core/drogui/src/MPU9250.c ****         }
- 143:Core/drogui/src/MPU9250.c ****         else{
- 144:Core/drogui/src/MPU9250.c ****                 max_gyro[0] = fmax(max_gyro[0], m->raw_gx);
- 145:Core/drogui/src/MPU9250.c ****                 max_gyro[1] = fmax(max_gyro[1], m->raw_gy);
- 146:Core/drogui/src/MPU9250.c ****                 max_gyro[2] = fmax(max_gyro[2], m->raw_gz);
- 147:Core/drogui/src/MPU9250.c ****                 
- 148:Core/drogui/src/MPU9250.c ****                 min_gyro[0] = fmin(min_gyro[0], m->raw_gx);
- 149:Core/drogui/src/MPU9250.c ****                 min_gyro[1] = fmin(min_gyro[1], m->raw_gy);
- 150:Core/drogui/src/MPU9250.c ****                 min_gyro[2] = fmin(min_gyro[2], m->raw_gz);
- 151:Core/drogui/src/MPU9250.c ****         }
- 152:Core/drogui/src/MPU9250.c ****         HAL_Delay(2);
- 856              		.loc 1 152 9 is_stmt 1 discriminator 2 view .LVU235
+ 132:Core/drogui/src/MPU9250.c ****         }
+ 133:Core/drogui/src/MPU9250.c ****         else{
+ 134:Core/drogui/src/MPU9250.c ****                 max_gyro[0] = fmax(max_gyro[0], m->raw_gx);
+ 135:Core/drogui/src/MPU9250.c ****                 max_gyro[1] = fmax(max_gyro[1], m->raw_gy);
+ 136:Core/drogui/src/MPU9250.c ****                 max_gyro[2] = fmax(max_gyro[2], m->raw_gz);
+ 137:Core/drogui/src/MPU9250.c ****                 
+ 138:Core/drogui/src/MPU9250.c ****                 min_gyro[0] = fmin(min_gyro[0], m->raw_gx);
+ 139:Core/drogui/src/MPU9250.c ****                 min_gyro[1] = fmin(min_gyro[1], m->raw_gy);
+ 140:Core/drogui/src/MPU9250.c ****                 min_gyro[2] = fmin(min_gyro[2], m->raw_gz);
+ 141:Core/drogui/src/MPU9250.c ****         }
+ 142:Core/drogui/src/MPU9250.c ****         HAL_Delay(2);
+ 856              		.loc 1 142 9 is_stmt 1 discriminator 2 view .LVU235
  857 0036 0220     		movs	r0, #2
  858 0038 FFF7FEFF 		bl	HAL_Delay
  859              	.LVL36:
- 129:Core/drogui/src/MPU9250.c ****         
- 860              		.loc 1 129 27 discriminator 2 view .LVU236
- 129:Core/drogui/src/MPU9250.c ****         
- 861              		.loc 1 129 28 is_stmt 0 discriminator 2 view .LVU237
+ 119:Core/drogui/src/MPU9250.c ****         
+ 860              		.loc 1 119 27 discriminator 2 view .LVU236
+ 119:Core/drogui/src/MPU9250.c ****         
+ 861              		.loc 1 119 28 is_stmt 0 discriminator 2 view .LVU237
  862 003c 0135     		adds	r5, r5, #1
  863              	.LVL37:
  864              	.L28:
- 129:Core/drogui/src/MPU9250.c ****         
- 865              		.loc 1 129 20 is_stmt 1 discriminator 1 view .LVU238
- 129:Core/drogui/src/MPU9250.c ****         
- 866              		.loc 1 129 5 is_stmt 0 discriminator 1 view .LVU239
+ 119:Core/drogui/src/MPU9250.c ****         
+ 865              		.loc 1 119 20 is_stmt 1 discriminator 1 view .LVU238
+ 119:Core/drogui/src/MPU9250.c ****         
+ 866              		.loc 1 119 5 is_stmt 0 discriminator 1 view .LVU239
  867 003e B542     		cmp	r5, r6
  868 0040 74DA     		bge	.L47
- 131:Core/drogui/src/MPU9250.c ****         Serial.print(m->gx);
- 869              		.loc 1 131 9 is_stmt 1 view .LVU240
+ 121:Core/drogui/src/MPU9250.c ****         Serial.print(m->gx);
+ 869              		.loc 1 121 9 is_stmt 1 view .LVU240
  870 0042 2046     		mov	r0, r4
  871 0044 FFF7FEFF 		bl	readRawGyro
  872              	.LVL38:
- 139:Core/drogui/src/MPU9250.c ****             max_gyro[0] = m->raw_gx, max_gyro[1] = m->raw_gy, max_gyro[2] = m->raw_gz;
- 873              		.loc 1 139 9 view .LVU241
- 139:Core/drogui/src/MPU9250.c ****             max_gyro[0] = m->raw_gx, max_gyro[1] = m->raw_gy, max_gyro[2] = m->raw_gz;
- 874              		.loc 1 139 11 is_stmt 0 view .LVU242
+ 129:Core/drogui/src/MPU9250.c ****             max_gyro[0] = m->raw_gx, max_gyro[1] = m->raw_gy, max_gyro[2] = m->raw_gz;
+ 873              		.loc 1 129 9 view .LVU241
+ 129:Core/drogui/src/MPU9250.c ****             max_gyro[0] = m->raw_gx, max_gyro[1] = m->raw_gy, max_gyro[2] = m->raw_gz;
+ 874              		.loc 1 129 11 is_stmt 0 view .LVU242
  875 0048 002D     		cmp	r5, #0
  876 004a EBD0     		beq	.L48
- 144:Core/drogui/src/MPU9250.c ****                 max_gyro[1] = fmax(max_gyro[1], m->raw_gy);
- 877              		.loc 1 144 17 is_stmt 1 view .LVU243
- 144:Core/drogui/src/MPU9250.c ****                 max_gyro[1] = fmax(max_gyro[1], m->raw_gy);
- 878              		.loc 1 144 31 is_stmt 0 view .LVU244
+ 134:Core/drogui/src/MPU9250.c ****                 max_gyro[1] = fmax(max_gyro[1], m->raw_gy);
+ 877              		.loc 1 134 17 is_stmt 1 view .LVU243
+ 134:Core/drogui/src/MPU9250.c ****                 max_gyro[1] = fmax(max_gyro[1], m->raw_gy);
+ 878              		.loc 1 134 31 is_stmt 0 view .LVU244
  879 004c 606E     		ldr	r0, [r4, #100]	@ float
  880 004e FFF7FEFF 		bl	__aeabi_f2d
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 19
-
-
  881              	.LVL39:
  882 0052 41EC1A0B 		vmov	d10, r0, r1
  883 0056 0398     		ldr	r0, [sp, #12]	@ float
@@ -1091,16 +1078,19 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  888 0064 41EC100B 		vmov	d0, r0, r1
  889 0068 FFF7FEFF 		bl	fmax
  890              	.LVL41:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 19
+
+
  891 006c 51EC100B 		vmov	r0, r1, d0
  892 0070 FFF7FEFF 		bl	__aeabi_d2f
  893              	.LVL42:
- 144:Core/drogui/src/MPU9250.c ****                 max_gyro[1] = fmax(max_gyro[1], m->raw_gy);
- 894              		.loc 1 144 29 view .LVU245
+ 134:Core/drogui/src/MPU9250.c ****                 max_gyro[1] = fmax(max_gyro[1], m->raw_gy);
+ 894              		.loc 1 134 29 view .LVU245
  895 0074 0390     		str	r0, [sp, #12]	@ float
- 145:Core/drogui/src/MPU9250.c ****                 max_gyro[2] = fmax(max_gyro[2], m->raw_gz);
- 896              		.loc 1 145 17 is_stmt 1 view .LVU246
- 145:Core/drogui/src/MPU9250.c ****                 max_gyro[2] = fmax(max_gyro[2], m->raw_gz);
- 897              		.loc 1 145 31 is_stmt 0 view .LVU247
+ 135:Core/drogui/src/MPU9250.c ****                 max_gyro[2] = fmax(max_gyro[2], m->raw_gz);
+ 896              		.loc 1 135 17 is_stmt 1 view .LVU246
+ 135:Core/drogui/src/MPU9250.c ****                 max_gyro[2] = fmax(max_gyro[2], m->raw_gz);
+ 897              		.loc 1 135 31 is_stmt 0 view .LVU247
  898 0076 A06E     		ldr	r0, [r4, #104]	@ float
  899 0078 FFF7FEFF 		bl	__aeabi_f2d
  900              	.LVL43:
@@ -1116,13 +1106,13 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  910 0096 51EC100B 		vmov	r0, r1, d0
  911 009a FFF7FEFF 		bl	__aeabi_d2f
  912              	.LVL46:
- 145:Core/drogui/src/MPU9250.c ****                 max_gyro[2] = fmax(max_gyro[2], m->raw_gz);
- 913              		.loc 1 145 29 view .LVU248
+ 135:Core/drogui/src/MPU9250.c ****                 max_gyro[2] = fmax(max_gyro[2], m->raw_gz);
+ 913              		.loc 1 135 29 view .LVU248
  914 009e 0490     		str	r0, [sp, #16]	@ float
- 146:Core/drogui/src/MPU9250.c ****                 
- 915              		.loc 1 146 17 is_stmt 1 view .LVU249
- 146:Core/drogui/src/MPU9250.c ****                 
- 916              		.loc 1 146 31 is_stmt 0 view .LVU250
+ 136:Core/drogui/src/MPU9250.c ****                 
+ 915              		.loc 1 136 17 is_stmt 1 view .LVU249
+ 136:Core/drogui/src/MPU9250.c ****                 
+ 916              		.loc 1 136 31 is_stmt 0 view .LVU250
  917 00a0 E06E     		ldr	r0, [r4, #108]	@ float
  918 00a2 FFF7FEFF 		bl	__aeabi_f2d
  919              	.LVL47:
@@ -1138,19 +1128,19 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  929 00c0 51EC100B 		vmov	r0, r1, d0
  930 00c4 FFF7FEFF 		bl	__aeabi_d2f
  931              	.LVL50:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 20
-
-
- 146:Core/drogui/src/MPU9250.c ****                 
- 932              		.loc 1 146 29 view .LVU251
+ 136:Core/drogui/src/MPU9250.c ****                 
+ 932              		.loc 1 136 29 view .LVU251
  933 00c8 0590     		str	r0, [sp, #20]	@ float
- 148:Core/drogui/src/MPU9250.c ****                 min_gyro[1] = fmin(min_gyro[1], m->raw_gy);
- 934              		.loc 1 148 17 is_stmt 1 view .LVU252
- 148:Core/drogui/src/MPU9250.c ****                 min_gyro[1] = fmin(min_gyro[1], m->raw_gy);
- 935              		.loc 1 148 31 is_stmt 0 view .LVU253
+ 138:Core/drogui/src/MPU9250.c ****                 min_gyro[1] = fmin(min_gyro[1], m->raw_gy);
+ 934              		.loc 1 138 17 is_stmt 1 view .LVU252
+ 138:Core/drogui/src/MPU9250.c ****                 min_gyro[1] = fmin(min_gyro[1], m->raw_gy);
+ 935              		.loc 1 138 31 is_stmt 0 view .LVU253
  936 00ca 0098     		ldr	r0, [sp]	@ float
  937 00cc FFF7FEFF 		bl	__aeabi_f2d
  938              	.LVL51:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 20
+
+
  939 00d0 B0EE4A1A 		vmov.f32	s2, s20
  940 00d4 F0EE6A1A 		vmov.f32	s3, s21
  941 00d8 41EC100B 		vmov	d0, r0, r1
@@ -1159,13 +1149,13 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  944 00e0 51EC100B 		vmov	r0, r1, d0
  945 00e4 FFF7FEFF 		bl	__aeabi_d2f
  946              	.LVL53:
- 148:Core/drogui/src/MPU9250.c ****                 min_gyro[1] = fmin(min_gyro[1], m->raw_gy);
- 947              		.loc 1 148 29 view .LVU254
+ 138:Core/drogui/src/MPU9250.c ****                 min_gyro[1] = fmin(min_gyro[1], m->raw_gy);
+ 947              		.loc 1 138 29 view .LVU254
  948 00e8 0090     		str	r0, [sp]	@ float
- 149:Core/drogui/src/MPU9250.c ****                 min_gyro[2] = fmin(min_gyro[2], m->raw_gz);
- 949              		.loc 1 149 17 is_stmt 1 view .LVU255
- 149:Core/drogui/src/MPU9250.c ****                 min_gyro[2] = fmin(min_gyro[2], m->raw_gz);
- 950              		.loc 1 149 31 is_stmt 0 view .LVU256
+ 139:Core/drogui/src/MPU9250.c ****                 min_gyro[2] = fmin(min_gyro[2], m->raw_gz);
+ 949              		.loc 1 139 17 is_stmt 1 view .LVU255
+ 139:Core/drogui/src/MPU9250.c ****                 min_gyro[2] = fmin(min_gyro[2], m->raw_gz);
+ 950              		.loc 1 139 31 is_stmt 0 view .LVU256
  951 00ea 0198     		ldr	r0, [sp, #4]	@ float
  952 00ec FFF7FEFF 		bl	__aeabi_f2d
  953              	.LVL54:
@@ -1177,13 +1167,13 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  959 0100 51EC100B 		vmov	r0, r1, d0
  960 0104 FFF7FEFF 		bl	__aeabi_d2f
  961              	.LVL56:
- 149:Core/drogui/src/MPU9250.c ****                 min_gyro[2] = fmin(min_gyro[2], m->raw_gz);
- 962              		.loc 1 149 29 view .LVU257
+ 139:Core/drogui/src/MPU9250.c ****                 min_gyro[2] = fmin(min_gyro[2], m->raw_gz);
+ 962              		.loc 1 139 29 view .LVU257
  963 0108 0190     		str	r0, [sp, #4]	@ float
- 150:Core/drogui/src/MPU9250.c ****         }
- 964              		.loc 1 150 17 is_stmt 1 view .LVU258
- 150:Core/drogui/src/MPU9250.c ****         }
- 965              		.loc 1 150 31 is_stmt 0 view .LVU259
+ 140:Core/drogui/src/MPU9250.c ****         }
+ 964              		.loc 1 140 17 is_stmt 1 view .LVU258
+ 140:Core/drogui/src/MPU9250.c ****         }
+ 965              		.loc 1 140 31 is_stmt 0 view .LVU259
  966 010a 0298     		ldr	r0, [sp, #8]	@ float
  967 010c FFF7FEFF 		bl	__aeabi_f2d
  968              	.LVL57:
@@ -1195,142 +1185,142 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  974 0120 51EC100B 		vmov	r0, r1, d0
  975 0124 FFF7FEFF 		bl	__aeabi_d2f
  976              	.LVL59:
- 150:Core/drogui/src/MPU9250.c ****         }
- 977              		.loc 1 150 29 view .LVU260
+ 140:Core/drogui/src/MPU9250.c ****         }
+ 977              		.loc 1 140 29 view .LVU260
  978 0128 0290     		str	r0, [sp, #8]	@ float
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 21
-
-
  979 012a 84E7     		b	.L30
  980              	.L47:
- 150:Core/drogui/src/MPU9250.c ****         }
- 981              		.loc 1 150 29 view .LVU261
+ 140:Core/drogui/src/MPU9250.c ****         }
+ 981              		.loc 1 140 29 view .LVU261
  982              	.LBE2:
- 153:Core/drogui/src/MPU9250.c ****     }
- 154:Core/drogui/src/MPU9250.c ****     /*
- 155:Core/drogui/src/MPU9250.c ****     for(int i = 0 ; i < 3; i++){
- 156:Core/drogui/src/MPU9250.c ****         Serial.print(max_gyro[i] -min_gyro[i]);
- 157:Core/drogui/src/MPU9250.c ****         Serial.print("\t");
- 158:Core/drogui/src/MPU9250.c ****     }
- 159:Core/drogui/src/MPU9250.c ****     Serial.println();*/
- 160:Core/drogui/src/MPU9250.c ****     
- 161:Core/drogui/src/MPU9250.c ****    //120 260 380
- 162:Core/drogui/src/MPU9250.c ****     if((max_gyro[0]-min_gyro[0] < (treshold+220)) && (max_gyro[1]-min_gyro[1] < (treshold+400)) && 
- 983              		.loc 1 162 5 is_stmt 1 view .LVU262
- 984              		.loc 1 162 17 is_stmt 0 view .LVU263
+ 143:Core/drogui/src/MPU9250.c ****     }
+ 144:Core/drogui/src/MPU9250.c ****     /*
+ 145:Core/drogui/src/MPU9250.c ****     for(int i = 0 ; i < 3; i++){
+ 146:Core/drogui/src/MPU9250.c ****         Serial.print(max_gyro[i] -min_gyro[i]);
+ 147:Core/drogui/src/MPU9250.c ****         Serial.print("\t");
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 21
+
+
+ 148:Core/drogui/src/MPU9250.c ****     }
+ 149:Core/drogui/src/MPU9250.c ****     Serial.println();*/
+ 150:Core/drogui/src/MPU9250.c ****     
+ 151:Core/drogui/src/MPU9250.c ****    //120 260 380
+ 152:Core/drogui/src/MPU9250.c ****     if((max_gyro[0]-min_gyro[0] < (treshold+220)) && (max_gyro[1]-min_gyro[1] < (treshold+400)) && 
+ 983              		.loc 1 152 5 is_stmt 1 view .LVU262
+ 984              		.loc 1 152 17 is_stmt 0 view .LVU263
  985 012c 9DED037A 		vldr.32	s14, [sp, #12]
- 986              		.loc 1 162 29 view .LVU264
+ 986              		.loc 1 152 29 view .LVU264
  987 0130 DDED006A 		vldr.32	s13, [sp]
- 988              		.loc 1 162 20 view .LVU265
+ 988              		.loc 1 152 20 view .LVU265
  989 0134 37EE666A 		vsub.f32	s12, s14, s13
- 990              		.loc 1 162 44 view .LVU266
+ 990              		.loc 1 152 44 view .LVU266
  991 0138 DFED237A 		vldr.32	s15, .L50
  992 013c 7BEE277A 		vadd.f32	s15, s22, s15
- 993              		.loc 1 162 7 view .LVU267
+ 993              		.loc 1 152 7 view .LVU267
  994 0140 B4EEE76A 		vcmpe.f32	s12, s15
  995 0144 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  996 0148 36D5     		bpl	.L43
- 997              		.loc 1 162 63 discriminator 1 view .LVU268
+ 997              		.loc 1 152 63 discriminator 1 view .LVU268
  998 014a 9DED046A 		vldr.32	s12, [sp, #16]
- 999              		.loc 1 162 75 discriminator 1 view .LVU269
+ 999              		.loc 1 152 75 discriminator 1 view .LVU269
  1000 014e DDED015A 		vldr.32	s11, [sp, #4]
- 1001              		.loc 1 162 66 discriminator 1 view .LVU270
+ 1001              		.loc 1 152 66 discriminator 1 view .LVU270
  1002 0152 36EE655A 		vsub.f32	s10, s12, s11
- 1003              		.loc 1 162 90 discriminator 1 view .LVU271
+ 1003              		.loc 1 152 90 discriminator 1 view .LVU271
  1004 0156 DFED1D7A 		vldr.32	s15, .L50+4
  1005 015a 7BEE277A 		vadd.f32	s15, s22, s15
- 1006              		.loc 1 162 51 discriminator 1 view .LVU272
+ 1006              		.loc 1 152 51 discriminator 1 view .LVU272
  1007 015e B4EEE75A 		vcmpe.f32	s10, s15
  1008 0162 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  1009 0166 2CD5     		bpl	.L44
- 1010              		.loc 1 162 109 discriminator 2 view .LVU273
+ 1010              		.loc 1 152 109 discriminator 2 view .LVU273
  1011 0168 9DED055A 		vldr.32	s10, [sp, #20]
- 1012              		.loc 1 162 121 discriminator 2 view .LVU274
+ 1012              		.loc 1 152 121 discriminator 2 view .LVU274
  1013 016c DDED024A 		vldr.32	s9, [sp, #8]
- 1014              		.loc 1 162 112 discriminator 2 view .LVU275
+ 1014              		.loc 1 152 112 discriminator 2 view .LVU275
  1015 0170 75EE647A 		vsub.f32	s15, s10, s9
- 1016              		.loc 1 162 136 discriminator 2 view .LVU276
+ 1016              		.loc 1 152 136 discriminator 2 view .LVU276
  1017 0174 9FED164A 		vldr.32	s8, .L50+8
  1018 0178 3BEE04BA 		vadd.f32	s22, s22, s8
  1019              	.LVL60:
- 1020              		.loc 1 162 97 discriminator 2 view .LVU277
+ 1020              		.loc 1 152 97 discriminator 2 view .LVU277
  1021 017c F4EECB7A 		vcmpe.f32	s15, s22
  1022 0180 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  1023 0184 01D4     		bmi	.L49
- 163:Core/drogui/src/MPU9250.c ****         if(cal){
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 22
-
-
- 164:Core/drogui/src/MPU9250.c ****             //Serial.print("Ra");
- 165:Core/drogui/src/MPU9250.c ****             m->off_gx = -(max_gyro[0] + min_gyro[0])/2;
- 166:Core/drogui/src/MPU9250.c ****             m->off_gy = -(max_gyro[1] + min_gyro[1])/2;
- 167:Core/drogui/src/MPU9250.c ****             m->off_gz = -(max_gyro[2] + min_gyro[2])/2;
- 168:Core/drogui/src/MPU9250.c ****         }
- 169:Core/drogui/src/MPU9250.c ****         return true;
- 170:Core/drogui/src/MPU9250.c ****     }
- 171:Core/drogui/src/MPU9250.c ****     return false;
- 1024              		.loc 1 171 12 view .LVU278
+ 153:Core/drogui/src/MPU9250.c ****         if(cal){
+ 154:Core/drogui/src/MPU9250.c ****             //Serial.print("Ra");
+ 155:Core/drogui/src/MPU9250.c ****             m->off_gx = -(max_gyro[0] + min_gyro[0])/2;
+ 156:Core/drogui/src/MPU9250.c ****             m->off_gy = -(max_gyro[1] + min_gyro[1])/2;
+ 157:Core/drogui/src/MPU9250.c ****             m->off_gz = -(max_gyro[2] + min_gyro[2])/2;
+ 158:Core/drogui/src/MPU9250.c ****         }
+ 159:Core/drogui/src/MPU9250.c ****         return true;
+ 160:Core/drogui/src/MPU9250.c ****     }
+ 161:Core/drogui/src/MPU9250.c ****     return false;
+ 1024              		.loc 1 161 12 view .LVU278
  1025 0186 0020     		movs	r0, #0
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 22
+
+
  1026 0188 17E0     		b	.L32
  1027              	.L49:
- 163:Core/drogui/src/MPU9250.c ****         if(cal){
- 1028              		.loc 1 163 9 is_stmt 1 view .LVU279
- 163:Core/drogui/src/MPU9250.c ****         if(cal){
- 1029              		.loc 1 163 11 is_stmt 0 view .LVU280
+ 153:Core/drogui/src/MPU9250.c ****         if(cal){
+ 1028              		.loc 1 153 9 is_stmt 1 view .LVU279
+ 153:Core/drogui/src/MPU9250.c ****         if(cal){
+ 1029              		.loc 1 153 11 is_stmt 0 view .LVU280
  1030 018a 9FB1     		cbz	r7, .L36
- 165:Core/drogui/src/MPU9250.c ****             m->off_gy = -(max_gyro[1] + min_gyro[1])/2;
- 1031              		.loc 1 165 13 is_stmt 1 view .LVU281
- 165:Core/drogui/src/MPU9250.c ****             m->off_gy = -(max_gyro[1] + min_gyro[1])/2;
- 1032              		.loc 1 165 39 is_stmt 0 view .LVU282
+ 155:Core/drogui/src/MPU9250.c ****             m->off_gy = -(max_gyro[1] + min_gyro[1])/2;
+ 1031              		.loc 1 155 13 is_stmt 1 view .LVU281
+ 155:Core/drogui/src/MPU9250.c ****             m->off_gy = -(max_gyro[1] + min_gyro[1])/2;
+ 1032              		.loc 1 155 39 is_stmt 0 view .LVU282
  1033 018c 77EE267A 		vadd.f32	s15, s14, s13
- 165:Core/drogui/src/MPU9250.c ****             m->off_gy = -(max_gyro[1] + min_gyro[1])/2;
- 1034              		.loc 1 165 53 view .LVU283
+ 155:Core/drogui/src/MPU9250.c ****             m->off_gy = -(max_gyro[1] + min_gyro[1])/2;
+ 1034              		.loc 1 155 53 view .LVU283
  1035 0190 B6EE007A 		vmov.f32	s14, #5.0e-1
  1036 0194 67EEC77A 		vnmul.f32	s15, s15, s14
- 165:Core/drogui/src/MPU9250.c ****             m->off_gy = -(max_gyro[1] + min_gyro[1])/2;
- 1037              		.loc 1 165 23 view .LVU284
+ 155:Core/drogui/src/MPU9250.c ****             m->off_gy = -(max_gyro[1] + min_gyro[1])/2;
+ 1037              		.loc 1 155 23 view .LVU284
  1038 0198 C4ED0A7A 		vstr.32	s15, [r4, #40]
- 166:Core/drogui/src/MPU9250.c ****             m->off_gz = -(max_gyro[2] + min_gyro[2])/2;
- 1039              		.loc 1 166 13 is_stmt 1 view .LVU285
- 166:Core/drogui/src/MPU9250.c ****             m->off_gz = -(max_gyro[2] + min_gyro[2])/2;
- 1040              		.loc 1 166 39 is_stmt 0 view .LVU286
+ 156:Core/drogui/src/MPU9250.c ****             m->off_gz = -(max_gyro[2] + min_gyro[2])/2;
+ 1039              		.loc 1 156 13 is_stmt 1 view .LVU285
+ 156:Core/drogui/src/MPU9250.c ****             m->off_gz = -(max_gyro[2] + min_gyro[2])/2;
+ 1040              		.loc 1 156 39 is_stmt 0 view .LVU286
  1041 019c 76EE257A 		vadd.f32	s15, s12, s11
- 166:Core/drogui/src/MPU9250.c ****             m->off_gz = -(max_gyro[2] + min_gyro[2])/2;
- 1042              		.loc 1 166 53 view .LVU287
+ 156:Core/drogui/src/MPU9250.c ****             m->off_gz = -(max_gyro[2] + min_gyro[2])/2;
+ 1042              		.loc 1 156 53 view .LVU287
  1043 01a0 67EEC77A 		vnmul.f32	s15, s15, s14
- 166:Core/drogui/src/MPU9250.c ****             m->off_gz = -(max_gyro[2] + min_gyro[2])/2;
- 1044              		.loc 1 166 23 view .LVU288
+ 156:Core/drogui/src/MPU9250.c ****             m->off_gz = -(max_gyro[2] + min_gyro[2])/2;
+ 1044              		.loc 1 156 23 view .LVU288
  1045 01a4 C4ED0B7A 		vstr.32	s15, [r4, #44]
- 167:Core/drogui/src/MPU9250.c ****         }
- 1046              		.loc 1 167 13 is_stmt 1 view .LVU289
- 167:Core/drogui/src/MPU9250.c ****         }
- 1047              		.loc 1 167 39 is_stmt 0 view .LVU290
+ 157:Core/drogui/src/MPU9250.c ****         }
+ 1046              		.loc 1 157 13 is_stmt 1 view .LVU289
+ 157:Core/drogui/src/MPU9250.c ****         }
+ 1047              		.loc 1 157 39 is_stmt 0 view .LVU290
  1048 01a8 75EE247A 		vadd.f32	s15, s10, s9
- 167:Core/drogui/src/MPU9250.c ****         }
- 1049              		.loc 1 167 53 view .LVU291
+ 157:Core/drogui/src/MPU9250.c ****         }
+ 1049              		.loc 1 157 53 view .LVU291
  1050 01ac 67EEC77A 		vnmul.f32	s15, s15, s14
- 167:Core/drogui/src/MPU9250.c ****         }
- 1051              		.loc 1 167 23 view .LVU292
+ 157:Core/drogui/src/MPU9250.c ****         }
+ 1051              		.loc 1 157 23 view .LVU292
  1052 01b0 C4ED0C7A 		vstr.32	s15, [r4, #48]
  1053              	.L36:
- 169:Core/drogui/src/MPU9250.c ****     }
- 1054              		.loc 1 169 9 is_stmt 1 view .LVU293
- 169:Core/drogui/src/MPU9250.c ****     }
- 1055              		.loc 1 169 16 is_stmt 0 view .LVU294
+ 159:Core/drogui/src/MPU9250.c ****     }
+ 1054              		.loc 1 159 9 is_stmt 1 view .LVU293
+ 159:Core/drogui/src/MPU9250.c ****     }
+ 1055              		.loc 1 159 16 is_stmt 0 view .LVU294
  1056 01b4 0120     		movs	r0, #1
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 23
-
-
  1057 01b6 00E0     		b	.L32
  1058              	.LVL61:
  1059              	.L43:
- 1060              		.loc 1 171 12 view .LVU295
+ 1060              		.loc 1 161 12 view .LVU295
  1061 01b8 0020     		movs	r0, #0
  1062              	.LVL62:
  1063              	.L32:
- 172:Core/drogui/src/MPU9250.c **** }
- 1064              		.loc 1 172 1 view .LVU296
+ 162:Core/drogui/src/MPU9250.c **** }
+ 1064              		.loc 1 162 1 view .LVU296
  1065 01ba 07B0     		add	sp, sp, #28
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 23
+
+
  1066              	.LCFI22:
  1067              		.cfi_remember_state
  1068              		.cfi_def_cfa_offset 52
@@ -1351,8 +1341,8 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  1083              	.L44:
  1084              	.LCFI24:
  1085              		.cfi_restore_state
- 171:Core/drogui/src/MPU9250.c **** }
- 1086              		.loc 1 171 12 view .LVU297
+ 161:Core/drogui/src/MPU9250.c **** }
+ 1086              		.loc 1 161 12 view .LVU297
  1087 01c2 0020     		movs	r0, #0
  1088 01c4 F9E7     		b	.L32
  1089              	.L51:
@@ -1373,63 +1363,63 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  1106              	calibrateGyro:
  1107              	.LVL64:
  1108              	.LFB152:
- 173:Core/drogui/src/MPU9250.c **** void calibrateGyro(mpu9250* m){
- 1109              		.loc 1 173 31 is_stmt 1 view -0
+ 163:Core/drogui/src/MPU9250.c **** void calibrateGyro(mpu9250* m){
+ 1109              		.loc 1 163 31 is_stmt 1 view -0
  1110              		.cfi_startproc
  1111              		@ args = 0, pretend = 0, frame = 0
  1112              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 24
-
-
- 1113              		.loc 1 173 31 is_stmt 0 view .LVU299
+ 1113              		.loc 1 163 31 is_stmt 0 view .LVU299
  1114 0000 10B5     		push	{r4, lr}
  1115              	.LCFI25:
  1116              		.cfi_def_cfa_offset 8
  1117              		.cfi_offset 4, -8
  1118              		.cfi_offset 14, -4
  1119 0002 0446     		mov	r4, r0
- 174:Core/drogui/src/MPU9250.c ****     
- 175:Core/drogui/src/MPU9250.c ****     setReg(CAL_GYR,0);
- 1120              		.loc 1 175 5 is_stmt 1 view .LVU300
+ 164:Core/drogui/src/MPU9250.c ****     
+ 165:Core/drogui/src/MPU9250.c ****     setReg(CAL_GYR,0);
+ 1120              		.loc 1 165 5 is_stmt 1 view .LVU300
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 24
+
+
  1121 0004 9FED0B0A 		vldr.32	s0, .L55
  1122 0008 0420     		movs	r0, #4
  1123              	.LVL65:
- 1124              		.loc 1 175 5 is_stmt 0 view .LVU301
+ 1124              		.loc 1 165 5 is_stmt 0 view .LVU301
  1125 000a FFF7FEFF 		bl	setReg
  1126              	.LVL66:
- 176:Core/drogui/src/MPU9250.c ****     while(!quiet(m,200,0, true));
- 1127              		.loc 1 176 5 is_stmt 1 view .LVU302
+ 166:Core/drogui/src/MPU9250.c ****     while(!quiet(m,200,0, true));
+ 1127              		.loc 1 166 5 is_stmt 1 view .LVU302
  1128              	.L53:
- 1129              		.loc 1 176 33 discriminator 1 view .LVU303
- 1130              		.loc 1 176 10 discriminator 1 view .LVU304
- 1131              		.loc 1 176 12 is_stmt 0 discriminator 1 view .LVU305
+ 1129              		.loc 1 166 33 discriminator 1 view .LVU303
+ 1130              		.loc 1 166 10 discriminator 1 view .LVU304
+ 1131              		.loc 1 166 12 is_stmt 0 discriminator 1 view .LVU305
  1132 000e 0122     		movs	r2, #1
  1133 0010 9FED080A 		vldr.32	s0, .L55
  1134 0014 C821     		movs	r1, #200
  1135 0016 2046     		mov	r0, r4
  1136 0018 FFF7FEFF 		bl	quiet
  1137              	.LVL67:
- 1138              		.loc 1 176 10 discriminator 1 view .LVU306
+ 1138              		.loc 1 166 10 discriminator 1 view .LVU306
  1139 001c 0028     		cmp	r0, #0
  1140 001e F6D0     		beq	.L53
- 177:Core/drogui/src/MPU9250.c ****     setReg(CAL_GYR, 100);
- 1141              		.loc 1 177 5 is_stmt 1 view .LVU307
+ 167:Core/drogui/src/MPU9250.c ****     setReg(CAL_GYR, 100);
+ 1141              		.loc 1 167 5 is_stmt 1 view .LVU307
  1142 0020 9FED050A 		vldr.32	s0, .L55+4
  1143 0024 0420     		movs	r0, #4
  1144 0026 FFF7FEFF 		bl	setReg
  1145              	.LVL68:
- 178:Core/drogui/src/MPU9250.c ****     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
- 1146              		.loc 1 178 5 view .LVU308
+ 168:Core/drogui/src/MPU9250.c ****     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+ 1146              		.loc 1 168 5 view .LVU308
  1147 002a 0221     		movs	r1, #2
  1148 002c 0348     		ldr	r0, .L55+8
  1149 002e FFF7FEFF 		bl	HAL_GPIO_TogglePin
  1150              	.LVL69:
- 179:Core/drogui/src/MPU9250.c **** }
- 1151              		.loc 1 179 1 is_stmt 0 view .LVU309
+ 169:Core/drogui/src/MPU9250.c **** }
+ 1151              		.loc 1 169 1 is_stmt 0 view .LVU309
  1152 0032 10BD     		pop	{r4, pc}
  1153              	.LVL70:
  1154              	.L56:
- 1155              		.loc 1 179 1 view .LVU310
+ 1155              		.loc 1 169 1 view .LVU310
  1156              		.align	2
  1157              	.L55:
  1158 0034 00000000 		.word	0
@@ -1438,9 +1428,6 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  1161              		.cfi_endproc
  1162              	.LFE152:
  1164              		.section	.text.dis3d,"ax",%progbits
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 25
-
-
  1165              		.align	1
  1166              		.global	dis3d
  1167              		.syntax unified
@@ -1450,57 +1437,57 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  1172              	dis3d:
  1173              	.LVL71:
  1174              	.LFB153:
- 180:Core/drogui/src/MPU9250.c **** 
- 181:Core/drogui/src/MPU9250.c **** float dis3d(float x,float y,float z, float a, float b, float c){
- 1175              		.loc 1 181 64 is_stmt 1 view -0
+ 170:Core/drogui/src/MPU9250.c **** 
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 25
+
+
+ 171:Core/drogui/src/MPU9250.c **** float dis3d(float x,float y,float z, float a, float b, float c){
+ 1175              		.loc 1 171 64 is_stmt 1 view -0
  1176              		.cfi_startproc
  1177              		@ args = 0, pretend = 0, frame = 0
  1178              		@ frame_needed = 0, uses_anonymous_args = 0
- 1179              		.loc 1 181 64 is_stmt 0 view .LVU312
+ 1179              		.loc 1 171 64 is_stmt 0 view .LVU312
  1180 0000 08B5     		push	{r3, lr}
  1181              	.LCFI26:
  1182              		.cfi_def_cfa_offset 8
  1183              		.cfi_offset 3, -8
  1184              		.cfi_offset 14, -4
- 182:Core/drogui/src/MPU9250.c ****     return sqrt((x - a)*(x - a) + (y - b)*(y - b) + (z - c)*(z - c));
- 1185              		.loc 1 182 5 is_stmt 1 view .LVU313
- 1186              		.loc 1 182 20 is_stmt 0 view .LVU314
+ 172:Core/drogui/src/MPU9250.c ****     return sqrt((x - a)*(x - a) + (y - b)*(y - b) + (z - c)*(z - c));
+ 1185              		.loc 1 172 5 is_stmt 1 view .LVU313
+ 1186              		.loc 1 172 20 is_stmt 0 view .LVU314
  1187 0002 70EE611A 		vsub.f32	s3, s0, s3
  1188              	.LVL72:
- 1189              		.loc 1 182 24 view .LVU315
+ 1189              		.loc 1 172 24 view .LVU315
  1190 0006 61EEA11A 		vmul.f32	s3, s3, s3
- 1191              		.loc 1 182 38 view .LVU316
+ 1191              		.loc 1 172 38 view .LVU316
  1192 000a 30EEC22A 		vsub.f32	s4, s1, s4
  1193              	.LVL73:
- 1194              		.loc 1 182 42 view .LVU317
+ 1194              		.loc 1 172 42 view .LVU317
  1195 000e 22EE022A 		vmul.f32	s4, s4, s4
- 1196              		.loc 1 182 33 view .LVU318
+ 1196              		.loc 1 172 33 view .LVU318
  1197 0012 71EE821A 		vadd.f32	s3, s3, s4
- 1198              		.loc 1 182 56 view .LVU319
+ 1198              		.loc 1 172 56 view .LVU319
  1199 0016 71EE622A 		vsub.f32	s5, s2, s5
  1200              	.LVL74:
- 1201              		.loc 1 182 60 view .LVU320
+ 1201              		.loc 1 172 60 view .LVU320
  1202 001a 62EEA22A 		vmul.f32	s5, s5, s5
- 1203              		.loc 1 182 12 view .LVU321
+ 1203              		.loc 1 172 12 view .LVU321
  1204 001e 71EEA27A 		vadd.f32	s15, s3, s5
  1205 0022 17EE900A 		vmov	r0, s15
  1206 0026 FFF7FEFF 		bl	__aeabi_f2d
  1207              	.LVL75:
- 1208              		.loc 1 182 12 view .LVU322
+ 1208              		.loc 1 172 12 view .LVU322
  1209 002a 41EC100B 		vmov	d0, r0, r1
  1210 002e FFF7FEFF 		bl	sqrt
  1211              	.LVL76:
  1212 0032 51EC100B 		vmov	r0, r1, d0
  1213 0036 FFF7FEFF 		bl	__aeabi_d2f
  1214              	.LVL77:
- 183:Core/drogui/src/MPU9250.c **** }
- 1215              		.loc 1 183 1 view .LVU323
+ 173:Core/drogui/src/MPU9250.c **** }
+ 1215              		.loc 1 173 1 view .LVU323
  1216 003a 00EE100A 		vmov	s0, r0
  1217 003e 08BD     		pop	{r3, pc}
  1218              		.cfi_endproc
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 26
-
-
  1219              	.LFE153:
  1221              		.global	__aeabi_i2d
  1222              		.global	__aeabi_dmul
@@ -1511,18 +1498,21 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  1227              		.align	1
  1228              		.global	calibrateAccel
  1229              		.syntax unified
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 26
+
+
  1230              		.thumb
  1231              		.thumb_func
  1232              		.fpu fpv5-sp-d16
  1234              	calibrateAccel:
  1235              	.LVL78:
  1236              	.LFB154:
- 184:Core/drogui/src/MPU9250.c **** void calibrateAccel(mpu9250* m){
- 1237              		.loc 1 184 32 is_stmt 1 view -0
+ 174:Core/drogui/src/MPU9250.c **** void calibrateAccel(mpu9250* m){
+ 1237              		.loc 1 174 32 is_stmt 1 view -0
  1238              		.cfi_startproc
  1239              		@ args = 0, pretend = 0, frame = 136
  1240              		@ frame_needed = 0, uses_anonymous_args = 0
- 1241              		.loc 1 184 32 is_stmt 0 view .LVU325
+ 1241              		.loc 1 174 32 is_stmt 0 view .LVU325
  1242 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
  1243              	.LCFI27:
  1244              		.cfi_def_cfa_offset 36
@@ -1546,171 +1536,171 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  1262              	.LCFI29:
  1263              		.cfi_def_cfa_offset 192
  1264 000a 0646     		mov	r6, r0
- 185:Core/drogui/src/MPU9250.c ****     
- 186:Core/drogui/src/MPU9250.c ****     setReg(CAL_ACC,0);
- 1265              		.loc 1 186 5 is_stmt 1 view .LVU326
+ 175:Core/drogui/src/MPU9250.c ****     
+ 176:Core/drogui/src/MPU9250.c ****     setReg(CAL_ACC,0);
+ 1265              		.loc 1 176 5 is_stmt 1 view .LVU326
  1266 000c 9FEDD40A 		vldr.32	s0, .L94+24
  1267 0010 0620     		movs	r0, #6
  1268              	.LVL79:
- 1269              		.loc 1 186 5 is_stmt 0 view .LVU327
+ 1269              		.loc 1 176 5 is_stmt 0 view .LVU327
  1270 0012 FFF7FEFF 		bl	setReg
  1271              	.LVL80:
- 187:Core/drogui/src/MPU9250.c **** 
- 188:Core/drogui/src/MPU9250.c ****     int neq = 4, nval = 2;
- 1272              		.loc 1 188 5 is_stmt 1 view .LVU328
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 27
-
-
- 189:Core/drogui/src/MPU9250.c ****     int tot = neq + nval;
- 1273              		.loc 1 189 5 view .LVU329
- 190:Core/drogui/src/MPU9250.c **** 
- 191:Core/drogui/src/MPU9250.c ****     float acc[tot][3], scale, aux;
- 1274              		.loc 1 191 5 view .LVU330
- 192:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < tot; i++){
- 1275              		.loc 1 192 5 view .LVU331
+ 177:Core/drogui/src/MPU9250.c **** 
+ 178:Core/drogui/src/MPU9250.c ****     int neq = 4, nval = 2;
+ 1272              		.loc 1 178 5 is_stmt 1 view .LVU328
+ 179:Core/drogui/src/MPU9250.c ****     int tot = neq + nval;
+ 1273              		.loc 1 179 5 view .LVU329
+ 180:Core/drogui/src/MPU9250.c **** 
+ 181:Core/drogui/src/MPU9250.c ****     float acc[tot][3], scale, aux;
+ 1274              		.loc 1 181 5 view .LVU330
+ 182:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < tot; i++){
+ 1275              		.loc 1 182 5 view .LVU331
  1276              	.LBB3:
- 1277              		.loc 1 192 9 view .LVU332
- 1278              		.loc 1 192 13 is_stmt 0 view .LVU333
+ 1277              		.loc 1 182 9 view .LVU332
+ 1278              		.loc 1 182 13 is_stmt 0 view .LVU333
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 27
+
+
  1279 0016 0021     		movs	r1, #0
- 1280              		.loc 1 192 5 view .LVU334
+ 1280              		.loc 1 182 5 view .LVU334
  1281 0018 0CE0     		b	.L60
  1282              	.LVL81:
  1283              	.L61:
  1284              	.LBB4:
- 193:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
- 194:Core/drogui/src/MPU9250.c ****             acc[i][j] = 0;
- 1285              		.loc 1 194 13 is_stmt 1 discriminator 3 view .LVU335
- 1286              		.loc 1 194 23 is_stmt 0 discriminator 3 view .LVU336
+ 183:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
+ 184:Core/drogui/src/MPU9250.c ****             acc[i][j] = 0;
+ 1285              		.loc 1 184 13 is_stmt 1 discriminator 3 view .LVU335
+ 1286              		.loc 1 184 23 is_stmt 0 discriminator 3 view .LVU336
  1287 001a 01EB4103 		add	r3, r1, r1, lsl #1
  1288 001e 1344     		add	r3, r3, r2
  1289 0020 22A8     		add	r0, sp, #136
  1290 0022 00EB8303 		add	r3, r0, r3, lsl #2
  1291 0026 0020     		movs	r0, #0
  1292 0028 43F8780C 		str	r0, [r3, #-120]	@ float
- 193:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
- 1293              		.loc 1 193 31 is_stmt 1 discriminator 3 view .LVU337
- 193:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
- 1294              		.loc 1 193 32 is_stmt 0 discriminator 3 view .LVU338
+ 183:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
+ 1293              		.loc 1 183 31 is_stmt 1 discriminator 3 view .LVU337
+ 183:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
+ 1294              		.loc 1 183 32 is_stmt 0 discriminator 3 view .LVU338
  1295 002c 0132     		adds	r2, r2, #1
  1296              	.LVL82:
  1297              	.L62:
- 193:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
- 1298              		.loc 1 193 24 is_stmt 1 discriminator 1 view .LVU339
- 193:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
- 1299              		.loc 1 193 9 is_stmt 0 discriminator 1 view .LVU340
+ 183:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
+ 1298              		.loc 1 183 24 is_stmt 1 discriminator 1 view .LVU339
+ 183:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
+ 1299              		.loc 1 183 9 is_stmt 0 discriminator 1 view .LVU340
  1300 002e 022A     		cmp	r2, #2
  1301 0030 F3DD     		ble	.L61
  1302              	.LBE4:
- 192:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < tot; i++){
- 1303              		.loc 1 192 29 is_stmt 1 discriminator 2 view .LVU341
- 192:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < tot; i++){
- 1304              		.loc 1 192 30 is_stmt 0 discriminator 2 view .LVU342
+ 182:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < tot; i++){
+ 1303              		.loc 1 182 29 is_stmt 1 discriminator 2 view .LVU341
+ 182:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < tot; i++){
+ 1304              		.loc 1 182 30 is_stmt 0 discriminator 2 view .LVU342
  1305 0032 0131     		adds	r1, r1, #1
  1306              	.LVL83:
  1307              	.L60:
- 192:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < tot; i++){
- 1308              		.loc 1 192 20 is_stmt 1 discriminator 1 view .LVU343
- 192:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < tot; i++){
- 1309              		.loc 1 192 5 is_stmt 0 discriminator 1 view .LVU344
+ 182:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < tot; i++){
+ 1308              		.loc 1 182 20 is_stmt 1 discriminator 1 view .LVU343
+ 182:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < tot; i++){
+ 1309              		.loc 1 182 5 is_stmt 0 discriminator 1 view .LVU344
  1310 0034 0529     		cmp	r1, #5
  1311 0036 01DC     		bgt	.L88
  1312              	.LBB5:
- 193:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
- 1313              		.loc 1 193 17 view .LVU345
+ 183:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
+ 1313              		.loc 1 183 17 view .LVU345
  1314 0038 0022     		movs	r2, #0
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 28
-
-
  1315 003a F8E7     		b	.L62
  1316              	.L88:
  1317              	.LBE5:
  1318              	.LBE3:
- 195:Core/drogui/src/MPU9250.c ****         }    
- 196:Core/drogui/src/MPU9250.c ****     }
- 197:Core/drogui/src/MPU9250.c **** 
- 198:Core/drogui/src/MPU9250.c ****     mat A, b, ans;
- 1319              		.loc 1 198 5 is_stmt 1 view .LVU346
- 199:Core/drogui/src/MPU9250.c ****     matInit(&A,3,3);
- 1320              		.loc 1 199 5 view .LVU347
+ 185:Core/drogui/src/MPU9250.c ****         }    
+ 186:Core/drogui/src/MPU9250.c ****     }
+ 187:Core/drogui/src/MPU9250.c **** 
+ 188:Core/drogui/src/MPU9250.c ****     mat A, b, ans;
+ 1319              		.loc 1 188 5 is_stmt 1 view .LVU346
+ 189:Core/drogui/src/MPU9250.c ****     matInit(&A,3,3);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 28
+
+
+ 1320              		.loc 1 189 5 view .LVU347
  1321 003c 0322     		movs	r2, #3
  1322 003e 1146     		mov	r1, r2
  1323              	.LVL84:
- 1324              		.loc 1 199 5 is_stmt 0 view .LVU348
+ 1324              		.loc 1 189 5 is_stmt 0 view .LVU348
  1325 0040 1EA8     		add	r0, sp, #120
  1326 0042 FFF7FEFF 		bl	matInit
  1327              	.LVL85:
- 200:Core/drogui/src/MPU9250.c ****     matInit(&b,3,1);
- 1328              		.loc 1 200 5 is_stmt 1 view .LVU349
+ 190:Core/drogui/src/MPU9250.c ****     matInit(&b,3,1);
+ 1328              		.loc 1 190 5 is_stmt 1 view .LVU349
  1329 0046 0122     		movs	r2, #1
  1330 0048 0321     		movs	r1, #3
  1331 004a 1AA8     		add	r0, sp, #104
  1332 004c FFF7FEFF 		bl	matInit
  1333              	.LVL86:
- 201:Core/drogui/src/MPU9250.c ****     matInit(&ans,3,1);
- 1334              		.loc 1 201 5 view .LVU350
+ 191:Core/drogui/src/MPU9250.c ****     matInit(&ans,3,1);
+ 1334              		.loc 1 191 5 view .LVU350
  1335 0050 0122     		movs	r2, #1
  1336 0052 0321     		movs	r1, #3
  1337 0054 16A8     		add	r0, sp, #88
  1338 0056 FFF7FEFF 		bl	matInit
  1339              	.LVL87:
- 202:Core/drogui/src/MPU9250.c **** 
- 203:Core/drogui/src/MPU9250.c ****     int head = 0, cnt = 0;
- 1340              		.loc 1 203 5 view .LVU351
- 204:Core/drogui/src/MPU9250.c ****     bool done = false, valid;
- 1341              		.loc 1 204 5 view .LVU352
- 205:Core/drogui/src/MPU9250.c ****     
- 206:Core/drogui/src/MPU9250.c ****     while(!done){
- 1342              		.loc 1 206 5 view .LVU353
- 204:Core/drogui/src/MPU9250.c ****     bool done = false, valid;
- 1343              		.loc 1 204 10 is_stmt 0 view .LVU354
+ 192:Core/drogui/src/MPU9250.c **** 
+ 193:Core/drogui/src/MPU9250.c ****     int head = 0, cnt = 0;
+ 1340              		.loc 1 193 5 view .LVU351
+ 194:Core/drogui/src/MPU9250.c ****     bool done = false, valid;
+ 1341              		.loc 1 194 5 view .LVU352
+ 195:Core/drogui/src/MPU9250.c ****     
+ 196:Core/drogui/src/MPU9250.c ****     while(!done){
+ 1342              		.loc 1 196 5 view .LVU353
+ 194:Core/drogui/src/MPU9250.c ****     bool done = false, valid;
+ 1343              		.loc 1 194 10 is_stmt 0 view .LVU354
  1344 005a 0023     		movs	r3, #0
  1345 005c 0193     		str	r3, [sp, #4]
- 203:Core/drogui/src/MPU9250.c ****     bool done = false, valid;
- 1346              		.loc 1 203 19 view .LVU355
+ 193:Core/drogui/src/MPU9250.c ****     bool done = false, valid;
+ 1346              		.loc 1 193 19 view .LVU355
  1347 005e 9B46     		mov	fp, r3
- 203:Core/drogui/src/MPU9250.c ****     bool done = false, valid;
- 1348              		.loc 1 203 9 view .LVU356
+ 193:Core/drogui/src/MPU9250.c ****     bool done = false, valid;
+ 1348              		.loc 1 193 9 view .LVU356
  1349 0060 9846     		mov	r8, r3
- 1350              		.loc 1 206 10 view .LVU357
+ 1350              		.loc 1 196 10 view .LVU357
  1351 0062 27E0     		b	.L63
  1352              	.LVL88:
  1353              	.L80:
  1354              	.LBB6:
  1355              	.LBB7:
- 207:Core/drogui/src/MPU9250.c ****         while(!quiet(m,100,30, false));
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 29
-
-
- 208:Core/drogui/src/MPU9250.c ****         readRawAcc(m);
- 209:Core/drogui/src/MPU9250.c ****         valid = true;
- 210:Core/drogui/src/MPU9250.c ****         for(int i = 1 ; i <= tot-1 ; i++){
- 211:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
- 212:Core/drogui/src/MPU9250.c ****             // Serial.println("quiet ");
- 213:Core/drogui/src/MPU9250.c ****             if(dis3d(m->raw_ax, m->raw_ay, m->raw_az, acc[j][0],acc[j][1],acc[j][2]) < 1000){
- 214:Core/drogui/src/MPU9250.c ****                 valid = false; break;
- 1356              		.loc 1 214 23 view .LVU358
+ 197:Core/drogui/src/MPU9250.c ****         while(!quiet(m,100,30, false));
+ 198:Core/drogui/src/MPU9250.c ****         readRawAcc(m);
+ 199:Core/drogui/src/MPU9250.c ****         valid = true;
+ 200:Core/drogui/src/MPU9250.c ****         for(int i = 1 ; i <= tot-1 ; i++){
+ 201:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
+ 202:Core/drogui/src/MPU9250.c ****             // Serial.println("quiet ");
+ 203:Core/drogui/src/MPU9250.c ****             if(dis3d(m->raw_ax, m->raw_ay, m->raw_az, acc[j][0],acc[j][1],acc[j][2]) < 1000){
+ 204:Core/drogui/src/MPU9250.c ****                 valid = false; break;
+ 1356              		.loc 1 204 23 view .LVU358
  1357 0064 019D     		ldr	r5, [sp, #4]
  1358              	.LVL89:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 29
+
+
  1359              	.L66:
- 1360              		.loc 1 214 23 view .LVU359
+ 1360              		.loc 1 204 23 view .LVU359
  1361              	.LBE7:
  1362              	.LBE6:
- 215:Core/drogui/src/MPU9250.c ****             } 
- 216:Core/drogui/src/MPU9250.c ****         }
- 217:Core/drogui/src/MPU9250.c **** 
- 218:Core/drogui/src/MPU9250.c ****         if(valid){
- 1363              		.loc 1 218 9 is_stmt 1 view .LVU360
- 1364              		.loc 1 218 11 is_stmt 0 view .LVU361
+ 205:Core/drogui/src/MPU9250.c ****             } 
+ 206:Core/drogui/src/MPU9250.c ****         }
+ 207:Core/drogui/src/MPU9250.c **** 
+ 208:Core/drogui/src/MPU9250.c ****         if(valid){
+ 1363              		.loc 1 208 9 is_stmt 1 view .LVU360
+ 1364              		.loc 1 208 11 is_stmt 0 view .LVU361
  1365 0066 002D     		cmp	r5, #0
  1366 0068 60D1     		bne	.L89
  1367              	.L68:
- 219:Core/drogui/src/MPU9250.c ****             HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
- 220:Core/drogui/src/MPU9250.c ****             acc[head][0] = m->raw_ax, acc[head][1] = m->raw_ay, acc[head][2] = m->raw_az;
- 221:Core/drogui/src/MPU9250.c ****             head++, cnt++, head%= tot; 
- 222:Core/drogui/src/MPU9250.c ****         }
- 223:Core/drogui/src/MPU9250.c ****         setReg(CAL_ACC, 100*fmin(cnt,6)/7 );
- 1368              		.loc 1 223 9 is_stmt 1 view .LVU362
- 1369              		.loc 1 223 29 is_stmt 0 view .LVU363
+ 209:Core/drogui/src/MPU9250.c ****             HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+ 210:Core/drogui/src/MPU9250.c ****             acc[head][0] = m->raw_ax, acc[head][1] = m->raw_ay, acc[head][2] = m->raw_az;
+ 211:Core/drogui/src/MPU9250.c ****             head++, cnt++, head%= tot; 
+ 212:Core/drogui/src/MPU9250.c ****         }
+ 213:Core/drogui/src/MPU9250.c ****         setReg(CAL_ACC, 100*fmin(cnt,6)/7 );
+ 1368              		.loc 1 213 9 is_stmt 1 view .LVU362
+ 1369              		.loc 1 213 29 is_stmt 0 view .LVU363
  1370 006a 5846     		mov	r0, fp
  1371 006c FFF7FEFF 		bl	__aeabi_i2d
  1372              	.LVL90:
@@ -1719,109 +1709,109 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  1375 0078 FFF7FEFF 		bl	fmin
  1376              	.LVL91:
  1377 007c 51EC100B 		vmov	r0, r1, d0
- 1378              		.loc 1 223 28 view .LVU364
+ 1378              		.loc 1 213 28 view .LVU364
  1379 0080 0022     		movs	r2, #0
  1380 0082 B84B     		ldr	r3, .L94+28
  1381 0084 FFF7FEFF 		bl	__aeabi_dmul
  1382              	.LVL92:
- 1383              		.loc 1 223 40 view .LVU365
+ 1383              		.loc 1 213 40 view .LVU365
  1384 0088 0022     		movs	r2, #0
  1385 008a B74B     		ldr	r3, .L94+32
  1386 008c FFF7FEFF 		bl	__aeabi_ddiv
  1387              	.LVL93:
- 1388              		.loc 1 223 9 view .LVU366
+ 1388              		.loc 1 213 9 view .LVU366
  1389 0090 FFF7FEFF 		bl	__aeabi_d2f
  1390              	.LVL94:
  1391 0094 00EE100A 		vmov	s0, r0
  1392 0098 0620     		movs	r0, #6
  1393 009a FFF7FEFF 		bl	setReg
  1394              	.LVL95:
- 224:Core/drogui/src/MPU9250.c **** 
- 225:Core/drogui/src/MPU9250.c ****         if(cnt >= tot && valid){
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 30
-
-
- 1395              		.loc 1 225 9 is_stmt 1 view .LVU367
- 1396              		.loc 1 225 23 is_stmt 0 view .LVU368
+ 214:Core/drogui/src/MPU9250.c **** 
+ 215:Core/drogui/src/MPU9250.c ****         if(cnt >= tot && valid){
+ 1395              		.loc 1 215 9 is_stmt 1 view .LVU367
+ 1396              		.loc 1 215 23 is_stmt 0 view .LVU368
  1397 009e BBF1050F 		cmp	fp, #5
  1398 00a2 D4BF     		ite	le
  1399 00a4 4FF00009 		movle	r9, #0
  1400 00a8 05F00109 		andgt	r9, r5, #1
- 1401              		.loc 1 225 11 view .LVU369
+ 1401              		.loc 1 215 11 view .LVU369
  1402 00ac B9F1000F 		cmp	r9, #0
  1403 00b0 40F0AA80 		bne	.L90
  1404              	.LVL96:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 30
+
+
  1405              	.L63:
- 206:Core/drogui/src/MPU9250.c ****         while(!quiet(m,100,30, false));
- 1406              		.loc 1 206 10 is_stmt 1 view .LVU370
+ 196:Core/drogui/src/MPU9250.c ****         while(!quiet(m,100,30, false));
+ 1406              		.loc 1 196 10 is_stmt 1 view .LVU370
  1407 00b4 019B     		ldr	r3, [sp, #4]
  1408 00b6 002B     		cmp	r3, #0
  1409 00b8 40F05E81 		bne	.L91
  1410              	.L64:
- 207:Core/drogui/src/MPU9250.c ****         readRawAcc(m);
- 1411              		.loc 1 207 39 discriminator 1 view .LVU371
- 207:Core/drogui/src/MPU9250.c ****         readRawAcc(m);
- 1412              		.loc 1 207 14 discriminator 1 view .LVU372
- 207:Core/drogui/src/MPU9250.c ****         readRawAcc(m);
- 1413              		.loc 1 207 16 is_stmt 0 discriminator 1 view .LVU373
+ 197:Core/drogui/src/MPU9250.c ****         readRawAcc(m);
+ 1411              		.loc 1 197 39 discriminator 1 view .LVU371
+ 197:Core/drogui/src/MPU9250.c ****         readRawAcc(m);
+ 1412              		.loc 1 197 14 discriminator 1 view .LVU372
+ 197:Core/drogui/src/MPU9250.c ****         readRawAcc(m);
+ 1413              		.loc 1 197 16 is_stmt 0 discriminator 1 view .LVU373
  1414 00bc 0022     		movs	r2, #0
  1415 00be B3EE0E0A 		vmov.f32	s0, #3.0e+1
  1416 00c2 6421     		movs	r1, #100
  1417 00c4 3046     		mov	r0, r6
  1418 00c6 FFF7FEFF 		bl	quiet
  1419              	.LVL97:
- 207:Core/drogui/src/MPU9250.c ****         readRawAcc(m);
- 1420              		.loc 1 207 14 discriminator 1 view .LVU374
+ 197:Core/drogui/src/MPU9250.c ****         readRawAcc(m);
+ 1420              		.loc 1 197 14 discriminator 1 view .LVU374
  1421 00ca 0546     		mov	r5, r0
  1422 00cc 0028     		cmp	r0, #0
  1423 00ce F5D0     		beq	.L64
- 208:Core/drogui/src/MPU9250.c ****         valid = true;
- 1424              		.loc 1 208 9 is_stmt 1 view .LVU375
+ 198:Core/drogui/src/MPU9250.c ****         valid = true;
+ 1424              		.loc 1 198 9 is_stmt 1 view .LVU375
  1425 00d0 3046     		mov	r0, r6
  1426 00d2 FFF7FEFF 		bl	readRawAcc
  1427              	.LVL98:
- 209:Core/drogui/src/MPU9250.c ****         for(int i = 1 ; i <= tot-1 ; i++){
- 1428              		.loc 1 209 9 view .LVU376
- 210:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
- 1429              		.loc 1 210 9 view .LVU377
+ 199:Core/drogui/src/MPU9250.c ****         for(int i = 1 ; i <= tot-1 ; i++){
+ 1428              		.loc 1 199 9 view .LVU376
+ 200:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
+ 1429              		.loc 1 200 9 view .LVU377
  1430              	.LBB9:
- 210:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
- 1431              		.loc 1 210 13 view .LVU378
- 210:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
- 1432              		.loc 1 210 17 is_stmt 0 view .LVU379
+ 200:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
+ 1431              		.loc 1 200 13 view .LVU378
+ 200:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
+ 1432              		.loc 1 200 17 is_stmt 0 view .LVU379
  1433 00d6 0124     		movs	r4, #1
  1434              	.LVL99:
  1435              	.L65:
- 210:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
- 1436              		.loc 1 210 25 is_stmt 1 discriminator 1 view .LVU380
- 210:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
- 1437              		.loc 1 210 9 is_stmt 0 discriminator 1 view .LVU381
+ 200:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
+ 1436              		.loc 1 200 25 is_stmt 1 discriminator 1 view .LVU380
+ 200:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
+ 1437              		.loc 1 200 9 is_stmt 0 discriminator 1 view .LVU381
  1438 00d8 052C     		cmp	r4, #5
  1439 00da C4DC     		bgt	.L66
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 31
-
-
  1440              	.LBB8:
- 211:Core/drogui/src/MPU9250.c ****             // Serial.println("quiet ");
- 1441              		.loc 1 211 13 is_stmt 1 view .LVU382
- 211:Core/drogui/src/MPU9250.c ****             // Serial.println("quiet ");
- 1442              		.loc 1 211 27 is_stmt 0 view .LVU383
+ 201:Core/drogui/src/MPU9250.c ****             // Serial.println("quiet ");
+ 1441              		.loc 1 201 13 is_stmt 1 view .LVU382
+ 201:Core/drogui/src/MPU9250.c ****             // Serial.println("quiet ");
+ 1442              		.loc 1 201 27 is_stmt 0 view .LVU383
  1443 00dc A8EB0402 		sub	r2, r8, r4
- 211:Core/drogui/src/MPU9250.c ****             // Serial.println("quiet ");
- 1444              		.loc 1 211 31 view .LVU384
+ 201:Core/drogui/src/MPU9250.c ****             // Serial.println("quiet ");
+ 1444              		.loc 1 201 31 view .LVU384
  1445 00e0 0632     		adds	r2, r2, #6
- 211:Core/drogui/src/MPU9250.c ****             // Serial.println("quiet ");
- 1446              		.loc 1 211 17 view .LVU385
+ 201:Core/drogui/src/MPU9250.c ****             // Serial.println("quiet ");
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 31
+
+
+ 1446              		.loc 1 201 17 view .LVU385
  1447 00e2 A24B     		ldr	r3, .L94+36
  1448 00e4 83FB0213 		smull	r1, r3, r3, r2
  1449 00e8 A3EBE273 		sub	r3, r3, r2, asr #31
  1450 00ec 03EB4303 		add	r3, r3, r3, lsl #1
  1451 00f0 A2EB4303 		sub	r3, r2, r3, lsl #1
  1452              	.LVL100:
- 213:Core/drogui/src/MPU9250.c ****                 valid = false; break;
- 1453              		.loc 1 213 13 is_stmt 1 view .LVU386
- 213:Core/drogui/src/MPU9250.c ****                 valid = false; break;
- 1454              		.loc 1 213 16 is_stmt 0 view .LVU387
+ 203:Core/drogui/src/MPU9250.c ****                 valid = false; break;
+ 1453              		.loc 1 203 13 is_stmt 1 view .LVU386
+ 203:Core/drogui/src/MPU9250.c ****                 valid = false; break;
+ 1454              		.loc 1 203 16 is_stmt 0 view .LVU387
  1455 00f4 03EB4302 		add	r2, r3, r3, lsl #1
  1456 00f8 22A9     		add	r1, sp, #136
  1457 00fa 01EB8202 		add	r2, r1, r2, lsl #2
@@ -1833,286 +1823,286 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  1463 0112 96ED160A 		vldr.32	s0, [r6, #88]
  1464 0116 FFF7FEFF 		bl	dis3d
  1465              	.LVL101:
- 213:Core/drogui/src/MPU9250.c ****                 valid = false; break;
- 1466              		.loc 1 213 15 view .LVU388
+ 203:Core/drogui/src/MPU9250.c ****                 valid = false; break;
+ 1466              		.loc 1 203 15 view .LVU388
  1467 011a DFED957A 		vldr.32	s15, .L94+40
  1468 011e B4EEE70A 		vcmpe.f32	s0, s15
  1469 0122 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
  1470 0126 9DD4     		bmi	.L80
  1471              	.LBE8:
- 210:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
- 1472              		.loc 1 210 38 is_stmt 1 discriminator 2 view .LVU389
- 210:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
- 1473              		.loc 1 210 39 is_stmt 0 discriminator 2 view .LVU390
+ 200:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
+ 1472              		.loc 1 200 38 is_stmt 1 discriminator 2 view .LVU389
+ 200:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
+ 1473              		.loc 1 200 39 is_stmt 0 discriminator 2 view .LVU390
  1474 0128 0134     		adds	r4, r4, #1
  1475              	.LVL102:
- 210:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
- 1476              		.loc 1 210 39 discriminator 2 view .LVU391
+ 200:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
+ 1476              		.loc 1 200 39 discriminator 2 view .LVU391
  1477 012a D5E7     		b	.L65
  1478              	.LVL103:
  1479              	.L89:
- 210:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
- 1480              		.loc 1 210 39 discriminator 2 view .LVU392
+ 200:Core/drogui/src/MPU9250.c ****             int j = (head - i + tot) % tot;
+ 1480              		.loc 1 200 39 discriminator 2 view .LVU392
  1481              	.LBE9:
- 219:Core/drogui/src/MPU9250.c ****             acc[head][0] = m->raw_ax, acc[head][1] = m->raw_ay, acc[head][2] = m->raw_az;
- 1482              		.loc 1 219 13 is_stmt 1 view .LVU393
+ 209:Core/drogui/src/MPU9250.c ****             acc[head][0] = m->raw_ax, acc[head][1] = m->raw_ay, acc[head][2] = m->raw_az;
+ 1482              		.loc 1 209 13 is_stmt 1 view .LVU393
  1483 012c 0221     		movs	r1, #2
  1484 012e 9148     		ldr	r0, .L94+44
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 32
-
-
  1485 0130 FFF7FEFF 		bl	HAL_GPIO_TogglePin
  1486              	.LVL104:
- 220:Core/drogui/src/MPU9250.c ****             head++, cnt++, head%= tot; 
- 1487              		.loc 1 220 13 view .LVU394
- 220:Core/drogui/src/MPU9250.c ****             head++, cnt++, head%= tot; 
- 1488              		.loc 1 220 29 is_stmt 0 view .LVU395
+ 210:Core/drogui/src/MPU9250.c ****             head++, cnt++, head%= tot; 
+ 1487              		.loc 1 210 13 view .LVU394
+ 210:Core/drogui/src/MPU9250.c ****             head++, cnt++, head%= tot; 
+ 1488              		.loc 1 210 29 is_stmt 0 view .LVU395
  1489 0134 B26D     		ldr	r2, [r6, #88]	@ float
- 220:Core/drogui/src/MPU9250.c ****             head++, cnt++, head%= tot; 
- 1490              		.loc 1 220 26 view .LVU396
+ 210:Core/drogui/src/MPU9250.c ****             head++, cnt++, head%= tot; 
+ 1490              		.loc 1 210 26 view .LVU396
  1491 0136 08EB4803 		add	r3, r8, r8, lsl #1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 32
+
+
  1492 013a 22A9     		add	r1, sp, #136
  1493 013c 01EB8303 		add	r3, r1, r3, lsl #2
  1494 0140 43F8782C 		str	r2, [r3, #-120]	@ float
- 220:Core/drogui/src/MPU9250.c ****             head++, cnt++, head%= tot; 
- 1495              		.loc 1 220 55 view .LVU397
+ 210:Core/drogui/src/MPU9250.c ****             head++, cnt++, head%= tot; 
+ 1495              		.loc 1 210 55 view .LVU397
  1496 0144 F26D     		ldr	r2, [r6, #92]	@ float
- 220:Core/drogui/src/MPU9250.c ****             head++, cnt++, head%= tot; 
- 1497              		.loc 1 220 52 view .LVU398
+ 210:Core/drogui/src/MPU9250.c ****             head++, cnt++, head%= tot; 
+ 1497              		.loc 1 210 52 view .LVU398
  1498 0146 43F8742C 		str	r2, [r3, #-116]	@ float
- 220:Core/drogui/src/MPU9250.c ****             head++, cnt++, head%= tot; 
- 1499              		.loc 1 220 81 view .LVU399
+ 210:Core/drogui/src/MPU9250.c ****             head++, cnt++, head%= tot; 
+ 1499              		.loc 1 210 81 view .LVU399
  1500 014a 326E     		ldr	r2, [r6, #96]	@ float
- 220:Core/drogui/src/MPU9250.c ****             head++, cnt++, head%= tot; 
- 1501              		.loc 1 220 78 view .LVU400
+ 210:Core/drogui/src/MPU9250.c ****             head++, cnt++, head%= tot; 
+ 1501              		.loc 1 210 78 view .LVU400
  1502 014c 43F8702C 		str	r2, [r3, #-112]	@ float
- 221:Core/drogui/src/MPU9250.c ****         }
- 1503              		.loc 1 221 13 is_stmt 1 view .LVU401
- 221:Core/drogui/src/MPU9250.c ****         }
- 1504              		.loc 1 221 17 is_stmt 0 view .LVU402
+ 211:Core/drogui/src/MPU9250.c ****         }
+ 1503              		.loc 1 211 13 is_stmt 1 view .LVU401
+ 211:Core/drogui/src/MPU9250.c ****         }
+ 1504              		.loc 1 211 17 is_stmt 0 view .LVU402
  1505 0150 08F10103 		add	r3, r8, #1
  1506              	.LVL105:
- 221:Core/drogui/src/MPU9250.c ****         }
- 1507              		.loc 1 221 24 view .LVU403
+ 211:Core/drogui/src/MPU9250.c ****         }
+ 1507              		.loc 1 211 24 view .LVU403
  1508 0154 0BF1010B 		add	fp, fp, #1
  1509              	.LVL106:
- 221:Core/drogui/src/MPU9250.c ****         }
- 1510              		.loc 1 221 32 view .LVU404
+ 211:Core/drogui/src/MPU9250.c ****         }
+ 1510              		.loc 1 211 32 view .LVU404
  1511 0158 844A     		ldr	r2, .L94+36
  1512 015a 82FB0328 		smull	r2, r8, r2, r3
  1513 015e A8EBE378 		sub	r8, r8, r3, asr #31
  1514 0162 08EB4808 		add	r8, r8, r8, lsl #1
  1515 0166 A3EB4808 		sub	r8, r3, r8, lsl #1
  1516              	.LVL107:
- 221:Core/drogui/src/MPU9250.c ****         }
- 1517              		.loc 1 221 32 view .LVU405
+ 211:Core/drogui/src/MPU9250.c ****         }
+ 1517              		.loc 1 211 32 view .LVU405
  1518 016a 7EE7     		b	.L68
  1519              	.LVL108:
  1520              	.L71:
  1521              	.LBB10:
  1522              	.LBB11:
- 226:Core/drogui/src/MPU9250.c **** 
- 227:Core/drogui/src/MPU9250.c ****             for(int i = 1 ; i <= neq-1; i++){
- 228:Core/drogui/src/MPU9250.c ****                 aux = 0;
- 229:Core/drogui/src/MPU9250.c ****                 for(int j = 0; j < 3; j++){
- 230:Core/drogui/src/MPU9250.c ****                     setMatVal(&A, i-1, j, 2*(acc[(head + i-1)%6][j] - acc[(head + i)%6][j]));
- 1523              		.loc 1 230 21 is_stmt 1 discriminator 3 view .LVU406
- 1524              		.loc 1 230 56 is_stmt 0 discriminator 3 view .LVU407
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 33
-
-
+ 216:Core/drogui/src/MPU9250.c **** 
+ 217:Core/drogui/src/MPU9250.c ****             for(int i = 1 ; i <= neq-1; i++){
+ 218:Core/drogui/src/MPU9250.c ****                 aux = 0;
+ 219:Core/drogui/src/MPU9250.c ****                 for(int j = 0; j < 3; j++){
+ 220:Core/drogui/src/MPU9250.c ****                     setMatVal(&A, i-1, j, 2*(acc[(head + i-1)%6][j] - acc[(head + i)%6][j]));
+ 1523              		.loc 1 220 21 is_stmt 1 discriminator 3 view .LVU406
+ 1524              		.loc 1 220 56 is_stmt 0 discriminator 3 view .LVU407
  1525 016c 08EB0A02 		add	r2, r8, r10
- 1526              		.loc 1 230 59 discriminator 3 view .LVU408
+ 1526              		.loc 1 220 59 discriminator 3 view .LVU408
  1527 0170 511E     		subs	r1, r2, #1
- 1528              		.loc 1 230 62 discriminator 3 view .LVU409
+ 1528              		.loc 1 220 62 discriminator 3 view .LVU409
  1529 0172 7E4B     		ldr	r3, .L94+36
  1530 0174 83FB0104 		smull	r0, r4, r3, r1
  1531 0178 A4EBE174 		sub	r4, r4, r1, asr #31
  1532 017c 04EB4404 		add	r4, r4, r4, lsl #1
  1533 0180 A1EB4404 		sub	r4, r1, r4, lsl #1
- 1534              		.loc 1 230 65 discriminator 3 view .LVU410
+ 1534              		.loc 1 220 65 discriminator 3 view .LVU410
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 33
+
+
  1535 0184 04EB4404 		add	r4, r4, r4, lsl #1
  1536 0188 2C44     		add	r4, r4, r5
  1537 018a 22A9     		add	r1, sp, #136
  1538 018c 01EB8404 		add	r4, r1, r4, lsl #2
  1539 0190 14ED1E0A 		vldr.32	s0, [r4, #-120]
- 1540              		.loc 1 230 85 discriminator 3 view .LVU411
+ 1540              		.loc 1 220 85 discriminator 3 view .LVU411
  1541 0194 83FB0213 		smull	r1, r3, r3, r2
  1542 0198 A3EBE273 		sub	r3, r3, r2, asr #31
  1543 019c 03EB4303 		add	r3, r3, r3, lsl #1
  1544 01a0 A2EB4303 		sub	r3, r2, r3, lsl #1
- 1545              		.loc 1 230 88 discriminator 3 view .LVU412
+ 1545              		.loc 1 220 88 discriminator 3 view .LVU412
  1546 01a4 03EB4303 		add	r3, r3, r3, lsl #1
  1547 01a8 5F19     		adds	r7, r3, r5
  1548 01aa 22AB     		add	r3, sp, #136
  1549 01ac 03EB8707 		add	r7, r3, r7, lsl #2
  1550 01b0 57ED1E7A 		vldr.32	s15, [r7, #-120]
- 1551              		.loc 1 230 69 discriminator 3 view .LVU413
+ 1551              		.loc 1 220 69 discriminator 3 view .LVU413
  1552 01b4 30EE670A 		vsub.f32	s0, s0, s15
- 1553              		.loc 1 230 21 discriminator 3 view .LVU414
+ 1553              		.loc 1 220 21 discriminator 3 view .LVU414
  1554 01b8 30EE000A 		vadd.f32	s0, s0, s0
  1555 01bc 2A46     		mov	r2, r5
  1556 01be 0AF1FF31 		add	r1, r10, #-1
  1557 01c2 1EA8     		add	r0, sp, #120
  1558 01c4 FFF7FEFF 		bl	setMatVal
  1559              	.LVL109:
- 231:Core/drogui/src/MPU9250.c ****                     //x2*x2-x1*x1+y2*y2-y1*y1+z2*z2-z1*z1 = 2*c1*(x1-x2)+2*c2*(y1-y2)+2*c3*(z1-z2)
- 232:Core/drogui/src/MPU9250.c ****                     aux += acc[(head + i)%6][j]*acc[(head + i)%6][j] - acc[(head + i-1)%6][j]*acc[(
- 1560              		.loc 1 232 21 is_stmt 1 discriminator 3 view .LVU415
- 1561              		.loc 1 232 45 is_stmt 0 discriminator 3 view .LVU416
+ 221:Core/drogui/src/MPU9250.c ****                     //x2*x2-x1*x1+y2*y2-y1*y1+z2*z2-z1*z1 = 2*c1*(x1-x2)+2*c2*(y1-y2)+2*c3*(z1-z2)
+ 222:Core/drogui/src/MPU9250.c ****                     aux += acc[(head + i)%6][j]*acc[(head + i)%6][j] - acc[(head + i-1)%6][j]*acc[(
+ 1560              		.loc 1 222 21 is_stmt 1 discriminator 3 view .LVU415
+ 1561              		.loc 1 222 45 is_stmt 0 discriminator 3 view .LVU416
  1562 01c8 57ED1E7A 		vldr.32	s15, [r7, #-120]
- 1563              		.loc 1 232 48 discriminator 3 view .LVU417
+ 1563              		.loc 1 222 48 discriminator 3 view .LVU417
  1564 01cc 67EEA77A 		vmul.f32	s15, s15, s15
- 1565              		.loc 1 232 91 discriminator 3 view .LVU418
+ 1565              		.loc 1 222 91 discriminator 3 view .LVU418
  1566 01d0 14ED1E7A 		vldr.32	s14, [r4, #-120]
- 1567              		.loc 1 232 94 discriminator 3 view .LVU419
+ 1567              		.loc 1 222 94 discriminator 3 view .LVU419
  1568 01d4 27EE077A 		vmul.f32	s14, s14, s14
- 1569              		.loc 1 232 70 discriminator 3 view .LVU420
+ 1569              		.loc 1 222 70 discriminator 3 view .LVU420
  1570 01d8 77EEC77A 		vsub.f32	s15, s15, s14
- 1571              		.loc 1 232 25 discriminator 3 view .LVU421
+ 1571              		.loc 1 222 25 discriminator 3 view .LVU421
  1572 01dc 38EE278A 		vadd.f32	s16, s16, s15
  1573              	.LVL110:
- 229:Core/drogui/src/MPU9250.c ****                     setMatVal(&A, i-1, j, 2*(acc[(head + i-1)%6][j] - acc[(head + i)%6][j]));
- 1574              		.loc 1 229 39 is_stmt 1 discriminator 3 view .LVU422
- 229:Core/drogui/src/MPU9250.c ****                     setMatVal(&A, i-1, j, 2*(acc[(head + i-1)%6][j] - acc[(head + i)%6][j]));
- 1575              		.loc 1 229 40 is_stmt 0 discriminator 3 view .LVU423
+ 219:Core/drogui/src/MPU9250.c ****                     setMatVal(&A, i-1, j, 2*(acc[(head + i-1)%6][j] - acc[(head + i)%6][j]));
+ 1574              		.loc 1 219 39 is_stmt 1 discriminator 3 view .LVU422
+ 219:Core/drogui/src/MPU9250.c ****                     setMatVal(&A, i-1, j, 2*(acc[(head + i-1)%6][j] - acc[(head + i)%6][j]));
+ 1575              		.loc 1 219 40 is_stmt 0 discriminator 3 view .LVU423
  1576 01e0 0135     		adds	r5, r5, #1
  1577              	.LVL111:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 34
-
-
  1578              	.L72:
- 229:Core/drogui/src/MPU9250.c ****                     setMatVal(&A, i-1, j, 2*(acc[(head + i-1)%6][j] - acc[(head + i)%6][j]));
- 1579              		.loc 1 229 32 is_stmt 1 discriminator 1 view .LVU424
- 229:Core/drogui/src/MPU9250.c ****                     setMatVal(&A, i-1, j, 2*(acc[(head + i-1)%6][j] - acc[(head + i)%6][j]));
- 1580              		.loc 1 229 17 is_stmt 0 discriminator 1 view .LVU425
+ 219:Core/drogui/src/MPU9250.c ****                     setMatVal(&A, i-1, j, 2*(acc[(head + i-1)%6][j] - acc[(head + i)%6][j]));
+ 1579              		.loc 1 219 32 is_stmt 1 discriminator 1 view .LVU424
+ 219:Core/drogui/src/MPU9250.c ****                     setMatVal(&A, i-1, j, 2*(acc[(head + i-1)%6][j] - acc[(head + i)%6][j]));
+ 1580              		.loc 1 219 17 is_stmt 0 discriminator 1 view .LVU425
  1581 01e2 022D     		cmp	r5, #2
  1582 01e4 C2DD     		ble	.L71
  1583              	.LBE11:
- 233:Core/drogui/src/MPU9250.c ****                 }
- 234:Core/drogui/src/MPU9250.c ****                 setMatVal(&b, i-1, 0, aux);
- 1584              		.loc 1 234 17 is_stmt 1 discriminator 2 view .LVU426
+ 223:Core/drogui/src/MPU9250.c ****                 }
+ 224:Core/drogui/src/MPU9250.c ****                 setMatVal(&b, i-1, 0, aux);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 34
+
+
+ 1584              		.loc 1 224 17 is_stmt 1 discriminator 2 view .LVU426
  1585 01e6 B0EE480A 		vmov.f32	s0, s16
  1586 01ea 0022     		movs	r2, #0
  1587 01ec 0AF1FF31 		add	r1, r10, #-1
  1588 01f0 1AA8     		add	r0, sp, #104
  1589 01f2 FFF7FEFF 		bl	setMatVal
  1590              	.LVL112:
- 227:Core/drogui/src/MPU9250.c ****                 aux = 0;
- 1591              		.loc 1 227 41 discriminator 2 view .LVU427
- 227:Core/drogui/src/MPU9250.c ****                 aux = 0;
- 1592              		.loc 1 227 42 is_stmt 0 discriminator 2 view .LVU428
+ 217:Core/drogui/src/MPU9250.c ****                 aux = 0;
+ 1591              		.loc 1 217 41 discriminator 2 view .LVU427
+ 217:Core/drogui/src/MPU9250.c ****                 aux = 0;
+ 1592              		.loc 1 217 42 is_stmt 0 discriminator 2 view .LVU428
  1593 01f6 0AF1010A 		add	r10, r10, #1
  1594              	.LVL113:
  1595              	.L69:
- 227:Core/drogui/src/MPU9250.c ****                 aux = 0;
- 1596              		.loc 1 227 29 is_stmt 1 discriminator 1 view .LVU429
- 227:Core/drogui/src/MPU9250.c ****                 aux = 0;
- 1597              		.loc 1 227 13 is_stmt 0 discriminator 1 view .LVU430
+ 217:Core/drogui/src/MPU9250.c ****                 aux = 0;
+ 1596              		.loc 1 217 29 is_stmt 1 discriminator 1 view .LVU429
+ 217:Core/drogui/src/MPU9250.c ****                 aux = 0;
+ 1597              		.loc 1 217 13 is_stmt 0 discriminator 1 view .LVU430
  1598 01fa BAF1030F 		cmp	r10, #3
  1599 01fe 06DC     		bgt	.L92
  1600              	.LBB12:
- 229:Core/drogui/src/MPU9250.c ****                     setMatVal(&A, i-1, j, 2*(acc[(head + i-1)%6][j] - acc[(head + i)%6][j]));
- 1601              		.loc 1 229 25 view .LVU431
+ 219:Core/drogui/src/MPU9250.c ****                     setMatVal(&A, i-1, j, 2*(acc[(head + i-1)%6][j] - acc[(head + i)%6][j]));
+ 1601              		.loc 1 219 25 view .LVU431
  1602 0200 0025     		movs	r5, #0
  1603              	.LBE12:
- 228:Core/drogui/src/MPU9250.c ****                 for(int j = 0; j < 3; j++){
- 1604              		.loc 1 228 21 view .LVU432
+ 218:Core/drogui/src/MPU9250.c ****                 for(int j = 0; j < 3; j++){
+ 1604              		.loc 1 218 21 view .LVU432
  1605 0202 9FED578A 		vldr.32	s16, .L94+24
  1606 0206 ECE7     		b	.L72
  1607              	.LVL114:
  1608              	.L90:
- 227:Core/drogui/src/MPU9250.c ****                 aux = 0;
- 1609              		.loc 1 227 21 view .LVU433
+ 217:Core/drogui/src/MPU9250.c ****                 aux = 0;
+ 1609              		.loc 1 217 21 view .LVU433
  1610 0208 4FF0010A 		mov	r10, #1
  1611 020c F5E7     		b	.L69
  1612              	.LVL115:
  1613              	.L92:
- 227:Core/drogui/src/MPU9250.c ****                 aux = 0;
- 1614              		.loc 1 227 21 view .LVU434
+ 217:Core/drogui/src/MPU9250.c ****                 aux = 0;
+ 1614              		.loc 1 217 21 view .LVU434
  1615              	.LBE10:
- 235:Core/drogui/src/MPU9250.c ****             }
- 236:Core/drogui/src/MPU9250.c **** 
- 237:Core/drogui/src/MPU9250.c ****             gaussElimination3x3(&A, &b, &ans);
- 1616              		.loc 1 237 13 is_stmt 1 view .LVU435
+ 225:Core/drogui/src/MPU9250.c ****             }
+ 226:Core/drogui/src/MPU9250.c **** 
+ 227:Core/drogui/src/MPU9250.c ****             gaussElimination3x3(&A, &b, &ans);
+ 1616              		.loc 1 227 13 is_stmt 1 view .LVU435
  1617 020e 16AA     		add	r2, sp, #88
  1618 0210 1AA9     		add	r1, sp, #104
  1619 0212 1EA8     		add	r0, sp, #120
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 35
-
-
  1620 0214 FFF7FEFF 		bl	gaussElimination3x3
  1621              	.LVL116:
- 238:Core/drogui/src/MPU9250.c ****             aux = 0;
- 1622              		.loc 1 238 13 view .LVU436
- 239:Core/drogui/src/MPU9250.c ****             for(int i = 0; i < 3; i++){
- 1623              		.loc 1 239 13 view .LVU437
+ 228:Core/drogui/src/MPU9250.c ****             aux = 0;
+ 1622              		.loc 1 228 13 view .LVU436
+ 229:Core/drogui/src/MPU9250.c ****             for(int i = 0; i < 3; i++){
+ 1623              		.loc 1 229 13 view .LVU437
  1624              	.LBB13:
- 1625              		.loc 1 239 17 view .LVU438
- 1626              		.loc 1 239 21 is_stmt 0 view .LVU439
+ 1625              		.loc 1 229 17 view .LVU438
+ 1626              		.loc 1 229 21 is_stmt 0 view .LVU439
  1627 0218 0025     		movs	r5, #0
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 35
+
+
  1628              	.LBE13:
- 238:Core/drogui/src/MPU9250.c ****             aux = 0;
- 1629              		.loc 1 238 17 view .LVU440
+ 228:Core/drogui/src/MPU9250.c ****             aux = 0;
+ 1629              		.loc 1 228 17 view .LVU440
  1630 021a 9FED519A 		vldr.32	s18, .L94+24
  1631              	.LVL117:
  1632              	.L73:
  1633              	.LBB14:
- 1634              		.loc 1 239 28 is_stmt 1 discriminator 1 view .LVU441
- 1635              		.loc 1 239 13 is_stmt 0 discriminator 1 view .LVU442
+ 1634              		.loc 1 229 28 is_stmt 1 discriminator 1 view .LVU441
+ 1635              		.loc 1 229 13 is_stmt 0 discriminator 1 view .LVU442
  1636 021e 022D     		cmp	r5, #2
  1637 0220 1DDC     		bgt	.L93
- 240:Core/drogui/src/MPU9250.c ****                 aux += (acc[head][i] + getMatVal(&ans, i, 0))*(acc[head][i] + getMatVal(&ans, i, 0)
- 1638              		.loc 1 240 17 is_stmt 1 discriminator 3 view .LVU443
- 1639              		.loc 1 240 34 is_stmt 0 discriminator 3 view .LVU444
+ 230:Core/drogui/src/MPU9250.c ****                 aux += (acc[head][i] + getMatVal(&ans, i, 0))*(acc[head][i] + getMatVal(&ans, i, 0)
+ 1638              		.loc 1 230 17 is_stmt 1 discriminator 3 view .LVU443
+ 1639              		.loc 1 230 34 is_stmt 0 discriminator 3 view .LVU444
  1640 0222 08EB4804 		add	r4, r8, r8, lsl #1
  1641 0226 2C44     		add	r4, r4, r5
  1642 0228 22AB     		add	r3, sp, #136
  1643 022a 03EB8404 		add	r4, r3, r4, lsl #2
  1644 022e 14ED1E8A 		vldr.32	s16, [r4, #-120]
- 1645              		.loc 1 240 40 discriminator 3 view .LVU445
+ 1645              		.loc 1 230 40 discriminator 3 view .LVU445
  1646 0232 0022     		movs	r2, #0
  1647 0234 2946     		mov	r1, r5
  1648 0236 16A8     		add	r0, sp, #88
  1649 0238 FFF7FEFF 		bl	getMatVal
  1650              	.LVL118:
- 1651              		.loc 1 240 38 discriminator 3 view .LVU446
+ 1651              		.loc 1 230 38 discriminator 3 view .LVU446
  1652 023c 38EE008A 		vadd.f32	s16, s16, s0
- 1653              		.loc 1 240 73 discriminator 3 view .LVU447
+ 1653              		.loc 1 230 73 discriminator 3 view .LVU447
  1654 0240 54ED1E8A 		vldr.32	s17, [r4, #-120]
- 1655              		.loc 1 240 79 discriminator 3 view .LVU448
+ 1655              		.loc 1 230 79 discriminator 3 view .LVU448
  1656 0244 0022     		movs	r2, #0
  1657 0246 2946     		mov	r1, r5
  1658 0248 16A8     		add	r0, sp, #88
  1659 024a FFF7FEFF 		bl	getMatVal
  1660              	.LVL119:
- 1661              		.loc 1 240 77 discriminator 3 view .LVU449
+ 1661              		.loc 1 230 77 discriminator 3 view .LVU449
  1662 024e 78EE808A 		vadd.f32	s17, s17, s0
- 1663              		.loc 1 240 62 discriminator 3 view .LVU450
+ 1663              		.loc 1 230 62 discriminator 3 view .LVU450
  1664 0252 28EE288A 		vmul.f32	s16, s16, s17
- 1665              		.loc 1 240 21 discriminator 3 view .LVU451
+ 1665              		.loc 1 230 21 discriminator 3 view .LVU451
  1666 0256 39EE089A 		vadd.f32	s18, s18, s16
  1667              	.LVL120:
- 239:Core/drogui/src/MPU9250.c ****             for(int i = 0; i < 3; i++){
- 1668              		.loc 1 239 35 is_stmt 1 discriminator 3 view .LVU452
- 239:Core/drogui/src/MPU9250.c ****             for(int i = 0; i < 3; i++){
- 1669              		.loc 1 239 36 is_stmt 0 discriminator 3 view .LVU453
+ 229:Core/drogui/src/MPU9250.c ****             for(int i = 0; i < 3; i++){
+ 1668              		.loc 1 229 35 is_stmt 1 discriminator 3 view .LVU452
+ 229:Core/drogui/src/MPU9250.c ****             for(int i = 0; i < 3; i++){
+ 1669              		.loc 1 229 36 is_stmt 0 discriminator 3 view .LVU453
  1670 025a 0135     		adds	r5, r5, #1
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 36
-
-
  1671              	.LVL121:
- 239:Core/drogui/src/MPU9250.c ****             for(int i = 0; i < 3; i++){
- 1672              		.loc 1 239 36 discriminator 3 view .LVU454
+ 229:Core/drogui/src/MPU9250.c ****             for(int i = 0; i < 3; i++){
+ 1672              		.loc 1 229 36 discriminator 3 view .LVU454
  1673 025c DFE7     		b	.L73
  1674              	.L93:
- 239:Core/drogui/src/MPU9250.c ****             for(int i = 0; i < 3; i++){
- 1675              		.loc 1 239 36 discriminator 3 view .LVU455
+ 229:Core/drogui/src/MPU9250.c ****             for(int i = 0; i < 3; i++){
+ 1675              		.loc 1 229 36 discriminator 3 view .LVU455
  1676              	.LBE14:
- 241:Core/drogui/src/MPU9250.c ****             }
- 242:Core/drogui/src/MPU9250.c ****             scale = sqrt(aux/G/G);
- 1677              		.loc 1 242 13 is_stmt 1 view .LVU456
- 1678              		.loc 1 242 29 is_stmt 0 view .LVU457
+ 231:Core/drogui/src/MPU9250.c ****             }
+ 232:Core/drogui/src/MPU9250.c ****             scale = sqrt(aux/G/G);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 36
+
+
+ 1677              		.loc 1 232 13 is_stmt 1 view .LVU456
+ 1678              		.loc 1 232 29 is_stmt 0 view .LVU457
  1679 025e 19EE100A 		vmov	r0, s18
  1680 0262 FFF7FEFF 		bl	__aeabi_f2d
  1681              	.LVL122:
@@ -2120,7 +2110,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  1683 0268 D3E90023 		ldrd	r2, [r3]
  1684 026c FFF7FEFF 		bl	__aeabi_ddiv
  1685              	.LVL123:
- 1686              		.loc 1 242 21 view .LVU458
+ 1686              		.loc 1 232 21 view .LVU458
  1687 0270 37A3     		adr	r3, .L94+8
  1688 0272 D3E90023 		ldrd	r2, [r3]
  1689 0276 FFF7FEFF 		bl	__aeabi_ddiv
@@ -2129,168 +2119,168 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  1692 027e FFF7FEFF 		bl	sqrt
  1693              	.LVL125:
  1694 0282 51EC100B 		vmov	r0, r1, d0
- 1695              		.loc 1 242 19 view .LVU459
+ 1695              		.loc 1 232 19 view .LVU459
  1696 0286 FFF7FEFF 		bl	__aeabi_d2f
  1697              	.LVL126:
  1698 028a 09EE900A 		vmov	s19, r0
  1699              	.LVL127:
- 243:Core/drogui/src/MPU9250.c **** 
- 244:Core/drogui/src/MPU9250.c ****             valid = true;
- 1700              		.loc 1 244 13 is_stmt 1 view .LVU460
- 245:Core/drogui/src/MPU9250.c ****             for(int i = neq ; i <= tot-1; i++){
- 1701              		.loc 1 245 13 view .LVU461
+ 233:Core/drogui/src/MPU9250.c **** 
+ 234:Core/drogui/src/MPU9250.c ****             valid = true;
+ 1700              		.loc 1 234 13 is_stmt 1 view .LVU460
+ 235:Core/drogui/src/MPU9250.c ****             for(int i = neq ; i <= tot-1; i++){
+ 1701              		.loc 1 235 13 view .LVU461
  1702              	.LBB15:
- 1703              		.loc 1 245 17 view .LVU462
- 1704              		.loc 1 245 21 is_stmt 0 view .LVU463
+ 1703              		.loc 1 235 17 view .LVU462
+ 1704              		.loc 1 235 21 is_stmt 0 view .LVU463
  1705 028e 0425     		movs	r5, #4
  1706              	.LVL128:
- 1707              		.loc 1 245 13 view .LVU464
+ 1707              		.loc 1 235 13 view .LVU464
  1708 0290 49E0     		b	.L75
  1709              	.LVL129:
  1710              	.L76:
  1711              	.LBB16:
- 246:Core/drogui/src/MPU9250.c ****                 aux = 0;
- 247:Core/drogui/src/MPU9250.c ****                 for(int j= 0; j < 3; j++){
- 248:Core/drogui/src/MPU9250.c ****                     aux += (acc[(head+i)%tot][j] + getMatVal(&ans, j, 0))*(acc[(head+i)%tot][j] + g
- 1712              		.loc 1 248 21 is_stmt 1 discriminator 3 view .LVU465
- 1713              		.loc 1 248 38 is_stmt 0 discriminator 3 view .LVU466
+ 236:Core/drogui/src/MPU9250.c ****                 aux = 0;
+ 237:Core/drogui/src/MPU9250.c ****                 for(int j= 0; j < 3; j++){
+ 238:Core/drogui/src/MPU9250.c ****                     aux += (acc[(head+i)%tot][j] + getMatVal(&ans, j, 0))*(acc[(head+i)%tot][j] + g
+ 1712              		.loc 1 238 21 is_stmt 1 discriminator 3 view .LVU465
+ 1713              		.loc 1 238 38 is_stmt 0 discriminator 3 view .LVU466
  1714 0292 08EB0502 		add	r2, r8, r5
- 1715              		.loc 1 248 41 discriminator 3 view .LVU467
+ 1715              		.loc 1 238 41 discriminator 3 view .LVU467
  1716 0296 354B     		ldr	r3, .L94+36
  1717 0298 83FB0213 		smull	r1, r3, r3, r2
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 37
-
-
  1718 029c A3EBE273 		sub	r3, r3, r2, asr #31
  1719 02a0 03EB4303 		add	r3, r3, r3, lsl #1
  1720 02a4 A2EB4303 		sub	r3, r2, r3, lsl #1
- 1721              		.loc 1 248 46 discriminator 3 view .LVU468
+ 1721              		.loc 1 238 46 discriminator 3 view .LVU468
  1722 02a8 03EB4303 		add	r3, r3, r3, lsl #1
  1723 02ac DC19     		adds	r4, r3, r7
  1724 02ae 22AB     		add	r3, sp, #136
  1725 02b0 03EB8404 		add	r4, r3, r4, lsl #2
  1726 02b4 14ED1E8A 		vldr.32	s16, [r4, #-120]
- 1727              		.loc 1 248 52 discriminator 3 view .LVU469
+ 1727              		.loc 1 238 52 discriminator 3 view .LVU469
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 37
+
+
  1728 02b8 0022     		movs	r2, #0
  1729 02ba 3946     		mov	r1, r7
  1730 02bc 16A8     		add	r0, sp, #88
  1731 02be FFF7FEFF 		bl	getMatVal
  1732              	.LVL130:
- 1733              		.loc 1 248 50 discriminator 3 view .LVU470
+ 1733              		.loc 1 238 50 discriminator 3 view .LVU470
  1734 02c2 38EE008A 		vadd.f32	s16, s16, s0
- 1735              		.loc 1 248 93 discriminator 3 view .LVU471
+ 1735              		.loc 1 238 93 discriminator 3 view .LVU471
  1736 02c6 54ED1E8A 		vldr.32	s17, [r4, #-120]
- 1737              		.loc 1 248 99 discriminator 3 view .LVU472
+ 1737              		.loc 1 238 99 discriminator 3 view .LVU472
  1738 02ca 0022     		movs	r2, #0
  1739 02cc 3946     		mov	r1, r7
  1740 02ce 16A8     		add	r0, sp, #88
  1741 02d0 FFF7FEFF 		bl	getMatVal
  1742              	.LVL131:
- 1743              		.loc 1 248 97 discriminator 3 view .LVU473
+ 1743              		.loc 1 238 97 discriminator 3 view .LVU473
  1744 02d4 78EE808A 		vadd.f32	s17, s17, s0
- 1745              		.loc 1 248 74 discriminator 3 view .LVU474
+ 1745              		.loc 1 238 74 discriminator 3 view .LVU474
  1746 02d8 28EE288A 		vmul.f32	s16, s16, s17
- 1747              		.loc 1 248 25 discriminator 3 view .LVU475
+ 1747              		.loc 1 238 25 discriminator 3 view .LVU475
  1748 02dc 39EE089A 		vadd.f32	s18, s18, s16
  1749              	.LVL132:
- 247:Core/drogui/src/MPU9250.c ****                     aux += (acc[(head+i)%tot][j] + getMatVal(&ans, j, 0))*(acc[(head+i)%tot][j] + g
- 1750              		.loc 1 247 38 is_stmt 1 discriminator 3 view .LVU476
- 247:Core/drogui/src/MPU9250.c ****                     aux += (acc[(head+i)%tot][j] + getMatVal(&ans, j, 0))*(acc[(head+i)%tot][j] + g
- 1751              		.loc 1 247 39 is_stmt 0 discriminator 3 view .LVU477
+ 237:Core/drogui/src/MPU9250.c ****                     aux += (acc[(head+i)%tot][j] + getMatVal(&ans, j, 0))*(acc[(head+i)%tot][j] + g
+ 1750              		.loc 1 237 38 is_stmt 1 discriminator 3 view .LVU476
+ 237:Core/drogui/src/MPU9250.c ****                     aux += (acc[(head+i)%tot][j] + getMatVal(&ans, j, 0))*(acc[(head+i)%tot][j] + g
+ 1751              		.loc 1 237 39 is_stmt 0 discriminator 3 view .LVU477
  1752 02e0 0137     		adds	r7, r7, #1
  1753              	.LVL133:
  1754              	.L78:
- 247:Core/drogui/src/MPU9250.c ****                     aux += (acc[(head+i)%tot][j] + getMatVal(&ans, j, 0))*(acc[(head+i)%tot][j] + g
- 1755              		.loc 1 247 31 is_stmt 1 discriminator 1 view .LVU478
- 247:Core/drogui/src/MPU9250.c ****                     aux += (acc[(head+i)%tot][j] + getMatVal(&ans, j, 0))*(acc[(head+i)%tot][j] + g
- 1756              		.loc 1 247 17 is_stmt 0 discriminator 1 view .LVU479
+ 237:Core/drogui/src/MPU9250.c ****                     aux += (acc[(head+i)%tot][j] + getMatVal(&ans, j, 0))*(acc[(head+i)%tot][j] + g
+ 1755              		.loc 1 237 31 is_stmt 1 discriminator 1 view .LVU478
+ 237:Core/drogui/src/MPU9250.c ****                     aux += (acc[(head+i)%tot][j] + getMatVal(&ans, j, 0))*(acc[(head+i)%tot][j] + g
+ 1756              		.loc 1 237 17 is_stmt 0 discriminator 1 view .LVU479
  1757 02e2 022F     		cmp	r7, #2
  1758 02e4 D5DD     		ble	.L76
  1759              	.LBE16:
- 249:Core/drogui/src/MPU9250.c ****                 }
- 250:Core/drogui/src/MPU9250.c ****                 if(fabs(sqrt(aux/scale/scale) - G) > 0.3){
- 1760              		.loc 1 250 17 is_stmt 1 view .LVU480
- 1761              		.loc 1 250 33 is_stmt 0 view .LVU481
+ 239:Core/drogui/src/MPU9250.c ****                 }
+ 240:Core/drogui/src/MPU9250.c ****                 if(fabs(sqrt(aux/scale/scale) - G) > 0.3){
+ 1760              		.loc 1 240 17 is_stmt 1 view .LVU480
+ 1761              		.loc 1 240 33 is_stmt 0 view .LVU481
  1762 02e6 C9EE297A 		vdiv.f32	s15, s18, s19
- 1763              		.loc 1 250 25 view .LVU482
+ 1763              		.loc 1 240 25 view .LVU482
  1764 02ea C7EEA97A 		vdiv.f32	s15, s15, s19
  1765 02ee 17EE900A 		vmov	r0, s15
  1766 02f2 FFF7FEFF 		bl	__aeabi_f2d
  1767              	.LVL134:
  1768 02f6 41EC100B 		vmov	d0, r0, r1
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 38
-
-
  1769 02fa FFF7FEFF 		bl	sqrt
  1770              	.LVL135:
  1771 02fe 51EC100B 		vmov	r0, r1, d0
- 1772              		.loc 1 250 47 view .LVU483
+ 1772              		.loc 1 240 47 view .LVU483
  1773 0302 13A3     		adr	r3, .L94+8
  1774 0304 D3E90023 		ldrd	r2, [r3]
  1775 0308 FFF7FEFF 		bl	__aeabi_dsub
  1776              	.LVL136:
- 1777              		.loc 1 250 20 view .LVU484
+ 1777              		.loc 1 240 20 view .LVU484
  1778 030c 0290     		str	r0, [sp, #8]
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 38
+
+
  1779 030e 21F00043 		bic	r3, r1, #-2147483648
  1780 0312 0393     		str	r3, [sp, #12]
- 1781              		.loc 1 250 19 view .LVU485
+ 1781              		.loc 1 240 19 view .LVU485
  1782 0314 10A3     		adr	r3, .L94+16
  1783 0316 D3E90023 		ldrd	r2, [r3]
  1784 031a DDE90201 		ldrd	r0, [sp, #8]
  1785 031e FFF7FEFF 		bl	__aeabi_dcmpgt
  1786              	.LVL137:
  1787 0322 30B9     		cbnz	r0, .L83
- 245:Core/drogui/src/MPU9250.c ****                 aux = 0;
- 1788              		.loc 1 245 43 is_stmt 1 discriminator 2 view .LVU486
- 245:Core/drogui/src/MPU9250.c ****                 aux = 0;
- 1789              		.loc 1 245 44 is_stmt 0 discriminator 2 view .LVU487
+ 235:Core/drogui/src/MPU9250.c ****                 aux = 0;
+ 1788              		.loc 1 235 43 is_stmt 1 discriminator 2 view .LVU486
+ 235:Core/drogui/src/MPU9250.c ****                 aux = 0;
+ 1789              		.loc 1 235 44 is_stmt 0 discriminator 2 view .LVU487
  1790 0324 0135     		adds	r5, r5, #1
  1791              	.LVL138:
  1792              	.L75:
- 245:Core/drogui/src/MPU9250.c ****                 aux = 0;
- 1793              		.loc 1 245 31 is_stmt 1 discriminator 1 view .LVU488
- 245:Core/drogui/src/MPU9250.c ****                 aux = 0;
- 1794              		.loc 1 245 13 is_stmt 0 discriminator 1 view .LVU489
+ 235:Core/drogui/src/MPU9250.c ****                 aux = 0;
+ 1793              		.loc 1 235 31 is_stmt 1 discriminator 1 view .LVU488
+ 235:Core/drogui/src/MPU9250.c ****                 aux = 0;
+ 1794              		.loc 1 235 13 is_stmt 0 discriminator 1 view .LVU489
  1795 0326 052D     		cmp	r5, #5
  1796 0328 05DC     		bgt	.L77
  1797              	.LBB17:
- 247:Core/drogui/src/MPU9250.c ****                     aux += (acc[(head+i)%tot][j] + getMatVal(&ans, j, 0))*(acc[(head+i)%tot][j] + g
- 1798              		.loc 1 247 25 view .LVU490
+ 237:Core/drogui/src/MPU9250.c ****                     aux += (acc[(head+i)%tot][j] + getMatVal(&ans, j, 0))*(acc[(head+i)%tot][j] + g
+ 1798              		.loc 1 237 25 view .LVU490
  1799 032a 0027     		movs	r7, #0
  1800              	.LBE17:
- 246:Core/drogui/src/MPU9250.c ****                 for(int j= 0; j < 3; j++){
- 1801              		.loc 1 246 21 view .LVU491
+ 236:Core/drogui/src/MPU9250.c ****                 for(int j= 0; j < 3; j++){
+ 1801              		.loc 1 236 21 view .LVU491
  1802 032c 9FED0C9A 		vldr.32	s18, .L94+24
  1803              	.LVL139:
- 246:Core/drogui/src/MPU9250.c ****                 for(int j= 0; j < 3; j++){
- 1804              		.loc 1 246 21 view .LVU492
+ 236:Core/drogui/src/MPU9250.c ****                 for(int j= 0; j < 3; j++){
+ 1804              		.loc 1 236 21 view .LVU492
  1805 0330 D7E7     		b	.L78
  1806              	.LVL140:
  1807              	.L83:
- 251:Core/drogui/src/MPU9250.c ****                     //Serial.println(sqrt(aux/scale/scale));
- 252:Core/drogui/src/MPU9250.c ****                     valid = false;
- 1808              		.loc 1 252 27 view .LVU493
+ 241:Core/drogui/src/MPU9250.c ****                     //Serial.println(sqrt(aux/scale/scale));
+ 242:Core/drogui/src/MPU9250.c ****                     valid = false;
+ 1808              		.loc 1 242 27 view .LVU493
  1809 0332 DDF80490 		ldr	r9, [sp, #4]
  1810              	.LVL141:
  1811              	.L77:
- 1812              		.loc 1 252 27 view .LVU494
+ 1812              		.loc 1 242 27 view .LVU494
  1813              	.LBE15:
- 253:Core/drogui/src/MPU9250.c ****                     break;
- 254:Core/drogui/src/MPU9250.c ****                 }
- 255:Core/drogui/src/MPU9250.c ****             }
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 39
-
-
- 256:Core/drogui/src/MPU9250.c ****             if(valid) done = true;
- 1814              		.loc 1 256 13 is_stmt 1 view .LVU495
- 1815              		.loc 1 256 15 is_stmt 0 view .LVU496
+ 243:Core/drogui/src/MPU9250.c ****                     break;
+ 244:Core/drogui/src/MPU9250.c ****                 }
+ 245:Core/drogui/src/MPU9250.c ****             }
+ 246:Core/drogui/src/MPU9250.c ****             if(valid) done = true;
+ 1814              		.loc 1 246 13 is_stmt 1 view .LVU495
+ 1815              		.loc 1 246 15 is_stmt 0 view .LVU496
  1816 0336 B9F1000F 		cmp	r9, #0
  1817 033a 3FF4BBAE 		beq	.L63
- 1818              		.loc 1 256 28 view .LVU497
+ 1818              		.loc 1 246 28 view .LVU497
  1819 033e CDF80490 		str	r9, [sp, #4]
  1820              	.LVL142:
- 1821              		.loc 1 256 28 view .LVU498
+ 1821              		.loc 1 246 28 view .LVU498
  1822 0342 B7E6     		b	.L63
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 39
+
+
  1823              	.L95:
  1824 0344 AFF30080 		.align	3
  1825              	.L94:
@@ -2308,70 +2298,70 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  1837 0374 00100240 		.word	1073876992
  1838              	.LVL143:
  1839              	.L91:
- 257:Core/drogui/src/MPU9250.c **** 
- 258:Core/drogui/src/MPU9250.c ****         }
- 259:Core/drogui/src/MPU9250.c ****     }
- 260:Core/drogui/src/MPU9250.c **** 
- 261:Core/drogui/src/MPU9250.c ****     m -> off_ax = getMatVal(&ans, 0, 0);
- 1840              		.loc 1 261 5 is_stmt 1 view .LVU499
- 1841              		.loc 1 261 19 is_stmt 0 view .LVU500
+ 247:Core/drogui/src/MPU9250.c **** 
+ 248:Core/drogui/src/MPU9250.c ****         }
+ 249:Core/drogui/src/MPU9250.c ****     }
+ 250:Core/drogui/src/MPU9250.c **** 
+ 251:Core/drogui/src/MPU9250.c ****     m -> off_ax = getMatVal(&ans, 0, 0);
+ 1840              		.loc 1 251 5 is_stmt 1 view .LVU499
+ 1841              		.loc 1 251 19 is_stmt 0 view .LVU500
  1842 0378 0022     		movs	r2, #0
  1843 037a 1146     		mov	r1, r2
  1844 037c 16A8     		add	r0, sp, #88
  1845 037e FFF7FEFF 		bl	getMatVal
  1846              	.LVL144:
- 1847              		.loc 1 261 17 view .LVU501
+ 1847              		.loc 1 251 17 view .LVU501
  1848 0382 86ED030A 		vstr.32	s0, [r6, #12]
- 262:Core/drogui/src/MPU9250.c ****     m -> off_ay = getMatVal(&ans, 1, 0);
- 1849              		.loc 1 262 5 is_stmt 1 view .LVU502
- 1850              		.loc 1 262 19 is_stmt 0 view .LVU503
+ 252:Core/drogui/src/MPU9250.c ****     m -> off_ay = getMatVal(&ans, 1, 0);
+ 1849              		.loc 1 252 5 is_stmt 1 view .LVU502
+ 1850              		.loc 1 252 19 is_stmt 0 view .LVU503
  1851 0386 0022     		movs	r2, #0
  1852 0388 0121     		movs	r1, #1
  1853 038a 16A8     		add	r0, sp, #88
  1854 038c FFF7FEFF 		bl	getMatVal
  1855              	.LVL145:
- 1856              		.loc 1 262 17 view .LVU504
+ 1856              		.loc 1 252 17 view .LVU504
  1857 0390 86ED040A 		vstr.32	s0, [r6, #16]
- 263:Core/drogui/src/MPU9250.c ****     m -> off_az = getMatVal(&ans, 2, 0);
- 1858              		.loc 1 263 5 is_stmt 1 view .LVU505
- 1859              		.loc 1 263 19 is_stmt 0 view .LVU506
+ 253:Core/drogui/src/MPU9250.c ****     m -> off_az = getMatVal(&ans, 2, 0);
+ 1858              		.loc 1 253 5 is_stmt 1 view .LVU505
+ 1859              		.loc 1 253 19 is_stmt 0 view .LVU506
  1860 0394 0022     		movs	r2, #0
  1861 0396 0221     		movs	r1, #2
  1862 0398 16A8     		add	r0, sp, #88
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 40
-
-
  1863 039a FFF7FEFF 		bl	getMatVal
  1864              	.LVL146:
- 1865              		.loc 1 263 17 view .LVU507
+ 1865              		.loc 1 253 17 view .LVU507
  1866 039e 86ED050A 		vstr.32	s0, [r6, #20]
- 264:Core/drogui/src/MPU9250.c ****     m -> scl_acc = scale;
- 1867              		.loc 1 264 5 is_stmt 1 view .LVU508
- 1868              		.loc 1 264 18 is_stmt 0 view .LVU509
+ 254:Core/drogui/src/MPU9250.c ****     m -> scl_acc = scale;
+ 1867              		.loc 1 254 5 is_stmt 1 view .LVU508
+ 1868              		.loc 1 254 18 is_stmt 0 view .LVU509
  1869 03a2 C6ED069A 		vstr.32	s19, [r6, #24]
- 265:Core/drogui/src/MPU9250.c **** /*
- 266:Core/drogui/src/MPU9250.c ****     char buff[50];
- 267:Core/drogui/src/MPU9250.c **** 
- 268:Core/drogui/src/MPU9250.c ****     sprintf(buff, "%f %f %f %f\n", m->off_ax, m->off_ay, m->off_az, m->scl_acc);
- 269:Core/drogui/src/MPU9250.c ****     HAL_UART_Transmit(&huart1, (uint8_t *)buff, strlen(buff), 100);*/
- 270:Core/drogui/src/MPU9250.c **** 
- 271:Core/drogui/src/MPU9250.c ****     matDestruct(&A);
- 1870              		.loc 1 271 5 is_stmt 1 view .LVU510
+ 255:Core/drogui/src/MPU9250.c **** /*
+ 256:Core/drogui/src/MPU9250.c ****     char buff[50];
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 40
+
+
+ 257:Core/drogui/src/MPU9250.c **** 
+ 258:Core/drogui/src/MPU9250.c ****     sprintf(buff, "%f %f %f %f\n", m->off_ax, m->off_ay, m->off_az, m->scl_acc);
+ 259:Core/drogui/src/MPU9250.c ****     HAL_UART_Transmit(&huart1, (uint8_t *)buff, strlen(buff), 100);*/
+ 260:Core/drogui/src/MPU9250.c **** 
+ 261:Core/drogui/src/MPU9250.c ****     matDestruct(&A);
+ 1870              		.loc 1 261 5 is_stmt 1 view .LVU510
  1871 03a6 1EA8     		add	r0, sp, #120
  1872 03a8 FFF7FEFF 		bl	matDestruct
  1873              	.LVL147:
- 272:Core/drogui/src/MPU9250.c ****     matDestruct(&b);
- 1874              		.loc 1 272 5 view .LVU511
+ 262:Core/drogui/src/MPU9250.c ****     matDestruct(&b);
+ 1874              		.loc 1 262 5 view .LVU511
  1875 03ac 1AA8     		add	r0, sp, #104
  1876 03ae FFF7FEFF 		bl	matDestruct
  1877              	.LVL148:
- 273:Core/drogui/src/MPU9250.c ****     matDestruct(&ans);
- 1878              		.loc 1 273 5 view .LVU512
+ 263:Core/drogui/src/MPU9250.c ****     matDestruct(&ans);
+ 1878              		.loc 1 263 5 view .LVU512
  1879 03b2 16A8     		add	r0, sp, #88
  1880 03b4 FFF7FEFF 		bl	matDestruct
  1881              	.LVL149:
- 274:Core/drogui/src/MPU9250.c **** }
- 1882              		.loc 1 274 1 is_stmt 0 view .LVU513
+ 264:Core/drogui/src/MPU9250.c **** }
+ 1882              		.loc 1 264 1 is_stmt 0 view .LVU513
  1883 03b8 23B0     		add	sp, sp, #140
  1884              	.LCFI30:
  1885              		.cfi_def_cfa_offset 52
@@ -2384,7 +2374,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  1892              		.cfi_restore 81
  1893              		.cfi_def_cfa_offset 36
  1894 03be BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
- 1895              		.loc 1 274 1 view .LVU514
+ 1895              		.loc 1 264 1 view .LVU514
  1896              		.cfi_endproc
  1897              	.LFE154:
  1899 03c2 00BF     		.section	.text.calibrateMag,"ax",%progbits
@@ -2397,20 +2387,20 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  1907              	calibrateMag:
  1908              	.LVL150:
  1909              	.LFB155:
- 275:Core/drogui/src/MPU9250.c **** 
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 41
-
-
- 276:Core/drogui/src/MPU9250.c **** void calibrateMag(mpu9250* m){
- 1910              		.loc 1 276 30 is_stmt 1 view -0
+ 265:Core/drogui/src/MPU9250.c **** 
+ 266:Core/drogui/src/MPU9250.c **** void calibrateMag(mpu9250* m){
+ 1910              		.loc 1 266 30 is_stmt 1 view -0
  1911              		.cfi_startproc
  1912              		@ args = 0, pretend = 0, frame = 0
  1913              		@ frame_needed = 1, uses_anonymous_args = 0
- 1914              		.loc 1 276 30 is_stmt 0 view .LVU516
+ 1914              		.loc 1 266 30 is_stmt 0 view .LVU516
  1915 0000 98B5     		push	{r3, r4, r7, lr}
  1916              	.LCFI32:
  1917              		.cfi_def_cfa_offset 16
  1918              		.cfi_offset 3, -16
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 41
+
+
  1919              		.cfi_offset 4, -12
  1920              		.cfi_offset 7, -8
  1921              		.cfi_offset 14, -4
@@ -2418,109 +2408,106 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  1923              	.LCFI33:
  1924              		.cfi_def_cfa_register 7
  1925 0004 0446     		mov	r4, r0
- 277:Core/drogui/src/MPU9250.c ****     
- 278:Core/drogui/src/MPU9250.c ****     setReg(CAL_MAG,0);
- 1926              		.loc 1 278 5 is_stmt 1 view .LVU517
+ 267:Core/drogui/src/MPU9250.c ****     
+ 268:Core/drogui/src/MPU9250.c ****     setReg(CAL_MAG,0);
+ 1926              		.loc 1 268 5 is_stmt 1 view .LVU517
  1927 0006 9FED110A 		vldr.32	s0, .L103
  1928 000a 0820     		movs	r0, #8
  1929              	.LVL151:
- 1930              		.loc 1 278 5 is_stmt 0 view .LVU518
+ 1930              		.loc 1 268 5 is_stmt 0 view .LVU518
  1931 000c FFF7FEFF 		bl	setReg
  1932              	.LVL152:
- 279:Core/drogui/src/MPU9250.c **** 
- 280:Core/drogui/src/MPU9250.c ****     int head = 0, cnt = 0;
- 1933              		.loc 1 280 5 is_stmt 1 view .LVU519
- 281:Core/drogui/src/MPU9250.c ****     bool done = false, valid;
- 1934              		.loc 1 281 5 view .LVU520
- 282:Core/drogui/src/MPU9250.c ****     const int n = 100;
- 1935              		.loc 1 282 5 view .LVU521
- 283:Core/drogui/src/MPU9250.c ****     float magX, magY, magZ, scaleGlobal = 0.01;
- 1936              		.loc 1 283 5 view .LVU522
- 284:Core/drogui/src/MPU9250.c ****     float mag[n][3];
- 1937              		.loc 1 284 5 view .LVU523
- 1938              		.loc 1 284 11 is_stmt 0 view .LVU524
+ 269:Core/drogui/src/MPU9250.c **** 
+ 270:Core/drogui/src/MPU9250.c ****     int head = 0, cnt = 0;
+ 1933              		.loc 1 270 5 is_stmt 1 view .LVU519
+ 271:Core/drogui/src/MPU9250.c ****     bool done = false, valid;
+ 1934              		.loc 1 271 5 view .LVU520
+ 272:Core/drogui/src/MPU9250.c ****     const int n = 100;
+ 1935              		.loc 1 272 5 view .LVU521
+ 273:Core/drogui/src/MPU9250.c ****     float magX, magY, magZ, scaleGlobal = 0.01;
+ 1936              		.loc 1 273 5 view .LVU522
+ 274:Core/drogui/src/MPU9250.c ****     float mag[n][3];
+ 1937              		.loc 1 274 5 view .LVU523
+ 1938              		.loc 1 274 11 is_stmt 0 view .LVU524
  1939 0010 ADF5966D 		sub	sp, sp, #1200
  1940 0014 6846     		mov	r0, sp
  1941              	.LVL153:
- 285:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < n; i++){
- 1942              		.loc 1 285 5 is_stmt 1 view .LVU525
+ 275:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < n; i++){
+ 1942              		.loc 1 275 5 is_stmt 1 view .LVU525
  1943              	.LBB18:
- 1944              		.loc 1 285 9 view .LVU526
- 1945              		.loc 1 285 13 is_stmt 0 view .LVU527
+ 1944              		.loc 1 275 9 view .LVU526
+ 1945              		.loc 1 275 13 is_stmt 0 view .LVU527
  1946 0016 0021     		movs	r1, #0
- 1947              		.loc 1 285 5 view .LVU528
+ 1947              		.loc 1 275 5 view .LVU528
  1948 0018 0CE0     		b	.L97
  1949              	.LVL154:
  1950              	.L98:
  1951              	.LBB19:
- 286:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
- 287:Core/drogui/src/MPU9250.c ****             mag[i][j] = 0;
- 1952              		.loc 1 287 13 is_stmt 1 discriminator 3 view .LVU529
- 1953              		.loc 1 287 23 is_stmt 0 discriminator 3 view .LVU530
+ 276:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
+ 277:Core/drogui/src/MPU9250.c ****             mag[i][j] = 0;
+ 1952              		.loc 1 277 13 is_stmt 1 discriminator 3 view .LVU529
+ 1953              		.loc 1 277 23 is_stmt 0 discriminator 3 view .LVU530
  1954 001a 01EB4103 		add	r3, r1, r1, lsl #1
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 42
-
-
  1955 001e 1344     		add	r3, r3, r2
  1956 0020 00EB8303 		add	r3, r0, r3, lsl #2
  1957 0024 4FF0000C 		mov	ip, #0
  1958 0028 C3F800C0 		str	ip, [r3]	@ float
- 286:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
- 1959              		.loc 1 286 31 is_stmt 1 discriminator 3 view .LVU531
- 286:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
- 1960              		.loc 1 286 32 is_stmt 0 discriminator 3 view .LVU532
+ 276:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
+ 1959              		.loc 1 276 31 is_stmt 1 discriminator 3 view .LVU531
+ 276:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
+ 1960              		.loc 1 276 32 is_stmt 0 discriminator 3 view .LVU532
  1961 002c 0132     		adds	r2, r2, #1
  1962              	.LVL155:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 42
+
+
  1963              	.L99:
- 286:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
- 1964              		.loc 1 286 24 is_stmt 1 discriminator 1 view .LVU533
- 286:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
- 1965              		.loc 1 286 9 is_stmt 0 discriminator 1 view .LVU534
+ 276:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
+ 1964              		.loc 1 276 24 is_stmt 1 discriminator 1 view .LVU533
+ 276:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
+ 1965              		.loc 1 276 9 is_stmt 0 discriminator 1 view .LVU534
  1966 002e 022A     		cmp	r2, #2
  1967 0030 F3DD     		ble	.L98
  1968              	.LBE19:
- 285:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < n; i++){
- 1969              		.loc 1 285 27 is_stmt 1 discriminator 2 view .LVU535
- 285:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < n; i++){
- 1970              		.loc 1 285 28 is_stmt 0 discriminator 2 view .LVU536
+ 275:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < n; i++){
+ 1969              		.loc 1 275 27 is_stmt 1 discriminator 2 view .LVU535
+ 275:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < n; i++){
+ 1970              		.loc 1 275 28 is_stmt 0 discriminator 2 view .LVU536
  1971 0032 0131     		adds	r1, r1, #1
  1972              	.LVL156:
  1973              	.L97:
- 285:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < n; i++){
- 1974              		.loc 1 285 20 is_stmt 1 discriminator 1 view .LVU537
- 285:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < n; i++){
- 1975              		.loc 1 285 5 is_stmt 0 discriminator 1 view .LVU538
+ 275:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < n; i++){
+ 1974              		.loc 1 275 20 is_stmt 1 discriminator 1 view .LVU537
+ 275:Core/drogui/src/MPU9250.c ****     for(int i = 0; i < n; i++){
+ 1975              		.loc 1 275 5 is_stmt 0 discriminator 1 view .LVU538
  1976 0034 6329     		cmp	r1, #99
  1977 0036 01DC     		bgt	.L100
  1978              	.LBB20:
- 286:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
- 1979              		.loc 1 286 17 view .LVU539
+ 276:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
+ 1979              		.loc 1 276 17 view .LVU539
  1980 0038 0022     		movs	r2, #0
  1981 003a F8E7     		b	.L99
  1982              	.LVL157:
  1983              	.L100:
- 286:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
- 1984              		.loc 1 286 17 view .LVU540
+ 276:Core/drogui/src/MPU9250.c ****         for(int j = 0; j < 3; j++){
+ 1984              		.loc 1 276 17 view .LVU540
  1985              	.LBE20:
  1986              	.LBE18:
- 288:Core/drogui/src/MPU9250.c ****         }    
- 289:Core/drogui/src/MPU9250.c ****     }
- 290:Core/drogui/src/MPU9250.c **** 
- 291:Core/drogui/src/MPU9250.c ****     while (!done){
- 1987              		.loc 1 291 11 is_stmt 1 view .LVU541
- 292:Core/drogui/src/MPU9250.c ****         HAL_Delay(100);
- 1988              		.loc 1 292 9 view .LVU542
+ 278:Core/drogui/src/MPU9250.c ****         }    
+ 279:Core/drogui/src/MPU9250.c ****     }
+ 280:Core/drogui/src/MPU9250.c **** 
+ 281:Core/drogui/src/MPU9250.c ****     while (!done){
+ 1987              		.loc 1 281 11 is_stmt 1 view .LVU541
+ 282:Core/drogui/src/MPU9250.c ****         HAL_Delay(100);
+ 1988              		.loc 1 282 9 view .LVU542
  1989 003c 6420     		movs	r0, #100
  1990 003e FFF7FEFF 		bl	HAL_Delay
  1991              	.LVL158:
- 293:Core/drogui/src/MPU9250.c ****         readRawMag(m);
- 1992              		.loc 1 293 9 view .LVU543
+ 283:Core/drogui/src/MPU9250.c ****         readRawMag(m);
+ 1992              		.loc 1 283 9 view .LVU543
  1993 0042 2046     		mov	r0, r4
  1994 0044 FFF7FEFF 		bl	readRawMag
  1995              	.LVL159:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 43
-
-
  1996 0048 F8E7     		b	.L100
  1997              	.L104:
  1998 004a 00BF     		.align	2
@@ -2531,6 +2518,9 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  2004              		.global	_mz
  2005              		.global	_my
  2006              		.global	_mx
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 43
+
+
  2007              		.global	_gz
  2008              		.global	_gy
  2009              		.global	_gx
@@ -2578,9 +2568,6 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  2067              	_my:
  2068 0000 0000     		.space	2
  2069              		.section	.bss._mz,"aw",%nobits
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 44
-
-
  2070              		.align	1
  2071              		.set	.LANCHOR8,. + 0
  2074              	_mz:
@@ -2591,72 +2578,75 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 1
  2079              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
  2080              		.file 4 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
  2081              		.file 5 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 44
+
+
  2082              		.file 6 "Core/drogui/include/matlib.h"
  2083              		.file 7 "Core/drogui/include/utils.h"
  2084              		.file 8 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h"
  2085              		.file 9 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
  2086              		.file 10 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_gpio.h"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 45
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 45
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 MPU9250.c
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:18     .text.initMpu:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:26     .text.initMpu:00000000 initMpu
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:100    .text.readRawAcc:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:107    .text.readRawAcc:00000000 readRawAcc
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:195    .text.readRawAcc:00000074 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:202    .text.readRawGyro:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:209    .text.readRawGyro:00000000 readRawGyro
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:297    .text.readRawGyro:00000074 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:304    .text.readRawMag:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:311    .text.readRawMag:00000000 readRawMag
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:401    .text.readRawMag:00000078 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:408    .text.readAcc:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:415    .text.readAcc:00000000 readAcc
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:523    .text.readAcc:000000a0 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:530    .text.readGyro:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:537    .text.readGyro:00000000 readGyro
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:637    .text.readGyro:0000008c $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:644    .text.readMag:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:651    .text.readMag:00000000 readMag
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:764    .text.readMag:000000a8 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:773    .text.quiet:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:780    .text.quiet:00000000 quiet
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:1092   .text.quiet:000001c8 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:1099   .text.calibrateGyro:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:1106   .text.calibrateGyro:00000000 calibrateGyro
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:1158   .text.calibrateGyro:00000034 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:1165   .text.dis3d:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:1172   .text.dis3d:00000000 dis3d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:1227   .text.calibrateAccel:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:1234   .text.calibrateAccel:00000000 calibrateAccel
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:1826   .text.calibrateAccel:00000348 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:1842   .text.calibrateAccel:00000378 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:1900   .text.calibrateMag:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:1907   .text.calibrateMag:00000000 calibrateMag
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2000   .text.calibrateMag:0000004c $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2074   .bss._mz:00000000 _mz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2067   .bss._my:00000000 _my
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2060   .bss._mx:00000000 _mx
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2053   .bss._gz:00000000 _gz
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2046   .bss._gy:00000000 _gy
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2039   .bss._gx:00000000 _gx
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2032   .bss._az:00000000 _az
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2025   .bss._ay:00000000 _ay
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2018   .bss._ax:00000000 _ax
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2014   .bss._ax:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2021   .bss._ay:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2028   .bss._az:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2035   .bss._gx:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2042   .bss._gy:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2049   .bss._gz:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2056   .bss._mx:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2063   .bss._my:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s:2070   .bss._mz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:18     .text.initMpu:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:26     .text.initMpu:00000000 initMpu
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:100    .text.readRawAcc:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:107    .text.readRawAcc:00000000 readRawAcc
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:195    .text.readRawAcc:00000074 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:202    .text.readRawGyro:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:209    .text.readRawGyro:00000000 readRawGyro
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:297    .text.readRawGyro:00000074 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:304    .text.readRawMag:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:311    .text.readRawMag:00000000 readRawMag
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:401    .text.readRawMag:00000078 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:408    .text.readAcc:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:415    .text.readAcc:00000000 readAcc
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:523    .text.readAcc:000000a0 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:530    .text.readGyro:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:537    .text.readGyro:00000000 readGyro
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:637    .text.readGyro:0000008c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:644    .text.readMag:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:651    .text.readMag:00000000 readMag
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:764    .text.readMag:000000a8 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:773    .text.quiet:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:780    .text.quiet:00000000 quiet
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:1092   .text.quiet:000001c8 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:1099   .text.calibrateGyro:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:1106   .text.calibrateGyro:00000000 calibrateGyro
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:1158   .text.calibrateGyro:00000034 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:1165   .text.dis3d:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:1172   .text.dis3d:00000000 dis3d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:1227   .text.calibrateAccel:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:1234   .text.calibrateAccel:00000000 calibrateAccel
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:1826   .text.calibrateAccel:00000348 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:1842   .text.calibrateAccel:00000378 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:1900   .text.calibrateMag:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:1907   .text.calibrateMag:00000000 calibrateMag
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2000   .text.calibrateMag:0000004c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2074   .bss._mz:00000000 _mz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2067   .bss._my:00000000 _my
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2060   .bss._mx:00000000 _mx
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2053   .bss._gz:00000000 _gz
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2046   .bss._gy:00000000 _gy
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2039   .bss._gx:00000000 _gx
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2032   .bss._az:00000000 _az
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2025   .bss._ay:00000000 _ay
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2018   .bss._ax:00000000 _ax
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2014   .bss._ax:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2021   .bss._ay:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2028   .bss._az:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2035   .bss._gx:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2042   .bss._gy:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2049   .bss._gz:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2056   .bss._mx:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2063   .bss._my:00000000 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s:2070   .bss._mz:00000000 $d
 
 UNDEFINED SYMBOLS
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cc3qGdII.s 			page 46
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccebIMlN.s 			page 46
 
 
 I2CwriteByte

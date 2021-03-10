@@ -4,8 +4,6 @@
 #include "main.h"
 #include "arm_math.h"
 
-extern float fc;
-
 /**
  * @brief Initialize Filter Structure
  * @param f filter (arm_iir_lattice_instance_f32)
@@ -15,6 +13,22 @@ typedef struct _filter{
     arm_iir_lattice_instance_f32 f;
     float *state;
 }filter ;
+
+/**
+ * @brief Initialize filter 
+ * @param f Filter (pointer filter)
+ * @param n Number of stages in the filter (float)
+ * @param k  Array of K (float*)
+ * @param v Array of V (float*)
+*/
+void initFilter(filter* f, int n, float* k, float* v);
+
+/**
+ * @brief Get the current filter signal 
+ * @param f filter (pointer filter)
+ * @param x Current value of the signal (float)
+*/
+float computeFilter(filter *f, float x);
 
 /**
  * @brief Initialize Dynamic Notch Filter Structure
@@ -43,34 +57,77 @@ typedef struct _dNotchFilter{
 }dNotchFilter;
 
 /**
- * @brief Initialize filter 
- * @param f PID (struct filter)
- * @param n Number of stages in the filter (float)
- * @param k  Array of K (float*)
- * @param v Array of V (float*)
-*/
-
-void initFilter(filter* f, int n, float* k, float* v);
-/**
- * @brief Get the current filter signal 
- * @param f filter (struct filter)
- * @param x Current value of the signal (float)
-*/
-float computeFilter(filter *f, float x);
-/**
  * @brief Initialize Dynamic Notch Filter 
- * @param df Dynamic Notch filter (struct dNotchFilter)
+ * @param df Dynamic Notch filter (pointer dNotchFilter)
  * @param n windows size (int)
  * @param fs Sampling frecuency (float)
  * @param a Gain (float)
  * @param threshold(float)
  */
 void initDNotchFilter(dNotchFilter* df, int n, float threshold, float fs, float a, float zeta);
+
 /**
  * @brief Get the current filter signal 
- * @param df Dynamic Notch filter (struct dNotchFilter)
+ * @param df Dynamic Notch filter (pointer dNotchFilter)
  * @param val Current value of the signal (float)
 */
 float computeDNotch(dNotchFilter *df, float val);
+
+/**
+ * @brief Ema Filter Struct ( a + b = 1)
+ * @param a Coefficient (float) 
+ * @param b Coefficient (float)
+ * @param threshold (float)  
+ * @param value Filtered value (float)
+*/
+typedef struct _emaFilter{
+    float a, b, threshold;
+    float value;
+} emaFilter;
+
+/**
+ * @brief Initialize Ema Filter
+ * @param ef Ema Filter(pointer emmaFilter)
+ * @param a Coefficient (float)
+ * @param b Coefficient (float)
+ * @param threshold (float)  
+*/
+void initEmaFilter(emaFilter* ef, float a, float b, float threshold);
+
+/**
+ * @brief Compute Ema Filter
+ * @param ef Ema Filter(pointer emmaFilter)
+ * @param val Current value (float)
+ * @return Filtered value (float)
+*/
+float computeEmaFilter(emaFilter* ef, float val);
+
+/**
+ * @brief Average Filter Struct
+ * @param n Size of array (int)
+ * @param head (int)
+ * @param values Array of values(float*)
+ * @param sum Acumulated value (float)
+*/
+typedef struct _mvAvgFilter{
+    int n, head;
+    float* values;
+    float sum;
+} mvAvgFilter;
+
+/**
+ * @brief Initialize Average Filter
+ * @param mf Average Filter(pointer mvAvgFilter)
+ * @param n  Number of values (int)
+*/
+void initMvAvgFilter(mvAvgFilter* mf, int n);
+
+/**
+ * @brief Compute Average Filter
+ * @param mf Filter(pointer mvAvgFilter)
+ * @param val Current value (float)
+ * @return Average value (float)
+*/
+float compueteMvAvgFilter(mvAvgFilter* mf, float val);
 
 #endif
