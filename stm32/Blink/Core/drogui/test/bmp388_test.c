@@ -19,7 +19,7 @@ void _main(){
         int64_t press = bmp388CompensatePress(bmpReadPressure());
 
         sprintf(buffer_bmp,"%lld \t %lld\n", temp, press);
-        HAL_UART_Transmit(&huart2,buffer_bmp,strlen(buffer_bmp),1000);
+        HAL_UART_Transmit(&huart2,(uint8_t *)buffer_bmp,strlen(buffer_bmp),1000);
         HAL_Delay(1000);
     }
 

@@ -1,5 +1,5 @@
 #include "utils.h"
-
+#include "i2c.h"
 
 uint8_t i2cReg[300][4];
 bool security;
@@ -95,3 +95,13 @@ void rampValue(float *var, float desired, float step){
 
     (*var) += fabs(desired - (*var) ) >= step  ? copysign(step, desired - (*var)) : (desired - (*var));
 }  
+
+void I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t* Data){
+    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 1000);
+    HAL_I2C_Master_Receive(&hi2c1, (Address << 1) | 1, Data, Nbytes, 1000);
+}
+ 
+void I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data){
+    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 10000);
+    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Data, 1, 10000);
+}

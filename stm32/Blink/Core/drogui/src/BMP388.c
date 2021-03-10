@@ -20,39 +20,25 @@ typedef struct _calib{
 
 
 void buildCalib(uint8_t* buff, calib * cal){
-    int c = 0;
+    
+    cal -> T1 = (uint16_t) (buff[0] << 8 | buff[1]);
+    cal -> T2 = (uint16_t) (buff[2] << 8 | buff[3]);
+    cal -> T3 = (int8_t) (buff[4]);
 
-    cal -> T1 = (uint16_t) (buff[c++] << 8 | buff[c++]);
-    cal -> T2 = (uint16_t) (buff[c++] << 8 | buff[c++]);
-    cal -> T3 = (int8_t) (buff[c++]);
-
-    cal -> P1 =  (int16_t) (buff[c++] << 8 | buff[c++]);
-    cal -> P2 =  (int16_t) (buff[c++] << 8 | buff[c++]);
-    cal -> P3 =  (int8_t) (buff[c++]);
-    cal -> P4 =  (int8_t) (buff[c++]);
-    cal -> P5 =  (uint16_t) (buff[c++] << 8 | buff[c++]);
-    cal -> P6 =  (uint16_t) (buff[c++] << 8 | buff[c++]);
-    cal -> P7 =  (int8_t) (buff[c++]);
-    cal -> P8 =  (int8_t) (buff[c++]);
-    cal -> P9 =  (int16_t) (buff[c++] << 8 | buff[c++]);
-    cal -> P10 = (int8_t) (buff[c++]);
-    cal -> P11 = (int8_t) (buff[c++]);    
+    cal -> P1 =  (int16_t) (buff[5]<< 8 | buff[6]);
+    cal -> P2 =  (int16_t) (buff[7] << 8 | buff[8]);
+    cal -> P3 =  (int8_t) (buff[9]);
+    cal -> P4 =  (int8_t) (buff[10]);
+    cal -> P5 =  (uint16_t) (buff[11] << 8 | buff[13]);
+    cal -> P6 =  (uint16_t) (buff[13] << 8 | buff[14]);
+    cal -> P7 =  (int8_t) (buff[15]);
+    cal -> P8 =  (int8_t) (buff[16]);
+    cal -> P9 =  (int16_t) (buff[17] << 8 | buff[18]);
+    cal -> P10 = (int8_t) (buff[19]);
+    cal -> P11 = (int8_t) (buff[20]);    
 }
 
 calib calib_bmp;
-
-
-void I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t* Data){
-    int x;
-    char aux_buff[50];
-    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 1000);
-    HAL_I2C_Master_Receive(&hi2c1, (Address << 1) | 1, Data, Nbytes, 1000);
-}
- 
-void I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data){
-    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 10000);
-    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Data, 1, 10000);
-}
 
 void initBmp388(){
     uint8_t buff[21];
@@ -78,7 +64,7 @@ uint32_t bmpReadPressure(){
     return (uint32_t)(((dat[0] << 8) | (dat[1]) ) << 4)  | (dat[2] >> 4);
 }
 
-static int64_t bmp388CompensateTemp(uint32_t u32RegData){
+int64_t bmp388CompensateTemp(uint32_t u32RegData){
 
   uint64_t partial_data1;
   uint64_t partial_data2;
@@ -100,7 +86,7 @@ static int64_t bmp388CompensateTemp(uint32_t u32RegData){
   return comp_temp;   
 }
 
-static int64_t bmp388CompensatePress(uint32_t u32RegData){
+int64_t bmp388CompensatePress(uint32_t u32RegData){
 
   int64_t partial_data1;
   int64_t partial_data2;

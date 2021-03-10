@@ -30,6 +30,6 @@
 void initBmp388();
 uint32_t bmpReadTemperature();
 uint32_t bmpReadPressure();
-static int64_t bmp388CompensateTemp(uint32_t u32RegData);
-static int64_t bmp388CompensatePress(uint32_t u32RegData);
+int64_t bmp388CompensateTemp(uint32_t u32RegData);
+int64_t bmp388CompensatePress(uint32_t u32RegData);
 #endif
