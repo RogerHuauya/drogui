@@ -25,8 +25,6 @@ void buildCalib(uint8_t* buff, calib * cal){
     cal -> T2 = (uint16_t) (buff[3] << 8 | buff[2]);
     cal -> T3 = (int8_t) (buff[4]);
 
-
-
     cal -> P1 =  (int16_t) (buff[6]<< 8 | buff[5]);
     cal -> P2 =  (int16_t) (buff[8] << 8 | buff[7]);
     cal -> P3 =  (int8_t) (buff[9]);
@@ -42,7 +40,7 @@ void buildCalib(uint8_t* buff, calib * cal){
 
 calib calib_bmp;
 
-void initBmp388(){
+void initBmp388(bmp388* b, int ntemp){
     char aux[50];
     uint8_t buff[21];
     I2CwriteByte(BMP388_DEFAULT_ADDRESS, BMP388_REG_PWR_CTRL, 0x33);
@@ -53,21 +51,14 @@ void initBmp388(){
     HAL_Delay(10);
     I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_CALIB_DATA, 21, buff);
     buildCalib(buff, &calib_bmp);
+    b -> temp = b -> press = b -> altitude = b -> cont = 0;
+    b -> alt_offset = b -> seaLevel = 0;
+    b -> temp_cont = ntemp;
 }
 
-uint32_t bmpReadTemperature(){
-    uint8_t dat[3];
-    I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_TEMP, 3, dat);
-    return (uint32_t) (dat[2] << 16) | (dat[1]  << 8)  | (dat[0]);
-}
 
-uint32_t bmpReadPressure(){
-    uint8_t dat[3];
-    I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_PRESS, 3, dat);
-    return (uint32_t)(dat[2] << 16) | (dat[1]  << 8)  | (dat[0]);
-}
 
-int64_t bmp388CompensateTemp(uint32_t u32RegData){
+int64_t bmp388CompensateTemp( uint32_t u32RegData){
 
   uint64_t partial_data1;
   uint64_t partial_data2;
@@ -130,26 +121,37 @@ int64_t bmp388CompensatePress(uint32_t u32RegData){
   return comp_press;
 }
 
-float bmp388ReadAltitude(){
+void bmpReadTemperature(bmp388* b){
+    uint8_t dat[3];
+    I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_TEMP, 3, dat);
+    b->temp = bmp388CompensateTemp((uint32_t) (dat[2] << 16) | (dat[1]  << 8)  | (dat[0]) );
+}
 
-    static bool zlevel = false;
-    static int cont = 0;
+void bmpReadPressure(bmp388* b){
+    uint8_t dat[3];
+    I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_PRESS, 3, dat);
+    b -> press = bmp388CompensatePress( (uint32_t)(dat[2] << 16) | (dat[1]  << 8)  | (dat[0]) );
+}
+
+
+void bmp388ReadAltitude(bmp388* b){
+
     float zerolevel,altitude;
 
-    if( cont == 10 ){
-        int64_t temp = bmp388CompensateTemp(bmpReadTemperature());
-        cont = 0;
+    if( b -> cont >= b ->temp_cont){
+        bmpReadTemperature(b);
+        b -> cont = 0;
     }
     
-    int64_t press = bmp388CompensatePress(bmpReadPressure());
+    bmpReadPressure(b);
 
-    if( !zlevel ){
-      zerolevel = bmp388CompensatePress(bmpReadPressure());
-      zlevel = true; 
-    } 
-    
-    altitude = 44330.0 * (1.0 -  pow( (1.0*press / zerolevel),0.1903));
+    if( b->seaLevel == 0 ) b->seaLevel = b->press;
 
-    return altitude;
+    b -> altitude = 44330.0 * (1.0 -  pow( 1.0*(b->press / b->seaLevel),0.1903));
+    b -> altitude += b -> alt_offset;
+}
+
+void updateBmp388Offset(bmp388 * b){
+    b -> alt_offset = - b-> altitude;
 }
 
