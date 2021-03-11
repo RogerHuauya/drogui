@@ -218,7 +218,7 @@ void I2C4_EV_IRQHandler(void)
     //HAL_UART_Transmit(&huart2, (uint8_t*) "TX\n", 4, 100);
     if(index1 != -1){
       
-      //sprintf(buffer, "%u %d %d\n", i2cReg[index1][index2+1], index1, index2);
+      //sprintf(buffer, "Trans %u %d %d\n", i2cReg[index1][index2+1], index1, index2);
       //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
       I2C4->TXDR = i2cReg[index1][++index2];
     }
@@ -229,13 +229,16 @@ void I2C4_EV_IRQHandler(void)
   {
     //HAL_UART_Transmit(&huart2, (uint8_t*) "RX\n", 4, 100);
     uint8_t a = (I2C4->RXDR);
-    if(index1 == -1)
+    if(index1 == -1){
       index1 = a;
+      //sprintf(buffer, "Trans %u %d %d\n", i2cReg[index1][index2+1], index1, index2);
+      //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
+    }
     else{
       i2cReg[index1][++index2] = a; 
     }
     
-    //printf(buffer, "%d %d\n", index1, index2);
+    //printf(buffer, "Rece %d %d\n", index1, index2);
     //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
   }
   else if ( isr & I2C_ISR_STOPF )

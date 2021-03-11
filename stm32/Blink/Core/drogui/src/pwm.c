@@ -4,7 +4,7 @@
 
 
 void setPwm(pwm* p, float percent){
-    *(p->duty) = 125000.0 + 125000.0*(percent)/100.0; 
+    *(p->duty) = 12500.0 + 12500.0*(percent)/100.0; 
 }
 
 void initPwm(pwm* p, TIM_HandleTypeDef* timer, uint32_t channel, volatile uint32_t *duty){

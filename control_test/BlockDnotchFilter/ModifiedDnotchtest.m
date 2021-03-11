@@ -1,4 +1,4 @@
-dim = length(accel(:,1));
+dim = length(data(:,1));
 Fs = 1000;
 samples = 64;
 L = samples;
@@ -10,7 +10,7 @@ y_ant_dn = [0 0];
 x_ant_dn = [0 0 0];
 a = 1;
 zeta = 1;
-aux = accel(:,1);
+aux = data(:,1);
 aux_dn = zeros(1,length(accel(:,1)));
 a_dn = 1;
 zeta_dn = 5;

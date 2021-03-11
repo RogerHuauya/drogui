@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccc2MWgl.s 			page 1
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDv5IhY.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccc2MWgl.s 			page 1
   40 0000 38B5     		push	{r3, r4, r5, lr}
   41              	.LCFI0:
   42              		.cfi_def_cfa_offset 16
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccc2MWgl.s 			page 2
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDv5IhY.s 			page 2
 
 
   43              		.cfi_offset 3, -16
@@ -68,17 +68,17 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccc2MWgl.s 			page 1
   14:Core/drogui/test/drogui.c **** 
   15:Core/drogui/test/drogui.c ****     HAL_TIM_Base_Start(&htim5);
   47              		.loc 1 15 5 view .LVU1
-  48 0002 1048     		ldr	r0, .L3
+  48 0002 1148     		ldr	r0, .L3
   49 0004 FFF7FEFF 		bl	HAL_TIM_Base_Start
   50              	.LVL0:
   16:Core/drogui/test/drogui.c ****     
   17:Core/drogui/test/drogui.c ****     
   18:Core/drogui/test/drogui.c ****     HAL_UART_Transmit(&huart2, (uint8_t*) "Start System\n", 14, 100);
   51              		.loc 1 18 5 view .LVU2
-  52 0008 0F4D     		ldr	r5, .L3+4
+  52 0008 104D     		ldr	r5, .L3+4
   53 000a 6423     		movs	r3, #100
   54 000c 0E22     		movs	r2, #14
-  55 000e 0F49     		ldr	r1, .L3+8
+  55 000e 1049     		ldr	r1, .L3+8
   56 0010 2846     		mov	r0, r5
   57 0012 FFF7FEFF 		bl	HAL_UART_Transmit
   58              	.LVL1:
@@ -86,94 +86,99 @@ ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccc2MWgl.s 			page 1
   59              		.loc 1 19 5 view .LVU3
   60 0016 FFF7FEFF 		bl	initDebug
   61              	.LVL2:
-  20:Core/drogui/test/drogui.c ****     initSensorsTasks();
+  20:Core/drogui/test/drogui.c ****     initControlTasks();
   62              		.loc 1 20 5 view .LVU4
-  63 001a FFF7FEFF 		bl	initSensorsTasks
+  63 001a FFF7FEFF 		bl	initControlTasks
   64              	.LVL3:
-  21:Core/drogui/test/drogui.c ****     //initControlTasks();
+  21:Core/drogui/test/drogui.c ****     initSensorsTasks();
+  65              		.loc 1 21 5 view .LVU5
+  66 001e FFF7FEFF 		bl	initSensorsTasks
+  67              	.LVL4:
   22:Core/drogui/test/drogui.c ****     sprintf(auxbuff, "%d\n", __FPU_USED);
-  65              		.loc 1 22 5 view .LVU5
-  66 001e 0C4C     		ldr	r4, .L3+12
-  67 0020 0122     		movs	r2, #1
-  68 0022 0C49     		ldr	r1, .L3+16
-  69 0024 2046     		mov	r0, r4
-  70 0026 FFF7FEFF 		bl	sprintf
-  71              	.LVL4:
+  68              		.loc 1 22 5 view .LVU6
+  69 0022 0C4C     		ldr	r4, .L3+12
+  70 0024 0122     		movs	r2, #1
+  71 0026 0C49     		ldr	r1, .L3+16
+  72 0028 2046     		mov	r0, r4
+  73 002a FFF7FEFF 		bl	sprintf
+  74              	.LVL5:
   23:Core/drogui/test/drogui.c ****     HAL_UART_Transmit(&huart2, (uint8_t*) auxbuff, strlen(auxbuff), 100);
-  72              		.loc 1 23 5 view .LVU6
-  73              		.loc 1 23 52 is_stmt 0 view .LVU7
-  74 002a 2046     		mov	r0, r4
-  75 002c FFF7FEFF 		bl	strlen
-  76              	.LVL5:
-  77              		.loc 1 23 5 view .LVU8
-  78 0030 6423     		movs	r3, #100
-  79 0032 82B2     		uxth	r2, r0
-  80 0034 2146     		mov	r1, r4
-  81 0036 2846     		mov	r0, r5
-  82 0038 FFF7FEFF 		bl	HAL_UART_Transmit
-  83              	.LVL6:
-  24:Core/drogui/test/drogui.c ****     initRTOS();
-  84              		.loc 1 24 5 is_stmt 1 view .LVU9
-  85 003c FFF7FEFF 		bl	initRTOS
+  75              		.loc 1 23 5 view .LVU7
+  76              		.loc 1 23 52 is_stmt 0 view .LVU8
+  77 002e 2046     		mov	r0, r4
+  78 0030 FFF7FEFF 		bl	strlen
+  79              	.LVL6:
+  80              		.loc 1 23 5 view .LVU9
+  81 0034 6423     		movs	r3, #100
+  82 0036 82B2     		uxth	r2, r0
+  83 0038 2146     		mov	r1, r4
+  84 003a 2846     		mov	r0, r5
+  85 003c FFF7FEFF 		bl	HAL_UART_Transmit
   86              	.LVL7:
+  24:Core/drogui/test/drogui.c ****     initRTOS();
+  87              		.loc 1 24 5 is_stmt 1 view .LVU10
+  88 0040 FFF7FEFF 		bl	initRTOS
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDv5IhY.s 			page 3
+
+
+  89              	.LVL8:
   25:Core/drogui/test/drogui.c **** }
-  87              		.loc 1 25 1 is_stmt 0 view .LVU10
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccc2MWgl.s 			page 3
-
-
-  88 0040 38BD     		pop	{r3, r4, r5, pc}
-  89              	.L4:
-  90 0042 00BF     		.align	2
-  91              	.L3:
-  92 0044 00000000 		.word	htim5
-  93 0048 00000000 		.word	huart2
-  94 004c 00000000 		.word	.LC0
-  95 0050 00000000 		.word	.LANCHOR0
-  96 0054 10000000 		.word	.LC1
-  97              		.cfi_endproc
-  98              	.LFE177:
- 100              		.global	auxbuff
- 101              		.section	.bss.auxbuff,"aw",%nobits
- 102              		.align	2
- 103              		.set	.LANCHOR0,. + 0
- 106              	auxbuff:
- 107 0000 00000000 		.space	50
- 107      00000000 
- 107      00000000 
- 107      00000000 
- 107      00000000 
- 108              		.text
- 109              	.Letext0:
- 110              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 111              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 112              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
- 113              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
- 114              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
- 115              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim.h"
- 116              		.file 8 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h"
- 117              		.file 9 "Core/Inc/tim.h"
- 118              		.file 10 "Core/Inc/usart.h"
- 119              		.file 11 "Core/drogui/include/debugTasks.h"
- 120              		.file 12 "Core/drogui/include/sensorsTasks.h"
- 121              		.file 13 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
- 122              		.file 14 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
- 123              		.file 15 "Core/drogui/include/task.h"
-ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccc2MWgl.s 			page 4
+  90              		.loc 1 25 1 is_stmt 0 view .LVU11
+  91 0044 38BD     		pop	{r3, r4, r5, pc}
+  92              	.L4:
+  93 0046 00BF     		.align	2
+  94              	.L3:
+  95 0048 00000000 		.word	htim5
+  96 004c 00000000 		.word	huart2
+  97 0050 00000000 		.word	.LC0
+  98 0054 00000000 		.word	.LANCHOR0
+  99 0058 10000000 		.word	.LC1
+ 100              		.cfi_endproc
+ 101              	.LFE177:
+ 103              		.global	auxbuff
+ 104              		.section	.bss.auxbuff,"aw",%nobits
+ 105              		.align	2
+ 106              		.set	.LANCHOR0,. + 0
+ 109              	auxbuff:
+ 110 0000 00000000 		.space	50
+ 110      00000000 
+ 110      00000000 
+ 110      00000000 
+ 110      00000000 
+ 111              		.text
+ 112              	.Letext0:
+ 113              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 114              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 115              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
+ 116              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
+ 117              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
+ 118              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim.h"
+ 119              		.file 8 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h"
+ 120              		.file 9 "Core/Inc/tim.h"
+ 121              		.file 10 "Core/Inc/usart.h"
+ 122              		.file 11 "Core/drogui/include/debugTasks.h"
+ 123              		.file 12 "Core/drogui/include/controlTasks.h"
+ 124              		.file 13 "Core/drogui/include/sensorsTasks.h"
+ 125              		.file 14 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ 126              		.file 15 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\in
+ 127              		.file 16 "Core/drogui/include/task.h"
+ARM GAS  C:\Users\USUARIO\AppData\Local\Temp\ccDv5IhY.s 			page 4
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 drogui.c
-C:\Users\USUARIO\AppData\Local\Temp\ccc2MWgl.s:18     .rodata._main.str1.4:00000000 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccc2MWgl.s:25     .text._main:00000000 $t
-C:\Users\USUARIO\AppData\Local\Temp\ccc2MWgl.s:33     .text._main:00000000 _main
-C:\Users\USUARIO\AppData\Local\Temp\ccc2MWgl.s:92     .text._main:00000044 $d
-C:\Users\USUARIO\AppData\Local\Temp\ccc2MWgl.s:106    .bss.auxbuff:00000000 auxbuff
-C:\Users\USUARIO\AppData\Local\Temp\ccc2MWgl.s:102    .bss.auxbuff:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDv5IhY.s:18     .rodata._main.str1.4:00000000 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDv5IhY.s:25     .text._main:00000000 $t
+C:\Users\USUARIO\AppData\Local\Temp\ccDv5IhY.s:33     .text._main:00000000 _main
+C:\Users\USUARIO\AppData\Local\Temp\ccDv5IhY.s:95     .text._main:00000048 $d
+C:\Users\USUARIO\AppData\Local\Temp\ccDv5IhY.s:109    .bss.auxbuff:00000000 auxbuff
+C:\Users\USUARIO\AppData\Local\Temp\ccDv5IhY.s:105    .bss.auxbuff:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_TIM_Base_Start
 HAL_UART_Transmit
 initDebug
+initControlTasks
 initSensorsTasks
 sprintf
 strlen

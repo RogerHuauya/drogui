@@ -2,6 +2,9 @@
 #include "filter.h"
 #include "task.h"
 #include "pwm.h"
+#include "usart.h"
+#include <stdio.h>
+#include <string.h>
 
 pwm m1, m2, m3, m4;
 pid roll2w, pitch2w, yaw2w; 
@@ -16,8 +19,7 @@ float roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0
 float wroll_ref, wpitch_ref, wyaw_ref, roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
 float wroll_err,wpitch_err,wyaw_err; 
 
-//TIMEr TIMEr_wcontrol, TIMEr_rpycontrol, TIMEr_xyzcontrol;
-
+char buffc[50] = "hola\n";
 void saturateM(float H){
     float f_max = 1;
     float arr_M[] = {M1, M2, M3, M4};
@@ -81,28 +83,22 @@ void wControlTask(){
     wpitch_err = fmax( fmin( wpitch_ref - gy , 100), -100);
     wyaw_err = fmax( fmin( wyaw_ref - gz , 100), -100);
 
-
     R = computePid(&wroll_control, wroll_err, TIME, 0);
     P = computePid(&wpitch_control, wpitch_err, TIME, 0);
     Y = computePid(&wyaw_control, wyaw_err, TIME, 0);
-
+    
     setReg(DER_GYRO_X, wroll_control.errd);
     setReg(DER_GYRO_Y, wpitch_control.errd);
-
-
-    /*R = getReg(ROLL_REF);
-    P = getReg(PITCH_REF);
-    Y = getReg(YAW_REF);*/
 
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
     setReg(YAW_U, Y);
     setReg(Z_U, H_comp);
 
-    M1 = R + P + Y;
-    M2 = R - P - Y;
-    M3 = -R - P + Y;
-    M4 = -R + P - Y;
+    M1 = -R + P + Y;
+    M2 = R + P - Y;
+    M3 = R - P + Y;
+    M4 = -R - P - Y;
 
     saturateM(H_comp*H_comp);
 
@@ -118,10 +114,11 @@ void wControlTask(){
         resetPid(&wyaw_control, TIME);
     }
 
-    setPwm(&m1, fmin(fmax(M1,0), 100));
-    setPwm(&m2, fmin(fmax(M2,0), 100));
-    setPwm(&m3, fmin(fmax(M3,0), 100));
+    setPwm(&m3, fmin(fmax(M1,0), 100));
+    setPwm(&m1, fmin(fmax(M2,0), 100));
+    setPwm(&m2, fmin(fmax(M3,0), 100));
     setPwm(&m4, fmin(fmax(M4,0), 100));
+
 }
 
 void rpyControlTask(){
@@ -130,17 +127,8 @@ void rpyControlTask(){
     wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0);
     wyaw_ref = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);
 
-/*
-    Serial.print("\nu values: ");
-    for(int i = 0 ; i < 13; i++) Serial.print(filter_wroll.arr_u.values[i]), Serial.print('\t');
-    Serial.print("\nu coeff: ");
-    for(int i = 0 ; i < 13; i++) Serial.print(filter_wroll.arr_u.coeff[i]), Serial.print('\t');
-    Serial.print("\ny values: ");
-    for(int i = 0 ; i < 12; i++) Serial.print(filter_wroll.arr_y.values[i]), Serial.print('\t');
-    Serial.print("\ny coeff: ");
-    for(int i = 0 ; i < 12; i++) Serial.print(filter_wroll.arr_y.coeff[i]), Serial.print('\t');
-    Serial.println("****************************************************************************");
-*/
+
+
     setReg(GYRO_X_REF,wroll_ref);
     setReg(GYRO_Y_REF,wpitch_ref);
     setReg(GYRO_Z_REF,wyaw_ref);
@@ -155,6 +143,7 @@ void rpyControlTask(){
 void xyzControlTask(){
     X_C = computePid(&x_control, -x, TIME, H);
     Y_C = computePid(&y_control, -y, TIME, H);
+
 
     rampValue(&z_ref, getReg(Z_REF), getReg(Z_REF_SIZE));
 
@@ -177,14 +166,16 @@ void xyzControlTask(){
 
 
 void initControlTasks(){
+    
     initPwm(&m1, &htim3, TIM_CHANNEL_1, &(htim3.Instance->CCR1));
     initPwm(&m2, &htim3, TIM_CHANNEL_2, &(htim3.Instance->CCR2));
-    initPwm(&m3, &htim4, TIM_CHANNEL_3, &(htim3.Instance->CCR3));
-    initPwm(&m4, &htim4, TIM_CHANNEL_4, &(htim3.Instance->CCR4));
+    initPwm(&m3, &htim4, TIM_CHANNEL_3, &(htim4.Instance->CCR3));
+    initPwm(&m4, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
     initPid(&z_control, 0, 0, 0, 0, 1 , 100000, 15, NORMAL);
     initPid(&x_control, 0, 0, 0, 0, 1 , 100000, 0.09, NORMAL);
     initPid(&y_control, 0, 0, 0, 0, 1 , 100000,0.09, NORMAL);
+
 
     initPid(&roll2w, 0, 0, 0, TIME, 50, 1.57*0.5,80, (P2ID & D_INT));
     initPid(&pitch2w, 0, 0, 0, TIME, 50, 1.57*0.5,80, (P2ID & D_INT));
@@ -194,10 +185,13 @@ void initControlTasks(){
     initPid(&wpitch_control, 0, 0, 0, TIME, 50, 80, 3000, (P2ID & D_INT));
     initPid(&wyaw_control, 0, 0, 0, TIME, 50, 80, 3000, (P2ID & D_INT));
     
+    
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
     setReg(N_FILTER, 50);
-    //addTask(&wControlTask, 1000, 1);
-    //addTask(&rpyControlTask, 2000, 1);
-    //addTask(&xyzControlTask, 10000, 1);
+
+    addTask(&wControlTask, 1000, 1);
+    addTask(&rpyControlTask, 2000, 1);
+    addTask(&xyzControlTask, 10000, 1);
+    
 }
