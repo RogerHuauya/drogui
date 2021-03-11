@@ -1,4 +1,4 @@
-#define MPU9250_TEST
+//#define MPU9250_TEST
 #ifdef MPU9250_TEST
 
 #include "_main.h"

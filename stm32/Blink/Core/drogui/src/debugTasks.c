@@ -32,7 +32,7 @@ void securityTask(){
 
 void initDebug(){
     
-    addTask(&debugTask, 10000, 1);
+    //addTask(&debugTask, 10000, 1);
     addTask(&blinkTask, 100000, 1);
     addTask(&securityTask, 1000, 1);
 }

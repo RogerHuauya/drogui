@@ -287,17 +287,17 @@ void calibrateMag(mpu9250* m){
         magY = m->raw_my*scaleGlobal;
         magZ = m->raw_mz*scaleGlobal;
         
-        sprintf(aux_buff, "%f %f %f\n", m->raw_mx, m->raw_my, m->raw_mz);
-        HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
+        //sprintf(aux_buff, "%f %f %f\n", m->raw_mx, m->raw_my, m->raw_mz);
+        //HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
         valid = true;
         for(int i = 1 ; i <= cnt ; i++){
             int j = (head - i + n) % n;
             float d = dis3d(magX, magY, magZ, mag[j][0], mag[j][1], mag[j][2]);
 
-            sprintf(aux_buff, "%f \n", d);
-            HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
+            //sprintf(aux_buff, "%f \n", d);
+            //HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
 
-            if(d < 15*scaleGlobal){
+            if(d < 20*scaleGlobal){
                 valid = false; break;
             } 
         }
@@ -308,8 +308,8 @@ void calibrateMag(mpu9250* m){
         }
         setReg(CAL_MAG, cnt);
         
-        sprintf(aux_buff, "%d\n", cnt);
-        HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
+        //sprintf(aux_buff, "%d\n", cnt);
+        //HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
 
         if(cnt == n){done = true;}
     }
