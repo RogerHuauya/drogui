@@ -123,7 +123,7 @@ int64_t bmp388CompensatePress(uint32_t u32RegData){
 void bmpReadTemperature(bmp388* b){
     uint8_t dat[3];
     I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_TEMP, 3, dat);
-    b->temp = bmp388CompensateTemp((uint32_t) (dat[2] << 16) | (dat[1]  << 8)  | (dat[0]) );
+    b -> temp = bmp388CompensateTemp((uint32_t) (dat[2] << 16) | (dat[1]  << 8)  | (dat[0]) );
 }
 
 void bmpReadPressure(bmp388* b){
