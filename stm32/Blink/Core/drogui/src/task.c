@@ -48,9 +48,9 @@ void initRTOS(){
         }
 
         if(id >= 0){
-            sprintf(buffer3, "Init %d\t%lu;\n",id,TIME - Tasks[id].last_time);
+            //sprintf(buffer3, "Init %d\t%lu;\n",id,TIME - Tasks[id].last_time);
             executeTask(&Tasks[id]), Tasks[id].ignored = 0;
-            HAL_UART_Transmit(&huart2, (uint8_t*) buffer3, strlen(buffer3), 100);
+            //HAL_UART_Transmit(&huart2, (uint8_t*) buffer3, strlen(buffer3), 100);
         }
             
     }

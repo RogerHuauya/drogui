@@ -10,33 +10,6 @@
 #define G 9.81
 int16_t _ax, _ay, _az, _gx, _gy, _gz, _mx, _my, _mz;
 
-void I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t* Data){
-    int x;
-    char aux_buff[50];
-    if((x = HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 1000)) != HAL_OK){
-        //sprintf(aux_buff, "read write %d\n", x);
-        //HAL_UART_Transmit(&huart2, (uint8_t *)aux_buff, strlen(aux_buff), 1000);
-    }
-    if((x=HAL_I2C_Master_Receive(&hi2c1, (Address << 1) | 1, Data, Nbytes, 1000)) != HAL_OK){
-        //sprintf(aux_buff, "read read %d\n", x);
-        //HAL_UART_Transmit(&huart2, (uint8_t *)aux_buff, strlen(aux_buff), 1000);
-    }
-}
- 
-void I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data){
-    int x;
-    char aux_buff[50];
-    if((x=HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 10000))!=HAL_OK){
-        //sprintf(aux_buff, "write reg %d\n", x);
-        //HAL_UART_Transmit(&huart2, (uint8_t *)aux_buff, strlen(aux_buff), 1000);
-    }   
-    if((x=HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Data, 1, 10000))!= HAL_OK){
-        //sprintf(aux_buff, "write value %d\n", x);
-        //HAL_UART_Transmit(&huart2, (uint8_t *)aux_buff, strlen(aux_buff), 1000);
-    }
-}
-
-
 
 void initMpu(mpu9250* m){
 
@@ -57,17 +30,7 @@ void readRawAcc(mpu9250* m){ // m/s^2
     _ax = -((Buf[0]<<8) | Buf[1]);
     _ay = -((Buf[2]<<8) | Buf[3]);
     _az =   (Buf[4]<<8) | Buf[5];
-    /*
-    char buff[50];
-
-    for(int i = 0; i < 6 ; i++){
-
-        sprintf(buff, "%x\t", Buf[i]);
-        HAL_UART_Transmit(&huart1, (uint8_t *)buff, strlen(buff), 100);
-    }
-
-    sprintf(buff, "\n");
-    HAL_UART_Transmit(&huart1, (uint8_t *)buff, strlen(buff), 100);*/
+    
     m -> raw_ax = _ax;
     m -> raw_ay = _ay;
     m -> raw_az = _az; 
@@ -237,7 +200,7 @@ void calibrateAccel(mpu9250* m){
         for(int i = 1 ; i <= tot-1 ; i++){
             int j = (head - i + tot) % tot;
             // Serial.println("quiet ");
-            if(dis3d(m->raw_ax, m->raw_ay, m->raw_az, acc[j][0],acc[j][1],acc[j][2]) < 1000){
+            if(dis3d(m->raw_ax, m->raw_ay, m->raw_az, acc[j][0],acc[j][1],acc[j][2]) < 800){
                 valid = false; break;
             } 
         }
@@ -302,6 +265,8 @@ void calibrateAccel(mpu9250* m){
 
 void calibrateMag(mpu9250* m){
     
+    char aux_buff[50]="";
+
     setReg(CAL_MAG,0);
 
     int head = 0, cnt = 0;
@@ -318,27 +283,35 @@ void calibrateMag(mpu9250* m){
     while (!done){
         HAL_Delay(100);
         readRawMag(m);
-        /*magX = m->raw_mx*scaleGlobal;
+        magX = m->raw_mx*scaleGlobal;
         magY = m->raw_my*scaleGlobal;
         magZ = m->raw_mz*scaleGlobal;
-        */
+        
         //sprintf(aux_buff, "%f %f %f\n", m->raw_mx, m->raw_my, m->raw_mz);
         //HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
-       /* valid = true;
+        valid = true;
         for(int i = 1 ; i <= cnt ; i++){
-            //int j = (head - i + n) % n;
-            float d = 0;//dis3d(magX, magY, magZ, mag[j][0], mag[j][1], mag[j][2]);
-            if(d < 5*scaleGlobal){
+            int j = (head - i + n) % n;
+            float d = dis3d(magX, magY, magZ, mag[j][0], mag[j][1], mag[j][2]);
+
+            //sprintf(aux_buff, "%f \n", d);
+            //HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
+
+            if(d < 20*scaleGlobal){
                 valid = false; break;
             } 
         }
         if(valid){
             HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-            //mag[head][0] = magX, mag[head][1] = magY, mag[head][2] = magZ;
+            mag[head][0] = magX, mag[head][1] = magY, mag[head][2] = magZ;
             head++, cnt++, head%= n; 
         }
         setReg(CAL_MAG, cnt);
-        if(cnt == n){done = true;}*/
+        
+        //sprintf(aux_buff, "%d\n", cnt);
+        //HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
+
+        if(cnt == n){done = true;}
     }
 
     mat H, Ht, w, prod, prod2, X, inverse;
@@ -401,8 +374,8 @@ void calibrateMag(mpu9250* m){
     matInverse(&inverse, &prod);
     matMult(&prod2, &inverse, &Ht);
     matMult(&X, &prod2, &w);
-    /*
-    for(int i = 0; i < 6; i++)
+    
+    /*for(int i = 0; i < 6; i++)
         Serial.println(getMatVal(&X, i, 0));
     */
     m -> off_mx = getMatVal(&X, 0, 0)/(2);

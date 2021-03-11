@@ -20,41 +20,27 @@ typedef struct _calib{
 
 
 void buildCalib(uint8_t* buff, calib * cal){
-    int c = 0;
+    cal -> T1 = (uint16_t) (buff[1] << 8 | buff[0]);
+    cal -> T2 = (uint16_t) (buff[3] << 8 | buff[2]);
+    cal -> T3 = (int8_t) (buff[4]);
 
-    cal -> T1 = (uint16_t) (buff[c++] << 8 | buff[c++]);
-    cal -> T2 = (uint16_t) (buff[c++] << 8 | buff[c++]);
-    cal -> T3 = (int8_t) (buff[c++]);
-
-    cal -> P1 =  (int16_t) (buff[c++] << 8 | buff[c++]);
-    cal -> P2 =  (int16_t) (buff[c++] << 8 | buff[c++]);
-    cal -> P3 =  (int8_t) (buff[c++]);
-    cal -> P4 =  (int8_t) (buff[c++]);
-    cal -> P5 =  (uint16_t) (buff[c++] << 8 | buff[c++]);
-    cal -> P6 =  (uint16_t) (buff[c++] << 8 | buff[c++]);
-    cal -> P7 =  (int8_t) (buff[c++]);
-    cal -> P8 =  (int8_t) (buff[c++]);
-    cal -> P9 =  (int16_t) (buff[c++] << 8 | buff[c++]);
-    cal -> P10 = (int8_t) (buff[c++]);
-    cal -> P11 = (int8_t) (buff[c++]);    
+    cal -> P1 =  (int16_t) (buff[6]<< 8 | buff[5]);
+    cal -> P2 =  (int16_t) (buff[8] << 8 | buff[7]);
+    cal -> P3 =  (int8_t) (buff[9]);
+    cal -> P4 =  (int8_t) (buff[10]);
+    cal -> P5 =  (uint16_t) (buff[12] << 8 | buff[11]);
+    cal -> P6 =  (uint16_t) (buff[14] << 8 | buff[13]);
+    cal -> P7 =  (int8_t) (buff[15]);
+    cal -> P8 =  (int8_t) (buff[16]);
+    cal -> P9 =  (int16_t) (buff[18] << 8 | buff[17]);
+    cal -> P10 = (int8_t) (buff[19]);
+    cal -> P11 = (int8_t) (buff[20]);    
 }
 
 calib calib_bmp;
 
-
-void I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t* Data){
-    int x;
-    char aux_buff[50];
-    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 1000);
-    HAL_I2C_Master_Receive(&hi2c1, (Address << 1) | 1, Data, Nbytes, 1000);
-}
- 
-void I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data){
-    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Register, 1, 10000);
-    HAL_I2C_Master_Transmit(&hi2c1, (Address << 1), &Data, 1, 10000);
-}
-
-void initBmp388(){
+void initBmp388(bmp388* b, int ntemp){
+    char aux[50];
     uint8_t buff[21];
     I2CwriteByte(BMP388_DEFAULT_ADDRESS, BMP388_REG_PWR_CTRL, 0x33);
     HAL_Delay(10);
@@ -64,21 +50,14 @@ void initBmp388(){
     HAL_Delay(10);
     I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_CALIB_DATA, 21, buff);
     buildCalib(buff, &calib_bmp);
+    b -> temp = b -> press = b -> altitude = b -> cont = 0;
+    b -> alt_offset = b -> seaLevel = 0;
+    b -> temp_cont = ntemp;
 }
 
-uint32_t bmpReadTemperature(){
-    uint8_t dat[3];
-    I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_TEMP, 3, dat);
-    return (uint32_t)(((dat[0] << 8) | (dat[1]) ) << 4)  | (dat[2] >> 4);
-}
 
-uint32_t bmpReadPressure(){
-    uint8_t dat[3];
-    I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_PRESS, 3, dat);
-    return (uint32_t)(((dat[0] << 8) | (dat[1]) ) << 4)  | (dat[2] >> 4);
-}
 
-static int64_t bmp388CompensateTemp(uint32_t u32RegData){
+int64_t bmp388CompensateTemp( uint32_t u32RegData){
 
   uint64_t partial_data1;
   uint64_t partial_data2;
@@ -100,7 +79,7 @@ static int64_t bmp388CompensateTemp(uint32_t u32RegData){
   return comp_temp;   
 }
 
-static int64_t bmp388CompensatePress(uint32_t u32RegData){
+int64_t bmp388CompensatePress(uint32_t u32RegData){
 
   int64_t partial_data1;
   int64_t partial_data2;
@@ -140,3 +119,35 @@ static int64_t bmp388CompensatePress(uint32_t u32RegData){
 
   return comp_press;
 }
+
+void bmpReadTemperature(bmp388* b){
+    uint8_t dat[3];
+    I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_TEMP, 3, dat);
+    b->temp = bmp388CompensateTemp((uint32_t) (dat[2] << 16) | (dat[1]  << 8)  | (dat[0]) );
+}
+
+void bmpReadPressure(bmp388* b){
+    uint8_t dat[3];
+    I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_DATA_PRESS, 3, dat);
+    b -> press = bmp388CompensatePress( (uint32_t)(dat[2] << 16) | (dat[1]  << 8)  | (dat[0]) );
+}
+
+
+void bmp388ReadAltitude(bmp388* b){
+
+
+    if( b -> cont == 0) bmpReadTemperature(b);
+    b -> cont = (b -> cont + 1)%(b -> temp_cont);
+
+    bmpReadPressure(b);
+
+    if( b->seaLevel == 0 ) b->seaLevel = b->press;
+
+    b -> altitude = 44330.0 * (1.0 -  pow( 1.0*b->press / b->seaLevel,0.1903));
+    b -> altitude += b -> alt_offset;
+}
+
+void updateBmp388Offset(bmp388 * b){
+    b -> alt_offset = - b-> altitude;
+}
+

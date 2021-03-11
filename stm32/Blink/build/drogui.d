@@ -30,10 +30,10 @@ build/drogui.o: Core/drogui/test/drogui.c Core/drogui/include/_main.h \
  Core/Inc/main.h Core/drogui/include/sensorsTasks.h \
  Core/drogui/include/filter.h Drivers/CMSIS/DSP/Include/arm_math.h \
  Core/drogui/include/MPU9250.h Core/drogui/include/registerMap.h \
- Core/drogui/include/utils.h Core/drogui/include/controlTasks.h \
- Core/drogui/include/control.h Core/drogui/include/sensorsTasks.h \
- Core/drogui/include/debugTasks.h Core/drogui/include/task.h \
- Core/Inc/usart.h
+ Core/drogui/include/utils.h Core/drogui/include/BMP388.h \
+ Core/drogui/include/controlTasks.h Core/drogui/include/control.h \
+ Core/drogui/include/sensorsTasks.h Core/drogui/include/debugTasks.h \
+ Core/drogui/include/task.h Core/Inc/usart.h
 Core/drogui/include/_main.h:
 Core/Inc/main.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h:
@@ -74,6 +74,7 @@ Drivers/CMSIS/DSP/Include/arm_math.h:
 Core/drogui/include/MPU9250.h:
 Core/drogui/include/registerMap.h:
 Core/drogui/include/utils.h:
+Core/drogui/include/BMP388.h:
 Core/drogui/include/controlTasks.h:
 Core/drogui/include/control.h:
 Core/drogui/include/sensorsTasks.h:

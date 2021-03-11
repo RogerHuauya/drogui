@@ -31,7 +31,7 @@ build/filter.o: Core/drogui/src/filter.c Core/drogui/include/filter.h \
  Core/drogui/include/utils.h Core/Inc/usart.h Core/Inc/main.h \
  Core/drogui/include/sensorsTasks.h Core/drogui/include/filter.h \
  Core/drogui/include/MPU9250.h Core/drogui/include/registerMap.h \
- Core/drogui/include/utils.h
+ Core/drogui/include/utils.h Core/drogui/include/BMP388.h
 Core/drogui/include/filter.h:
 Core/Inc/main.h:
 Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h:
@@ -74,3 +74,4 @@ Core/drogui/include/filter.h:
 Core/drogui/include/MPU9250.h:
 Core/drogui/include/registerMap.h:
 Core/drogui/include/utils.h:
+Core/drogui/include/BMP388.h:

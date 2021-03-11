@@ -27,9 +27,19 @@
 #define BMP388_REG_CMD                            UINT8_C(0x7E)
 
 
-void initBmp388();
-uint32_t bmpReadTemperature();
-uint32_t bmpReadPressure();
-static int64_t bmp388CompensateTemp(uint32_t u32RegData);
-static int64_t bmp388CompensatePress(uint32_t u32RegData);
+typedef struct _bmp388{
+    int temp_cont;
+    int cont;
+    float alt_offset, altitude;
+    int64_t temp, press, seaLevel;
+} bmp388;
+
+
+
+void initBmp388(bmp388* b, int ntemp);
+void bmpReadTemperature(bmp388* b);
+void bmpReadPressure(bmp388* b);
+
+void bmp388ReadAltitude(bmp388* b);
+
 #endif

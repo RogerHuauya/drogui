@@ -95,3 +95,46 @@ float computeDNotch(dNotchFilter *df, float val){
 
     return ans;    
 }
+
+
+void initEmaFilter(emaFilter* ef, float a, float b, float threshold){
+    ef -> a = a;
+    ef -> b = b;
+    ef -> threshold = threshold;
+    ef -> value = 0;
+}
+
+float computeEmaFilter(emaFilter* ef, float val){
+    float ans = 0;
+    ans = (ef -> value) * (ef -> a) + val * (ef -> b);
+
+    float diff = val - ans;
+    diff = fmax(fmin(diff, 1), -1);
+
+    if (fabs(diff) >  (ef->threshold)) ans += diff / 6.0;
+    return (ef->value) = ans;
+}
+
+
+void initMvAvgFilter(mvAvgFilter* mf, int n){
+    mf -> values = (float *) calloc(n, sizeof(float));
+    mf -> n = n;
+    mf -> head = 0;
+    mf -> sum = 0;
+}
+
+float compueteMvAvgFilter(mvAvgFilter* mf, float val){
+    mf -> sum -= mf->values[(mf -> head)];
+    mf -> values[(mf -> head)] = val;
+    mf -> sum += mf -> values[ (mf -> head) ++];
+    mf -> head = (mf -> head)%(mf -> n);
+    return (float) (mf -> sum)/(mf->n);
+}
+
+
+
+
+
+
+
+
