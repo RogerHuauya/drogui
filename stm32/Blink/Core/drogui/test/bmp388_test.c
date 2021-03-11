@@ -29,9 +29,6 @@ void _main(){
         
         HAL_Delay(5);
 
-
-
-
     }
 
 }
