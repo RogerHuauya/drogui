@@ -20,7 +20,6 @@ typedef struct _calib{
 
 
 void buildCalib(uint8_t* buff, calib * cal){
-    char aux[50];
     cal -> T1 = (uint16_t) (buff[1] << 8 | buff[0]);
     cal -> T2 = (uint16_t) (buff[3] << 8 | buff[2]);
     cal -> T3 = (int8_t) (buff[4]);
@@ -136,18 +135,15 @@ void bmpReadPressure(bmp388* b){
 
 void bmp388ReadAltitude(bmp388* b){
 
-    float zerolevel,altitude;
 
-    if( b -> cont >= b ->temp_cont){
-        bmpReadTemperature(b);
-        b -> cont = 0;
-    }
-    
+    if( b -> cont == 0) bmpReadTemperature(b);
+    b -> cont = (b -> cont + 1)%(b -> temp_cont);
+
     bmpReadPressure(b);
 
     if( b->seaLevel == 0 ) b->seaLevel = b->press;
 
-    b -> altitude = 44330.0 * (1.0 -  pow( 1.0*(b->press / b->seaLevel),0.1903));
+    b -> altitude = 44330.0 * (1.0 -  pow( 1.0*b->press / b->seaLevel,0.1903));
     b -> altitude += b -> alt_offset;
 }
 

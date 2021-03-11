@@ -207,35 +207,31 @@ void SysTick_Handler(void)
   * @brief This function handles I2C4 event interrupt.
   */
 char buffer[50];
-int index1 = -1, index2 = -1;
+int write_adress = -1, read_adress = -1;
+int index = 0;
 
 void I2C4_EV_IRQHandler(void)
 {
   unsigned long isr = I2C4->ISR;
 
-  if ( isr & I2C_ISR_TXIS )
+  if ( isr & I2C_ISR_TXIS ) 
   {
-    //HAL_UART_Transmit(&huart2, (uint8_t*) "TX\n", 4, 100);
-    if(index1 != -1){
-      
-      //sprintf(buffer, "Trans %u %d %d\n", i2cReg[index1][index2+1], index1, index2);
-      //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
-      I2C4->TXDR = i2cReg[index1][++index2];
-    }
-    else
-      I2C4->TXDR = index2;
+    I2C4->TXDR = i2cReg[read_adress][ index++ ];
   }
-  else if ( isr & I2C_ISR_RXNE )
-  {
+  else if ( isr & I2C_ISR_RXNE ){
+
     //HAL_UART_Transmit(&huart2, (uint8_t*) "RX\n", 4, 100);
     uint8_t a = (I2C4->RXDR);
-    if(index1 == -1){
-      index1 = a;
-      //sprintf(buffer, "Trans %u %d %d\n", i2cReg[index1][index2+1], index1, index2);
-      //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
+    if(write_adress == -1){
+        if(a & 1){
+          write_adress = a;
+        }
+        else{
+          read_adress = a;
+        }
     }
     else{
-      i2cReg[index1][++index2] = a; 
+      i2cReg[write_adress^1][ index++ ];
     }
     
     //printf(buffer, "Rece %d %d\n", index1, index2);
@@ -243,7 +239,7 @@ void I2C4_EV_IRQHandler(void)
   }
   else if ( isr & I2C_ISR_STOPF )
   {
-    if(index2 != -1) index1 = index2 = -1;
+    if(index != 0) write_adress = read_adress = -1, index = 0;
     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
     I2C4->ISR |= I2C_ISR_TXE;
     I2C4->ICR = I2C_ICR_STOPCF;

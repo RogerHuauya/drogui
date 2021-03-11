@@ -20,6 +20,12 @@ dNotchFilter dnotch_ax, dnotch_ay, dnotch_az;
 filter filter_roll, filter_pitch, filter_yaw;
 float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
 
+bmp388 myBMP;
+float altitude;
+
+emaFilter ema_bmp;
+mvAvgFilter mvAvg_bmp;
+
 
 void accelTask(){   
     readAcc(&myIMU);
@@ -80,7 +86,7 @@ float Kdfilt = 0.01;
 void rpyTask(){
     
     float rpy[3];
-    mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, 0, 0, 0);
+    mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, my, mx, mz);
     getMahonyEuler(rpy);
     roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
     
@@ -98,6 +104,15 @@ void rpyTask(){
     setReg(YAW_VAL, yaw);
 }
 
+void altitudeTask(){
+    
+    bmp388ReadAltitude(&myBMP);
+    altitude = compueteMvAvgFilter( &mvAvg_bmp, myBMP.altitude );
+    altitude = computeEmaFilter( &ema_bmp, altitude );
+
+    setReg(Z_VAL,altitude);
+
+}
 
 void initSensorsTasks(){
     
@@ -133,14 +148,19 @@ void initSensorsTasks(){
     initFilter(&filter_pitch, 4, k_1_10, v_1_10);
     initFilter(&filter_yaw, 4, k_1_10, v_1_10);
 
-
     calibrateGyro(&myIMU);
     calibrateAccel(&myIMU);
-
-    //calibrateMag(&myIMU);
+    calibrateMag(&myIMU);
     
+    initBmp388(&myBMP, 10);  
+
+    initMvAvgFilter(&mvAvg_bmp, N_BMP);
+    initEmaFilter(&ema_bmp, 0.6, 0.4, 0.5);
+
     addTask(&gyroTask, 1000, 2);
     addTask(&accelTask, 1000, 3);
-    //addTask(&magTask, 10, 2);
+    addTask(&magTask, 100000, 2);
     addTask(&rpyTask, 2000, 2);
+    addTask(&altitudeTask,10000,3);
+
 }

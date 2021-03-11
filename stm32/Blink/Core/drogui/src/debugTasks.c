@@ -10,7 +10,6 @@
 
 
 void blinkTask(void *argument){
-
     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
 }
 
@@ -25,7 +24,7 @@ void securityTask(){
         updatePID();
         if(getReg(CAL_GYR_TRG) == 1) calibrateGyro(&myIMU), setReg(CAL_GYR_TRG, 0);
         if(getReg(CAL_ACC_TRG) == 1) calibrateAccel(&myIMU), setReg(CAL_ACC_TRG, 0);
-        //if(getReg(CAL_MAG_TRG) == 1) calibrateMag(&myIMU), setReg(CAL_MAG_TRG, 0);
+        if(getReg(CAL_MAG_TRG) == 1) calibrateMag(&myIMU), setReg(CAL_MAG_TRG, 0);
         security = true;
     }
     else security = false;
@@ -33,7 +32,7 @@ void securityTask(){
 
 void initDebug(){
     
-    //addTask(&debugTask, 10000, 1);
-    addTask(&blinkTask, 10, 1);
+    addTask(&debugTask, 10000, 1);
+    addTask(&blinkTask, 100000, 1);
     addTask(&securityTask, 1000, 1);
 }
