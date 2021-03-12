@@ -1,2 +1,4 @@
 raspberry/main
 raspberry/logs/*
+stm32/Blink/build/*
+rpicurses/logs/*
