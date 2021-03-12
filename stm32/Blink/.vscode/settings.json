@@ -23,6 +23,7 @@
         "random": "c",
         "mahony.h": "c",
         "matlib.h": "c",
-        "bmp388.h": "c"
+        "bmp388.h": "c",
+        "mpu9250.h": "c"
     }
 }
