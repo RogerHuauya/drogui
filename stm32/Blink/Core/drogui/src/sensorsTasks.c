@@ -149,8 +149,8 @@ void initSensorsTasks(){
     initFilter(&filter_yaw, 4, k_1_10, v_1_10);
 
     calibrateGyro(&myIMU);
-    calibrateAccel(&myIMU);
-    calibrateMag(&myIMU);
+    //calibrateAccel(&myIMU);
+    //calibrateMag(&myIMU);
     
     initBmp388(&myBMP, 10);  
 
