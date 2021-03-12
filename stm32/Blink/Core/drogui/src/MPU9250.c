@@ -149,7 +149,8 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
     Serial.println();*/
     
    //120 260 380
-    if((max_gyro[0]-min_gyro[0] < (treshold+1000)) && (max_gyro[1]-min_gyro[1] < (treshold+2100)) && (max_gyro[2]-min_gyro[2] < (treshold+3000))){
+
+    if((max_gyro[0]-min_gyro[0] < (treshold+1100)) && (max_gyro[1]-min_gyro[1] < (treshold+2000)) && (max_gyro[2]-min_gyro[2] < (treshold+3100))){
         if(cal){
             //Serial.print("Ra");
             m->off_gx = -(max_gyro[0] + min_gyro[0])/2;
