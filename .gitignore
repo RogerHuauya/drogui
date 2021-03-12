@@ -2,3 +2,7 @@ raspberry/main
 raspberry/logs/*
 stm32/Blink/build/*
 rpicurses/logs/*
+*.map
+*.bin
+*.hex
+*.bin
