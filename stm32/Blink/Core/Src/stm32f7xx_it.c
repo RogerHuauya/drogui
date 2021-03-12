@@ -208,7 +208,7 @@ void SysTick_Handler(void)
   */
 char buffer[50];
 int write_adress = -1, read_adress = -1;
-int index = 0;
+int index_i2c = 0;
 
 void I2C4_EV_IRQHandler(void)
 {
@@ -216,7 +216,7 @@ void I2C4_EV_IRQHandler(void)
 
   if ( isr & I2C_ISR_TXIS ) 
   {
-    I2C4->TXDR = i2cReg[read_adress][ index++ ];
+    I2C4->TXDR = i2cReg[read_adress][ index_i2c++ ];
   }
   else if ( isr & I2C_ISR_RXNE ){
 
@@ -231,7 +231,7 @@ void I2C4_EV_IRQHandler(void)
         }
     }
     else{
-      i2cReg[write_adress^1][ index++ ];
+      i2cReg[write_adress^1][ index_i2c++ ];
     }
     
     //printf(buffer, "Rece %d %d\n", index1, index2);
@@ -239,7 +239,7 @@ void I2C4_EV_IRQHandler(void)
   }
   else if ( isr & I2C_ISR_STOPF )
   {
-    if(index != 0) write_adress = read_adress = -1, index = 0;
+    if(index_i2c != 0) write_adress = read_adress = -1, index_i2c = 0;
     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
     I2C4->ISR |= I2C_ISR_TXE;
     I2C4->ICR = I2C_ICR_STOPCF;

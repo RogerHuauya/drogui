@@ -13,7 +13,7 @@ char auxbuff[50];
 void _main(){
 
     HAL_TIM_Base_Start(&htim5);
-
+    HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
     HAL_Delay(1000);
     HAL_UART_Transmit(&huart2, (uint8_t*) "Start System\n", 14, 100);
     initDebug();

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 1
+ARM GAS  C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 1
   28:Core/Src/stm32f7xx_it.c **** /* Private includes ----------------------------------------------------------*/
   29:Core/Src/stm32f7xx_it.c **** /* USER CODE BEGIN Includes */
   30:Core/Src/stm32f7xx_it.c **** /* USER CODE END Includes */
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 2
+ARM GAS  C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s 			page 2
 
 
   31:Core/Src/stm32f7xx_it.c **** 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 1
   78:Core/Src/stm32f7xx_it.c ****   /* USER CODE END NonMaskableInt_IRQn 0 */
   79:Core/Src/stm32f7xx_it.c ****   /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
   80:Core/Src/stm32f7xx_it.c ****   while (1)
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 3
+ARM GAS  C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s 			page 3
 
 
   36              		.loc 1 80 3 discriminator 1 view .LVU1
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 1
   73              		.fpu fpv5-sp-d16
   75              	MemManage_Handler:
   76              	.LFB146:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 4
+ARM GAS  C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s 			page 4
 
 
   99:Core/Src/stm32f7xx_it.c **** }
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 1
  123:Core/Src/stm32f7xx_it.c ****   /* USER CODE END BusFault_IRQn 0 */
  124:Core/Src/stm32f7xx_it.c ****   while (1)
  108              		.loc 1 124 3 discriminator 1 view .LVU13
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 5
+ARM GAS  C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s 			page 5
 
 
  125:Core/Src/stm32f7xx_it.c ****   {
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 1
  145              		.fpu fpv5-sp-d16
  147              	SVC_Handler:
  148              	.LFB149:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 6
+ARM GAS  C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s 			page 6
 
 
  144:Core/Src/stm32f7xx_it.c **** }
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 1
  179              		.section	.text.PendSV_Handler,"ax",%progbits
  180              		.align	1
  181              		.global	PendSV_Handler
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 7
+ARM GAS  C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s 			page 7
 
 
  182              		.syntax unified
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 1
  192:Core/Src/stm32f7xx_it.c ****   /* USER CODE END SysTick_IRQn 0 */
  193:Core/Src/stm32f7xx_it.c ****   HAL_IncTick();
  218              		.loc 1 193 3 view .LVU27
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 8
+ARM GAS  C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s 			page 8
 
 
  219 0002 FFF7FEFF 		bl	HAL_IncTick
@@ -452,341 +452,382 @@ ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 1
  207:Core/Src/stm32f7xx_it.c ****   * @brief This function handles I2C4 event interrupt.
  208:Core/Src/stm32f7xx_it.c ****   */
  209:Core/Src/stm32f7xx_it.c **** char buffer[50];
- 210:Core/Src/stm32f7xx_it.c **** int index1 = -1, index2 = -1;
- 211:Core/Src/stm32f7xx_it.c **** 
- 212:Core/Src/stm32f7xx_it.c **** void I2C4_EV_IRQHandler(void)
- 213:Core/Src/stm32f7xx_it.c **** {
- 236              		.loc 1 213 1 is_stmt 1 view -0
+ 210:Core/Src/stm32f7xx_it.c **** int write_adress = -1, read_adress = -1;
+ 211:Core/Src/stm32f7xx_it.c **** int index_i2c = 0;
+ 212:Core/Src/stm32f7xx_it.c **** 
+ 213:Core/Src/stm32f7xx_it.c **** void I2C4_EV_IRQHandler(void)
+ 214:Core/Src/stm32f7xx_it.c **** {
+ 236              		.loc 1 214 1 is_stmt 1 view -0
  237              		.cfi_startproc
  238              		@ args = 0, pretend = 0, frame = 0
  239              		@ frame_needed = 0, uses_anonymous_args = 0
  240              		@ link register save eliminated.
- 214:Core/Src/stm32f7xx_it.c ****   unsigned long isr = I2C4->ISR;
- 241              		.loc 1 214 3 view .LVU30
- 242              		.loc 1 214 17 is_stmt 0 view .LVU31
- 243 0000 2E4B     		ldr	r3, .L27
+ 215:Core/Src/stm32f7xx_it.c ****   unsigned long isr = I2C4->ISR;
+ 241              		.loc 1 215 3 view .LVU30
+ 242              		.loc 1 215 17 is_stmt 0 view .LVU31
+ 243 0000 2F4B     		ldr	r3, .L33
  244 0002 9B69     		ldr	r3, [r3, #24]
  245              	.LVL1:
- 215:Core/Src/stm32f7xx_it.c **** 
- 216:Core/Src/stm32f7xx_it.c ****   if ( isr & I2C_ISR_TXIS )
- 246              		.loc 1 216 3 is_stmt 1 view .LVU32
- 247              		.loc 1 216 6 is_stmt 0 view .LVU33
+ 216:Core/Src/stm32f7xx_it.c **** 
+ 217:Core/Src/stm32f7xx_it.c ****   if ( isr & I2C_ISR_TXIS ) 
+ 246              		.loc 1 217 3 is_stmt 1 view .LVU32
+ 247              		.loc 1 217 6 is_stmt 0 view .LVU33
  248 0004 13F0020F 		tst	r3, #2
- 249 0008 1AD0     		beq	.L17
- 217:Core/Src/stm32f7xx_it.c ****   {
- 218:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "TX\n", 4, 100);
- 219:Core/Src/stm32f7xx_it.c ****     if(index1 != -1){
- 250              		.loc 1 219 5 is_stmt 1 view .LVU34
- 251              		.loc 1 219 15 is_stmt 0 view .LVU35
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 9
+ 249 0008 43D1     		bne	.L31
+ 218:Core/Src/stm32f7xx_it.c ****   {
+ 219:Core/Src/stm32f7xx_it.c ****     I2C4->TXDR = i2cReg[read_adress][ index_i2c++ ];
+ 220:Core/Src/stm32f7xx_it.c ****   }
+ 221:Core/Src/stm32f7xx_it.c ****   else if ( isr & I2C_ISR_RXNE ){
+ARM GAS  C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s 			page 9
 
 
- 252 000a 2D4A     		ldr	r2, .L27+4
- 253 000c 1168     		ldr	r1, [r2]
- 254              		.loc 1 219 7 view .LVU36
- 255 000e B1F1FF3F 		cmp	r1, #-1
- 256 0012 10D0     		beq	.L18
- 220:Core/Src/stm32f7xx_it.c ****       
- 221:Core/Src/stm32f7xx_it.c ****       //sprintf(buffer, "Trans %u %d %d\n", i2cReg[index1][index2+1], index1, index2);
- 222:Core/Src/stm32f7xx_it.c ****       //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
- 223:Core/Src/stm32f7xx_it.c ****       I2C4->TXDR = i2cReg[index1][++index2];
- 257              		.loc 1 223 7 is_stmt 1 view .LVU37
- 258              		.loc 1 223 35 is_stmt 0 view .LVU38
- 259 0014 2B48     		ldr	r0, .L27+8
- 260 0016 0268     		ldr	r2, [r0]
- 261 0018 0132     		adds	r2, r2, #1
- 262              		.loc 1 223 18 view .LVU39
- 263 001a 0260     		str	r2, [r0]
- 264              		.loc 1 223 34 view .LVU40
- 265 001c 2A48     		ldr	r0, .L27+12
- 266 001e 00EB8101 		add	r1, r0, r1, lsl #2
- 267 0022 895C     		ldrb	r1, [r1, r2]	@ zero_extendqisi2
- 268              		.loc 1 223 18 view .LVU41
- 269 0024 254A     		ldr	r2, .L27
- 270 0026 9162     		str	r1, [r2, #40]
- 271              	.L19:
- 224:Core/Src/stm32f7xx_it.c ****     }
- 225:Core/Src/stm32f7xx_it.c ****     else
- 226:Core/Src/stm32f7xx_it.c ****       I2C4->TXDR = index2;
- 227:Core/Src/stm32f7xx_it.c ****   }
- 228:Core/Src/stm32f7xx_it.c ****   else if ( isr & I2C_ISR_RXNE )
- 229:Core/Src/stm32f7xx_it.c ****   {
- 230:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "RX\n", 4, 100);
- 231:Core/Src/stm32f7xx_it.c ****     uint8_t a = (I2C4->RXDR);
- 232:Core/Src/stm32f7xx_it.c ****     if(index1 == -1){
- 233:Core/Src/stm32f7xx_it.c ****       index1 = a;
- 234:Core/Src/stm32f7xx_it.c ****       //sprintf(buffer, "Trans %u %d %d\n", i2cReg[index1][index2+1], index1, index2);
- 235:Core/Src/stm32f7xx_it.c ****       //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
- 236:Core/Src/stm32f7xx_it.c ****     }
- 237:Core/Src/stm32f7xx_it.c ****     else{
- 238:Core/Src/stm32f7xx_it.c ****       i2cReg[index1][++index2] = a; 
- 239:Core/Src/stm32f7xx_it.c ****     }
- 240:Core/Src/stm32f7xx_it.c ****     
- 241:Core/Src/stm32f7xx_it.c ****     //printf(buffer, "Rece %d %d\n", index1, index2);
- 242:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
- 243:Core/Src/stm32f7xx_it.c ****   }
- 244:Core/Src/stm32f7xx_it.c ****   else if ( isr & I2C_ISR_STOPF )
- 245:Core/Src/stm32f7xx_it.c ****   {
- 246:Core/Src/stm32f7xx_it.c ****     if(index2 != -1) index1 = index2 = -1;
- 247:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
- 248:Core/Src/stm32f7xx_it.c ****     I2C4->ISR |= I2C_ISR_TXE;
- 249:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_STOPCF;
+ 250              		.loc 1 221 8 is_stmt 1 view .LVU34
+ 251              		.loc 1 221 11 is_stmt 0 view .LVU35
+ 252 000a 13F0040F 		tst	r3, #4
+ 253 000e 1BD0     		beq	.L19
+ 254              	.LBB2:
+ 222:Core/Src/stm32f7xx_it.c **** 
+ 223:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "RX\n", 4, 100);
+ 224:Core/Src/stm32f7xx_it.c ****     uint8_t a = (I2C4->RXDR);
+ 255              		.loc 1 224 5 is_stmt 1 view .LVU36
+ 256              		.loc 1 224 22 is_stmt 0 view .LVU37
+ 257 0010 2B4A     		ldr	r2, .L33
+ 258 0012 516A     		ldr	r1, [r2, #36]
+ 259              	.LVL2:
+ 225:Core/Src/stm32f7xx_it.c ****     if(write_adress == -1){
+ 260              		.loc 1 225 5 is_stmt 1 view .LVU38
+ 261              		.loc 1 225 21 is_stmt 0 view .LVU39
+ 262 0014 2B4A     		ldr	r2, .L33+4
+ 263 0016 1268     		ldr	r2, [r2]
+ 264              		.loc 1 225 7 view .LVU40
+ 265 0018 B2F1FF3F 		cmp	r2, #-1
+ 266 001c 0AD0     		beq	.L32
+ 226:Core/Src/stm32f7xx_it.c ****         if(a & 1){
+ 227:Core/Src/stm32f7xx_it.c ****           write_adress = a;
+ 228:Core/Src/stm32f7xx_it.c ****         }
+ 229:Core/Src/stm32f7xx_it.c ****         else{
+ 230:Core/Src/stm32f7xx_it.c ****           read_adress = a;
+ 231:Core/Src/stm32f7xx_it.c ****         }
+ 232:Core/Src/stm32f7xx_it.c ****     }
+ 233:Core/Src/stm32f7xx_it.c ****     else{
+ 234:Core/Src/stm32f7xx_it.c ****       i2cReg[write_adress^1][ index_i2c++ ];
+ 267              		.loc 1 234 7 is_stmt 1 view .LVU41
+ 268              		.loc 1 234 40 is_stmt 0 view .LVU42
+ 269 001e 2A49     		ldr	r1, .L33+8
+ 270              	.LVL3:
+ 271              		.loc 1 234 40 view .LVU43
+ 272 0020 0A68     		ldr	r2, [r1]
+ 273 0022 0132     		adds	r2, r2, #1
+ 274 0024 0A60     		str	r2, [r1]
+ 275              	.L27:
+ 276              		.loc 1 234 40 view .LVU44
+ 277              	.LBE2:
+ 235:Core/Src/stm32f7xx_it.c ****     }
+ 236:Core/Src/stm32f7xx_it.c ****     
+ 237:Core/Src/stm32f7xx_it.c ****     //printf(buffer, "Rece %d %d\n", index1, index2);
+ 238:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
+ 239:Core/Src/stm32f7xx_it.c ****   }
+ 240:Core/Src/stm32f7xx_it.c ****   else if ( isr & I2C_ISR_STOPF )
+ 241:Core/Src/stm32f7xx_it.c ****   {
+ 242:Core/Src/stm32f7xx_it.c ****     if(index_i2c != 0) write_adress = read_adress = -1, index_i2c = 0;
+ 243:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
+ 244:Core/Src/stm32f7xx_it.c ****     I2C4->ISR |= I2C_ISR_TXE;
+ 245:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_STOPCF;
+ 246:Core/Src/stm32f7xx_it.c ****   }
+ 247:Core/Src/stm32f7xx_it.c ****   else if ( isr & I2C_ISR_NACKF )
+ 248:Core/Src/stm32f7xx_it.c ****   {
+ 249:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "NACK\n", 6, 100);
+ 250:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_NACKCF;
+ARM GAS  C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s 			page 10
+
+
+ 251:Core/Src/stm32f7xx_it.c ****   }
+ 252:Core/Src/stm32f7xx_it.c ****   else if ( isr & I2C_ISR_ADDR )
+ 253:Core/Src/stm32f7xx_it.c ****   {
+ 254:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "ADDR\n", 6, 100);
+ 255:Core/Src/stm32f7xx_it.c ****     /* not required, the addr match interrupt is not enabled */
+ 256:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_ADDRCF;
+ 257:Core/Src/stm32f7xx_it.c ****   }
+ 258:Core/Src/stm32f7xx_it.c ****  
+ 259:Core/Src/stm32f7xx_it.c ****   /* if at any time the addr match is set, clear the flag */
+ 260:Core/Src/stm32f7xx_it.c ****   /* not sure, whether this is required */
+ 261:Core/Src/stm32f7xx_it.c ****   if ( isr & I2C_ISR_ADDR )
+ 278              		.loc 1 261 3 is_stmt 1 view .LVU45
+ 279              		.loc 1 261 6 is_stmt 0 view .LVU46
+ 280 0026 13F0080F 		tst	r3, #8
+ 281 002a 48D0     		beq	.L29
+ 262:Core/Src/stm32f7xx_it.c ****   {
+ 263:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_ADDRCF;
+ 282              		.loc 1 263 5 is_stmt 1 view .LVU47
+ 283              		.loc 1 263 15 is_stmt 0 view .LVU48
+ 284 002c 244B     		ldr	r3, .L33
+ 285              	.LVL4:
+ 286              		.loc 1 263 15 view .LVU49
+ 287 002e 0822     		movs	r2, #8
+ 288 0030 DA61     		str	r2, [r3, #28]
+ 289 0032 7047     		bx	lr
+ 290              	.LVL5:
+ 291              	.L32:
+ 292              	.LBB3:
+ 226:Core/Src/stm32f7xx_it.c ****           write_adress = a;
+ 293              		.loc 1 226 9 is_stmt 1 view .LVU50
+ 226:Core/Src/stm32f7xx_it.c ****           write_adress = a;
+ 294              		.loc 1 226 14 is_stmt 0 view .LVU51
+ 295 0034 CAB2     		uxtb	r2, r1
+ 226:Core/Src/stm32f7xx_it.c ****           write_adress = a;
+ 296              		.loc 1 226 11 view .LVU52
+ 297 0036 11F0010F 		tst	r1, #1
+ 298 003a 02D0     		beq	.L21
+ 227:Core/Src/stm32f7xx_it.c ****         }
+ 299              		.loc 1 227 11 is_stmt 1 view .LVU53
+ 227:Core/Src/stm32f7xx_it.c ****         }
+ 300              		.loc 1 227 24 is_stmt 0 view .LVU54
+ 301 003c 2149     		ldr	r1, .L33+4
+ 302              	.LVL6:
+ 227:Core/Src/stm32f7xx_it.c ****         }
+ 303              		.loc 1 227 24 view .LVU55
+ 304 003e 0A60     		str	r2, [r1]
+ 305 0040 F1E7     		b	.L27
+ 306              	.LVL7:
+ 307              	.L21:
+ 230:Core/Src/stm32f7xx_it.c ****         }
+ 308              		.loc 1 230 11 is_stmt 1 view .LVU56
+ 230:Core/Src/stm32f7xx_it.c ****         }
+ 309              		.loc 1 230 23 is_stmt 0 view .LVU57
+ 310 0042 2249     		ldr	r1, .L33+12
+ 311              	.LVL8:
+ 230:Core/Src/stm32f7xx_it.c ****         }
+ 312              		.loc 1 230 23 view .LVU58
+ARM GAS  C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s 			page 11
+
+
+ 313 0044 0A60     		str	r2, [r1]
+ 314 0046 EEE7     		b	.L27
+ 315              	.LVL9:
+ 316              	.L19:
+ 230:Core/Src/stm32f7xx_it.c ****         }
+ 317              		.loc 1 230 23 view .LVU59
+ 318              	.LBE3:
+ 240:Core/Src/stm32f7xx_it.c ****   {
+ 319              		.loc 1 240 8 is_stmt 1 view .LVU60
+ 240:Core/Src/stm32f7xx_it.c ****   {
+ 320              		.loc 1 240 11 is_stmt 0 view .LVU61
+ 321 0048 13F0200F 		tst	r3, #32
+ 322 004c 13D0     		beq	.L22
+ 242:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
+ 323              		.loc 1 242 5 is_stmt 1 view .LVU62
+ 242:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
+ 324              		.loc 1 242 18 is_stmt 0 view .LVU63
+ 325 004e 1E4A     		ldr	r2, .L33+8
+ 326 0050 1268     		ldr	r2, [r2]
+ 242:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
+ 327              		.loc 1 242 7 view .LVU64
+ 328 0052 42B1     		cbz	r2, .L23
+ 242:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
+ 329              		.loc 1 242 24 is_stmt 1 discriminator 1 view .LVU65
+ 242:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
+ 330              		.loc 1 242 51 is_stmt 0 discriminator 1 view .LVU66
+ 331 0054 4FF0FF32 		mov	r2, #-1
+ 332 0058 1C49     		ldr	r1, .L33+12
+ 333 005a 0A60     		str	r2, [r1]
+ 242:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
+ 334              		.loc 1 242 37 discriminator 1 view .LVU67
+ 335 005c 1949     		ldr	r1, .L33+4
+ 336 005e 0A60     		str	r2, [r1]
+ 242:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
+ 337              		.loc 1 242 67 discriminator 1 view .LVU68
+ 338 0060 194A     		ldr	r2, .L33+8
+ 339 0062 0021     		movs	r1, #0
+ 340 0064 1160     		str	r1, [r2]
+ 341              	.L23:
+ 244:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_STOPCF;
+ 342              		.loc 1 244 5 is_stmt 1 view .LVU69
+ 244:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_STOPCF;
+ 343              		.loc 1 244 15 is_stmt 0 view .LVU70
+ 344 0066 164A     		ldr	r2, .L33
+ 345 0068 9169     		ldr	r1, [r2, #24]
+ 346 006a 41F00101 		orr	r1, r1, #1
+ 347 006e 9161     		str	r1, [r2, #24]
+ 245:Core/Src/stm32f7xx_it.c ****   }
+ 348              		.loc 1 245 5 is_stmt 1 view .LVU71
+ 245:Core/Src/stm32f7xx_it.c ****   }
+ 349              		.loc 1 245 15 is_stmt 0 view .LVU72
+ 350 0070 2021     		movs	r1, #32
+ 351 0072 D161     		str	r1, [r2, #28]
+ 352 0074 D7E7     		b	.L27
+ 353              	.L22:
+ 247:Core/Src/stm32f7xx_it.c ****   {
+ 354              		.loc 1 247 8 is_stmt 1 view .LVU73
+ARM GAS  C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s 			page 12
+
+
+ 247:Core/Src/stm32f7xx_it.c ****   {
+ 355              		.loc 1 247 11 is_stmt 0 view .LVU74
+ 356 0076 13F0100F 		tst	r3, #16
+ 357 007a 03D0     		beq	.L24
  250:Core/Src/stm32f7xx_it.c ****   }
- 251:Core/Src/stm32f7xx_it.c ****   else if ( isr & I2C_ISR_NACKF )
+ 358              		.loc 1 250 5 is_stmt 1 view .LVU75
+ 250:Core/Src/stm32f7xx_it.c ****   }
+ 359              		.loc 1 250 15 is_stmt 0 view .LVU76
+ 360 007c 104A     		ldr	r2, .L33
+ 361 007e 1021     		movs	r1, #16
+ 362 0080 D161     		str	r1, [r2, #28]
+ 363 0082 D0E7     		b	.L27
+ 364              	.L24:
  252:Core/Src/stm32f7xx_it.c ****   {
- 253:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "NACK\n", 6, 100);
- 254:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_NACKCF;
- 255:Core/Src/stm32f7xx_it.c ****   }
- 256:Core/Src/stm32f7xx_it.c ****   else if ( isr & I2C_ISR_ADDR )
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 10
+ 365              		.loc 1 252 8 is_stmt 1 view .LVU77
+ 252:Core/Src/stm32f7xx_it.c ****   {
+ 366              		.loc 1 252 11 is_stmt 0 view .LVU78
+ 367 0084 13F0080F 		tst	r3, #8
+ 368 0088 CDD0     		beq	.L27
+ 256:Core/Src/stm32f7xx_it.c ****   }
+ 369              		.loc 1 256 5 is_stmt 1 view .LVU79
+ 256:Core/Src/stm32f7xx_it.c ****   }
+ 370              		.loc 1 256 15 is_stmt 0 view .LVU80
+ 371 008a 0D4A     		ldr	r2, .L33
+ 372 008c 0821     		movs	r1, #8
+ 373 008e D161     		str	r1, [r2, #28]
+ 374 0090 C9E7     		b	.L27
+ 375              	.L31:
+ 214:Core/Src/stm32f7xx_it.c ****   unsigned long isr = I2C4->ISR;
+ 376              		.loc 1 214 1 view .LVU81
+ 377 0092 10B4     		push	{r4}
+ 378              	.LCFI1:
+ 379              		.cfi_def_cfa_offset 4
+ 380              		.cfi_offset 4, -4
+ 219:Core/Src/stm32f7xx_it.c ****   }
+ 381              		.loc 1 219 5 is_stmt 1 view .LVU82
+ 219:Core/Src/stm32f7xx_it.c ****   }
+ 382              		.loc 1 219 37 is_stmt 0 view .LVU83
+ 383 0094 0D4A     		ldr	r2, .L33+12
+ 384 0096 1468     		ldr	r4, [r2]
+ 219:Core/Src/stm32f7xx_it.c ****   }
+ 385              		.loc 1 219 48 view .LVU84
+ 386 0098 0B48     		ldr	r0, .L33+8
+ 387 009a 0168     		ldr	r1, [r0]
+ 388 009c 4A1C     		adds	r2, r1, #1
+ 389 009e 0260     		str	r2, [r0]
+ 219:Core/Src/stm32f7xx_it.c ****   }
+ 390              		.loc 1 219 37 view .LVU85
+ 391 00a0 0B4A     		ldr	r2, .L33+16
+ 392 00a2 02EB8402 		add	r2, r2, r4, lsl #2
+ 393 00a6 515C     		ldrb	r1, [r2, r1]	@ zero_extendqisi2
+ 219:Core/Src/stm32f7xx_it.c ****   }
+ 394              		.loc 1 219 16 view .LVU86
+ 395 00a8 054A     		ldr	r2, .L33
+ 396 00aa 9162     		str	r1, [r2, #40]
+ 261:Core/Src/stm32f7xx_it.c ****   {
+ 397              		.loc 1 261 3 is_stmt 1 view .LVU87
+ARM GAS  C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s 			page 13
 
 
- 257:Core/Src/stm32f7xx_it.c ****   {
- 258:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "ADDR\n", 6, 100);
- 259:Core/Src/stm32f7xx_it.c ****     /* not required, the addr match interrupt is not enabled */
- 260:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_ADDRCF;
- 261:Core/Src/stm32f7xx_it.c ****   }
- 262:Core/Src/stm32f7xx_it.c ****  
- 263:Core/Src/stm32f7xx_it.c ****   /* if at any time the addr match is set, clear the flag */
- 264:Core/Src/stm32f7xx_it.c ****   /* not sure, whether this is required */
- 265:Core/Src/stm32f7xx_it.c ****   if ( isr & I2C_ISR_ADDR )
- 272              		.loc 1 265 3 is_stmt 1 view .LVU42
- 273              		.loc 1 265 6 is_stmt 0 view .LVU43
- 274 0028 13F0080F 		tst	r3, #8
- 275 002c 02D0     		beq	.L16
- 266:Core/Src/stm32f7xx_it.c ****   {
- 267:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_ADDRCF;
- 276              		.loc 1 267 5 is_stmt 1 view .LVU44
- 277              		.loc 1 267 15 is_stmt 0 view .LVU45
- 278 002e 234B     		ldr	r3, .L27
- 279              	.LVL2:
- 280              		.loc 1 267 15 view .LVU46
- 281 0030 0822     		movs	r2, #8
- 282 0032 DA61     		str	r2, [r3, #28]
- 283              	.L16:
- 268:Core/Src/stm32f7xx_it.c ****   }
- 269:Core/Src/stm32f7xx_it.c ****    
- 270:Core/Src/stm32f7xx_it.c **** 
- 271:Core/Src/stm32f7xx_it.c **** }
- 284              		.loc 1 271 1 view .LVU47
- 285 0034 7047     		bx	lr
- 286              	.LVL3:
- 287              	.L18:
- 226:Core/Src/stm32f7xx_it.c ****   }
- 288              		.loc 1 226 7 is_stmt 1 view .LVU48
- 226:Core/Src/stm32f7xx_it.c ****   }
- 289              		.loc 1 226 18 is_stmt 0 view .LVU49
- 290 0036 234A     		ldr	r2, .L27+8
- 291 0038 1168     		ldr	r1, [r2]
- 292 003a 204A     		ldr	r2, .L27
- 293 003c 9162     		str	r1, [r2, #40]
- 294 003e F3E7     		b	.L19
- 295              	.L17:
- 228:Core/Src/stm32f7xx_it.c ****   {
- 296              		.loc 1 228 8 is_stmt 1 view .LVU50
- 228:Core/Src/stm32f7xx_it.c ****   {
- 297              		.loc 1 228 11 is_stmt 0 view .LVU51
- 298 0040 13F0040F 		tst	r3, #4
- 299 0044 16D0     		beq	.L20
- 300              	.LBB2:
- 231:Core/Src/stm32f7xx_it.c ****     if(index1 == -1){
- 301              		.loc 1 231 5 is_stmt 1 view .LVU52
- 231:Core/Src/stm32f7xx_it.c ****     if(index1 == -1){
- 302              		.loc 1 231 22 is_stmt 0 view .LVU53
- 303 0046 1D4A     		ldr	r2, .L27
- 304 0048 526A     		ldr	r2, [r2, #36]
- 231:Core/Src/stm32f7xx_it.c ****     if(index1 == -1){
- 305              		.loc 1 231 13 view .LVU54
- 306 004a 5FFA82FC 		uxtb	ip, r2
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 11
+ 261:Core/Src/stm32f7xx_it.c ****   {
+ 398              		.loc 1 261 6 is_stmt 0 view .LVU88
+ 399 00ac 13F0080F 		tst	r3, #8
+ 400 00b0 02D0     		beq	.L16
+ 401              		.loc 1 263 5 is_stmt 1 view .LVU89
+ 402              		.loc 1 263 15 is_stmt 0 view .LVU90
+ 403 00b2 034B     		ldr	r3, .L33
+ 404              	.LVL10:
+ 405              		.loc 1 263 15 view .LVU91
+ 406 00b4 0822     		movs	r2, #8
+ 407 00b6 DA61     		str	r2, [r3, #28]
+ 408              	.L16:
+ 264:Core/Src/stm32f7xx_it.c ****   }
+ 265:Core/Src/stm32f7xx_it.c ****    
+ 266:Core/Src/stm32f7xx_it.c **** 
+ 267:Core/Src/stm32f7xx_it.c **** }
+ 409              		.loc 1 267 1 view .LVU92
+ 410 00b8 5DF8044B 		ldr	r4, [sp], #4
+ 411              	.LCFI2:
+ 412              		.cfi_restore 4
+ 413              		.cfi_def_cfa_offset 0
+ 414 00bc 7047     		bx	lr
+ 415              	.LVL11:
+ 416              	.L29:
+ 417              		.loc 1 267 1 view .LVU93
+ 418 00be 7047     		bx	lr
+ 419              	.L34:
+ 420              		.align	2
+ 421              	.L33:
+ 422 00c0 00600040 		.word	1073766400
+ 423 00c4 00000000 		.word	.LANCHOR2
+ 424 00c8 00000000 		.word	.LANCHOR1
+ 425 00cc 00000000 		.word	.LANCHOR0
+ 426 00d0 00000000 		.word	i2cReg
+ 427              		.cfi_endproc
+ 428              	.LFE153:
+ 430              		.global	index_i2c
+ 431              		.global	read_adress
+ 432              		.global	write_adress
+ 433              		.global	buffer
+ 434              		.section	.bss.buffer,"aw",%nobits
+ 435              		.align	2
+ 438              	buffer:
+ 439 0000 00000000 		.space	50
+ 439      00000000 
+ 439      00000000 
+ 439      00000000 
+ 439      00000000 
+ 440              		.section	.bss.index_i2c,"aw",%nobits
+ 441              		.align	2
+ 442              		.set	.LANCHOR1,. + 0
+ 445              	index_i2c:
+ 446 0000 00000000 		.space	4
+ 447              		.section	.data.read_adress,"aw"
+ 448              		.align	2
+ 449              		.set	.LANCHOR0,. + 0
+ 452              	read_adress:
+ARM GAS  C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s 			page 14
 
 
- 307              	.LVL4:
- 232:Core/Src/stm32f7xx_it.c ****       index1 = a;
- 308              		.loc 1 232 5 is_stmt 1 view .LVU55
- 232:Core/Src/stm32f7xx_it.c ****       index1 = a;
- 309              		.loc 1 232 15 is_stmt 0 view .LVU56
- 310 004e 1C49     		ldr	r1, .L27+4
- 311 0050 0968     		ldr	r1, [r1]
- 232:Core/Src/stm32f7xx_it.c ****       index1 = a;
- 312              		.loc 1 232 7 view .LVU57
- 313 0052 B1F1FF3F 		cmp	r1, #-1
- 314 0056 09D0     		beq	.L26
- 238:Core/Src/stm32f7xx_it.c ****     }
- 315              		.loc 1 238 7 is_stmt 1 view .LVU58
- 238:Core/Src/stm32f7xx_it.c ****     }
- 316              		.loc 1 238 22 is_stmt 0 view .LVU59
- 317 0058 1A48     		ldr	r0, .L27+8
- 318 005a 0268     		ldr	r2, [r0]
- 319 005c 0132     		adds	r2, r2, #1
- 238:Core/Src/stm32f7xx_it.c ****     }
- 320              		.loc 1 238 32 view .LVU60
- 321 005e 0260     		str	r2, [r0]
- 322 0060 1948     		ldr	r0, .L27+12
- 323 0062 00EB8101 		add	r1, r0, r1, lsl #2
- 324 0066 01F802C0 		strb	ip, [r1, r2]
- 325 006a DDE7     		b	.L19
- 326              	.L26:
- 233:Core/Src/stm32f7xx_it.c ****       //sprintf(buffer, "Trans %u %d %d\n", i2cReg[index1][index2+1], index1, index2);
- 327              		.loc 1 233 7 is_stmt 1 view .LVU61
- 233:Core/Src/stm32f7xx_it.c ****       //sprintf(buffer, "Trans %u %d %d\n", i2cReg[index1][index2+1], index1, index2);
- 328              		.loc 1 233 14 is_stmt 0 view .LVU62
- 329 006c 1449     		ldr	r1, .L27+4
- 330 006e C1F800C0 		str	ip, [r1]
- 331 0072 D9E7     		b	.L19
- 332              	.LVL5:
- 333              	.L20:
- 233:Core/Src/stm32f7xx_it.c ****       //sprintf(buffer, "Trans %u %d %d\n", i2cReg[index1][index2+1], index1, index2);
- 334              		.loc 1 233 14 view .LVU63
- 335              	.LBE2:
- 244:Core/Src/stm32f7xx_it.c ****   {
- 336              		.loc 1 244 8 is_stmt 1 view .LVU64
- 244:Core/Src/stm32f7xx_it.c ****   {
- 337              		.loc 1 244 11 is_stmt 0 view .LVU65
- 338 0074 13F0200F 		tst	r3, #32
- 339 0078 12D0     		beq	.L22
- 246:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
- 340              		.loc 1 246 5 is_stmt 1 view .LVU66
- 246:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
- 341              		.loc 1 246 15 is_stmt 0 view .LVU67
- 342 007a 124A     		ldr	r2, .L27+8
- 343 007c 1268     		ldr	r2, [r2]
- 246:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
- 344              		.loc 1 246 7 view .LVU68
- 345 007e B2F1FF3F 		cmp	r2, #-1
- 346 0082 05D0     		beq	.L23
- 246:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
- 347              		.loc 1 246 22 is_stmt 1 discriminator 1 view .LVU69
- 246:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 12
-
-
- 348              		.loc 1 246 38 is_stmt 0 discriminator 1 view .LVU70
- 349 0084 4FF0FF32 		mov	r2, #-1
- 350 0088 0E49     		ldr	r1, .L27+8
- 351 008a 0A60     		str	r2, [r1]
- 246:Core/Src/stm32f7xx_it.c ****     //HAL_UART_Transmit(&huart2, (uint8_t*) "STOP\n", 6, 100);
- 352              		.loc 1 246 29 discriminator 1 view .LVU71
- 353 008c 0C49     		ldr	r1, .L27+4
- 354 008e 0A60     		str	r2, [r1]
- 355              	.L23:
- 248:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_STOPCF;
- 356              		.loc 1 248 5 is_stmt 1 view .LVU72
- 248:Core/Src/stm32f7xx_it.c ****     I2C4->ICR = I2C_ICR_STOPCF;
- 357              		.loc 1 248 15 is_stmt 0 view .LVU73
- 358 0090 0A4A     		ldr	r2, .L27
- 359 0092 9169     		ldr	r1, [r2, #24]
- 360 0094 41F00101 		orr	r1, r1, #1
- 361 0098 9161     		str	r1, [r2, #24]
- 249:Core/Src/stm32f7xx_it.c ****   }
- 362              		.loc 1 249 5 is_stmt 1 view .LVU74
- 249:Core/Src/stm32f7xx_it.c ****   }
- 363              		.loc 1 249 15 is_stmt 0 view .LVU75
- 364 009a 2021     		movs	r1, #32
- 365 009c D161     		str	r1, [r2, #28]
- 366 009e C3E7     		b	.L19
- 367              	.L22:
- 251:Core/Src/stm32f7xx_it.c ****   {
- 368              		.loc 1 251 8 is_stmt 1 view .LVU76
- 251:Core/Src/stm32f7xx_it.c ****   {
- 369              		.loc 1 251 11 is_stmt 0 view .LVU77
- 370 00a0 13F0100F 		tst	r3, #16
- 371 00a4 03D0     		beq	.L24
- 254:Core/Src/stm32f7xx_it.c ****   }
- 372              		.loc 1 254 5 is_stmt 1 view .LVU78
- 254:Core/Src/stm32f7xx_it.c ****   }
- 373              		.loc 1 254 15 is_stmt 0 view .LVU79
- 374 00a6 054A     		ldr	r2, .L27
- 375 00a8 1021     		movs	r1, #16
- 376 00aa D161     		str	r1, [r2, #28]
- 377 00ac BCE7     		b	.L19
- 378              	.L24:
- 256:Core/Src/stm32f7xx_it.c ****   {
- 379              		.loc 1 256 8 is_stmt 1 view .LVU80
- 256:Core/Src/stm32f7xx_it.c ****   {
- 380              		.loc 1 256 11 is_stmt 0 view .LVU81
- 381 00ae 13F0080F 		tst	r3, #8
- 382 00b2 B9D0     		beq	.L19
- 260:Core/Src/stm32f7xx_it.c ****   }
- 383              		.loc 1 260 5 is_stmt 1 view .LVU82
- 260:Core/Src/stm32f7xx_it.c ****   }
- 384              		.loc 1 260 15 is_stmt 0 view .LVU83
- 385 00b4 014A     		ldr	r2, .L27
- 386 00b6 0821     		movs	r1, #8
- 387 00b8 D161     		str	r1, [r2, #28]
- 388 00ba B5E7     		b	.L19
- 389              	.L28:
- 390              		.align	2
- 391              	.L27:
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 13
-
-
- 392 00bc 00600040 		.word	1073766400
- 393 00c0 00000000 		.word	.LANCHOR0
- 394 00c4 00000000 		.word	.LANCHOR1
- 395 00c8 00000000 		.word	i2cReg
- 396              		.cfi_endproc
- 397              	.LFE153:
- 399              		.global	index2
- 400              		.global	index1
- 401              		.global	buffer
- 402              		.section	.bss.buffer,"aw",%nobits
- 403              		.align	2
- 406              	buffer:
- 407 0000 00000000 		.space	50
- 407      00000000 
- 407      00000000 
- 407      00000000 
- 407      00000000 
- 408              		.section	.data.index1,"aw"
- 409              		.align	2
- 410              		.set	.LANCHOR0,. + 0
- 413              	index1:
- 414 0000 FFFFFFFF 		.word	-1
- 415              		.section	.data.index2,"aw"
- 416              		.align	2
- 417              		.set	.LANCHOR1,. + 0
- 420              	index2:
- 421 0000 FFFFFFFF 		.word	-1
- 422              		.text
- 423              	.Letext0:
- 424              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 425              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
- 426              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
- 427              		.file 5 "Core/drogui/include/utils.h"
- 428              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h"
-ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s 			page 14
+ 453 0000 FFFFFFFF 		.word	-1
+ 454              		.section	.data.write_adress,"aw"
+ 455              		.align	2
+ 456              		.set	.LANCHOR2,. + 0
+ 459              	write_adress:
+ 460 0000 FFFFFFFF 		.word	-1
+ 461              		.text
+ 462              	.Letext0:
+ 463              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 464              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 465              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
+ 466              		.file 5 "Core/drogui/include/utils.h"
+ 467              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h"
+ARM GAS  C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s 			page 15
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f7xx_it.c
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:18     .text.NMI_Handler:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:26     .text.NMI_Handler:00000000 NMI_Handler
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:44     .text.HardFault_Handler:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:51     .text.HardFault_Handler:00000000 HardFault_Handler
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:68     .text.MemManage_Handler:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:75     .text.MemManage_Handler:00000000 MemManage_Handler
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:92     .text.BusFault_Handler:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:99     .text.BusFault_Handler:00000000 BusFault_Handler
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:116    .text.UsageFault_Handler:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:123    .text.UsageFault_Handler:00000000 UsageFault_Handler
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:140    .text.SVC_Handler:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:147    .text.SVC_Handler:00000000 SVC_Handler
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:160    .text.DebugMon_Handler:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:167    .text.DebugMon_Handler:00000000 DebugMon_Handler
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:180    .text.PendSV_Handler:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:187    .text.PendSV_Handler:00000000 PendSV_Handler
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:200    .text.SysTick_Handler:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:207    .text.SysTick_Handler:00000000 SysTick_Handler
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:227    .text.I2C4_EV_IRQHandler:00000000 $t
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:234    .text.I2C4_EV_IRQHandler:00000000 I2C4_EV_IRQHandler
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:392    .text.I2C4_EV_IRQHandler:000000bc $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:420    .data.index2:00000000 index2
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:413    .data.index1:00000000 index1
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:406    .bss.buffer:00000000 buffer
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:403    .bss.buffer:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:409    .data.index1:00000000 $d
-C:\Users\GUILLE~1\AppData\Local\Temp\ccHfLd4Z.s:416    .data.index2:00000000 $d
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:18     .text.NMI_Handler:00000000 $t
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:26     .text.NMI_Handler:00000000 NMI_Handler
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:44     .text.HardFault_Handler:00000000 $t
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:51     .text.HardFault_Handler:00000000 HardFault_Handler
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:68     .text.MemManage_Handler:00000000 $t
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:75     .text.MemManage_Handler:00000000 MemManage_Handler
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:92     .text.BusFault_Handler:00000000 $t
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:99     .text.BusFault_Handler:00000000 BusFault_Handler
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:116    .text.UsageFault_Handler:00000000 $t
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:123    .text.UsageFault_Handler:00000000 UsageFault_Handler
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:140    .text.SVC_Handler:00000000 $t
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:147    .text.SVC_Handler:00000000 SVC_Handler
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:160    .text.DebugMon_Handler:00000000 $t
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:167    .text.DebugMon_Handler:00000000 DebugMon_Handler
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:180    .text.PendSV_Handler:00000000 $t
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:187    .text.PendSV_Handler:00000000 PendSV_Handler
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:200    .text.SysTick_Handler:00000000 $t
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:207    .text.SysTick_Handler:00000000 SysTick_Handler
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:227    .text.I2C4_EV_IRQHandler:00000000 $t
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:234    .text.I2C4_EV_IRQHandler:00000000 I2C4_EV_IRQHandler
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:422    .text.I2C4_EV_IRQHandler:000000c0 $d
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:445    .bss.index_i2c:00000000 index_i2c
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:452    .data.read_adress:00000000 read_adress
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:459    .data.write_adress:00000000 write_adress
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:438    .bss.buffer:00000000 buffer
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:435    .bss.buffer:00000000 $d
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:441    .bss.index_i2c:00000000 $d
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:448    .data.read_adress:00000000 $d
+C:\Users\roger\AppData\Local\Temp\ccrSVXAL.s:455    .data.write_adress:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_IncTick
