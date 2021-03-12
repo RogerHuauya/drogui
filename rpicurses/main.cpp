@@ -3,7 +3,7 @@
 #define DSPIC_ADDRESS 0x60
 #include <iostream>
 #include "registerMap.h"
-#include "arduPi.h"
+//#include "arduPi.h"
 #include "sim7600.h"
 #include <ctime>
 #include <signal.h>
@@ -16,6 +16,7 @@
 #include "curmenu.h"
 #include "threaded.h"
 #include <pthread.h>
+#include <string.h>
 
 rasp_I2C rasp_i2c(DSPIC_ADDRESS);
 #define POWERKEY 6
@@ -49,7 +50,7 @@ void reset(){
 }
 
 int main(int argc, char** argv ){
-	
+		
 	enable_emergency_stop();
 	srand((unsigned) time(NULL));
 	setup();
@@ -63,6 +64,32 @@ int main(int argc, char** argv ){
 	id_thread_wifi = pthread_create(&threads[1], NULL, wifiCheck, (void *)0);
 	//printf("Threads created \n");
 	curmenu();
+	
+	/*
+	setup();
 
+	uint8_t n, c[50], x;
+	float ans = 5;
+	std::string s;*/
+	/*std::cout << "write[w], read[r]\n";
+	while(std::cin >> n){
+		switch(n){
+			case 'w':
+				std::cin >> s;
+				write(rasp_i2c.file_id, s.c_str(), s.size());
+			break;
+			case 'r':
+				read(rasp_i2c.file_id, &c, 2);
+				c[2] = '\0';
+				printf("%s\n",c);
+			break;
+		}
+		std::cout << "write[w], read[r]\n";
+	}*/
+	/*for(int i = 0 ; i < 100 ; i++){
+		ans = rasp_i2c.readFloat(N_FILTER);
+		std::cout<<ans<<std::endl;
+		usleep(1000);
+	}*/
     return 0;
 }

@@ -1,4 +1,5 @@
 #include "utils.h"
+#include <math.h>
 
 std::string str_datetime(){
     auto t = std::time(nullptr);
@@ -47,7 +48,9 @@ void rasp_I2C::sendFloat(uint8_t reg, float val){
 float rasp_I2C::readFloat(uint8_t reg){
     uint8_t buff[5];
     rasp_I2C::readMCU(reg, buff);
-    return bytestofloat(buff);
+    float ans = bytestofloat(buff);
+    if( fabs(ans) > 10000 || isnan(ans) ) ans = 0;
+    return ans;
 }
 
 void rasp_I2C::print4bytes(uint8_t *data){
@@ -81,7 +84,7 @@ void rasp_I2C::finish(){
 void rasp_I2C::writeMCU(uint8_t reg, uint8_t* val){
     
     unsigned char buff[10];
-    buff[0] = reg | 1;
+    buff[0] = reg|1;
     for(int i = 0; i < 4; i++) buff[i+1] = val[i];
     write(file_id, buff, 5);
 }
@@ -91,6 +94,8 @@ void rasp_I2C::readMCU(uint8_t reg, uint8_t * val){
     buff[0] = reg;
     write(file_id, buff, 1);
     read(file_id, val, 4);
+    //for(int i = 0; i < 4 ; i++) std::cout << (int)val[i] << " ";
+    //std::cout << std::endl;
 }
 
 void cls(){
