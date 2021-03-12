@@ -6,4 +6,4 @@ rpicurses/logs/*
 *.bin
 *.hex
 *.bin
-**.vscode/*
+.vscode/
