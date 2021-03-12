@@ -49,18 +49,22 @@ void *logging(void *threadid){
     */
     
     while(1){
-        /*if(tim%50 == 0){
-            log_gps << tim/50 << "\t" << sim7600.pos_x << "\t"<< sim7600.pos_y << "\t" << sim7600.Lat << "\t" << sim7600.Log <<std::endl;
-        }*/
-
         if(logging_state){
             
-	    log_gps << tim/50.0 << "\t" << rasp_i2c.readFloat(ROLL_U) 	<< "\t" << rasp_i2c.readFloat(PITCH_U) 	<< "\t"\
-                                    	    << rasp_i2c.readFloat(ROLL_VAL) 	<< "\t" << rasp_i2c.readFloat(PITCH_VAL) 	<< "\t"\
-				     	    << rasp_i2c.readFloat(GYRO_X_REF) 	<< "\t"	<< rasp_i2c.readFloat(GYRO_Y_REF) 	<< "\t"\
-                                    	    << rasp_i2c.readFloat(GYRO_X) 	<< "\t" << rasp_i2c.readFloat(GYRO_Y) 		<< std::endl;
+	        log_gps << tim/50.0 << "\t";
+            log_gps << rasp_i2c.readFloat(ROLL_REF)     << "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(PITCH_REF) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(ROLL_VAL) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(PITCH_VAL) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(GYRO_X_REF) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(GYRO_Y_REF) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(GYRO_X) 	    << "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(GYRO_Y) 	    << "\n"; unistd::usleep(300);
         }
-        unistd::usleep(20000);
+        else{
+            unistd::usleep(2400);
+        }
+        unistd::usleep(17600);
         tim++;
     }
 }
