@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+#include <stdint.h>
+#include <math.h>
+#include "matlib.h"
+=======
 #ifndef MAHONY_H
 #define MAHONY_h
 
@@ -7,3 +12,4 @@ void getMahonyQuaternion(float* quat);
 void getMahonyEuler(float* euler);
 
 #endif
+>>>>>>> julio

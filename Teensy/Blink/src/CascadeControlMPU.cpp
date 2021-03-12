@@ -49,7 +49,7 @@ void debugInterrupt(){
     if( c == 'b' ) setReg(CAL_ACC_TRG,1);
     if( c == 'c' ) setReg(CAL_MAG_TRG,1);
 
-    Serial.print(gx,DEC);
+    /*Serial.print(gx,DEC);
     Serial.print("\t");
     Serial.print(gy,DEC);
     Serial.print("\t");
@@ -63,8 +63,15 @@ void debugInterrupt(){
     Serial.print("\t");
     Serial.print(wroll_control.errd,DEC);
     Serial.print("\t");
-    Serial.print(wpitch_control.errd,DEC);
+    Serial.print(wpitch_control.errd,DEC);*/
+    
+    Serial.print(mx,DEC);
+    Serial.print("\t");
+    Serial.print(my,DEC);
+    Serial.print("\t");
+    Serial.print(mz,DEC);
     Serial.print("\n");
+
     /*Serial.print(roll,DEC);
     Serial.print("\t");
     Serial.print(pitch,DEC);
@@ -76,7 +83,7 @@ void debugInterrupt(){
 
 
 void securityInterrupt(){
-    if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
+    if(getReg(Z_REF) == 0 /*|| (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)*/){
         updatePID();
         if(getReg(CAL_GYR_TRG) == 1) calibrateGyro(&myIMU), setReg(CAL_GYR_TRG, 0);
         if(getReg(CAL_ACC_TRG) == 1) calibrateAccel(&myIMU), setReg(CAL_ACC_TRG, 0);
@@ -106,12 +113,11 @@ int _main(void){
     initControlTasks();
     initSensorsTasks();
 
-
     delay(1000);
     while(1){
         if(timerReady(&timer_blink)) executeTimer(&timer_blink);
         if(timerReady(&timer_debug)) executeTimer(&timer_debug);
-        if(timerReady(&timer_security)) executeTimer(&timer_security);  
+        //if(timerReady(&timer_security)) executeTimer(&timer_security);  
         executeControlTasks();
         executeSensorsTasks();   
     }

@@ -10,13 +10,10 @@ void initPwmPin(pwm* p, int n){
 }
 
 
-
 void setPwmFrecuency(pwm* p, float freq){
     analogWriteFrequency(p->n,3500);
     p->period = 1000000.0/freq;
 }
-
-
 
 
 void setPwmDuty(pwm* p, float percent){
