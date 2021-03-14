@@ -41,5 +41,6 @@ void bmpReadTemperature(bmp388* b);
 void bmpReadPressure(bmp388* b);
 
 void bmp388ReadAltitude(bmp388* b);
+void updateBmp388Offset(bmp388 * b);
 
 #endif

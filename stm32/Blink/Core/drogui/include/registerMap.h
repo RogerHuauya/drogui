@@ -103,4 +103,8 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 
 #define N_FILTER 0x9A
 
+#define OFFSET_ROLL 0x9C
+#define OFFSET_PITCH 0x9E
+#define OFFSET_YAW 0xA0
+
 #endif 		

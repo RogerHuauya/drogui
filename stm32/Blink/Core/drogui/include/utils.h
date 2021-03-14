@@ -84,9 +84,10 @@ extern bool security;
 //@}
 
 //!  @brief  Low Pass Filter with K array (4 elements), V array(5 elements) and Fc/Fs = 5/100
-    extern float k_5_100[];
-    extern float v_5_100[];
+    extern float k_1_20[];
+    extern float v_1_20[];
 //@}
+
 
 /**
 *   @brief Increse a variable with little steps until a desired value   

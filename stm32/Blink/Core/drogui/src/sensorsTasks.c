@@ -25,7 +25,7 @@ float altitude;
 
 emaFilter ema_bmp;
 mvAvgFilter mvAvg_bmp;
-
+filter filter_z;
 
 void accelTask(){   
     readAcc(&myIMU);
@@ -65,9 +65,9 @@ void gyroTask(){
     gy = computeDNotch(&dnotch_gy2, gy);
     gz = computeDNotch(&dnotch_gz2, gz);
     
-    gx /= 5;
-    gy /= 5;
-    gz /= 5; 
+    gx /= 100;
+    gy /= 100;
+    gz /= 100; 
 
 
     setReg(GYRO_X, gx);
@@ -86,7 +86,7 @@ float Kdfilt = 0.01;
 void rpyTask(){
     
     float rpy[3];
-    mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, my, mx, mz);
+    mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, mx, my, mz);
     getMahonyEuler(rpy);
     roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
     
@@ -98,6 +98,9 @@ void rpyTask(){
     pitch = computeFilter(&filter_pitch, pitch);
     yaw = computeFilter(&filter_yaw, yaw);
 
+    roll -= getReg(OFFSET_ROLL);
+    pitch -= getReg(OFFSET_PITCH);
+    yaw -= getReg(OFFSET_YAW);
 
     setReg(ROLL_VAL, roll);
     setReg(PITCH_VAL, pitch);
@@ -109,6 +112,7 @@ void altitudeTask(){
     bmp388ReadAltitude(&myBMP);
     altitude = compueteMvAvgFilter( &mvAvg_bmp, myBMP.altitude );
     altitude = computeEmaFilter( &ema_bmp, altitude );
+    altitude = computeFilter( &filter_z, altitude );
 
     setReg(Z_VAL,altitude);
 
@@ -134,9 +138,9 @@ void initSensorsTasks(){
     initDNotchFilter(&dnotch_gy2, 64, 50, 1000, 1, 5);
     initDNotchFilter(&dnotch_gz2, 64, 50, 1000, 1, 5);
 
-    initFilter(&filter_ax, 4 , k_5_100, v_5_100);
-    initFilter(&filter_ay, 4 , k_5_100, v_5_100);
-    initFilter(&filter_az, 4 , k_5_100, v_5_100);
+    initFilter(&filter_ax, 4 , k_1_20, v_1_20);
+    initFilter(&filter_ay, 4 , k_1_20, v_1_20);
+    initFilter(&filter_az, 4 , k_1_20, v_1_20);
 
 
     initDNotchFilter(&dnotch_ax, 64, 40, 1000, 1, 1);
@@ -149,13 +153,18 @@ void initSensorsTasks(){
     initFilter(&filter_yaw, 4, k_1_10, v_1_10);
 
     calibrateGyro(&myIMU);
-    //calibrateAccel(&myIMU);
-    //calibrateMag(&myIMU);
+    calibrateAccel(&myIMU);
+    calibrateMag(&myIMU);
     
     initBmp388(&myBMP, 10);  
 
-    initMvAvgFilter(&mvAvg_bmp, N_BMP);
-    initEmaFilter(&ema_bmp, 0.6, 0.4, 0.5);
+    initMvAvgFilter(&mvAvg_bmp, 25);
+    initEmaFilter(&ema_bmp, 0.9, 0.1, 0.8);
+    initFilter(&filter_z, 4, k_1_20, v_1_20);
+
+    setReg(OFFSET_ROLL,0);
+    setReg(OFFSET_PITCH,0);
+    setReg(OFFSET_YAW,0);
 
     addTask(&gyroTask, 1000, 2);
     addTask(&accelTask, 1000, 3);

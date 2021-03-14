@@ -206,14 +206,14 @@ void SysTick_Handler(void)
 /**
   * @brief This function handles I2C4 event interrupt.
   */
-char buffer[50];
+char buffer[50]="";
 int write_adress = -1, read_adress = -1;
 int index_i2c = 0, state;
 
 void I2C4_EV_IRQHandler(void)
 {
-  //sprintf(buffer, "%x \t %x \t %x \n", write_adress, read_adress, index_i2c);
-  //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
+  sprintf(buffer, "%x \t %x \t %x \n", write_adress, read_adress, index_i2c);
+  HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
 
   unsigned long isr = I2C4->ISR;
 

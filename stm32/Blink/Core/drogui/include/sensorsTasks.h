@@ -6,7 +6,6 @@
 #include "registerMap.h"
 #include "utils.h"
 #include "BMP388.h"
-#define N_BMP 25
 
 extern float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
 extern mpu9250 myIMU;

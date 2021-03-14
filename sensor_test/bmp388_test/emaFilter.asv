@@ -24,11 +24,10 @@ for i = 1:(length(prom_altitude))
     end
     y_out(i+1) = u;
 end
-aux = y_out;
-figure;plot(y_out,'b');
+plot(y)
 y_out = filter(b,a,y_out);
 % plot(altitude, 'b')
 hold on
-plot(y_out, 'r')
+figure;plot(y_out, 'r')
 % figure
 % plotFreq(y_out, 200)
