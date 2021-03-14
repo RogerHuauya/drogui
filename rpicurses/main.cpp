@@ -18,6 +18,7 @@
 #include "threaded.h"
 #include <pthread.h>
 #include <string.h>
+#include <vector>
 
 rasp_I2C rasp_i2c(DSPIC_ADDRESS);
 extern rasp_I2C rasp_i2c;
@@ -88,19 +89,22 @@ int main(int argc, char** argv ){
 	std::fstream offsetfile;
 	std::string offset="";
 	std::vector<float> offset_angles;
+	float offs_roll,offs_pitch,offs_yaw;
 
 	offsetfile.open("../rpicurses/memory/offset_angles.txt",std::ios::in);
 
 	if (offsetfile.is_open()){
-		getline(offsetfile, offset);  
+		cin >> offs_roll >> offs_pitch >> offs_yaw;
       	offsetfile.close();
 	}  
 
 	offset_angles = parsestring(offset, " ");
 
-	rasp_i2c.sendFloat(ROLL_OFFSET, offset_angles[0]);
+	/*rasp_i2c.sendFloat(ROLL_OFFSET, offset_angles[0]);
 	rasp_i2c.sendFloat(PITCH_OFFSET, offset_angles[1]);
-	rasp_i2c.sendFloat(YAW_OFFSET, offset_angles[2]);
+	rasp_i2c.sendFloat(YAW_OFFSET, offset_angles[2]);*/
+
+	cout << offs_roll << " " << offs_pitch <<" "<<offs_yaw;
 	
 
 	/*
