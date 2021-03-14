@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include "read_write.h"
 #include "curmenu.h"
+#include <time.h>
 
 extern rasp_I2C rasp_i2c;
 bool logging_state = false;
@@ -194,15 +195,22 @@ bool variousOp(PANEL* pan, int index){
         float offset_pitch = 0;
         float offset_yaw = 0;
 
-        for( int i = 0; i < 5; i++ ){
+        for( int i = 0; i < 50; i++ ){
             offset_roll += rasp_i2c.readFloat(ROLL_VAL);
-            offset_pitch += rasp_i2c.readFloat(PITCH_VAL);
-            offset_yaw += rasp_i2c.readFloat(YAW_VAL);
-        } 
+            usleep(10000);
+	    offset_pitch += rasp_i2c.readFloat(PITCH_VAL);
+	    usleep(10000);
+	    offset_yaw += rasp_i2c.readFloat(YAW_VAL);
+            usleep(10000);
+	} 
 
-        offset_roll /= 5.0;
-        offset_pitch /= 5.0;
-        offset_yaw /= 5.0;
+        offset_roll /= 50.0;
+        offset_pitch /= 50.0;
+        offset_yaw /= 50.0;
+
+	offset_roll += rasp_i2c.readFloat(ROLL_OFFSET);
+        offset_pitch += rasp_i2c.readFloat(PITCH_OFFSET);
+        offset_yaw += rasp_i2c.readFloat(YAW_OFFSET);
 
         rasp_i2c.sendFloat(ROLL_OFFSET,offset_roll);
         rasp_i2c.sendFloat(PITCH_OFFSET,offset_pitch);
