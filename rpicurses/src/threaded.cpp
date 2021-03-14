@@ -1,5 +1,3 @@
-
-
 #include "threaded.h"
 #include "sim7600.h"
 #include "registerMap.h"
@@ -33,16 +31,16 @@ void *logging(void *threadid){
     unsigned long long tim = 0;
     //unistd::sleep(10);
     std::ofstream log_gps;
-    //while(!logging_state){}
+    while(!logging_state){}
     std::string name_log = str_datetime(); 
     log_gps.open("logs/"+name_log+ "_control"+ ".txt");
     
     log_gps.precision(10);
 
-    std::ofstream log_imu; 
+    /*std::ofstream log_imu; 
     log_imu.open("logs/"+name_log+ "_imu"+ ".txt");
     log_imu.precision(10);
-    
+    */
     /*
     log_file << "H_VAL   H_STEP_SIZE " << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE)<< std::endl;
     log_file << "ROLL KP KI KD " << rasp_i2c.readFloat(ROLL_KP) << " " <<rasp_i2c.readFloat(ROLL_KI) << " " <<rasp_i2c.readFloat(ROLL_KD)<<std::endl;
@@ -51,18 +49,22 @@ void *logging(void *threadid){
     */
     
     while(1){
-        /*if(tim%50 == 0){
-            log_gps << tim/50 << "\t" << sim7600.pos_x << "\t"<< sim7600.pos_y << "\t" << sim7600.Lat << "\t" << sim7600.Log <<std::endl;
-        }*/
-
         if(logging_state){
             
-	    log_gps << tim/50.0 << "\t" << rasp_i2c.readFloat(ROLL_REF) 	<< "\t" << rasp_i2c.readFloat(PITCH_REF) 	<< "\t"\
-                                    	    << rasp_i2c.readFloat(ROLL_VAL) 	<< "\t" << rasp_i2c.readFloat(PITCH_VAL) 	<< "\t"\
-				     	    << rasp_i2c.readFloat(GYRO_X_REF) 	<< "\t"	<< rasp_i2c.readFloat(GYRO_Y_REF) 	<< "\t"\
-                                    	    << rasp_i2c.readFloat(GYRO_X) 	<< "\t" << rasp_i2c.readFloat(GYRO_Y) 		<< std::endl;
+	        log_gps << tim/50.0 << "\t";
+            log_gps << rasp_i2c.readFloat(ROLL_REF)     << "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(PITCH_REF) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(ROLL_VAL) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(PITCH_VAL) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(GYRO_X_REF) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(GYRO_Y_REF) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(GYRO_X) 	    << "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(GYRO_Y) 	    << "\n"; unistd::usleep(300);
         }
-        unistd::usleep(20000);
+        else{
+            unistd::usleep(2400);
+        }
+        unistd::usleep(17600);
         tim++;
     }
 }
@@ -73,7 +75,7 @@ void *wifiCheck(void *threadid){
     int cnt = 0;
     
     while(1){
-        unistd::usleep(10000);
+        unistd::usleep(200000);
         
         std::string CommandResult = do_console_command_get_result((char*)"cat /sys/class/net/wlan0/operstate");
 	if (CommandResult.find("up") != 0){
@@ -83,7 +85,7 @@ void *wifiCheck(void *threadid){
 	}
         else cnt = 0;
 
-        if(cnt >=  250) rasp_i2c.sendFloat(Z_REF, 0);
+        if(cnt >=  20) rasp_i2c.sendFloat(Z_REF, 0);
     }
 }
 

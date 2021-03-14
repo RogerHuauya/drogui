@@ -26,8 +26,8 @@
 
 
 class rasp_I2C{
-    int adress, file_id;
     public:
+	int adress, file_id;
         rasp_I2C(int ADDRESS);
         int32_t bytestoint32(uint8_t *bytesint32);
         void int32tobytes(int32_t n,uint8_t *bytesint32);
