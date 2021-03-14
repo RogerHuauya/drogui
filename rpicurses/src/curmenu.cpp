@@ -190,35 +190,32 @@ bool variousOp(PANEL* pan, int index){
     if(index == 5){
         string names[] = {"roll", "pitch", "yaw"};
 
-        float off_roll = 0;
-        float off_pitch = 0;
-        float off_yaw = 0;
-        std::string offsetdata = "";
+        float offset_roll = 0;
+        float offset_pitch = 0;
+        float offset_yaw = 0;
 
         for( int i = 0; i < 5; i++ ){
-            off_roll += rasp_i2c.readFloat(ROLL_VAL);
-            off_pitch += rasp_i2c.readFloat(PITCH_VAL);
-            off_yaw += rasp_i2c.readFloat(YAW_VAL);
+            offset_roll += rasp_i2c.readFloat(ROLL_VAL);
+            offset_pitch += rasp_i2c.readFloat(PITCH_VAL);
+            offset_yaw += rasp_i2c.readFloat(YAW_VAL);
         } 
 
-        off_roll /=5.0;
-        off_pitch /=5.0;
-        off_yaw /=5.0;
+        offset_roll /= 5.0;
+        offset_pitch /= 5.0;
+        offset_yaw /= 5.0;
 
-        offsetdata = std::to_string(off_roll) + std::to_string(off_pitch) + std::to_string(off_yaw);
-
-        rasp_i2c.sendFloat(ROLL_OFFSET,off_roll);
-        rasp_i2c.senddFloat(PITCH_OFFSET,off_pitch);
-        rasp_i2c.sendFloat(YAW_OFFSET,off_yaw);
+        rasp_i2c.sendFloat(ROLL_OFFSET,offset_roll);
+        rasp_i2c.sendFloat(PITCH_OFFSET,offset_pitch);
+        rasp_i2c.sendFloat(YAW_OFFSET,offset_yaw);
 
         std::fstream offsetfile;
-        offsetfile.open("../rpicurses/memory/offset_angles.txt",std::ios::out);  
+        offsetfile.open("../rpicurses/memory/offset_angles.txt",std::ios::out);{
         if(offsetfile.is_open()) 
-            offsetfile<<offsetdata; 
+            offsetfile << offset_roll << "\t" << offset_pitch << "\t" << offset_yaw; 
             offsetfile.close();
         }
 
-        float arr[] = { rasp_i2c.readFloat(ROLL_OFFSET) , rasp_i2c.readFloat(PITCH_OFFSET), rasp_i2c.readFloat(YAW_OFFSET)}; 
+        float arr[] = { offset_roll, offset_pitch, offset_yaw }; 
         writeData(pan, various_op[index], names, arr, 3);
     }
     else if(index == 4){
@@ -363,7 +360,7 @@ int curmenu(void) {
         menu("SensorData", sensor_data_op, 5, &sensorDataOp),
         menu("Calibration", calibration_op, 3, &calibrationOp),
         menu("Setpoint", setpoint_op, 6, &setpointOp),
-	menu("Various", various_op, 5, &variousOp)
+	menu("Various", various_op, 6, &variousOp)
     };
 
     scrollMenu scm = scrollMenu(mainpanel, workpanel, arr_menu, 5);
