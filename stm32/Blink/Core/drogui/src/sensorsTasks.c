@@ -98,9 +98,9 @@ void rpyTask(){
     pitch = computeFilter(&filter_pitch, pitch);
     yaw = computeFilter(&filter_yaw, yaw);
 
-    roll -= getReg(OFFSET_ROLL);
-    pitch -= getReg(OFFSET_PITCH);
-    yaw -= getReg(OFFSET_YAW);
+    roll -= getReg(ROLL_OFFSET);
+    pitch -= getReg(PITCH_OFFSET);
+    yaw -= getReg(YAW_OFFSET);
 
     setReg(ROLL_VAL, roll);
     setReg(PITCH_VAL, pitch);
@@ -162,9 +162,9 @@ void initSensorsTasks(){
     initEmaFilter(&ema_bmp, 0.9, 0.1, 0.8);
     initFilter(&filter_z, 4, k_1_20, v_1_20);
 
-    setReg(OFFSET_ROLL,0);
-    setReg(OFFSET_PITCH,0);
-    setReg(OFFSET_YAW,0);
+    setReg(ROLL_OFFSET,0);
+    setReg(PITCH_OFFSET,0);
+    setReg(YAW_OFFSET,0);
 
     addTask(&gyroTask, 1000, 2);
     addTask(&accelTask, 1000, 3);

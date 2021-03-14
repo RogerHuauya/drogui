@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include <fstream>
 #include "scroll_menu.h"
 #include <unistd.h>
 #include "read_write.h"
@@ -182,11 +183,45 @@ bool setpointOp(PANEL* pan, int index){
 
 bool start = false;
 
-string various_op[] = {"Read Register", "Write Register", "Start kalman", "Compensation", "Start logging"}; 
+string various_op[] = {"Read Register", "Write Register", "Start kalman", "Compensation", "Start logging", "Update Offset"}; 
 bool variousOp(PANEL* pan, int index){
     //wmove(win, 5, 5);
     //wprintw(win, "kha3");
-    if(index == 4){
+    if(index == 5){
+        string names[] = {"roll", "pitch", "yaw"};
+
+        float off_roll = 0;
+        float off_pitch = 0;
+        float off_yaw = 0;
+        std::string offsetdata = "";
+
+        for( int i = 0; i < 5; i++ ){
+            off_roll += rasp_i2c.readFloat(ROLL_VAL);
+            off_pitch += rasp_i2c.readFloat(PITCH_VAL);
+            off_yaw += rasp_i2c.readFloat(YAW_VAL);
+        } 
+
+        off_roll /=5.0;
+        off_pitch /=5.0;
+        off_yaw /=5.0;
+
+        offsetdata = std::to_string(off_roll) + std::to_string(off_pitch) + std::to_string(off_yaw);
+
+        rasp_i2c.sendFloat(ROLL_OFFSET,off_roll);
+        rasp_i2c.senddFloat(PITCH_OFFSET,off_pitch);
+        rasp_i2c.sendFloat(YAW_OFFSET,off_yaw);
+
+        std::fstream offsetfile;
+        offsetfile.open("../rpicurses/memory/offset_angles.txt",std::ios::out);  
+        if(offsetfile.is_open()) 
+            offsetfile<<offsetdata; 
+            offsetfile.close();
+        }
+
+        float arr[] = { rasp_i2c.readFloat(ROLL_OFFSET) , rasp_i2c.readFloat(PITCH_OFFSET), rasp_i2c.readFloat(YAW_OFFSET)}; 
+        writeData(pan, various_op[index], names, arr, 3);
+    }
+    else if(index == 4){
         logging_state = !logging_state;
         various_op[index] = (logging_state ? "Stop  logging":"Start logging");
     }
