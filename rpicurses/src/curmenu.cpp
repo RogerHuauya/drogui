@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include "read_write.h"
 #include "curmenu.h"
+#include <time.h>
 
 extern rasp_I2C rasp_i2c;
 bool logging_state = false;
@@ -190,35 +191,45 @@ bool variousOp(PANEL* pan, int index){
     if(index == 5){
         string names[] = {"roll", "pitch", "yaw"};
 
-        float off_roll = 0;
-        float off_pitch = 0;
-        float off_yaw = 0;
-        std::string offsetdata = "";
+        float offset_roll = 0;
+        float offset_pitch = 0;
+        float offset_yaw = 0;
 
-        for( int i = 0; i < 5; i++ ){
-            off_roll += rasp_i2c.readFloat(ROLL_VAL);
-            off_pitch += rasp_i2c.readFloat(PITCH_VAL);
-            off_yaw += rasp_i2c.readFloat(YAW_VAL);
-        } 
+        for( int i = 0; i < 50; i++ ){
+            offset_roll += rasp_i2c.readFloat(ROLL_VAL);
+            usleep(10000);
+	    offset_pitch += rasp_i2c.readFloat(PITCH_VAL);
+	    usleep(10000);
+	    offset_yaw += rasp_i2c.readFloat(YAW_VAL);
+            usleep(10000);
+	} 
 
-        off_roll /= 5.0;
-        off_pitch /= 5.0;
-        off_yaw /= 5.0;
+        offset_roll /= 50.0;
+        offset_pitch /= 50.0;
+        offset_yaw /= 50.0;
 
-        offsetdata = std::to_string(off_roll) + std::to_string(off_pitch) + std::to_string(off_yaw);
+	    offset_roll += rasp_i2c.readFloat(ROLL_OFFSET);
+        offset_pitch += rasp_i2c.readFloat(PITCH_OFFSET);
+        offset_yaw += rasp_i2c.readFloat(YAW_OFFSET);
 
-        rasp_i2c.sendFloat(ROLL_OFFSET,off_roll);
-        rasp_i2c.senddFloat(PITCH_OFFSET,off_pitch);
-        rasp_i2c.sendFloat(YAW_OFFSET,off_yaw);
+        rasp_i2c.sendFloat(ROLL_OFFSET,offset_roll);
+        rasp_i2c.sendFloat(PITCH_OFFSET,offset_pitch);
+        rasp_i2c.sendFloat(YAW_OFFSET,offset_yaw);
 
         std::fstream offsetfile;
+<<<<<<< HEAD
         offsetfile.open("../rpicurses/memory/offset_angles.txt",std::ios::out);  
         if(offsetfile.is_open()){
             offsetfile << offsetdata; 
+=======
+        offsetfile.open("../rpicurses/memory/offset_angles.txt",std::ios::out);{
+        if(offsetfile.is_open()) 
+            offsetfile << offset_roll << "\t" << offset_pitch << "\t" << offset_yaw; 
+>>>>>>> origin/inglis
             offsetfile.close();
         }
 
-        float arr[] = { rasp_i2c.readFloat(ROLL_OFFSET) , rasp_i2c.readFloat(PITCH_OFFSET), rasp_i2c.readFloat(YAW_OFFSET)}; 
+        float arr[] = { offset_roll, offset_pitch, offset_yaw }; 
         writeData(pan, various_op[index], names, arr, 3);
     }
     else if(index == 4){
@@ -363,7 +374,7 @@ int curmenu(void) {
         menu("SensorData", sensor_data_op, 5, &sensorDataOp),
         menu("Calibration", calibration_op, 3, &calibrationOp),
         menu("Setpoint", setpoint_op, 6, &setpointOp),
-	menu("Various", various_op, 5, &variousOp)
+	menu("Various", various_op, 6, &variousOp)
     };
 
     scrollMenu scm = scrollMenu(mainpanel, workpanel, arr_menu, 5);
