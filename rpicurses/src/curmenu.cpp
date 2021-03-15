@@ -217,15 +217,9 @@ bool variousOp(PANEL* pan, int index){
         rasp_i2c.sendFloat(YAW_OFFSET,offset_yaw);
 
         std::fstream offsetfile;
-<<<<<<< HEAD
-        offsetfile.open("../rpicurses/memory/offset_angles.txt",std::ios::out);  
-        if(offsetfile.is_open()){
-            offsetfile << offsetdata; 
-=======
         offsetfile.open("../rpicurses/memory/offset_angles.txt",std::ios::out);{
         if(offsetfile.is_open()) 
             offsetfile << offset_roll << "\t" << offset_pitch << "\t" << offset_yaw; 
->>>>>>> origin/inglis
             offsetfile.close();
         }
 
