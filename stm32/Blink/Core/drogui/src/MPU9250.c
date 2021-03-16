@@ -10,6 +10,17 @@
 #define G 9.81
 int16_t _ax, _ay, _az, _gx, _gy, _gz, _mx, _my, _mz;
 
+void updateCalibOffset(mpu9250* m){
+
+    m->off_gx =   getReg(GYR_X_OFF);  m->off_gy = getReg(GYR_Y_OFF); m->off_gz = getReg(GYR_Z_OFF);
+    
+    m->off_ax =   getReg(ACC_X_OFF);  m->off_ay = getReg(ACC_Y_OFF); m->off_az = getReg(ACC_Z_OFF);
+    m->scl_acc =  getReg(ACC_SCALE);
+
+    m->off_mx =   getReg(MAG_X_OFF);   m->off_my = getReg(MAG_Y_OFF);     m->off_mz = getReg(MAG_Z_OFF);
+    m->scl_magx = getReg(MAG_X_SCALE); m->scl_magy = getReg(MAG_Y_SCALE); m->scl_magz = getReg(MAG_Z_SCALE);  
+    
+}
 
 void initMpu(mpu9250* m){
 
@@ -165,6 +176,11 @@ void calibrateGyro(mpu9250* m){
     
     setReg(CAL_GYR,0);
     while(!quiet(m,200,0, true));
+    
+    setReg(GYR_X_OFF, m -> off_gx);
+    setReg(GYR_Y_OFF, m -> off_gy);
+    setReg(GYR_Z_OFF, m -> off_gz);
+
     setReg(CAL_GYR, 100);
     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
 }
@@ -253,6 +269,12 @@ void calibrateAccel(mpu9250* m){
     m -> off_ay = getMatVal(&ans, 1, 0);
     m -> off_az = getMatVal(&ans, 2, 0);
     m -> scl_acc = scale;
+
+    setReg(CAL_ACC, 100);
+    setReg(ACC_X_OFF, m->off_ax );    
+    setReg(ACC_Y_OFF, m->off_ay );
+    setReg(ACC_Z_OFF, m->off_az );
+    setReg(ACC_SCALE, m->scl_acc);  
 /*
     char buff[50];
 
@@ -393,6 +415,14 @@ void calibrateMag(mpu9250* m){
     m -> scl_magx = sqrt(temp)/ (scaleGlobal);
     m -> scl_magy = sqrt(temp / getMatVal(&X, 3, 0)) / (scaleGlobal);
     m -> scl_magz = sqrt(temp / getMatVal(&X, 4, 0)) / (scaleGlobal);
+
+    setReg( MAG_X_OFF ,m -> off_mx);
+    setReg( MAG_Y_OFF ,m -> off_my);
+    setReg( MAG_Z_OFF ,m -> off_mz);
+    setReg( MAG_X_SCALE ,m -> scl_magx);
+    setReg( MAG_Y_SCALE ,m -> scl_magy);
+    setReg( MAG_Z_SCALE ,m -> scl_magy);
+
 /*
     Serial.print(m -> off_mx);
     Serial.print("\t");

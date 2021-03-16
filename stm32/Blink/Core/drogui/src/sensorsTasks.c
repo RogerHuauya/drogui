@@ -42,6 +42,12 @@ void accelTask(){
     setReg(ACC_X,(float)(ax));
     setReg(ACC_Y,(float)(ay));
     setReg(ACC_Z,(float)(az));
+
+    if( security ){
+        cleanFilter(&filter_ax); cleanFilter(&filter_ay); cleanFilter(&filter_az);
+        
+        cleanDNotch(&dnotch_ax); cleanDNotch(&dnotch_ay); cleanDNotch(&dnotch_az);
+    }
 }
 
 char buff2[50] = "hola\n";
@@ -73,6 +79,15 @@ void gyroTask(){
     setReg(GYRO_X, gx);
     setReg(GYRO_Y, gy);
     setReg(GYRO_Z, gz);
+
+    if( security ){
+        cleanFilter(&filter_gx);  cleanFilter(&filter_gy);  cleanFilter(&filter_gz);
+        cleanFilter(&filter_gx2); cleanFilter(&filter_gy2); cleanFilter(&filter_gz2);
+
+        cleanDNotch(&dnotch_gx);   cleanDNotch(&dnotch_gy);    cleanDNotch(&dnotch_gz);
+        cleanDNotch(&dnotch_gx2);  cleanDNotch(&dnotch_gy2);  cleanDNotch(&dnotch_gz2);
+    }
+
 }
 
 void magTask(){
@@ -105,6 +120,12 @@ void rpyTask(){
     setReg(ROLL_VAL, roll);
     setReg(PITCH_VAL, pitch);
     setReg(YAW_VAL, yaw);
+
+    if( security ){
+        cleanFilter(&filter_roll);
+        cleanFilter(&filter_pitch);
+        cleanFilter(&filter_yaw);
+    }
 }
 
 void altitudeTask(){

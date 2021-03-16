@@ -122,7 +122,7 @@ void MX_I2C4_Init(void)
   
   char buffer[50];
   sprintf(buffer, "%lu\n", I2C4->ISR);
-  HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
+  //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
 }
 
 void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
