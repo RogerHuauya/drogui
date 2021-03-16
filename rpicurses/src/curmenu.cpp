@@ -291,9 +291,9 @@ bool calibrationOp(PANEL* pan, int index){
         std::fstream fil;
         fil.open("../rpicurses/memory/cal_gyr.txt",std::ios::out);
         if(fil.is_open()){ 
-            fil << rasp_I2C.readFloat(GYR_X_OFF) << "\t"\
-                << rasp_I2C.readFloat(GYR_Y_OFF) << "\t"\
-                << rasp_I2C.readFloat(GYR_Z_OFF) << std::endl; 
+            fil << rasp_i2c.readFloat(GYR_X_OFF) << "\t"\
+                << rasp_i2c.readFloat(GYR_Y_OFF) << "\t"\
+                << rasp_i2c.readFloat(GYR_Z_OFF) << std::endl; 
             fil.close();
         }
     }
@@ -303,16 +303,16 @@ bool calibrationOp(PANEL* pan, int index){
             rasp_i2c.sendFloat(CAL_ACC_TRG,arr[0]);
         }
         sleep(1);
-        while(rasp_I2C.readFloat(CAL_ACC) < 100.0)
+        while(rasp_i2c.readFloat(CAL_ACC) < 100.0)
             usleep(100000);
 
         std::fstream fil;
         fil.open("../rpicurses/memory/cal_acc.txt",std::ios::out);
         if(fil.is_open()){ 
-            fil << rasp_I2C.readFloat(ACC_X_OFF) << "\t"\
-                << rasp_I2C.readFloat(ACC_Y_OFF) << "\t"\
-                << rasp_I2C.readFloat(ACC_Z_OFF) << "\t"\
-                << rasp_I2C.readFloat(ACC_SCALE) << std::endl; 
+            fil << rasp_i2c.readFloat(ACC_X_OFF) << "\t"\
+                << rasp_i2c.readFloat(ACC_Y_OFF) << "\t"\
+                << rasp_i2c.readFloat(ACC_Z_OFF) << "\t"\
+                << rasp_i2c.readFloat(ACC_SCALE) << std::endl; 
             fil.close();
         }
     }
@@ -322,18 +322,18 @@ bool calibrationOp(PANEL* pan, int index){
             rasp_i2c.sendFloat(CAL_MAG_TRG,arr[0]);
         }
         sleep(1);
-        while(rasp_I2C.readFloat(CAL_MAG) < 100.0);
+        while(rasp_i2c.readFloat(CAL_MAG) < 100.0);
             usleep(100000);
 
         std::fstream fil;
         fil.open("../rpicurses/memory/cal_mag.txt",std::ios::out);
         if(fil.is_open()){ 
-            fil << rasp_I2C.readFloat(MAG_X_OFF) << "\t"\
-                << rasp_I2C.readFloat(MAG_Y_OFF) << "\t"\
-                << rasp_I2C.readFloat(MAG_Z_OFF) << "\t"\
-                << rasp_I2C.readFloat(MAG_X_SCALE) << "\t"\
-                << rasp_I2C.readFloat(MAG_Y_SCALE) << "\t"\
-                << rasp_I2C.readFloat(MAG_Z_SCALE) << std::endl; 
+            fil << rasp_i2c.readFloat(MAG_X_OFF) << "\t"\
+                << rasp_i2c.readFloat(MAG_Y_OFF) << "\t"\
+                << rasp_i2c.readFloat(MAG_Z_OFF) << "\t"\
+                << rasp_i2c.readFloat(MAG_X_SCALE) << "\t"\
+                << rasp_i2c.readFloat(MAG_Y_SCALE) << "\t"\
+                << rasp_i2c.readFloat(MAG_Z_SCALE) << std::endl; 
             fil.close();
         }
     }
