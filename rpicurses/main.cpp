@@ -39,22 +39,50 @@ void enable_emergency_stop(){
 }
 
 void setup() {
-    	rasp_i2c.setup();
-    	//sim7600.PowerOn(POWERKEY);
-    	std::fstream offsetfile;
-	float offs_roll, offs_pitch, offs_yaw;
+	rasp_i2c.setup();
+	//sim7600.PowerOn(POWERKEY);
+	std::fstream fil;
+	float aux[6];
 
-	offsetfile.open("../rpicurses/memory/offset_angles.txt",std::ios::in);
-
-	if (offsetfile.is_open()){
-		offsetfile >> offs_roll >> offs_pitch >> offs_yaw; 
-      		offsetfile.close();
+	fil.open("../rpicurses/memory/offset_angles.txt",std::ios::in);
+	if (fil.is_open()){
+		fil >> aux[0] >> aux[1] >> aux[2]; 
+      	fil.close();
 	}
+	rasp_i2c.sendFloat(ROLL_OFFSET, aux[0]);
+	rasp_i2c.sendFloat(PITCH_OFFSET,aux[1]);
+	rasp_i2c.sendFloat(YAW_OFFSET, 	aux[2]);
 
-	rasp_i2c.sendFloat(ROLL_OFFSET, offs_roll);
-	rasp_i2c.sendFloat(PITCH_OFFSET, offs_pitch);
-	rasp_i2c.sendFloat(YAW_OFFSET, offs_yaw);
+	fil.open("../rpicurses/memory/cal_gyr.txt",std::ios::in);
+	if (fil.is_open()){
+		fil >> aux[0] >> aux[1] >> aux[2]; 
+      	fil.close();
+	}
+	rasp_i2c.sendFloat(GYR_X_OFF, aux[0]);
+	rasp_i2c.sendFloat(GYR_Y_OFF, aux[1]);
+	rasp_i2c.sendFloat(GYR_Z_OFF, aux[2]);
 
+	fil.open("../rpicurses/memory/cal_acc.txt",std::ios::in);
+	if (fil.is_open()){
+		fil >> aux[0] >> aux[1] >> aux[2] >> aux[3]; 
+      	fil.close();
+	}
+	rasp_i2c.sendFloat(ACC_X_OFF, aux[0]);
+	rasp_i2c.sendFloat(ACC_Y_OFF, aux[1]);
+	rasp_i2c.sendFloat(ACC_Z_OFF, aux[2]);
+	rasp_i2c.sendFloat(ACC_SCALE, aux[3]);
+	
+	fil.open("../rpicurses/memory/cal_mag.txt",std::ios::in);
+	if (fil.is_open()){
+		fil >> aux[0] >> aux[1] >> aux[2] >> aux[3] >> aux[4] >> aux[5]; 
+      	fil.close();
+	}
+	rasp_i2c.sendFloat(MAG_X_OFF, 	aux[0]);
+	rasp_i2c.sendFloat(MAG_Y_OFF, 	aux[1]);
+	rasp_i2c.sendFloat(MAG_Z_OFF, 	aux[2]);
+	rasp_i2c.sendFloat(MAG_X_SCALE, aux[3]);
+	rasp_i2c.sendFloat(MAG_Y_SCALE, aux[4]);
+	rasp_i2c.sendFloat(MAG_Z_SCALE, aux[5]);
 }
 
 void reset(){

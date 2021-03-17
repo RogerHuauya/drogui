@@ -198,11 +198,11 @@ bool variousOp(PANEL* pan, int index){
         for( int i = 0; i < 50; i++ ){
             offset_roll += rasp_i2c.readFloat(ROLL_VAL);
             usleep(10000);
-	    offset_pitch += rasp_i2c.readFloat(PITCH_VAL);
-	    usleep(10000);
-	    offset_yaw += rasp_i2c.readFloat(YAW_VAL);
+	        offset_pitch += rasp_i2c.readFloat(PITCH_VAL);
+	        usleep(10000);
+	        offset_yaw += rasp_i2c.readFloat(YAW_VAL);
             usleep(10000);
-	} 
+	    } 
 
         offset_roll /= 50.0;
         offset_pitch /= 50.0;
@@ -217,15 +217,9 @@ bool variousOp(PANEL* pan, int index){
         rasp_i2c.sendFloat(YAW_OFFSET,offset_yaw);
 
         std::fstream offsetfile;
-<<<<<<< HEAD
-        offsetfile.open("../rpicurses/memory/offset_angles.txt",std::ios::out);  
-        if(offsetfile.is_open()){
-            offsetfile << offsetdata; 
-=======
         offsetfile.open("../rpicurses/memory/offset_angles.txt",std::ios::out);{
         if(offsetfile.is_open()) 
             offsetfile << offset_roll << "\t" << offset_pitch << "\t" << offset_yaw; 
->>>>>>> origin/inglis
             offsetfile.close();
         }
 
@@ -253,27 +247,25 @@ bool variousOp(PANEL* pan, int index){
         various_op[index] = (start ? "Stop  Kalman":"Start Kalman");
     }
     else if (index == 0){
-	string names[] = {"register"};
-	float arr[1];
-	if(readData(pan, various_op[index], names, arr, 1)){
-		arr[0] = rasp_i2c.readFloat((uint8_t) arr[0]);
-		names[0] = "value";
-		writeData(pan, various_op[index], names, arr, 1);
-	}
+        string names[] = {"register"};
+        float arr[1];
+        if(readData(pan, various_op[index], names, arr, 1)){
+            arr[0] = rasp_i2c.readFloat((uint8_t) arr[0]);
+            names[0] = "value";
+            writeData(pan, various_op[index], names, arr, 1);
+        }
     }
     else{
-	
-	string names[] = {"register"};
-	float arr[1];
-	if(readData(pan, various_op[index], names, arr, 1)){
-		float reg = arr[0];
-		names[0] = "value";
-		if(readData(pan, various_op[index], names, arr, 1)){
-			rasp_i2c.sendFloat(reg,arr[0]);
-		}
-	}
-
-
+        
+        string names[] = {"register"};
+        float arr[1];
+        if(readData(pan, various_op[index], names, arr, 1)){
+            float reg = arr[0];
+            names[0] = "value";
+            if(readData(pan, various_op[index], names, arr, 1)){
+                rasp_i2c.sendFloat(reg,arr[0]);
+            }
+        }
     }
 
 
@@ -292,17 +284,57 @@ bool calibrationOp(PANEL* pan, int index){
         if(readData(pan, calibration_op[index], names, arr, 1)){
             rasp_i2c.sendFloat(CAL_GYR_TRG,arr[0]);
         }
+        sleep(1);
+        while(rasp_I2C.readFloat(CAL_GYR) < 100.0)
+            usleep(100000);
+
+        std::fstream fil;
+        fil.open("../rpicurses/memory/cal_gyr.txt",std::ios::out);
+        if(fil.is_open()){ 
+            fil << rasp_i2c.readFloat(GYR_X_OFF) << "\t"\
+                << rasp_i2c.readFloat(GYR_Y_OFF) << "\t"\
+                << rasp_i2c.readFloat(GYR_Z_OFF) << std::endl; 
+            fil.close();
+        }
     }
     else if(index == 1){
-	string names[] = {"trigger"};
+        string names[] = {"trigger"};
         if(readData(pan, calibration_op[index], names, arr, 1)){
             rasp_i2c.sendFloat(CAL_ACC_TRG,arr[0]);
+        }
+        sleep(1);
+        while(rasp_i2c.readFloat(CAL_ACC) < 100.0)
+            usleep(100000);
+
+        std::fstream fil;
+        fil.open("../rpicurses/memory/cal_acc.txt",std::ios::out);
+        if(fil.is_open()){ 
+            fil << rasp_i2c.readFloat(ACC_X_OFF) << "\t"\
+                << rasp_i2c.readFloat(ACC_Y_OFF) << "\t"\
+                << rasp_i2c.readFloat(ACC_Z_OFF) << "\t"\
+                << rasp_i2c.readFloat(ACC_SCALE) << std::endl; 
+            fil.close();
         }
     }
     else if(index == 2){
 	string names[] = {"trigger"};
         if(readData(pan, calibration_op[index], names, arr, 1)){
             rasp_i2c.sendFloat(CAL_MAG_TRG,arr[0]);
+        }
+        sleep(1);
+        while(rasp_i2c.readFloat(CAL_MAG) < 100.0);
+            usleep(100000);
+
+        std::fstream fil;
+        fil.open("../rpicurses/memory/cal_mag.txt",std::ios::out);
+        if(fil.is_open()){ 
+            fil << rasp_i2c.readFloat(MAG_X_OFF) << "\t"\
+                << rasp_i2c.readFloat(MAG_Y_OFF) << "\t"\
+                << rasp_i2c.readFloat(MAG_Z_OFF) << "\t"\
+                << rasp_i2c.readFloat(MAG_X_SCALE) << "\t"\
+                << rasp_i2c.readFloat(MAG_Y_SCALE) << "\t"\
+                << rasp_i2c.readFloat(MAG_Z_SCALE) << std::endl; 
+            fil.close();
         }
     }
 
