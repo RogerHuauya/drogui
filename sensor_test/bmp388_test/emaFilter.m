@@ -26,8 +26,9 @@ for i = 1:(length(prom_altitude))
 end
 aux = y_out;
 figure;plot(y_out,'b');
-y_out = filter(b,a,y_out);
-% plot(altitude, 'b')
+%%
+y_out = filter(b_f,a_f,y_out);
+plot(altitude, 'b')
 hold on
 plot(y_out, 'r')
 % figure

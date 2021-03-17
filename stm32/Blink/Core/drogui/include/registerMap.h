@@ -116,11 +116,11 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define ACC_Z_OFF 0xAC
 #define ACC_SCALE 0xAE
 
-#define MAG_X_OFF 0xC0
-#define MAG_Y_OFF 0xC2
-#define MAG_Z_OFF 0xC4
-#define MAG_X_SCALE 0xC6
-#define MAG_Y_SCALE 0xC8
-#define MAG_Z_SCALE 0xCA
+#define MAG_X_OFF 0xB0
+#define MAG_Y_OFF 0xB2
+#define MAG_Z_OFF 0xB4
+#define MAG_X_SCALE 0xB6
+#define MAG_Y_SCALE 0xB8
+#define MAG_Z_SCALE 0xBA
 
 #endif 		

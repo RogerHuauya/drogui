@@ -60,7 +60,7 @@ void updateCoeffNotch(dNotchFilter *df, float fc){
 
 void cleanDNotch(dNotchFilter *df){
     
-    for( int i = 0; i < df->n; i++ ) df->state[i] = 0;
+    for( int i = 0; i < df->n; i++ ) df->values[i] = 0;
 
     df -> coeffs[0] = 1;
     df -> coeffs[1] = df -> coeffs[2] = df -> coeffs[3] = df -> coeffs[4] = 0;

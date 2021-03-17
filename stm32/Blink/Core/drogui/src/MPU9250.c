@@ -10,16 +10,28 @@
 #define G 9.81
 int16_t _ax, _ay, _az, _gx, _gy, _gz, _mx, _my, _mz;
 
-void updateCalibOffset(mpu9250* m){
+int updateCalibOffset(mpu9250* m){
+    int ans = 0;
+    if( m->off_gx != getReg(GYR_X_OFF))  ans |= 2, m->off_gx = getReg(GYR_X_OFF);
+    if( m->off_gy != getReg(GYR_Y_OFF))  ans |= 2, m->off_gy = getReg(GYR_Y_OFF);
+    if( m->off_gz != getReg(GYR_Z_OFF))  ans |= 2, m->off_gz = getReg(GYR_Z_OFF);
 
-    m->off_gx =   getReg(GYR_X_OFF);  m->off_gy = getReg(GYR_Y_OFF); m->off_gz = getReg(GYR_Z_OFF);
-    
-    m->off_ax =   getReg(ACC_X_OFF);  m->off_ay = getReg(ACC_Y_OFF); m->off_az = getReg(ACC_Z_OFF);
-    m->scl_acc =  getReg(ACC_SCALE);
+    if( m->off_ax  != getReg(ACC_X_OFF)) ans |= 1, m->off_ax = getReg(ACC_X_OFF);
+    if( m->off_ay  != getReg(ACC_Y_OFF)) ans |= 1, m->off_ay = getReg(ACC_Y_OFF); 
+    if( m->off_az  != getReg(ACC_Z_OFF)) ans |= 1, m->off_az = getReg(ACC_Z_OFF);
+    if( m->scl_acc != getReg(ACC_SCALE)) ans |= 1, m->scl_acc =  getReg(ACC_SCALE);
 
-    m->off_mx =   getReg(MAG_X_OFF);   m->off_my = getReg(MAG_Y_OFF);     m->off_mz = getReg(MAG_Z_OFF);
-    m->scl_magx = getReg(MAG_X_SCALE); m->scl_magy = getReg(MAG_Y_SCALE); m->scl_magz = getReg(MAG_Z_SCALE);  
+    if( m->off_mx != getReg(MAG_X_OFF)) ans |= 4, m->off_mx =   getReg(MAG_X_OFF);
+    if( m->off_my != getReg(MAG_Y_OFF)) ans |= 4, m->off_my = getReg(MAG_Y_OFF);     
+    if( m->off_mz != getReg(MAG_Z_OFF)) ans |= 4, m->off_mz = getReg(MAG_Z_OFF);
     
+    if( m->scl_magx != getReg(MAG_X_SCALE)) ans |= 4, m->scl_magx = getReg(MAG_X_SCALE);
+    if( m->scl_magy != getReg(MAG_Y_SCALE)) ans |= 4, m->scl_magy = getReg(MAG_Y_SCALE);     
+    if( m->scl_magz != getReg(MAG_Z_SCALE)) ans |= 4, m->scl_magz = getReg(MAG_Z_SCALE);
+    
+    if(ans != 0) ans |= 8;
+
+    return ans;
 }
 
 void initMpu(mpu9250* m){
@@ -329,7 +341,7 @@ void calibrateMag(mpu9250* m){
             mag[head][0] = magX, mag[head][1] = magY, mag[head][2] = magZ;
             head++, cnt++, head%= n; 
         }
-        setReg(CAL_MAG, cnt);
+        setReg(CAL_MAG, fmin(cnt, 99.0));
         
         //sprintf(aux_buff, "%d\n", cnt);
         //HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
@@ -422,7 +434,7 @@ void calibrateMag(mpu9250* m){
     setReg( MAG_X_SCALE ,m -> scl_magx);
     setReg( MAG_Y_SCALE ,m -> scl_magy);
     setReg( MAG_Z_SCALE ,m -> scl_magy);
-
+    setReg( CAL_MAG, 100);
 /*
     Serial.print(m -> off_mx);
     Serial.print("\t");

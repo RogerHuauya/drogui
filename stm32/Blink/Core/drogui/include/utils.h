@@ -71,7 +71,7 @@ void getEuler(float q0, float q1, float q2, float q3, float* roll, float *pitch,
 float angle_dif(float angle1, float angle2);
 extern uint8_t i2cReg[300][4];
 extern bool security;
-
+extern int calib_status;
 
 //!  @brief  Low Pass Filter with K array (4 elements), V array(5 elements) and Fc/Fs = 1/10
     extern float k_1_10[];
