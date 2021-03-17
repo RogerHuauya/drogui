@@ -11,6 +11,8 @@ pid roll2w, pitch2w, yaw2w;
 pid wroll_control, wpitch_control, wyaw_control;
 pid z_control, x_control, y_control;
 
+filter filter_wroll, filter_wpitch, filter_wyaw;
+
 
 float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, R_MAX = PI/22.0 , P_MAX = PI/22.0;
 float M1,M2,M3,M4;
@@ -79,9 +81,9 @@ void updatePID(){
 
 void wControlTask(){ 
     
-    wroll_err = fmax( fmin( wroll_ref - gx , 100), -100);
-    wpitch_err = fmax( fmin( wpitch_ref - gy , 100), -100);
-    wyaw_err = fmax( fmin( wyaw_ref - gz , 100), -100);
+    wroll_err = fmax( fmin( wroll_ref - gx , 10), -10);
+    wpitch_err = fmax( fmin( wpitch_ref - gy , 10), -10);
+    wyaw_err = fmax( fmin( wyaw_ref - gz , 10), -10);
 
     R = computePid(&wroll_control, wroll_err, TIME, 0);
     P = computePid(&wpitch_control, wpitch_err, TIME, 0);
@@ -127,6 +129,8 @@ void rpyControlTask(){
     wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0);
     wyaw_ref = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);
 
+    computeFilter(filter_wroll,  wroll_ref);
+    computeFilter(filter_wpitch, wpitch_ref);
 
 
     setReg(GYRO_X_REF,wroll_ref);
@@ -177,14 +181,17 @@ void initControlTasks(){
     initPid(&y_control, 0, 0, 0, 0, 1 , 100000,0.09, NORMAL);
 
 
-    initPid(&roll2w, 0, 0, 0, TIME, 50, 1.57*0.5,80, (P2ID & D_INT));
-    initPid(&pitch2w, 0, 0, 0, TIME, 50, 1.57*0.5,80, (P2ID & D_INT));
-    initPid(&yaw2w, 0, 0, 0, TIME, 50, 1.57*0.5,80, (P2ID & D_INT));
+    initPid(&roll2w,    0, 0, 0, TIME, 50, 0.785, 60, (P2ID & D_INT));
+    initPid(&pitch2w,   0, 0, 0, TIME, 50, 0.785, 60, (P2ID & D_INT));
+    initPid(&yaw2w,     0, 0, 0, TIME, 50, 0.785, 60, (P2ID & D_INT));
 
-    initPid(&wroll_control, 0, 0, 0, TIME, 50,  80, 3000, (P2ID & D_INT));
-    initPid(&wpitch_control, 0, 0, 0, TIME, 50, 80, 3000, (P2ID & D_INT));
-    initPid(&wyaw_control, 0, 0, 0, TIME, 50, 80, 3000, (P2ID & D_INT));
+    initPid(&wroll_control, 0, 0, 0, TIME, 50, 80, 3000, (P2ID & D_INT));
+    initPid(&wpitch_control,0, 0, 0, TIME, 50, 80, 3000, (P2ID & D_INT));
+    initPid(&wyaw_control,  0, 0, 0, TIME, 50, 80, 3000, (P2ID & D_INT));
     
+    initFilter(&filter_wroll, 4, k_1_20, v_1_20);
+    initFilter(&filter_wpitch, 4, k_1_20, v_1_20);
+    initFilter(&filter_wyaw, 4, k_1_20, v_1_20);
     
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
