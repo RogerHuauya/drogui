@@ -189,12 +189,11 @@ bool variousOp(PANEL* pan, int index){
     //wmove(win, 5, 5);
     //wprintw(win, "kha3");
     if(index == 6){
-        float arr[1];
-        if(readData(pan, various_op[index], names, arr, 1)){
-            names[0] = "Amplitude";
-            if(readData(pan, various_op[index], names, arr, 1)){
-                rasp_i2c.sendFloat(AMP_SIN, arr[0]);
-            }
+        string names[] = {"Amplitude", "Frecuency (Hz.)"};
+        float arr[2];
+        if(readData(pan, various_op[index], names, arr, 2)){
+            rasp_i2c.sendFloat(AMP_SIN, arr[0]);
+            rasp_i2c.sendFloat(FREQ_SIN, arr[1]);
         }
     }
     else if(index == 5){
