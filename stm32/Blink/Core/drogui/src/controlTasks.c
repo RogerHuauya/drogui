@@ -81,9 +81,9 @@ void updatePID(){
 
 void wControlTask(){ 
     
-    wroll_err = fmax( fmin( wroll_ref - gx , 10), -10);
-    wpitch_err = fmax( fmin( wpitch_ref - gy , 10), -10);
-    wyaw_err = fmax( fmin( wyaw_ref - gz , 10), -10);
+    wroll_err = fmax( fmin( wroll_ref - gx , 20), -20);
+    wpitch_err = fmax( fmin( wpitch_ref - gy , 20), -20);
+    wyaw_err = fmax( fmin( wyaw_ref - gz , 20), -20);
 
     R = computePid(&wroll_control, wroll_err, TIME, 0);
     P = computePid(&wpitch_control, wpitch_err, TIME, 0);
@@ -125,13 +125,16 @@ void wControlTask(){
 
 void rpyControlTask(){
 
-    wroll_ref = computePid(&roll2w, angle_dif(roll_ref, roll), TIME, 0);
-    wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0);
-    wyaw_ref = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);
+    float wroll_ref_d = computePid(&roll2w, angle_dif(roll_ref, roll), TIME, 0);
+    float wpitch_ref_d = computePid(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0);
+    float wyaw_ref_d = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);
 
-    computeFilter(filter_wroll,  wroll_ref);
-    computeFilter(filter_wpitch, wpitch_ref);
+    wroll_ref_d = computeFilter(&filter_wroll,  wroll_ref_d);
+    wpitch_ref_d = computeFilter(&filter_wpitch, wpitch_ref_d);
 
+
+    rampValue(&wroll_ref, wroll_ref_d, 0.1);
+    rampValue(&wpitch_ref, wpitch_ref_d, 0.1);
 
     setReg(GYRO_X_REF,wroll_ref);
     setReg(GYRO_Y_REF,wpitch_ref);
