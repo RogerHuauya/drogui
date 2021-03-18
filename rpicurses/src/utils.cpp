@@ -49,7 +49,7 @@ float rasp_I2C::readFloat(uint8_t reg){
     uint8_t buff[5];
     rasp_I2C::readMCU(reg, buff);
     float ans = bytestofloat(buff);
-    if( fabs(ans) > 10000 || isnan(ans) ) ans = 0;
+    if( fabs(ans) > 100000 || isnan(ans) ) ans = 0;
     return ans;
 }
 

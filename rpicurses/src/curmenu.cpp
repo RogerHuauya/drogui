@@ -285,7 +285,7 @@ bool calibrationOp(PANEL* pan, int index){
             rasp_i2c.sendFloat(CAL_GYR_TRG,arr[0]);
         }
         sleep(1);
-        while(rasp_I2C.readFloat(CAL_GYR) < 100.0)
+        while(rasp_i2c.readFloat(CAL_GYR) < 100.0)
             usleep(100000);
 
         std::fstream fil;
