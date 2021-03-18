@@ -152,7 +152,7 @@ void xyzControlTask(){
 
     rampValue(&z_ref, getReg(Z_REF), getReg(Z_REF_SIZE));
 
-    H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(AMP_SIN)*sin(2*PI*getReg(FREQ_SIN)*TIME/1000000);
+    H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG) + getReg(AMP_SIN)*sin(2*PI*getReg(FREQ_SIN)*TIME/1000000);
     rampValue(&H, H_ref, 0.2);
 
     H_comp = H;
