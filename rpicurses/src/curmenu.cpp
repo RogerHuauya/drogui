@@ -184,11 +184,20 @@ bool setpointOp(PANEL* pan, int index){
 
 bool start = false;
 
-string various_op[] = {"Read Register", "Write Register", "Start kalman", "Compensation", "Start logging", "Update Offset"}; 
+string various_op[] = {"Read Register", "Write Register", "Start kalman", "Compensation", "Start logging", "Update Offset", "Noise H parameters"}; 
 bool variousOp(PANEL* pan, int index){
     //wmove(win, 5, 5);
     //wprintw(win, "kha3");
-    if(index == 5){
+    if(index == 6){
+        float arr[1];
+        if(readData(pan, various_op[index], names, arr, 1)){
+            names[0] = "Amplitude";
+            if(readData(pan, various_op[index], names, arr, 1)){
+                rasp_i2c.sendFloat(AMP_SIN, arr[0]);
+            }
+        }
+    }
+    else if(index == 5){
         string names[] = {"roll", "pitch", "yaw"};
 
         float offset_roll = 0;

@@ -123,6 +123,9 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define MAG_Y_SCALE 0xB8
 #define MAG_Z_SCALE 0xBA
 
+#define AMP_SIN 0xBC
+#define FREQ_SIN 0xBE
+
 #define NUM_THREADS 3
 
 #endif
