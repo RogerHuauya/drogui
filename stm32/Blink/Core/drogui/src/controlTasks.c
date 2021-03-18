@@ -77,8 +77,6 @@ void updatePID(){
 }
 
 
-
-
 void wControlTask(){ 
     
     wroll_err = fmax( fmin( wroll_ref - gx , 10), -10);
