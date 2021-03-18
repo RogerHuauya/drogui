@@ -107,6 +107,22 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define PITCH_OFFSET 0x9E
 #define YAW_OFFSET 0xA0
 
+#define GYR_X_OFF 0xA2
+#define GYR_Y_OFF 0xA4
+#define GYR_Z_OFF 0xA6
+
+#define ACC_X_OFF 0xA8
+#define ACC_Y_OFF 0xAA
+#define ACC_Z_OFF 0xAC
+#define ACC_SCALE 0xAE
+
+#define MAG_X_OFF 0xB0
+#define MAG_Y_OFF 0xB2
+#define MAG_Z_OFF 0xB4
+#define MAG_X_SCALE 0xB6
+#define MAG_Y_SCALE 0xB8
+#define MAG_Z_SCALE 0xBA
+
 #define NUM_THREADS 3
 
 #endif
