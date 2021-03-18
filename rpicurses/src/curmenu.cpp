@@ -414,7 +414,7 @@ int curmenu(void) {
         menu("SensorData", sensor_data_op, 5, &sensorDataOp),
         menu("Calibration", calibration_op, 3, &calibrationOp),
         menu("Setpoint", setpoint_op, 6, &setpointOp),
-	menu("Various", various_op, 6, &variousOp)
+	menu("Various", various_op, 7, &variousOp)
     };
 
     scrollMenu scm = scrollMenu(mainpanel, workpanel, arr_menu, 5);
