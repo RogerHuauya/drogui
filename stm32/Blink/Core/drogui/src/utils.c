@@ -3,6 +3,7 @@
 
 uint8_t i2cReg[300][4];
 bool security;
+int calib_status;
 
 float k_1_10[] = {3.269648e-01,-7.541241e-01,8.955497e-01,-8.705845e-01};
 float v_1_10[] = {9.923580e-03,4.324221e-02,9.622375e-02,9.899868e-02,3.930249e-02};
@@ -43,7 +44,7 @@ float getReg(uint8_t reg){
     float val;
     uint8_t arr[4];
     for(int i = 0; i < 4 ; i++){
-     arr[i] = i2cReg[reg][i];
+        arr[i] = i2cReg[reg][i];
     }
     val = bytestofloat(arr); 
     return val; 

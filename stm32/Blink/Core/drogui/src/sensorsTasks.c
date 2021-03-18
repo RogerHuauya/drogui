@@ -2,9 +2,9 @@
 #include "mahony.h"
 #include "task.h"
 #include "usart.h"
+#include "utils.h"
 #include <stdio.h>
 #include <string.h>
-
 
 mpu9250 myIMU;
 
@@ -42,6 +42,14 @@ void accelTask(){
     setReg(ACC_X,(float)(ax));
     setReg(ACC_Y,(float)(ay));
     setReg(ACC_Z,(float)(az));
+
+    if( calib_status & 1 ){
+        cleanFilter(&filter_ax); cleanFilter(&filter_ay); cleanFilter(&filter_az);
+        
+        cleanDNotch(&dnotch_ax); cleanDNotch(&dnotch_ay); cleanDNotch(&dnotch_az);
+        
+        calib_status ^= 1;
+    }
 }
 
 char buff2[50] = "hola\n";
@@ -73,6 +81,17 @@ void gyroTask(){
     setReg(GYRO_X, gx);
     setReg(GYRO_Y, gy);
     setReg(GYRO_Z, gz);
+
+    if( calib_status & 2  ){
+        cleanFilter(&filter_gx);  cleanFilter(&filter_gy);  cleanFilter(&filter_gz);
+        cleanFilter(&filter_gx2); cleanFilter(&filter_gy2); cleanFilter(&filter_gz2);
+
+        cleanDNotch(&dnotch_gx);   cleanDNotch(&dnotch_gy);    cleanDNotch(&dnotch_gz);
+        cleanDNotch(&dnotch_gx2);  cleanDNotch(&dnotch_gy2);  cleanDNotch(&dnotch_gz2);
+
+        calib_status ^= 2;
+    }
+
 }
 
 void magTask(){
@@ -86,7 +105,7 @@ float Kdfilt = 0.01;
 void rpyTask(){
     
     float rpy[3];
-    mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, my, mx, mz);
+    mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, 0, 0, 0);
     getMahonyEuler(rpy);
     roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
     
@@ -105,6 +124,13 @@ void rpyTask(){
     setReg(ROLL_VAL, roll);
     setReg(PITCH_VAL, pitch);
     setReg(YAW_VAL, yaw);
+
+    if( calib_status & 8  ){
+        cleanFilter(&filter_roll);
+        cleanFilter(&filter_pitch);
+        cleanFilter(&filter_yaw);
+        calib_status ^= 8;
+    }
 }
 
 void altitudeTask(){
@@ -152,10 +178,17 @@ void initSensorsTasks(){
     initFilter(&filter_pitch, 4, k_1_10, v_1_10);
     initFilter(&filter_yaw, 4, k_1_10, v_1_10);
 
-    calibrateGyro(&myIMU);
-    calibrateAccel(&myIMU);
-    calibrateMag(&myIMU);
+    setReg(ACC_SCALE,1);
+    setReg(MAG_X_SCALE,1);
+    setReg(MAG_Y_SCALE,1);
+    setReg(MAG_Z_SCALE,1);
     
+    //calibrateGyro(&myIMU);
+    //calibrateAccel(&myIMU);
+    //calibrateMag(&myIMU);
+
+    calib_status = 0;
+
     initBmp388(&myBMP, 10);  
 
     initMvAvgFilter(&mvAvg_bmp, 25);
@@ -167,5 +200,6 @@ void initSensorsTasks(){
     addTask(&magTask, 100000, 2);
     addTask(&rpyTask, 2000, 2);
     addTask(&altitudeTask,10000,3);
+
 
 }

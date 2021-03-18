@@ -16,8 +16,8 @@ void blinkTask(void *argument){
 char buff[50] = "hola\n";
 void debugTask(void *argument){
     
-    //sprintf(buff, "%f\t%f\t%f \n", gx, gy, gz);
-    sprintf(buff, "%f \n", 100*altitude);
+    sprintf(buff, "%f\t%f\t%f \n", roll, pitch, yaw);
+    //sprintf(buff, "%f \n", 100*altitude);
     HAL_UART_Transmit(&huart2, (uint8_t*) buff, strlen(buff), 100);
 }
 void securityTask(){
@@ -28,13 +28,14 @@ void securityTask(){
         if(getReg(CAL_MAG_TRG) == 1) calibrateMag(&myIMU), setReg(CAL_MAG_TRG, 0);
         updateBmp388Offset(&myBMP);
         security = true;
+        calib_status = updateCalibOffset(&myIMU);
     }
     else security = false;
 }
 
 void initDebug(){
     
-    //addTask(&debugTask, 5000, 1);
-    addTask(&blinkTask, 100000, 1);
+    //addTask(&debugTask, 50000, 1);
+    addTask(&blinkTask, 20000, 1);
     addTask(&securityTask, 1000, 1);
 }

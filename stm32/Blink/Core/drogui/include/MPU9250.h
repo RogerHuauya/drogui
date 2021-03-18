@@ -91,4 +91,6 @@ void calibrateAccel(mpu9250* m);
 */
 void calibrateMag(mpu9250* m);
 
+int updateCalibOffset(mpu9250* m);
+
 #endif

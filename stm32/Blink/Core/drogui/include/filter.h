@@ -7,10 +7,12 @@
 /**
  * @brief Initialize Filter Structure
  * @param f filter (arm_iir_lattice_instance_f32)
+ * @param n Number of stages in the filter (float)
  * @param state Array of values that changes in time (float*)
 */
 typedef struct _filter{
     arm_iir_lattice_instance_f32 f;
+    int n;
     float *state;
 }filter ;
 
@@ -29,6 +31,12 @@ void initFilter(filter* f, int n, float* k, float* v);
  * @param x Current value of the signal (float)
 */
 float computeFilter(filter *f, float x);
+
+/**
+ * @brief Clean filter  
+ * @param f filter (pointer filter)
+*/
+void cleanFilter(filter *f);
 
 /**
  * @brief Initialize Dynamic Notch Filter Structure
@@ -72,6 +80,12 @@ void initDNotchFilter(dNotchFilter* df, int n, float threshold, float fs, float 
  * @param val Current value of the signal (float)
 */
 float computeDNotch(dNotchFilter *df, float val);
+
+/**
+ * @brief Clean Dynamic Notch filter  
+ * @param df Dynamic Notch filter (pointer dNotchFilter)
+*/
+void cleanDNotch(dNotchFilter *df);
 
 /**
  * @brief Ema Filter Struct ( a + b = 1)

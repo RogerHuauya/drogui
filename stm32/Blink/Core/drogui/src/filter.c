@@ -8,8 +8,9 @@
 float fc;
 
 void initFilter(filter* f, int n, float* k, float* v){
+    f->n = n;
     f->state = (float*) calloc(n, sizeof(float));
-    arm_iir_lattice_init_f32(&(f->f), n, k, v, f->state, 1);
+    arm_iir_lattice_init_f32(&(f->f), f->n, k, v, f->state, 1);
 }
 
 
@@ -19,6 +20,9 @@ float computeFilter(filter *f, float x){
     return ans;
 }
 
+void cleanFilter(filter *f){
+    for( int i = 0; i < (f->n); i++ ) f->state[i] = 0;
+}
 
 void initDNotchFilter(dNotchFilter* df, int n, float threshold, float fs, float a, float zeta){
     df -> n = n;
@@ -54,7 +58,15 @@ void updateCoeffNotch(dNotchFilter *df, float fc){
 
 }
 
+void cleanDNotch(dNotchFilter *df){
+    
+    for( int i = 0; i < df->n; i++ ) df->values[i] = 0;
 
+    df -> coeffs[0] = 1;
+    df -> coeffs[1] = df -> coeffs[2] = df -> coeffs[3] = df -> coeffs[4] = 0;
+    df -> state[0] = df -> state[1] = df -> state[2] = df -> state[3] =  0;
+
+}
 
 float computeDNotch(dNotchFilter *df, float val){
 
@@ -95,6 +107,8 @@ float computeDNotch(dNotchFilter *df, float val){
 
     return ans;    
 }
+
+
 
 
 void initEmaFilter(emaFilter* ef, float a, float b, float threshold){
