@@ -131,9 +131,9 @@ bool sensorDataOp(PANEL* pan, int index){
 	writeData(pan, sensor_data_op[index], names, arr, 4);
     }
     else if(index == 3){
-        string names[] = {"SYS", "GYR", "ACC", "MAG"};
-        float arr[] = {rasp_i2c.readFloat(CAL_SYS), rasp_i2c.readFloat(CAL_GYR), rasp_i2c.readFloat(CAL_ACC), rasp_i2c.readFloat(CAL_MAG)}; 
-        writeData(pan, sensor_data_op[index], names, arr, 4);
+        string names[] = {"GYR", "ACC", "MAG"};
+        float arr[] = {rasp_i2c.readFloat(CAL_GYR), rasp_i2c.readFloat(CAL_ACC), rasp_i2c.readFloat(CAL_MAG)}; 
+        writeData(pan, sensor_data_op[index], names, arr, 3);
     }
     else if(index == 4){
         string names[] = {"Z"};
@@ -197,42 +197,46 @@ bool variousOp(PANEL* pan, int index){
         }
     }
     else if(index == 5){
-        string names[] = {"roll", "pitch", "yaw"};
 
-        float offset_roll = 0;
-        float offset_pitch = 0;
-        float offset_yaw = 0;
+        if(confirmData(pan)){
 
-        for( int i = 0; i < 50; i++ ){
-            offset_roll += rasp_i2c.readFloat(ROLL_VAL);
-            usleep(10000);
-	        offset_pitch += rasp_i2c.readFloat(PITCH_VAL);
-	        usleep(10000);
-	        offset_yaw += rasp_i2c.readFloat(YAW_VAL);
-            usleep(10000);
-	    } 
+            string names[] = {"roll", "pitch", "yaw"};
 
-        offset_roll /= 50.0;
-        offset_pitch /= 50.0;
-        offset_yaw /= 50.0;
+            float offset_roll = 0;
+            float offset_pitch = 0;
+            float offset_yaw = 0;
 
-	    offset_roll += rasp_i2c.readFloat(ROLL_OFFSET);
-        offset_pitch += rasp_i2c.readFloat(PITCH_OFFSET);
-        offset_yaw += rasp_i2c.readFloat(YAW_OFFSET);
+            for( int i = 0; i < 50; i++ ){
+                offset_roll += rasp_i2c.readFloat(ROLL_VAL);
+                usleep(10000);
+                offset_pitch += rasp_i2c.readFloat(PITCH_VAL);
+                usleep(10000);
+                offset_yaw += rasp_i2c.readFloat(YAW_VAL);
+                usleep(10000);
+            } 
 
-        rasp_i2c.sendFloat(ROLL_OFFSET,offset_roll);
-        rasp_i2c.sendFloat(PITCH_OFFSET,offset_pitch);
-        rasp_i2c.sendFloat(YAW_OFFSET,offset_yaw);
+            offset_roll /= 50.0;
+            offset_pitch /= 50.0;
+            offset_yaw /= 50.0;
 
-        std::fstream offsetfile;
-        offsetfile.open("../rpicurses/memory/offset_angles.txt",std::ios::out);{
-        if(offsetfile.is_open()) 
-            offsetfile << offset_roll << "\t" << offset_pitch << "\t" << offset_yaw; 
-            offsetfile.close();
+            offset_roll += rasp_i2c.readFloat(ROLL_OFFSET);
+            offset_pitch += rasp_i2c.readFloat(PITCH_OFFSET);
+            offset_yaw += rasp_i2c.readFloat(YAW_OFFSET);
+
+            rasp_i2c.sendFloat(ROLL_OFFSET,offset_roll);
+            rasp_i2c.sendFloat(PITCH_OFFSET,offset_pitch);
+            rasp_i2c.sendFloat(YAW_OFFSET,offset_yaw);
+
+            std::fstream offsetfile;
+            offsetfile.open("../rpicurses/memory/offset_angles.txt",std::ios::out);{
+            if(offsetfile.is_open()) 
+                offsetfile << offset_roll << "\t" << offset_pitch << "\t" << offset_yaw; 
+                offsetfile.close();
+            }
+
+            float arr[] = { offset_roll, offset_pitch, offset_yaw }; 
+            writeData(pan, various_op[index], names, arr, 3);
         }
-
-        float arr[] = { offset_roll, offset_pitch, offset_yaw }; 
-        writeData(pan, various_op[index], names, arr, 3);
     }
     else if(index == 4){
         logging_state = !logging_state;
@@ -291,58 +295,76 @@ bool calibrationOp(PANEL* pan, int index){
         string names[] = {"trigger"};
         if(readData(pan, calibration_op[index], names, arr, 1)){
             rasp_i2c.sendFloat(CAL_GYR_TRG,arr[0]);
-        }
-        sleep(1);
-        while(rasp_i2c.readFloat(CAL_GYR) < 100.0)
-            usleep(100000);
+        
+            sleep(1);
+            while(rasp_i2c.readFloat(CAL_GYR) < 100.0){
+                string names[] = {"GYR", "ACC", "MAG"};
+                float arr[] = {rasp_i2c.readFloat(CAL_GYR), rasp_i2c.readFloat(CAL_ACC), rasp_i2c.readFloat(CAL_MAG)}; 
+                writeDataNoConfirm(pan, sensor_data_op[index], names, arr, 3);
+                usleep(100000);
+                werase(panel_window(pan));
+            }
 
-        std::fstream fil;
-        fil.open("../rpicurses/memory/cal_gyr.txt",std::ios::out);
-        if(fil.is_open()){ 
-            fil << rasp_i2c.readFloat(GYR_X_OFF) << "\t"\
-                << rasp_i2c.readFloat(GYR_Y_OFF) << "\t"\
-                << rasp_i2c.readFloat(GYR_Z_OFF) << std::endl; 
-            fil.close();
+            std::fstream fil;
+            fil.open("../rpicurses/memory/cal_gyr.txt",std::ios::out);
+            if(fil.is_open()){ 
+                fil << rasp_i2c.readFloat(GYR_X_OFF) << "\t"\
+                    << rasp_i2c.readFloat(GYR_Y_OFF) << "\t"\
+                    << rasp_i2c.readFloat(GYR_Z_OFF) << std::endl; 
+                fil.close();
+            }
         }
     }
     else if(index == 1){
         string names[] = {"trigger"};
         if(readData(pan, calibration_op[index], names, arr, 1)){
             rasp_i2c.sendFloat(CAL_ACC_TRG,arr[0]);
-        }
-        sleep(1);
-        while(rasp_i2c.readFloat(CAL_ACC) < 100.0)
-            usleep(100000);
+        
+            sleep(1);
+            while(rasp_i2c.readFloat(CAL_ACC) < 100.0){
+                string names[] = {"GYR", "ACC", "MAG"};
+                float arr[] = {rasp_i2c.readFloat(CAL_GYR), rasp_i2c.readFloat(CAL_ACC), rasp_i2c.readFloat(CAL_MAG)}; 
+                writeDataNoConfirm(pan, sensor_data_op[index], names, arr, 3);
+                usleep(100000);
+                werase(panel_window(pan));
+            }
 
-        std::fstream fil;
-        fil.open("../rpicurses/memory/cal_acc.txt",std::ios::out);
-        if(fil.is_open()){ 
-            fil << rasp_i2c.readFloat(ACC_X_OFF) << "\t"\
-                << rasp_i2c.readFloat(ACC_Y_OFF) << "\t"\
-                << rasp_i2c.readFloat(ACC_Z_OFF) << "\t"\
-                << rasp_i2c.readFloat(ACC_SCALE) << std::endl; 
-            fil.close();
+            std::fstream fil;
+            fil.open("../rpicurses/memory/cal_acc.txt",std::ios::out);
+            if(fil.is_open()){ 
+                fil << rasp_i2c.readFloat(ACC_X_OFF) << "\t"\
+                    << rasp_i2c.readFloat(ACC_Y_OFF) << "\t"\
+                    << rasp_i2c.readFloat(ACC_Z_OFF) << "\t"\
+                    << rasp_i2c.readFloat(ACC_SCALE) << std::endl; 
+                fil.close();
+            }
         }
     }
     else if(index == 2){
-	string names[] = {"trigger"};
+	    string names[] = {"trigger"};
         if(readData(pan, calibration_op[index], names, arr, 1)){
             rasp_i2c.sendFloat(CAL_MAG_TRG,arr[0]);
-        }
-        sleep(1);
-        while(rasp_i2c.readFloat(CAL_MAG) < 100.0);
-            usleep(100000);
+        
+            sleep(1);
+            while(rasp_i2c.readFloat(CAL_MAG) < 100.0){
+                string names[] = {"GYR", "ACC", "MAG"};
+                float arr[] = {rasp_i2c.readFloat(CAL_GYR), rasp_i2c.readFloat(CAL_ACC), rasp_i2c.readFloat(CAL_MAG)}; 
+                writeDataNoConfirm(pan, sensor_data_op[index], names, arr, 3);
+                usleep(100000);
+                werase(panel_window(pan));
+            }
 
-        std::fstream fil;
-        fil.open("../rpicurses/memory/cal_mag.txt",std::ios::out);
-        if(fil.is_open()){ 
-            fil << rasp_i2c.readFloat(MAG_X_OFF) << "\t"\
-                << rasp_i2c.readFloat(MAG_Y_OFF) << "\t"\
-                << rasp_i2c.readFloat(MAG_Z_OFF) << "\t"\
-                << rasp_i2c.readFloat(MAG_X_SCALE) << "\t"\
-                << rasp_i2c.readFloat(MAG_Y_SCALE) << "\t"\
-                << rasp_i2c.readFloat(MAG_Z_SCALE) << std::endl; 
-            fil.close();
+            std::fstream fil;
+            fil.open("../rpicurses/memory/cal_mag.txt",std::ios::out);
+            if(fil.is_open()){ 
+                fil << rasp_i2c.readFloat(MAG_X_OFF) << "\t"\
+                    << rasp_i2c.readFloat(MAG_Y_OFF) << "\t"\
+                    << rasp_i2c.readFloat(MAG_Z_OFF) << "\t"\
+                    << rasp_i2c.readFloat(MAG_X_SCALE) << "\t"\
+                    << rasp_i2c.readFloat(MAG_Y_SCALE) << "\t"\
+                    << rasp_i2c.readFloat(MAG_Z_SCALE) << std::endl; 
+                fil.close();
+            }
         }
     }
 
