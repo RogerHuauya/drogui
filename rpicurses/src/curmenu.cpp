@@ -300,8 +300,8 @@ bool calibrationOp(PANEL* pan, int index){
             while(rasp_i2c.readFloat(CAL_GYR) < 100.0){
                 string names[] = {"GYR", "ACC", "MAG"};
                 float arr[] = {rasp_i2c.readFloat(CAL_GYR), rasp_i2c.readFloat(CAL_ACC), rasp_i2c.readFloat(CAL_MAG)}; 
-                writeDataNoConfirm(pan, sensor_data_op[index], names, arr, 3);
-                usleep(100000);
+                writeDataNoConfirm(pan, "CAL", names, arr, 3);
+                usleep(10000);
                 werase(panel_window(pan));
             }
 
@@ -324,8 +324,8 @@ bool calibrationOp(PANEL* pan, int index){
             while(rasp_i2c.readFloat(CAL_ACC) < 100.0){
                 string names[] = {"GYR", "ACC", "MAG"};
                 float arr[] = {rasp_i2c.readFloat(CAL_GYR), rasp_i2c.readFloat(CAL_ACC), rasp_i2c.readFloat(CAL_MAG)}; 
-                writeDataNoConfirm(pan, sensor_data_op[index], names, arr, 3);
-                usleep(100000);
+                writeDataNoConfirm(pan, "CAL", names, arr, 3);
+                usleep(10000);
                 werase(panel_window(pan));
             }
 
@@ -349,8 +349,8 @@ bool calibrationOp(PANEL* pan, int index){
             while(rasp_i2c.readFloat(CAL_MAG) < 100.0){
                 string names[] = {"GYR", "ACC", "MAG"};
                 float arr[] = {rasp_i2c.readFloat(CAL_GYR), rasp_i2c.readFloat(CAL_ACC), rasp_i2c.readFloat(CAL_MAG)}; 
-                writeDataNoConfirm(pan, sensor_data_op[index], names, arr, 3);
-                usleep(100000);
+                writeDataNoConfirm(pan, "CAL", names, arr, 3);
+                usleep(10000);
                 werase(panel_window(pan));
             }
 
