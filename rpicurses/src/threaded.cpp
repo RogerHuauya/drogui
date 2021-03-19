@@ -51,7 +51,7 @@ void *logging(void *threadid){
     while(1){
         if(logging_state){
             
-	        log_gps << tim/50.0 << "\t";
+	        log_gps << tim/100.0 << "\t";
             log_gps << rasp_i2c.readFloat(ROLL_REF)     << "\t"; unistd::usleep(300);
             log_gps << rasp_i2c.readFloat(PITCH_REF) 	<< "\t"; unistd::usleep(300);
             log_gps << rasp_i2c.readFloat(ROLL_VAL) 	<< "\t"; unistd::usleep(300);
@@ -64,7 +64,7 @@ void *logging(void *threadid){
         else{
             unistd::usleep(2400);
         }
-        unistd::usleep(17600);
+        unistd::usleep(7600);
         tim++;
     }
 }
