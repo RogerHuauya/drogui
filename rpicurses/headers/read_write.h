@@ -139,8 +139,8 @@ bool readData(PANEL* pan, string title, string* names, float* arr, int sz){
 
 
 bool confirmData(PANEL* pan){
-    string title = "Confirm"
-    curs_set(1);
+    string title = "Confirm";
+    
     WINDOW* win = panel_window(pan);
     
     int sz_x, sz_y, cur;
@@ -329,17 +329,11 @@ bool writeDataNoConfirm(PANEL* pan, string title, string* names, float* arr, int
         mvwprintw(win, sz_y/2 + 1, pos[i] + form/2 - names[i].size()/2, names[i].c_str());    
 	wattroff(win, COLOR_PAIR(5));
     }
-
-    wattron(win, COLOR_PAIR(2));
-    mvwprintw(win, sz_y - 8,  sz_x/2 - 5, "[A] Accept");
-    wattroff(win, COLOR_PAIR(2));
-    
-    
-    
+        
     wrefresh(win);    
     update_panels();
     doupdate();
-    return ans;
+    return 1;
 }
 
 
