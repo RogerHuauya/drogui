@@ -199,8 +199,8 @@ void initSensorsTasks(){
 
 void executeSensorsTasks(){
     
-    //if(timerReady(&timer_rpy))  executeTimer(&timer_rpy);
-    //if(timerReady(&timer_accel))  executeTimer(&timer_accel);
+    if(timerReady(&timer_rpy))  executeTimer(&timer_rpy);
+    if(timerReady(&timer_accel))  executeTimer(&timer_accel);
     //if(timerReady(&timer_gyro))  executeTimer(&timer_gyro);  
     if(timerReady(&timer_mag))  executeTimer(&timer_mag);  
 }

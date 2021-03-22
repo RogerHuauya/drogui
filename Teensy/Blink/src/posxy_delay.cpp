@@ -1,5 +1,5 @@
-//#define CASCADE_CONTROL_MPU_TEST
-#ifdef CASCADE_CONTROL_MPU_TEST
+#define POSXY_DELAY
+#ifdef POSXY_DELAY
 
 #include "..\headers\timer.h"
 #include "..\headers\main.h"
@@ -64,20 +64,20 @@ void debugInterrupt(){
     Serial.print(wroll_control.errd,DEC);
     Serial.print("\t");
     Serial.print(wpitch_control.errd,DEC);*/
-    
+    /*
     Serial.print(mx,DEC);
     Serial.print("\t");
     Serial.print(my,DEC);
     Serial.print("\t");
     Serial.print(mz,DEC);
     Serial.print("\n");
-
-    /*Serial.print(roll,DEC);
+    */
+    Serial.print(roll,DEC);
     Serial.print("\t");
     Serial.print(pitch,DEC);
     Serial.print("\t");
     Serial.print(yaw,DEC);
-    Serial.print(";\n");*/
+    Serial.print(";\n");
 
 }
 
@@ -110,15 +110,14 @@ void initializeSystem(){
 int _main(void){
 
     initializeSystem();
-    initControlTasks();
     initSensorsTasks();
-
+    
     delay(1000);
     while(1){
+        Serial.println("Mierda");
         if(timerReady(&timer_blink)) executeTimer(&timer_blink);
         if(timerReady(&timer_debug)) executeTimer(&timer_debug);
         //if(timerReady(&timer_security)) executeTimer(&timer_security);  
-        executeControlTasks();
         executeSensorsTasks();   
     }
     return 0;
