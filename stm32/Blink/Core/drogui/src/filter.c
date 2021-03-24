@@ -137,7 +137,7 @@ void initMvAvgFilter(mvAvgFilter* mf, int n){
     mf -> sum = 0;
 }
 
-float compueteMvAvgFilter(mvAvgFilter* mf, float val){
+float computeMvAvgFilter(mvAvgFilter* mf, float val){
     mf -> sum -= mf->values[(mf -> head)];
     mf -> values[(mf -> head)] = val;
     mf -> sum += mf -> values[ (mf -> head) ++];

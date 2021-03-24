@@ -21,7 +21,7 @@ float roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0
 float wroll_ref, wpitch_ref, wyaw_ref, roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
 float wroll_err,wpitch_err,wyaw_err; 
 
-char buffc[50] = "hola\n";
+char buffc[500] = "hola\n";
 void saturateM(float H){
     float f_max = 1;
     float arr_M[] = {M1, M2, M3, M4};
@@ -39,41 +39,41 @@ void saturateM(float H){
 
 void updatePID(){
     int index = getReg(PID_INDEX), var = getReg(PID_VAR);
-    if(index >= 0) {
-        switch(var){
 
-            case PID_ROLL:
-                if(index == 0)
-                    roll2w.kp[0] = getReg(ROLL_KP),  roll2w.ki[0] = getReg(ROLL_KI),  roll2w.kd[0] = getReg(ROLL_KD);
-                else
-                    wroll_control.kp[0] = getReg(ROLL_KP),  wroll_control.ki[0] = getReg(ROLL_KI),  wroll_control.kd[0] = getReg(ROLL_KD);
+    switch(var){
 
-            break;
-            
-            case PID_PITCH:
-                if(index == 0)
-                    pitch2w.kp[0] = getReg(PITCH_KP),  pitch2w.ki[0] = getReg(PITCH_KI),  pitch2w.kd[0] = getReg(PITCH_KD);
-                else
-                    wpitch_control.kp[0] = getReg(PITCH_KP),  wpitch_control.ki[0] = getReg(PITCH_KI),  wpitch_control.kd[0] = getReg(PITCH_KD);
+        case PID_ROLL:
+            if(index == 0)
+                roll2w.kp[0] = getReg(ROLL_KP),  roll2w.ki[0] = getReg(ROLL_KI),  roll2w.kd[0] = getReg(ROLL_KD);
+            else if(index == 1)
+                wroll_control.kp[0] = getReg(ROLL_KP),  wroll_control.ki[0] = getReg(ROLL_KI),  wroll_control.kd[0] = getReg(ROLL_KD);
 
-            break;
+        break;
+        
+        case PID_PITCH:
+            if(index == 0)
+                pitch2w.kp[0] = getReg(PITCH_KP),  pitch2w.ki[0] = getReg(PITCH_KI),  pitch2w.kd[0] = getReg(PITCH_KD);
+            else if(index == 1)
+                wpitch_control.kp[0] = getReg(PITCH_KP),  wpitch_control.ki[0] = getReg(PITCH_KI),  wpitch_control.kd[0] = getReg(PITCH_KD);
 
-            case PID_YAW:
-                if(index == 0)
-                    yaw2w.kp[0] = getReg(YAW_KP),  yaw2w.ki[0] = getReg(YAW_KI),  yaw2w.kd[0] = getReg(YAW_KD);
-                else
-                    wyaw_control.kp[0] = getReg(YAW_KP),  wyaw_control.ki[0] = getReg(YAW_KI),  wyaw_control.kd[0] = getReg(YAW_KD);
+        break;
 
-            break;
-            
-            case PID_Z:
-                z_control.kp[0] = getReg(Z_KP);
-                z_control.ki[0] = getReg(Z_KI);
-                z_control.kd[0] = getReg(Z_KD);
-            break;
-        }
-        roll2w.N_filt = pitch2w.N_filt = yaw2w.N_filt = wroll_control.N_filt = wpitch_control.N_filt = wyaw_control.N_filt = getReg(N_FILTER);
+        case PID_YAW:
+            if(index == 0)
+                yaw2w.kp[0] = getReg(YAW_KP),  yaw2w.ki[0] = getReg(YAW_KI),  yaw2w.kd[0] = getReg(YAW_KD);
+            else if(index == 1)
+                wyaw_control.kp[0] = getReg(YAW_KP),  wyaw_control.ki[0] = getReg(YAW_KI),  wyaw_control.kd[0] = getReg(YAW_KD);
+
+        break;
+        
+        case PID_Z:
+            z_control.kp[0] = getReg(Z_KP);
+            z_control.ki[0] = getReg(Z_KI);
+            z_control.kd[0] = getReg(Z_KD);
+        break;
     }
+    roll2w.N_filt = pitch2w.N_filt = yaw2w.N_filt = wroll_control.N_filt = wpitch_control.N_filt = wyaw_control.N_filt = getReg(N_FILTER);
+    
 }
 
 
@@ -154,6 +154,9 @@ void xyzControlTask(){
 
     H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG) + getReg(AMP_SIN)*sin(2*PI*getReg(FREQ_SIN)*TIME/1000000);
     rampValue(&H, H_ref, 0.2);
+
+    //sprintf(buffc, "%f\n", z_control.kp[0] );
+    //HAL_UART_Transmit(&huart2, (uint8_t*) buffc, strlen(buffc), 100);
 
     H_comp = H/(cos(roll)*cos(pitch));
 
