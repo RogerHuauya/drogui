@@ -12,7 +12,7 @@ pid wroll_control, wpitch_control, wyaw_control;
 pid z_control, x_control, y_control;
 
 filter filter_wroll, filter_wpitch, filter_wyaw;
-
+filter filter_m1, filter_m2, filter_m3, filter_m4; 
 
 float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, R_MAX = PI/22.0 , P_MAX = PI/22.0;
 float M1,M2,M3,M4;
@@ -73,7 +73,6 @@ void updatePID(){
         break;
     }
     roll2w.N_filt = pitch2w.N_filt = yaw2w.N_filt = wroll_control.N_filt = wpitch_control.N_filt = wyaw_control.N_filt = getReg(N_FILTER);
-    
 }
 
 
@@ -196,7 +195,7 @@ void initControlTasks(){
     initFilter(&filter_wroll, 4, k_1_20, v_1_20);
     initFilter(&filter_wpitch, 4, k_1_20, v_1_20);
     initFilter(&filter_wyaw, 4, k_1_20, v_1_20);
-    
+
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
     setReg(N_FILTER, 50);
