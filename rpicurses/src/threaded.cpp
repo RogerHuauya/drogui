@@ -51,20 +51,33 @@ void *logging(void *threadid){
     while(1){
         if(logging_state){
             
-	        log_gps << tim/100.0 << "\t";
+	    log_gps << tim/50.0 << "\t";
             log_gps << rasp_i2c.readFloat(ROLL_REF)     << "\t"; unistd::usleep(300);
             log_gps << rasp_i2c.readFloat(PITCH_REF) 	<< "\t"; unistd::usleep(300);
             log_gps << rasp_i2c.readFloat(ROLL_VAL) 	<< "\t"; unistd::usleep(300);
             log_gps << rasp_i2c.readFloat(PITCH_VAL) 	<< "\t"; unistd::usleep(300);
             log_gps << rasp_i2c.readFloat(GYRO_X_REF) 	<< "\t"; unistd::usleep(300);
             log_gps << rasp_i2c.readFloat(GYRO_Y_REF) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(GYRO_X) 	    << "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(GYRO_Y) 	    << "\n"; unistd::usleep(300);
-        }
+            log_gps << rasp_i2c.readFloat(GYRO_X) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(GYRO_Y) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat( Z_VAL ) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat( Z_U ) 	<< "\n"; unistd::usleep(300);
+	    /*log_gps << tim/50.0 << "\t";
+            log_gps << rasp_i2c.readFloat(MOTOR_1)      << "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(MOTOR_2)      << "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(MOTOR_3)      << "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(MOTOR_4)      << "\t"; unistd::usleep(300);
+	    log_gps << rasp_i2c.readFloat(ROLL_VAL) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(PITCH_VAL) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(GYRO_X_REF) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(GYRO_Y_REF) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(GYRO_X) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(GYRO_Y) 	<< "\n"; unistd::usleep(300);*/
+	}
         else{
-            unistd::usleep(2400);
+            unistd::usleep(3000);
         }
-        unistd::usleep(7600);
+        unistd::usleep(17000);
         tim++;
     }
 }

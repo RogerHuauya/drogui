@@ -81,19 +81,19 @@ bool pidOp(PANEL* pan, int index){
         if(readData(pan, pid_op[index], names, arr, 3)){
             switch (index){
                 case 3: rasp_i2c.sendFloat(PID_VAR, PID_X);
-                        rasp_i2c.sendFloat(X_KP, arr[1]);
-                        rasp_i2c.sendFloat(X_KI, arr[2]);
-                        rasp_i2c.sendFloat(X_KD, arr[3]);
+                        rasp_i2c.sendFloat(X_KP, arr[0]);
+                        rasp_i2c.sendFloat(X_KI, arr[1]);
+                        rasp_i2c.sendFloat(X_KD, arr[2]);
                         break;
                 case 4: rasp_i2c.sendFloat(PID_VAR, PID_Y);
-                        rasp_i2c.sendFloat(Y_KP, arr[1]);
-                        rasp_i2c.sendFloat(Y_KI, arr[2]);
-                        rasp_i2c.sendFloat(Y_KD, arr[3]);
+                        rasp_i2c.sendFloat(Y_KP, arr[0]);
+                        rasp_i2c.sendFloat(Y_KI, arr[1]);
+                        rasp_i2c.sendFloat(Y_KD, arr[2]);
                         break;
                 case 5: rasp_i2c.sendFloat(PID_VAR, PID_Z);
-                        rasp_i2c.sendFloat(Z_KP, arr[1]);
-                        rasp_i2c.sendFloat(Z_KI, arr[2]);
-                        rasp_i2c.sendFloat(Z_KD, arr[3]);
+                        rasp_i2c.sendFloat(Z_KP, arr[0]);
+                        rasp_i2c.sendFloat(Z_KI, arr[1]);
+                        rasp_i2c.sendFloat(Z_KD, arr[2]);
                         break;
             }
 
@@ -164,6 +164,14 @@ bool setpointOp(PANEL* pan, int index){
 
         }
     }
+    else if(index == 5){
+        string names[] = {"meters", "delta"};
+        float arr[2]; 
+        if(readData(pan, setpoint_op[index], names, arr, 2)){
+      	    rasp_i2c.sendFloat(Z_REF,arr[0]);
+	    rasp_i2c.sendFloat(Z_REF_SIZE,arr[1]);
+        }
+    }
     else{
         string names[] = {"meters"};
         float arr[1]; 
@@ -174,8 +182,6 @@ bool setpointOp(PANEL* pan, int index){
                     rasp_i2c.sendFloat(X_REF,arr[0]); break;    
                 case 4:
                     rasp_i2c.sendFloat(Y_REF,arr[0]); break;
-                case 5:
-                    rasp_i2c.sendFloat(Z_REF,arr[0]); break;
             }
         }
     }
