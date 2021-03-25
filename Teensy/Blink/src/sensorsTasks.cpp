@@ -1,6 +1,6 @@
 #include "..\headers\sensorsTasks.h"
 #include "..\headers\mahony.h"
-
+#include <Arduino.h>
 #define N_BMP 25
 
 Adafruit_BMP3XX bmp;
@@ -11,7 +11,7 @@ mpu9250 myIMU;
 float alt_memo[N_BMP], alt_fast, alt_slow = 0, alt_diff, sum = 0,alt_offs;
 int alt_pointer = 0;
 float sealevel;
-
+char gpsData[80];
 filter filter_gx, filter_gy, filter_gz;
 filter filter_gx2, filter_gy2, filter_gz2;
 dNotchFilter dnotch_gx, dnotch_gy, dnotch_gz; 
@@ -23,7 +23,7 @@ filter filter_ax, filter_ay, filter_az;
 dNotchFilter dnotch_ax, dnotch_ay, dnotch_az; 
 
 
-timer timer_accel, timer_gyro, timer_mag, timer_rpy;
+timer timer_accel, timer_gyro, timer_mag, timer_rpy, timer_gps, timer_pos;
 float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
 
 
@@ -37,6 +37,8 @@ void accelInterrupt(){
     ax = myIMU.ax;
     ay = myIMU.ay;
     az = myIMU.az;*/
+
+    
     ax = computeDNotch(&dnotch_ax, ax);
     ay = computeDNotch(&dnotch_ay, ay);
     az = computeDNotch(&dnotch_az, az);
@@ -89,7 +91,7 @@ void magInterrupt(){
     my = myIMU.raw_my;
     mz = myIMU.raw_mz;
 }
-float Kdfilt = 0.0005;
+float Kdfilt = 1000;
 void rpyInterrupt(){
     float rpy[3];
     
@@ -133,7 +135,7 @@ void bmpInterrupt(){
 
     alt_pointer %= N_BMP;
     sum -= alt_memo[alt_pointer];
-    alt_memo[alt_pointer] = bmp.readAltitude(sealevel);
+    //alt_memo[alt_pointer] = bmp.readAltitude(sealevel);
     sum += alt_memo[alt_pointer++];
     alt_fast = sum / N_BMP;
 
@@ -146,6 +148,18 @@ void bmpInterrupt(){
 
     if(security) alt_offs = alt_slow;
 
+}
+
+void gpsInterrupt(){
+    Serial1.print("AT+CGPSINFO\r\n");
+    int i = 0;
+    while(Serial1.available() == 0);
+    while(Serial1.available()>0){
+        gpsData[i] = Serial1.read();
+        i++;
+    }
+    gpsData[i] = '\0'; 
+    Serial.print(gpsData);
 }
 
 void initSensorsTasks(){
@@ -185,22 +199,33 @@ void initSensorsTasks(){
     initDNotchFilter(&dnotch_ax, 64, 40, 1000, 1, 10);
     initDNotchFilter(&dnotch_ay, 64, 40, 1000, 1, 10);
     initDNotchFilter(&dnotch_az, 64, 40, 1000, 1, 10);
-
     //calibrateGyro(&myIMU);
     //calibrateAccel(&myIMU);
     //calibrateMag(&myIMU);
     
 
-    //initTimer(&timer_accel, &accelInterrupt, 1000);
-    //initTimer(&timer_gyro, &gyroInterrupt, 1000);
+    initTimer(&timer_accel, &accelInterrupt, 1000);
+    initTimer(&timer_gyro, &gyroInterrupt, 1000);
     initTimer(&timer_mag, &magInterrupt, 10);
-    //initTimer(&timer_rpy, &rpyInterrupt, 500);
+    initTimer(&timer_rpy, &rpyInterrupt, 500);
+    //initTimer(&timer_gps, &gpsInterrupt, 1  );
+    initTimer(&timer_pos, &positionInterrupt, 100);
+    /*
+    Serial1.print("AT+CGPS=1,1\r\n");
+    delay(100);
+    char temp;
+    while(Serial1.available()){
+        temp = Serial1.read();
+        Serial.print(x);
+    }*/
 }
 
 void executeSensorsTasks(){
     
     if(timerReady(&timer_rpy))  executeTimer(&timer_rpy);
     if(timerReady(&timer_accel))  executeTimer(&timer_accel);
-    //if(timerReady(&timer_gyro))  executeTimer(&timer_gyro);  
+    if(timerReady(&timer_gyro))  executeTimer(&timer_gyro);  
     if(timerReady(&timer_mag))  executeTimer(&timer_mag);  
+    //if(timerReady(&timer_gps))  executeTimer(&timer_gps ); 
+    if(timerReady(&timer_pos)) executeTimer(&timer_pos);
 }

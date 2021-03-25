@@ -48,19 +48,27 @@ void debugInterrupt(){
     if( c == 'a' ) setReg(CAL_GYR_TRG,1);
     if( c == 'b' ) setReg(CAL_ACC_TRG,1);
     if( c == 'c' ) setReg(CAL_MAG_TRG,1);
+    if( c == 'g' ) Serial1.print("AT+CGPS=1,1\r\n");
+    if( c == 'o' ) Serial1.print("AT+CGPS=0,1\r\n");
+    if( c == 'k' ) setReg(START,1);
 
-    /*Serial.print(gx,DEC);
-    Serial.print("\t");
-    Serial.print(gy,DEC);
-    Serial.print("\t");
-    Serial.print(gz,DEC);
-    Serial.print("\t");
+    
     Serial.print(ax,DEC);
     Serial.print("\t");
     Serial.print(ay,DEC);
     Serial.print("\t");
     Serial.print(az,DEC);
     Serial.print("\t");
+    
+    /*
+    Serial.print(gx,DEC);
+    Serial.print("\t");
+    Serial.print(gy,DEC);
+    Serial.print("\t");
+    Serial.print(gz,DEC);
+    Serial.print("\t");
+    */
+    /*
     Serial.print(wroll_control.errd,DEC);
     Serial.print("\t");
     Serial.print(wpitch_control.errd,DEC);*/
@@ -72,13 +80,23 @@ void debugInterrupt(){
     Serial.print(mz,DEC);
     Serial.print("\n");
     */
+   /*
     Serial.print(roll,DEC);
     Serial.print("\t");
     Serial.print(pitch,DEC);
     Serial.print("\t");
     Serial.print(yaw,DEC);
-    Serial.print(";\n");
-
+    Serial.print(" ;");
+*/
+    /*
+    Serial.print(x,DEC);
+    Serial.print("\t");
+    Serial.print(y,DEC);
+    Serial.print("\t");
+    Serial.print(z,DEC);
+    Serial.print("\t");
+    */
+    Serial.print("\n");
 }
 
 
@@ -99,7 +117,7 @@ void initializeSystem(){
     initI2C(SLAVE, I2C1, 0x60);
     clearI2Cregisters(I2C1);
     initTimer(&timer_security, &securityInterrupt, 100);
-    initTimer(&timer_debug, &debugInterrupt, 1000);
+    initTimer(&timer_debug, &debugInterrupt, 100);
     initTimer(&timer_blink, &blinkInterrupt, 10);
 
 
@@ -114,7 +132,6 @@ int _main(void){
     
     delay(1000);
     while(1){
-        Serial.println("Mierda");
         if(timerReady(&timer_blink)) executeTimer(&timer_blink);
         if(timerReady(&timer_debug)) executeTimer(&timer_debug);
         //if(timerReady(&timer_security)) executeTimer(&timer_security);  
