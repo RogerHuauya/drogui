@@ -21,11 +21,13 @@ filter filter_roll, filter_pitch, filter_yaw;
 float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
 
 bmp388 myBMP;
-float altitude;
+float altitude,offset_alt;
 
 emaFilter ema_bmp;
 mvAvgFilter mvAvg_bmp;
 filter filter_z;
+
+char altbuff[50] = "hola\n";
 
 void accelTask(){   
     readAcc(&myIMU);
@@ -136,12 +138,12 @@ void rpyTask(){
 void altitudeTask(){
     
     bmp388ReadAltitude(&myBMP);
-    altitude = compueteMvAvgFilter( &mvAvg_bmp, myBMP.altitude );
-    altitude = computeEmaFilter( &ema_bmp, altitude );
-    altitude = computeFilter( &filter_z, altitude );
-
-    setReg(Z_VAL,altitude);
-
+    //z = computeMvAvgFilter( &mvAvg_bmp, myBMP.altitude );
+    z = computeEmaFilter( &ema_bmp, myBMP.altitude);
+    z = computeFilter( &filter_z, z );
+    
+    setReg(Z_VAL, z);
+    
 }
 
 void initSensorsTasks(){
@@ -191,15 +193,15 @@ void initSensorsTasks(){
 
     initBmp388(&myBMP, 10);  
 
-    initMvAvgFilter(&mvAvg_bmp, 25);
+    //initMvAvgFilter(&mvAvg_bmp, 25);
     initEmaFilter(&ema_bmp, 0.9, 0.1, 0.8);
     initFilter(&filter_z, 4, k_1_20, v_1_20);
 
-    addTask(&gyroTask, 1000, 2);
+    addTask(&gyroTask, 1000, 3);
     addTask(&accelTask, 1000, 3);
     addTask(&magTask, 100000, 2);
     addTask(&rpyTask, 2000, 2);
-    addTask(&altitudeTask,10000,3);
+    addTask(&altitudeTask,10000,2);
 
 
 }

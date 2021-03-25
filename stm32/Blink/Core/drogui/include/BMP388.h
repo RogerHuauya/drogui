@@ -1,7 +1,7 @@
 #ifndef BMP388_H
 #define BMP388_H
 #include <stdint.h>
-
+#include "filter.h" 
 #define BMP388_DEFAULT_ADDRESS (0x77) 
 
 /**\name Register Address */
@@ -30,8 +30,9 @@
 typedef struct _bmp388{
     int temp_cont;
     int cont;
-    float alt_offset, altitude;
+    float alt_offset, altitude,raw_altitude;
     int64_t temp, press, seaLevel;
+    mvAvgFilter f;
 } bmp388;
 
 

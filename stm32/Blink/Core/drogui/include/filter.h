@@ -142,6 +142,6 @@ void initMvAvgFilter(mvAvgFilter* mf, int n);
  * @param val Current value (float)
  * @return Average value (float)
 */
-float compueteMvAvgFilter(mvAvgFilter* mf, float val);
+float computeMvAvgFilter(mvAvgFilter* mf, float val);
 
 #endif

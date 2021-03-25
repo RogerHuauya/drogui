@@ -31,7 +31,7 @@ void _main(){
         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);        
         bmp388ReadAltitude(&myBMP);
         
-        bmp_alt = compueteMvAvgFilter( &mvAvg_bmp, myBMP.altitude );
+        bmp_alt = computeMvAvgFilter( &mvAvg_bmp, myBMP.altitude );
         bmp_alt = computeEmaFilter( &ema_bmp, bmp_alt );
 
         sprintf(buffer_bmp,"%f %f ;\n", 100*myBMP.altitude, 100*bmp_alt);

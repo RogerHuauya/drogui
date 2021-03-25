@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "usart.h"
+char buffs[100] = "";
 
 typedef struct _calib{
     uint16_t T1, T2;
@@ -16,6 +17,7 @@ typedef struct _calib{
     uint16_t P5, P6;
     
     int64_t T_fine;
+
 } calib;
 
 
@@ -40,7 +42,7 @@ void buildCalib(uint8_t* buff, calib * cal){
 calib calib_bmp;
 
 void initBmp388(bmp388* b, int ntemp){
-    char aux[50];
+    
     uint8_t buff[21];
     I2CwriteByte(BMP388_DEFAULT_ADDRESS, BMP388_REG_PWR_CTRL, 0x33);
     HAL_Delay(10);
@@ -50,12 +52,11 @@ void initBmp388(bmp388* b, int ntemp){
     HAL_Delay(10);
     I2Cread(BMP388_DEFAULT_ADDRESS, BMP388_REG_CALIB_DATA, 21, buff);
     buildCalib(buff, &calib_bmp);
+    initMvAvgFilter(&(b->f), 25);
     b -> temp = b -> press = b -> altitude = b -> cont = 0;
-    b -> alt_offset = b -> seaLevel = 0;
+    b -> alt_offset = b -> seaLevel = b -> raw_altitude =  0;
     b -> temp_cont = ntemp;
 }
-
-
 
 int64_t bmp388CompensateTemp( uint32_t u32RegData){
 
@@ -143,11 +144,12 @@ void bmp388ReadAltitude(bmp388* b){
 
     if( b->seaLevel == 0 ) b->seaLevel = b->press;
 
-    b -> altitude = 44330.0 * (1.0 -  pow( 1.0*b->press / b->seaLevel,0.1903));
-    b -> altitude += b -> alt_offset;
+    b -> raw_altitude = 44330.0 * (1.0 -  pow( 1.0*b->press / b->seaLevel,0.1903));
+    b -> raw_altitude = computeMvAvgFilter( &(b->f), b->raw_altitude);
+    b -> altitude = b -> raw_altitude + b -> alt_offset;
 }
 
-void updateBmp388Offset(bmp388 * b){
-    b -> alt_offset = - b-> altitude;
+void updateBmp388Offset(bmp388 * b){    
+    b -> alt_offset = - b -> raw_altitude;
 }
 
