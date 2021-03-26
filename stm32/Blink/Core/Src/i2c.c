@@ -19,11 +19,11 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "i2c.h"
+
+/* USER CODE BEGIN 0 */
 #include "usart.h"
 #include <string.h>
 #include <stdio.h>
-/* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 I2C_HandleTypeDef hi2c1;
@@ -123,6 +123,9 @@ void MX_I2C4_Init(void)
   char buffer[50];
   sprintf(buffer, "%lu\n", I2C4->ISR);
   //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
+
+  /* USER CODE END I2C4_Init 2 */
+
 }
 
 void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)

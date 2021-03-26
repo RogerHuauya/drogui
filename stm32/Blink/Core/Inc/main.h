@@ -29,11 +29,10 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f7xx_hal.h"
-#include "_main.h"
-#define ARM_MATH_CM7
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "_main.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -48,7 +47,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
+#define ARM_MATH_CM7
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -59,12 +58,11 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define TRIGGER_Pin GPIO_PIN_2
+#define TRIGGER_GPIO_Port GPIOE
 #define ECHO_Pin GPIO_PIN_1
 #define ECHO_GPIO_Port GPIOE
 #define ECHO_EXTI_IRQn EXTI1_IRQn
-
-#define TRIGGER_Pin GPIO_PIN_0
-#define TRIGGER_GPIO_Port GPIOE
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

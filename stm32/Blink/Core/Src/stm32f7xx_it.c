@@ -21,13 +21,13 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f7xx_it.h"
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
 #include "usart.h"
 #include <stdio.h>
 #include <string.h>
 #include "utils.h"
 #include "task.h"
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,6 +47,13 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
+
+double distance = 0;
+uint32_t time_ant;
+
+char buffer[50]="";
+int write_adress = -1, read_adress = -1;
+int index_i2c = 0, state;
 
 /* USER CODE END PV */
 
@@ -205,14 +212,31 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles EXTI line1 interrupt.
+  */
+void EXTI1_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI1_IRQn 0 */
+  
+  if(__HAL_GPIO_EXTI_GET_FLAG(GPIO_PIN_1)){
+    bool state = HAL_GPIO_ReadPin(ECHO_GPIO_Port, ECHO_Pin) == GPIO_PIN_SET;
+    if(state) time_ant = TIME;
+    else distance = 0.0003432*(TIME - time_ant)/2.0;
+    //LD2_GPIO_Port -> ODR ^= LD2_Pin; // toggle LD2 LED
+  } 
+  /* USER CODE END EXTI1_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
+  /* USER CODE BEGIN EXTI1_IRQn 1 */
+
+  /* USER CODE END EXTI1_IRQn 1 */
+}
+
+/**
   * @brief This function handles I2C4 event interrupt.
   */
-char buffer[50]="";
-int write_adress = -1, read_adress = -1;
-int index_i2c = 0, state;
-
 void I2C4_EV_IRQHandler(void)
 {
+  /* USER CODE BEGIN I2C4_EV_IRQn 0 */
   sprintf(buffer, "%x \t %x \t %x \n", write_adress, read_adress, index_i2c);
   //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
 
@@ -269,31 +293,11 @@ void I2C4_EV_IRQHandler(void)
     I2C4->ICR = I2C_ICR_ADDRCF;
   }
    
+  /* USER CODE END I2C4_EV_IRQn 0 */
+  //HAL_I2C_EV_IRQHandler(&hi2c4);
+  /* USER CODE BEGIN I2C4_EV_IRQn 1 */
 
-}
-
-/**
-  * @brief This function handles EXTI line1 interrupt.
-  */
-
-double distance = 0;
-uint32_t time_ant;
-
-void EXTI1_IRQHandler(void)
-{
-  /* USER CODE BEGIN EXTI1_IRQn 0 */
-  
-  if(__HAL_GPIO_EXTI_GET_FLAG(GPIO_PIN_1)){
-    bool state = HAL_GPIO_ReadPin(ECHO_GPIO_Port, ECHO_Pin) == GPIO_PIN_SET;
-    if(state) time_ant = TIME;
-    else distance = 0.0003432*(TIME - time_ant)/2.0;
-    //LD2_GPIO_Port -> ODR ^= LD2_Pin; // toggle LD2 LED
-  } 
-  /* USER CODE END EXTI1_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
-  /* USER CODE BEGIN EXTI1_IRQn 1 */
-
-  /* USER CODE END EXTI1_IRQn 1 */
+  /* USER CODE END I2C4_EV_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
