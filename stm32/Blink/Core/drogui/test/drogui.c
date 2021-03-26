@@ -17,7 +17,7 @@ void _main(){
     HAL_Delay(1000);
     HAL_UART_Transmit(&huart2, (uint8_t*) "Start System\n", 14, 100);
     initDebug();
-    //initControlTasks();
+    initControlTasks();
     initSensorsTasks();
 
     //sprintf(auxbuff, "%d\n", __FPU_USED);
