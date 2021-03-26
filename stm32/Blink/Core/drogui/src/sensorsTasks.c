@@ -146,6 +146,17 @@ void altitudeTask(){
     
 }
 
+
+
+void heightTask(void *argument){
+    HAL_GPIO_WritePin(TRIGGER_GPIO_Port, TRIGGER_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(TRIGGER_GPIO_Port, TRIGGER_Pin, GPIO_PIN_SET);
+    uint32_t tim = TIME;
+    while(TIME - tim < 10);
+    HAL_GPIO_WritePin(TRIGGER_GPIO_Port, TRIGGER_Pin, GPIO_PIN_RESET);
+}
+
+
 void initSensorsTasks(){
     
     initMpu(&myIMU);
@@ -191,17 +202,17 @@ void initSensorsTasks(){
 
     calib_status = 0;
 
-    initBmp388(&myBMP, 10);  
+    //initBmp388(&myBMP, 10);  
 
     //initMvAvgFilter(&mvAvg_bmp, 25);
     initEmaFilter(&ema_bmp, 0.9, 0.1, 0.8);
     initFilter(&filter_z, 4, k_1_20, v_1_20);
 
-    addTask(&gyroTask, 1000, 3);
-    addTask(&accelTask, 1000, 3);
-    addTask(&magTask, 100000, 2);
-    addTask(&rpyTask, 2000, 2);
-    addTask(&altitudeTask,10000,2);
-
+    //addTask(&gyroTask, 1000, 3);
+    //addTask(&accelTask, 1000, 3);
+    //addTask(&magTask, 100000, 2);
+    //addTask(&rpyTask, 2000, 2);
+    //addTask(&altitudeTask,10000,2);
+    addTask(&heightTask, 1000000, 2);
 
 }
