@@ -10,7 +10,7 @@
 
 
 void blinkTask(void *argument){
-    HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+    //HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
 }
 
 char buff[50] = "hola\n";

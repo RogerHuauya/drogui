@@ -194,7 +194,7 @@ void calibrateGyro(mpu9250* m){
     setReg(GYR_Z_OFF, m -> off_gz);
 
     setReg(CAL_GYR, 100);
-    HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+    //HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
 }
 
 float dis3d(float x,float y,float z, float a, float b, float c){
@@ -235,7 +235,7 @@ void calibrateAccel(mpu9250* m){
         }
 
         if(valid){
-            HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+            //HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
             acc[head][0] = m->raw_ax, acc[head][1] = m->raw_ay, acc[head][2] = m->raw_az;
             head++, cnt++, head%= tot; 
         }
@@ -337,7 +337,7 @@ void calibrateMag(mpu9250* m){
             } 
         }
         if(valid){
-            HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+            //HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
             mag[head][0] = magX, mag[head][1] = magY, mag[head][2] = magZ;
             head++, cnt++, head%= n; 
         }
