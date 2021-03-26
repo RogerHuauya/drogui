@@ -8,16 +8,10 @@
 #include <string.h>
 #include "filter.h"
 
-
-void blinkTask(void *argument){
-    //HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-}
-
 char buff[50] = "hola\n";
 void debugTask(void *argument){
     
-    //sprintf(buff, "%f\t%f\t%f \n", roll, pitch, yaw);
-    sprintf(buff, "%f \t %f \t %ld \t %ld\n", 100*altitude, myBMP.alt_offset, (int32_t)myBMP.press, (int32_t)myBMP.temp);
+    sprintf(buff, "%f\n", z);
     HAL_UART_Transmit(&huart2, (uint8_t*) buff, strlen(buff), 100);
 }
 void securityTask(){
@@ -35,7 +29,6 @@ void securityTask(){
 
 void initDebug(){
     
-    //addTask(&debugTask, 50000, 1);    
-    addTask(&blinkTask, 20000, 1);
+    //addTask(&debugTask, 10000, 1);   
     addTask(&securityTask, 1000, 1);
 }

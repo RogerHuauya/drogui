@@ -120,8 +120,6 @@ void MX_I2C4_Init(void)
   I2C4->ISR &= !I2C_ISR_RXNE; 
   I2C4->ISR &= !I2C_ISR_TXIS; 
   
-  char buffer[50];
-  sprintf(buffer, "%lu\n", I2C4->ISR);
   //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
 
   /* USER CODE END I2C4_Init 2 */
