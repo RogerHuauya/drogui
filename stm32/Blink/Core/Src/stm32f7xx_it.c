@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "utils.h"
+#include "task.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -269,6 +270,30 @@ void I2C4_EV_IRQHandler(void)
   }
    
 
+}
+
+/**
+  * @brief This function handles EXTI line1 interrupt.
+  */
+
+double distance = 0;
+uint32_t time_ant;
+
+void EXTI1_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI1_IRQn 0 */
+  
+  if(__HAL_GPIO_EXTI_GET_FLAG(GPIO_PIN_1)){
+    bool state = HAL_GPIO_ReadPin(ECHO_GPIO_Port, ECHO_Pin) == GPIO_PIN_SET;
+    if(state) time_ant = TIME;
+    else distance = 0.0003432*(TIME - time_ant)/2.0;
+    //LD2_GPIO_Port -> ODR ^= LD2_Pin; // toggle LD2 LED
+  } 
+  /* USER CODE END EXTI1_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
+  /* USER CODE BEGIN EXTI1_IRQn 1 */
+
+  /* USER CODE END EXTI1_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

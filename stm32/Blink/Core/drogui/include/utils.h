@@ -10,12 +10,21 @@
 #define EPS 1e-9
 #define pi acos(-1)
 #define copysign(x, y) ( ( (((x) > 0) && ((y) < 0)) || (((x) < 0) && ((y) > 0)) ) ? (-1)*(x) : (x) )
+
+extern uint8_t i2cReg[300][4];
+extern bool security;
+extern int calib_status;
+
+extern double distance;
+
+
 /**
  * @brief Convert bytes to int32
  * @param bytesint32 (uint8_t *) Value
  * @return int32 value 
  */
 int32_t bytestoint32(uint8_t *bytesint32);
+
 /**
  * @brief Convert int32 to bytes
  * @param n Integer value (int32_t)
@@ -30,12 +39,14 @@ void int32tobytes(int32_t n,uint8_t *bytesint32);
  * @return  
  */
 void floattobytes(float n, uint8_t* bytesfloat);
+
 /**
  * @brief Convert bytes to float
  * @param bytesfloat  Bytes Array (uint8_t *)
  * @return Floating value 
  */
 float bytestofloat(uint8_t *bytesfloat);
+
 /**
  * @brief Get value from register
  * @param reg Register (uint8_t) 
@@ -69,9 +80,6 @@ void getEuler(float q0, float q1, float q2, float q3, float* roll, float *pitch,
 *   @return The difference
 */
 float angle_dif(float angle1, float angle2);
-extern uint8_t i2cReg[300][4];
-extern bool security;
-extern int calib_status;
 
 //!  @brief  Low Pass Filter with K array (4 elements), V array(5 elements) and Fc/Fs = 1/10
     extern float k_1_10[];
