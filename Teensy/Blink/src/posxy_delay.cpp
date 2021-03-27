@@ -52,14 +52,14 @@ void debugInterrupt(){
     if( c == 'o' ) Serial1.print("AT+CGPS=0,1\r\n");
     if( c == 'k' ) setReg(START,1);
 
-    
+    /*
     Serial.print(ax,DEC);
     Serial.print("\t");
     Serial.print(ay,DEC);
     Serial.print("\t");
     Serial.print(az,DEC);
     Serial.print("\t");
-    
+    */
     /*
     Serial.print(gx,DEC);
     Serial.print("\t");
@@ -95,8 +95,9 @@ void debugInterrupt(){
     Serial.print("\t");
     Serial.print(z,DEC);
     Serial.print("\t");
-    */
+    
     Serial.print("\n");
+    */
 }
 
 

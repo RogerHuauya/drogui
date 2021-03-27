@@ -200,7 +200,7 @@ void initSensorsTasks(){
     initDNotchFilter(&dnotch_ay, 64, 40, 1000, 1, 10);
     initDNotchFilter(&dnotch_az, 64, 40, 1000, 1, 10);
     //calibrateGyro(&myIMU);
-    //calibrateAccel(&myIMU);
+    calibrateAccel(&myIMU);
     //calibrateMag(&myIMU);
     
 
