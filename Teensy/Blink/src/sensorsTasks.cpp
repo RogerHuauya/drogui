@@ -1,12 +1,13 @@
 #include "..\headers\sensorsTasks.h"
 #include "..\headers\mahony.h"
-
+#include "SparkFun_Ublox_Arduino_Library.h"
 #define N_BMP 25
 
 Adafruit_BMP3XX bmp;
 
 
 mpu9250 myIMU;
+SFE_UBLOX_GPS myGPS;
 
 float alt_memo[N_BMP], alt_fast, alt_slow = 0, alt_diff, sum = 0,alt_offs;
 int alt_pointer = 0;
@@ -26,7 +27,33 @@ dNotchFilter dnotch_ax, dnotch_ay, dnotch_az;
 timer timer_accel, timer_gyro, timer_mag, timer_rpy;
 float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
 
+void initGPS(SFE_UBLOX_GPS * gps){
 
+  do {
+    
+    Serial.println("GPS: trying 38400 baud");
+    Serial2.begin(38400);
+    if (myGPS.begin(Serial2) == true) break;
+
+    delay(100);
+    
+    Serial.println("GPS: trying 9600 baud");
+    Serial2.begin(9600);
+    if (myGPS.begin(Serial2) == true) {
+        Serial.println("GPS: connected at 9600 baud, switching to 38400");
+        myGPS.setSerialRate(38400);
+        delay(100);
+    } else {
+        //myGPS.factoryReset();
+        delay(2000); //Wait a bit before trying again to limit the Serial output
+    }
+  } while(1);
+  Serial.println("GPS serial connected");
+
+  myGPS.setUART1Output(COM_TYPE_UBX); //Set the UART port to output UBX only
+  myGPS.setI2COutput(COM_TYPE_UBX); //Set the I2C port to output UBX only (turn off NMEA noise)
+  myGPS.saveConfiguration(); //Save the current settings to flash and BBR
+}
 void accelInterrupt(){
     readAcc(&myIMU);
     
@@ -151,7 +178,7 @@ void bmpInterrupt(){
 void initSensorsTasks(){
     
     initMpu(&myIMU);
-    
+    initGPS(&myGPS)
     setKalmanTsImu(0.01);
     setKalmanTsGps(1);
     initMatGlobal();

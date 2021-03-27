@@ -114,11 +114,12 @@ int _main(void){
     
     delay(1000);
     while(1){
-        Serial.println("Mierda");
+        //Serial.println("Mierda");
+        //delay(100);
         if(timerReady(&timer_blink)) executeTimer(&timer_blink);
-        if(timerReady(&timer_debug)) executeTimer(&timer_debug);
+        //if(timerReady(&timer_debug)) executeTimer(&timer_debug);
         //if(timerReady(&timer_security)) executeTimer(&timer_security);  
-        executeSensorsTasks();   
+        //executeSensorsTasks();   
     }
     return 0;
 }
