@@ -120,10 +120,10 @@ void gyroInterrupt(){
 }
 
 void magInterrupt(){
-    readRawMag(&myIMU);
-    mx = myIMU.raw_mx;
-    my = myIMU.raw_my;
-    mz = myIMU.raw_mz;
+    readMag(&myIMU);
+    mx = myIMU.mx;
+    my = myIMU.my;
+    mz = myIMU.mz;
 }
 float Kdfilt = 1000;
 void rpyInterrupt(){
@@ -131,11 +131,12 @@ void rpyInterrupt(){
     
     mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, my, mx, mz);
     getMahonyEuler(rpy);
-    //roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
+    roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
+    /*
     roll += max(min(Kdfilt, (rpy[0] - roll)),-Kdfilt);
     pitch += max(min(Kdfilt, (rpy[1] - pitch)),-Kdfilt);
     yaw += max(min(Kdfilt,(rpy[2] - yaw)),-Kdfilt);
-
+    */
     /*roll = computeFilter(&filter_roll, roll);
     pitch = computeFilter(&filter_pitch, pitch);
     yaw = computeFilter(&filter_yaw, yaw);*/
@@ -200,7 +201,7 @@ void initSensorsTasks(){
     initMpu(&myIMU);
     initGPS();
     setKalmanTsImu(0.01);
-    setKalmanTsGps(1);
+    setKalmanTsGps(0.5);
     initMatGlobal();
 
     initFilter(&filter_roll, 9 , coeffA_50Hz, coeffB_50Hz);
@@ -232,9 +233,22 @@ void initSensorsTasks(){
     initDNotchFilter(&dnotch_ax, 64, 40, 1000, 1, 10);
     initDNotchFilter(&dnotch_ay, 64, 40, 1000, 1, 10);
     initDNotchFilter(&dnotch_az, 64, 40, 1000, 1, 10);
+
+    myIMU.off_ax = 1808.2934570313;
+    myIMU.off_ay = -4216.2314453125;
+    myIMU.off_az = 417.3168334961;
+    myIMU.scl_acc = 416.3453063965;
+
+    myIMU.off_mx = -300.4071350098;
+    myIMU.off_my = -161.3137817383;
+    myIMU.off_mz = -196.4404296875;
+    myIMU.scl_magx = 156.9006958008;
+    myIMU.scl_magy = 162.3730010986;
+    myIMU.scl_magz = 184.1072998047;
+
     calibrateGyro(&myIMU);
-    calibrateAccel(&myIMU);
-    calibrateMag(&myIMU);
+    //calibrateAccel(&myIMU);
+    //calibrateMag(&myIMU);
     
 
     initTimer(&timer_accel, &accelInterrupt, 1000);

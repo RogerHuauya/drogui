@@ -79,18 +79,19 @@ void debugInterrupt(){
     Serial.print("\n");
     */
    /*
-    Serial.print(roll,DEC);
+    Serial.print(roll*180/pi,DEC);
     Serial.print("\t");
-    Serial.print(pitch,DEC);
+    Serial.print(pitch*180/pi,DEC);
     Serial.print("\t");
-    Serial.print(yaw,DEC);
-    Serial.print(" ;");
-*/
-
+    Serial.print(yaw*180/pi,DEC);
+    Serial.print("\t");
+    */
+    
     Serial.print(x*10,DEC);
     Serial.print("\t");
     Serial.print(y*10,DEC);
     Serial.print("\t");
+    
     Serial.print(getReg(GPS_X)*10, DEC);
     Serial.print("\t");
     Serial.print(getReg(GPS_Y)*10, DEC);

@@ -64,8 +64,9 @@ void kynematics(){
         Serial.print(aux2.val[i][0]);
         Serial.print("\t");
     }
-    Serial.println();*/
-    setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0) - 9.70);
+    Serial.println();
+    */
+    setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0) - 9.30);
     
     matScale(&aux2, &aux2, Ts);    
 
@@ -213,6 +214,7 @@ void kalmanUpdateGPS(float x_gps, float y_gps, float z_gps){
     matScale(&bias_v, &bias_v, 1/1.3);
     matAdd(&v, &v, &bias_v);
     matScale(&bias_p, &bias_p, N);
+    matAdd(&p, &p, &bias_p);
 }
 
 
