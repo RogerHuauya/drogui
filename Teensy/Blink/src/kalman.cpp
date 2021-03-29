@@ -61,13 +61,6 @@ void kynematics(){
 
     
     setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0) - 9.70);
-    for(int i = 0; i < 3; i++){
-        Serial.print(aux2.val[i][0]);
-        Serial.print("\t");
-    }
-    for(int i = 0; i < 3; i++){
-        if(abs(aux2.val[i][0]) <= 0.15) aux2.val[i][0] = 0, v.val[i][0] = 0;
-    }
 
     matScale(&aux2, &aux2, Ts);    
 
@@ -77,11 +70,6 @@ void kynematics(){
 
     matAdd(&p, &p, &aux1);
     matAdd(&p, &p, &aux2);
-    for(int i = 0; i < 3; i++){
-        Serial.print(p.val[i][0]);
-        Serial.print("\t");
-    }
-    Serial.print("\n");
 
     matDestruct(&aux1);
     matDestruct(&aux2);

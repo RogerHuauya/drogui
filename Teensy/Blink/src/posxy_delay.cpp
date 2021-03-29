@@ -48,18 +48,16 @@ void debugInterrupt(){
     if( c == 'a' ) setReg(CAL_GYR_TRG,1);
     if( c == 'b' ) setReg(CAL_ACC_TRG,1);
     if( c == 'c' ) setReg(CAL_MAG_TRG,1);
-    if( c == 'g' ) Serial1.print("AT+CGPS=1,1\r\n");
-    if( c == 'o' ) Serial1.print("AT+CGPS=0,1\r\n");
     if( c == 'k' ) setReg(START,1);
 
-    /*
+    
     Serial.print(ax,DEC);
     Serial.print("\t");
     Serial.print(ay,DEC);
     Serial.print("\t");
     Serial.print(az,DEC);
     Serial.print("\t");
-    */
+
     /*
     Serial.print(gx,DEC);
     Serial.print("\t");
@@ -88,7 +86,7 @@ void debugInterrupt(){
     Serial.print(yaw,DEC);
     Serial.print(" ;");
 */
-    /*
+
     Serial.print(x,DEC);
     Serial.print("\t");
     Serial.print(y,DEC);
@@ -96,8 +94,12 @@ void debugInterrupt(){
     Serial.print(z,DEC);
     Serial.print("\t");
     
+    Serial.print(lat, DEC);
+    Serial.print("\t");
+    Serial.print(lon, DEC);
+
     Serial.print("\n");
-    */
+
 }
 
 
@@ -134,9 +136,9 @@ int _main(void){
     delay(1000);
     while(1){
         if(timerReady(&timer_blink)) executeTimer(&timer_blink);
-        //if(timerReady(&timer_debug)) executeTimer(&timer_debug);
+        if(timerReady(&timer_debug)) executeTimer(&timer_debug);
         //if(timerReady(&timer_security)) executeTimer(&timer_security);  
-        //executeSensorsTasks();   
+        executeSensorsTasks();   
     }
     return 0;
 }
