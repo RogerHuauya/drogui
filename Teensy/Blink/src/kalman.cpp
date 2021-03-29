@@ -58,10 +58,14 @@ void kynematics(){
 
     matInit(&aux2, p.row, p.col);
     matMult(&aux2, &Rq, &u);
-
-    
+    Serial.print("trar ");
+    for(int i = 0; i < 3; i++){
+        Serial.print(aux2.val[i][0]);
+        Serial.print("\t");
+    }
+    Serial.println();
     setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0) - 9.70);
-
+    
     matScale(&aux2, &aux2, Ts);    
 
     matAdd(&v, &v, &aux2);

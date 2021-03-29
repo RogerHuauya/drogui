@@ -92,12 +92,6 @@ void debugInterrupt(){
     Serial.print(y,DEC);
     Serial.print("\t");
     Serial.print(z,DEC);
-    Serial.print("\t");
-    
-    Serial.print(lat, DEC);
-    Serial.print("\t");
-    Serial.print(lon, DEC);
-
     Serial.print("\n");
 
 }

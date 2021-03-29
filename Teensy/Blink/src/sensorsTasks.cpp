@@ -52,10 +52,11 @@ void initGPS(){
     Serial.println("GPS serial connected");
 
     myGNSS.setUART1Output(COM_TYPE_UBX); //Set the UART port to output UBX only
-    myGNSS.setNavigationFrequency(2); //Produce two solutions per second
+    myGNSS.setNavigationFrequency(1); //Produce two solutions per second
     myGNSS.setAutoPVT(true); //Tell the GNSS to "send" each solution
     //myGNSS.saveConfiguration(); //Save the current settings to flash and BBR
     delay(1000);
+
     while( myGNSS.getLatitude() == 0){}
     xi = myGNSS.getLatitude()*1e-7, yi = myGNSS.getLongitude()*1e-7;
 
@@ -191,6 +192,7 @@ void gpsInterrupt(){
         y = 100000*(lon*1e-7 - yi);
         setReg(GPS_AVAILABLE, 1);
     }
+
 }
 
 void initSensorsTasks(){
@@ -230,16 +232,16 @@ void initSensorsTasks(){
     initDNotchFilter(&dnotch_ax, 64, 40, 1000, 1, 10);
     initDNotchFilter(&dnotch_ay, 64, 40, 1000, 1, 10);
     initDNotchFilter(&dnotch_az, 64, 40, 1000, 1, 10);
-    //calibrateGyro(&myIMU);
-    //calibrateAccel(&myIMU);
-    //calibrateMag(&myIMU);
+    calibrateGyro(&myIMU);
+    calibrateAccel(&myIMU);
+    calibrateMag(&myIMU);
     
 
     initTimer(&timer_accel, &accelInterrupt, 1000);
     initTimer(&timer_gyro, &gyroInterrupt, 1000);
     initTimer(&timer_mag, &magInterrupt, 10);
     initTimer(&timer_rpy, &rpyInterrupt, 500);
-    initTimer(&timer_gps, &gpsInterrupt, 1);
+    initTimer(&timer_gps, &gpsInterrupt, 200);
     initTimer(&timer_pos, &positionInterrupt, 100);
 }
 
