@@ -52,12 +52,12 @@ void initGPS(){
     Serial.println("GPS serial connected");
 
     myGNSS.setUART1Output(COM_TYPE_UBX); //Set the UART port to output UBX only
-    myGNSS.setNavigationFrequency(1); //Produce two solutions per second
+    myGNSS.setNavigationFrequency(2); //Produce two solutions per second
     myGNSS.setAutoPVT(true); //Tell the GNSS to "send" each solution
-    //myGNSS.saveConfiguration(); //Save the current settings to flash and BBR
+    myGNSS.saveConfiguration(); //Save the current settings to flash and BBR
     delay(1000);
 
-    while( myGNSS.getLatitude() == 0){}
+    while( !myGNSS.getPVT()){}
     xi = myGNSS.getLatitude()*1e-7, yi = myGNSS.getLongitude()*1e-7;
 
 }
@@ -188,8 +188,8 @@ void gpsInterrupt(){
     if (myGNSS.getPVT()){
         lat = myGNSS.getLatitude();
         lon = myGNSS.getLongitude();
-        x = 100000*(lat*1e-7 - xi);
-        y = 100000*(lon*1e-7 - yi);
+        setReg(GPS_X, 100000*(lat*1e-7 - xi));
+        setReg(GPS_Y, 100000*(lon*1e-7 - yi));
         setReg(GPS_AVAILABLE, 1);
     }
 

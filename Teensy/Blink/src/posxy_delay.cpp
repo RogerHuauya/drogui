@@ -50,14 +50,14 @@ void debugInterrupt(){
     if( c == 'c' ) setReg(CAL_MAG_TRG,1);
     if( c == 'k' ) setReg(START,1);
 
-    
+    /*
     Serial.print(ax,DEC);
     Serial.print("\t");
     Serial.print(ay,DEC);
     Serial.print("\t");
     Serial.print(az,DEC);
     Serial.print("\t");
-
+    */
     /*
     Serial.print(gx,DEC);
     Serial.print("\t");
@@ -87,11 +87,15 @@ void debugInterrupt(){
     Serial.print(" ;");
 */
 
-    Serial.print(x,DEC);
+    Serial.print(x*10,DEC);
     Serial.print("\t");
-    Serial.print(y,DEC);
+    Serial.print(y*10,DEC);
     Serial.print("\t");
-    Serial.print(z,DEC);
+    Serial.print(getReg(GPS_X)*10, DEC);
+    Serial.print("\t");
+    Serial.print(getReg(GPS_Y)*10, DEC);
+    //Serial.print("\t");
+    //Serial.print(z,DEC);
     Serial.print("\n");
 
 }
