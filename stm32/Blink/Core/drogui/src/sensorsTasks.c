@@ -18,7 +18,7 @@ filter filter_ax, filter_ay, filter_az;
 dNotchFilter dnotch_ax, dnotch_ay, dnotch_az; 
 
 filter filter_roll, filter_pitch, filter_yaw;
-float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
+float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z, z_ant = 0;
 
 bmp388 myBMP;
 float altitude,offset_alt;
@@ -155,6 +155,8 @@ void heightTask(void *argument){
     while(TIME - tim < 10);
     HAL_GPIO_WritePin(TRIGGER_GPIO_Port, TRIGGER_Pin, GPIO_PIN_RESET);
     z = distance;
+    if( fabs(z-z_ant) > 0.5  ) z = z_ant;
+    z_ant = z;
     setReg(Z_VAL, z);
 }
 
@@ -213,8 +215,8 @@ void initSensorsTasks(){
     addTask(&gyroTask, 1000, 3);
     addTask(&accelTask, 1000, 3);
     addTask(&magTask, 100000, 2);
-    addTask(&rpyTask, 2000, 2);
+    //addTask(&rpyTask, 2000, 2);
     //addTask(&altitudeTask,10000,2);
-    addTask(&heightTask, 10000, 2);
+    //addTask(&heightTask, 10000, 2);
 
 }
