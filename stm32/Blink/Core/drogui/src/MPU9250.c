@@ -36,7 +36,7 @@ int updateCalibOffset(mpu9250* m){
 
 void initMpu(mpu9250* m){
 
-    I2CwriteByte(MPU9250_ADDRESS, MASTER_CONFIG, 0);
+    I2CwriteByte(MPU9250_ADDRESS, MASTER_CONFIG, 0x00);
     I2CwriteByte(MPU9250_ADDRESS, GYRO_CONFIG, GYRO_FULL_SCALE_250_DPS | 3);
     I2CwriteByte(MPU9250_ADDRESS, ACCEL_CONFIG1, ACC_FULL_SCALE_2_G);
     I2CwriteByte(MPU9250_ADDRESS, ACCEL_CONFIG2, 8);
@@ -138,7 +138,8 @@ void readMag(mpu9250* m){ // m/s^2
 bool quiet(mpu9250* m, int n, float treshold, bool cal){
     float max_gyro[3] = {0,0,0};
     float min_gyro[3] = {0,0,0};
-    
+    float acum_gyro[3] = {0,0,0};
+
     for(int i = 0; i < n; i++){
         
         readRawGyro(m);   /*
@@ -162,6 +163,12 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
                 min_gyro[1] = fmin(min_gyro[1], m->raw_gy);
                 min_gyro[2] = fmin(min_gyro[2], m->raw_gz);
         }
+
+        acum_gyro[0] += m ->raw_gx;
+        acum_gyro[1] += m ->raw_gy;
+        acum_gyro[2] += m ->raw_gz;
+
+
         HAL_Delay(2);
     }
     /*
@@ -176,9 +183,12 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
     if((max_gyro[0]-min_gyro[0] < (treshold+1100)) && (max_gyro[1]-min_gyro[1] < (treshold+2000)) && (max_gyro[2]-min_gyro[2] < (treshold+3100))){
         if(cal){
             //Serial.print("Ra");
-            m->off_gx = -(max_gyro[0] + min_gyro[0])/2;
+            /*m->off_gx = -(max_gyro[0] + min_gyro[0])/2;
             m->off_gy = -(max_gyro[1] + min_gyro[1])/2;
-            m->off_gz = -(max_gyro[2] + min_gyro[2])/2;
+            m->off_gz = -(max_gyro[2] + min_gyro[2])/2;*/
+            m->off_gx = -1.0*acum_gyro[0]/n;
+            m->off_gy = -1.0*acum_gyro[1]/n;
+            m->off_gz = -1.0*acum_gyro[2]/n;
         }
         return true;
     }
@@ -187,7 +197,7 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
 void calibrateGyro(mpu9250* m){
     
     setReg(CAL_GYR,0);
-    while(!quiet(m,200,0, true));
+    while(!quiet(m,500,0, true));
     
     setReg(GYR_X_OFF, m -> off_gx);
     setReg(GYR_Y_OFF, m -> off_gy);

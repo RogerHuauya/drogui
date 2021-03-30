@@ -215,8 +215,8 @@ void initSensorsTasks(){
     addTask(&gyroTask, 1000, 3);
     addTask(&accelTask, 1000, 3);
     addTask(&magTask, 100000, 2);
-    //addTask(&rpyTask, 2000, 2);
+    addTask(&rpyTask, 2000, 2);
     //addTask(&altitudeTask,10000,2);
-    //addTask(&heightTask, 10000, 2);
+    addTask(&heightTask, 10000, 2);
 
 }
