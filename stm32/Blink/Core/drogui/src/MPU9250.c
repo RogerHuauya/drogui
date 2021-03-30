@@ -64,19 +64,36 @@ void initFiltAcc(filtAcc *fa){
 }
 
 
-void computeFiltGyro(filtGyro *fg, float val){
+float computeFiltGyro(filtGyro *fg, float val){
     val = computeFilter(&(fg->first), val);
     val = computeFilter(&(fg->second), val);
 
-    val = computeDnotchFilter(&(fg->third), val);
-    val = computeDnotchFilter(&(fg->fourth), val);
+    val = computeDNotch(&(fg->third), val);
+    val = computeDNotch(&(fg->fourth), val);
+    return val / 100.0;
 }
 
-void computeFiltAcc(filtAcc *fa, float val){
+float computeFiltAcc(filtAcc *fa, float val){
     val = computeFilter(&(fa->first), val);
 
-    val = computeDnotchFilter(&(fa->second), val);
+    val = computeDNotch(&(fa->second), val);
+    return val;
 }
+
+
+
+void cleanFiltGyro(filtGyro *fg){
+    cleanFilter(&(fg->first));
+    cleanFilter(&(fg->second));
+    cleanDNotch(&(fg->third));
+    cleanDNotch(&(fg->fourth));
+}
+
+void cleanFiltAcc(filtAcc *fa){
+    cleanFilter(&(fa->first));
+    cleanDNotch(&(fa->second));
+}
+
 
 void readRawAcc(mpu9250* m){ // m/s^2
     uint8_t Buf[6];
@@ -117,57 +134,35 @@ void readRawMag(mpu9250* m){ // m/s^2
 
 
 void readFiltAcc(mpu9250* m){ // m/s^2
-    uint8_t Buf[6];
-    I2Cread(MPU9250_ADDRESS, 0x3B, 6, Buf);
-    _ax = -((Buf[0]<<8) | Buf[1]);
-    _ay = -((Buf[2]<<8) | Buf[3]);
-    _az =   (Buf[4]<<8) | Buf[5];
     
-    m -> filt_ax = computeFiltAcc(&(m->fAccX), _ax);
-    m -> filt_ay = computeFiltAcc(&(m->fAccY), _ay);
-    m -> filt_az = computeFiltAcc(&(m->fAccZ), _az); 
+    readRawAcc(m);
+    m -> filt_ax = computeFiltAcc(&(m->fAccX), m->raw_ax);
+    m -> filt_ay = computeFiltAcc(&(m->fAccY), m->raw_ay);
+    m -> filt_az = computeFiltAcc(&(m->fAccZ), m->raw_az); 
 }
 
 void readFiltGyro(mpu9250* m){ // degrees/sec
     
-    uint8_t Buf[6];
-    I2Cread(MPU9250_ADDRESS, 0x43, 6, Buf);
-    _gx = -((Buf[0] << 8) | Buf[1]);
-    _gy = -((Buf[2] << 8) | Buf[3]);
-    _gz =   (Buf[4] << 8) | Buf[5];
-    m -> filt_gx = computeFiltGyro(&(m->fGyroX), _gx);
-    m -> filt_gy = computeFiltGyro(&(m->fGyroY), _gy);
-    m -> filt_gz = computeFiltGyro(&(m->fGyroZ), _gz);
+    readRawGyro(m);
+    m -> filt_gx = computeFiltGyro(&(m->fGyroX), m->raw_gx);
+    m -> filt_gy = computeFiltGyro(&(m->fGyroY), m->raw_gy);
+    m -> filt_gz = computeFiltGyro(&(m->fGyroZ), m->raw_gz);
 }
 
 
-
-
-
-
 void readAcc(mpu9250* m){ // m/s^2
-    uint8_t Buf[6];
-    I2Cread(MPU9250_ADDRESS, 0x3B, 6, Buf);
-    _ax = -((Buf[0]<<8) | Buf[1]);
-    _ay = -((Buf[2]<<8) | Buf[3]);
-    _az =   (Buf[4]<<8) | Buf[5];
-    m -> ax = (_ax + m->off_ax)/m->scl_acc;
-    m -> ay = (_ay + m->off_ay)/m->scl_acc;
-    m -> az = (_az + m->off_az)/m->scl_acc; 
+    readFiltAcc(m);
+    m -> ax = (m->filt_ax + m->off_ax)/m->scl_acc;
+    m -> ay = (m->filt_ay + m->off_ay)/m->scl_acc;
+    m -> az = (m->filt_az + m->off_az)/m->scl_acc; 
 }
 
 
 void readGyro(mpu9250* m){ // degrees/sec
-    
-    uint8_t Buf[6];
-    I2Cread(MPU9250_ADDRESS, 0x43, 6, Buf);
-    _gx = -((Buf[0] << 8) | Buf[1]);
-    _gy = -((Buf[2] << 8) | Buf[3]);
-    _gz =   (Buf[4] << 8) | Buf[5];
-    
-    m -> gx = _gx + m->off_gx;
-    m -> gy = _gy + m->off_gy;
-    m -> gz = _gz + m->off_gz; 
+    readFiltGyro(m);
+    m -> gx = m->filt_gx + m->off_gx;
+    m -> gy = m->filt_gy + m->off_gy;
+    m -> gz = m->filt_gz + m->off_gz; 
 }
 
 void readMag(mpu9250* m){ // m/s^2
@@ -194,25 +189,25 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
 
     for(int i = 0; i < n; i++){
         
-        readRawGyro(m);   
+        readFiltGyro(m);   
 
         if(i == 0){
-            max_gyro[0] = m->raw_gx, max_gyro[1] = m->raw_gy, max_gyro[2] = m->raw_gz;
-            min_gyro[0] = m->raw_gx, min_gyro[1] = m->raw_gy, min_gyro[2] = m->raw_gz;
+            max_gyro[0] = m->filt_gx, max_gyro[1] = m->filt_gy, max_gyro[2] = m->filt_gz;
+            min_gyro[0] = m->filt_gx, min_gyro[1] = m->filt_gy, min_gyro[2] = m->filt_gz;
         }
         else{
-                max_gyro[0] = fmax(max_gyro[0], m->raw_gx);
-                max_gyro[1] = fmax(max_gyro[1], m->raw_gy);
-                max_gyro[2] = fmax(max_gyro[2], m->raw_gz);
+                max_gyro[0] = fmax(max_gyro[0], m->filt_gx);
+                max_gyro[1] = fmax(max_gyro[1], m->filt_gy);
+                max_gyro[2] = fmax(max_gyro[2], m->filt_gz);
                 
-                min_gyro[0] = fmin(min_gyro[0], m->raw_gx);
-                min_gyro[1] = fmin(min_gyro[1], m->raw_gy);
-                min_gyro[2] = fmin(min_gyro[2], m->raw_gz);
+                min_gyro[0] = fmin(min_gyro[0], m->filt_gx);
+                min_gyro[1] = fmin(min_gyro[1], m->filt_gy);
+                min_gyro[2] = fmin(min_gyro[2], m->filt_gz);
         }
 
-        acum_gyro[0] += m ->raw_gx;
-        acum_gyro[1] += m ->raw_gy;
-        acum_gyro[2] += m ->raw_gz;
+        acum_gyro[0] += m ->filt_gx;
+        acum_gyro[1] += m ->filt_gy;
+        acum_gyro[2] += m ->filt_gz;
 
 
         HAL_Delay(2);
@@ -221,7 +216,6 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
 
     if((max_gyro[0]-min_gyro[0] < (treshold+1100)) && (max_gyro[1]-min_gyro[1] < (treshold+2000)) && (max_gyro[2]-min_gyro[2] < (treshold+3100))){
         if(cal){
-            //Serial.print("Ra");
             /*m->off_gx = -(max_gyro[0] + min_gyro[0])/2;
             m->off_gy = -(max_gyro[1] + min_gyro[1])/2;
             m->off_gz = -(max_gyro[2] + min_gyro[2])/2;*/
@@ -279,12 +273,12 @@ void calibrateAccel(mpu9250* m){
     
     while(!done){
         while(!quiet(m,100,30, false));
-        readRawAcc(m);
+        readFiltAcc(m);
         valid = true;
         for(int i = 1 ; i <= tot-1 ; i++){
             int j = (head - i + tot) % tot;
             // Serial.println("quiet ");
-            if(dis3d(m->raw_ax, m->raw_ay, m->raw_az, acc[j][0],acc[j][1],acc[j][2]) < 800){
+            if(dis3d(m->filt_ax, m->filt_ay, m->filt_az, acc[j][0],acc[j][1],acc[j][2]) < 800){
                 valid = false; break;
             } 
         }
@@ -293,7 +287,7 @@ void calibrateAccel(mpu9250* m){
             #ifndef DEBUG 
                 HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
             #endif
-            acc[head][0] = m->raw_ax, acc[head][1] = m->raw_ay, acc[head][2] = m->raw_az;
+            acc[head][0] = m->filt_ax, acc[head][1] = m->filt_ay, acc[head][2] = m->filt_az;
             head++, cnt++, head%= tot; 
         }
         setReg(CAL_ACC, 100*fmin(cnt,6)/7 );

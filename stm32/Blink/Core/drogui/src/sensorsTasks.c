@@ -59,38 +59,14 @@ void gyroTask(){
 
     readGyro(&myIMU);
 
-    gx = computeFilter(&filter_gx, myIMU.gx);
-    gy = computeFilter(&filter_gy, myIMU.gy);
-    gz = computeFilter(&filter_gz, myIMU.gz);
-
-    gx = computeFilter(&filter_gx2, gx);
-    gy = computeFilter(&filter_gy2, gy);
-    gz = computeFilter(&filter_gz2, gz);
-
-    gx = computeDNotch(&dnotch_gx, gx);
-    gy = computeDNotch(&dnotch_gy, gy);
-    gz = computeDNotch(&dnotch_gz, gz);
-
-    gx = computeDNotch(&dnotch_gx2, gx);
-    gy = computeDNotch(&dnotch_gy2, gy);
-    gz = computeDNotch(&dnotch_gz2, gz);
-    
-    gx /= 100;
-    gy /= 100;
-    gz /= 100; 
-
-
     setReg(GYRO_X, gx);
     setReg(GYRO_Y, gy);
     setReg(GYRO_Z, gz);
 
     if( calib_status & 2  ){
-        cleanFilter(&filter_gx);  cleanFilter(&filter_gy);  cleanFilter(&filter_gz);
-        cleanFilter(&filter_gx2); cleanFilter(&filter_gy2); cleanFilter(&filter_gz2);
-
-        cleanDNotch(&dnotch_gx);   cleanDNotch(&dnotch_gy);    cleanDNotch(&dnotch_gz);
-        cleanDNotch(&dnotch_gx2);  cleanDNotch(&dnotch_gy2);  cleanDNotch(&dnotch_gz2);
-
+        cleanFiltGyro(&myIMU.fGyroX); 
+        cleanFiltGyro(&myIMU.fGyroY); 
+        cleanFiltGyro(&myIMU.fGyroZ);
         calib_status ^= 2;
     }
 
