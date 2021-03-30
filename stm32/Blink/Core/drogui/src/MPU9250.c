@@ -363,26 +363,6 @@ void calibrateMag(mpu9250* m){
     matInit(&inverse, 6, 6);
     matInit(&w, n, 1);
     matInit(&X, 6, 1);
-/*
-    Serial.print("mx = [ ");
-    for(int i = 0 ; i < 99 ; i++){
-        Serial.print(mag[i][0]), Serial.print(";");
-    }
-    Serial.print(mag[99][0]), Serial.println("];");
-
-    Serial.print("my = [ ");
-    for(int i = 0 ; i < 99 ; i++){
-        Serial.print(mag[i][1]), Serial.print(";");
-    }
-    Serial.print(mag[99][1]), Serial.println("];");
-    
-    
-    Serial.print("mz = [ ");
-    for(int i = 0 ; i < 99 ; i++){
-        Serial.print(mag[i][2]), Serial.print(";");
-    }
-    Serial.print(mag[99][2]), Serial.println("];");*/
-    
 
 
     for(int i = 0; i < n; i++){
@@ -398,33 +378,15 @@ void calibrateMag(mpu9250* m){
     matTrans(&Ht, &H);
     matMult(&prod, &Ht, &H);
     
-    
-    /*
-    Serial.print("H = [");
-    for(int i = 0; i < prod.row; i++){
-        for(int j = 0; j < prod.col; j++){
-            Serial.print(" ");
-            dtostrf(getMatVal(&prod, i, j), 15, 2, str_temp);
-            Serial.println(str_temp);
-
-        }
-        Serial.println(";");
-    }
-    Serial.println("];");
-    */
     matInverse(&inverse, &prod);
     matMult(&prod2, &inverse, &Ht);
     matMult(&X, &prod2, &w);
     
-    /*for(int i = 0; i < 6; i++)
-        Serial.println(getMatVal(&X, i, 0));
-    */
     m -> off_mx = getMatVal(&X, 0, 0)/(2);
     m -> off_my = getMatVal(&X, 1, 0)/(2*getMatVal(&X, 3, 0));
     m -> off_mz = getMatVal(&X, 2, 0)/(2*getMatVal(&X, 4, 0));
     
     float temp = getMatVal(&X, 5, 0) + (m -> off_mx) * (m -> off_mx) + (m -> off_my) * (m -> off_my) + (m -> off_mz) * (m -> off_mz);
-    //Serial.println(temp);
     
     m -> off_mx /= scaleGlobal;
     m -> off_my /= scaleGlobal;
@@ -441,18 +403,6 @@ void calibrateMag(mpu9250* m){
     setReg( MAG_Y_SCALE ,m -> scl_magy);
     setReg( MAG_Z_SCALE ,m -> scl_magy);
     setReg( CAL_MAG, 100);
-/*
-    Serial.print(m -> off_mx);
-    Serial.print("\t");
-    Serial.print(m -> off_my);
-    Serial.print("\t");
-    Serial.print(m -> off_mz);
-    Serial.print("\t");
-    Serial.println(m -> scl_magx);
-    Serial.print("\t");
-    Serial.println(m -> scl_magy);
-    Serial.print("\t");
-    Serial.println(m -> scl_magz);*/
     
     matDestruct(&H);
     matDestruct(&Ht);
@@ -461,24 +411,5 @@ void calibrateMag(mpu9250* m){
     matDestruct(&inverse); 
     matDestruct(&w); 
     matDestruct(&X); 
-/*
-    Serial.print("mxf = [ ");
-    for(int i = 0 ; i < 99 ; i++){
-        Serial.print((mag[i][0] - m->off_mx)/m->scl_magx), Serial.print(";");
-    }
-    Serial.print((mag[99][0] - m->off_mx)/m->scl_magx), Serial.println("];");
 
-    Serial.print("myf = [ ");
-    for(int i = 0 ; i < 99 ; i++){
-        Serial.print((mag[i][1] - m->off_my)/m->scl_magy), Serial.print(";");
-    }
-    Serial.print((mag[99][1] - m->off_my)/m->scl_magy), Serial.println("];");
-
-    Serial.print("mzf = [ ");
-    for(int i = 0 ; i < 99 ; i++){
-        Serial.print((mag[i][2] - m->off_mz)/m->scl_magz), Serial.print(";");
-    }
-    Serial.print((mag[99][2] - m->off_mz)/m->scl_magz), Serial.println("];");*/
-
-       
 }
