@@ -78,6 +78,8 @@ void initFiltGyro(filtGyro *fg);
 void initFiltAcc(filtAcc *fa);
 
 
+void computeFiltGyro(filtGyro *fg, float val);
+void computeFiltAcc(filtAcc *fa, float val);
 
 
 /**

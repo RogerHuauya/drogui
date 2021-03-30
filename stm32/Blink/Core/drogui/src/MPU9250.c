@@ -64,6 +64,20 @@ void initFiltAcc(filtAcc *fa){
 }
 
 
+void computeFiltGyro(filtGyro *fg, float val){
+    val = computeFilter(&(fg->first), val);
+    val = computeFilter(&(fg->second), val);
+
+    val = computeDnotchFilter(&(fg->third), val);
+    val = computeDnotchFilter(&(fg->fourth), val);
+}
+
+void computeFiltAcc(filtAcc *fa, float val){
+    val = computeFilter(&(fa->first), val);
+
+    val = computeDnotchFilter(&(fa->second), val);
+}
+
 void readRawAcc(mpu9250* m){ // m/s^2
     uint8_t Buf[6];
     I2Cread(MPU9250_ADDRESS, 0x3B, 6, Buf);
@@ -89,19 +103,9 @@ void readRawGyro(mpu9250* m){ // degrees/sec
 }
 
 void readRawMag(mpu9250* m){ // m/s^2
+
     uint8_t Buf[7];
     I2Cread(MAG_ADDRESS, 0x03, 7, Buf);
-    
-    char buff[50];
-
-    /*for(int i = 0; i < 6 ; i++){
-
-        sprintf(buff, "%x\t", Buf[i]);
-        HAL_UART_Transmit(&huart2, (uint8_t *)buff, strlen(buff), 100);
-    }*/
-
-    //sprintf(buff, "\n");
-    //HAL_UART_Transmit(&huart2, (uint8_t *)buff, strlen(buff), 100);
     _mx = -((Buf[3]<<8) | Buf[2]);
     _my = -((Buf[1]<<8) | Buf[0]);
     _mz = -((Buf[5]<<8) | Buf[4]);
@@ -109,6 +113,37 @@ void readRawMag(mpu9250* m){ // m/s^2
     m -> raw_my = _my;
     m -> raw_mz = _mz; 
 }
+
+
+
+void readFiltAcc(mpu9250* m){ // m/s^2
+    uint8_t Buf[6];
+    I2Cread(MPU9250_ADDRESS, 0x3B, 6, Buf);
+    _ax = -((Buf[0]<<8) | Buf[1]);
+    _ay = -((Buf[2]<<8) | Buf[3]);
+    _az =   (Buf[4]<<8) | Buf[5];
+    
+    m -> filt_ax = computeFiltAcc(&(m->fAccX), _ax);
+    m -> filt_ay = computeFiltAcc(&(m->fAccY), _ay);
+    m -> filt_az = computeFiltAcc(&(m->fAccZ), _az); 
+}
+
+void readFiltGyro(mpu9250* m){ // degrees/sec
+    
+    uint8_t Buf[6];
+    I2Cread(MPU9250_ADDRESS, 0x43, 6, Buf);
+    _gx = -((Buf[0] << 8) | Buf[1]);
+    _gy = -((Buf[2] << 8) | Buf[3]);
+    _gz =   (Buf[4] << 8) | Buf[5];
+    m -> filt_gx = computeFiltGyro(&(m->fGyroX), _gx);
+    m -> filt_gy = computeFiltGyro(&(m->fGyroY), _gy);
+    m -> filt_gz = computeFiltGyro(&(m->fGyroZ), _gz);
+}
+
+
+
+
+
 
 void readAcc(mpu9250* m){ // m/s^2
     uint8_t Buf[6];
