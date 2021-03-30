@@ -214,7 +214,7 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
     }
     
 
-    if((max_gyro[0]-min_gyro[0] < (treshold+1100)) && (max_gyro[1]-min_gyro[1] < (treshold+2000)) && (max_gyro[2]-min_gyro[2] < (treshold+3100))){
+    if((max_gyro[0]-min_gyro[0] < (treshold+3)) && (max_gyro[1]-min_gyro[1] < (treshold+6.5)) && (max_gyro[2]-min_gyro[2] < (treshold+7))){
         if(cal){
             /*m->off_gx = -(max_gyro[0] + min_gyro[0])/2;
             m->off_gy = -(max_gyro[1] + min_gyro[1])/2;
