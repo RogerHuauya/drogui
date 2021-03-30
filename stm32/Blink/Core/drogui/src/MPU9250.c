@@ -36,10 +36,10 @@ int updateCalibOffset(mpu9250* m){
 
 void initMpu(mpu9250* m){
 
-    I2CwriteByte(MPU9250_ADDRESS, MASTER_CONFIG, 0x06);
+    I2CwriteByte(MPU9250_ADDRESS, MASTER_CONFIG, 0);
     I2CwriteByte(MPU9250_ADDRESS, GYRO_CONFIG, GYRO_FULL_SCALE_250_DPS | 3);
     I2CwriteByte(MPU9250_ADDRESS, ACCEL_CONFIG1, ACC_FULL_SCALE_2_G);
-    I2CwriteByte(MPU9250_ADDRESS, ACCEL_CONFIG2, 4);
+    I2CwriteByte(MPU9250_ADDRESS, ACCEL_CONFIG2, 8);
     I2CwriteByte(MPU9250_ADDRESS, 0x37, 0x02);
     HAL_Delay(1000);
     I2CwriteByte(MAG_ADDRESS, 0x0A, 0x16);
@@ -194,7 +194,9 @@ void calibrateGyro(mpu9250* m){
     setReg(GYR_Z_OFF, m -> off_gz);
 
     setReg(CAL_GYR, 100);
-    //HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+    #ifndef DEBUG 
+        HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+    #endif
 }
 
 float dis3d(float x,float y,float z, float a, float b, float c){
@@ -235,7 +237,9 @@ void calibrateAccel(mpu9250* m){
         }
 
         if(valid){
-            //HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+            #ifndef DEBUG 
+                HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+            #endif
             acc[head][0] = m->raw_ax, acc[head][1] = m->raw_ay, acc[head][2] = m->raw_az;
             head++, cnt++, head%= tot; 
         }
@@ -337,7 +341,9 @@ void calibrateMag(mpu9250* m){
             } 
         }
         if(valid){
-            //HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+            #ifndef DEBUG 
+                HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+            #endif
             mag[head][0] = magX, mag[head][1] = magY, mag[head][2] = magZ;
             head++, cnt++, head%= n; 
         }

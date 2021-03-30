@@ -7,7 +7,7 @@
 #include "utils.h"
 #include "BMP388.h"
 
-extern float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z;
+extern float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z, z_ant;
 extern mpu9250 myIMU;
 
 extern bmp388 myBMP;

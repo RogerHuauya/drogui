@@ -84,7 +84,7 @@ void wControlTask(){
 
     R = computePid(&wroll_control, wroll_err, TIME, 0);
     P = computePid(&wpitch_control, wpitch_err, TIME, 0);
-    Y = computePid(&wyaw_control, wyaw_err, TIME, 0);
+    Y = -computePid(&wyaw_control, wyaw_err, TIME, 0);
     
     setReg(DER_GYRO_X, wroll_control.errd);
     setReg(DER_GYRO_Y, wpitch_control.errd);
@@ -128,14 +128,14 @@ void rpyControlTask(){
 
     wroll_ref_d = computeFilter(&filter_wroll,  wroll_ref_d);
     wpitch_ref_d = computeFilter(&filter_wpitch, wpitch_ref_d);
+    wyaw_ref_d = computeFilter(&filter_wpitch, wyaw_ref_d);
 
-
-    rampValue(&wroll_ref, wroll_ref_d, 0.1);
-    rampValue(&wpitch_ref, wpitch_ref_d, 0.1);
-
+    rampValue(&wroll_ref, wroll_ref_d, 0.2);
+    rampValue(&wpitch_ref, wpitch_ref_d, 0.2);
+        
     setReg(GYRO_X_REF,wroll_ref);
     setReg(GYRO_Y_REF,wpitch_ref);
-    setReg(GYRO_Z_REF,wyaw_ref);
+    setReg(GYRO_Z_REF,wyaw_ref_d);
     
     if(security){
         resetPid(&roll2w, TIME);
@@ -179,18 +179,17 @@ void initControlTasks(){
     initPwm(&m3, &htim4, TIM_CHANNEL_3, &(htim4.Instance->CCR3));
     initPwm(&m4, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
-    initPid(&z_control, 0, 0, 0, 0, 1 , 100000, 15, NORMAL);
-    initPid(&x_control, 0, 0, 0, 0, 1 , 100000, 0.09, NORMAL);
-    initPid(&y_control, 0, 0, 0, 0, 1 , 100000,0.09, NORMAL);
+    initPid(&z_control, 0, 0, 0, 0, 50 , 10, 15, (P2ID & D_INT));
+    initPid(&x_control, 0, 0, 0, 0, 50 , 10, 0.09, NORMAL);
+    initPid(&y_control, 0, 0, 0, 0, 50 , 10,0.09, NORMAL);
 
-
-    initPid(&roll2w,    0, 0, 0, TIME, 50, 0.785, 60, (P2ID & D_INT));
-    initPid(&pitch2w,   0, 0, 0, TIME, 50, 0.785, 60, (P2ID & D_INT));
+    initPid(&roll2w,    550, 0, 0, TIME, 50, 0.785, 60, (P2ID & D_INT));
+    initPid(&pitch2w,   550, 0, 0, TIME, 50, 0.785, 60, (P2ID & D_INT));
     initPid(&yaw2w,     0, 0, 0, TIME, 50, 0.785, 60, (P2ID & D_INT));
 
-    initPid(&wroll_control, 0, 0, 0, TIME, 50, 80, 3000, (P2ID & D_INT));
-    initPid(&wpitch_control,0, 0, 0, TIME, 50, 80, 3000, (P2ID & D_INT));
-    initPid(&wyaw_control,  0, 0, 0, TIME, 50, 80, 3000, (P2ID & D_INT));
+    initPid(&wroll_control, 15, 0, 30, TIME, 50, 80, 3000, (P2ID & D_INT));
+    initPid(&wpitch_control,15, 0, 30, TIME, 50, 80, 3000, (P2ID & D_INT));
+    initPid(&wyaw_control, 15, 0, 30, TIME, 50, 80, 3000, (P2ID & D_INT));
     
     initFilter(&filter_wroll, 4, k_1_20, v_1_20);
     initFilter(&filter_wpitch, 4, k_1_20, v_1_20);
