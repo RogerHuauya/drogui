@@ -2,6 +2,7 @@
 #define MPU9250_H
 
 #include <stdbool.h>
+#include "filter.h"
 #define MPU9250_ADDRESS 0x68
 #define MAG_ADDRESS 0x0C
 
@@ -26,45 +27,102 @@ enum ACCEL_SCALE{
     ACC_FULL_SCALE_16_G = 0x18
 };
 
+typedef struct _filtGyro{
+    
+    filter first, second;
+    dNotchFilter third, fourth;
+
+} filtGyro;
+
+typedef struct _filtAcc{
+    
+    filter first;
+    dNotchFilter second;
+
+} filtAcc;
+
 typedef struct _mpu9250{  
-    float ax, ay, az, off_ax, off_ay, off_az, scl_acc;
-    float gx, gy, gz, off_gx, off_gy, off_gz;
-    float mx, my, mz, off_mx, off_my, off_mz, scl_magx, scl_magy, scl_magz;
+    
+    float ax, ay, az; 
+    float gx, gy, gz; 
+    float mx, my, mz; 
     
     float raw_ax, raw_ay, raw_az;
     float raw_gx, raw_gy, raw_gz;
     float raw_mx, raw_my, raw_mz;
+
+    float filt_ax, filt_ay, filt_az;
+    float filt_gx, filt_gy, filt_gz;
+    
+    float off_ax, off_ay, off_az, scl_acc;
+    float off_gx, off_gy, off_gz;
+    float off_mx, off_my, off_mz, scl_magx, scl_magy, scl_magz;
+    
+    
+    
     int accScale, gyroScale, magScale;
     bool isGyroCalibrated;
     bool isAccelCalibrated;
     bool isMagCalibrated;
+
+    filtGyro fGyroX, fGyroY, fGyroZ;
+    filtAcc fAccX, fAccY, fAccZ;
+
 } mpu9250;
+
+//TODO: fix comments
+
+
+
+void initFiltGyro(filtGyro *fg);
+void initFiltAcc(filtAcc *fa);
+
+
+
 
 /**
  * @brief Initialize MPU9250
  * @param m MPU9250 (pointer to struct mpu9250)
 */
 void initMpu(mpu9250* m);
+
+
 /**
  * @brief Read raw data from Accelerometer 
  * @param m MPU9250 (pointer to struct mpu9250)
 */
 void readRawAcc(mpu9250* m);
+
+/**
+ * @brief Read raw data from Accelerometer 
+ * @param m MPU9250 (pointer to struct mpu9250)
+*/
+void readFiltAcc(mpu9250* m);
 /**
  * @brief Get data transformed from Accelerometer due to offset and scale     
  * @param m MPU9250 (pointer to struct mpu9250)
 */
 void readAcc(mpu9250* m);
+
+
+
 /**
  * @brief Read raw data from Gyroscope 
  * @param m MPU9250 (pointer to struct mpu9250)
 */
 void readRawGyro(mpu9250* m);
 /**
+ * @brief Read raw data from Gyroscope 
+ * @param m MPU9250 (pointer to struct mpu9250)
+*/
+void readFiltGyro(mpu9250* m);
+/**
  * @brief Get data transformed from Gyroscope due to offset and scale
  * @param m MPU9250 (pointer to struct mpu9250)
 */
 void readGyro(mpu9250* m);
+
+
 /**
  * @brief Get data transformed from Magnetometer due to offset and scale
  * @param m MPU9250 (pointer to struct mpu9250)
@@ -75,6 +133,7 @@ void readMag(mpu9250* m);
  * @param m MPU9250 (pointer to struct mpu9250)
 */
 void readRawMag(mpu9250* m);
+
 /**
  * @brief Calibrate Gyroscope taking data, for this the system must be quiet  
  * @param m MPU9250 (pointer to struct mpu9250)

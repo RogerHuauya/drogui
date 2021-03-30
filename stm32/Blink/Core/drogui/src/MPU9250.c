@@ -44,8 +44,25 @@ void initMpu(mpu9250* m){
     HAL_Delay(1000);
     I2CwriteByte(MAG_ADDRESS, 0x0A, 0x16);
     m->scl_acc = m->scl_magx = m-> scl_magy = m-> scl_magz = 1;
-    
+
+    initFiltGyro(&(m->fGyroX)), initFiltGyro(&(m->fGyroY)), initFiltGyro(&(m->fGyroZ));
+    initFiltAcc(&(m->fAccX)), initFiltAcc(&(m->fAccY)), initFiltAcc(&(m->fAccZ));
 }
+
+void initFiltGyro(filtGyro *fg){
+
+    initFilter(&(fg->first), 4 , k_1_10, v_1_10);
+    initFilter(&(fg->second), 5 , k_3_10, v_3_10);
+    initDNotchFilter(&(fg->third), 64, 50, 1000, 1, 10);
+    initDNotchFilter(&(fg->fourth), 64, 50, 1000, 1, 5);
+}
+
+void initFiltAcc(filtAcc *fa){
+    
+    initFilter(&(fa->first), 4 , k_1_20, v_1_20);
+    initDNotchFilter(&(fa->second), 64, 40, 1000, 1, 1);
+}
+
 
 void readRawAcc(mpu9250* m){ // m/s^2
     uint8_t Buf[6];
@@ -141,13 +158,7 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
     
     for(int i = 0; i < n; i++){
         
-        readRawGyro(m);   /*
-        Serial.print(m->gx);
-        Serial.print("\t");
-        Serial.print(m->gy);
-        Serial.print("\t");
-        Serial.print(m->gz);
-        Serial.print("\n");*/
+        readRawGyro(m);   
 
         if(i == 0){
             max_gyro[0] = m->raw_gx, max_gyro[1] = m->raw_gy, max_gyro[2] = m->raw_gz;
@@ -164,14 +175,7 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
         }
         HAL_Delay(2);
     }
-    /*
-    for(int i = 0 ; i < 3; i++){
-        Serial.print(max_gyro[i] -min_gyro[i]);
-        Serial.print("\t");
-    }
-    Serial.println();*/
     
-   //120 260 380
 
     if((max_gyro[0]-min_gyro[0] < (treshold+1100)) && (max_gyro[1]-min_gyro[1] < (treshold+2000)) && (max_gyro[2]-min_gyro[2] < (treshold+3100))){
         if(cal){
@@ -184,6 +188,8 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
     }
     return false;
 }
+
+
 void calibrateGyro(mpu9250* m){
     
     setReg(CAL_GYR,0);
@@ -202,6 +208,8 @@ void calibrateGyro(mpu9250* m){
 float dis3d(float x,float y,float z, float a, float b, float c){
     return sqrt((x - a)*(x - a) + (y - b)*(y - b) + (z - c)*(z - c));
 }
+
+
 void calibrateAccel(mpu9250* m){
     
     setReg(CAL_ACC,0);
