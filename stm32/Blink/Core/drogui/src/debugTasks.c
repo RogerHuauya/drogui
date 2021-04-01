@@ -18,7 +18,7 @@ char buff[500] = "hola\n";
 void debugTask(void *argument){
     
     //sprintf(buff, "%f\n", z);
-    sprintf(buff, "%f\t%f\t%f\t%f\t%f\t%f;\n", myIMU.gx/100.0, myIMU.gy/100.0, myIMU.gz/100.0, gx, gy, gz);
+    sprintf(buff, "%f\t%f\t%f;\n", 100*roll, 100*pitch, 100*yaw);
     HAL_UART_Transmit(&huart2, (uint8_t*) buff, strlen(buff), 100);
 }
 void securityTask(){

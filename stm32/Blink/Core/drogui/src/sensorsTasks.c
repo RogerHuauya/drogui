@@ -8,14 +8,6 @@
 
 mpu9250 myIMU;
 
-filter filter_gx, filter_gy, filter_gz;
-filter filter_gx2, filter_gy2, filter_gz2;
-dNotchFilter dnotch_gx, dnotch_gy, dnotch_gz; 
-dNotchFilter dnotch_gx2, dnotch_gy2, dnotch_gz2;
-
-
-filter filter_ax, filter_ay, filter_az;
-dNotchFilter dnotch_ax, dnotch_ay, dnotch_az; 
 
 filter filter_roll, filter_pitch, filter_yaw;
 float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z, z_ant = 0;
@@ -31,25 +23,16 @@ char altbuff[50] = "hola\n";
 
 void accelTask(){   
     readAcc(&myIMU);
-
-    ax = computeFilter(&filter_ax, myIMU.ax);
-    ay = computeFilter(&filter_ay, myIMU.ay);
-    az = computeFilter(&filter_az, myIMU.az);
-
-
-    ax = computeDNotch(&dnotch_ax, ax);
-    ay = computeDNotch(&dnotch_ay, ay);
-    az = computeDNotch(&dnotch_az, az);
-
+    ax = myIMU.ax, ay = myIMU.ay, az = myIMU.az; 
+    
     setReg(ACC_X,(float)(ax));
     setReg(ACC_Y,(float)(ay));
     setReg(ACC_Z,(float)(az));
 
     if( calib_status & 1 ){
-        cleanFilter(&filter_ax); cleanFilter(&filter_ay); cleanFilter(&filter_az);
-        
-        cleanDNotch(&dnotch_ax); cleanDNotch(&dnotch_ay); cleanDNotch(&dnotch_az);
-        
+        cleanFiltAcc(&myIMU.fAccX); 
+        cleanFiltAcc(&myIMU.fAccY); 
+        cleanFiltAcc(&myIMU.fAccZ);
         calib_status ^= 1;
     }
 }
@@ -59,6 +42,8 @@ void gyroTask(){
 
     readGyro(&myIMU);
 
+    gx = myIMU.gx, gy = myIMU.gy, gz = myIMU.gz; 
+    
     setReg(GYRO_X, gx);
     setReg(GYRO_Y, gy);
     setReg(GYRO_Z, gz);

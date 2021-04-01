@@ -10,6 +10,8 @@
 #define G 9.81
 int16_t _ax, _ay, _az, _gx, _gy, _gz, _mx, _my, _mz;
 
+char buffcal[500]="";
+
 int updateCalibOffset(mpu9250* m){
     int ans = 0;
     if( m->off_gx != getReg(GYR_X_OFF))  ans |= 2, m->off_gx = getReg(GYR_X_OFF);
@@ -37,7 +39,7 @@ int updateCalibOffset(mpu9250* m){
 void initMpu(mpu9250* m){
 
     I2CwriteByte(MPU9250_ADDRESS, MASTER_CONFIG, 0x00);
-    I2CwriteByte(MPU9250_ADDRESS, GYRO_CONFIG, GYRO_FULL_SCALE_250_DPS | 3);
+    I2CwriteByte(MPU9250_ADDRESS, GYRO_CONFIG, GYRO_FULL_SCALE_500_DPS | 3);
     I2CwriteByte(MPU9250_ADDRESS, ACCEL_CONFIG1, ACC_FULL_SCALE_2_G);
     I2CwriteByte(MPU9250_ADDRESS, ACCEL_CONFIG2, 8);
     I2CwriteByte(MPU9250_ADDRESS, 0x37, 0x02);
@@ -132,7 +134,6 @@ void readRawMag(mpu9250* m){ // m/s^2
 }
 
 
-
 void readFiltAcc(mpu9250* m){ // m/s^2
     
     readRawAcc(m);
@@ -187,6 +188,8 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
     float min_gyro[3] = {0,0,0};
     float acum_gyro[3] = {0,0,0};
 
+    //HAL_UART_Transmit(&huart2, (uint8_t*) "Quiet\n", 8, 100);
+
     for(int i = 0; i < n; i++){
         
         readFiltGyro(m);   
@@ -210,9 +213,11 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
         acum_gyro[2] += m ->filt_gz;
 
 
-        HAL_Delay(2);
+        HAL_Delay(1);
     }
     
+    //sprintf(buffcal, "%f\t%f\t%f\t%f\t%f\t%f\n", max_gyro[0] ,min_gyro[0], max_gyro[1] ,min_gyro[1], max_gyro[2] ,min_gyro[2] );
+    //HAL_UART_Transmit(&huart2, (uint8_t*) buffcal, strlen(buffcal), 100);
 
     if((max_gyro[0]-min_gyro[0] < (treshold+3)) && (max_gyro[1]-min_gyro[1] < (treshold+6.5)) && (max_gyro[2]-min_gyro[2] < (treshold+7))){
         if(cal){
@@ -230,7 +235,7 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
 
 
 void calibrateGyro(mpu9250* m){
-    
+    //HAL_UART_Transmit(&huart2, (uint8_t*) "CalibG\n", 8, 100);
     setReg(CAL_GYR,0);
     while(!quiet(m,500,0, true));
     
@@ -272,13 +277,18 @@ void calibrateAccel(mpu9250* m){
     bool done = false, valid;
     
     while(!done){
-        while(!quiet(m,100,30, false));
-        readFiltAcc(m);
+        while(!quiet(m, 100, 2, false));
+        readRawAcc(m);
         valid = true;
         for(int i = 1 ; i <= tot-1 ; i++){
             int j = (head - i + tot) % tot;
             // Serial.println("quiet ");
-            if(dis3d(m->filt_ax, m->filt_ay, m->filt_az, acc[j][0],acc[j][1],acc[j][2]) < 800){
+            float d = dis3d(m->raw_ax, m->raw_ay, m->raw_az, acc[j][0],acc[j][1],acc[j][2]);
+            
+            //sprintf(buffcal, "%f\t%f\t%f\t%f\n", d, m->filt_ax, m->filt_ay, m->filt_az);
+            //HAL_UART_Transmit(&huart2, (uint8_t*) buffcal, strlen(buffcal), 100);
+
+            if(d < 3000){
                 valid = false; break;
             } 
         }
@@ -287,7 +297,7 @@ void calibrateAccel(mpu9250* m){
             #ifndef DEBUG 
                 HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
             #endif
-            acc[head][0] = m->filt_ax, acc[head][1] = m->filt_ay, acc[head][2] = m->filt_az;
+            acc[head][0] = m->raw_ax, acc[head][1] = m->raw_ay, acc[head][2] = m->raw_az;
             head++, cnt++, head%= tot; 
         }
         setReg(CAL_ACC, 100*fmin(cnt,6)/7 );
