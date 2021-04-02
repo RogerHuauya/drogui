@@ -21,6 +21,8 @@ float roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0
 float wroll_ref, wpitch_ref, wyaw_ref, roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
 float wroll_err,wpitch_err,wyaw_err; 
 
+//float aux_wref, aux_wref2;
+
 char buffc[500] = "hola\n";
 void saturateM(float H){
     float f_max = 1;
@@ -128,11 +130,11 @@ void rpyControlTask(){
 
     wroll_ref_d = computeFilter(&filter_wroll,  wroll_ref_d);
     wpitch_ref_d = computeFilter(&filter_wpitch, wpitch_ref_d);
-    wyaw_ref_d = computeFilter(&filter_wpitch, wyaw_ref_d);
+    wyaw_ref_d = computeFilter(&filter_wyaw, wyaw_ref_d);
 
     rampValue(&wroll_ref, wroll_ref_d, 0.2);
     rampValue(&wpitch_ref, wpitch_ref_d, 0.2);
-        
+    
     setReg(GYRO_X_REF,wroll_ref);
     setReg(GYRO_Y_REF,wpitch_ref);
     setReg(GYRO_Z_REF,wyaw_ref_d);
@@ -183,13 +185,13 @@ void initControlTasks(){
     initPid(&x_control, 0, 0, 0, 0, 50 , 10, 0.09, NORMAL);
     initPid(&y_control, 0, 0, 0, 0, 50 , 10,0.09, NORMAL);
 
-    initPid(&roll2w,    550, 0, 0, TIME, 50, 0.785, 60, (P2ID & D_INT));
-    initPid(&pitch2w,   550, 0, 0, TIME, 50, 0.785, 60, (P2ID & D_INT));
+    initPid(&roll2w,    200, 0, 20, TIME, 50, 0.785, 60, (P2ID & D_INT));
+    initPid(&pitch2w,   200, 0, 20, TIME, 50, 0.785, 60, (P2ID & D_INT));
     initPid(&yaw2w,     0, 0, 0, TIME, 50, 0.785, 60, (P2ID & D_INT));
 
     initPid(&wroll_control, 15, 0, 30, TIME, 50, 80, 3000, (P2ID & D_INT));
     initPid(&wpitch_control,15, 0, 30, TIME, 50, 80, 3000, (P2ID & D_INT));
-    initPid(&wyaw_control, 15, 0, 30, TIME, 50, 80, 3000, (P2ID & D_INT));
+    initPid(&wyaw_control, 50, 0, 30, TIME, 50, 80, 3000, (P2ID & D_INT));
     
     initFilter(&filter_wroll, 4, k_1_20, v_1_20);
     initFilter(&filter_wpitch, 4, k_1_20, v_1_20);
