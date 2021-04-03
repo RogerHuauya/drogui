@@ -259,6 +259,21 @@ void calibrateAccel(mpu9250* m){
 
         }
     }
+    Serial.print("myIMU.off_ax = ");
+    Serial.print(getMatVal(&ans, 0, 0), DEC);
+    Serial.print(";\n");
+
+    Serial.print("myIMU.off_ay = ");
+    Serial.print(getMatVal(&ans, 1, 0), DEC);
+    Serial.print(";\n");
+
+    Serial.print("myIMU.off_az = ");
+    Serial.print(getMatVal(&ans, 2, 0), DEC);
+    Serial.print(";\n");
+
+    Serial.print("myIMU.scl_acc = ");
+    Serial.print(scale, DEC);
+    Serial.print(";\n");
 
     m -> off_ax = getMatVal(&ans, 0, 0);
     m -> off_ay = getMatVal(&ans, 1, 0);
@@ -355,7 +370,7 @@ void calibrateMag(mpu9250* m){
     
     char str_temp[60];
     
-    
+    /*
     Serial.print("H = [");
     for(int i = 0; i < prod.row; i++){
         for(int j = 0; j < prod.col; j++){
@@ -366,7 +381,7 @@ void calibrateMag(mpu9250* m){
         }
         Serial.println(";");
     }
-    Serial.println("];");
+    Serial.println("];");*/
     
     matInverse(&inverse, &prod);
     matMult(&prod2, &inverse, &Ht);
@@ -380,7 +395,7 @@ void calibrateMag(mpu9250* m){
     m -> off_mz = getMatVal(&X, 2, 0)/(2*getMatVal(&X, 4, 0));
     
     float temp = getMatVal(&X, 5, 0) + (m -> off_mx) * (m -> off_mx) + (m -> off_my) * (m -> off_my) + (m -> off_mz) * (m -> off_mz);
-    Serial.println(temp);
+    //Serial.println(temp);
     
     m -> off_mx /= scaleGlobal;
     m -> off_my /= scaleGlobal;
@@ -389,18 +404,30 @@ void calibrateMag(mpu9250* m){
     m -> scl_magx = sqrt(temp)/ (scaleGlobal);
     m -> scl_magy = sqrt(temp / getMatVal(&X, 3, 0)) / (scaleGlobal);
     m -> scl_magz = sqrt(temp / getMatVal(&X, 4, 0)) / (scaleGlobal);
-/*
-    Serial.print(m -> off_mx);
-    Serial.print("\t");
-    Serial.print(m -> off_my);
-    Serial.print("\t");
-    Serial.print(m -> off_mz);
-    Serial.print("\t");
-    Serial.println(m -> scl_magx);
-    Serial.print("\t");
-    Serial.println(m -> scl_magy);
-    Serial.print("\t");
-    Serial.println(m -> scl_magz);*/
+
+    Serial.print("myIMU.off_mx = ");
+    Serial.print(m -> off_mx, DEC);
+    Serial.print(";\n");
+    
+    Serial.print("myIMU.off_my = ");
+    Serial.print(m -> off_my, DEC);
+    Serial.print(";\n");
+    
+    Serial.print("myIMU.off_mz = ");
+    Serial.print(m -> off_mz, DEC);
+    Serial.print(";\n");
+
+    Serial.print("myIMU.scl_magx = ");
+    Serial.print(m -> scl_magx, DEC);
+    Serial.print(";\n");
+
+    Serial.print("myIMU.scl_magy = ");
+    Serial.print(m -> scl_magy, DEC);
+    Serial.print(";\n");
+
+    Serial.print("myIMU.scl_magz = ");
+    Serial.print(m -> scl_magz, DEC);
+    Serial.print(";\n");
     
     matDestruct(&H);
     matDestruct(&Ht);

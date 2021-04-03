@@ -156,9 +156,6 @@ void xyzControlTask(){
     H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG) + getReg(AMP_SIN)*sin(2*PI*getReg(FREQ_SIN)*TIME/1000000);
     rampValue(&H, H_ref, 0.2);
 
-    //sprintf(buffc, "%f\n", z_control.kp[0] );
-    //HAL_UART_Transmit(&huart2, (uint8_t*) buffc, strlen(buffc), 100);
-
     H_comp = H/(cos(roll)*cos(pitch));
 
     rampValue(&roll_ref, getReg(ROLL_REF) + roll_off, 0.015);
