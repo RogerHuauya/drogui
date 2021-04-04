@@ -11,8 +11,9 @@ int _main(){
     delay(100);
     Serial1.begin(460800);
     cfgRate(&myPacket, defaultCfgRate);
+    if(readM8Q(&readPacket)) printPacket(&readPacket);
     cfgMsg(&myPacket, defaultCfgMsg);
-
+    if(readM8Q(&readPacket)) printPacket(&readPacket);
     delay(100);
     while(1){
         if(Serial1.available()){

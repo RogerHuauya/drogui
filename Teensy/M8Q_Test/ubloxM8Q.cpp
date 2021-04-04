@@ -125,9 +125,9 @@ bool readM8Q(ubxPacket *mp){
 			while(!ser->available());
 			cntMSB = ser->read();
 
-			cnt = (uint16_t) (cntMSB << 8) | (cntLSB & 0xFF);
+			mp->len = (uint16_t) (cntMSB << 8) | (cntLSB & 0xFF);
 
-			for(int i = 0; i < cnt ; i++){
+			for(int i = 0; i < mp->len ; i++){
 				while(!ser->available());
 				mp->payload[i] = ser->read();
 			}
@@ -154,12 +154,12 @@ void printPacket(ubxPacket *mp){
 	Serial.print("Class:\t"); 
 	Serial.print(mp->cls);
 	Serial.print("\tID:\t");
-	Serial.println(mp->id);
+	Serial.print(mp->id);
 	Serial.print("\tlen:\t");
 	Serial.println(mp->len);
 
 	for( int i = 0; i < mp->len ; i++) 
-		Serial.print((char)mp->payload[i]), Serial.print(" ");
+		Serial.print(mp->payload[i],HEX), Serial.print(" ");
 	Serial.println();
 
 }
