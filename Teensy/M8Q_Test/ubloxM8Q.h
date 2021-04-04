@@ -1,7 +1,8 @@
 #ifndef UBLOX_M8Q_H
 #define UBLOX_M8Q_H
 
-#include <Arduino.h>
+#include "Arduino.h"
+#include <Wire.h>
 
 
 
@@ -286,19 +287,36 @@ const uint32_t VAL_RXM_PMREQ_WAKEUPSOURCE_EXTINT1 = 0x00000040; // extint1
 const uint32_t VAL_RXM_PMREQ_WAKEUPSOURCE_SPICS = 0x00000080;	// spics
 
 //-=-=-=-=- UBX binary specific variables
-struct ubxPacket
+typedef struct _ubxPacket
 {
 	uint8_t cls;
 	uint8_t id;
 	uint16_t len; //Length of the payload. Does not include cls, id, or checksum bytes
 	uint16_t counter; //Keeps track of number of overall bytes received. Some responses are larger than 255 bytes.
 	uint16_t startingSpot; //The counter value needed to go past before we begin recording into payload array
-	uint8_t payload[100]; // We will allocate RAM for the payload if/when needed.
+	uint8_t payload[200]; // We will allocate RAM for the payload if/when needed.
 	uint8_t checksumA; //Given to us from module. Checked against the rolling calculated A/B checksums.
 	uint8_t checksumB;
 	
-};
+} ubxPacket;
 
 int _main();
+void calcChecksum(ubxPacket *msg);
+void sendSerialCommand(ubxPacket *outgoingUBX);
+
+void cfgM8Q(ubxPacket *mp, uint8_t id,uint8_t len, uint8_t *cfgArray);
+
+void cfgPort(ubxPacket *mp, uint8_t *cfgPortArray);
+void cfgMsg(ubxPacket *mp, uint8_t *cfgMsgArray);
+void cfgRate(ubxPacket *mp, uint8_t *cfgRateArray);
+void cfgRate2(ubxPacket *mp);
+
+bool readM8Q(ubxPacket *mp);
+void printPacket(ubxPacket *mp);
+
+extern uint8_t defaultCfgPort[];
+extern uint8_t defaultCfgRate[];
+extern uint8_t defaultCfgMsg[];
+
 
 #endif
