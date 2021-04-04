@@ -10,15 +10,26 @@ int _main(){
     cfgPort(&myPacket, defaultCfgPort);
     delay(100);
     Serial1.begin(460800);
+
     cfgRate(&myPacket, defaultCfgRate);
-    if(readM8Q(&readPacket)) printPacket(&readPacket);
+    readM8Q(&readPacket);
     cfgMsg(&myPacket, defaultCfgMsg);
-    if(readM8Q(&readPacket)) printPacket(&readPacket);
+    readM8Q(&readPacket);
     delay(100);
+
     while(1){
         if(Serial1.available()){
             if(readM8Q(&readPacket)){
-                printPacket(&readPacket);
+                int latitude = 0, longitud = 0;
+                for(int i = 0 ; i < 4 ; i++) 
+                    latitude = (latitude << 8) | (readPacket.payload[27-i]);
+                for(int i = 0 ; i < 4 ; i++) 
+                    longitud = (longitud << 8) | (readPacket.payload[31-i]);
+                
+                Serial.print(latitude);
+                Serial.print("\t");
+                Serial.print(longitud);
+                
             }
         }
     }
