@@ -107,7 +107,6 @@ void cfgRate2(ubxPacket *mp){
 bool readM8Q(ubxPacket *mp){
 	uint8_t sync1 = 0, sync2 = 0, cntLSB, cntMSB;
 	uint8_t checksumA, checksumB, flag = 0;
-	uint16_t cnt;
 	while(1){
 		if(ser->available()){
 			sync1 = sync2;

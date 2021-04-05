@@ -20,15 +20,18 @@ int _main(){
     while(1){
         if(Serial1.available()){
             if(readM8Q(&readPacket)){
+                
+                //printPacket(&readPacket);
+
                 int latitude = 0, longitud = 0;
                 for(int i = 0 ; i < 4 ; i++) 
-                    latitude = (latitude << 8) | (readPacket.payload[27-i]);
+                    latitude = (latitude << 8) | (readPacket.payload[27-i] & 0xFF);
                 for(int i = 0 ; i < 4 ; i++) 
-                    longitud = (longitud << 8) | (readPacket.payload[31-i]);
+                    longitud = (longitud << 8) | (readPacket.payload[31-i] & 0xFF);
                 
                 Serial.print(latitude);
                 Serial.print("\t");
-                Serial.print(longitud);
+                Serial.println(longitud);
                 
             }
         }
