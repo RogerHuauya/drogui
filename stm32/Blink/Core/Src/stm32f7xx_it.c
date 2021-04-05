@@ -69,6 +69,7 @@ int index_i2c = 0, state;
 
 /* External variables --------------------------------------------------------*/
 extern I2C_HandleTypeDef hi2c4;
+extern UART_HandleTypeDef huart2;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -229,6 +230,37 @@ void EXTI1_IRQHandler(void)
   /* USER CODE BEGIN EXTI1_IRQn 1 */
 
   /* USER CODE END EXTI1_IRQn 1 */
+}
+
+/**
+  * @brief This function handles USART2 global interrupt.
+  */
+void USART2_IRQHandler(void)
+{
+	/* USER CODE BEGIN USART2_IRQn 0 */
+	unsigned long isr = USART2->ISR;
+	if(isr & USART_ISR_RXNE){
+
+		rcv_buff[rcv_head++] = USART2->RDR;
+        rcv_head %= SER_BUFF_SZ;
+        rcv_tail += (rcv_head == rcv_tail);
+        rcv_tail %= SER_BUFF_SZ;
+	
+	}
+	else if(isr & USART_ISR_TXE){
+		if(snd_head != snd_tail){
+			USART2->TDR = snd_buff[snd_tail++];
+			snd_tail %= SER_BUFF_SZ;
+		}
+		if(snd_head == snd_tail){
+			USART2->CR1  ^= USART_CR1_TXEIE;
+		}
+	}
+	/* USER CODE END USART2_IRQn 0 */
+	// HAL_UART_IRQHandler(&huart2);
+	/* USER CODE BEGIN USART2_IRQn 1 */
+
+	/* USER CODE END USART2_IRQn 1 */
 }
 
 /**
