@@ -8,12 +8,13 @@
 #include <string.h>
 #include "filter.h"
 
-#ifndef DEBUG
+#if PORT == LED
     void blinkTask(void *argument){
         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
     }
 #endif
 
+#if PORT == DEBUG
 char buff[500] = "hola\n";
 void debugTask(void *argument){
     
@@ -21,6 +22,8 @@ void debugTask(void *argument){
     sprintf(buff, "%f\n", myIMU.gz);
     HAL_UART_Transmit(&huart2, (uint8_t*) buff, strlen(buff), 100);
 }
+#endif
+
 void securityTask(){
     if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
         updatePID();
@@ -35,9 +38,9 @@ void securityTask(){
 }
 
 void initDebug(){
-    #ifdef DEBUG   
+    #if PORT == DEBUG   
         addTask(&debugTask, 10000, 1);
-    #else
+    #elif PORT == LED
         addTask(&blinkTask, 100000, 1);   
     #endif
     addTask(&securityTask, 1000, 1);

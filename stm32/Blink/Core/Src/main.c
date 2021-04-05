@@ -98,7 +98,7 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   MX_I2C4_Init();
-  #ifdef DEBUG
+  #if PORT == DEBUG || PORT == GPS
     MX_USART2_UART_Init();
   #endif
   MX_TIM3_Init();

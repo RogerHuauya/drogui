@@ -19,8 +19,6 @@ emaFilter ema_bmp;
 mvAvgFilter mvAvg_bmp;
 filter filter_z;
 
-char altbuff[50] = "hola\n";
-
 void accelTask(){   
     readAcc(&myIMU);
     ax = myIMU.ax, ay = myIMU.ay, az = myIMU.az; 
@@ -37,7 +35,6 @@ void accelTask(){
     }
 }
 
-char buff2[50] = "hola\n";
 void gyroTask(){
 
     readGyro(&myIMU);
