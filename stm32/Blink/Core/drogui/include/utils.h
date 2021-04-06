@@ -7,14 +7,18 @@
 #include "main.h"
 
 
+
 #define EPS 1e-9
 #define pi acos(-1)
 #define copysign(x, y) ( ( (((x) > 0) && ((y) < 0)) || (((x) < 0) && ((y) > 0)) ) ? (-1)*(x) : (x) )
+#define SER_BUFF_SZ 300
 
 extern uint8_t i2cReg[300][4];
 extern bool security;
 extern int calib_status;
 
+extern uint8_t rcv_buff[SER_BUFF_SZ], rcv_head, rcv_tail;
+extern uint8_t snd_buff[SER_BUFF_SZ], snd_head, snd_tail;
 extern double distance;
 
 

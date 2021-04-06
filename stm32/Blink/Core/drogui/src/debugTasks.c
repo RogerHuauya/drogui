@@ -1,6 +1,6 @@
 #include "debugTasks.h"
 #include "utils.h"
-#include "usart.h"
+#include "serial.h"
 #include "sensorsTasks.h"
 #include "controlTasks.h"
 #include "task.h"
@@ -8,19 +8,26 @@
 #include <string.h>
 #include "filter.h"
 
-#ifndef DEBUG
+#if PORT == LED
     void blinkTask(void *argument){
         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
     }
 #endif
 
-char buff[500] = "hola\n";
+#if PORT == DEBUG
+char debug_buffer[500] = "hola\n";
 void debugTask(void *argument){
     
     //sprintf(buff, "%f\n", z);
-    sprintf(buff, "%f\n", myIMU.gz);
-    HAL_UART_Transmit(&huart2, (uint8_t*) buff, strlen(buff), 100);
+    int ind = 0;
+    while(serialAvailable()){
+        debug_buffer[ind++] = serialRead();
+    }
+    debug_buffer[ind] = '\0';
+    serialPrint(debug_buffer);
 }
+#endif
+
 void securityTask(){
     if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
         updatePID();
@@ -35,10 +42,10 @@ void securityTask(){
 }
 
 void initDebug(){
-    #ifdef DEBUG   
+    #if PORT == DEBUG   
         addTask(&debugTask, 10000, 1);
-    #else
+    #elif PORT == LED
         addTask(&blinkTask, 100000, 1);   
     #endif
-    addTask(&securityTask, 1000, 1);
+    //addTask(&securityTask, 1000, 1);
 }

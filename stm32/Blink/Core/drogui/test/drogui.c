@@ -1,4 +1,4 @@
-#define DROGUI
+//#define DROGUI
 #ifdef DROGUI
 #include "_main.h"
 #include "tim.h"
@@ -13,7 +13,7 @@ char auxbuff[50];
 void _main(){
 
     HAL_TIM_Base_Start(&htim5);
-    #ifndef DEBUG 
+    #if PORT == LED 
         HAL_GPIO_WritePin(GPIOD, GPIO_PIN_5, GPIO_PIN_SET);
     #endif
     HAL_Delay(1000);

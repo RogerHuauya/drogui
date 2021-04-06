@@ -64,7 +64,7 @@ void Error_Handler(void);
 #define ECHO_GPIO_Port GPIOE
 #define ECHO_EXTI_IRQn EXTI1_IRQn
 /* USER CODE BEGIN Private defines */
-#ifndef DEBUG
+#if PORT == LED
   #define LED_Pin GPIO_PIN_5
   #define LED_GPIO_Port GPIOD
 #endif

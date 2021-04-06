@@ -2,6 +2,8 @@
 #include "i2c.h"
 
 uint8_t i2cReg[300][4];
+uint8_t rcv_buff[SER_BUFF_SZ], rcv_head = 0, rcv_tail = 0;
+uint8_t snd_buff[SER_BUFF_SZ], snd_head = 0, snd_tail = 0;
 bool security;
 int calib_status;
 

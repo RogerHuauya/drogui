@@ -10,7 +10,7 @@
 #define G 9.81
 int16_t _ax, _ay, _az, _gx, _gy, _gz, _mx, _my, _mz;
 
-char buffcal[500]="";
+//char buffcal[500]="";
 
 int updateCalibOffset(mpu9250* m){
     int ans = 0;
@@ -244,7 +244,7 @@ void calibrateGyro(mpu9250* m){
     setReg(GYR_Z_OFF, m -> off_gz);
 
     setReg(CAL_GYR, 100);
-    #ifndef DEBUG 
+    #if PORT == LED 
         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
     #endif
 }
@@ -294,7 +294,7 @@ void calibrateAccel(mpu9250* m){
         }
 
         if(valid){
-            #ifndef DEBUG 
+            #if PORT == LED 
                 HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
             #endif
             acc[head][0] = m->raw_ax, acc[head][1] = m->raw_ay, acc[head][2] = m->raw_az;
@@ -361,7 +361,7 @@ void calibrateAccel(mpu9250* m){
 
 void calibrateMag(mpu9250* m){
     
-    char aux_buff[50]="";
+    //char aux_buff[50]="";
 
     setReg(CAL_MAG,0);
 
@@ -398,7 +398,7 @@ void calibrateMag(mpu9250* m){
             } 
         }
         if(valid){
-            #ifndef DEBUG 
+            #if PORT == LED 
                 HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
             #endif
             mag[head][0] = magX, mag[head][1] = magY, mag[head][2] = magZ;
