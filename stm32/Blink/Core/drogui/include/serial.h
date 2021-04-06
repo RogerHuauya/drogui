@@ -6,8 +6,9 @@
 
 void serialPrint(char *s);
 void serialPrintf(const char *s, ...);
+void serialWrite(char c);
 
 bool serialAvailable();
-char serialReadChar();
+char serialRead();
 
 #endif
