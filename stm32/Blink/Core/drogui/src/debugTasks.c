@@ -15,16 +15,22 @@
 #endif
 
 #if PORT == DEBUG
-char debug_buffer[500] = "hola\n";
+//char debug_buffer[500] = "hola\n";
 void debugTask(void *argument){
     
     //sprintf(buff, "%f\n", z);
-    int ind = 0;
+    //int ind = 0;
     while(serialAvailable()){
-        debug_buffer[ind++] = serialRead();
+        char c = serialRead();
+        serialPrintf("%x ",(uint8_t) c);
+        /*if(c == 'a'){ 
+            serialPrintf("Recibi el caracter: %c\n", c);
+            HAL_Delay(1000);
+            changeBaudrate(460800);
+        }*/
     }
-    debug_buffer[ind] = '\0';
-    serialPrint(debug_buffer);
+    //debug_buffer[ind] = '\0';
+    //serialPrint(debug_buffer);
 }
 #endif
 

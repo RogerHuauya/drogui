@@ -1,5 +1,6 @@
 #include "M8Q.h"
 #include "serial.h"
+#include "task.h"
 
 uint8_t defaultCfgPort[20] = { 1, 0, 0, 0, 0xC0, 8, 0, 0, 0x00, 0x08, 0x07, 0, 7, 0, 1, 0, 0, 0, 0, 0};
 uint8_t defaultCfgRate[6]  = { 0xE8, 3, 1, 0, 1, 0 };
@@ -94,11 +95,11 @@ void cfgM8QRate(ubxPacket *mp, uint8_t *cfgRateArray){
 
 
 
-bool readM8Q(ubxPacket *mp){
+int readM8Q(ubxPacket *mp, uint32_t timeout){
 	uint8_t sync1 = 0, sync2 = 0, cntLSB, cntMSB;
 	uint8_t checksumA, checksumB, flag = 0;
-
-	while(1){
+	uint32_t tim = TIME;
+	while(TIME - tim < timeout){
 		if(serialAvailable()){
 			sync1 = sync2;
 			sync2 = serialRead();
@@ -136,7 +137,9 @@ bool readM8Q(ubxPacket *mp){
 
 	}
 
-	return (mp->checksumA == checksumA) && (mp->checksumB == checksumB);
+	if(flag == 0) return TIMEOUT;
+	if((mp->checksumA == checksumA) && (mp->checksumB == checksumB)) return GPS_OK;
+	else return WRG_CHKSUM;
 }
 
 
@@ -146,4 +149,28 @@ void printPacket(ubxPacket *mp){
 	for( int i = 0; i < mp->len ; i++) 
 		serialPrintf("%x ", mp->payload[i]);
 	serialPrint("\n");
+}
+
+
+int readLatLon(m8q *mg){
+	if(serialAvailable()){
+		int ret = readM8Q(&(mg->rcv_pack), 1000); 
+		if( ret != GPS_OK) return ret;
+
+
+		if(mg->rcv_pack.cls == 1 && mg->rcv_pack.id == 7){
+		
+			mg->latitude = 0, mg->longitud = 0;
+			for(int i = 0 ; i < 4 ; i++) 
+				mg->latitude = (mg->latitude << 8) | (mg->rcv_pack.payload[27-i]);
+			for(int i = 0 ; i < 4 ; i++) 
+				mg->longitud = (mg->longitud << 8) | (mg->rcv_pack.payload[31-i]);
+			
+			return GPS_OK;
+		}
+		else{
+			return WRG_CLS_ID;
+		}
+	}
+	return NO_DATA;
 }
