@@ -12,7 +12,6 @@ void serialPrintf(const char *s, ...) {
     serialPrint(serial_buffer);
 }
 
-
 void serialPrint(char *s){
     while(*s){
         snd_buff[snd_head++] = *s, s++;
