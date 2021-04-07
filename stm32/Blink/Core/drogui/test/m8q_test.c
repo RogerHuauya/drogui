@@ -12,9 +12,9 @@
 
 m8q myGPS;
 char auxbuff[50];
-int flag = 0, head = 0;
+int flag = 0, head = 0, cnt = 0;
 uint8_t buff[1000];
-
+int pos_x, pos_y;
 
 void gpsTask(){
 
@@ -30,9 +30,16 @@ void gpsTask(){
     else if(ret == TIMEOUT)
         serialPrint("Timeout\n");
     serialPrintf("return: %d\n", ret);*/
-    setReg(GPS_X, myGPS.latitude/10000.0);
-    setReg(GPS_Y, myGPS.longitud/10000.0);
     setReg(GPS_STATE, ret);
+    
+    if(ret == GPS_OK){
+        if(flag == 0) 
+            pos_x = myGPS.latitude, pos_y = myGPS.longitud, flag = 1;
+        
+        setReg(GPS_X, myGPS.latitude - pos_x),
+        setReg(GPS_Y, myGPS.longitud - pos_y),
+        setReg(GPS_CNT,   cnt++);     
+    }
 }
 
 
@@ -55,7 +62,7 @@ void _main(){
 
     HAL_Delay(100);
     
-    addTask(&gpsTask, 1000000, 1);
+    addTask(&gpsTask, 500000, 1);
     initRTOS();
 
 

@@ -127,4 +127,6 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define FREQ_SIN 0xBE
 
 #define GPS_STATE 0xD0
+#define GPS_CNT   0xD2
+
 #endif 		
