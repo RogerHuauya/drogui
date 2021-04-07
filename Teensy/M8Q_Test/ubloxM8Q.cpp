@@ -2,7 +2,7 @@
 
 uint8_t defaultCfgPort[20] = { 1, 0, 0, 0, 0xC0, 8, 0, 0, 0x00, 0x08, 0x07, 0, 7, 0, 1, 0, 0, 0, 0, 0};
 uint8_t defaultCfgRate[6]  = { 0xE8, 3, 1, 0, 1, 0 };
-uint8_t defaultCfgMsg[3]   = {UBX_CLASS_NAV, UBX_NAV_PVT, 1};
+uint8_t defaultCfgMsg[3]   = {UBX_CLASS_NAV, UBX_NAV_POSLLH, 1};
 
 Stream *ser = &Serial1;
 void calcChecksum(ubxPacket *msg){

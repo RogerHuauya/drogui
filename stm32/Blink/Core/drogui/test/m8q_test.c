@@ -36,8 +36,6 @@ void gpsTask(){
 }
 
 
-
-
 void _main(){
     
     HAL_Delay(1000);
