@@ -2,6 +2,7 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+
 char serial_buffer[100];
 
 void serialPrintf(const char *s, ...) {
@@ -19,9 +20,12 @@ void serialPrint(char *s){
         snd_tail += (snd_head == snd_tail);
         snd_tail %= SER_BUFF_SZ;
     }
+    USART2->CR1  |= USART_CR1_TXEIE;
 }
 
 void serialWrite(char c){
+    
+	USART2->CR1  &= ~(USART_CR1_TXEIE);
     snd_buff[snd_head++] = c;
     snd_head %= SER_BUFF_SZ;
     snd_tail += (snd_head == snd_tail);
@@ -34,12 +38,18 @@ bool serialAvailable(){
 }
 
 char serialRead(){
-    rcv_tail = (rcv_tail + 1)%SER_BUFF_SZ;
-    return rcv_buff[ (rcv_tail + SER_BUFF_SZ - 1) % SER_BUFF_SZ];
+    char ans;	
+    USART2->CR1  &= ~(USART_CR1_RXNEIE);	
+    ans = rcv_buff[rcv_tail++];
+    rcv_tail %= SER_BUFF_SZ;
+    USART2->CR1  |= USART_CR1_RXNEIE;
+    return ans;
 }
 
 void changeBaudrate(int baudrate){
-   /* USART2 -> CR1 ^= USART_CR1_UE;
-    USART2 -> BRR = UART_BRR_SAMPLING8(HAL_RCC_GetPCLK2Freq(), baudrate);;
-    USART2 -> CR1 |= USART_CR1_UE;*/
+    USART2 -> CR1 ^= USART_CR1_UE;
+
+    USART2 -> BRR = (uint16_t)(UART_DIV_SAMPLING16( HAL_RCC_GetPCLK1Freq(), baudrate));
+    
+    USART2 -> CR1 |= USART_CR1_UE;
 }

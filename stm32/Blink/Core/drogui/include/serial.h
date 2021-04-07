@@ -10,5 +10,6 @@ void serialWrite(char c);
 
 bool serialAvailable();
 char serialRead();
+void changeBaudrate(int baudrate);
 
 #endif

@@ -4,6 +4,7 @@
 #include "_main.h"
 #include <stdbool.h>
 
+enum GPS_STATE {NO_DATA, TIMEOUT, WRG_CLS_ID, GPS_OK, WRG_CHKSUM};
 extern uint8_t defaultCfgPort[];
 extern uint8_t defaultCfgRate[];
 extern uint8_t defaultCfgMsg[];
@@ -283,7 +284,7 @@ typedef struct _ubxPacket{
 
 typedef struct _m8q{
     ubxPacket snd_pack, rcv_pack;
-    int latitud, longitud;
+    int latitude, longitud;
 } m8q;
 
 
@@ -297,9 +298,9 @@ void cfgM8QPort(ubxPacket *mp, uint8_t *cfgPortArray);
 void cfgM8QMsg(ubxPacket *mp, uint8_t *cfgMsgArray);
 void cfgM8QRate(ubxPacket *mp, uint8_t *cfgRateArray);
 
-void readLatLon(ubxPacket *mp);
+int readLatLon(m8q* mg);
 
-bool readM8Q(ubxPacket *mp);
+int readM8Q(ubxPacket *mp, uint32_t timeout);
 void printPacket(ubxPacket *mp);
 
 

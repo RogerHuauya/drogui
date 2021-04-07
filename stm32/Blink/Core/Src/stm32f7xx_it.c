@@ -248,12 +248,13 @@ void USART2_IRQHandler(void)
 	
 	}
 	else if(isr & USART_ISR_TXE){
+    
 		if(snd_head != snd_tail){
 			USART2->TDR = snd_buff[snd_tail++];
 			snd_tail %= SER_BUFF_SZ;
 		}
 		if(snd_head == snd_tail){
-			USART2->CR1  ^= USART_CR1_TXEIE;
+			USART2->CR1  &= ~(USART_CR1_TXEIE);
 		}
 	}
 	/* USER CODE END USART2_IRQn 0 */

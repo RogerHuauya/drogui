@@ -105,6 +105,7 @@ int main(void)
   MX_TIM4_Init();
   MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
+  HAL_TIM_Base_Start(&htim5);
   _main();
   /* USER CODE END 2 */
 

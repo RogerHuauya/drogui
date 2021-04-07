@@ -1,5 +1,5 @@
 #include "task.h"
-#include "usart.h"
+#include "serial.h"
 #include "string.h"
 #include "stdio.h"
 #include <stdbool.h>
@@ -38,6 +38,8 @@ void initRTOS(){
         
         for(int i = 0; i < tasks_count; i++){
             int score = Tasks[i].priority + Tasks[i].ignored;
+            //serialPrintf("rtos %d %d %ld\n", TIME, score, Tasks[i].period), HAL_Delay(100);  
+
             if(isTaskReady(&Tasks[i]) && max_score < score)
                 max_score = score, id = i;    
         }
@@ -51,7 +53,8 @@ void initRTOS(){
             //sprintf(buffer3, "Init %d\t%lu;\n",id,TIME - Tasks[id].last_time);
             executeTask(&Tasks[id]), Tasks[id].ignored = 0;
             //HAL_UART_Transmit(&huart2, (uint8_t*) buffer3, strlen(buffer3), 100);
+            //serialPrint("execute\n");
         }
-            
+          
     }
 }
