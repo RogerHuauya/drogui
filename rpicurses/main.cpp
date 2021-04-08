@@ -102,7 +102,7 @@ int main(int argc, char** argv ){
 	reset();
 
 
-	pthread_t threads[NUM_THREADS];
+	pthread_t threads[3];
 	id_thread_log  = pthread_create(&threads[0], NULL, logging, (void *)0);
 	//id_thread_gps = pthread_create(&threads[2], NULL, gps_data, (void *)0);
 	id_thread_wifi = pthread_create(&threads[1], NULL, wifiCheck, (void *)0);
