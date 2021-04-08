@@ -12,22 +12,23 @@
 #include "utils.h"
 
 m8q myGPS;
-int flag = 0, head = 0, cnt = 0;
-int ret, pos_x, pos_y;
+int cnt = 0;
+int off_x, off_y;
 //float x, y;
 
 
 void gpsTask(){
 
-    ret = readLatLon(&myGPS); 
+    int ret = readLatLon(&myGPS); 
     setReg(GPS_STATE, ret);
     
     if(ret == GPS_OK){
         if(getReg(START) <= 0)
-            pos_x = myGPS.latitude, pos_y = myGPS.longitud;
+            off_x = myGPS.latitude, off_y = myGPS.longitud;
         
-        setReg(GPS_X, myGPS.latitude - pos_x),
-        setReg(GPS_Y, myGPS.longitud - pos_y),
+        setReg(GPS_AVAILABLE, 1);
+        setReg(GPS_X, myGPS.latitude - off_x),
+        setReg(GPS_Y, myGPS.longitud - off_y),
         setReg(GPS_CNT,   cnt++);     
     }
 }
@@ -38,10 +39,11 @@ void kalmanTask(){
 
     
     if(getReg(START) > 0){
-        if(ret == GPS_OK){
-            kalmanUpdateIMU(ax, ay, az, roll, pitch, yaw);
-            kalmanUpdateGPS(getReg(GPS_X)/100.0, getReg(GPS_Y)/100.0, 0);    
-        }
+            kalmanUpdateIMU(ax, ay, az, raw_roll, raw_pitch, raw_yaw);
+
+            if(getReg(GPS_AVAILABLE) > 0)
+                setReg(GPS_AVAILABLE, 0),
+                kalmanUpdateGPS(getReg(GPS_X)/100.0, getReg(GPS_Y)/100.0, 0);
     }
     else{
         clearKalman();
@@ -73,7 +75,7 @@ void _main(){
     HAL_Delay(100);
     
     
-    setKalmanTsImu(0.001);
+    setKalmanTsImu(0.01);
     setKalmanTsGps(0.5);
 
     initMatGlobal();
@@ -81,7 +83,7 @@ void _main(){
     initDebug();
     initSensorsTasks();
     addTask(&gpsTask, 500000, 3);
-    addTask(&kalmanTask, 1000, 3);
+    addTask(&kalmanTask, 10000, 3);
     
     initRTOS();
 }

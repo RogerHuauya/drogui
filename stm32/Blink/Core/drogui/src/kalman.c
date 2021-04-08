@@ -33,10 +33,10 @@ void initMatGlobal(){
     for(int i = 0; i < 3;  i++) setMatVal(&Rc,i,i,0.1);
 
     matInit(&Q12, 6, 6); 
-    for(int i = 0; i < 6;  i++) setMatVal(&Q12,i,i,0.01);
+    for(int i = 0; i < 6;  i++) setMatVal(&Q12,i,i,0.1);
 
     matInit(&Pm, 9, 9); 
-    for(int i = 0; i < 9;  i++) setMatVal(&Pm,i,i,0.1);
+    for(int i = 0; i < 9;  i++) setMatVal(&Pm,i,i,1);
 
     matInit(&Fm, 9, 9);
     for(int i = 0; i < 9 ; i++) setMatVal(&Fm, i, i, 1);

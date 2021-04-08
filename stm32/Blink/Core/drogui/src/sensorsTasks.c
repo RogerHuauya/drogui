@@ -10,7 +10,15 @@ mpu9250 myIMU;
 
 
 filter filter_roll, filter_pitch, filter_yaw;
-float roll, pitch, yaw, ax, ay, az, gx, gy, gz, mx, my, mz, x, y, z, z_ant = 0;
+
+float   roll,       pitch,      yaw,
+        raw_roll,   raw_pitch,  raw_yaw,
+        ax,         ay,         az, 
+        gx,         gy,         gz, 
+        mx,         my,         mz, 
+        x,          y,          z; 
+        
+float z_ant = 0;
 
 bmp388 myBMP;
 float altitude,offset_alt;
