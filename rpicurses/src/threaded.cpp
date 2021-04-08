@@ -60,14 +60,19 @@ void *logging(void *threadid){
 
             log_gps << rasp_i2c.readFloat(GPS_X) 	<< "\t"; unistd::usleep(300);
             log_gps << rasp_i2c.readFloat(GPS_Y) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(GPS_STATUS) 	<< "\t"; unistd::usleep(300);
+            log_gps << rasp_i2c.readFloat(GPS_STATE) 	<< "\t"; unistd::usleep(300);
             //log_gps << rasp_i2c.readFloat(GPS_CNT)      << "\n"; unistd::usleep(300);
             log_gps << rasp_i2c.readFloat(X_VAL) 	<< "\t"; unistd::usleep(300);
 	    log_gps << rasp_i2c.readFloat(Y_VAL) 	<< "\t"; unistd::usleep(300);
+
 	    log_gps << rasp_i2c.readFloat(ACC_X) 	<< "\t"; unistd::usleep(300);
 	    log_gps << rasp_i2c.readFloat(ACC_Y) 	<< "\t"; unistd::usleep(300);
 	    log_gps << rasp_i2c.readFloat(ACC_Z) 	<< "\t"; unistd::usleep(300);
-	    log_gps << rasp_i2c.readFloat(YAW_VAL)      << "\n"; unistd::usleep(300);
+	    
+	    log_gps << rasp_i2c.readFloat(RAW_ROLL) 	<< "\t"; unistd::usleep(300);
+	    log_gps << rasp_i2c.readFloat(RAW_PITCH) 	<< "\t"; unistd::usleep(300);
+	    log_gps << rasp_i2c.readFloat(RAW_YAW)      << "\n"; unistd::usleep(300);
+	    
 	    /*log_gps << rasp_i2c.readFloat(ROLL_REF)     << "\t"; unistd::usleep(300);
             log_gps << rasp_i2c.readFloat(PITCH_REF) 	<< "\t"; unistd::usleep(300);
             log_gps << rasp_i2c.readFloat(ROLL_VAL) 	<< "\t"; unistd::usleep(300);
@@ -78,6 +83,7 @@ void *logging(void *threadid){
             log_gps << rasp_i2c.readFloat(GYRO_Y) 	<< "\t"; unistd::usleep(300);
             log_gps << rasp_i2c.readFloat( Z_VAL ) 	<< "\t"; unistd::usleep(300);
             log_gps << rasp_i2c.readFloat( Z_U ) 	<< "\n"; unistd::usleep(300);*/
+	    
 	    /*log_gps << tim/50.0 << "\t";
             log_gps << rasp_i2c.readFloat(MOTOR_1)      << "\t"; unistd::usleep(300);
             log_gps << rasp_i2c.readFloat(MOTOR_2)      << "\t"; unistd::usleep(300);
