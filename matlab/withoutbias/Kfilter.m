@@ -1,14 +1,14 @@
 close all 
 Gr = 9.81;
-Ts = 0.02;
+Ts = 0.01;
 N = length(ax);
-p_gps = [-y';x';z'];
+p_gps = [x';y';z'];
 p = zeros(3,N);
 v = zeros(3,N);
 g = [0 0 1.02]'*Gr;
-P = eye(9)*0.1;
+P = eye(9)*1;
 H = [eye(3) zeros(3,6)];
-Q12 = eye(6)*0.01;
+Q12 = eye(6)*0.1;
 bias_u = zeros(3,1);
 u = zeros(3,1);
 R = eye(3)*0.1;
@@ -19,9 +19,9 @@ s = [ax ay az]';
 s_rot = zeros(3, N);
 s_norm = zeros(3, N);
 for i= 2:length(t_mm)
-    Rq = rpy2R(roll(i), pitch(i), yaw(i) - pi/2);
+    Rq = rpy2R(roll(i), pitch(i), yaw(i));
     s_rot(:,i) = Rq*s(:,i);
-    s_norm(:,i) = s_rot(:,i) + g/Gr;
+    s_norm(:,i) = s_rot(:,i) - g/Gr;
     %s_rot(:,i) = Rq\s(:,i);
 end
 % figure 
@@ -72,17 +72,17 @@ end
 
 
 s_filtered = zeros(3, length(t_mm));
-s_filtered(3,1) = -1;
+s_filtered(3,1) = 1;
 
 aux = zeros(3,1);
 cnt = 0; flag = 0;
 for i= 2:length(t_mm)
-    
+   
     Rq = rpy2R(roll(i), pitch(i), yaw(i));
     
     s_filtered(:,i) = s_filtered(:, i-1) + lambda*(s(:, i) - s_filtered(:, i-1));
-    u = s_filtered(:, i)*Gr;%+ bias_u*0.005;
-    s_rot(:,i) = Rq*u + g;
+    u = s(:, i);% + bias_u*0.005;
+    s_rot(:,i) = Rq*u - g;
     
     if(flag == 1)
         p(:, i) = p(:, i-1) + Ts*v(:, i-1) + Ts^2/2*(s_rot(:,i));
