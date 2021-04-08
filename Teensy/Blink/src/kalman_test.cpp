@@ -67,7 +67,9 @@ void timer1Interrupt(){
 
     if(getReg(START) > 0){
         kalmanUpdateIMU(ax, ay, az, roll, pitch, yaw);
-        if(getReg(GPS_AVAILABLE) == 1) setReg(GPS_AVAILABLE, 0), kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), 0);    
+        if(getReg(GPS_AVAILABLE) == 1) 
+            setReg(GPS_AVAILABLE, 0), 
+            kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), 0);    
     }
     else{
         clearKalman();
