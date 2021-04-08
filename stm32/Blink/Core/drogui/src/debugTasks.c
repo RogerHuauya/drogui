@@ -36,11 +36,11 @@ void debugTask(void *argument){
 
 void securityTask(){
     if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
-        updatePID();
+        //updatePID();
         if(getReg(CAL_GYR_TRG) == 1) calibrateGyro(&myIMU), setReg(CAL_GYR_TRG, 0);
         if(getReg(CAL_ACC_TRG) == 1) calibrateAccel(&myIMU), setReg(CAL_ACC_TRG, 0);
         if(getReg(CAL_MAG_TRG) == 1) calibrateMag(&myIMU), setReg(CAL_MAG_TRG, 0);
-        updateBmp388Offset(&myBMP);
+        //updateBmp388Offset(&myBMP);
         security = true;
         calib_status = updateCalibOffset(&myIMU);
     }
@@ -49,9 +49,9 @@ void securityTask(){
 
 void initDebug(){
     #if PORT == DEBUG   
-        addTask(&debugTask, 10000, 1);
+        //addTask(&debugTask, 10000, 1);
     #elif PORT == LED
         addTask(&blinkTask, 100000, 1);   
     #endif
-    //addTask(&securityTask, 1000, 1);
+    addTask(&securityTask, 1000, 1);
 }

@@ -65,7 +65,7 @@ float Kdfilt = 0.01;
 void rpyTask(){
     
     float rpy[3];
-    mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, 0, 0, 0);
+    mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, my, mx, mz);
     getMahonyEuler(rpy);
     roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
     
@@ -122,6 +122,7 @@ void heightTask(void *argument){
 void initSensorsTasks(){
     
     initMpu(&myIMU);
+    
 
     initFilter(&filter_roll, 4, k_1_10, v_1_10);
     initFilter(&filter_pitch, 4, k_1_10, v_1_10);
@@ -149,6 +150,6 @@ void initSensorsTasks(){
     addTask(&magTask, 100000, 2);
     addTask(&rpyTask, 2000, 2);
     //addTask(&altitudeTask,10000,2);
-    addTask(&heightTask, 10000, 2);
+    //addTask(&heightTask, 10000, 2);
 
 }

@@ -59,7 +59,7 @@ void kynematics(){
     matInit(&aux2, p.row, p.col);
     matMult(&aux2, &Rq, &u);
 
-    //setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0) + 10.0062);
+    setMatVal(&aux2, 2, 0, getMatVal(&aux2, 2, 0) - 9.81);
 
     matScale(&aux2, &aux2, Ts);    
 

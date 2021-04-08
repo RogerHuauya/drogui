@@ -1,4 +1,4 @@
-#define M8Q_TEST
+//#define M8Q_TEST
 #ifdef M8Q_TEST
 #include "_main.h"
 #include "tim.h"

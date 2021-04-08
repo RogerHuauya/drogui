@@ -4,7 +4,7 @@
 #include "_main.h"
 #include <stdbool.h>
 
-enum GPS_STATE {NO_DATA, TIMEOUT, WRG_CLS_ID, GPS_OK, WRG_CHKSUM};
+enum GPS_STATUS {NO_DATA, TIMEOUT, WRG_CLS_ID, GPS_OK, WRG_CHKSUM};
 extern uint8_t defaultCfgPort[];
 extern uint8_t defaultCfgRate[];
 extern uint8_t defaultCfgMsg[];
