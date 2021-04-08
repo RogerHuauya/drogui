@@ -1,5 +1,5 @@
 CXX = g++
-INC = 
+INC = -I../registerMap
 PCFG = -lz -lrt -lpthread -lwiringPi -lncurses -lpanel
 
 SOURCES :=  $(wildcard src/*.cpp)
