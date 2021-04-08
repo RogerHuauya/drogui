@@ -75,19 +75,23 @@ void rpyTask(){
     float rpy[3];
     mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, my, mx, mz);
     getMahonyEuler(rpy);
-    roll = rpy[0], pitch = rpy[1], yaw = rpy[2];
+    raw_roll = rpy[0], raw_pitch = rpy[1], raw_yaw = rpy[2];
     
     /*roll += fmax(fmin(Kdfilt, (rpy[0] - roll)),-Kdfilt);
     pitch += fmax(fmin(Kdfilt, (rpy[1] - pitch)),-Kdfilt);
     yaw += fmax(fmin(Kdfilt,(rpy[2] - yaw)),-Kdfilt);*/
 
-    roll = computeFilter(&filter_roll, roll);
-    pitch = computeFilter(&filter_pitch, pitch);
-    yaw = computeFilter(&filter_yaw, yaw);
+    raw_roll = computeFilter(&filter_roll, raw_roll);
+    raw_pitch = computeFilter(&filter_pitch, raw_pitch);
+    raw_yaw = computeFilter(&filter_yaw, raw_yaw);
 
-    roll -= getReg(ROLL_OFFSET);
-    pitch -= getReg(PITCH_OFFSET);
-    yaw -= getReg(YAW_OFFSET);
+    setReg(RAW_ROLL, raw_roll);
+    setReg(RAW_PITCH, raw_pitch);
+    setReg(RAW_YAW, raw_yaw);
+    
+    roll = raw_roll - getReg(ROLL_OFFSET);
+    pitch = raw_pitch - getReg(PITCH_OFFSET);
+    yaw = raw_yaw - getReg(YAW_OFFSET);
 
     setReg(ROLL_VAL, roll);
     setReg(PITCH_VAL, pitch);
