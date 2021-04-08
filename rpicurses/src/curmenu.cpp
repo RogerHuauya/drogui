@@ -8,6 +8,7 @@
 #include "read_write.h"
 #include "curmenu.h"
 #include <time.h>
+#include "threaded.h"
 
 extern rasp_I2C rasp_i2c;
 bool logging_state = false;
@@ -40,6 +41,7 @@ char bigtext[100][50];
 void handler_stop(int s){
     rasp_i2c.sendFloat(Z_REF, 0);
     //printf("Emergency exit CTRL+C - Caught signal %d ... turning off motors\n",s);
+    exitLog();
     rasp_i2c.finish();
     endwin();
     exit(1); 
@@ -256,10 +258,10 @@ bool variousOp(PANEL* pan, int index){
 	}
     }
     else if (index == 2){
-        if(sim7600.GPSGet()){
+        /*if(sim7600.GPSGet()){
             sim7600.offset_Log = sim7600.Log;
             sim7600.offset_Lat = sim7600.Lat;
-        }
+        }*/
         start = !start;
         rasp_i2c.sendFloat(START, start);
         various_op[index] = (start ? "Stop  Kalman":"Start Kalman");
