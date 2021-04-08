@@ -285,6 +285,8 @@ typedef struct _ubxPacket{
 typedef struct _m8q{
     ubxPacket snd_pack, rcv_pack;
     int latitude, longitud;
+	int off_x, off_y;
+	int cnt;
 } m8q;
 
 
@@ -299,6 +301,8 @@ void cfgM8QMsg(ubxPacket *mp, uint8_t *cfgMsgArray);
 void cfgM8QRate(ubxPacket *mp, uint8_t *cfgRateArray);
 
 int readLatLon(m8q* mg);
+
+int initM8Q(m8q *mg);
 
 int readM8Q(ubxPacket *mp, uint32_t timeout);
 void printPacket(ubxPacket *mp);

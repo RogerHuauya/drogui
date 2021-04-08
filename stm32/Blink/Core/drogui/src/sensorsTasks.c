@@ -1,13 +1,13 @@
 #include "sensorsTasks.h"
 #include "mahony.h"
 #include "task.h"
-#include "usart.h"
 #include "utils.h"
-#include <stdio.h>
-#include <string.h>
+#include "M8Q.h"
+#include "kalman.h"
 
 mpu9250 myIMU;
 
+m8q myGPS;
 
 filter filter_roll, filter_pitch, filter_yaw;
 
@@ -19,6 +19,7 @@ float   roll,       pitch,      yaw,
         x,          y,          z; 
         
 float z_ant = 0;
+float Kdfilt = 0.01;
 
 bmp388 myBMP;
 float altitude,offset_alt;
@@ -69,7 +70,42 @@ void magTask(){
     mz = myIMU.mz;
 }
 
-float Kdfilt = 0.01;
+void altitudeTask(){
+    
+    bmp388ReadAltitude(&myBMP);
+    //z = computeMvAvgFilter( &mvAvg_bmp, myBMP.altitude );
+    z = computeEmaFilter( &ema_bmp, myBMP.altitude);
+    z = computeFilter( &filter_z, z );
+    
+    setReg(Z_VAL, z);
+    
+}
+
+void heightTask(void *argument){
+    HAL_GPIO_WritePin(TRIGGER_GPIO_Port, TRIGGER_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(TRIGGER_GPIO_Port, TRIGGER_Pin, GPIO_PIN_SET);
+    uint32_t tim = TIME;
+    while(TIME - tim < 10);
+    HAL_GPIO_WritePin(TRIGGER_GPIO_Port, TRIGGER_Pin, GPIO_PIN_RESET);
+}
+
+void gpsTask(){
+
+    int ret = readLatLon(&myGPS); 
+    setReg(GPS_STATE, ret);
+    
+    if(ret == GPS_OK){
+        if(getReg(START) <= 0)
+            myGPS.off_x = myGPS.latitude, myGPS.off_y = myGPS.longitud;
+        
+        setReg(GPS_AVAILABLE, 1);
+        setReg(GPS_X, myGPS.latitude - myGPS.off_x),
+        setReg(GPS_Y, myGPS.longitud - myGPS.off_y),
+        setReg(GPS_CNT,   myGPS.cnt++);     
+    }
+}
+
+
 void rpyTask(){
     
     float rpy[3];
@@ -105,36 +141,34 @@ void rpyTask(){
     }
 }
 
-void altitudeTask(){
+void xyzTask(){
     
-    bmp388ReadAltitude(&myBMP);
-    //z = computeMvAvgFilter( &mvAvg_bmp, myBMP.altitude );
-    z = computeEmaFilter( &ema_bmp, myBMP.altitude);
-    z = computeFilter( &filter_z, z );
     
-    setReg(Z_VAL, z);
+    if(getReg(START) > 0){
+            kalmanUpdateIMU(ax, ay, az, raw_roll, raw_pitch, raw_yaw);
+
+            if(getReg(GPS_AVAILABLE) > 0)
+                setReg(GPS_AVAILABLE, 0),
+                kalmanUpdateGPS(getReg(GPS_X)/100.0, getReg(GPS_Y)/100.0, 0);
+    }
+    else{
+        clearKalman();
+    }
+
+    getPosition(&x, &y, &z);
     
-}
-
-
-
-void heightTask(void *argument){
-    HAL_GPIO_WritePin(TRIGGER_GPIO_Port, TRIGGER_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(TRIGGER_GPIO_Port, TRIGGER_Pin, GPIO_PIN_SET);
-    uint32_t tim = TIME;
-    while(TIME - tim < 10);
-    HAL_GPIO_WritePin(TRIGGER_GPIO_Port, TRIGGER_Pin, GPIO_PIN_RESET);
     z = distance;
     if( fabs(z-z_ant) > 0.5  ) z = z_ant;
     z_ant = z;
+
+    setReg(X_VAL, x);
+    setReg(Y_VAL, y);
     setReg(Z_VAL, z);
 }
-
 
 void initSensorsTasks(){
     
     initMpu(&myIMU);
-    
 
     initFilter(&filter_roll, 4, k_1_10, v_1_10);
     initFilter(&filter_pitch, 4, k_1_10, v_1_10);
@@ -144,16 +178,20 @@ void initSensorsTasks(){
     setReg(MAG_X_SCALE,1);
     setReg(MAG_Y_SCALE,1);
     setReg(MAG_Z_SCALE,1);
-    
-    //calibrateGyro(&myIMU);
-    //calibrateAccel(&myIMU);
-    //calibrateMag(&myIMU);
 
+    #if PORT == GPS
+        initM8Q(&myGPS);
+        setKalmanTsImu(0.01);
+        setKalmanTsGps(0.5);
+
+        initMatGlobal();
+    #endif
+    
     calib_status = 0;
 
     //initBmp388(&myBMP, 10);  
-
     //initMvAvgFilter(&mvAvg_bmp, 25);
+
     initEmaFilter(&ema_bmp, 0.9, 0.1, 0.8);
     initFilter(&filter_z, 4, k_1_20, v_1_20);
 
@@ -162,6 +200,11 @@ void initSensorsTasks(){
     addTask(&magTask, 100000, 2);
     addTask(&rpyTask, 2000, 2);
     //addTask(&altitudeTask,10000,2);
-    //addTask(&heightTask, 10000, 2);
+    addTask(&heightTask, 10000, 2);
+    
+    #if PORT == GPS
+        addTask(&gpsTask, 500000, 3);
+        addTask(&xyzTask, 10000, 3);
+    #endif
 
 }
