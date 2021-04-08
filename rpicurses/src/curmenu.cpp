@@ -8,6 +8,7 @@
 #include "read_write.h"
 #include "curmenu.h"
 #include <time.h>
+#include "threaded.h"
 
 extern rasp_I2C rasp_i2c;
 bool logging_state = false;
@@ -40,6 +41,7 @@ char bigtext[100][50];
 void handler_stop(int s){
     rasp_i2c.sendFloat(Z_REF, 0);
     //printf("Emergency exit CTRL+C - Caught signal %d ... turning off motors\n",s);
+    exitLog();
     rasp_i2c.finish();
     endwin();
     exit(1); 
@@ -190,19 +192,11 @@ bool setpointOp(PANEL* pan, int index){
 
 bool start = false;
 
-string various_op[] = {"Read Register", "Write Register", "Start kalman", "Compensation", "Start logging", "Update Offset", "Noise H parameters"}; 
+string various_op[] = {"Read Register", "Write Register", "Start kalman", "Compensation", "Start logging", "Update Offset"}; 
 bool variousOp(PANEL* pan, int index){
     //wmove(win, 5, 5);
     //wprintw(win, "kha3");
-    if(index == 6){
-        string names[] = {"Amp", "Fr-Hz"};
-        float arr[2];
-        if(readData(pan, various_op[index], names, arr, 2)){
-            rasp_i2c.sendFloat(AMP_SIN, arr[0]);
-            rasp_i2c.sendFloat(FREQ_SIN, arr[1]);
-        }
-    }
-    else if(index == 5){
+    if(index == 5){
 
         if(confirmData(pan)){
 
@@ -256,10 +250,10 @@ bool variousOp(PANEL* pan, int index){
 	}
     }
     else if (index == 2){
-        if(sim7600.GPSGet()){
+        /*if(sim7600.GPSGet()){
             sim7600.offset_Log = sim7600.Log;
             sim7600.offset_Lat = sim7600.Lat;
-        }
+        }*/
         start = !start;
         rasp_i2c.sendFloat(START, start);
         various_op[index] = (start ? "Stop  Kalman":"Start Kalman");
@@ -442,7 +436,7 @@ int curmenu(void) {
         menu("SensorData", sensor_data_op, 5, &sensorDataOp),
         menu("Calibration", calibration_op, 3, &calibrationOp),
         menu("Setpoint", setpoint_op, 6, &setpointOp),
-	menu("Various", various_op, 7, &variousOp)
+	menu("Various", various_op, 6, &variousOp)
     };
 
     scrollMenu scm = scrollMenu(mainpanel, workpanel, arr_menu, 5);

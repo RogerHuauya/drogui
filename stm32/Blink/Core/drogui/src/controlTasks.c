@@ -2,9 +2,6 @@
 #include "filter.h"
 #include "task.h"
 #include "pwm.h"
-#include "usart.h"
-#include <stdio.h>
-#include <string.h>
 
 pwm m1, m2, m3, m4;
 pid roll2w, pitch2w, yaw2w; 
@@ -23,7 +20,6 @@ float wroll_err,wpitch_err,wyaw_err;
 
 //float aux_wref, aux_wref2;
 
-char buffc[500] = "hola\n";
 void saturateM(float H){
     float f_max = 1;
     float arr_M[] = {M1, M2, M3, M4};

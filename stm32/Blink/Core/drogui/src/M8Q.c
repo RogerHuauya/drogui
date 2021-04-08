@@ -57,6 +57,32 @@ void sendSerialCommand(ubxPacket *outgoingUBX)
 }
 
 
+int initM8Q(m8q *mg){
+	int ret;
+	HAL_Delay(1000);
+    cfgM8QPort(&(mg->snd_pack), defaultCfgPort);
+    
+    HAL_Delay(100);
+    changeBaudrate(460800);
+    HAL_Delay(100);
+
+    cfgM8QRate(&(mg->snd_pack), defaultCfgRate);
+	
+    ret = readM8Q(&(mg->rcv_pack), 10000);
+	if(ret != GPS_OK) return ret; 
+
+    cfgM8QMsg(&(mg->snd_pack), defaultCfgMsg);
+
+    ret = readM8Q(&(mg->rcv_pack), 10000);
+	if(ret != GPS_OK) return ret;
+
+    HAL_Delay(100);
+
+	mg->cnt = 0;
+	return GPS_OK;
+}
+
+
 void cfgM8Q(ubxPacket *mp, uint8_t id,uint8_t len, uint8_t *cfgArray){
 	mp->cls = UBX_CLASS_CFG;
 	mp->id  = id;
