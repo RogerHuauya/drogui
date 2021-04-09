@@ -16,7 +16,7 @@ void _main(){
     HAL_Delay(1000);
     
     #if PORT == DEBUG
-        seriaPrint("Start System\n");
+        serialPrint("Start System\n");
     #endif
     
     initDebug();

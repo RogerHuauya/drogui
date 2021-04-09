@@ -15,10 +15,11 @@
 #if PORT == DEBUG
     void debugTask(void *argument){
         
-        while(serialAvailable()){
+        /*while(serialAvailable()){
             char c = serialRead();
             serialPrintf("%x ",(uint8_t) c);
-        }
+        }*/
+        serialPrint("I am debugging\n");
     }
 #endif
 
@@ -37,7 +38,7 @@ void securityTask(){
 
 void initDebug(){
     #if PORT == DEBUG   
-        addTask(&debugTask, 10000, 1);
+        addTask(&debugTask, 1000000, 1);
     #elif PORT == LED
         addTask(&blinkTask, 100000, 1);   
     #endif
