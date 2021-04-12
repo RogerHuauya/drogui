@@ -3,9 +3,6 @@
 #include "matlib.h"
 #include "registerMap.h"
 #include "utils.h"
-#include <stdio.h>
-#include <string.h>
-#include "usart.h"
 
 #define G 9.81
 int16_t _ax, _ay, _az, _gx, _gy, _gz, _mx, _my, _mz;
