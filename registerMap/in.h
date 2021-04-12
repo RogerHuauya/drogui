@@ -71,6 +71,7 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define	PID_INDEX
 #define	PID_VAR
 #define	N_FILTER
+#define START_XYC
 
 
 /**********************************
@@ -110,6 +111,20 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define	Y_REF_SIZE
 #define	Z_REF_SIZE
 
+#define	ROLL_PERIOD
+#define	PITCH_PERIOD
+#define	YAW_PERIOD
+#define	X_PERIOD
+#define	Y_PERIOD
+#define	Z_PERIOD
+
+#define	ROLL_SCURVE
+#define	PITCH_SCURVE
+#define	YAW_SCURVE
+#define	X_SCURVE
+#define	Y_SCURVE
+#define	Z_SCURVE
+
 #define	GYRO_X_REF
 #define	GYRO_Y_REF
 #define	GYRO_Z_REF
@@ -148,7 +163,7 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define	GPS_CNT
 #define	GPS_STATE
 #define	GPS_AVAILABLE
-#define	START
+#define	START_GPS
 
 // Accelerometer
 #define	ACC_X

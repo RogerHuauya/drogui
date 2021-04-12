@@ -95,7 +95,7 @@ void gpsTask(){
     setReg(GPS_STATE, ret);
     
     if(ret == GPS_OK){
-        if(getReg(START) <= 0)
+        if(getReg(START_GPS) <= 0)
             myGPS.off_x = myGPS.latitude, myGPS.off_y = myGPS.longitud;
         
         setReg(GPS_AVAILABLE, 1);
@@ -144,7 +144,7 @@ void rpyTask(){
 void xyzTask(){
     
     
-    if(getReg(START) > 0){
+    if(getReg(START_GPS) > 0){
             kalmanUpdateIMU(ax, ay, az, raw_roll, raw_pitch, raw_yaw);
 
             if(getReg(GPS_AVAILABLE) > 0)

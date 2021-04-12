@@ -1,6 +1,7 @@
 #include "controlTasks.h"
 #include "filter.h"
 #include "task.h"
+#include "scurve.h"
 #include "pwm.h"
 
 pwm m1, m2, m3, m4;
@@ -9,12 +10,13 @@ pid wroll_control, wpitch_control, wyaw_control;
 pid z_control, x_control, y_control;
 
 filter filter_wroll, filter_wpitch, filter_wyaw;
-filter filter_m1, filter_m2, filter_m3, filter_m4; 
+filter filter_m1, filter_m2, filter_m3, filter_m4;
+
+scurve z_sp, x_sp, y_sp, roll_sp, pitch_sp, yaw_sp;
 
 float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, R_MAX = PI/22.0 , P_MAX = PI/22.0;
 float M1,M2,M3,M4;
 
-float roll_off = 0 , pitch_off = 0, yaw_off = 0, x_off = 0, y_off = 0, z_off = 0;
 float wroll_ref, wpitch_ref, wyaw_ref, roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
 float wroll_err,wpitch_err,wyaw_err; 
 
@@ -146,17 +148,51 @@ void xyzControlTask(){
     X_C = computePid(&x_control, -x, TIME, H);
     Y_C = computePid(&y_control, -y, TIME, H);
 
+    if(getReg(Z_REF) != z_sp.fin) 
+        setTrayectory(&z_sp, z_sp.fin, getReg(Z_REF), getReg(Z_PERIOD), TIME);
 
-    rampValue(&z_ref, getReg(Z_REF), getReg(Z_REF_SIZE));
+    z_ref =  getSetpoint(&z_sp, TIME);
 
-    H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG);// + getReg(AMP_SIN)*sin(2*PI*getReg(FREQ_SIN)*TIME/1000000);
+    setReg(Z_SCURVE, z_ref);
+
+    H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG);
     rampValue(&H, H_ref, 0.2);
 
     H_comp = H/(cos(roll)*cos(pitch));
 
-    rampValue(&roll_ref, getReg(ROLL_REF) + roll_off, 0.015);
-    rampValue(&pitch_ref, getReg(PITCH_REF) + pitch_off, 0.015);
-    yaw_ref = getReg(YAW_REF) + yaw_off;
+    if(getReg(START_XYC) > 0){
+        
+        roll_ref = Y_C*cos(yaw) + X_C*sin(yaw);
+        pitch_ref = Y_C*sin(yaw) - X_C*cos(yaw);
+        float rel = roll_ref/(pitch_ref + EPS);
+        
+        if( fabs(rel) < 1  &&  fabs(pitch_ref) >= P_MAX  ){
+            pitch_ref = copysign(P_MAX, pitch_ref);
+            roll_ref = pitch_ref * rel;
+        }
+        else if (fabs(rel) >= 1 && fabs(roll_ref) >= R_MAX  ){
+            roll_ref = copysign(R_MAX, roll_ref);
+            pitch_ref = roll_ref/rel;
+        }
+    }
+    else{
+
+        if(getReg(ROLL_REF) != roll_sp.fin) 
+            setTrayectory(&roll_sp, roll_sp.fin, getReg(ROLL_REF), getReg(ROLL_PERIOD), TIME);
+
+        roll_ref =  getSetpoint(&roll_sp, TIME);
+
+        setReg(ROLL_SCURVE, roll_ref);
+
+        if(getReg(PITCH_REF) != pitch_sp.fin) 
+            setTrayectory(&pitch_sp, pitch_sp.fin, getReg(PITCH_REF), getReg(PITCH_PERIOD), TIME);
+
+        pitch_ref =  getSetpoint(&pitch_sp, TIME);
+        
+        setReg(PITCH_SCURVE, pitch_ref);
+
+    }
+    yaw_ref = getReg(YAW_REF);
 
     if(security){
         H = 0; z_ref = 0;
@@ -176,7 +212,7 @@ void initControlTasks(){
 
     initPid(&z_control, 0, 0, 0, 0, 50 , 10, 15, (P2ID & D_INT));
     initPid(&x_control, 0, 0, 0, 0, 50 , 10, 0.09, NORMAL);
-    initPid(&y_control, 0, 0, 0, 0, 50 , 10,0.09, NORMAL);
+    initPid(&y_control, 0, 0, 0, 0, 50 , 10, 0.09, NORMAL);
 
     initPid(&roll2w,    200, 0, 20, TIME, 50, 0.785, 60, (P2ID & D_INT));
     initPid(&pitch2w,   200, 0, 20, TIME, 50, 0.785, 60, (P2ID & D_INT));
@@ -189,6 +225,10 @@ void initControlTasks(){
     initFilter(&filter_wroll, 4, k_1_20, v_1_20);
     initFilter(&filter_wpitch, 4, k_1_20, v_1_20);
     initFilter(&filter_wyaw, 4, k_1_20, v_1_20);
+
+    setTrayectory(&z_sp, 0, 0, 1, TIME);
+    setTrayectory(&roll_sp, 0, 0, 1, TIME);
+    setTrayectory(&pitch_sp, 0, 0, 1, TIME);
 
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
