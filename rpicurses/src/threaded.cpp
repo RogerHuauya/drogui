@@ -1,17 +1,31 @@
 #include "threaded.h"
 #include "sim7600.h"
 #include "registerMap.h"
+#include <chrono>
+
+#define max(x,y) ( ( (x) > (y) ) ? (x) : (y) )
+
 extern rasp_I2C rasp_i2c;
 
 extern bool logging_state;
 
 std::ofstream log_gps;
 
+int gps_arr[] = {GPS_X, GPS_Y, GPS_STATE, X_VAL, Y_VAL, ACC_X, ACC_Y, ACC_Z, RAW_ROLL, RAW_PITCH, RAW_YAW};
+int gps_sz = 11;
+
+int z_arr[] = {ROLL_REF, PITCH_REF, ROLL_VAL,  PITCH_VAL, GYRO_X_REF, GYRO_Y_REF, GYRO_X, GYRO_Y, Z_VAL, Z_U};
+int z_sz = 10;
+
+int rpy_arr[] = {ROLL_U, PITCH_U, YAW_U, GYRO_X_REF, GYRO_Y_REF, GYRO_X, GYRO_Y, GYRO_Z, ROLL_VAL, PITCH_VAL};
+int rpy_sz = 10;
+
+int xyz_arr[] = {GPS_X, GPS_Y, X_VAL, Y_VAL, Z_VAL, ROLL_VAL, PITCH_VAL, GYRO_Z, Z_U};
+int xyz_sz = 9;
+
 void exitLog(){
 	if(logging_state) log_gps.close();
 }
-
-
 
 std::string do_console_command_get_result (char* command)
 {
@@ -32,74 +46,41 @@ std::string do_console_command_get_result (char* command)
 
 
 
+void logArr(std::ofstream *log, int *arr, int sz){
+    
+    for(int i = 0 ; i < sz ; i++){
+	*log << rasp_i2c.readFloat(arr[i]);
+	if(i < sz-1) *log << "\t";
+	else *log << "\n";
+	unistd::usleep(200);
+    }
+
+}
+
+
+
 
 void *logging(void *threadid){
     unsigned long long tim = 0;
-    //unistd::sleep(10);
+    std::chrono::time_point<std::chrono::system_clock> end_clock, start_clock;
     while(!logging_state){}
-    std::string name_log = str_datetime(); 
+
+    std::string name_log = str_datetime();
     log_gps.open("logs/"+name_log+ "_control"+ ".txt");
-    
     log_gps.precision(10);
 
-    /*std::ofstream log_imu; 
-    log_imu.open("logs/"+name_log+ "_imu"+ ".txt");
-    log_imu.precision(10);
-    */
-    /*
-    log_file << "H_VAL   H_STEP_SIZE " << rasp_i2c.readFloat(H_VAL) << " " << rasp_i2c.readFloat(H_STEP_SIZE)<< std::endl;
-    log_file << "ROLL KP KI KD " << rasp_i2c.readFloat(ROLL_KP) << " " <<rasp_i2c.readFloat(ROLL_KI) << " " <<rasp_i2c.readFloat(ROLL_KD)<<std::endl;
-    log_file << "PITCH KP KI KD " << rasp_i2c.readFloat(PITCH_KP) << " " <<rasp_i2c.readFloat(PITCH_KI) << " " <<rasp_i2c.readFloat(PITCH_KD)<<std::endl;
-    log_file << "YAW KP KI KD " << rasp_i2c.readFloat(YAW_KP) << " " <<rasp_i2c.readFloat(YAW_KI) << " " <<rasp_i2c.readFloat(YAW_KD)<<std::endl;
-    */
-    
+    start_clock = std::chrono::system_clock::now();
+    end_clock = std::chrono::system_clock::now();
     while(1){
+
+	while(std::chrono::duration_cast<std::chrono::microseconds> (end_clock-start_clock).count() < (10000*tim))
+	    end_clock = std::chrono::system_clock::now();
+
         if(logging_state){
-            
+
 	    log_gps << tim/100.0 << "\t";
-
-            log_gps << rasp_i2c.readFloat(GPS_X) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(GPS_Y) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(GPS_STATE) 	<< "\t"; unistd::usleep(300);
-            //log_gps << rasp_i2c.readFloat(GPS_CNT)      << "\n"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(X_VAL) 	<< "\t"; unistd::usleep(300);
-	    log_gps << rasp_i2c.readFloat(Y_VAL) 	<< "\t"; unistd::usleep(300);
-
-	    log_gps << rasp_i2c.readFloat(ACC_X) 	<< "\t"; unistd::usleep(300);
-	    log_gps << rasp_i2c.readFloat(ACC_Y) 	<< "\t"; unistd::usleep(300);
-	    log_gps << rasp_i2c.readFloat(ACC_Z) 	<< "\t"; unistd::usleep(300);
-	    
-	    log_gps << rasp_i2c.readFloat(RAW_ROLL) 	<< "\t"; unistd::usleep(300);
-	    log_gps << rasp_i2c.readFloat(RAW_PITCH) 	<< "\t"; unistd::usleep(300);
-	    log_gps << rasp_i2c.readFloat(RAW_YAW)      << "\n"; unistd::usleep(300);
-	    
-	    /*log_gps << rasp_i2c.readFloat(ROLL_REF)     << "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(PITCH_REF) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(ROLL_VAL) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(PITCH_VAL) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(GYRO_X_REF) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(GYRO_Y_REF) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(GYRO_X) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(GYRO_Y) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat( Z_VAL ) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat( Z_U ) 	<< "\n"; unistd::usleep(300);*/
-	    
-	    /*log_gps << tim/50.0 << "\t";
-            log_gps << rasp_i2c.readFloat(MOTOR_1)      << "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(MOTOR_2)      << "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(MOTOR_3)      << "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(MOTOR_4)      << "\t"; unistd::usleep(300);
-	    log_gps << rasp_i2c.readFloat(ROLL_VAL) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(PITCH_VAL) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(GYRO_X_REF) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(GYRO_Y_REF) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(GYRO_X) 	<< "\t"; unistd::usleep(300);
-            log_gps << rasp_i2c.readFloat(GYRO_Y) 	<< "\n"; unistd::usleep(300);*/
+	    logArr(&log_gps, xyz_arr, xyz_sz);
 	}
-        else{
-            unistd::usleep(2700);
-        }
-        unistd::usleep(7300);
         tim++;
     }
 }
