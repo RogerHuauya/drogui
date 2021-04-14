@@ -98,9 +98,14 @@ void gpsTask(){
         if(getReg(START_GPS) <= 0)
             myGPS.off_x = myGPS.latitude, myGPS.off_y = myGPS.longitud;
         
+        int x_lat = myGPS.latitude - myGPS.off_x;
+        int y_lon = myGPS.longitud - myGPS.off_y;
+        // 0.003042806	0.016161039
+        // 0.015095819	-0.002778266
+
         setReg(GPS_AVAILABLE, 1);
-        setReg(GPS_X, myGPS.latitude - myGPS.off_x),
-        setReg(GPS_Y, myGPS.longitud - myGPS.off_y),
+        setReg(GPS_X, 0.016161039*x_lat + 0.003042806*y_lon),
+        setReg(GPS_Y, 0.015095819*y_lon	- 0.002778266*x_lat),
         setReg(GPS_CNT,   myGPS.cnt++);     
     }
 }
