@@ -100,12 +100,11 @@ void gpsTask(){
         
         int x_lat = myGPS.latitude - myGPS.off_x;
         int y_lon = myGPS.longitud - myGPS.off_y;
-        // 0.003042806	0.016161039
-        // 0.015095819	-0.002778266
+        
 
         setReg(GPS_AVAILABLE, 1);
-        setReg(GPS_X, 0.016161039*x_lat + 0.003042806*y_lon),
-        setReg(GPS_Y, 0.015095819*y_lon	- 0.002778266*x_lat),
+        setReg(GPS_X, 0.012502101*x_lat + 3.75547E-05*y_lon),
+        setReg(GPS_Y, 0.009585987*y_lon + 0.000322043*x_lat),
         setReg(GPS_CNT,   myGPS.cnt++);     
     }
 }
