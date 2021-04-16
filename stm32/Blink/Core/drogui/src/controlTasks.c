@@ -17,7 +17,9 @@ scurve z_sp, x_sp, y_sp, roll_sp, pitch_sp, yaw_sp;
 float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, R_MAX = PI/22.0 , P_MAX = PI/22.0;
 float M1,M2,M3,M4;
 
-float wroll_ref, wpitch_ref, wyaw_ref, roll_ref, pitch_ref, yaw_ref, x_ref, y_ref, z_ref;
+float wroll_ref, wpitch_ref, wyaw_ref;
+float roll_ref, pitch_ref, yaw_ref;
+float x_ref = 0, y_ref = 0, z_ref = 0;
 float wroll_err,wpitch_err,wyaw_err; 
 
 //float aux_wref, aux_wref2;
@@ -65,12 +67,26 @@ void updatePID(){
                 wyaw_control.kp[0] = getReg(YAW_KP),  wyaw_control.ki[0] = getReg(YAW_KI),  wyaw_control.kd[0] = getReg(YAW_KD);
 
         break;
-        
+
+        case PID_X:
+            x_control.kp[0] = getReg(X_KP);
+            x_control.ki[0] = getReg(X_KI);
+            x_control.kd[0] = getReg(X_KD);
+        break;
+
+        case PID_Y:
+            y_control.kp[0] = getReg(Y_KP);
+            y_control.ki[0] = getReg(Y_KI);
+            y_control.kd[0] = getReg(Y_KD);
+        break;
+
         case PID_Z:
             z_control.kp[0] = getReg(Z_KP);
             z_control.ki[0] = getReg(Z_KI);
             z_control.kd[0] = getReg(Z_KD);
         break;
+
+    
     }
     roll2w.N_filt = pitch2w.N_filt = yaw2w.N_filt = wroll_control.N_filt = wpitch_control.N_filt = wyaw_control.N_filt = getReg(N_FILTER);
 }
@@ -145,8 +161,23 @@ void rpyControlTask(){
 }
 
 void xyzControlTask(){
-    X_C = computePid(&x_control, -x, TIME, H);
-    Y_C = computePid(&y_control, -y, TIME, H);
+
+    if(getReg(X_REF) != x_sp.fin) 
+        setTrayectory(&x_sp, x_sp.fin, getReg(X_REF), getReg(X_PERIOD), TIME);
+
+    x_ref =  getSetpoint(&x_sp, TIME);
+
+    setReg(X_SCURVE, x_ref);
+
+    if(getReg(Y_REF) != y_sp.fin) 
+        setTrayectory(&y_sp, y_sp.fin, getReg(Y_REF), getReg(Y_PERIOD), TIME);
+
+    y_ref =  getSetpoint(&y_sp, TIME);
+
+    setReg(Y_SCURVE, y_ref);
+
+    X_C = computePid(&x_control, x_ref - x, TIME, H);
+    Y_C = computePid(&y_control, y_ref - y, TIME, H);
 
     if(getReg(Z_REF) != z_sp.fin) 
         setTrayectory(&z_sp, z_sp.fin, getReg(Z_REF), getReg(Z_PERIOD), TIME);
@@ -162,8 +193,9 @@ void xyzControlTask(){
 
     if(getReg(START_XYC) > 0){
         
-        roll_ref = Y_C*cos(yaw) + X_C*sin(yaw);
-        pitch_ref = Y_C*sin(yaw) - X_C*cos(yaw);
+        roll_ref = -Y_C*cos(raw_yaw) - X_C*sin(raw_yaw);
+        pitch_ref = -Y_C*sin(raw_yaw) + X_C*cos(raw_yaw);
+
         float rel = roll_ref/(pitch_ref + EPS);
         
         if( fabs(rel) < 1  &&  fabs(pitch_ref) >= P_MAX  ){
@@ -174,6 +206,9 @@ void xyzControlTask(){
             roll_ref = copysign(R_MAX, roll_ref);
             pitch_ref = roll_ref/rel;
         }
+
+        setReg(ROLL_SCURVE, roll_ref);
+        setReg(PITCH_SCURVE, pitch_ref);
     }
     else{
 
@@ -226,7 +261,10 @@ void initControlTasks(){
     initFilter(&filter_wpitch, 4, k_1_20, v_1_20);
     initFilter(&filter_wyaw, 4, k_1_20, v_1_20);
 
+    setTrayectory(&x_sp, 0, 0, 1, TIME);
+    setTrayectory(&y_sp, 0, 0, 1, TIME);
     setTrayectory(&z_sp, 0, 0, 1, TIME);
+
     setTrayectory(&roll_sp, 0, 0, 1, TIME);
     setTrayectory(&pitch_sp, 0, 0, 1, TIME);
 
