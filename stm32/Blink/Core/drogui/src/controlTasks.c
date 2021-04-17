@@ -138,20 +138,20 @@ void wControlTask(){
 
 void rpyControlTask(){
 
-    float wroll_ref_d = computePid(&roll2w, angle_dif(roll_ref, roll), TIME, 0);
-    float wpitch_ref_d = computePid(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0);
-    float wyaw_ref_d = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);
+    wroll_ref = computePid(&roll2w, angle_dif(roll_ref, roll), TIME, 0);
+    wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0);
+    wyaw_ref = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);
 
-    wroll_ref_d = computeFilter(&filter_wroll,  wroll_ref_d);
-    wpitch_ref_d = computeFilter(&filter_wpitch, wpitch_ref_d);
-    wyaw_ref_d = computeFilter(&filter_wyaw, wyaw_ref_d);
+    //wroll_ref_d = computeFilter(&filter_wroll,  wroll_ref_d);
+    //wpitch_ref_d = computeFilter(&filter_wpitch, wpitch_ref_d);
+    //wyaw_ref_d = computeFilter(&filter_wyaw, wyaw_ref_d);
 
-    rampValue(&wroll_ref, wroll_ref_d, 0.2);
-    rampValue(&wpitch_ref, wpitch_ref_d, 0.2);
+    //rampValue(&wroll_ref, wroll_ref_d, 0.2);
+    //rampValue(&wpitch_ref, wpitch_ref_d, 0.2);
     
     setReg(GYRO_X_REF,wroll_ref);
     setReg(GYRO_Y_REF,wpitch_ref);
-    setReg(GYRO_Z_REF,wyaw_ref_d);
+    setReg(GYRO_Z_REF,wyaw_ref);
     
     if(security){
         resetPid(&roll2w, TIME);
