@@ -69,7 +69,7 @@ float computeFiltGyro(filtGyro *fg, float val){
 
     val = computeDNotch(&(fg->third), val);
     val = computeDNotch(&(fg->fourth), val);
-    return val / 100.0;
+    return val / 65.534;
 }
 
 float computeFiltAcc(filtAcc *fa, float val){
@@ -181,6 +181,7 @@ void readMag(mpu9250* m){ // m/s^2
 // 120 260 380
 
 bool quiet(mpu9250* m, int n, float treshold, bool cal){
+    
     float max_gyro[3] = {0,0,0};
     float min_gyro[3] = {0,0,0};
     float acum_gyro[3] = {0,0,0};
@@ -234,7 +235,7 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
 void calibrateGyro(mpu9250* m){
     //HAL_UART_Transmit(&huart2, (uint8_t*) "CalibG\n", 8, 100);
     setReg(CAL_GYR,0);
-    while(!quiet(m,500,0, true));
+    while(!quiet(m,800,0, true));
     
     setReg(GYR_X_OFF, m -> off_gx);
     setReg(GYR_Y_OFF, m -> off_gy);

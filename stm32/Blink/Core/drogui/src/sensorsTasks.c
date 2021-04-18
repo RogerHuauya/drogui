@@ -17,7 +17,10 @@ float   roll,       pitch,      yaw,
         gx,         gy,         gz, 
         mx,         my,         mz, 
         x,          y,          z; 
-        
+
+float mx_ant = 0, my_ant = 0, mz_ant = 0;
+bool mag_available = false;
+
 float z_ant = 0;
 float Kdfilt = 0.01;
 
@@ -103,9 +106,9 @@ void gpsTask(){
         
 
         setReg(GPS_AVAILABLE, 1);
-        setReg(GPS_X, 0.012502101*x_lat + 3.75547E-05*y_lon),
-        setReg(GPS_Y, 0.009585987*y_lon + 0.000322043*x_lat),
-        setReg(GPS_CNT,   myGPS.cnt++);     
+        setReg(GPS_X, 0.01*x_lat),
+        setReg(GPS_Y, 0.01*y_lon),
+        setReg(GPS_CNT, myGPS.cnt++);     
     }
 }
 
@@ -113,7 +116,16 @@ void gpsTask(){
 void rpyTask(){
     
     float rpy[3];
-    mahonyUpdate(gx*PI/360.0f, gy*PI/360.0f, gz*PI/360.0f, ax, ay, az, my, mx, mz);
+
+    if( ( mx_ant == mx ) && ( my_ant == my ) && ( mz_ant == mz ) )
+        mahonyUpdateIMU(gx*2*PI/360.0f, gy*2*PI/360.0f, gz*2*PI/360.0f, ax, ay, az);
+    else{
+        mahonyUpdate(gx*2*PI/360.0f, gy*2*PI/360.0f, gz*2*PI/360.0f, ax, ay, az, my, mx, mz);
+        mx_ant = mx;
+        my_ant = my;
+        mz_ant = mz;
+    }
+    
     getMahonyEuler(rpy);
     raw_roll = rpy[0], raw_pitch = rpy[1], raw_yaw = rpy[2];
     
@@ -153,7 +165,7 @@ void xyzTask(){
 
             if(getReg(GPS_AVAILABLE) > 0)
                 setReg(GPS_AVAILABLE, 0),
-                kalmanUpdateGPS(getReg(GPS_X)/100.0, getReg(GPS_Y)/100.0, 0);
+                kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), 0);
     }
     else{
         clearKalman();
@@ -201,7 +213,7 @@ void initSensorsTasks(){
 
     addTask(&gyroTask, 1000, 3);
     addTask(&accelTask, 1000, 3);
-    addTask(&magTask, 100000, 2);
+    addTask(&magTask, 10000, 2);
     addTask(&rpyTask, 2000, 2);
     //addTask(&altitudeTask,10000,2);
     addTask(&heightTask, 10000, 2);
