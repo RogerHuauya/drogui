@@ -4,13 +4,13 @@
 #include "utils.h"
 
 
-//---------------------------------------------------------------------------------------------------
+//====================================================================================================
 // Definitions
 #define sampleFreq	500.0f			// sample frequency in Hz
 #define twoKpDef	(2.0f * 30.0f)	// 2 * proportional gain
 #define twoKiDef	(2.0f * 0.0f)	// 2 * integral gain
 
-//---------------------------------------------------------------------------------------------------
+//===================================================================================================
 // Variable definitions
 
 volatile float twoKp = twoKpDef;											// 2 * proportional gain (Kp)
@@ -18,7 +18,7 @@ volatile float twoKi = twoKiDef;											// 2 * integral gain (Ki)
 volatile float q0 = 1.0f, q1 = 0.0f, q2 = 0.0f, q3 = 0.0f;					// quaternion of sensor frame relative to auxiliary frame
 volatile float integralFBx = 0.0f,  integralFBy = 0.0f, integralFBz = 0.0f;	// integral error terms scaled by Ki
 
-//---------------------------------------------------------------------------------------------------
+//====================================================================================================
 // Function declarations
 
 float invSqrt(float x);
@@ -26,7 +26,7 @@ float invSqrt(float x);
 //====================================================================================================
 // Functions
 
-//---------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------
 // AHRS algorithm update
 
 void mahonyUpdate(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz) {
