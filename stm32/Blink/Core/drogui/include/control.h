@@ -5,7 +5,7 @@
 #include "filter.h"
 
 
-enum TYPES_PID {NORMAL = 0, P2ID = 1, INDEXED = 2, PIDABS = 4, D_FILTER = 8, D_INT = 16};
+enum TYPES_PID {NORMAL = 0, P2ID = 1, INDEXED = 2, PIDABS = 4, D_FILTER = 8, D_INT = 16, D_SG = 32};
 /**
  * @brief Struct PID
  * @param Kp Kp Array (float)
@@ -33,6 +33,7 @@ typedef struct _pid{
     int type;
     filter f;
     float N_filt;
+    savGolDFilter sgd;
 } pid;
 /**
  * @brief Get control law from PID controller from the error between Reference and Current Value 
