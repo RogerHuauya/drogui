@@ -3,6 +3,7 @@
 #include "matlib.h"
 #include "registerMap.h"
 #include "utils.h"
+#include "serial.h"
 
 #define G 9.81
 int16_t _ax, _ay, _az, _gx, _gy, _gz, _mx, _my, _mz;
@@ -214,14 +215,12 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
         HAL_Delay(1);
     }
     
-    //sprintf(buffcal, "%f\t%f\t%f\t%f\t%f\t%f\n", max_gyro[0] ,min_gyro[0], max_gyro[1] ,min_gyro[1], max_gyro[2] ,min_gyro[2] );
-    //HAL_UART_Transmit(&huart2, (uint8_t*) buffcal, strlen(buffcal), 100);
+    //serialPrintf("%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
 
-    if((max_gyro[0]-min_gyro[0] < (treshold+3)) && (max_gyro[1]-min_gyro[1] < (treshold+6.5)) && (max_gyro[2]-min_gyro[2] < (treshold+7))){
+    if( ( max_gyro[0]-min_gyro[0] < (treshold + 1.8) ) &&\
+        ( max_gyro[1]-min_gyro[1] < (treshold + 3.8) ) && \
+        ( max_gyro[2]-min_gyro[2] < (treshold + 5.0) ) ){
         if(cal){
-            /*m->off_gx = -(max_gyro[0] + min_gyro[0])/2;
-            m->off_gy = -(max_gyro[1] + min_gyro[1])/2;
-            m->off_gz = -(max_gyro[2] + min_gyro[2])/2;*/
             m->off_gx = -1.0*acum_gyro[0]/n;
             m->off_gy = -1.0*acum_gyro[1]/n;
             m->off_gz = -1.0*acum_gyro[2]/n;
@@ -235,7 +234,7 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
 void calibrateGyro(mpu9250* m){
     //HAL_UART_Transmit(&huart2, (uint8_t*) "CalibG\n", 8, 100);
     setReg(CAL_GYR,0);
-    while(!quiet(m,800,0, true));
+    while(!quiet(m,1000,0, true));
     
     setReg(GYR_X_OFF, m -> off_gx);
     setReg(GYR_Y_OFF, m -> off_gy);

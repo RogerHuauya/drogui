@@ -18,7 +18,6 @@ float   roll,       pitch,      yaw,
         mx,         my,         mz, 
         x,          y,          z; 
 
-float mx_ant = 0, my_ant = 0, mz_ant = 0;
 bool mag_available = false;
 
 float z_ant = 0;
@@ -71,6 +70,7 @@ void magTask(){
     mx = myIMU.mx;
     my = myIMU.my;
     mz = myIMU.mz;
+    mag_available = true;
 }
 
 void altitudeTask(){
@@ -116,16 +116,8 @@ void gpsTask(){
 void rpyTask(){
     
     float rpy[3];
-
-    if( ( mx_ant == mx ) && ( my_ant == my ) && ( mz_ant == mz ) )
-        mahonyUpdateIMU(gx*2*PI/360.0f, gy*2*PI/360.0f, gz*2*PI/360.0f, ax, ay, az);
-    else{
-        mahonyUpdate(gx*2*PI/360.0f, gy*2*PI/360.0f, gz*2*PI/360.0f, ax, ay, az, my, mx, mz);
-        mx_ant = mx;
-        my_ant = my;
-        mz_ant = mz;
-    }
-    
+   
+    mahonyUpdate(gx*PI/180.0, gy*PI/180.0, -gz*PI/180.0, ax, ay, az, my, mx, mz);
     getMahonyEuler(rpy);
     raw_roll = rpy[0], raw_pitch = rpy[1], raw_yaw = rpy[2];
     
@@ -213,7 +205,7 @@ void initSensorsTasks(){
 
     addTask(&gyroTask, 1000, 3);
     addTask(&accelTask, 1000, 3);
-    addTask(&magTask, 10000, 2);
+    addTask(&magTask, 100000, 2);
     addTask(&rpyTask, 2000, 2);
     //addTask(&altitudeTask,10000,2);
     addTask(&heightTask, 10000, 2);

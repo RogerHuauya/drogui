@@ -5,7 +5,7 @@
 #define DEBUG 1
 #define GPS 2
 
-#define PORT GPS
+#define PORT DEBUG
 
 void _main();
 
