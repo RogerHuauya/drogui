@@ -1,5 +1,6 @@
 #define SAVGOL_TEST
 #ifdef SAVGOL_TEST
+
 #include "_main.h"
 #include "tim.h"
 #include "sensorsTasks.h"
@@ -19,6 +20,7 @@ void savGolayTask(){
 
 
 void _main(){
+
 
     HAL_Delay(1000);
     

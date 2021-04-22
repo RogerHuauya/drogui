@@ -145,9 +145,8 @@ void initMvAvgFilter(mvAvgFilter* mf, int n);
 float computeMvAvgFilter(mvAvgFilter* mf, float val);
 
 typedef struct _savGolDFilter{
-    int n;
-    float head;
-    float* values, coeffs;
+    int n, head;
+    float *values, *coeffs;
 } savGolDFilter;
 
 // TODO: Comments
