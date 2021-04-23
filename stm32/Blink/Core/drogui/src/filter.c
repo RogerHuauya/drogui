@@ -148,7 +148,11 @@ float computeMvAvgFilter(mvAvgFilter* mf, float val){
 
 void initSavGolDFilter(savGolDFilter* sg, int n){
     sg->n = n;
-    sg->coeffs = SG7;
+    if(n == 7)
+        sg->coeffs = SG7;
+    else
+        sg->coeffs = SG10;
+    
     sg->head = 0;
     sg->values = (float *) calloc(n, sizeof(float));
 }
@@ -158,7 +162,7 @@ float computeSavGolDFilter(savGolDFilter* sg, float value){
     sg->values[sg->head] = value;
     
     for(int i = 0; i < sg->n; i++)
-        ret += sg->values[(sg->head+i)%(sg->n)] * sg->coeffs[i];
+        ret += sg->values[(sg->head -i + sg->n)%(sg->n)] * sg->coeffs[i];
     
     sg->head = (sg->head + 1)%(sg->n);
     

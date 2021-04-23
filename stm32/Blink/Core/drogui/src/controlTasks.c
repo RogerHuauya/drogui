@@ -3,6 +3,7 @@
 #include "task.h"
 #include "scurve.h"
 #include "pwm.h"
+#include "serial.h"
 
 pwm m1, m2, m3, m4;
 pid roll2w, pitch2w, yaw2w; 
@@ -20,7 +21,6 @@ float M1,M2,M3,M4;
 float wroll_ref, wpitch_ref, wyaw_ref;
 float roll_ref, pitch_ref, yaw_ref;
 float x_ref = 0, y_ref = 0, z_ref = 0;
-float wroll_err,wpitch_err,wyaw_err; 
 
 //float aux_wref, aux_wref2;
 
@@ -94,14 +94,16 @@ void updatePID(){
 
 void wControlTask(){ 
     
-    wroll_err = fmax( fmin( wroll_ref - gx , 20), -20);
-    wpitch_err = fmax( fmin( wpitch_ref - gy , 20), -20);
-    wyaw_err = fmax( fmin( wyaw_ref - gz , 20), -20);
+    float wroll_err = fmax( fmin( wroll_ref - gx , 20), -20);
+    float wpitch_err = fmax( fmin( wpitch_ref - gy , 20), -20);
+    float wyaw_err = fmax( fmin( wyaw_ref - gz , 20), -20);
 
     R = computePid(&wroll_control, wroll_err, TIME, 0);
     P = computePid(&wpitch_control, wpitch_err, TIME, 0);
     Y = -computePid(&wyaw_control, wyaw_err, TIME, 0);
     
+    serialPrintf("%f\t%f\n", wroll_err ,wroll_control.errd);
+
     setReg(DER_GYRO_X, wroll_control.errd);
     setReg(DER_GYRO_Y, wpitch_control.errd);
 
@@ -245,17 +247,18 @@ void initControlTasks(){
     initPwm(&m3, &htim4, TIM_CHANNEL_3, &(htim4.Instance->CCR3));
     initPwm(&m4, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
-    initPid(&z_control, 0, 0, 0, 0, 50 , 10, 15, (P2ID & D_INT));
+    initPid(&z_control, 0, 0, 0, 0, 50 , 10, 15, (P2ID | D_INT));
     initPid(&x_control, 0, 0, 0, 0, 50 , 10, 0.09, NORMAL);
     initPid(&y_control, 0, 0, 0, 0, 50 , 10, 0.09, NORMAL);
 
-    initPid(&roll2w,    200, 0, 20, TIME, 50, 0.785, 60, (P2ID & D_INT));
-    initPid(&pitch2w,   200, 0, 20, TIME, 50, 0.785, 60, (P2ID & D_INT));
-    initPid(&yaw2w,     0, 0, 0, TIME, 50, 0.785, 60, (P2ID & D_INT));
+    initPid(&roll2w,    200, 0, 20, TIME, 50, 0.785, 60, (P2ID | D_INT));
+    initPid(&pitch2w,   200, 0, 20, TIME, 50, 0.785, 60, (P2ID | D_INT));
+    initPid(&yaw2w,     0, 0, 0, TIME, 50, 0.785, 60, (P2ID | D_INT));
 
-    initPid(&wroll_control, 15, 0, 30, TIME, 50, 80, 3000, (P2ID & D_INT));
-    initPid(&wpitch_control,15, 0, 30, TIME, 50, 80, 3000, (P2ID & D_INT));
-    initPid(&wyaw_control, 50, 0, 30, TIME, 50, 80, 3000, (P2ID & D_INT));
+
+    initPid(&wroll_control, 15, 0, 30, TIME, 50, 80, 3000, (P2ID | D_SG));
+    initPid(&wpitch_control,15, 0, 30, TIME, 50, 80, 3000, (P2ID | D_SG));
+    initPid(&wyaw_control, 50, 0, 30, TIME, 50, 80, 3000, (P2ID | D_SG));
     
     initFilter(&filter_wroll, 4, k_1_20, v_1_20);
     initFilter(&filter_wpitch, 4, k_1_20, v_1_20);

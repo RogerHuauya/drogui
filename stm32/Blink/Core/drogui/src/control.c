@@ -3,6 +3,7 @@
 #include "usart.h"
 #include <stdio.h>
 #include <string.h>
+
 char buffct[50]="";
 
 float computePid(pid* p, float error, uint32_t t, float h){
@@ -20,14 +21,14 @@ float computePid(pid* p, float error, uint32_t t, float h){
     
     p->err_ant2 = p->err_ant1;
     p->err_ant1 = error;
-
+    
     if( p->type & D_INT){
         p->errd = p->N_filt*(error - p->errd_acum);
         p->errd_acum += 0.5*(p->errd+p->errd_ant)*p->dt;
     }
 
     if( p->type & D_SG){
-        p->errd = computeSavGolDFilter(&(p->sgd), error)/(p->dt);
+        p->errd = computeSavGolDFilter(&(p->sgd), error);
     }
 
     if(p->type & D_FILTER){
@@ -82,7 +83,7 @@ void initPid(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float is
     p->osat = osat;
     p->type = type;
     p->isat = isat;
-    initSavGolDFilter(&(p->sgd), 7);
+    initSavGolDFilter(&(p->sgd), 10);
 }
 
 void initPidFilter(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float isat, float osat, int type,int n, float* a , float*b ){

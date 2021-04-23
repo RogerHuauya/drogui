@@ -19,7 +19,7 @@
             char c = serialRead();
             serialPrintf("%x ",(uint8_t) c);
         }*/
-        serialPrintf("%f\t%f\t%f\t%f\t%f\t%f\n", myIMU.raw_gx, myIMU.raw_gy, myIMU.raw_gz,myIMU.gx, myIMU.gy, myIMU.gz);
+        serialPrintf("%f\t%f\n", wroll_control.errd, wpitch_control.errd );
         //serialPrint("I am debugging\n");
 
     }
@@ -40,7 +40,7 @@ void securityTask(){
 
 void initDebug(){
     #if PORT == DEBUG   
-        addTask(&debugTask, 1000, 1);
+        //addTask(&debugTask, 1000, 1);
     #elif PORT == LED
         addTask(&blinkTask, 100000, 1);   
     #endif

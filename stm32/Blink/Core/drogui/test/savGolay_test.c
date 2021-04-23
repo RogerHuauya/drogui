@@ -1,9 +1,10 @@
-#define SAVGOL_TEST
+//#define SAVGOL_TEST
 #ifdef SAVGOL_TEST
 
 #include "_main.h"
 #include "tim.h"
 #include "sensorsTasks.h"
+#include "controlTasks.h"
 #include "filter.h"
 #include "debugTasks.h"
 #include "task.h"
@@ -15,7 +16,7 @@ savGolDFilter sgd;
 
 void savGolayTask(){
     float ret = computeSavGolDFilter(&sgd, gx);
-    serialPrintf("%f %f\n", ret, gx);
+    serialPrintf("%f\t%f\n", ret, gx);
 }
 
 
@@ -28,8 +29,10 @@ void _main(){
         serialPrint("Start System\n");
     #endif
 
-    initSavGolDFilter(&sgd, 7);
+    initSavGolDFilter(&sgd, 10);
 
+    initDebug();
+    initControlTasks();
     initSensorsTasks();
     addTask(&savGolayTask, 1000, 0);
     initRTOS();
