@@ -109,6 +109,7 @@ float angle_dif(float angle1, float angle2);
 
 extern float SG7[];
 extern float SG10[];
+extern float SG13[];
 
 /**
 *   @brief Increse a variable with little steps until a desired value   
