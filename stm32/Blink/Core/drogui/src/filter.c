@@ -150,9 +150,10 @@ void initSavGolDFilter(savGolDFilter* sg, int n){
     sg->n = n;
     if(n == 7)
         sg->coeffs = SG7;
-    else
+    else if( n == 10)
         sg->coeffs = SG10;
-    
+    else
+        sg->coeffs = SG13;
     sg->head = 0;
     sg->values = (float *) calloc(n, sizeof(float));
 }
