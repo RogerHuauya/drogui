@@ -136,6 +136,7 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define	ROLL_VAL
 #define	PITCH_VAL
 #define	YAW_VAL
+
 #define	X_VAL
 #define	Y_VAL
 #define	Z_VAL
@@ -150,6 +151,9 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define	RAW_PITCH
 #define	RAW_YAW
 
+#define	DER_ROLL
+#define	DER_PITCH
+#define	DER_YAW
 
 // BMP
 #define	RAW_TEMP

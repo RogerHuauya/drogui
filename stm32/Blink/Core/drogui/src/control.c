@@ -83,7 +83,7 @@ void initPid(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float is
     p->osat = osat;
     p->type = type;
     p->isat = isat;
-    initSavGolDFilter(&(p->sgd), 10);
+    initSavGolDFilter(&(p->sgd), 13);
 }
 
 void initPidFilter(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float isat, float osat, int type,int n, float* a , float*b ){
@@ -102,7 +102,8 @@ void initPidFilter(pid* p, float kp, float kd, float ki,uint32_t ti, float N, fl
     p->isat = isat, 
     p->osat = osat;
     p->type = type;
-
+    
+    initSavGolDFilter(&(p->sgd), 13);
     
     if(p->type & D_FILTER){
         initFilter(&(p->f), n, a, b);

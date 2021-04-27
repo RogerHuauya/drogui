@@ -136,6 +136,7 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define	ROLL_VAL	0xA8
 #define	PITCH_VAL	0xAA
 #define	YAW_VAL	0xAC
+
 #define	X_VAL	0xAE
 #define	Y_VAL	0xB0
 #define	Z_VAL	0xB2
@@ -150,33 +151,36 @@ enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
 #define	RAW_PITCH	0xB6
 #define	RAW_YAW	0xB8
 
+#define	DER_ROLL	0xBA
+#define	DER_PITCH	0xBC
+#define	DER_YAW	0xBE
 
 // BMP
-#define	RAW_TEMP	0xBA
-#define	TEMP_ABS	0xBC
-#define	RAW_PRESS	0xBE
-#define	PRESS_ABS	0xC0
+#define	RAW_TEMP	0xC0
+#define	TEMP_ABS	0xC2
+#define	RAW_PRESS	0xC4
+#define	PRESS_ABS	0xC6
 
 // GPS
-#define	GPS_X	0xC2
-#define	GPS_Y	0xC4
-#define	GPS_CNT	0xC6
-#define	GPS_STATE	0xC8
-#define	GPS_AVAILABLE	0xCA
-#define	START_GPS	0xCC
+#define	GPS_X	0xC8
+#define	GPS_Y	0xCA
+#define	GPS_CNT	0xCC
+#define	GPS_STATE	0xCE
+#define	GPS_AVAILABLE	0xD0
+#define	START_GPS	0xD2
 
 // Accelerometer
-#define	ACC_X	0xCE
-#define	ACC_Y	0xD0
-#define	ACC_Z	0xD2
+#define	ACC_X	0xD4
+#define	ACC_Y	0xD6
+#define	ACC_Z	0xD8
 
 // Gyroscope
-#define	GYRO_X	0xD4
-#define	GYRO_Y	0xD6
-#define	GYRO_Z	0xD8
+#define	GYRO_X	0xDA
+#define	GYRO_Y	0xDC
+#define	GYRO_Z	0xDE
 
-#define	DER_GYRO_X	0xDA
-#define	DER_GYRO_Y	0xDC
+#define	DER_GYRO_X	0xE0
+#define	DER_GYRO_Y	0xE2
 
 
 
