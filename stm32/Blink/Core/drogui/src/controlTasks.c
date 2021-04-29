@@ -250,20 +250,20 @@ void initControlTasks(){
     
     initPwm(&m1, &htim3, TIM_CHANNEL_1, &(htim3.Instance->CCR1));
     initPwm(&m2, &htim3, TIM_CHANNEL_2, &(htim3.Instance->CCR2));
-    initPwm(&m3, &htim4, TIM_CHANNEL_3, &(hti   m4.Instance->CCR3));
+    initPwm(&m3, &htim4, TIM_CHANNEL_3, &(htim4.Instance->CCR3));
     initPwm(&m4, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
     initPid(&z_control, 0, 0, 0, 0, 50 , 10, 15, NORMAL);
     initPid(&x_control, 0, 0, 0, 0, 50 , 10, 0.09, NORMAL);
     initPid(&y_control, 0, 0, 0, 0, 50 , 10, 0.09, NORMAL);
 
-    initPidFilter(&roll2w,  400, 500, 30, TIME, 50, 0.785, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
-    initPidFilter(&pitch2w, 400, 500, 30, TIME, 50, 0.785, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+    initPidFilter(&roll2w,  400, -5000, 30, TIME, 50, 0.785, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+    initPidFilter(&pitch2w, 400, -5000, 30, TIME, 50, 0.785, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
     initPidFilter(&yaw2w,     0,   0,  0, TIME, 50, 0.785, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
  
-    initPidFilter(&wroll_control,  30, 2000, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER), 4, k_1_20, v_1_20 );
-    initPidFilter(&wpitch_control, 30, 2000, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER), 4, k_1_20, v_1_20 );
-    initPidFilter(&wyaw_control,   50, 0, 30, TIME, 50, 80, 3000,  ( D_SG | D_FILTER), 4, k_1_20, v_1_20  );
+    initPidFilter(&wroll_control,  30, 2000, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER), 3, k_1_50, v_1_50 );
+    initPidFilter(&wpitch_control, 30, 2000, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER), 3, k_1_50, v_1_50 );
+    initPidFilter(&wyaw_control,   50, 0, 30, TIME, 50, 80, 3000,  ( D_SG | D_FILTER), 3, k_1_50, v_1_50  );
     
     initFilter(&filter_wroll, 4, k_1_20, v_1_20);
     initFilter(&filter_wpitch, 4, k_1_20, v_1_20);
