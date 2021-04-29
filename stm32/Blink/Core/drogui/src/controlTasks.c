@@ -187,6 +187,9 @@ void xyzControlTask(){
     X_C = computePid(&x_control, x_ref - x, TIME, H);
     Y_C = computePid(&y_control, y_ref - y, TIME, H);
 
+    setReg(DER_X,x_control.errd);
+    setReg(DER_Y,y_control.errd);
+
     if(getReg(Z_REF) != z_sp.fin) 
         setTrayectory(&z_sp, z_sp.fin, getReg(Z_REF), getReg(Z_PERIOD), TIME);
 
