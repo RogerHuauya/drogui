@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include "read_write.h"
 #include "curmenu.h"
+#include "utils.h"
 #include <time.h>
 #include "threaded.h"
 
@@ -112,12 +113,12 @@ bool pidOp(PANEL* pan, int index){
     return true;
 }
 
-
+const float conv = 180.0/pi;
 string sensor_data_op[] = {"IMU", "GPS", "KALMAN", "IMU CAL", "HEIGHT"};
 bool sensorDataOp(PANEL* pan, int index){
     if(index == 0){    
         string names[] = {"roll", "pitch", "yaw"};
-        float arr[] = { rasp_i2c.readFloat(ROLL_VAL) , rasp_i2c.readFloat(PITCH_VAL), rasp_i2c.readFloat(YAW_VAL)}; 
+        float arr[] = { rasp_i2c.readFloat(ROLL_VAL)*conv , rasp_i2c.readFloat(PITCH_VAL)*conv, rasp_i2c.readFloat(YAW_VAL)*conv}; 
         writeData(pan, sensor_data_op[index], names, arr, 3);
     }
     else if(index == 1){
@@ -150,40 +151,50 @@ bool sensorDataOp(PANEL* pan, int index){
 string setpoint_op[] = {"ROLL", "PITCH", "YAW", "X", "Y", "Z"};
 bool setpointOp(PANEL* pan, int index){
     if(index < 3){    
-        string names[] = {"degrees"};
-        float arr[1]; 
-        if(readData(pan, setpoint_op[index], names, arr, 1)){
+        string names[] = {"degrees", "secs"};
+        float arr[2]; 
+        if(readData(pan, setpoint_op[index], names, arr, 2)){
             arr[0] *= pi/180;
             switch(index){
                 
                 case 0:
-                    rasp_i2c.sendFloat(ROLL_REF,arr[0]); break;
-                case 1: 
-                    rasp_i2c.sendFloat(PITCH_REF,arr[0]); break;
+                    rasp_i2c.sendFloat(ROLL_REF,arr[0]);
+		    rasp_i2c.sendFloat(ROLL_PERIOD,arr[1]);
+		    break;
+                case 1:
+                    rasp_i2c.sendFloat(PITCH_REF,arr[0]);
+		    rasp_i2c.sendFloat(PITCH_PERIOD,arr[1]);
+		    break;
                 case 2:
-                    rasp_i2c.sendFloat(YAW_REF,arr[0]); break;
+                    rasp_i2c.sendFloat(YAW_REF,arr[0]);
+		    rasp_i2c.sendFloat(YAW_PERIOD,arr[1]);
+		    break;
             }
 
         }
     }
     else if(index == 5){
-        string names[] = {"meters", "delta"};
+        string names[] = {"meters", "secs"};
         float arr[2]; 
         if(readData(pan, setpoint_op[index], names, arr, 2)){
       	    rasp_i2c.sendFloat(Z_REF,arr[0]);
-	    rasp_i2c.sendFloat(Z_REF_SIZE,arr[1]);
+	    rasp_i2c.sendFloat(Z_PERIOD,arr[1]);
         }
     }
     else{
-        string names[] = {"meters"};
-        float arr[1]; 
-        if(readData(pan, setpoint_op[index], names, arr, 1)){
+        string names[] = {"meters", "secs"};
+        float arr[2]; 
+        if(readData(pan, setpoint_op[index], names, arr, 2)){
             switch(index){
            
                 case 3:
-                    rasp_i2c.sendFloat(X_REF,arr[0]); break;    
+                    rasp_i2c.sendFloat(X_REF,arr[0]); 
+		    rasp_i2c.sendFloat(X_PERIOD,arr[1]);
+		    break;    
                 case 4:
-                    rasp_i2c.sendFloat(Y_REF,arr[0]); break;
+                    rasp_i2c.sendFloat(Y_REF,arr[0]); 
+		    rasp_i2c.sendFloat(Y_PERIOD,arr[1]);
+		    break;
             }
         }
     }
@@ -191,52 +202,15 @@ bool setpointOp(PANEL* pan, int index){
 }
 
 bool start = false;
+bool start_xyc = false;
 
-string various_op[] = {"Read Register", "Write Register", "Start kalman", "Compensation", "Start logging", "Update Offset"}; 
+string various_op[] = {"Read Register", "Write Register", "Start kalman", "Compensation", "Start logging", "Start XYControl"}; 
 bool variousOp(PANEL* pan, int index){
-    //wmove(win, 5, 5);
-    //wprintw(win, "kha3");
+    
     if(index == 5){
-
-        if(confirmData(pan)){
-
-            string names[] = {"roll", "pitch", "yaw"};
-
-            float offset_roll = 0;
-            float offset_pitch = 0;
-            float offset_yaw = 0;
-
-            for( int i = 0; i < 50; i++ ){
-                offset_roll += rasp_i2c.readFloat(ROLL_VAL);
-                usleep(10000);
-                offset_pitch += rasp_i2c.readFloat(PITCH_VAL);
-                usleep(10000);
-                offset_yaw += rasp_i2c.readFloat(YAW_VAL);
-                usleep(10000);
-            } 
-
-            offset_roll /= 50.0;
-            offset_pitch /= 50.0;
-            offset_yaw /= 50.0;
-
-            offset_roll += rasp_i2c.readFloat(ROLL_OFFSET);
-            offset_pitch += rasp_i2c.readFloat(PITCH_OFFSET);
-            offset_yaw += rasp_i2c.readFloat(YAW_OFFSET);
-
-            rasp_i2c.sendFloat(ROLL_OFFSET,offset_roll);
-            rasp_i2c.sendFloat(PITCH_OFFSET,offset_pitch);
-            rasp_i2c.sendFloat(YAW_OFFSET,offset_yaw);
-
-            std::fstream offsetfile;
-            offsetfile.open("../rpicurses/memory/offset_angles.txt",std::ios::out);{
-            if(offsetfile.is_open()) 
-                offsetfile << offset_roll << "\t" << offset_pitch << "\t" << offset_yaw; 
-                offsetfile.close();
-            }
-
-            float arr[] = { offset_roll, offset_pitch, offset_yaw }; 
-            writeData(pan, various_op[index], names, arr, 3);
-        }
+        start_xyc = !start_xyc;
+	rasp_i2c.sendFloat(START_XYC,start_xyc);
+        various_op[index] = (start_xyc ? "Stop  XYControl":"Start XYControl");
     }
     else if(index == 4){
         logging_state = !logging_state;
@@ -255,7 +229,7 @@ bool variousOp(PANEL* pan, int index){
             sim7600.offset_Lat = sim7600.Lat;
         }*/
         start = !start;
-        rasp_i2c.sendFloat(START, start);
+        rasp_i2c.sendFloat(START_GPS, start);
         various_op[index] = (start ? "Stop  Kalman":"Start Kalman");
     }
     else if (index == 0){
@@ -287,7 +261,7 @@ bool variousOp(PANEL* pan, int index){
 
 
 
-string calibration_op[] = {"GYRO", "ACC", "MAG"};
+string calibration_op[] = {"GYRO", "ACC", "MAG", "Update Offset"};
 
 bool calibrationOp(PANEL* pan, int index){
     float arr[1];
@@ -367,6 +341,48 @@ bool calibrationOp(PANEL* pan, int index){
             }
         }
     }
+    else if(index == 3){
+
+        if(confirmData(pan)){
+
+            string names[] = {"roll", "pitch", "yaw"};
+
+            float offset_roll = 0;
+            float offset_pitch = 0;
+            float offset_yaw = 0;
+
+            for( int i = 0; i < 200; i++ ){
+                offset_roll += rasp_i2c.readFloat(ROLL_VAL);
+                usleep(5000);
+                offset_pitch += rasp_i2c.readFloat(PITCH_VAL);
+                usleep(5000);
+                offset_yaw += rasp_i2c.readFloat(YAW_VAL);
+                usleep(5000);
+            } 
+
+            offset_roll /= 200.0;
+            offset_pitch /= 200.0;
+            offset_yaw /= 200.0;
+
+            offset_roll += rasp_i2c.readFloat(ROLL_OFFSET);
+            offset_pitch += rasp_i2c.readFloat(PITCH_OFFSET);
+            offset_yaw += rasp_i2c.readFloat(YAW_OFFSET);
+
+            rasp_i2c.sendFloat(ROLL_OFFSET,offset_roll);
+            rasp_i2c.sendFloat(PITCH_OFFSET,offset_pitch);
+            rasp_i2c.sendFloat(YAW_OFFSET,offset_yaw);
+
+            std::fstream offsetfile;
+            offsetfile.open("../rpicurses/memory/offset_angles.txt",std::ios::out);{
+            if(offsetfile.is_open()) 
+                offsetfile << offset_roll << "\t" << offset_pitch << "\t" << offset_yaw; 
+                offsetfile.close();
+            }
+
+            float arr[] = { offset_roll, offset_pitch, offset_yaw }; 
+            writeData(pan, various_op[index], names, arr, 3);
+        }
+    }
 
     return true;
 }
@@ -378,7 +394,8 @@ bool calibrationOp(PANEL* pan, int index){
  
 int curmenu(void) {
     
-    rasp_i2c.sendFloat(START, 0);
+    rasp_i2c.sendFloat(START_GPS, 0);
+    rasp_i2c.sendFloat(START_XYC, 0);
     setlocale(LC_ALL, "");
  	initscr();
 	//cbreak();
@@ -434,7 +451,7 @@ int curmenu(void) {
     menu arr_menu[] = {
         menu("SendPID", pid_op, 7, &pidOp),
         menu("SensorData", sensor_data_op, 5, &sensorDataOp),
-        menu("Calibration", calibration_op, 3, &calibrationOp),
+        menu("Calibration", calibration_op, 4, &calibrationOp),
         menu("Setpoint", setpoint_op, 6, &setpointOp),
 	menu("Various", various_op, 6, &variousOp)
     };

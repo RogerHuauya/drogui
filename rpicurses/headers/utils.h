@@ -44,4 +44,5 @@ class rasp_I2C{
 
 void cls();
 std::string str_datetime();
+extern std::string varNames[]; 
 #endif
