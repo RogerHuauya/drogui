@@ -102,7 +102,7 @@ void wControlTask(){
     P = computePid(&wpitch_control, wpitch_err, TIME, 0);
     Y = -computePid(&wyaw_control, wyaw_err, TIME, 0);
     
-    serialPrintf("%f\t%f\n", wroll_err ,wroll_control.errd);
+    //serialPrintf("%f\t%f\n", wroll_err ,wroll_control.errd);
 
     setReg(DER_GYRO_X, wroll_control.errd);
     setReg(DER_GYRO_Y, wpitch_control.errd);
@@ -151,6 +151,12 @@ void rpyControlTask(){
     //rampValue(&wroll_ref, wroll_ref_d, 0.2);
     //rampValue(&wpitch_ref, wpitch_ref_d, 0.2);
     
+    //serialPrintf("%f\t%f\t%f\t%f\n", angle_dif(roll_ref,roll), angle_dif(pitch_ref, pitch), roll2w.errd, pitch2w.errd );
+
+    setReg(DER_ROLL,roll2w.errd); 
+    setReg(DER_PITCH,pitch2w.errd); 
+    setReg(DER_YAW,yaw2w.errd); 
+
     setReg(GYRO_X_REF,wroll_ref);
     setReg(GYRO_Y_REF,wpitch_ref);
     setReg(GYRO_Z_REF,wyaw_ref);
@@ -247,18 +253,17 @@ void initControlTasks(){
     initPwm(&m3, &htim4, TIM_CHANNEL_3, &(htim4.Instance->CCR3));
     initPwm(&m4, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
-    initPid(&z_control, 0, 0, 0, 0, 50 , 10, 15, (P2ID | D_INT));
+    initPid(&z_control, 0, 0, 0, 0, 50 , 10, 15, NORMAL);
     initPid(&x_control, 0, 0, 0, 0, 50 , 10, 0.09, NORMAL);
     initPid(&y_control, 0, 0, 0, 0, 50 , 10, 0.09, NORMAL);
 
-    initPid(&roll2w,    200, 0, 20, TIME, 50, 0.785, 60, (P2ID | D_INT));
-    initPid(&pitch2w,   200, 0, 20, TIME, 50, 0.785, 60, (P2ID | D_INT));
-    initPid(&yaw2w,     0, 0, 0, TIME, 50, 0.785, 60, (P2ID | D_INT));
-
-
-    initPid(&wroll_control, 15, 0, 30, TIME, 50, 80, 3000, (P2ID | D_SG));
-    initPid(&wpitch_control,15, 0, 30, TIME, 50, 80, 3000, (P2ID | D_SG));
-    initPid(&wyaw_control, 50, 0, 30, TIME, 50, 80, 3000, (P2ID | D_SG));
+    initPidFilter(&roll2w,  400, -5000, 30, TIME, 50, 0.785, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+    initPidFilter(&pitch2w, 400, -5000, 30, TIME, 50, 0.785, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+    initPidFilter(&yaw2w,     0,   0,  0, TIME, 50, 0.785, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+ 
+    initPidFilter(&wroll_control,  30, 2000, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER), 3, k_1_50, v_1_50 );
+    initPidFilter(&wpitch_control, 30, 2000, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER), 3, k_1_50, v_1_50 );
+    initPidFilter(&wyaw_control,   50, 0, 30, TIME, 50, 80, 3000,  ( D_SG | D_FILTER), 3, k_1_50, v_1_50  );
     
     initFilter(&filter_wroll, 4, k_1_20, v_1_20);
     initFilter(&filter_wpitch, 4, k_1_20, v_1_20);

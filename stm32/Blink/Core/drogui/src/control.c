@@ -3,6 +3,7 @@
 #include "usart.h"
 #include <stdio.h>
 #include <string.h>
+#include "serial.h"
 
 char buffct[50]="";
 
@@ -29,10 +30,13 @@ float computePid(pid* p, float error, uint32_t t, float h){
 
     if( p->type & D_SG){
         p->errd = computeSavGolDFilter(&(p->sgd), error);
+        //if(h==50) serialPrintf("%f\t", p->errd);
     }
 
     if(p->type & D_FILTER){
+
         p->errd = computeFilter(&(p->f), p->errd);
+        //if(h==50)serialPrintf("%f\n", p->errd);
     }    
 
     //return max(min(p->kp[0]*error + p->ki[0]*p->erri + p->kd[0]*p->errd,p->osat),-p->osat);
@@ -83,7 +87,7 @@ void initPid(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float is
     p->osat = osat;
     p->type = type;
     p->isat = isat;
-    initSavGolDFilter(&(p->sgd), 10);
+    initSavGolDFilter(&(p->sgd), 13);
 }
 
 void initPidFilter(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float isat, float osat, int type,int n, float* a , float*b ){
@@ -102,7 +106,8 @@ void initPidFilter(pid* p, float kp, float kd, float ki,uint32_t ti, float N, fl
     p->isat = isat, 
     p->osat = osat;
     p->type = type;
-
+    
+    initSavGolDFilter(&(p->sgd), 13);
     
     if(p->type & D_FILTER){
         initFilter(&(p->f), n, a, b);

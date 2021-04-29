@@ -1,5 +1,5 @@
 #include "scurve.h"
-
+#include "utils.h"
 
 float t2s(scurve *sc, float time){
     float tT = time / (sc -> period);
@@ -15,7 +15,7 @@ void setTrayectory(scurve *sc, float ini, float fin, float period, uint32_t ini_
 
 float getSetpoint(scurve *sc, uint32_t time){
 
-    if(time - sc->ini_time > sc->period) 
+    if(sc->period <= EPS  || time - sc->ini_time > sc->period) 
         return sc->fin;
 
     float s = t2s(sc, time - sc->ini_time);
