@@ -100,12 +100,20 @@ float angle_dif(float angle1, float angle2);
     extern float v_1_20[];
 //@}
 
-//!  @brief  Low Pass Filter with K array (4 elements), V array(5 elements) and Fc/Fs = 5/100
+//!  @brief  Low Pass Filter with K array (2 elements), V array(3 elements) and Fc/Fs = 4/1000
     extern float k_1_250[];
     extern float v_1_250[];
 //@}
 
+//!  @brief  Low Pass Filter with K array (3 elements), V array(4 elements) and Fc/Fs = 10/1000
+    extern float k_1_100[];
+    extern float v_1_100[];
+//@}
 
+//!  @brief  Low Pass Filter with K array (3 elements), V array(4 elements) and Fc/Fs = 20/1000
+    extern float k_1_50[];
+    extern float v_1_50[];
+//@}
 
 extern float SG7[];
 extern float SG10[];
