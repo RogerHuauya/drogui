@@ -250,7 +250,7 @@ void initControlTasks(){
     
     initPwm(&m1, &htim3, TIM_CHANNEL_1, &(htim3.Instance->CCR1));
     initPwm(&m2, &htim3, TIM_CHANNEL_2, &(htim3.Instance->CCR2));
-    initPwm(&m3, &htim4, TIM_CHANNEL_3, &(hti   m4.Instance->CCR3));
+    initPwm(&m3, &htim4, TIM_CHANNEL_3, &(htim4.Instance->CCR3));
     initPwm(&m4, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
     initPid(&z_control, 0, 0, 0, 0, 50 , 10, 15, NORMAL);
