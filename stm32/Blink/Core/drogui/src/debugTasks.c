@@ -15,11 +15,14 @@
 #if PORT == DEBUG
     void debugTask(void *argument){
         
-        /*while(serialAvailable()){
+        /*if(serialAvailable()){
             char c = serialRead();
-            serialPrintf("%x ",(uint8_t) c);
+            //serialPrintf("%x ",(uint8_t) c);
+            if( c == 'a' ) setReg(START_GPS,1);
+            else setReg(START_GPS,0);
         }*/
-        serialPrintf("%f\t%f\n", wroll_control.errd, wpitch_control.errd );
+        readRawGyro(&myIMU);
+        serialPrintf("%f\t%f\t%f;\n", myIMU.raw_gx/65.534,myIMU.raw_gy/65.534, myIMU.raw_gz/65.534  );
         //serialPrint("I am debugging\n");
 
     }
@@ -40,7 +43,7 @@ void securityTask(){
 
 void initDebug(){
     #if PORT == DEBUG   
-        //addTask(&debugTask, 1000, 1);
+        addTask(&debugTask, 10000, 1);
     #elif PORT == LED
         addTask(&blinkTask, 100000, 1);   
     #endif
