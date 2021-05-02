@@ -46,6 +46,13 @@ char serialRead(){
     return ans;
 }
 
+void serialFlush(){
+    USART2->CR1  &= ~(USART_CR1_RXNEIE);	
+    rcv_tail = rcv_head;
+    USART2->CR1  |= USART_CR1_RXNEIE;
+}
+
+
 void changeBaudrate(int baudrate){
     USART2 -> CR1 ^= USART_CR1_UE;
 

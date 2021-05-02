@@ -11,5 +11,6 @@ void serialWrite(char c);
 bool serialAvailable();
 char serialRead();
 void changeBaudrate(int baudrate);
+void serialFlush();
 
 #endif
