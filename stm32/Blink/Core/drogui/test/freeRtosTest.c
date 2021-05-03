@@ -32,7 +32,7 @@ char buff[50] = "hola\n";
 void debugTask(void *argument){
     
     for(;;){
-        sprintf(buff, "%f\t%f\t%f;\n", myIMU.gx/5, gx, gy);
+        sprintf(buff, "%f\t%f\t%f;\n", myMPU.gx/5, gx, gy);
         HAL_UART_Transmit(&huart2, (uint8_t*) buff, strlen(buff), 100);
         osDelay(1);
     }

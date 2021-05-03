@@ -21,8 +21,8 @@
             if( c == 'a' ) setReg(START_GPS,1);
             else setReg(START_GPS,0);
         }*/
-        readRawGyro(&myIMU);
-        serialPrintf("%f\t%f\t%f;\n", myIMU.raw_gx/65.534,myIMU.raw_gy/65.534, myIMU.raw_gz/65.534  );
+        readRawGyro(&myMPU);
+        serialPrintf("%f\t%f\t%f;\n", myMPU.raw_gx/65.534,myMPU.raw_gy/65.534, myMPU.raw_gz/65.534  );
         //serialPrint("I am debugging\n");
 
     }
@@ -31,12 +31,12 @@
 void securityTask(){
     if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
         updatePID();
-        if(getReg(CAL_GYR_TRG) == 1) calibrateGyro(&myIMU), setReg(CAL_GYR_TRG, 0);
-        if(getReg(CAL_ACC_TRG) == 1) calibrateAccel(&myIMU), setReg(CAL_ACC_TRG, 0);
-        if(getReg(CAL_MAG_TRG) == 1) calibrateMag(&myIMU), setReg(CAL_MAG_TRG, 0);
+        if(getReg(CAL_GYR_TRG) == 1) calibrateGyro(&myMPU), setReg(CAL_GYR_TRG, 0);
+        if(getReg(CAL_ACC_TRG) == 1) calibrateAccel(&myMPU), setReg(CAL_ACC_TRG, 0);
+        if(getReg(CAL_MAG_TRG) == 1) calibrateMag(&myMPU), setReg(CAL_MAG_TRG, 0);
         updateBmp388Offset(&myBMP);
         security = true;
-        calib_status = updateCalibOffset(&myIMU);
+        calib_status = updateCalibOffset(&myMPU);
     }
     else security = false;
 }

@@ -3,6 +3,7 @@
 
 #include "filter.h"
 #include "MPU9250.h"
+#include "ICM20948.h"
 #include "registerMap.h"
 #include "utils.h"
 #include "BMP388.h"
@@ -14,7 +15,8 @@ extern float    roll,       pitch,      yaw,
                 mx,         my,         mz, 
                 x,          y,          z; 
 
-extern mpu9250 myIMU;
+extern mpu9250 myMPU;
+extern icm20948 myICM;
 
 extern bmp388 myBMP;
 extern float altitude;

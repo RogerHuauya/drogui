@@ -132,5 +132,6 @@ void rampValue(float *var, float desired, float step);
 void I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t* Data);
 void I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data);
 
+float dis3d(float x,float y,float z, float a, float b, float c);
 
 #endif

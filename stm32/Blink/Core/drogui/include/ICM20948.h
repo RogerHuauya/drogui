@@ -3,9 +3,13 @@
 
 #include <stdbool.h>
 #include "filter.h"
-#define ICM20948_ADDRESS 0x68
-#define ICM_MAG_ADDRESS 0x0C
 
+// https://3cfeqx1hf82y3xcoull08ihx-wpengine.netdna-ssl.com/wp-content/uploads/2016/06/DS-000189-ICM-20948-v1.3.pdf
+
+#define ICM20948_ADDRESS 0x69
+#define ICM_MAG_ADDRESS 0x0C
+#define CHANGE_BANK 0x7F
+#define PWR_MGT 0x06
 
 enum ICM_DATA_REGS{
     ICM_ACCEL_XOUT_H = 0x2D,
@@ -15,8 +19,8 @@ enum ICM_DATA_REGS{
     ICM_ACCEL_ZOUT_H = 0x31,
     ICM_ACCEL_ZOUT_L = 0x32,
 
-    ICM_GYRO_XOUT_L = 0x33,
-    ICM_GYRO_XOUT_H = 0x34,
+    ICM_GYRO_XOUT_H = 0x33,
+    ICM_GYRO_XOUT_L = 0x34,
     ICM_GYRO_YOUT_H = 0x35,
     ICM_GYRO_YOUT_L = 0x36,
     ICM_GYRO_ZOUT_H = 0x37,
@@ -36,7 +40,7 @@ enum ICM_CONFIGS{
 };
 
 enum ICM_GYRO_SCALE{
-    GYRO_FULL_SCALE_250_DPS  = 0x00,
+    ICM_GYRO_FULL_SCALE_250_DPS  = 0x00,
     ICM_GYRO_FULL_SCALE_500_DPS  = 0x02,    
     ICM_GYRO_FULL_SCALE_1000_DPS =  0x04,
     ICM_GYRO_FULL_SCALE_2000_DPS =  0x06
@@ -121,15 +125,15 @@ void readIcmFiltGyro(icm20948* m);
 
 void readIcmGyro(icm20948* m);
 
-void readIcmMag(icm20948* m);
+//void readIcmMag(icm20948* m);
 
-void readIcmRawMag(icm20948* m);
+//void readIcmRawMag(icm20948* m);
 
 void calibrateIcmGyro(icm20948* m);
 
 void calibrateIcmAccel(icm20948* m);
 
-void calibrateIcmMag(icm20948* m);
+//void calibrateIcmMag(icm20948* m);
 
 int updateIcmCalibOffset(icm20948* m);
 

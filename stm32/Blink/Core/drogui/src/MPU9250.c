@@ -12,14 +12,14 @@ int16_t _ax, _ay, _az, _gx, _gy, _gz, _mx, _my, _mz;
 
 int updateCalibOffset(mpu9250* m){
     int ans = 0;
-    if( m->off_gx != getReg(GYR_X_OFF))  ans |= 2, m->off_gx = getReg(GYR_X_OFF);
+    /*if( m->off_gx != getReg(GYR_X_OFF))  ans |= 2, m->off_gx = getReg(GYR_X_OFF);
     if( m->off_gy != getReg(GYR_Y_OFF))  ans |= 2, m->off_gy = getReg(GYR_Y_OFF);
     if( m->off_gz != getReg(GYR_Z_OFF))  ans |= 2, m->off_gz = getReg(GYR_Z_OFF);
 
     if( m->off_ax  != getReg(ACC_X_OFF)) ans |= 1, m->off_ax = getReg(ACC_X_OFF);
     if( m->off_ay  != getReg(ACC_Y_OFF)) ans |= 1, m->off_ay = getReg(ACC_Y_OFF); 
     if( m->off_az  != getReg(ACC_Z_OFF)) ans |= 1, m->off_az = getReg(ACC_Z_OFF);
-    if( m->scl_acc != getReg(ACC_SCALE)) ans |= 1, m->scl_acc =  getReg(ACC_SCALE);
+    if( m->scl_acc != getReg(ACC_SCALE)) ans |= 1, m->scl_acc =  getReg(ACC_SCALE);*/
 
     if( m->off_mx != getReg(MAG_X_OFF)) ans |= 4, m->off_mx =   getReg(MAG_X_OFF);
     if( m->off_my != getReg(MAG_Y_OFF)) ans |= 4, m->off_my = getReg(MAG_Y_OFF);     
@@ -246,9 +246,7 @@ void calibrateGyro(mpu9250* m){
     #endif
 }
 
-float dis3d(float x,float y,float z, float a, float b, float c){
-    return sqrt((x - a)*(x - a) + (y - b)*(y - b) + (z - c)*(z - c));
-}
+
 
 
 void calibrateAccel(mpu9250* m){

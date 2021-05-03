@@ -5,7 +5,8 @@
 #include "M8Q.h"
 #include "kalman.h"
 
-mpu9250 myIMU;
+mpu9250 myMPU;
+icm20948 myICM;
 
 m8q myGPS;
 
@@ -31,45 +32,45 @@ mvAvgFilter mvAvg_bmp;
 filter filter_z;
 
 void accelTask(){   
-    readAcc(&myIMU);
-    ax = myIMU.ax, ay = myIMU.ay, az = myIMU.az; 
+    readAcc(&myMPU);
+    ax = myMPU.ax, ay = myMPU.ay, az = myMPU.az; 
     
     setReg(ACC_X,(float)(ax));
     setReg(ACC_Y,(float)(ay));
     setReg(ACC_Z,(float)(az));
 
     if( calib_status & 1 ){
-        cleanFiltAcc(&myIMU.fAccX); 
-        cleanFiltAcc(&myIMU.fAccY); 
-        cleanFiltAcc(&myIMU.fAccZ);
+        cleanFiltAcc(&myMPU.fAccX); 
+        cleanFiltAcc(&myMPU.fAccY); 
+        cleanFiltAcc(&myMPU.fAccZ);
         calib_status ^= 1;
     }
 }
 
 void gyroTask(){
 
-    readGyro(&myIMU);
+    readGyro(&myMPU);
 
-    gx = myIMU.gx, gy = myIMU.gy, gz = myIMU.gz; 
+    gx = myMPU.gx, gy = myMPU.gy, gz = myMPU.gz; 
     
     setReg(GYRO_X, gx);
     setReg(GYRO_Y, gy);
     setReg(GYRO_Z, gz);
 
     if( calib_status & 2  ){
-        cleanFiltGyro(&myIMU.fGyroX); 
-        cleanFiltGyro(&myIMU.fGyroY); 
-        cleanFiltGyro(&myIMU.fGyroZ);
+        cleanFiltGyro(&myMPU.fGyroX); 
+        cleanFiltGyro(&myMPU.fGyroY); 
+        cleanFiltGyro(&myMPU.fGyroZ);
         calib_status ^= 2;
     }
 
 }
 
 void magTask(){
-    readMag(&myIMU);
-    mx = myIMU.mx;
-    my = myIMU.my;
-    mz = myIMU.mz;
+    readMag(&myMPU);
+    mx = myMPU.mx;
+    my = myMPU.my;
+    mz = myMPU.mz;
     mag_available = true;
 }
 
@@ -176,7 +177,7 @@ void xyzTask(){
 
 void initSensorsTasks(){
     
-    initMpu(&myIMU);
+    initMpu(&myMPU);
 
     initFilter(&filter_roll, 4, k_1_10, v_1_10);
     initFilter(&filter_pitch, 4, k_1_10, v_1_10);
