@@ -10,7 +10,7 @@ int16_t _ax, _ay, _az, _gx, _gy, _gz, _mx, _my, _mz;
 
 //char buffcal[500]="";
 
-int updateCalibOffset(mpu9250* m){
+int updateMpuCalibOffset(mpu9250* m){
     int ans = 0;
     if( m->off_gx != getReg(GYR_X_OFF))  ans |= 2, m->off_gx = getReg(GYR_X_OFF);
     if( m->off_gy != getReg(GYR_Y_OFF))  ans |= 2, m->off_gy = getReg(GYR_Y_OFF);
@@ -36,20 +36,20 @@ int updateCalibOffset(mpu9250* m){
 
 void initMpu(mpu9250* m){
 
-    I2CwriteByte(MPU9250_ADDRESS, MASTER_CONFIG, 0x06);
-    I2CwriteByte(MPU9250_ADDRESS, GYRO_CONFIG, GYRO_FULL_SCALE_500_DPS | 3);
-    I2CwriteByte(MPU9250_ADDRESS, ACCEL_CONFIG1, ACC_FULL_SCALE_2_G);
-    I2CwriteByte(MPU9250_ADDRESS, ACCEL_CONFIG2, 4);
+    I2CwriteByte(MPU9250_ADDRESS, MPU_MASTER_CONFIG, 0x06);
+    I2CwriteByte(MPU9250_ADDRESS, MPU_GYRO_CONFIG, MPU_GYRO_FULL_SCALE_500_DPS | 3);
+    I2CwriteByte(MPU9250_ADDRESS, MPU_ACCEL_CONFIG1, MPU_ACC_FULL_SCALE_2_G);
+    I2CwriteByte(MPU9250_ADDRESS, MPU_ACCEL_CONFIG2, 4);
     I2CwriteByte(MPU9250_ADDRESS, 0x37, 0x02);
     HAL_Delay(1000);
-    I2CwriteByte(MAG_ADDRESS, 0x0A, 0x16);
+    I2CwriteByte(MPU_MAG_ADDRESS, 0x0A, 0x16);
     m->scl_acc = m->scl_magx = m-> scl_magy = m-> scl_magz = 1;
 
-    initFiltGyro(&(m->fGyroX)), initFiltGyro(&(m->fGyroY)), initFiltGyro(&(m->fGyroZ));
-    initFiltAcc(&(m->fAccX)), initFiltAcc(&(m->fAccY)), initFiltAcc(&(m->fAccZ));
+    initMpuFiltGyro(&(m->fGyroX)), initMpuFiltGyro(&(m->fGyroY)), initMpuFiltGyro(&(m->fGyroZ));
+    initMpuFiltAcc(&(m->fAccX)), initMpuFiltAcc(&(m->fAccY)), initMpuFiltAcc(&(m->fAccZ));
 }
 
-void initFiltGyro(filtGyro *fg){
+void initMpuFiltGyro(mpuFiltGyro *fg){
 
     initFilter(&(fg->first), 4 , k_1_10, v_1_10);
     initFilter(&(fg->second), 5 , k_3_10, v_3_10);
@@ -57,14 +57,14 @@ void initFiltGyro(filtGyro *fg){
     initDNotchFilter(&(fg->fourth), 64, 50, 1000, 5, 5);
 }
 
-void initFiltAcc(filtAcc *fa){
+void initMpuFiltAcc(mpuFiltAcc *fa){
     
     initFilter(&(fa->first), 4 , k_1_20, v_1_20);
     initDNotchFilter(&(fa->second), 64, 40, 1000, 1, 1);
 }
 
 
-float computeFiltGyro(filtGyro *fg, float val){
+float computeMpuFiltGyro(mpuFiltGyro *fg, float val){
     val = computeFilter(&(fg->first), val);
     val = computeFilter(&(fg->second), val);
 
@@ -73,7 +73,7 @@ float computeFiltGyro(filtGyro *fg, float val){
     return val / 65.534;
 }
 
-float computeFiltAcc(filtAcc *fa, float val){
+float computeMpuFiltAcc(mpuFiltAcc *fa, float val){
     val = computeFilter(&(fa->first), val);
 
     val = computeDNotch(&(fa->second), val);
@@ -82,20 +82,20 @@ float computeFiltAcc(filtAcc *fa, float val){
 
 
 
-void cleanFiltGyro(filtGyro *fg){
+void cleanMpuFiltGyro(mpuFiltGyro *fg){
     cleanFilter(&(fg->first));
     cleanFilter(&(fg->second));
     cleanDNotch(&(fg->third));
     cleanDNotch(&(fg->fourth));
 }
 
-void cleanFiltAcc(filtAcc *fa){
+void cleanMpuFiltAcc(mpuFiltAcc *fa){
     cleanFilter(&(fa->first));
     cleanDNotch(&(fa->second));
 }
 
 
-void readRawAcc(mpu9250* m){ // m/s^2
+void readMpuRawAcc(mpu9250* m){ // m/s^2
     uint8_t Buf[6];
     I2Cread(MPU9250_ADDRESS, 0x3B, 6, Buf);
     _ax = -((Buf[0]<<8) | Buf[1]);
@@ -107,7 +107,7 @@ void readRawAcc(mpu9250* m){ // m/s^2
     m -> raw_az = _az; 
 }
 
-void readRawGyro(mpu9250* m){ // degrees/sec
+void readMpuRawGyro(mpu9250* m){ // degrees/sec
     
     uint8_t Buf[6];
     I2Cread(MPU9250_ADDRESS, 0x43, 6, Buf);
@@ -119,10 +119,10 @@ void readRawGyro(mpu9250* m){ // degrees/sec
     m -> raw_gz = _gz; 
 }
 
-void readRawMag(mpu9250* m){ // m/s^2
+void readMpuRawMag(mpu9250* m){ // m/s^2
 
     uint8_t Buf[7];
-    I2Cread(MAG_ADDRESS, 0x03, 7, Buf);
+    I2Cread(MPU_MAG_ADDRESS, 0x03, 7, Buf);
     _mx = -((Buf[3]<<8) | Buf[2]);
     _my = -((Buf[1]<<8) | Buf[0]);
     _mz = -((Buf[5]<<8) | Buf[4]);
@@ -132,41 +132,41 @@ void readRawMag(mpu9250* m){ // m/s^2
 }
 
 
-void readFiltAcc(mpu9250* m){ // m/s^2
+void readMpuFiltAcc(mpu9250* m){ // m/s^2
     
-    readRawAcc(m);
-    m -> filt_ax = computeFiltAcc(&(m->fAccX), m->raw_ax);
-    m -> filt_ay = computeFiltAcc(&(m->fAccY), m->raw_ay);
-    m -> filt_az = computeFiltAcc(&(m->fAccZ), m->raw_az); 
+    readMpuRawAcc(m);
+    m -> filt_ax = computeMpuFiltAcc(&(m->fAccX), m->raw_ax);
+    m -> filt_ay = computeMpuFiltAcc(&(m->fAccY), m->raw_ay);
+    m -> filt_az = computeMpuFiltAcc(&(m->fAccZ), m->raw_az); 
 }
 
-void readFiltGyro(mpu9250* m){ // degrees/sec
+void readMpuFiltGyro(mpu9250* m){ // degrees/sec
     
-    readRawGyro(m);
-    m -> filt_gx = computeFiltGyro(&(m->fGyroX), m->raw_gx);
-    m -> filt_gy = computeFiltGyro(&(m->fGyroY), m->raw_gy);
-    m -> filt_gz = computeFiltGyro(&(m->fGyroZ), m->raw_gz);
+    readMpuRawGyro(m);
+    m -> filt_gx = computeMpuFiltGyro(&(m->fGyroX), m->raw_gx);
+    m -> filt_gy = computeMpuFiltGyro(&(m->fGyroY), m->raw_gy);
+    m -> filt_gz = computeMpuFiltGyro(&(m->fGyroZ), m->raw_gz);
 }
 
 
-void readAcc(mpu9250* m){ // m/s^2
-    readFiltAcc(m);
+void readMpuAcc(mpu9250* m){ // m/s^2
+    readMpuFiltAcc(m);
     m -> ax = (m->filt_ax + m->off_ax)/m->scl_acc;
     m -> ay = (m->filt_ay + m->off_ay)/m->scl_acc;
     m -> az = (m->filt_az + m->off_az)/m->scl_acc; 
 }
 
 
-void readGyro(mpu9250* m){ // degrees/sec
-    readFiltGyro(m);
+void readMpuGyro(mpu9250* m){ // degrees/sec
+    readMpuFiltGyro(m);
     m -> gx = m->filt_gx + m->off_gx;
     m -> gy = m->filt_gy + m->off_gy;
     m -> gz = m->filt_gz + m->off_gz; 
 }
 
-void readMag(mpu9250* m){ // m/s^2
+void readMpuMag(mpu9250* m){ // m/s^2
     uint8_t Buf[7];
-    I2Cread(MAG_ADDRESS, 0x03, 7, Buf);
+    I2Cread(MPU_MAG_ADDRESS, 0x03, 7, Buf);
     
     _mx = -((Buf[3]<<8) | Buf[2]);
     _my = -((Buf[1]<<8) | Buf[0]);
@@ -191,7 +191,7 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
 
     for(int i = 0; i < n; i++){
         
-        readFiltGyro(m);   
+        readMpuFiltGyro(m);   
 
         if(i == 0){
             max_gyro[0] = m->filt_gx, max_gyro[1] = m->filt_gy, max_gyro[2] = m->filt_gz;
@@ -231,7 +231,7 @@ bool quiet(mpu9250* m, int n, float treshold, bool cal){
 }
 
 
-void calibrateGyro(mpu9250* m){
+void calibrateMpuGyro(mpu9250* m){
     //HAL_UART_Transmit(&huart2, (uint8_t*) "CalibG\n", 8, 100);
     setReg(CAL_GYR,0);
     while(!quiet(m,1000,0, true));
@@ -251,7 +251,7 @@ float dis3d(float x,float y,float z, float a, float b, float c){
 }
 
 
-void calibrateAccel(mpu9250* m){
+void calibrateMpuAccel(mpu9250* m){
     
     setReg(CAL_ACC,0);
 
@@ -275,7 +275,7 @@ void calibrateAccel(mpu9250* m){
     
     while(!done){
         while(!quiet(m, 100, 2, false));
-        readRawAcc(m);
+        readMpuRawAcc(m);
         valid = true;
         for(int i = 1 ; i <= tot-1 ; i++){
             int j = (head - i + tot) % tot;
@@ -356,7 +356,7 @@ void calibrateAccel(mpu9250* m){
     matDestruct(&ans);
 }
 
-void calibrateMag(mpu9250* m){
+void calibrateMpuMag(mpu9250* m){
     
     //char aux_buff[50]="";
 
@@ -375,7 +375,7 @@ void calibrateMag(mpu9250* m){
 
     while (!done){
         HAL_Delay(100);
-        readRawMag(m);
+        readMpuRawMag(m);
         magX = m->raw_mx*scaleGlobal;
         magY = m->raw_my*scaleGlobal;
         magZ = m->raw_mz*scaleGlobal;

@@ -31,7 +31,7 @@ mvAvgFilter mvAvg_bmp;
 filter filter_z;
 
 void accelTask(){   
-    readAcc(&myIMU);
+    readMpuAcc(&myIMU);
     ax = myIMU.ax, ay = myIMU.ay, az = myIMU.az; 
     
     setReg(ACC_X,(float)(ax));
@@ -39,16 +39,16 @@ void accelTask(){
     setReg(ACC_Z,(float)(az));
 
     if( calib_status & 1 ){
-        cleanFiltAcc(&myIMU.fAccX); 
-        cleanFiltAcc(&myIMU.fAccY); 
-        cleanFiltAcc(&myIMU.fAccZ);
+        cleanMpuFiltAcc(&myIMU.fAccX); 
+        cleanMpuFiltAcc(&myIMU.fAccY); 
+        cleanMpuFiltAcc(&myIMU.fAccZ);
         calib_status ^= 1;
     }
 }
 
 void gyroTask(){
 
-    readGyro(&myIMU);
+    readMpuGyro(&myIMU);
 
     gx = myIMU.gx, gy = myIMU.gy, gz = myIMU.gz; 
     
@@ -57,16 +57,16 @@ void gyroTask(){
     setReg(GYRO_Z, gz);
 
     if( calib_status & 2  ){
-        cleanFiltGyro(&myIMU.fGyroX); 
-        cleanFiltGyro(&myIMU.fGyroY); 
-        cleanFiltGyro(&myIMU.fGyroZ);
+        cleanMpuFiltGyro(&myIMU.fGyroX); 
+        cleanMpuFiltGyro(&myIMU.fGyroY); 
+        cleanMpuFiltGyro(&myIMU.fGyroZ);
         calib_status ^= 2;
     }
 
 }
 
 void magTask(){
-    readMag(&myIMU);
+    readMpuMag(&myIMU);
     mx = myIMU.mx;
     my = myIMU.my;
     mz = myIMU.mz;

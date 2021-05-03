@@ -260,11 +260,11 @@ void initControlTasks(){
     initPwm(&m4, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
     initPid(&z_control, 0, 0, 0, 0, 50 , 10, 15, NORMAL);
-    initPid(&x_control, 0, 0, 0, 0, 50 , 10, pi/36, D_SG);
-    initPid(&y_control, 0, 0, 0, 0, 50 , 10, pi/36, D_SG);
+    initPid(&x_control, 0, 0, 0, 0, 50 , 10, R_MAX, D_SG);
+    initPid(&y_control, 0, 0, 0, 0, 50 , 10, P_MAX, D_SG);
 
-    initPidFilter(&roll2w,  400, -5000, 30, TIME, 50, R_MAX, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
-    initPidFilter(&pitch2w, 400, -5000, 30, TIME, 50, P_MAX, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+    initPidFilter(&roll2w,  400, -5000, 30, TIME, 50, pi/9 , 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+    initPidFilter(&pitch2w, 400, -5000, 30, TIME, 50, pi/9 , 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
     initPidFilter(&yaw2w,     0,   0,  0, TIME, 50, pi/9, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
  
     initPidFilter(&wroll_control,  30, 2000, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER), 3, k_1_50, v_1_50 );
