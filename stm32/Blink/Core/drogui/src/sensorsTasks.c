@@ -211,7 +211,7 @@ void initSensorsTasks(){
     addTask(&heightTask, 10000, 2);
     
     #if PORT == GPS
-        addTask(&gpsTask, 125000, 3);
+        addTask(&gpsTask, 500000, 3);
         addTask(&xyzTask, 10000, 3);
     #endif
 

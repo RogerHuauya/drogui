@@ -15,7 +15,7 @@ filter filter_m1, filter_m2, filter_m3, filter_m4;
 
 scurve z_sp, x_sp, y_sp, roll_sp, pitch_sp, yaw_sp;
 
-float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, R_MAX = 3*PI/180.0 , P_MAX = 3*PI/180.0;
+float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, ANG_MAX = 3*PI/180.0;
 float M1,M2,M3,M4;
 
 float wroll_ref, wpitch_ref, wyaw_ref;
@@ -212,12 +212,12 @@ void xyzControlTask(){
 
         float rel = roll_ref/(pitch_ref + EPS);
         
-        if( fabs(rel) < 1  &&  fabs(pitch_ref) >= P_MAX  ){
-            pitch_ref = copysign(P_MAX, pitch_ref);
+        if( fabs(rel) < 1  &&  fabs(pitch_ref) >= ANG_MAX  ){
+            pitch_ref = copysign(ANG_MAX, pitch_ref);
             roll_ref = pitch_ref * rel;
         }
-        else if (fabs(rel) >= 1 && fabs(roll_ref) >= R_MAX  ){
-            roll_ref = copysign(R_MAX, roll_ref);
+        else if (fabs(rel) >= 1 && fabs(roll_ref) >= ANG_MAX  ){
+            roll_ref = copysign(ANG_MAX, roll_ref);
             pitch_ref = roll_ref/rel;
         }
 
@@ -260,11 +260,11 @@ void initControlTasks(){
     initPwm(&m4, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
     initPid(&z_control, 0, 0, 0, 0, 50 , 10, 15, NORMAL);
-    initPid(&x_control, 0, 0, 0, 0, 50 , 10, pi/36, D_SG);
-    initPid(&y_control, 0, 0, 0, 0, 50 , 10, pi/36, D_SG);
+    initPid(&x_control, 0, 0, 0, 0, 50 , 10, ANG_MAX, D_SG);
+    initPid(&y_control, 0, 0, 0, 0, 50 , 10, ANG_MAX, D_SG);
 
-    initPidFilter(&roll2w,  400, -5000, 30, TIME, 50, R_MAX, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
-    initPidFilter(&pitch2w, 400, -5000, 30, TIME, 50, P_MAX, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+    initPidFilter(&roll2w,  400, -5000, 30, TIME, 50, pi/9, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+    initPidFilter(&pitch2w, 400, -5000, 30, TIME, 50, pi/9, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
     initPidFilter(&yaw2w,     0,   0,  0, TIME, 50, pi/9, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
  
     initPidFilter(&wroll_control,  30, 2000, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER), 3, k_1_50, v_1_50 );
