@@ -32,7 +32,7 @@ mvAvgFilter mvAvg_bmp;
 filter filter_z;
 
 void accelTask(){   
-    readAcc(&myMPU);
+    readMpuAcc(&myMPU);
     ax = myMPU.ax, ay = myMPU.ay, az = myMPU.az; 
     
     setReg(ACC_X,(float)(ax));
@@ -40,16 +40,16 @@ void accelTask(){
     setReg(ACC_Z,(float)(az));
 
     if( calib_status & 1 ){
-        cleanFiltAcc(&myMPU.fAccX); 
-        cleanFiltAcc(&myMPU.fAccY); 
-        cleanFiltAcc(&myMPU.fAccZ);
+        cleanMpuFiltAcc(&myMPU.fAccX); 
+        cleanMpuFiltAcc(&myMPU.fAccY); 
+        cleanMpuFiltAcc(&myMPU.fAccZ);
         calib_status ^= 1;
     }
 }
 
 void gyroTask(){
 
-    readGyro(&myMPU);
+    readMpuGyro(&myMPU);
 
     gx = myMPU.gx, gy = myMPU.gy, gz = myMPU.gz; 
     
@@ -58,16 +58,16 @@ void gyroTask(){
     setReg(GYRO_Z, gz);
 
     if( calib_status & 2  ){
-        cleanFiltGyro(&myMPU.fGyroX); 
-        cleanFiltGyro(&myMPU.fGyroY); 
-        cleanFiltGyro(&myMPU.fGyroZ);
+        cleanMpuFiltGyro(&myMPU.fGyroX); 
+        cleanMpuFiltGyro(&myMPU.fGyroY); 
+        cleanMpuFiltGyro(&myMPU.fGyroZ);
         calib_status ^= 2;
     }
 
 }
 
 void magTask(){
-    readMag(&myMPU);
+    readMpuMag(&myMPU);
     mx = myMPU.mx;
     my = myMPU.my;
     mz = myMPU.mz;

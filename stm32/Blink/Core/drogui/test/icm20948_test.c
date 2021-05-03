@@ -19,7 +19,8 @@ void _main(){
     calibrateIcmGyro(&myicm);
     while(1){
         readIcmGyro(&myicm);
-        serialPrintf("%f\t%f\t%f\n", myicm.gx, myicm.gy, myicm.gz);
+        readMpuMag(&mympu);
+        serialPrintf("%f\t%f\t%f\t%f\t%f\t%f\n", myicm.gx, myicm.gy, myicm.gz, mympu.mx, mympu.my, mympu.mz);
                                                  //myicm.raw_gx, myicm.raw_gy, myicm.raw_gz);
         // serialPrint("loop\n");
         HAL_Delay(1);
