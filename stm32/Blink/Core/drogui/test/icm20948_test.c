@@ -10,18 +10,28 @@ mpu9250 mympu;
 
 void _main(){
     
-    serialPrint("Starting...");
     HAL_Delay(1000);
-    serialPrint("Starting...");
+    serialPrint("Starting...\n");
     initIcm(&myicm);
     initMpu(&mympu);
-    serialPrint("ICM started...!");
+    serialPrint("ICM started...!\n");
     calibrateIcmGyro(&myicm);
+    calibrateMpuGyro(&mympu);
     while(1){
-        readIcmGyro(&myicm);
-        readMpuMag(&mympu);
-        serialPrintf("%f\t%f\t%f\t%f\t%f\t%f\n", myicm.gx, myicm.gy, myicm.gz, mympu.mx, mympu.my, mympu.mz);
-                                                 //myicm.raw_gx, myicm.raw_gy, myicm.raw_gz);
+        readIcmRawGyro(&myicm);
+        
+        float val = myicm.raw_gx/65.5 + myicm.off_gx;
+        //serialPrintf("%f\t", val);
+        val = computeFilter(&(myicm.fGyroX.first), val);
+        serialPrintf("%f\t", val);
+        val = computeFilter(&(myicm.fGyroX.second), val);
+        serialPrintf("%f\t", val);
+        val = computeDNotch(&(myicm.fGyroX.third), val);
+        serialPrintf("%f\n", val);
+        val = computeDNotch(&(myicm.fGyroX.fourth), val);
+        //serialPrintf("%f\n", val);
+
+
         // serialPrint("loop\n");
         HAL_Delay(1);
     }

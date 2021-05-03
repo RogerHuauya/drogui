@@ -4,6 +4,7 @@
 #include "utils.h"
 #include "M8Q.h"
 #include "kalman.h"
+#include "serial.h"
 
 mpu9250 myMPU;
 icm20948 myICM;
@@ -32,35 +33,35 @@ mvAvgFilter mvAvg_bmp;
 filter filter_z;
 
 void accelTask(){   
-    readMpuAcc(&myMPU);
-    ax = myMPU.ax, ay = myMPU.ay, az = myMPU.az; 
+    readIcmAcc(&myICM);
+    ax = myICM.ax, ay = myICM.ay, az = myICM.az; 
     
     setReg(ACC_X,(float)(ax));
     setReg(ACC_Y,(float)(ay));
     setReg(ACC_Z,(float)(az));
 
     if( calib_status & 1 ){
-        cleanMpuFiltAcc(&myMPU.fAccX); 
-        cleanMpuFiltAcc(&myMPU.fAccY); 
-        cleanMpuFiltAcc(&myMPU.fAccZ);
+        cleanIcmFiltAcc(&myICM.fAccX); 
+        cleanIcmFiltAcc(&myICM.fAccY); 
+        cleanIcmFiltAcc(&myICM.fAccZ);
         calib_status ^= 1;
     }
 }
 
 void gyroTask(){
 
-    readMpuGyro(&myMPU);
+    readIcmGyro(&myICM);
 
-    gx = myMPU.gx, gy = myMPU.gy, gz = myMPU.gz; 
+    gx = myICM.gx, gy = myICM.gy, gz = myICM.gz; 
     
     setReg(GYRO_X, gx);
     setReg(GYRO_Y, gy);
     setReg(GYRO_Z, gz);
 
     if( calib_status & 2  ){
-        cleanMpuFiltGyro(&myMPU.fGyroX); 
-        cleanMpuFiltGyro(&myMPU.fGyroY); 
-        cleanMpuFiltGyro(&myMPU.fGyroZ);
+        cleanIcmFiltGyro(&myICM.fGyroX); 
+        cleanIcmFiltGyro(&myICM.fGyroY); 
+        cleanIcmFiltGyro(&myICM.fGyroZ);
         calib_status ^= 2;
     }
 
@@ -118,7 +119,7 @@ void rpyTask(){
     
     float rpy[3];
    
-    mahonyUpdate(gx*PI/180.0, gy*PI/180.0, -gz*PI/180.0, ax, ay, az, my, mx, mz);
+    mahonyUpdate(gx*PI/180.0, gy*PI/180.0, -gz*PI/180.0, ax, ay, az, my, mx, -mz);
     getMahonyEuler(rpy);
     raw_roll = rpy[0], raw_pitch = rpy[1], raw_yaw = rpy[2];
     
@@ -178,6 +179,11 @@ void xyzTask(){
 void initSensorsTasks(){
     
     initMpu(&myMPU);
+    initIcm(&myICM);
+
+    serialPrint("Gyro\n");calibrateIcmGyro(&myICM);
+    //serialPrint("Accel\n");calibrateIcmAccel(&myICM);
+    //serialPrint("Mag\n");calibrateMpuMag(&myMPU);
 
     initFilter(&filter_roll, 4, k_1_10, v_1_10);
     initFilter(&filter_pitch, 4, k_1_10, v_1_10);

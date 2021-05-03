@@ -97,8 +97,8 @@ void cleanMpuFiltAcc(mpuFiltAcc *fa){
 void readMpuRawAcc(mpu9250* m){ // m/s^2
     uint8_t Buf[6];
     I2Cread(MPU9250_ADDRESS, 0x3B, 6, Buf);
-    int16_t _ax = -((Buf[0]<<8) | Buf[1]);
-    int16_t _ay = -((Buf[2]<<8) | Buf[3]);
+    int16_t _ax =   (Buf[0]<<8) | Buf[1];
+    int16_t _ay =   (Buf[2]<<8) | Buf[3];
     int16_t _az =   (Buf[4]<<8) | Buf[5];
     
     m -> raw_ax = _ax;
@@ -110,8 +110,8 @@ void readMpuRawGyro(mpu9250* m){ // degrees/sec
     
     uint8_t Buf[6];
     I2Cread(MPU9250_ADDRESS, 0x43, 6, Buf);
-    int16_t _gx = -((Buf[0] << 8) | Buf[1]);
-    int16_t _gy = -((Buf[2] << 8) | Buf[3]);
+    int16_t _gx =   (Buf[0] << 8) | Buf[1];
+    int16_t _gy =   (Buf[2] << 8) | Buf[3];
     int16_t _gz =   (Buf[4] << 8) | Buf[5];
     m -> raw_gx = _gx;
     m -> raw_gy = _gy;
@@ -122,9 +122,9 @@ void readMpuRawMag(mpu9250* m){ // m/s^2
 
     uint8_t Buf[7];
     I2Cread(MPU_MAG_ADDRESS, 0x03, 7, Buf);
-    uint16_t _mx = -((Buf[3]<<8) | Buf[2]);
-    uint16_t _my = -((Buf[1]<<8) | Buf[0]);
-    uint16_t _mz = -((Buf[5]<<8) | Buf[4]);
+    int16_t _mx = -((Buf[3]<<8) | Buf[2]);
+    int16_t _my = -((Buf[1]<<8) | Buf[0]);
+    int16_t _mz = -((Buf[5]<<8) | Buf[4]);
     m -> raw_mx = _mx;
     m -> raw_my = _my;
     m -> raw_mz = _mz; 

@@ -21,8 +21,8 @@
             if( c == 'a' ) setReg(START_GPS,1);
             else setReg(START_GPS,0);
         }*/
-        readMpuRawGyro(&myMPU);
-        serialPrintf("%f\t%f\t%f;\n", myMPU.raw_gx/65.534,myMPU.raw_gy/65.534, myMPU.raw_gz/65.534  );
+        
+        serialPrintf("%f\t%f\t%f;\n", gx, gy, gz);
         //serialPrint("I am debugging\n");
 
     }
@@ -31,12 +31,12 @@
 void securityTask(){
     if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
         updatePID();
-        if(getReg(CAL_GYR_TRG) == 1) calibrateMpuGyro(&myMPU), setReg(CAL_GYR_TRG, 0);
-        if(getReg(CAL_ACC_TRG) == 1) calibrateMpuAccel(&myMPU), setReg(CAL_ACC_TRG, 0);
+        if(getReg(CAL_GYR_TRG) == 1) calibrateIcmGyro(&myICM), setReg(CAL_GYR_TRG, 0);
+        if(getReg(CAL_ACC_TRG) == 1) calibrateIcmAccel(&myICM), setReg(CAL_ACC_TRG, 0);
         if(getReg(CAL_MAG_TRG) == 1) calibrateMpuMag(&myMPU), setReg(CAL_MAG_TRG, 0);
         updateBmp388Offset(&myBMP);
         security = true;
-        calib_status = updateMpuCalibOffset(&myMPU);
+        calib_status = updateMpuCalibOffset(&myMPU) | updateIcmCalibOffset(&myICM);
     }
     else security = false;
 }
@@ -47,5 +47,5 @@ void initDebug(){
     #elif PORT == LED
         addTask(&blinkTask, 100000, 1);   
     #endif
-    addTask(&securityTask, 1000, 1);
+    //addTask(&securityTask, 1000, 1);
 }

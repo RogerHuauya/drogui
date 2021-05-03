@@ -55,7 +55,7 @@ void initIcmFiltGyro(icmFiltGyro *fg){
 
     initFilter(&(fg->first), 4 , k_1_10, v_1_10);
     initFilter(&(fg->second), 5 , k_3_10, v_3_10);
-    initDNotchFilter(&(fg->third), 64, 50, 1000, 5, 10);
+    initDNotchFilter(&(fg->third), 64, 50, 1000, 3, 5);
     initDNotchFilter(&(fg->fourth), 64, 50, 1000, 5, 5);
 }
 
@@ -100,8 +100,8 @@ void cleanIcmFiltAcc(icmFiltAcc *fa){
 void readIcmRawAcc(icm20948* m){ // m/s^2
     uint8_t Buf[6];
     I2Cread(ICM20948_ADDRESS, ICM_ACCEL_XOUT_H, 6, Buf);
-    int16_t _ax = -((Buf[0]<<8) | Buf[1]);
-    int16_t _ay = -((Buf[2]<<8) | Buf[3]);
+    int16_t _ax =   (Buf[0]<<8) | Buf[1];
+    int16_t _ay =   (Buf[2]<<8) | Buf[3];
     int16_t _az =   (Buf[4]<<8) | Buf[5];
     
     m -> raw_ax = _ax;
@@ -113,8 +113,8 @@ void readIcmRawGyro(icm20948* m){ // degrees/sec
     
     uint8_t Buf[6];
     I2Cread(ICM20948_ADDRESS, ICM_GYRO_XOUT_H, 6, Buf);
-    int16_t _gx = -((Buf[0] << 8) | Buf[1]);
-    int16_t _gy = -((Buf[2] << 8) | Buf[3]);
+    int16_t _gx =   (Buf[0] << 8) | Buf[1];
+    int16_t _gy =   (Buf[2] << 8) | Buf[3];
     int16_t _gz =   (Buf[4] << 8) | Buf[5];
     m -> raw_gx = _gx;
     m -> raw_gy = _gy;

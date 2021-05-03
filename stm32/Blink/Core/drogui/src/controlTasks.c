@@ -100,7 +100,7 @@ void wControlTask(){
 
     R = computePid(&wroll_control, wroll_err, TIME, 0);
     P = computePid(&wpitch_control, wpitch_err, TIME, 0);
-    Y = -computePid(&wyaw_control, wyaw_err, TIME, 0);
+    Y = computePid(&wyaw_control, wyaw_err, TIME, 0);
     
     //serialPrintf("%f\t%f\n", wroll_err ,wroll_control.errd);
 
@@ -112,10 +112,10 @@ void wControlTask(){
     setReg(YAW_U, Y);
     setReg(Z_U, H_comp);
 
-    M1 = -R + P + Y;
-    M2 = R + P - Y;
-    M3 = R - P + Y;
-    M4 = -R - P - Y;
+    M1 = + R  - P - Y;
+    M2 = - R  - P + Y;
+    M3 = - R  + P - Y;
+    M4 = + R  + P + Y;
 
     saturateM(H_comp*H_comp);
 
@@ -142,7 +142,7 @@ void rpyControlTask(){
 
     wroll_ref = computePid(&roll2w, angle_dif(roll_ref, roll), TIME, 0);
     wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0);
-    wyaw_ref = -computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);
+    wyaw_ref = computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);
 
     //wroll_ref_d = computeFilter(&filter_wroll,  wroll_ref_d);
     //wpitch_ref_d = computeFilter(&filter_wpitch, wpitch_ref_d);
