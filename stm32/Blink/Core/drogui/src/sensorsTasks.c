@@ -181,13 +181,13 @@ void initSensorsTasks(){
     initMpu(&myMPU);
     initIcm(&myICM);
 
-    serialPrint("Gyro\n");calibrateIcmGyro(&myICM);
+    //serialPrint("Gyro\n");calibrateIcmGyro(&myICM);
     //serialPrint("Accel\n");calibrateIcmAccel(&myICM);
     //serialPrint("Mag\n");calibrateMpuMag(&myMPU);
 
-    initFilter(&filter_roll, 4, k_1_10, v_1_10);
-    initFilter(&filter_pitch, 4, k_1_10, v_1_10);
-    initFilter(&filter_yaw, 4, k_1_10, v_1_10);
+    initFilter(&filter_roll, 6, k_1_10, v_1_10);
+    initFilter(&filter_pitch, 6, k_1_10, v_1_10);
+    initFilter(&filter_yaw, 6, k_1_10, v_1_10);
 
     setReg(ACC_SCALE,1);
     setReg(MAG_X_SCALE,1);

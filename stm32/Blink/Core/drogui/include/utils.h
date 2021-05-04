@@ -85,7 +85,7 @@ void getEuler(float q0, float q1, float q2, float q3, float* roll, float *pitch,
 */
 float angle_dif(float angle1, float angle2);
 
-//!  @brief  Low Pass Filter with K array (4 elements), V array(5 elements) and Fc/Fs = 1/10
+//!  @brief  Low Pass Filter with K array (6 elements), V array(7 elements) and Fc/Fs = 1/10
     extern float k_1_10[];
     extern float v_1_10[];
 //@}

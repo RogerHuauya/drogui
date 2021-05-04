@@ -50,7 +50,7 @@ void initMpu(mpu9250* m){
 
 void initMpuFiltGyro(mpuFiltGyro *fg){
 
-    initFilter(&(fg->first), 4 , k_1_10, v_1_10);
+    initFilter(&(fg->first), 6 , k_1_10, v_1_10);
     initFilter(&(fg->second), 5 , k_3_10, v_3_10);
     initDNotchFilter(&(fg->third), 64, 50, 1000, 5, 10);
     initDNotchFilter(&(fg->fourth), 64, 50, 1000, 5, 5);
