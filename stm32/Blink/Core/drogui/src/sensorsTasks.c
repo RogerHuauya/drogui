@@ -8,6 +8,7 @@
 
 mpu9250 myMPU;
 icm20948 myICM;
+mahony myRPY;
 
 m8q myGPS;
 
@@ -119,8 +120,8 @@ void rpyTask(){
     
     float rpy[3];
    
-    mahonyUpdate(gx*PI/180.0, gy*PI/180.0, -gz*PI/180.0, ax, ay, az, my, mx, -mz);
-    getMahonyEuler(rpy);
+    mahonyUpdate(&myRPY, gx*PI/180.0, gy*PI/180.0, -gz*PI/180.0, ax, ay, az, my, mx, -mz);
+    getMahonyEuler(&myRPY, rpy);
     raw_roll = rpy[0], raw_pitch = rpy[1], raw_yaw = rpy[2];
     
     /*roll += fmax(fmin(Kdfilt, (rpy[0] - roll)),-Kdfilt);
@@ -180,6 +181,7 @@ void initSensorsTasks(){
     
     initMpu(&myMPU);
     initIcm(&myICM);
+    initMahony(&myRPY, 2, 0.1, 500);
 
     serialPrint("Gyro\n");calibrateIcmGyro(&myICM);
     //serialPrint("Accel\n");calibrateIcmAccel(&myICM);
