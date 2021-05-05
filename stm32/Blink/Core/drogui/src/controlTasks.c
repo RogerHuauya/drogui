@@ -11,7 +11,7 @@ pid wroll_control, wpitch_control, wyaw_control;
 pid z_control, x_control, y_control;
 
 filter filter_wroll, filter_wpitch, filter_wyaw;
-filter filter_m1, filter_m2, filter_m3, filter_m4;
+filter filter_R, filter_P, filter_Y, filter_H;
 
 scurve z_sp, x_sp, y_sp, roll_sp, pitch_sp, yaw_sp;
 
@@ -94,8 +94,8 @@ void updatePID(){
 
 void wControlTask(){ 
     
-    float wroll_err = fmax( fmin( wroll_ref - gx , 20), -20);
-    float wpitch_err = fmax( fmin( wpitch_ref - gy , 20), -20);
+    float wroll_err = fmax( fmin( roll_ref - gx , 20), -20);
+    float wpitch_err = fmax( fmin( pitch_ref - gy , 20), -20);
     float wyaw_err = fmax( fmin( wyaw_ref - gz , 20), -20);
 
     
@@ -108,6 +108,10 @@ void wControlTask(){
     setReg(DER_GYRO_X, wroll_control.errd);
     setReg(DER_GYRO_Y, wpitch_control.errd);
 
+    /*R = computeFilter(&filter_R, R);
+    P = computeFilter(&filter_P, P);
+    Y = computeFilter(&filter_Y, Y);
+*/
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
     setReg(YAW_U, Y);
@@ -255,6 +259,11 @@ void xyzControlTask(){
 
 void initControlTasks(){
     
+    initFilter(&filter_R, 3, k_3_200, v_3_200);
+    initFilter(&filter_P, 3, k_3_200, v_3_200);
+    initFilter(&filter_Y, 3, k_3_200, v_3_200);
+    //initFilter(&filter_R, 3, k_3_200, v_3_200);
+
     initPwm(&m1, &htim3, TIM_CHANNEL_1, &(htim3.Instance->CCR1));
     initPwm(&m2, &htim3, TIM_CHANNEL_2, &(htim3.Instance->CCR2));
     initPwm(&m3, &htim4, TIM_CHANNEL_3, &(htim4.Instance->CCR3));
