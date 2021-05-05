@@ -120,7 +120,7 @@ void rpyTask(){
     
     float rpy[3];
    
-    mahonyUpdate(&myRPY, gx*PI/180.0, gy*PI/180.0, -gz*PI/180.0, ax, ay, az, my, mx, -mz);
+    mahonyUpdate(&myRPY, gx*PI/180.0, gy*PI/180.0, gz*PI/180.0, ax, ay, az, my, mx, -mz);
     getMahonyEuler(&myRPY, rpy);
     raw_roll = rpy[0], raw_pitch = rpy[1], raw_yaw = rpy[2];
     
@@ -183,13 +183,13 @@ void initSensorsTasks(){
     initIcm(&myICM);
     initMahony(&myRPY, 2, 0.1, 500);
 
-    serialPrint("Gyro\n");calibrateIcmGyro(&myICM);
+    //serialPrint("Gyro\n");calibrateIcmGyro(&myICM);
     //serialPrint("Accel\n");calibrateIcmAccel(&myICM);
     //serialPrint("Mag\n");calibrateMpuMag(&myMPU);
 
-    initFilter(&filter_roll, 4, k_1_10, v_1_10);
-    initFilter(&filter_pitch, 4, k_1_10, v_1_10);
-    initFilter(&filter_yaw, 4, k_1_10, v_1_10);
+    initFilter(&filter_roll, 6, k_1_10, v_1_10);
+    initFilter(&filter_pitch, 6, k_1_10, v_1_10);
+    initFilter(&filter_yaw, 6, k_1_10, v_1_10);
 
     setReg(ACC_SCALE,1);
     setReg(MAG_X_SCALE,1);

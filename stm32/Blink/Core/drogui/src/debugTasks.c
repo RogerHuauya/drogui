@@ -31,9 +31,9 @@
 void securityTask(){
     if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
         updatePID();
-        if(getReg(CAL_GYR_TRG) == 1) calibrateIcmGyro(&myICM), setReg(CAL_GYR_TRG, 0);
+        if(getReg(CAL_GYR_TRG) == 1) calibrateIcmGyro(&myICM),  setReg(CAL_GYR_TRG, 0);
         if(getReg(CAL_ACC_TRG) == 1) calibrateIcmAccel(&myICM), setReg(CAL_ACC_TRG, 0);
-        if(getReg(CAL_MAG_TRG) == 1) calibrateMpuMag(&myMPU), setReg(CAL_MAG_TRG, 0);
+        if(getReg(CAL_MAG_TRG) == 1) calibrateMpuMag(&myMPU),   setReg(CAL_MAG_TRG, 0);
         updateBmp388Offset(&myBMP);
         security = true;
         calib_status = updateMpuCalibOffset(&myMPU) | updateIcmCalibOffset(&myICM);
@@ -43,9 +43,9 @@ void securityTask(){
 
 void initDebug(){
     #if PORT == DEBUG   
-        addTask(&debugTask, 10000, 1);
+        //addTask(&debugTask, 10000, 1);
     #elif PORT == LED
         addTask(&blinkTask, 100000, 1);   
     #endif
-    //addTask(&securityTask, 1000, 1);
+    addTask(&securityTask, 1000, 1);
 }

@@ -98,6 +98,7 @@ void wControlTask(){
     float wpitch_err = fmax( fmin( wpitch_ref - gy , 20), -20);
     float wyaw_err = fmax( fmin( wyaw_ref - gz , 20), -20);
 
+    
     R = computePid(&wroll_control, wroll_err, TIME, 0);
     P = computePid(&wpitch_control, wpitch_err, TIME, 0);
     Y = computePid(&wyaw_control, wyaw_err, TIME, 0);

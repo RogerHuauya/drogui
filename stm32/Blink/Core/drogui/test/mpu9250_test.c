@@ -20,7 +20,7 @@ void _main(){
     //calibrateGyro(&myImu); 
     //calibrateAccel(&myImu);
     calibrateMag(&myImu);
-    initFilter(&my_filter, 5, k_1_10, v_1_10);
+    initFilter(&my_filter, 6, k_1_10, v_1_10);
 
     while(1){
         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
