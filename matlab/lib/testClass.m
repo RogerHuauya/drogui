@@ -29,7 +29,7 @@ classdef testClass
         
         function plotGyroX(obj)
             figure;
-            %plot(obj.datos.GYRO_X_REF);
+            plot(obj.datos.GYRO_X_REF);
             hold on
             plot(obj.datos.GYRO_X);
             title(strcat('Gyro x ',obj.wrpy))

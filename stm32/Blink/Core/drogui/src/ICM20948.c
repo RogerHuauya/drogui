@@ -38,7 +38,7 @@ void initIcm(icm20948* m){
     I2CwriteByte(ICM20948_ADDRESS, PWR_MGT, 9);
     I2CwriteByte(ICM20948_ADDRESS, CHANGE_BANK, 2<<4);
     I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_SMPLRT_DIV, 0);
-    I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_CONFIG1, ICM_GYRO_FULL_SCALE_250_DPS | 0x31);
+    I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_CONFIG1, ICM_GYRO_FULL_SCALE_1000_DPS | 0x31);
     I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_CONFIG1,ICM_ACC_FULL_SCALE_2_G | 0x31);
     I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_SMPLRT_DIV_MSB, 0);
     I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_SMPLRT_DIV_LSB, 0);
@@ -71,7 +71,7 @@ float computeIcmFiltGyro(icmFiltGyro *fg, float val){
 
     val = computeDNotch(&(fg->third), val);
     //val = computeDNotch(&(fg->fourth), val);
-    return val / 131;
+    return val / 32.8;
 }
 
 float computeIcmFiltAcc(icmFiltAcc *fa, float val){
