@@ -38,8 +38,8 @@ void initIcm(icm20948* m){
     I2CwriteByte(ICM20948_ADDRESS, PWR_MGT, 9);
     I2CwriteByte(ICM20948_ADDRESS, CHANGE_BANK, 2<<4);
     I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_SMPLRT_DIV, 0);
-    I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_CONFIG1, ICM_GYRO_FULL_SCALE_1000_DPS | 0x31);
-    I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_CONFIG1,ICM_ACC_FULL_SCALE_2_G | 0x31);
+    I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_CONFIG1, ICM_GYRO_FULL_SCALE_2000_DPS);
+    I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_CONFIG1,ICM_ACC_FULL_SCALE_16_G);
     I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_SMPLRT_DIV_MSB, 0);
     I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_SMPLRT_DIV_LSB, 0);
     I2CwriteByte(ICM20948_ADDRESS, CHANGE_BANK, 0);
@@ -53,9 +53,9 @@ void initIcm(icm20948* m){
 void initIcmFiltGyro(icmFiltGyro *fg){
 
     initFilter(&(fg->first), 6 , k_1_10, v_1_10);
-    //initFilter(&(fg->second), 5 , k_3_10, v_3_10);
+    initFilter(&(fg->second), 5 , k_3_10, v_3_10);
     initDNotchFilter(&(fg->third), 64, 50, 1000, 3, 5);
-    //initDNotchFilter(&(fg->fourth), 64, 50, 1000, 5, 5);
+    initDNotchFilter(&(fg->fourth), 64, 50, 1000, 5, 5);
 }
 
 void initIcmFiltAcc(icmFiltAcc *fa){
@@ -67,11 +67,11 @@ void initIcmFiltAcc(icmFiltAcc *fa){
 
 float computeIcmFiltGyro(icmFiltGyro *fg, float val){
     val = computeFilter(&(fg->first), val);
-    //val = computeFilter(&(fg->second), val);
+    val = computeFilter(&(fg->second), val);
 
     val = computeDNotch(&(fg->third), val);
-    //val = computeDNotch(&(fg->fourth), val);
-    return val / 32.8;
+    val = computeDNotch(&(fg->fourth), val);
+    return val / 16.4;
 }
 
 float computeIcmFiltAcc(icmFiltAcc *fa, float val){

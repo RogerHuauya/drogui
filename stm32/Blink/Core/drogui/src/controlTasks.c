@@ -94,9 +94,9 @@ void updatePID(){
 
 void wControlTask(){ 
     
-    float wroll_err = fmax( fmin( wroll_ref - gx , 20), -20);
-    float wpitch_err = fmax( fmin( wpitch_ref - gy , 20), -20);
-    float wyaw_err = fmax( fmin( wyaw_ref - gz , 20), -20);
+    float wroll_err = wroll_ref - gx;//fmax( fmin( wroll_ref - gx , 20), -20);
+    float wpitch_err = wpitch_ref - gy;//fmax( fmin( wpitch_ref - gy , 20), -20);
+    float wyaw_err = wyaw_ref - gz;//fmax( fmin( wyaw_ref - gz , 20), -20);
 
     
     R = computePid(&wroll_control, wroll_err, TIME, 0);
@@ -277,9 +277,9 @@ void initControlTasks(){
     initPidFilter(&pitch2w, 150, -1000, 20, TIME, 50, pi/9, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
     initPidFilter(&yaw2w,     0,   0,  0, TIME, 50, pi/9, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
  
-    initPidFilter(&wroll_control,  30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER), 3, k_3_200, v_3_200 );
-    initPidFilter(&wpitch_control, 30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER), 3, k_3_200, v_3_200 );
-    initPidFilter(&wyaw_control,   30, 500, 25, TIME, 50, 80, 3000,  ( D_SG | D_FILTER), 3, k_3_200, v_3_200  );
+    initPidFilter(&wroll_control,  30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+    initPidFilter(&wpitch_control, 30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+    initPidFilter(&wyaw_control,   30, 500, 25, TIME, 50, 80, 3000,  ( D_SG | D_FILTER),  6, k_1_10, v_1_10  );
     
     initFilter(&filter_wroll, 4, k_1_20, v_1_20);
     initFilter(&filter_wpitch, 4, k_1_20, v_1_20);
