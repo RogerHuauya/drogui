@@ -122,7 +122,7 @@ void wControlTask(){
     M3 = - R  + P - Y;
     M4 = + R  + P + Y;
 
-    saturateM(H_comp*H_comp);
+    saturateM(H_comp*100);
 
     setReg(MOTOR_1, M1);
     setReg(MOTOR_2, M2);
