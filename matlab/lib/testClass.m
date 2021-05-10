@@ -9,38 +9,37 @@ classdef testClass
     end
     methods
         function plotRoll(obj)
-            figure;
+            figure('Name', "roll " + obj.rpy,'NumberTitle','off');
             
             plot(obj.datos.ROLL_SCURVE);
             hold on
             plot(obj.datos.ROLL_VAL);
-            title(strcat('roll ', obj.rpy))
             hold off;
         end
         function plotPitch(obj)
-            figure;
+            figure('Name',"pitch " + obj.rpy,'NumberTitle','off');
             plot(obj.datos.PITCH_SCURVE);
             hold on
             plot(obj.datos.PITCH_VAL);
-            title(strcat('pitch ',obj.rpy))
+          
             hold off
         end
         
         
         function plotGyroX(obj)
-            figure;
+            figure('Name',"Gyro x " + obj.wrpy,'NumberTitle','off');
             plot(obj.datos.GYRO_X_REF);
             hold on
             plot(obj.datos.GYRO_X);
-            title(strcat('Gyro x ',obj.wrpy))
+          
             hold off;
         end
         function plotGyroY(obj)
-            figure;
+            figure('Name', "Gyro y " + obj.wrpy,'NumberTitle','off');
             plot(obj.datos.GYRO_Y_REF);
             hold on
             plot(obj.datos.GYRO_Y);
-            title(strcat('Gyro y ',obj.wrpy))
+            
             hold off;
         end
         

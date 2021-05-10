@@ -1,0 +1,5 @@
+name = "10-05-2021 13-13-15_rpy" + ".txt";
+datos = appendTest(datos,name, ' 100 20 -1000 ', '3 100 0 Yaw 1 50 500','0 0 0 ' , '0 0 0');
+T = datos(end).datos;
+delete(name);
+delete(strrep(name, "rpy", "xyz"));
