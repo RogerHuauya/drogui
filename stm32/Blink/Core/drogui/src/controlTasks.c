@@ -108,10 +108,11 @@ void wControlTask(){
     setReg(DER_GYRO_X, wroll_control.errd);
     setReg(DER_GYRO_Y, wpitch_control.errd);
 
-    /*R = computeFilter(&filter_R, R);
-    P = computeFilter(&filter_P, P);
-    Y = computeFilter(&filter_Y, Y);
-*/
+    
+    //R = computeFilter(&filter_R, R);
+    //P = computeFilter(&filter_P, P);
+    //Y = computeFilter(&filter_Y, Y);
+    
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
     setReg(YAW_U, Y);
@@ -277,9 +278,9 @@ void initControlTasks(){
     initPidFilter(&pitch2w, 150, -1000, 20, TIME, 50, pi/9, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
     initPidFilter(&yaw2w,     0,   0,  0, TIME, 50, pi/9, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
  
-    initPidFilter(&wroll_control,  30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
-    initPidFilter(&wpitch_control, 30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
-    initPidFilter(&wyaw_control,   30, 500, 25, TIME, 50, 80, 3000,  ( D_SG | D_FILTER),  6, k_1_10, v_1_10  );
+    initPidFilter(&wroll_control,  30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER | P2ID),  6, k_1_10, v_1_10 );
+    initPidFilter(&wpitch_control, 30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER | P2ID),  6, k_1_10, v_1_10 );
+    initPidFilter(&wyaw_control,   30, 500, 25, TIME, 50, 80, 3000,  ( D_SG | D_FILTER | P2ID),  6, k_1_10, v_1_10  );
     
     initFilter(&filter_wroll, 4, k_1_20, v_1_20);
     initFilter(&filter_wpitch, 4, k_1_20, v_1_20);

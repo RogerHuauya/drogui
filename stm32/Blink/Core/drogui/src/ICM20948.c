@@ -39,7 +39,7 @@ void initIcm(icm20948* m){
     I2CwriteByte(ICM20948_ADDRESS, CHANGE_BANK, 2<<4);
     I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_SMPLRT_DIV, 0);
     I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_CONFIG1, ICM_GYRO_FULL_SCALE_2000_DPS);
-    I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_CONFIG1,ICM_ACC_FULL_SCALE_16_G);
+    I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_CONFIG1,ICM_ACC_FULL_SCALE_2_G);
     I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_SMPLRT_DIV_MSB, 0);
     I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_SMPLRT_DIV_LSB, 0);
     I2CwriteByte(ICM20948_ADDRESS, CHANGE_BANK, 0);
@@ -276,7 +276,7 @@ void calibrateIcmAccel(icm20948* m){
         while(!icmQuiet(m, 100, 2, false));
         readIcmRawAcc(m);
         valid = true;
-        for(int i = 1 ; i <= tot-1 ; i++){
+        for(int i = 1 ; i <= cnt ; i++){
             int j = (head - i + tot) % tot;
             // Serial.println("icmQuiet ");
             float d = dis3d(m->raw_ax, m->raw_ay, m->raw_az, acc[j][0],acc[j][1],acc[j][2]);
