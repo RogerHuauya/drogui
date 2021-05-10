@@ -1,0 +1,129 @@
+diff --git a/control_test/ICMTests/another_failed_test.mat b/control_test/ICMTests/another_failed_test.mat
+new file mode 100644
+index 0000000..816f5b2
+Binary files /dev/null and b/control_test/ICMTests/another_failed_test.mat differ
+diff --git a/matlab/lib/plotHold.m b/matlab/lib/plotHold.m
+new file mode 100644
+index 0000000..ff11e73
+--- /dev/null
++++ b/matlab/lib/plotHold.m
+@@ -0,0 +1,9 @@
++function plotHold(mat) 
++    colors = ['b', 'r', 'g', 'c', 'm', 'y'];
++    cant = size(mat,2);
++    for i = 1:cant
++        plot(mat(:,i), colors(i))
++        hold on;
++    end
++    hold off
++end
+\ No newline at end of file
+diff --git a/matlab/lib/testClass.m b/matlab/lib/testClass.m
+index c7c32ac..8ff9827 100644
+--- a/matlab/lib/testClass.m
++++ b/matlab/lib/testClass.m
+@@ -29,7 +29,7 @@ classdef testClass
+         
+         function plotGyroX(obj)
+             figure;
+-            %plot(obj.datos.GYRO_X_REF);
++            plot(obj.datos.GYRO_X_REF);
+             hold on
+             plot(obj.datos.GYRO_X);
+             title(strcat('Gyro x ',obj.wrpy))
+diff --git a/stm32/Blink/Core/drogui/src/ICM20948.c b/stm32/Blink/Core/drogui/src/ICM20948.c
+index 18adda2..2183435 100644
+--- a/stm32/Blink/Core/drogui/src/ICM20948.c
++++ b/stm32/Blink/Core/drogui/src/ICM20948.c
+@@ -38,8 +38,8 @@ void initIcm(icm20948* m){
+     I2CwriteByte(ICM20948_ADDRESS, PWR_MGT, 9);
+     I2CwriteByte(ICM20948_ADDRESS, CHANGE_BANK, 2<<4);
+     I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_SMPLRT_DIV, 0);
+-    I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_CONFIG1, ICM_GYRO_FULL_SCALE_250_DPS | 0x31);
+-    I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_CONFIG1,ICM_ACC_FULL_SCALE_2_G | 0x31);
++    I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_CONFIG1, ICM_GYRO_FULL_SCALE_2000_DPS);
++    I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_CONFIG1,ICM_ACC_FULL_SCALE_16_G);
+     I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_SMPLRT_DIV_MSB, 0);
+     I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_SMPLRT_DIV_LSB, 0);
+     I2CwriteByte(ICM20948_ADDRESS, CHANGE_BANK, 0);
+@@ -53,9 +53,9 @@ void initIcm(icm20948* m){
+ void initIcmFiltGyro(icmFiltGyro *fg){
+ 
+     initFilter(&(fg->first), 6 , k_1_10, v_1_10);
+-    //initFilter(&(fg->second), 5 , k_3_10, v_3_10);
++    initFilter(&(fg->second), 5 , k_3_10, v_3_10);
+     initDNotchFilter(&(fg->third), 64, 50, 1000, 3, 5);
+-    //initDNotchFilter(&(fg->fourth), 64, 50, 1000, 5, 5);
++    initDNotchFilter(&(fg->fourth), 64, 50, 1000, 5, 5);
+ }
+ 
+ void initIcmFiltAcc(icmFiltAcc *fa){
+@@ -67,11 +67,11 @@ void initIcmFiltAcc(icmFiltAcc *fa){
+ 
+ float computeIcmFiltGyro(icmFiltGyro *fg, float val){
+     val = computeFilter(&(fg->first), val);
+-    //val = computeFilter(&(fg->second), val);
++    val = computeFilter(&(fg->second), val);
+ 
+     val = computeDNotch(&(fg->third), val);
+-    //val = computeDNotch(&(fg->fourth), val);
+-    return val / 131;
++    val = computeDNotch(&(fg->fourth), val);
++    return val / 16.4;
+ }
+ 
+ float computeIcmFiltAcc(icmFiltAcc *fa, float val){
+diff --git a/stm32/Blink/Core/drogui/src/controlTasks.c b/stm32/Blink/Core/drogui/src/controlTasks.c
+index 4909c59..779b18f 100644
+--- a/stm32/Blink/Core/drogui/src/controlTasks.c
++++ b/stm32/Blink/Core/drogui/src/controlTasks.c
+@@ -94,9 +94,9 @@ void updatePID(){
+ 
+ void wControlTask(){ 
+     
+-    float wroll_err = fmax( fmin( roll_ref - gx , 20), -20);
+-    float wpitch_err = fmax( fmin( pitch_ref - gy , 20), -20);
+-    float wyaw_err = fmax( fmin( wyaw_ref - gz , 20), -20);
++    float wroll_err = wroll_ref - gx;//fmax( fmin( wroll_ref - gx , 20), -20);
++    float wpitch_err = wpitch_ref - gy;//fmax( fmin( wpitch_ref - gy , 20), -20);
++    float wyaw_err = wyaw_ref - gz;//fmax( fmin( wyaw_ref - gz , 20), -20);
+ 
+     
+     R = computePid(&wroll_control, wroll_err, TIME, 0);
+@@ -122,7 +122,7 @@ void wControlTask(){
+     M3 = - R  + P - Y;
+     M4 = + R  + P + Y;
+ 
+-    saturateM(H_comp*H_comp);
++    saturateM(H_comp*100);
+ 
+     setReg(MOTOR_1, M1);
+     setReg(MOTOR_2, M2);
+@@ -206,7 +206,7 @@ void xyzControlTask(){
+ 
+     setReg(DER_Z,z_control.errd);
+ 
+-    rampValue(&H, H_ref, 0.2);
++    rampValue(&H, H_ref, 0.08);
+ 
+     H_comp = H/(cos(roll)*cos(pitch));
+ 
+@@ -273,13 +273,13 @@ void initControlTasks(){
+     initPid(&x_control, 0, 0, 0, 0, 50 , 10, ANG_MAX, D_SG);
+     initPid(&y_control, 0, 0, 0, 0, 50 , 10, ANG_MAX, D_SG);
+ 
+-    initPidFilter(&roll2w,  400, -5000, 30, TIME, 50, pi/9, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+-    initPidFilter(&pitch2w, 400, -5000, 30, TIME, 50, pi/9, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
++    initPidFilter(&roll2w,  150, -1000, 20, TIME, 50, pi/9, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
++    initPidFilter(&pitch2w, 150, -1000, 20, TIME, 50, pi/9, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+     initPidFilter(&yaw2w,     0,   0,  0, TIME, 50, pi/9, 60, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+  
+-    initPidFilter(&wroll_control,  40, 1750, 50, TIME, 50, 80, 3000, ( D_SG | D_FILTER), 3, k_3_200, v_3_200 );
+-    initPidFilter(&wpitch_control, 40, 1750, 50, TIME, 50, 80, 3000, ( D_SG | D_FILTER), 3, k_3_200, v_3_200 );
+-    initPidFilter(&wyaw_control,   50, 0, 30, TIME, 50, 80, 3000,  ( D_SG | D_FILTER), 3, k_3_200, v_3_200  );
++    initPidFilter(&wroll_control,  30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
++    initPidFilter(&wpitch_control, 30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
++    initPidFilter(&wyaw_control,   30, 500, 25, TIME, 50, 80, 3000,  ( D_SG | D_FILTER),  6, k_1_10, v_1_10  );
+     
+     initFilter(&filter_wroll, 4, k_1_20, v_1_20);
+     initFilter(&filter_wpitch, 4, k_1_20, v_1_20);
