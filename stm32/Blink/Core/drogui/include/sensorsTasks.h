@@ -8,6 +8,13 @@
 #include "utils.h"
 #include "BMP388.h"
 
+
+#define MPU9250  1
+#define ICM20948 2
+
+#define IMU MPU9250
+
+
 extern float    roll,       pitch,      yaw,
                 raw_roll,   raw_pitch,  raw_yaw,
                 ax,         ay,         az, 

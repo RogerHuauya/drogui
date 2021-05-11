@@ -34,37 +34,64 @@ mvAvgFilter mvAvg_bmp;
 filter filter_z;
 
 void accelTask(){   
-    readIcmAcc(&myICM);
-    ax = myICM.ax, ay = myICM.ay, az = myICM.az; 
+    #if IMU == ICM20948
+        readIcmAcc(&myICM);
+        ax = myICM.ax, ay = myICM.ay, az = myICM.az; 
+    
+    #elif IMU == MPU9250
+        readMpuAcc(&myMPU);
+        ax = myMPU.ax, ay = myMPU.ay, az = myMPU.az; 
+
+    #endif
+    
+
+    if( calib_status & 1 ){
+        #if IMU == ICM20948
+            cleanIcmFiltAcc(&myICM.fAccX); 
+            cleanIcmFiltAcc(&myICM.fAccY); 
+            cleanIcmFiltAcc(&myICM.fAccZ);
+        #elif IMU == MPU9250
+            cleanMpuFiltAcc(&myMPU.fAccX); 
+            cleanMpuFiltAcc(&myMPU.fAccY); 
+            cleanMpuFiltAcc(&myMPU.fAccZ);
+        #endif
+        calib_status ^= 1;
+    }
     
     setReg(ACC_X,(float)(ax));
     setReg(ACC_Y,(float)(ay));
     setReg(ACC_Z,(float)(az));
-
-    if( calib_status & 1 ){
-        cleanIcmFiltAcc(&myICM.fAccX); 
-        cleanIcmFiltAcc(&myICM.fAccY); 
-        cleanIcmFiltAcc(&myICM.fAccZ);
-        calib_status ^= 1;
-    }
 }
 
 void gyroTask(){
-
-    readIcmGyro(&myICM);
-
-    gx = myICM.gx, gy = myICM.gy, gz = myICM.gz; 
     
-    setReg(GYRO_X, gx);
-    setReg(GYRO_Y, gy);
-    setReg(GYRO_Z, gz);
+    #if IMU == ICM20948
+        readIcmGyro(&myICM);
+        ax = myICM.gx, ay = myICM.gy, az = myICM.gz; 
+    
+    #elif IMU == MPU9250
+        readMpuGyro(&myMPU);
+        gx = myMPU.gx, gy = myMPU.gy, gz = myMPU.gz; 
 
-    if( calib_status & 2  ){
-        cleanIcmFiltGyro(&myICM.fGyroX); 
-        cleanIcmFiltGyro(&myICM.fGyroY); 
-        cleanIcmFiltGyro(&myICM.fGyroZ);
+    #endif
+    
+
+    if( calib_status & 2 ){
+        #if IMU == ICM20948
+            cleanIcmFiltGyro(&myICM.fGyroX); 
+            cleanIcmFiltGyro(&myICM.fGyroY); 
+            cleanIcmFiltGyro(&myICM.fGyroZ);
+        #elif IMU == MPU9250
+            cleanMpuFiltGyro(&myMPU.fGyroX); 
+            cleanMpuFiltGyro(&myMPU.fGyroY); 
+            cleanMpuFiltGyro(&myMPU.fGyroZ);
+        #endif
         calib_status ^= 2;
     }
+    
+    setReg(GYRO_X,(float)(gx));
+    setReg(GYRO_Y,(float)(gy));
+    setReg(GYRO_Z,(float)(gz));
 
 }
 
