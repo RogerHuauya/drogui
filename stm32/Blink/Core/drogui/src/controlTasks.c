@@ -21,7 +21,7 @@ float M1,M2,M3,M4;
 float wroll_ref, wpitch_ref, wyaw_ref;
 float roll_ref, pitch_ref, yaw_ref;
 float x_ref = 0, y_ref = 0, z_ref = 0;
-
+float Ixx = 0, Iyy = 0;
 //float aux_wref, aux_wref2;
 
 void saturateM(float H){
@@ -146,9 +146,9 @@ void wControlTask(){
 
 void rpyControlTask(){
 
-    wroll_ref = computePid(&roll2w, angle_dif(roll_ref, roll), TIME, 0);
-    wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0);
-    wyaw_ref = computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);
+    wroll_ref = computePidD(&roll2w, angle_dif(roll_ref, roll), TIME, 0, gx);
+    wpitch_ref = computePidD(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0, gy);
+    wyaw_ref = computePidD(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0, gz);
 
     //wroll_ref_d = computeFilter(&filter_wroll,  wroll_ref_d);
     //wpitch_ref_d = computeFilter(&filter_wpitch, wpitch_ref_d);
