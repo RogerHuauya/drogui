@@ -54,9 +54,8 @@ void initIcmFiltGyro(icmFiltGyro *fg){
 
     initFilter(&(fg->first), 6 , k_1_10, v_1_10);
     initFilter(&(fg->second), 5 , k_3_10, v_3_10);
-    initDNotchFilter(&(fg->third), 64, 50, 1000, 3, 5);
-    initDNotchFilter(&(fg->fourth), 64, 50, 1000, 5, 5);
-    initFilter(&(fg->fifth), 6 , hk_1_500, hv_1_500);    
+    initDNotchFilter(&(fg->third), 64, 30, 1000, 3, 5);
+    initDNotchFilter(&(fg->fourth), 64, 30, 1000, 5, 5);
 }
 
 void initIcmFiltAcc(icmFiltAcc *fa){

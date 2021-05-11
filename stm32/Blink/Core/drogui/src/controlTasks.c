@@ -5,6 +5,7 @@
 #include "pwm.h"
 #include "serial.h"
 
+
 pwm m1, m2, m3, m4;
 pid roll2w, pitch2w, yaw2w; 
 pid wroll_control, wpitch_control, wyaw_control;
@@ -280,9 +281,9 @@ void initControlTasks(){
     initPidFilter(&pitch2w, 150, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
     initPidFilter(&yaw2w,     0,   0,  0, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
  
-    initPidFilter(&wroll_control,  30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER | P2ID),  6, k_1_10, v_1_10 );
-    initPidFilter(&wpitch_control, 30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER | P2ID),  6, k_1_10, v_1_10 );
-    initPidFilter(&wyaw_control,   30, 500, 25, TIME, 50, 80, 3000,  ( D_SG | D_FILTER | P2ID),  6, k_1_10, v_1_10  );
+    initPidFilter(&wroll_control,  30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+    initPidFilter(&wpitch_control, 30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+    initPidFilter(&wyaw_control,   30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10  );
     
     initFilter(&filter_wroll, 4, k_1_20, v_1_20);
     initFilter(&filter_wpitch, 4, k_1_20, v_1_20);

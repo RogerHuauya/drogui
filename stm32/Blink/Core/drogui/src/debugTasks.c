@@ -31,8 +31,15 @@
 void securityTask(){
     if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
         updatePID();
-        if(getReg(CAL_GYR_TRG) == 1) calibrateIcmGyro(&myICM),  setReg(CAL_GYR_TRG, 0);
-        if(getReg(CAL_ACC_TRG) == 1) calibrateIcmAccel(&myICM), setReg(CAL_ACC_TRG, 0);
+        
+        #if IMU == ICM20948
+            if(getReg(CAL_GYR_TRG) == 1) calibrateIcmGyro(&myICM),  setReg(CAL_GYR_TRG, 0);
+            if(getReg(CAL_ACC_TRG) == 1) calibrateIcmAccel(&myICM), setReg(CAL_ACC_TRG, 0);
+        #elif IMU == MPU9250
+            if(getReg(CAL_GYR_TRG) == 1) calibrateMpuGyro (&myMPU), setReg(CAL_GYR_TRG, 0);
+            if(getReg(CAL_ACC_TRG) == 1) calibrateMpuAccel(&myMPU), setReg(CAL_ACC_TRG, 0);
+        #endif
+
         if(getReg(CAL_MAG_TRG) == 1) calibrateMpuMag(&myMPU),   setReg(CAL_MAG_TRG, 0);
         updateBmp388Offset(&myBMP);
         security = true;
