@@ -69,7 +69,7 @@ float computeMpuFiltGyro(mpuFiltGyro *fg, float val){
 
     val = computeDNotch(&(fg->third), val);
     val = computeDNotch(&(fg->fourth), val);
-    return val / 65.534;
+    return val / 65.5;
 }
 
 float computeMpuFiltAcc(mpuFiltAcc *fa, float val){
@@ -122,9 +122,9 @@ void readMpuRawMag(mpu9250* m){ // m/s^2
 
     uint8_t Buf[7];
     I2Cread(MPU_MAG_ADDRESS, 0x03, 7, Buf);
-    int16_t _mx = -((Buf[3]<<8) | Buf[2]);
-    int16_t _my = -((Buf[1]<<8) | Buf[0]);
-    int16_t _mz = -((Buf[5]<<8) | Buf[4]);
+    int16_t _mx = ((Buf[1]<<8) | Buf[0]);
+    int16_t _my = ((Buf[3]<<8) | Buf[2]);
+    int16_t _mz = ((Buf[5]<<8) | Buf[4]);
     m -> raw_mx = _mx;
     m -> raw_my = _my;
     m -> raw_mz = _mz; 
