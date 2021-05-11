@@ -52,7 +52,7 @@ void accelTask(){
 void gyroTask(){
 
     readIcmGyro(&myICM);
-
+    
     gx = myICM.gx, gy = myICM.gy, gz = myICM.gz; 
     
     setReg(GYRO_X, gx);

@@ -56,6 +56,7 @@ void initIcmFiltGyro(icmFiltGyro *fg){
     initFilter(&(fg->second), 5 , k_3_10, v_3_10);
     initDNotchFilter(&(fg->third), 64, 50, 1000, 3, 5);
     initDNotchFilter(&(fg->fourth), 64, 50, 1000, 5, 5);
+    initFilter(&(fg->fifth), 6 , hk_1_500, hv_1_500);    
 }
 
 void initIcmFiltAcc(icmFiltAcc *fa){
@@ -68,9 +69,9 @@ void initIcmFiltAcc(icmFiltAcc *fa){
 float computeIcmFiltGyro(icmFiltGyro *fg, float val){
     val = computeFilter(&(fg->first), val);
     val = computeFilter(&(fg->second), val);
-
     val = computeDNotch(&(fg->third), val);
     val = computeDNotch(&(fg->fourth), val);
+    //val = computeFilter(&(fg->fifth), val);
     return val / 16.4;
 }
 
@@ -85,9 +86,10 @@ float computeIcmFiltAcc(icmFiltAcc *fa, float val){
 
 void cleanIcmFiltGyro(icmFiltGyro *fg){
     cleanFilter(&(fg->first));
-    //cleanFilter(&(fg->second));
+    cleanFilter(&(fg->second));
     cleanDNotch(&(fg->third));
-    //cleanDNotch(&(fg->fourth));
+    cleanDNotch(&(fg->fourth));
+    cleanFilter(&(fg->fifth));
 }
 
 void cleanIcmFiltAcc(icmFiltAcc *fa){
@@ -218,8 +220,8 @@ bool icmQuiet(icm20948* m, int n, float treshold, bool cal){
     
     //serialPrintf("%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
 
-    if( ( max_gyro[0]-min_gyro[0] < (treshold + 1.8) ) &&\
-        ( max_gyro[1]-min_gyro[1] < (treshold + 3.8) ) && \
+    if( ( max_gyro[0]-min_gyro[0] < (treshold + 2.0 /*1.8*/) ) &&\
+        ( max_gyro[1]-min_gyro[1] < (treshold + 4.0 /*3.8*/) ) && \
         ( max_gyro[2]-min_gyro[2] < (treshold + 5.0) ) ){
         if(cal){
             m->off_gx = -1.0*acum_gyro[0]/n;
