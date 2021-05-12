@@ -44,6 +44,7 @@ typedef struct _pid{
  * @return u Control law
 */
 float computePid(pid* p, float error, uint32_t t, float h);
+float computePidD(pid* p, float error, uint32_t t, float h, float dp);
 /**
  * @brief Reset PID controller, the error as well as the integral and derivative components become zeros 
  * @param p PID (pointer to struct pid) 

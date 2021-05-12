@@ -5,12 +5,14 @@
 #include "M8Q.h"
 #include "kalman.h"
 #include "serial.h"
+#include "opticalFlow.h"
 
 mpu9250 myMPU;
 icm20948 myICM;
 mahony myRPY;
 
 m8q myGPS;
+optFlow myOF;
 
 filter filter_roll, filter_pitch, filter_yaw;
 
@@ -19,7 +21,8 @@ float   roll,       pitch,      yaw,
         ax,         ay,         az, 
         gx,         gy,         gz, 
         mx,         my,         mz, 
-        x,          y,          z; 
+        x,          y,          z, 
+        xp,         yp,         zp; 
 
 bool mag_available = false;
 
@@ -100,6 +103,9 @@ void magTask(){
     mx = myMPU.mx;
     my = myMPU.my;
     mz = myMPU.mz;
+    setReg(MAG_X, mx);
+    setReg(MAG_Y, my);
+    setReg(MAG_Z, mz);
     mag_available = true;
 }
 
@@ -143,11 +149,24 @@ void gpsTask(){
 }
 
 
+void optTask(){
+
+    int ret = readFlowRange(&myOF);
+    setReg(OPT_STATE, ret);
+           
+    if(ret == OPT_VEL || ret == OPT_RNG){
+        xp  = myOF.vel_x, yp = myOF.vel_y, z = myOF.dis;
+        setReg(XP_VAL, xp), setReg(YP_VAL, yp), setReg(Z_VAL, Z);
+    }
+
+}
+
+
 void rpyTask(){
     
     float rpy[3];
    
-    mahonyUpdate(&myRPY, gx*PI/180.0, gy*PI/180.0, gz*PI/180.0, ax, ay, az, my, mx, -mz);
+    mahonyUpdate(&myRPY, gx*PI/180.0, gy*PI/180.0, gz*PI/180.0, ax, ay, az, 0, 0, 0);
     getMahonyEuler(&myRPY, rpy);
     raw_roll = rpy[0], raw_pitch = rpy[1], raw_yaw = rpy[2];
     
@@ -226,10 +245,14 @@ void initSensorsTasks(){
     #if PORT == GPS
         initM8Q(&myGPS);
         setKalmanTsImu(0.01);
-        setKalmanTsGps(0.5);
+        setKalmanTsGps(0.125);
 
         initMatGlobal();
+    #elif PORT == FLOW
+        initOptFlow(&myOF);
     #endif
+
+
     
     calib_status = 0;
 
@@ -244,11 +267,13 @@ void initSensorsTasks(){
     addTask(&magTask, 100000, 2);
     addTask(&rpyTask, 2000, 2);
     //addTask(&altitudeTask,10000,2);
-    addTask(&heightTask, 10000, 2);
+    //addTask(&heightTask, 10000, 2);
     
     #if PORT == GPS
-        addTask(&gpsTask, 500000, 3);
+        addTask(&gpsTask, 125000, 3);
         addTask(&xyzTask, 10000, 3);
+    #elif PORT == FLOW
+        addTask(&optTask, 1000, 1);
     #endif
 
 }

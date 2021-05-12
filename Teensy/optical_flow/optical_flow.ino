@@ -37,16 +37,16 @@ void loop() {
                 Serial.print(int(comando[i]), HEX), Serial.print(" ");
             }
             Serial.println();*/
-            Serial.print(millis()-t);
-            Serial.print("\t");
+            //Serial.print(millis()-t);
+            /*Serial.print("\t");
             Serial.print(q1);
             Serial.print("\t");
   
             Serial.print(fx);
             Serial.print("\t");
             Serial.print(fy);
-            Serial.print("\n");
-            t = millis();
+            Serial.print("\n");*/
+            //t = millis();
           }
           else if(comando[4] == 1){
               q2 = comando[8];
@@ -62,7 +62,9 @@ void loop() {
           Serial.print("\t");
           */
           
-          
+          Serial.print(millis() - t);
+          Serial.print("\n");
+          t = millis();
           comando[0] = '$';
           comando[1] = 'X';
           idx = 2;

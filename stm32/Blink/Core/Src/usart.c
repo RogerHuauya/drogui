@@ -43,6 +43,8 @@ void MX_USART2_UART_Init(void)
     huart2.Init.BaudRate = 2000000;
   #elif PORT == GPS
     huart2.Init.BaudRate = 9600;
+  #elif PORT == FLOW
+    huart2.Init.BaudRate = 115200;
   #endif
   
   huart2.Init.WordLength = UART_WORDLENGTH_8B;

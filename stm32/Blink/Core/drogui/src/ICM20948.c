@@ -2,6 +2,7 @@
 #include "i2c.h"
 #include "matlib.h"
 #include "registerMap.h"
+#include "sensorsTasks.h"
 #include "utils.h"
 #include "serial.h"
 
@@ -11,14 +12,19 @@
 
 int updateIcmCalibOffset(icm20948* m){
     int ans = 0;
-    if( m->off_gx != getReg(GYR_X_OFF))  ans |= 2, m->off_gx = getReg(GYR_X_OFF);
-    if( m->off_gy != getReg(GYR_Y_OFF))  ans |= 2, m->off_gy = getReg(GYR_Y_OFF);
-    if( m->off_gz != getReg(GYR_Z_OFF))  ans |= 2, m->off_gz = getReg(GYR_Z_OFF);
 
-    if( m->off_ax  != getReg(ACC_X_OFF)) ans |= 1, m->off_ax = getReg(ACC_X_OFF);
-    if( m->off_ay  != getReg(ACC_Y_OFF)) ans |= 1, m->off_ay = getReg(ACC_Y_OFF); 
-    if( m->off_az  != getReg(ACC_Z_OFF)) ans |= 1, m->off_az = getReg(ACC_Z_OFF);
-    if( m->scl_acc != getReg(ACC_SCALE)) ans |= 1, m->scl_acc =  getReg(ACC_SCALE);
+    #if IMU == ICM20948
+
+        if( m->off_gx != getReg(GYR_X_OFF))  ans |= 2, m->off_gx = getReg(GYR_X_OFF);
+        if( m->off_gy != getReg(GYR_Y_OFF))  ans |= 2, m->off_gy = getReg(GYR_Y_OFF);
+        if( m->off_gz != getReg(GYR_Z_OFF))  ans |= 2, m->off_gz = getReg(GYR_Z_OFF);
+
+        if( m->off_ax  != getReg(ACC_X_OFF)) ans |= 1, m->off_ax = getReg(ACC_X_OFF);
+        if( m->off_ay  != getReg(ACC_Y_OFF)) ans |= 1, m->off_ay = getReg(ACC_Y_OFF); 
+        if( m->off_az  != getReg(ACC_Z_OFF)) ans |= 1, m->off_az = getReg(ACC_Z_OFF);
+        if( m->scl_acc != getReg(ACC_SCALE)) ans |= 1, m->scl_acc =  getReg(ACC_SCALE);
+
+    #endif
 
 /*    if( m->off_mx != getReg(MAG_X_OFF)) ans |= 4, m->off_mx =   getReg(MAG_X_OFF);
     if( m->off_my != getReg(MAG_Y_OFF)) ans |= 4, m->off_my = getReg(MAG_Y_OFF);     
@@ -68,9 +74,9 @@ void initIcmFiltAcc(icmFiltAcc *fa){
 float computeIcmFiltGyro(icmFiltGyro *fg, float val){
     val = computeFilter(&(fg->first), val);
     val = computeFilter(&(fg->second), val);
-
     val = computeDNotch(&(fg->third), val);
     val = computeDNotch(&(fg->fourth), val);
+    //val = computeFilter(&(fg->fifth), val);
     return val / 16.4;
 }
 
@@ -88,6 +94,7 @@ void cleanIcmFiltGyro(icmFiltGyro *fg){
     cleanFilter(&(fg->second));
     cleanDNotch(&(fg->third));
     cleanDNotch(&(fg->fourth));
+    cleanFilter(&(fg->fifth));
 }
 
 void cleanIcmFiltAcc(icmFiltAcc *fa){
@@ -218,8 +225,8 @@ bool icmQuiet(icm20948* m, int n, float treshold, bool cal){
     
     //serialPrintf("%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
 
-    if( ( max_gyro[0]-min_gyro[0] < (treshold + 1.8) ) &&\
-        ( max_gyro[1]-min_gyro[1] < (treshold + 3.8) ) && \
+    if( ( max_gyro[0]-min_gyro[0] < (treshold + 2.0 /*1.8*/) ) &&\
+        ( max_gyro[1]-min_gyro[1] < (treshold + 4.0 /*3.8*/) ) && \
         ( max_gyro[2]-min_gyro[2] < (treshold + 5.0) ) ){
         if(cal){
             m->off_gx = -1.0*acum_gyro[0]/n;
