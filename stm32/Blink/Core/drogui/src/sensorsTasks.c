@@ -150,7 +150,7 @@ void rpyTask(){
     
     float rpy[3];
    
-    mahonyUpdate(&myRPY, gx*PI/180.0, gy*PI/180.0, gz*PI/180.0, ax, ay, az, 0, 0, 0);
+    mahonyUpdate(&myRPY, gx*PI/180.0, gy*PI/180.0, gz*PI/180.0, ax, ay, az, my, mx, -mz);
     getMahonyEuler(&myRPY, rpy);
     raw_roll = rpy[0], raw_pitch = rpy[1], raw_yaw = rpy[2];
     

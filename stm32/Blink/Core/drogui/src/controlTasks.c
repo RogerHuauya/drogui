@@ -217,8 +217,11 @@ void xyzControlTask(){
 
     if(getReg(START_XYC) > 0){
         
-        roll_ref = -Y_C*cos(raw_yaw) - X_C*sin(raw_yaw);
-        pitch_ref = -Y_C*sin(raw_yaw) + X_C*cos(raw_yaw);
+        /*roll_ref = -Y_C*cos(raw_yaw) - X_C*sin(raw_yaw);
+        pitch_ref = -Y_C*sin(raw_yaw) + X_C*cos(raw_yaw);*/
+        
+        roll_ref  = -Y_C*cos(raw_yaw) + X_C*sin(raw_yaw);
+        pitch_ref = +Y_C*sin(raw_yaw) + X_C*cos(raw_yaw);
 
         float rel = roll_ref/(pitch_ref + EPS);
         
