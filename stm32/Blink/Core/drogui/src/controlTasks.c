@@ -95,14 +95,18 @@ void updatePID(){
 
 void wControlTask(){ 
     
-    float wroll_err = wroll_ref - gx;//fmax( fmin( wroll_ref - gx , 20), -20);
+    float wroll_err  = wroll_ref - gx;//fmax( fmin( wroll_ref - gx , 20), -20);
     float wpitch_err = wpitch_ref - gy;//fmax( fmin( wpitch_ref - gy , 20), -20);
-    float wyaw_err = wyaw_ref - gz;//fmax( fmin( wyaw_ref - gz , 20), -20);
+    float wyaw_err   = wyaw_ref - gz;//fmax( fmin( wyaw_ref - gz , 20), -20);
 
     
     R = computePid(&wroll_control, wroll_err, TIME, 0);
     P = computePid(&wpitch_control, wpitch_err, TIME, 0);
     Y = computePid(&wyaw_control, wyaw_err, TIME, 0);
+
+    R = wroll_err ;
+    P = wpitch_err;
+    Y = wyaw_err  ;
     
     //serialPrintf("%f\t%f\n", wroll_err ,wroll_control.errd);
 
