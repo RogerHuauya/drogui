@@ -155,8 +155,9 @@ void optTask(){
     setReg(OPT_STATE, ret);
            
     if(ret == OPT_VEL || ret == OPT_RNG){
-        xp  = myOF.vel_x, yp = myOF.vel_y, z = myOF.dis;
-        setReg(XP_VAL, xp), setReg(YP_VAL, yp), setReg(Z_VAL, Z);
+        yp  = -myOF.vel_x, xp = -myOF.vel_y;
+        if(myOF.dis != -1) z = myOF.dis;
+        setReg(XP_VAL, xp), setReg(YP_VAL, yp), setReg(Z_VAL, z);
     }
 
 }
