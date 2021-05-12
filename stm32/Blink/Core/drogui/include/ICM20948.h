@@ -55,7 +55,7 @@ enum ICM_ACCEL_SCALE{
 
 typedef struct _icmFiltGyro{
     
-    filter first, second;
+    filter first, second, fifth;
     dNotchFilter third, fourth;
 
 } icmFiltGyro;
