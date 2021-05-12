@@ -100,6 +100,9 @@ void magTask(){
     mx = myMPU.mx;
     my = myMPU.my;
     mz = myMPU.mz;
+    setReg(MAG_X, mx);
+    setReg(MAG_Y, my);
+    setReg(MAG_Z, mz);
     mag_available = true;
 }
 
@@ -147,7 +150,7 @@ void rpyTask(){
     
     float rpy[3];
    
-    mahonyUpdate(&myRPY, gx*PI/180.0, gy*PI/180.0, gz*PI/180.0, ax, ay, az, my, mx, -mz);
+    mahonyUpdate(&myRPY, gx*PI/180.0, gy*PI/180.0, gz*PI/180.0, ax, ay, az, 0, 0, 0);
     getMahonyEuler(&myRPY, rpy);
     raw_roll = rpy[0], raw_pitch = rpy[1], raw_yaw = rpy[2];
     
@@ -226,7 +229,7 @@ void initSensorsTasks(){
     #if PORT == GPS
         initM8Q(&myGPS);
         setKalmanTsImu(0.01);
-        setKalmanTsGps(0.5);
+        setKalmanTsGps(0.125);
 
         initMatGlobal();
     #endif
@@ -247,7 +250,7 @@ void initSensorsTasks(){
     addTask(&heightTask, 10000, 2);
     
     #if PORT == GPS
-        addTask(&gpsTask, 500000, 3);
+        addTask(&gpsTask, 125000, 3);
         addTask(&xyzTask, 10000, 3);
     #endif
 

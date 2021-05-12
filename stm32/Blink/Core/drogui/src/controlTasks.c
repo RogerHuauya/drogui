@@ -100,14 +100,15 @@ void wControlTask(){
     float wyaw_err   = wyaw_ref - gz;//fmax( fmin( wyaw_ref - gz , 20), -20);
 
     
-    /*R = computePid(&wroll_control, wroll_err, TIME, 0);
+    R = computePid(&wroll_control, wroll_err, TIME, 0);
     P = computePid(&wpitch_control, wpitch_err, TIME, 0);
-    Y = computePid(&wyaw_control, wyaw_err, TIME, 0);*/
+    Y = computePid(&wyaw_control, wyaw_err, TIME, 0);
     
+    /*
     R = wroll_ref; 
     P = wpitch_ref;
     Y = wyaw_ref;
-
+    */
     setReg(DER_GYRO_X, wroll_control.errd);
     setReg(DER_GYRO_Y, wpitch_control.errd);
 
@@ -277,13 +278,13 @@ void initControlTasks(){
     initPid(&x_control, 0, 0, 0, 0, 50 , 10, ANG_MAX, D_SG);
     initPid(&y_control, 0, 0, 0, 0, 50 , 10, ANG_MAX, D_SG);
 
-    initPidFilter(&roll2w,  150, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
-    initPidFilter(&pitch2w, 150, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+    initPidFilter(&roll2w,  400, -10, 30, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+    initPidFilter(&pitch2w, 400, -10, 30, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
     initPidFilter(&yaw2w,     0,   0,  0, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
  
-    initPidFilter(&wroll_control,  30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
-    initPidFilter(&wpitch_control, 30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
-    initPidFilter(&wyaw_control,   30, 500, 25, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10  );
+    initPidFilter(&wroll_control,  30, 1500, 80, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+    initPidFilter(&wpitch_control, 30, 1500, 80, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+    initPidFilter(&wyaw_control,   30, 1500, 80, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10  );
     
     initFilter(&filter_wroll, 4, k_1_20, v_1_20);
     initFilter(&filter_wpitch, 4, k_1_20, v_1_20);
