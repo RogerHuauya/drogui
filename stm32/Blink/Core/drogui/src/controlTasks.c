@@ -218,10 +218,7 @@ void xyzControlTask(){
     if(getReg(START_XYC) > 0){
         
         /*roll_ref = -Y_C*cos(raw_yaw) - X_C*sin(raw_yaw);
-        pitch_ref = -Y_C*sin(raw_yaw) + X_C*cos(raw_yaw);*/
-        
-        roll_ref  = -Y_C*cos(raw_yaw) + X_C*sin(raw_yaw);
-        pitch_ref = +Y_C*sin(raw_yaw) + X_C*cos(raw_yaw);
+        pitch_ref = -Y_C*sin(raw_yaw) + X_C*cos(raw_yaw);
 
         float rel = roll_ref/(pitch_ref + EPS);
         
@@ -233,6 +230,10 @@ void xyzControlTask(){
             roll_ref = copysign(ANG_MAX, roll_ref);
             pitch_ref = roll_ref/rel;
         }
+        */
+        
+        roll_ref = -Y_C;
+        pitch_ref = X_C;
 
         setReg(ROLL_SCURVE, roll_ref);
         setReg(PITCH_SCURVE, pitch_ref);

@@ -4,8 +4,9 @@
 #define LED 0
 #define DEBUG 1
 #define GPS 2
+#define FLOW 3
 
-#define PORT GPS
+#define PORT FLOW
 
 void _main();
 
