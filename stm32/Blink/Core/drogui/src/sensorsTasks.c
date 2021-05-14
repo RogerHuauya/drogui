@@ -155,7 +155,7 @@ void optTask(){
     setReg(OPT_STATE, ret);
            
     if(ret == OPT_VEL || ret == OPT_RNG){
-        yp  = -myOF.vel_x, xp = -myOF.vel_y;
+        yp  = -myOF.vel_x*0.001, xp = -myOF.vel_y*0.001;
         if(myOF.dis != -1) z = myOF.dis;
         setReg(XP_VAL, xp), setReg(YP_VAL, yp), setReg(Z_VAL, z);
     }
@@ -167,7 +167,7 @@ void rpyTask(){
     
     float rpy[3];
    
-    mahonyUpdate(&myRPY, gx*PI/180.0, gy*PI/180.0, gz*PI/180.0, ax, ay, az, my, mx, -mz);
+    mahonyUpdate(&myRPY, gx*PI/180.0, gy*PI/180.0, gz*PI/180.0, ax, ay, az, 0, 0, 0);
     getMahonyEuler(&myRPY, rpy);
     raw_roll = rpy[0], raw_pitch = rpy[1], raw_yaw = rpy[2];
     
