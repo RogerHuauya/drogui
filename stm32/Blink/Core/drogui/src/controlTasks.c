@@ -194,8 +194,8 @@ void xyzControlTask(){
 
     setReg(Y_SCURVE, y_ref);
 
-    X_C = computePid(&x_control, x_ref - x, TIME, H);
-    Y_C = computePid(&y_control, y_ref - y, TIME, H);
+    X_C = computePid(&x_control, x_ref - xp, TIME, H);
+    Y_C = computePid(&y_control, y_ref - yp, TIME, H);
 
     setReg(DER_X,x_control.errd);
     setReg(DER_Y,y_control.errd);

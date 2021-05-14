@@ -20,7 +20,8 @@ extern float    roll,       pitch,      yaw,
                 ax,         ay,         az, 
                 gx,         gy,         gz, 
                 mx,         my,         mz, 
-                x,          y,          z; 
+                x,          y,          z,
+                xp,         yp,         zp; 
 
 extern mpu9250 myMPU;
 extern icm20948 myICM;

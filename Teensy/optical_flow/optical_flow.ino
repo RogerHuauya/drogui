@@ -1,6 +1,8 @@
+#define Optical Serial2
+
 void setup() {
   // put your setup code here, to run once:
-  Serial1.begin(115000);
+  Optical.begin(115200);
   Serial.begin(9600);
 
 }
@@ -15,8 +17,8 @@ void loop() {
   int32_t rng;
   long t = millis();
   while(1){
-      if(Serial1.available()){
-          comando[idx++] = Serial1.read();
+      if(Optical.available()){
+          comando[idx++] = Optical.read();
       }  
       if(idx > 2 && comando[idx-1] == 'X' && comando [idx-2] == '$'){
           if(comando[4] == 2){
@@ -62,9 +64,13 @@ void loop() {
           Serial.print("\t");
           */
           
-          Serial.print(millis() - t);
+          /*Serial.print(rng);
+          Serial.print("\t");*/
+          Serial.print(fx);
+          Serial.print("\t");
+          Serial.print(fy);
           Serial.print("\n");
-          t = millis();
+          
           comando[0] = '$';
           comando[1] = 'X';
           idx = 2;
