@@ -1,29 +1,8 @@
-uint8_t crc8_dvb_s2(uint8_t crc, uint8_t a){
-    crc ^= a;
-    for (int ii = 0; ii < 8; ++ii) {
-        if (crc & 0x80) {
-            crc = (crc << 1) ^ 0xD5;
-        } else {
-            crc = crc << 1;
-        }
-    }
-    return crc;
-}
+#define Optical Serial2
 
-uint8_t crc8_func(int len, uint8_t* msg){
-    /*for(int i= 0; i < len; i++) {
-      Serial.print(int(msg[i]), HEX); Serial.print(" ");
-    }
-    Serial.println();*/
-    uint8_t crc8t = 0;
-    for(int i = 0; i < len; i++){
-        crc8t = crc8_dvb_s2(crc8t, msg[i]);
-    }
-    return crc8t;
-}
 void setup() {
   // put your setup code here, to run once:
-  Serial1.begin(115000);
+  Optical.begin(115200);
   Serial.begin(9600);
 
 }
@@ -38,8 +17,8 @@ void loop() {
   int32_t rng;
   long t = millis();
   while(1){
-      if(Serial1.available()){
-          comando[idx++] = Serial1.read();
+      if(Optical.available()){
+          comando[idx++] = Optical.read();
       }  
       if(idx > 2 && comando[idx-1] == 'X' && comando [idx-2] == '$'){
           if(comando[4] == 2){
@@ -49,33 +28,17 @@ void loop() {
             
             q1 = comando[8];
             fx = 0, fy = 0;
-<<<<<<< HEAD
-           for(int i = 3 ; i >= 0 ; i--)
-              /*Serial.print(int(comando[9+i]), HEX), Serial.print(" "),*/fx = (fx << 8) | comando[9+i];
-              
-          for(int i = 3 ; i >= 0 ; i--)
-              /*Serial.print(int(comando[13+i]), HEX), Serial.print(" "),*/fy = (fy << 8) | comando[13+i];
-=======
             for(int i = 3 ; i >= 0 ; i--)
               /*Serial.print(int(comando[9+i]), HEX), Serial.print(" "),*/ fx = (fx << 8) | comando[9+i];
               
             for(int i = 3 ; i >= 0 ; i--)
               /*Serial.print(int(comando[13+i]), HEX), Serial.print(" "),*/ fy = (fy << 8) | comando[13+i];
->>>>>>> origin/julio
             
             /*
             for(int i = 3 ; i < idx-2; i++){
                 Serial.print(int(comando[i]), HEX), Serial.print(" ");
             }
             Serial.println();*/
-<<<<<<< HEAD
-            
-            Serial.print(fx);
-            Serial.print("\t");
-            Serial.print(fy);
-            Serial.print("\t");
-            t = millis();
-=======
             //Serial.print(millis()-t);
             /*Serial.print("\t");
             Serial.print(q1);
@@ -86,7 +49,6 @@ void loop() {
             Serial.print(fy);
             Serial.print("\n");*/
             //t = millis();
->>>>>>> origin/julio
           }
           else if(comando[4] == 1){
               q2 = comando[8];
@@ -94,7 +56,6 @@ void loop() {
               for(int i = 3 ; i >= 0 ; i--)
                   rng = (rng << 8) | comando[9+i];
           
-<<<<<<< HEAD
           
             
             Serial.print(rng);
@@ -111,7 +72,7 @@ void loop() {
           */
           
             Serial.print("\n");
-=======
+
           }
           /*Serial.print(q2);
           Serial.print("\t");
@@ -120,10 +81,14 @@ void loop() {
           Serial.print("\t");
           */
           
-          Serial.print(millis() - t);
+          /*Serial.print(rng);
+          Serial.print("\t");*/
+          Serial.print(fx);
+          Serial.print("\t");
+          Serial.print(fy);
           Serial.print("\n");
           t = millis();
->>>>>>> origin/julio
+
           comando[0] = '$';
           comando[1] = 'X';
           idx = 2;
