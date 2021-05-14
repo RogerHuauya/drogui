@@ -5,12 +5,14 @@
 #include "M8Q.h"
 #include "kalman.h"
 #include "serial.h"
+#include "opticalFlow.h"
 
 mpu9250 myMPU;
 icm20948 myICM;
 mahony myRPY;
 
 m8q myGPS;
+optFlow myOF;
 
 filter filter_roll, filter_pitch, filter_yaw;
 
@@ -19,7 +21,8 @@ float   roll,       pitch,      yaw,
         ax,         ay,         az, 
         gx,         gy,         gz, 
         mx,         my,         mz, 
-        x,          y,          z; 
+        x,          y,          z, 
+        xp,         yp,         zp; 
 
 bool mag_available = false;
 
@@ -146,6 +149,20 @@ void gpsTask(){
 }
 
 
+void optTask(){
+
+    int ret = readFlowRange(&myOF);
+    setReg(OPT_STATE, ret);
+           
+    if(ret == OPT_VEL || ret == OPT_RNG){
+        yp  = -myOF.vel_x*0.001, xp = -myOF.vel_y*0.001;
+        if(myOF.dis != -1) z = myOF.dis;
+        setReg(XP_VAL, xp), setReg(YP_VAL, yp), setReg(Z_VAL, z);
+    }
+
+}
+
+
 void rpyTask(){
     
     float rpy[3];
@@ -232,7 +249,11 @@ void initSensorsTasks(){
         setKalmanTsGps(0.125);
 
         initMatGlobal();
+    #elif PORT == FLOW
+        initOptFlow(&myOF);
     #endif
+
+
     
     calib_status = 0;
 
@@ -247,11 +268,13 @@ void initSensorsTasks(){
     addTask(&magTask, 100000, 2);
     addTask(&rpyTask, 2000, 2);
     //addTask(&altitudeTask,10000,2);
-    addTask(&heightTask, 10000, 2);
+    //addTask(&heightTask, 10000, 2);
     
     #if PORT == GPS
         addTask(&gpsTask, 125000, 3);
         addTask(&xyzTask, 10000, 3);
+    #elif PORT == FLOW
+        addTask(&optTask, 1000, 1);
     #endif
 
 }
