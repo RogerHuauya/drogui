@@ -50,7 +50,7 @@ void securityTask(){
 
 void initDebug(){
     #if PORT == DEBUG   
-        //addTask(&debugTask, 10000, 1);
+        addTask(&debugTask, 100000, 1);
     #elif PORT == LED
         addTask(&blinkTask, 100000, 1);   
     #endif

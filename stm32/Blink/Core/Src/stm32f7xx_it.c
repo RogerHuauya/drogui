@@ -28,6 +28,7 @@
 #include <string.h>
 #include "utils.h"
 #include "task.h"
+#include "serial.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -218,7 +219,6 @@ void SysTick_Handler(void)
 void EXTI1_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI1_IRQn 0 */
-  
   if(__HAL_GPIO_EXTI_GET_FLAG(GPIO_PIN_1)){
     bool state = HAL_GPIO_ReadPin(ECHO_GPIO_Port, ECHO_Pin) == GPIO_PIN_SET;
     if(state) time_ant = TIME;

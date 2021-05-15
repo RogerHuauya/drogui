@@ -211,7 +211,7 @@ void xyzControlTask(){
 
     setReg(DER_Z,z_control.errd);
 
-    rampValue(&H, H_ref, 0.08);
+    rampValue(&H, H_ref, 0.15);
 
     H_comp = H/(cos(roll)*cos(pitch));
 
