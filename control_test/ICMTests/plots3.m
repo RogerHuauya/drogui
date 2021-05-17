@@ -1,0 +1,1 @@
+plotSync([Txyz.Z_VAL, Txyz.Z_SCURVE, Txyz.Z_U]);
