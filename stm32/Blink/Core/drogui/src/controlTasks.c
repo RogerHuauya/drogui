@@ -288,7 +288,7 @@ void initControlTasks(){
  
     initPidFilter(&wroll_control,  30, 1500, 80, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
     initPidFilter(&wpitch_control, 30, 1500, 80, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
-    initPidFilter(&wyaw_control,   30, 1500, 80, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10  );
+    initPidFilter(&wyaw_control,   30, 1500, 80, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
     
     initFilter(&filter_wroll, 4, k_1_20, v_1_20);
     initFilter(&filter_wpitch, 4, k_1_20, v_1_20);
