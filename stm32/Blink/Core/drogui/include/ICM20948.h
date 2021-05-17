@@ -10,6 +10,8 @@
 #define ICM_MAG_ADDRESS 0x0C
 #define CHANGE_BANK 0x7F
 #define PWR_MGT 0x06
+#define INT_PIN_CFG 0x0F
+#define USER_CTRL 0x03
 
 enum ICM_DATA_REGS{
     ICM_ACCEL_XOUT_H = 0x2D,
