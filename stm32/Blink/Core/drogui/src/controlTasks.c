@@ -116,7 +116,7 @@ void wControlTask(){
     //R = computeFilter(&filter_R, R);
     //P = computeFilter(&filter_P, P);
     //Y = computeFilter(&filter_Y, Y);
-    
+
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
     setReg(YAW_U, Y);
@@ -211,7 +211,7 @@ void xyzControlTask(){
 
     setReg(DER_Z,z_control.errd);
 
-    rampValue(&H, H_ref, 0.08);
+    rampValue(&H, H_ref, 0.15);
 
     H_comp = H/(cos(roll)*cos(pitch));
 
@@ -278,7 +278,7 @@ void initControlTasks(){
     initPwm(&m3, &htim4, TIM_CHANNEL_3, &(htim4.Instance->CCR3));
     initPwm(&m4, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
-    initPid(&z_control, 0, 0, 0, 0, 50 , 10, 15, NORMAL);
+    initPid(&z_control, 0, 0, 0, 0, 50 , 10, 15, (NORMAL | D_SG));
     initPid(&x_control, 0, 0, 0, 0, 50 , 10, ANG_MAX, D_SG);
     initPid(&y_control, 0, 0, 0, 0, 50 , 10, ANG_MAX, D_SG);
 

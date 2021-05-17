@@ -35,6 +35,7 @@ float altitude,offset_alt;
 emaFilter ema_bmp;
 mvAvgFilter mvAvg_bmp;
 filter filter_z;
+int cfilt_z = 0;
 
 void accelTask(){   
     #if IMU == ICM20948
@@ -126,6 +127,7 @@ void heightTask(void *argument){
     uint32_t tim = TIME;
     while(TIME - tim < 10);
     HAL_GPIO_WritePin(TRIGGER_GPIO_Port, TRIGGER_Pin, GPIO_PIN_RESET);
+    //serialPrintf("trigger\n");
 }
 
 void gpsTask(){
@@ -155,9 +157,9 @@ void optTask(){
     setReg(OPT_STATE, ret);
            
     if(ret == OPT_VEL || ret == OPT_RNG){
-        yp  = -myOF.vel_x, xp = -myOF.vel_y;
-        if(myOF.dis != -1) z = myOF.dis;
-        setReg(XP_VAL, xp), setReg(YP_VAL, yp), setReg(Z_VAL, z);
+        yp  = -myOF.vel_x*0.001, xp = -myOF.vel_y*0.001;
+        //if(myOF.dis != -1) z = myOF.dis;
+        setReg(XP_VAL, xp), setReg(YP_VAL, yp)/*, setReg(Z_VAL, z)*/;
     }
 
 }
@@ -216,8 +218,9 @@ void xyzTask(){
     getPosition(&x, &y, &z);
     
     z = distance;
-    if( fabs(z-z_ant) > 0.5  ) z = z_ant;
-    z_ant = z;
+    if( cfilt_z <= 50 && fabs(z-z_ant) > 0.2) cfilt_z++, z = z_ant;
+    else z_ant = z,  cfilt_z = 0;
+    
 
     setReg(X_VAL, x);
     setReg(Y_VAL, y);
@@ -243,12 +246,13 @@ void initSensorsTasks(){
     setReg(MAG_Y_SCALE,1);
     setReg(MAG_Z_SCALE,1);
 
+    setKalmanTsImu(0.01);
+    setKalmanTsGps(0.125);
+
+    initMatGlobal();
+
     #if PORT == GPS
         initM8Q(&myGPS);
-        setKalmanTsImu(0.01);
-        setKalmanTsGps(0.125);
-
-        initMatGlobal();
     #elif PORT == FLOW
         initOptFlow(&myOF);
     #endif
@@ -268,11 +272,12 @@ void initSensorsTasks(){
     addTask(&magTask, 100000, 2);
     addTask(&rpyTask, 2000, 2);
     //addTask(&altitudeTask,10000,2);
-    //addTask(&heightTask, 10000, 2);
+    addTask(&heightTask, 10000, 2);
+    
+    addTask(&xyzTask, 10000, 3);
     
     #if PORT == GPS
         addTask(&gpsTask, 125000, 3);
-        addTask(&xyzTask, 10000, 3);
     #elif PORT == FLOW
         addTask(&optTask, 1000, 1);
     #endif
