@@ -14,7 +14,7 @@ pid z_control, x_control, y_control;
 filter filter_wroll, filter_wpitch, filter_wyaw;
 filter filter_R, filter_P, filter_Y, filter_H;
 
-scurve z_sp, x_sp, y_sp, roll_sp, pitch_sp, yaw_sp;
+scurve z_sp, x_sp, y_sp, roll_sp, pitch_sp, yaw_sp, H_sp;
 
 float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, ANG_MAX = 3*PI/180.0;
 float M1,M2,M3,M4;
@@ -27,11 +27,12 @@ float Ixx = 0, Iyy = 0;
 
 void saturateM(float H){
     float f_max = 1;
+    /*
     float arr_M[] = {M1, M2, M3, M4};
     for(int i = 0; i < 4 ; i++){
         float delta = fmax(fmax(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
         f_max = fmax(f_max, fabs(arr_M[i] / (fabs(arr_M[i]) - delta + 0.0000001)) );
-    }
+    }*/
 
     M1 = sqrt(M1 / f_max + H);
     M2 = sqrt(M2 / f_max + H);
@@ -134,16 +135,16 @@ void wControlTask(){
     setReg(MOTOR_3, M3);
     setReg(MOTOR_4, M4);
 
-    if(security){
+    if(security && H_comp == 0){
         M1 = M2 = M3 = M4 = 0;
         resetPid(&wroll_control, TIME);
         resetPid(&wpitch_control, TIME);
         resetPid(&wyaw_control, TIME);
     }
 
-    setPwm(&m3, fmin(fmax(M1,0), 100));
-    setPwm(&m1, fmin(fmax(M2,0), 100));
-    setPwm(&m2, fmin(fmax(M3,0), 100));
+    setPwm(&m1, fmin(fmax(M1,0), 100));
+    setPwm(&m2, fmin(fmax(M2,0), 100));
+    setPwm(&m3, fmin(fmax(M3,0), 100));
     setPwm(&m4, fmin(fmax(M4,0), 100));
 
 }
@@ -171,12 +172,13 @@ void rpyControlTask(){
     setReg(GYRO_Y_REF,wpitch_ref);
     setReg(GYRO_Z_REF,wyaw_ref);
     
-    if(security){
+    if(security && H_comp == 0){
         resetPid(&roll2w, TIME);
         resetPid(&pitch2w, TIME);
         resetPid(&yaw2w, TIME);
     }
 }
+bool descend = false;
 
 void xyzControlTask(){
 
@@ -258,10 +260,19 @@ void xyzControlTask(){
     yaw_ref = getReg(YAW_REF);
 
     if(security){
-        H = 0; z_ref = 0;
-        resetPid(&x_control, TIME);
-        resetPid(&y_control, TIME);
+        if(!descend) 
+            setTrayectory(&H_sp, H_comp, 0, z*3, TIME), descend = true;
+        H_comp = getSetpoint(&H_sp, TIME); 
+        z_ref = 0;
+        
+        if(H_comp == 0)
+            resetPid(&x_control, TIME),
+            resetPid(&y_control, TIME);
+        
         resetPid(&z_control, TIME);
+    
+    }else{
+        descend = false;   
     }
 }
 
@@ -273,12 +284,12 @@ void initControlTasks(){
     initFilter(&filter_Y, 3, k_3_200, v_3_200);
     //initFilter(&filter_R, 3, k_3_200, v_3_200);
 
-    initPwm(&m1, &htim3, TIM_CHANNEL_1, &(htim3.Instance->CCR1));
-    initPwm(&m2, &htim3, TIM_CHANNEL_2, &(htim3.Instance->CCR2));
+    initPwm(&m4, &htim3, TIM_CHANNEL_1, &(htim3.Instance->CCR1));
+    initPwm(&m1, &htim3, TIM_CHANNEL_2, &(htim3.Instance->CCR2));
     initPwm(&m3, &htim4, TIM_CHANNEL_3, &(htim4.Instance->CCR3));
-    initPwm(&m4, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
+    initPwm(&m2, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
-    initPid(&z_control, 0, 0, 0, 0, 50 , 10, 15, (NORMAL | D_SG));
+    initPid(&z_control, 0, 0, 0, 0, 50 , 10, 30, (NORMAL | D_SG));
     initPid(&x_control, 0, 0, 0, 0, 50 , 10, ANG_MAX, D_SG);
     initPid(&y_control, 0, 0, 0, 0, 50 , 10, ANG_MAX, D_SG);
 
@@ -288,7 +299,7 @@ void initControlTasks(){
  
     initPidFilter(&wroll_control,  30, 1500, 80, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
     initPidFilter(&wpitch_control, 30, 1500, 80, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
-    initPidFilter(&wyaw_control,   30, 1500, 80, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10  );
+    initPidFilter(&wyaw_control,   30, 1500, 80, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
     
     initFilter(&filter_wroll, 4, k_1_20, v_1_20);
     initFilter(&filter_wpitch, 4, k_1_20, v_1_20);
@@ -300,6 +311,8 @@ void initControlTasks(){
 
     setTrayectory(&roll_sp, 0, 0, 1, TIME);
     setTrayectory(&pitch_sp, 0, 0, 1, TIME);
+    
+    setTrayectory(&H_sp, 0, 0, 1, TIME);
 
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);

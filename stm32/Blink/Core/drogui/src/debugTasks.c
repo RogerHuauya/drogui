@@ -22,7 +22,7 @@
             else setReg(START_GPS,0);
         }*/
         
-        serialPrintf("%f\t%f\t%f;\n", gx, gy, gz);
+        serialPrintf("%f %f\n", z, distance);
         //serialPrint("I am debugging\n");
 
     }

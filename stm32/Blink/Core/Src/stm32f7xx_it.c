@@ -270,7 +270,7 @@ void USART2_IRQHandler(void)
 void I2C4_EV_IRQHandler(void)
 {
   /* USER CODE BEGIN I2C4_EV_IRQn 0 */
-  sprintf(buffer, "%x \t %x \t %x \n", write_adress, read_adress, index_i2c);
+  //sprintf(buffer, "%x \t %x \t %x \n", write_adress, read_adress, index_i2c);
   //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
 
   unsigned long isr = I2C4->ISR;

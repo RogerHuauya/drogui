@@ -56,6 +56,23 @@ void loop() {
               for(int i = 3 ; i >= 0 ; i--)
                   rng = (rng << 8) | comando[9+i];
           
+          
+            
+            Serial.print(rng);
+            Serial.print("\t");
+          }
+          /*
+          Serial.print(comando[0]);
+            Serial.print(comando[1]);
+            Serial.print(comando[2]);
+            for(int i = 3; i < idx-2; i++)
+            Serial.print(int(comando[i]), HEX), Serial.print(" ");
+            Serial.print("CRC calc: "); Serial.print(int(crc8_func(idx-6, comando + 3)), HEX);
+            Serial.println();
+          */
+          
+            Serial.print("\n");
+
           }
           /*Serial.print(q2);
           Serial.print("\t");
@@ -70,7 +87,8 @@ void loop() {
           Serial.print("\t");
           Serial.print(fy);
           Serial.print("\n");
-          
+          t = millis();
+
           comando[0] = '$';
           comando[1] = 'X';
           idx = 2;
