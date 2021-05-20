@@ -7,7 +7,7 @@ xy  =   '0.25 0.05 0.3';
 z =     '50 20 2000';
 
 datos_rpy = appendTest(datos_rpy, rpyfile, rpy, wrpy, xy, z);
-datos_xyz = appendTest(datos_rpy, xyzfile, rpy, wrpy, xy, z);
+datos_xyz = appendTest(datos_xyz, xyzfile, rpy, wrpy, xy, z);
 
 Trpy = datos_rpy(end).datos;
 Txyz = datos_xyz(end).datos;
