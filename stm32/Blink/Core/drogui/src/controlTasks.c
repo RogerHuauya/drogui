@@ -142,9 +142,9 @@ void wControlTask(){
         resetPid(&wyaw_control, TIME);
     }
 
-    setPwm(&m3, fmin(fmax(M1,0), 100));
-    setPwm(&m1, fmin(fmax(M2,0), 100));
-    setPwm(&m2, fmin(fmax(M3,0), 100));
+    setPwm(&m1, fmin(fmax(M1,0), 100));
+    setPwm(&m2, fmin(fmax(M2,0), 100));
+    setPwm(&m3, fmin(fmax(M3,0), 100));
     setPwm(&m4, fmin(fmax(M4,0), 100));
 
 }
@@ -274,10 +274,10 @@ void initControlTasks(){
     initFilter(&filter_Y, 3, k_3_200, v_3_200);
     //initFilter(&filter_R, 3, k_3_200, v_3_200);
 
-    initPwm(&m1, &htim3, TIM_CHANNEL_1, &(htim3.Instance->CCR1));
-    initPwm(&m2, &htim3, TIM_CHANNEL_2, &(htim3.Instance->CCR2));
+    initPwm(&m4, &htim3, TIM_CHANNEL_1, &(htim3.Instance->CCR1));
+    initPwm(&m1, &htim3, TIM_CHANNEL_2, &(htim3.Instance->CCR2));
     initPwm(&m3, &htim4, TIM_CHANNEL_3, &(htim4.Instance->CCR3));
-    initPwm(&m4, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
+    initPwm(&m2, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
     initPid(&z_control, 0, 0, 0, 0, 50 , 10, 30, (NORMAL | D_SG));
     initPid(&x_control, 0, 0, 0, 0, 50 , 10, ANG_MAX, D_SG);
