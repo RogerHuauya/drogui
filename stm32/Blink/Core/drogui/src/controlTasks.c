@@ -14,7 +14,7 @@ pid z_control, x_control, y_control;
 filter filter_wroll, filter_wpitch, filter_wyaw;
 filter filter_R, filter_P, filter_Y, filter_H;
 
-scurve z_sp, x_sp, y_sp, roll_sp, pitch_sp, yaw_sp;
+scurve z_sp, x_sp, y_sp, roll_sp, pitch_sp, yaw_sp, H_sp;
 
 float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, ANG_MAX = 3*PI/180.0;
 float M1,M2,M3,M4;
@@ -135,7 +135,7 @@ void wControlTask(){
     setReg(MOTOR_3, M3);
     setReg(MOTOR_4, M4);
 
-    if(security){
+    if(security && H_comp == 0){
         M1 = M2 = M3 = M4 = 0;
         resetPid(&wroll_control, TIME);
         resetPid(&wpitch_control, TIME);
@@ -172,12 +172,13 @@ void rpyControlTask(){
     setReg(GYRO_Y_REF,wpitch_ref);
     setReg(GYRO_Z_REF,wyaw_ref);
     
-    if(security){
+    if(security && H_comp == 0){
         resetPid(&roll2w, TIME);
         resetPid(&pitch2w, TIME);
         resetPid(&yaw2w, TIME);
     }
 }
+bool descend = false;
 
 void xyzControlTask(){
 
@@ -259,10 +260,19 @@ void xyzControlTask(){
     yaw_ref = getReg(YAW_REF);
 
     if(security){
-        H = 0; z_ref = 0;
-        resetPid(&x_control, TIME);
-        resetPid(&y_control, TIME);
+        if(!descend) 
+            setTrayectory(&H_sp, H_comp, 0, z*3, TIME), descend = true;
+        H_comp = getSetpoint(&H_sp, TIME); 
+        z_ref = 0;
+        
+        if(H_comp == 0)
+            resetPid(&x_control, TIME),
+            resetPid(&y_control, TIME);
+        
         resetPid(&z_control, TIME);
+    
+    }else{
+        descend = false;   
     }
 }
 
@@ -301,6 +311,8 @@ void initControlTasks(){
 
     setTrayectory(&roll_sp, 0, 0, 1, TIME);
     setTrayectory(&pitch_sp, 0, 0, 1, TIME);
+    
+    setTrayectory(&H_sp, 0, 0, 1, TIME);
 
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
