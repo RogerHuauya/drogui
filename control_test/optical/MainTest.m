@@ -1,13 +1,13 @@
 rpyfile = dir('*rpy.txt').name;
 xyzfile = dir('*xyz.txt').name;
 
-rpy =   '400 30 -10';
-wrpy =  '30 80 1500';
-xy  =   '0.25 0.05 0.3'; 
-z =     '50 20 2000';
+rpy =   '300 15 -5';
+wrpy =  '15 40 750';
+xy  =   '0.2 0.05 0.3'; 
+z =     '0 0 0';
 
 datos_rpy = appendTest(datos_rpy, rpyfile, rpy, wrpy, xy, z);
-datos_xyz = appendTest(datos_rpy, xyzfile, rpy, wrpy, xy, z);
+datos_xyz = appendTest(datos_xyz, xyzfile, rpy, wrpy, xy, z);
 
 Trpy = datos_rpy(end).datos;
 Txyz = datos_xyz(end).datos;
