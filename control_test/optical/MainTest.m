@@ -1,3 +1,9 @@
+if exist('datos_rpy','var') ~= 1
+    datos_rpy = [];
+end
+if exist('datos_xyz','var') ~= 1
+    datos_xyz = [];
+end
 rpyfile = dir('*rpy.txt').name;
 xyzfile = dir('*xyz.txt').name;
 
