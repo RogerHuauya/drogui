@@ -219,6 +219,7 @@ void SysTick_Handler(void)
 void EXTI1_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI1_IRQn 0 */
+  
   if(__HAL_GPIO_EXTI_GET_FLAG(GPIO_PIN_1)){
     bool state = HAL_GPIO_ReadPin(ECHO_GPIO_Port, ECHO_Pin) == GPIO_PIN_SET;
     if(state) time_ant = TIME;
@@ -270,7 +271,7 @@ void USART2_IRQHandler(void)
 void I2C4_EV_IRQHandler(void)
 {
   /* USER CODE BEGIN I2C4_EV_IRQn 0 */
-  //sprintf(buffer, "%x \t %x \t %x \n", write_adress, read_adress, index_i2c);
+  sprintf(buffer, "%x \t %x \t %x \n", write_adress, read_adress, index_i2c);
   //HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), 100);
 
   unsigned long isr = I2C4->ISR;

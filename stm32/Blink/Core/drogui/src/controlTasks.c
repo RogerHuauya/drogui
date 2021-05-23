@@ -151,9 +151,9 @@ void wControlTask(){
 
 void rpyControlTask(){
 
-    wroll_ref = computePidD(&roll2w, angle_dif(roll_ref, roll), TIME, 0, gx);
-    wpitch_ref = computePidD(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0, gy);
-    wyaw_ref = computePidD(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0, gz);
+    wroll_ref = computePid(&roll2w, angle_dif(roll_ref, roll), TIME, 0);
+    wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0);
+    wyaw_ref = computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);
 
     //wroll_ref_d = computeFilter(&filter_wroll,  wroll_ref_d);
     //wpitch_ref_d = computeFilter(&filter_wpitch, wpitch_ref_d);
@@ -261,7 +261,7 @@ void xyzControlTask(){
 
     if(security){
         if(!descend) 
-            setTrayectory(&H_sp, H_comp, 0, z*3, TIME), descend = true;
+            setTrayectory(&H_sp, H_comp, 0, fmin(z*3,3), TIME), descend = true;
         H_comp = getSetpoint(&H_sp, TIME); 
         z_ref = 0;
         
@@ -293,13 +293,13 @@ void initControlTasks(){
     initPid(&x_control, 0, 0, 0, 0, 50 , 10, ANG_MAX, D_SG);
     initPid(&y_control, 0, 0, 0, 0, 50 , 10, ANG_MAX, D_SG);
 
-    initPidFilter(&roll2w,  400, -10, 30, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
-    initPidFilter(&pitch2w, 400, -10, 30, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+    initPidFilter(&roll2w,  500, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+    initPidFilter(&pitch2w, 300, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
     initPidFilter(&yaw2w,     0,   0,  0, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
  
-    initPidFilter(&wroll_control,  30, 1500, 80, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
-    initPidFilter(&wpitch_control, 30, 1500, 80, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
-    initPidFilter(&wyaw_control,   30, 1500, 80, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+    initPidFilter(&wroll_control,   5, 500, 10, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+    initPidFilter(&wpitch_control,  8, 500, 16, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+    initPidFilter(&wyaw_control,   10, 500, 30, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
     
     initFilter(&filter_wroll, 4, k_1_20, v_1_20);
     initFilter(&filter_wpitch, 4, k_1_20, v_1_20);
