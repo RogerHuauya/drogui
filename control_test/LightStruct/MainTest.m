@@ -7,9 +7,9 @@ end
 rpyfile = dir('*rpy.txt').name;
 xyzfile = dir('*xyz.txt').name;
 
-rpy =   '0 0 0';
-wrpy =  '0 0 0';
-xy  =   '0 0 0'; 
+rpy =   '500/300 20 -1000';
+wrpy =  '5/8 10/16 500';
+xy  =   '0.2 0.05 0.3'; 
 z =     '0 0 0';
 
 Drpy = appendTest(Drpy, rpyfile, rpy, wrpy, xy, z);
