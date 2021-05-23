@@ -261,7 +261,7 @@ void xyzControlTask(){
 
     if(security){
         if(!descend) 
-            setTrayectory(&H_sp, H_comp, 0, fmin(z*3,3), TIME), descend = true;
+            setTrayectory(&H_sp, H_comp, 0, fmin(z*10,3), TIME), descend = true;
         H_comp = getSetpoint(&H_sp, TIME); 
         z_ref = 0;
         
@@ -289,9 +289,9 @@ void initControlTasks(){
     initPwm(&m3, &htim4, TIM_CHANNEL_3, &(htim4.Instance->CCR3));
     initPwm(&m2, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
-    initPid(&z_control, 0, 0, 0, 0, 50 , 10, 30, (NORMAL | D_SG));
-    initPid(&x_control, 0, 0, 0, 0, 50 , 10, ANG_MAX, D_SG);
-    initPid(&y_control, 0, 0, 0, 0, 50 , 10, ANG_MAX, D_SG);
+    initPid(&z_control,  10, 750,    2, 0, 50 , 10, 30, (NORMAL | D_SG));
+    initPid(&x_control, 0.2, 1.5, 0.08, 0, 50 , 10, ANG_MAX, D_SG);
+    initPid(&y_control, 0.2, 1.5, 0.08, 0, 50 , 10, ANG_MAX, D_SG);
 
     initPidFilter(&roll2w,  500, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
     initPidFilter(&pitch2w, 300, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
