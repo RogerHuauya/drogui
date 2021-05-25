@@ -22,7 +22,7 @@ float   roll,       pitch,      yaw,
         gx,         gy,         gz, 
         mx,         my,         mz, 
         x,          y,          z, 
-        xp,         yp,         zp; 
+        xp,         yp,         z_of; 
 
 bool mag_available = false;
 
@@ -157,9 +157,13 @@ void optTask(){
     setReg(OPT_STATE, ret);
            
     if(ret == OPT_VEL || ret == OPT_RNG){
-        yp  = -myOF.vel_x*0.001, xp = -myOF.vel_y*0.001;
-        //if(myOF.dis != -1) z = myOF.dis;
-        setReg(XP_VAL, xp), setReg(YP_VAL, yp)/*, setReg(Z_VAL, z)*/;
+        if( z >= 0.05)
+            xp  = -myOF.vel_x*0.001, yp = myOF.vel_y*0.001;
+        else 
+            xp = yp = 0;
+        if(myOF.dis != -1) z_of= myOF.dis*0.001;
+        setReg(XP_VAL, xp), setReg(YP_VAL, yp), setReg(Z_RNG, z_of);
+
     }
 
 }
@@ -217,9 +221,9 @@ void xyzTask(){
 
     getPosition(&x, &y, &z);
     
-    z = distance;
-    if( cfilt_z <= 50 && fabs(z-z_ant) > 0.2) cfilt_z++, z = z_ant;
-    else z_ant = z,  cfilt_z = 0;
+    z = z_of;
+    /*if( cfilt_z <= 50 && fabs(z-z_ant) > 0.2) cfilt_z++, z = z_ant;
+    else z_ant = z,  cfilt_z = 0;*/
     
 
     setReg(X_VAL, x);
@@ -272,7 +276,7 @@ void initSensorsTasks(){
     addTask(&magTask, 100000, 2);
     addTask(&rpyTask, 2000, 2);
     //addTask(&altitudeTask,10000,2);
-    addTask(&heightTask, 10000, 2);
+    //addTask(&heightTask, 10000, 2);
     
     addTask(&xyzTask, 10000, 3);
     

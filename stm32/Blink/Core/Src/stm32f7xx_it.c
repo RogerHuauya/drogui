@@ -54,7 +54,7 @@ uint32_t time_ant;
 
 char buffer[50]="";
 int write_adress = -1, read_adress = -1;
-int index_i2c = 0, state;
+int index_i2c = 0;
 
 /* USER CODE END PV */
 
@@ -218,10 +218,11 @@ void SysTick_Handler(void)
   */
 void EXTI1_IRQHandler(void)
 {
-  /* USER CODE BEGIN EXTI1_IRQn 0 */
+  /* USER CODE BEGIN EXTI1_IRQn 0 */  
+  
   if(__HAL_GPIO_EXTI_GET_FLAG(GPIO_PIN_1)){
-    bool state = HAL_GPIO_ReadPin(ECHO_GPIO_Port, ECHO_Pin) == GPIO_PIN_SET;
-    if(state) time_ant = TIME;
+    bool echo_state = HAL_GPIO_ReadPin(ECHO_GPIO_Port, ECHO_Pin) == GPIO_PIN_SET;
+    if(echo_state) time_ant = TIME;
     else distance = 0.0003432*(TIME - time_ant)/2.0;
     //LD2_GPIO_Port -> ODR ^= LD2_Pin; // toggle LD2 LED
   } 
