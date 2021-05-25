@@ -41,7 +41,7 @@ void securityTask(){
     }
 
 
-    if((fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)) state = DESCEND;
+    if((fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)) state = SEC_STOP;
     
     
     if(state == SEC_STOP || state == DESCEND){

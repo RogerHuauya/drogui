@@ -6,7 +6,7 @@
 #define GPS 2
 #define FLOW 3
 
-#define PORT DEBUG
+#define PORT FLOW
 
 void _main();
 

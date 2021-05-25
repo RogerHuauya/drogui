@@ -117,9 +117,6 @@ void wControlTask(){
 
     if(state == SEC_STOP){
         M1 = M2 = M3 = M4 = 0;
-        resetPid(&wroll_control, TIME);
-        resetPid(&wpitch_control, TIME);
-        resetPid(&wyaw_control, TIME);
     }
 
     if(state == ARM_MOTORS){
@@ -194,7 +191,7 @@ void rpyControlTask(){
         setReg(ROLL_REF, 0), setReg(PITCH_REF, 0), setReg(YAW_REF, 0);
     }
 
-    if(state == SEC_STOP || state == ARM_MOTORS){
+    if(state == ARM_MOTORS){
         wroll_ref = wpitch_ref = wyaw_ref = 0;
         resetPid(&roll2w, TIME);
         resetPid(&pitch2w, TIME);
@@ -257,14 +254,15 @@ void xyzControlTask(){
         setTrayectory(&x_sp, 0, 0, 0, TIME);
         setTrayectory(&y_sp, 0, 0, 0, TIME);
         setTrayectory(&z_sp, 0, 0, 0, TIME);
-        setReg(X_REF, 0), setReg(Y_REF, 0), setReg(Z_REF, 0);
+        //setReg(X_REF, 0), setReg(Y_REF, 0), setReg(Z_REF, 0);
+        //setReg(Z_MG, 10);
     }
 
-    if(state == ARM_MOTORS || state == SEC_STOP){
+    if(state == ARM_MOTORS){
         resetPid(&x_control, TIME),
         resetPid(&y_control, TIME),
         resetPid(&z_control, TIME);
-        setReg(Z_MG, 10);
+        
         H = 10;
         H_comp = H/(cos(roll)*cos(pitch));
     }
