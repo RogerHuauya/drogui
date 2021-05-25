@@ -22,20 +22,20 @@
             else setReg(START_GPS,0);
         }*/
         
-        serialPrintf("%f %f\n", z, distance);
+        serialPrintf("%f\t%f\t%d\n", z, z_ref, state);
         //serialPrint("I am debugging\n");
 
     }
 #endif
 
 void securityTask(){
-    if(getReg(DESC) >= 0) state = DESCEND, setReg(DESC, 0);
-    if(getReg(STOP) >= 0) state = SEC_STOP, setReg(STOP, 0);    
-    if(getReg(ARM) >= 0){
+    if(getReg(DESC) > 0) state = DESCEND, setReg(DESC, 0);
+    if(getReg(STOP) > 0) state = SEC_STOP, setReg(STOP, 0);    
+    if(getReg(ARM) > 0){
         if(state == SEC_STOP) state = ARM_MOTORS;
         setReg(ARM, 0);
     }
-    if(getReg(START) >= 0){
+    if(getReg(START) > 0){
         if(state == ARM_MOTORS) state = CONTROL_LOOP;
         setReg(START, 0);
     }
@@ -44,7 +44,7 @@ void securityTask(){
     if((fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)) state = DESCEND;
     
     
-    if(state == SEC_STOP){
+    if(state == SEC_STOP || state == DESCEND){
         updatePID();
 
         #if IMU == ICM20948

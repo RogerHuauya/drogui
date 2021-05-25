@@ -123,7 +123,7 @@ void wControlTask(){
     }
 
     if(state == ARM_MOTORS){
-        M1 = M2 = M3 = M4 = 10;
+        M1 = M2 = M3 = M4 = 30;
         resetPid(&wroll_control, TIME);
         resetPid(&wpitch_control, TIME);
         resetPid(&wyaw_control, TIME);
@@ -264,6 +264,9 @@ void xyzControlTask(){
         resetPid(&x_control, TIME),
         resetPid(&y_control, TIME),
         resetPid(&z_control, TIME);
+        setReg(Z_MG, 10);
+        H = 10;
+        H_comp = H/(cos(roll)*cos(pitch));
     }
 
     

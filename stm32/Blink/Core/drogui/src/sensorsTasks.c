@@ -221,9 +221,9 @@ void xyzTask(){
 
     getPosition(&x, &y, &z);
     
-    z = z_of;
-    /*if( cfilt_z <= 50 && fabs(z-z_ant) > 0.2) cfilt_z++, z = z_ant;
-    else z_ant = z,  cfilt_z = 0;*/
+    z = distance;
+    if( cfilt_z <= 50 && fabs(z-z_ant) > 0.2) cfilt_z++, z = z_ant;
+    else z_ant = z,  cfilt_z = 0;
     
 
     setReg(X_VAL, x);
@@ -276,7 +276,7 @@ void initSensorsTasks(){
     addTask(&magTask, 100000, 2);
     addTask(&rpyTask, 2000, 2);
     //addTask(&altitudeTask,10000,2);
-    //addTask(&heightTask, 10000, 2);
+    addTask(&heightTask, 10000, 2);
     
     addTask(&xyzTask, 10000, 3);
     
