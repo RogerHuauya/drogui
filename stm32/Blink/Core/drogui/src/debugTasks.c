@@ -29,9 +29,24 @@
 #endif
 
 void securityTask(){
-    if(getReg(Z_REF) == 0 || (fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)){
+    if(getReg(DESC) >= 0) state = DESCEND, setReg(DESC, 0);
+    if(getReg(STOP) >= 0) state = SEC_STOP, setReg(STOP, 0);    
+    if(getReg(ARM) >= 0){
+        if(state == SEC_STOP) state = ARM_MOTORS;
+        setReg(ARM, 0);
+    }
+    if(getReg(START) >= 0){
+        if(state == ARM_MOTORS) state = CONTROL_LOOP;
+        setReg(START, 0);
+    }
+
+
+    if((fabs(angle_dif(roll_ref, roll))> pi/9) || (fabs(angle_dif(pitch_ref, pitch))> pi/9)) state = DESCEND;
+    
+    
+    if(state == SEC_STOP){
         updatePID();
-        
+
         #if IMU == ICM20948
             if(getReg(CAL_GYR_TRG) == 1) calibrateIcmGyro(&myICM),  setReg(CAL_GYR_TRG, 0);
             if(getReg(CAL_ACC_TRG) == 1) calibrateIcmAccel(&myICM), setReg(CAL_ACC_TRG, 0);
@@ -42,13 +57,12 @@ void securityTask(){
 
         if(getReg(CAL_MAG_TRG) == 1) calibrateMpuMag(&myMPU),   setReg(CAL_MAG_TRG, 0);
         updateBmp388Offset(&myBMP);
-        security = true;
         calib_status = updateMpuCalibOffset(&myMPU) | updateIcmCalibOffset(&myICM);
     }
-    else security = false;
 }
 
 void initDebug(){
+    state = SEC_STOP;
     #if PORT == DEBUG   
         addTask(&debugTask, 100000, 1);
     #elif PORT == LED

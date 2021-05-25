@@ -6,6 +6,7 @@ uint8_t rcv_buff[SER_BUFF_SZ], rcv_head = 0, rcv_tail = 0;
 uint8_t snd_buff[SER_BUFF_SZ], snd_head = 0, snd_tail = 0;
 bool security;
 int calib_status;
+int state;
 
 float k_1_10[] = {3.460276e-01,-7.771395e-01,9.035554e-01,-9.244740e-01,9.585879e-01,-8.644216e-01};
 float v_1_10[] = {3.635609e-03,1.256157e-02,2.776979e-02,3.332425e-02,2.536337e-02,9.166384e-03,1.466144e-03};

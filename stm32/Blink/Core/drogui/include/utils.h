@@ -13,8 +13,11 @@
 #define copysign(x, y) ( ( (((x) > 0) && ((y) < 0)) || (((x) < 0) && ((y) > 0)) ) ? (-1)*(x) : (x) )
 #define SER_BUFF_SZ 300
 
+enum STATES {DESCEND, SEC_STOP, WAITING, ARM_MOTORS, CONTROL_LOOP};
+
 extern uint8_t i2cReg[300][4];
 extern bool security;
+extern int state;
 extern int calib_status;
 
 extern uint8_t rcv_buff[SER_BUFF_SZ], rcv_head, rcv_tail;
