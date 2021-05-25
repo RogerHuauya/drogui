@@ -144,7 +144,7 @@ void loop() {
   readIcmRawMag(&imu);
   readIcmRawAcc(&imu);
   uint8_t a;
-  I2Cread(ICM_MAG_ADDRESS, 0x00, 1, &a);
+  I2Cread(ICM_MAG_ADDRESS, 0x31, 1, &a);
   Serial.print(int(a), HEX); Serial.print("\t");
   Serial.print(imu.raw_mx); Serial.print("\t");
   
@@ -154,10 +154,10 @@ void loop() {
   delay(100);
 }
 
-void I2CwriteByte(uint8_t addr, uint8_t reg, uint8_t val){
+void I2CwriteByte(uint8_t addr, uint8_t reg, uint8_t valor){
   Wire.beginTransmission(addr);
   Wire.write(reg);
-  Wire.write(val);
+  Wire.write(valor);
   Wire.endTransmission();
   }
 
