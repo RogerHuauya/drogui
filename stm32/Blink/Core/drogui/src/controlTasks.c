@@ -195,6 +195,7 @@ void rpyControlTask(){
     }
 
     if(state == SEC_STOP || state == ARM_MOTORS){
+        wroll_ref = wpitch_ref = wyaw_ref = 0;
         resetPid(&roll2w, TIME);
         resetPid(&pitch2w, TIME);
         resetPid(&yaw2w, TIME);
