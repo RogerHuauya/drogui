@@ -1,0 +1,264 @@
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXu6fRD.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"scurve.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.t2s,"ax",%progbits
+  18              		.align	1
+  19              		.global	t2s
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv5-sp-d16
+  26              	t2s:
+  27              	.LVL0:
+  28              	.LFB141:
+  29              		.file 1 "Core/drogui/src/scurve.c"
+   1:Core/drogui/src/scurve.c **** #include "scurve.h"
+   2:Core/drogui/src/scurve.c **** #include "utils.h"
+   3:Core/drogui/src/scurve.c **** 
+   4:Core/drogui/src/scurve.c **** float t2s(scurve *sc, float time){
+  30              		.loc 1 4 34 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+   5:Core/drogui/src/scurve.c ****     float tT = time / (sc -> period);
+  35              		.loc 1 5 5 view .LVU1
+  36              		.loc 1 5 27 is_stmt 0 view .LVU2
+  37 0000 90ED027A 		vldr.32	s14, [r0, #8]
+  38              		.loc 1 5 11 view .LVU3
+  39 0004 C0EE077A 		vdiv.f32	s15, s0, s14
+  40              	.LVL1:
+   6:Core/drogui/src/scurve.c ****     return 10*tT*tT*tT - 15*tT*tT*tT*tT + 6*tT*tT*tT*tT*tT;
+  41              		.loc 1 6 5 is_stmt 1 view .LVU4
+  42              		.loc 1 6 14 is_stmt 0 view .LVU5
+  43 0008 B2EE040A 		vmov.f32	s0, #1.0e+1
+  44              	.LVL2:
+  45              		.loc 1 6 14 view .LVU6
+  46 000c 27EE800A 		vmul.f32	s0, s15, s0
+  47              		.loc 1 6 17 view .LVU7
+  48 0010 20EE270A 		vmul.f32	s0, s0, s15
+  49              		.loc 1 6 20 view .LVU8
+  50 0014 20EE270A 		vmul.f32	s0, s0, s15
+  51              		.loc 1 6 28 view .LVU9
+  52 0018 B2EE0E7A 		vmov.f32	s14, #1.5e+1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXu6fRD.s 			page 2
+
+
+  53 001c 27EE877A 		vmul.f32	s14, s15, s14
+  54              		.loc 1 6 31 view .LVU10
+  55 0020 27EE277A 		vmul.f32	s14, s14, s15
+  56              		.loc 1 6 34 view .LVU11
+  57 0024 27EE277A 		vmul.f32	s14, s14, s15
+  58              		.loc 1 6 37 view .LVU12
+  59 0028 27EE277A 		vmul.f32	s14, s14, s15
+  60              		.loc 1 6 24 view .LVU13
+  61 002c 30EE470A 		vsub.f32	s0, s0, s14
+  62              		.loc 1 6 44 view .LVU14
+  63 0030 B1EE087A 		vmov.f32	s14, #6.0e+0
+  64 0034 27EE877A 		vmul.f32	s14, s15, s14
+  65              		.loc 1 6 47 view .LVU15
+  66 0038 27EE277A 		vmul.f32	s14, s14, s15
+  67              		.loc 1 6 50 view .LVU16
+  68 003c 27EE277A 		vmul.f32	s14, s14, s15
+  69              		.loc 1 6 53 view .LVU17
+  70 0040 27EE277A 		vmul.f32	s14, s14, s15
+  71              		.loc 1 6 56 view .LVU18
+  72 0044 67EE277A 		vmul.f32	s15, s14, s15
+  73              	.LVL3:
+   7:Core/drogui/src/scurve.c **** }
+  74              		.loc 1 7 1 view .LVU19
+  75 0048 30EE270A 		vadd.f32	s0, s0, s15
+  76 004c 7047     		bx	lr
+  77              		.cfi_endproc
+  78              	.LFE141:
+  80              		.section	.text.setTrayectory,"ax",%progbits
+  81              		.align	1
+  82              		.global	setTrayectory
+  83              		.syntax unified
+  84              		.thumb
+  85              		.thumb_func
+  86              		.fpu fpv5-sp-d16
+  88              	setTrayectory:
+  89              	.LVL4:
+  90              	.LFB142:
+   8:Core/drogui/src/scurve.c **** 
+   9:Core/drogui/src/scurve.c **** void setTrayectory(scurve *sc, float ini, float fin, float period, uint32_t ini_time){
+  91              		.loc 1 9 86 is_stmt 1 view -0
+  92              		.cfi_startproc
+  93              		@ args = 0, pretend = 0, frame = 0
+  94              		@ frame_needed = 0, uses_anonymous_args = 0
+  95              		@ link register save eliminated.
+  10:Core/drogui/src/scurve.c ****     sc->ini = ini;
+  96              		.loc 1 10 5 view .LVU21
+  97              		.loc 1 10 13 is_stmt 0 view .LVU22
+  98 0000 80ED000A 		vstr.32	s0, [r0]
+  11:Core/drogui/src/scurve.c ****     sc->fin = fin;
+  99              		.loc 1 11 5 is_stmt 1 view .LVU23
+ 100              		.loc 1 11 13 is_stmt 0 view .LVU24
+ 101 0004 C0ED010A 		vstr.32	s1, [r0, #4]
+  12:Core/drogui/src/scurve.c ****     sc->period = 1000000 * period;
+ 102              		.loc 1 12 5 is_stmt 1 view .LVU25
+ 103              		.loc 1 12 26 is_stmt 0 view .LVU26
+ 104 0008 DFED037A 		vldr.32	s15, .L3
+ 105 000c 21EE271A 		vmul.f32	s2, s2, s15
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXu6fRD.s 			page 3
+
+
+ 106              	.LVL5:
+ 107              		.loc 1 12 16 view .LVU27
+ 108 0010 80ED021A 		vstr.32	s2, [r0, #8]
+  13:Core/drogui/src/scurve.c ****     sc->ini_time = ini_time;
+ 109              		.loc 1 13 5 is_stmt 1 view .LVU28
+ 110              		.loc 1 13 18 is_stmt 0 view .LVU29
+ 111 0014 C160     		str	r1, [r0, #12]
+  14:Core/drogui/src/scurve.c **** }
+ 112              		.loc 1 14 1 view .LVU30
+ 113 0016 7047     		bx	lr
+ 114              	.L4:
+ 115              		.align	2
+ 116              	.L3:
+ 117 0018 00247449 		.word	1232348160
+ 118              		.cfi_endproc
+ 119              	.LFE142:
+ 121              		.global	__aeabi_f2d
+ 122              		.global	__aeabi_dcmple
+ 123              		.section	.text.getSetpoint,"ax",%progbits
+ 124              		.align	1
+ 125              		.global	getSetpoint
+ 126              		.syntax unified
+ 127              		.thumb
+ 128              		.thumb_func
+ 129              		.fpu fpv5-sp-d16
+ 131              	getSetpoint:
+ 132              	.LVL6:
+ 133              	.LFB143:
+  15:Core/drogui/src/scurve.c **** 
+  16:Core/drogui/src/scurve.c **** float getSetpoint(scurve *sc, uint32_t time){
+ 134              		.loc 1 16 45 is_stmt 1 view -0
+ 135              		.cfi_startproc
+ 136              		@ args = 0, pretend = 0, frame = 0
+ 137              		@ frame_needed = 0, uses_anonymous_args = 0
+ 138              		.loc 1 16 45 is_stmt 0 view .LVU32
+ 139 0000 70B5     		push	{r4, r5, r6, lr}
+ 140              	.LCFI0:
+ 141              		.cfi_def_cfa_offset 16
+ 142              		.cfi_offset 4, -16
+ 143              		.cfi_offset 5, -12
+ 144              		.cfi_offset 6, -8
+ 145              		.cfi_offset 14, -4
+ 146 0002 0546     		mov	r5, r0
+ 147 0004 0C46     		mov	r4, r1
+  17:Core/drogui/src/scurve.c **** 
+  18:Core/drogui/src/scurve.c ****     if(sc->period <= EPS  || time - sc->ini_time > sc->period) 
+ 148              		.loc 1 18 5 is_stmt 1 view .LVU33
+ 149              		.loc 1 18 10 is_stmt 0 view .LVU34
+ 150 0006 8668     		ldr	r6, [r0, #8]	@ float
+ 151 0008 3046     		mov	r0, r6	@ float
+ 152              	.LVL7:
+ 153              		.loc 1 18 10 view .LVU35
+ 154 000a FFF7FEFF 		bl	__aeabi_f2d
+ 155              	.LVL8:
+ 156              		.loc 1 18 7 view .LVU36
+ 157 000e 12A3     		adr	r3, .L12
+ 158 0010 D3E90023 		ldrd	r2, [r3]
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXu6fRD.s 			page 4
+
+
+ 159 0014 FFF7FEFF 		bl	__aeabi_dcmple
+ 160              	.LVL9:
+ 161 0018 D0B9     		cbnz	r0, .L6
+ 162              		.loc 1 18 39 discriminator 1 view .LVU37
+ 163 001a E968     		ldr	r1, [r5, #12]
+ 164              		.loc 1 18 35 discriminator 1 view .LVU38
+ 165 001c 611A     		subs	r1, r4, r1
+ 166              		.loc 1 18 50 discriminator 1 view .LVU39
+ 167 001e 07EE901A 		vmov	s15, r1	@ int
+ 168 0022 B8EE670A 		vcvt.f32.u32	s0, s15
+ 169              		.loc 1 18 27 discriminator 1 view .LVU40
+ 170 0026 07EE906A 		vmov	s15, r6
+ 171 002a F4EEC07A 		vcmpe.f32	s15, s0
+ 172 002e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 173 0032 0DD4     		bmi	.L6
+  19:Core/drogui/src/scurve.c ****         return sc->fin;
+  20:Core/drogui/src/scurve.c **** 
+  21:Core/drogui/src/scurve.c ****     float s = t2s(sc, time - sc->ini_time);
+ 174              		.loc 1 21 5 is_stmt 1 view .LVU41
+ 175              		.loc 1 21 15 is_stmt 0 view .LVU42
+ 176 0034 2846     		mov	r0, r5
+ 177 0036 FFF7FEFF 		bl	t2s
+ 178              	.LVL10:
+  22:Core/drogui/src/scurve.c ****     return (sc->ini) + s*(sc->fin - sc->ini);
+ 179              		.loc 1 22 5 is_stmt 1 view .LVU43
+ 180              		.loc 1 22 15 is_stmt 0 view .LVU44
+ 181 003a D5ED007A 		vldr.32	s15, [r5]
+ 182              		.loc 1 22 29 view .LVU45
+ 183 003e 95ED017A 		vldr.32	s14, [r5, #4]
+ 184              		.loc 1 22 35 view .LVU46
+ 185 0042 37EE677A 		vsub.f32	s14, s14, s15
+ 186              		.loc 1 22 25 view .LVU47
+ 187 0046 27EE000A 		vmul.f32	s0, s14, s0
+ 188              	.LVL11:
+ 189              		.loc 1 22 22 view .LVU48
+ 190 004a 37EE800A 		vadd.f32	s0, s15, s0
+ 191 004e 01E0     		b	.L5
+ 192              	.L6:
+  19:Core/drogui/src/scurve.c ****         return sc->fin;
+ 193              		.loc 1 19 9 is_stmt 1 view .LVU49
+  19:Core/drogui/src/scurve.c ****         return sc->fin;
+ 194              		.loc 1 19 18 is_stmt 0 view .LVU50
+ 195 0050 95ED010A 		vldr.32	s0, [r5, #4]
+ 196              	.L5:
+  23:Core/drogui/src/scurve.c **** }
+ 197              		.loc 1 23 1 view .LVU51
+ 198 0054 70BD     		pop	{r4, r5, r6, pc}
+ 199              	.LVL12:
+ 200              	.L13:
+ 201              		.loc 1 23 1 view .LVU52
+ 202 0056 00BF     		.align	3
+ 203              	.L12:
+ 204 0058 95D626E8 		.word	-400107883
+ 205 005c 0B2E113E 		.word	1041313291
+ 206              		.cfi_endproc
+ 207              	.LFE143:
+ 209              		.text
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXu6fRD.s 			page 5
+
+
+ 210              	.Letext0:
+ 211              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 212              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 213              		.file 4 "Core/drogui/include/scurve.h"
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccXu6fRD.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 scurve.c
+C:\Users\GUILLE~1\AppData\Local\Temp\ccXu6fRD.s:18     .text.t2s:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccXu6fRD.s:26     .text.t2s:00000000 t2s
+C:\Users\GUILLE~1\AppData\Local\Temp\ccXu6fRD.s:81     .text.setTrayectory:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccXu6fRD.s:88     .text.setTrayectory:00000000 setTrayectory
+C:\Users\GUILLE~1\AppData\Local\Temp\ccXu6fRD.s:117    .text.setTrayectory:00000018 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccXu6fRD.s:124    .text.getSetpoint:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccXu6fRD.s:131    .text.getSetpoint:00000000 getSetpoint
+C:\Users\GUILLE~1\AppData\Local\Temp\ccXu6fRD.s:204    .text.getSetpoint:00000058 $d
+
+UNDEFINED SYMBOLS
+__aeabi_f2d
+__aeabi_dcmple
