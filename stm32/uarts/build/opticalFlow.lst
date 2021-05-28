@@ -1,0 +1,1098 @@
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"opticalFlow.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.crc8_dvb_s2,"ax",%progbits
+  18              		.align	1
+  19              		.global	crc8_dvb_s2
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv5-sp-d16
+  26              	crc8_dvb_s2:
+  27              	.LVL0:
+  28              	.LFB141:
+  29              		.file 1 "Core/drogui/src/opticalFlow.c"
+   1:Core/drogui/src/opticalFlow.c **** #include "opticalFlow.h"
+   2:Core/drogui/src/opticalFlow.c **** #include "serial.h"
+   3:Core/drogui/src/opticalFlow.c **** #include "task.h"
+   4:Core/drogui/src/opticalFlow.c **** 
+   5:Core/drogui/src/opticalFlow.c **** uint8_t crc8_dvb_s2(uint8_t crc, uint8_t a){
+  30              		.loc 1 5 44 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+   6:Core/drogui/src/opticalFlow.c ****     crc ^= a;
+  35              		.loc 1 6 5 view .LVU1
+  36              		.loc 1 6 9 is_stmt 0 view .LVU2
+  37 0000 4840     		eors	r0, r0, r1
+  38              	.LVL1:
+   7:Core/drogui/src/opticalFlow.c ****     for (int ii = 0; ii < 8; ++ii) {
+  39              		.loc 1 7 5 is_stmt 1 view .LVU3
+  40              	.LBB2:
+  41              		.loc 1 7 10 view .LVU4
+  42              		.loc 1 7 14 is_stmt 0 view .LVU5
+  43 0002 0023     		movs	r3, #0
+  44              		.loc 1 7 5 view .LVU6
+  45 0004 02E0     		b	.L2
+  46              	.LVL2:
+  47              	.L3:
+   8:Core/drogui/src/opticalFlow.c ****         if (crc & 0x80) {
+   9:Core/drogui/src/opticalFlow.c ****             crc = (crc << 1) ^ 0xD5;
+  10:Core/drogui/src/opticalFlow.c ****         } else {
+  11:Core/drogui/src/opticalFlow.c ****             crc = crc << 1;
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 2
+
+
+  48              		.loc 1 11 13 is_stmt 1 view .LVU7
+  49              		.loc 1 11 17 is_stmt 0 view .LVU8
+  50 0006 4000     		lsls	r0, r0, #1
+  51              	.LVL3:
+  52              		.loc 1 11 17 view .LVU9
+  53 0008 C0B2     		uxtb	r0, r0
+  54              	.LVL4:
+  55              	.L4:
+   7:Core/drogui/src/opticalFlow.c ****     for (int ii = 0; ii < 8; ++ii) {
+  56              		.loc 1 7 30 is_stmt 1 discriminator 2 view .LVU10
+  57 000a 0133     		adds	r3, r3, #1
+  58              	.LVL5:
+  59              	.L2:
+   7:Core/drogui/src/opticalFlow.c ****     for (int ii = 0; ii < 8; ++ii) {
+  60              		.loc 1 7 22 discriminator 1 view .LVU11
+   7:Core/drogui/src/opticalFlow.c ****     for (int ii = 0; ii < 8; ++ii) {
+  61              		.loc 1 7 5 is_stmt 0 discriminator 1 view .LVU12
+  62 000c 072B     		cmp	r3, #7
+  63 000e 07DC     		bgt	.L6
+   8:Core/drogui/src/opticalFlow.c ****         if (crc & 0x80) {
+  64              		.loc 1 8 9 is_stmt 1 view .LVU13
+   8:Core/drogui/src/opticalFlow.c ****         if (crc & 0x80) {
+  65              		.loc 1 8 12 is_stmt 0 view .LVU14
+  66 0010 10F0800F 		tst	r0, #128
+  67 0014 F7D0     		beq	.L3
+   9:Core/drogui/src/opticalFlow.c ****         } else {
+  68              		.loc 1 9 13 is_stmt 1 view .LVU15
+   9:Core/drogui/src/opticalFlow.c ****         } else {
+  69              		.loc 1 9 24 is_stmt 0 view .LVU16
+  70 0016 4000     		lsls	r0, r0, #1
+  71              	.LVL6:
+   9:Core/drogui/src/opticalFlow.c ****         } else {
+  72              		.loc 1 9 30 view .LVU17
+  73 0018 80F0D500 		eor	r0, r0, #213
+   9:Core/drogui/src/opticalFlow.c ****         } else {
+  74              		.loc 1 9 17 view .LVU18
+  75 001c C0B2     		uxtb	r0, r0
+  76              	.LVL7:
+   9:Core/drogui/src/opticalFlow.c ****         } else {
+  77              		.loc 1 9 17 view .LVU19
+  78 001e F4E7     		b	.L4
+  79              	.L6:
+   9:Core/drogui/src/opticalFlow.c ****         } else {
+  80              		.loc 1 9 17 view .LVU20
+  81              	.LBE2:
+  12:Core/drogui/src/opticalFlow.c ****         }
+  13:Core/drogui/src/opticalFlow.c ****     }
+  14:Core/drogui/src/opticalFlow.c ****     return crc; 
+  82              		.loc 1 14 5 is_stmt 1 view .LVU21
+  15:Core/drogui/src/opticalFlow.c **** }
+  83              		.loc 1 15 1 is_stmt 0 view .LVU22
+  84 0020 7047     		bx	lr
+  85              		.cfi_endproc
+  86              	.LFE141:
+  88              		.section	.text.crc8_func,"ax",%progbits
+  89              		.align	1
+  90              		.global	crc8_func
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 3
+
+
+  91              		.syntax unified
+  92              		.thumb
+  93              		.thumb_func
+  94              		.fpu fpv5-sp-d16
+  96              	crc8_func:
+  97              	.LVL8:
+  98              	.LFB142:
+  16:Core/drogui/src/opticalFlow.c **** 
+  17:Core/drogui/src/opticalFlow.c **** uint8_t crc8_func(int len, uint8_t* msg){
+  99              		.loc 1 17 41 is_stmt 1 view -0
+ 100              		.cfi_startproc
+ 101              		@ args = 0, pretend = 0, frame = 0
+ 102              		@ frame_needed = 0, uses_anonymous_args = 0
+ 103              		.loc 1 17 41 is_stmt 0 view .LVU24
+ 104 0000 70B5     		push	{r4, r5, r6, lr}
+ 105              	.LCFI0:
+ 106              		.cfi_def_cfa_offset 16
+ 107              		.cfi_offset 4, -16
+ 108              		.cfi_offset 5, -12
+ 109              		.cfi_offset 6, -8
+ 110              		.cfi_offset 14, -4
+ 111 0002 0546     		mov	r5, r0
+ 112 0004 0E46     		mov	r6, r1
+  18:Core/drogui/src/opticalFlow.c ****     uint8_t crc8 = 0;
+ 113              		.loc 1 18 5 is_stmt 1 view .LVU25
+ 114              	.LVL9:
+  19:Core/drogui/src/opticalFlow.c ****     for(int i = 0; i < len; i++){
+ 115              		.loc 1 19 5 view .LVU26
+ 116              	.LBB3:
+ 117              		.loc 1 19 9 view .LVU27
+ 118              		.loc 1 19 13 is_stmt 0 view .LVU28
+ 119 0006 0024     		movs	r4, #0
+ 120              	.LBE3:
+  18:Core/drogui/src/opticalFlow.c ****     uint8_t crc8 = 0;
+ 121              		.loc 1 18 13 view .LVU29
+ 122 0008 2046     		mov	r0, r4
+ 123              	.LVL10:
+ 124              	.LBB4:
+ 125              		.loc 1 19 5 view .LVU30
+ 126 000a 03E0     		b	.L8
+ 127              	.LVL11:
+ 128              	.L9:
+  20:Core/drogui/src/opticalFlow.c ****         crc8 = crc8_dvb_s2(crc8, msg[i]);
+ 129              		.loc 1 20 9 is_stmt 1 discriminator 3 view .LVU31
+ 130              		.loc 1 20 16 is_stmt 0 discriminator 3 view .LVU32
+ 131 000c 315D     		ldrb	r1, [r6, r4]	@ zero_extendqisi2
+ 132 000e FFF7FEFF 		bl	crc8_dvb_s2
+ 133              	.LVL12:
+  19:Core/drogui/src/opticalFlow.c ****     for(int i = 0; i < len; i++){
+ 134              		.loc 1 19 29 is_stmt 1 discriminator 3 view .LVU33
+  19:Core/drogui/src/opticalFlow.c ****     for(int i = 0; i < len; i++){
+ 135              		.loc 1 19 30 is_stmt 0 discriminator 3 view .LVU34
+ 136 0012 0134     		adds	r4, r4, #1
+ 137              	.LVL13:
+ 138              	.L8:
+  19:Core/drogui/src/opticalFlow.c ****     for(int i = 0; i < len; i++){
+ 139              		.loc 1 19 20 is_stmt 1 discriminator 1 view .LVU35
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 4
+
+
+  19:Core/drogui/src/opticalFlow.c ****     for(int i = 0; i < len; i++){
+ 140              		.loc 1 19 5 is_stmt 0 discriminator 1 view .LVU36
+ 141 0014 AC42     		cmp	r4, r5
+ 142 0016 F9DB     		blt	.L9
+ 143              	.LBE4:
+  21:Core/drogui/src/opticalFlow.c ****     }
+  22:Core/drogui/src/opticalFlow.c ****     return crc8;
+ 144              		.loc 1 22 5 is_stmt 1 view .LVU37
+  23:Core/drogui/src/opticalFlow.c **** }
+ 145              		.loc 1 23 1 is_stmt 0 view .LVU38
+ 146 0018 70BD     		pop	{r4, r5, r6, pc}
+ 147              		.loc 1 23 1 view .LVU39
+ 148              		.cfi_endproc
+ 149              	.LFE142:
+ 151              		.section	.text.calcChksum,"ax",%progbits
+ 152              		.align	1
+ 153              		.global	calcChksum
+ 154              		.syntax unified
+ 155              		.thumb
+ 156              		.thumb_func
+ 157              		.fpu fpv5-sp-d16
+ 159              	calcChksum:
+ 160              	.LVL14:
+ 161              	.LFB143:
+  24:Core/drogui/src/opticalFlow.c **** 
+  25:Core/drogui/src/opticalFlow.c **** 
+  26:Core/drogui/src/opticalFlow.c **** void calcChksum(optPacket *msg){
+ 162              		.loc 1 26 32 is_stmt 1 view -0
+ 163              		.cfi_startproc
+ 164              		@ args = 0, pretend = 0, frame = 0
+ 165              		@ frame_needed = 0, uses_anonymous_args = 0
+ 166              		.loc 1 26 32 is_stmt 0 view .LVU41
+ 167 0000 10B5     		push	{r4, lr}
+ 168              	.LCFI1:
+ 169              		.cfi_def_cfa_offset 8
+ 170              		.cfi_offset 4, -8
+ 171              		.cfi_offset 14, -4
+ 172 0002 0446     		mov	r4, r0
+  27:Core/drogui/src/opticalFlow.c ****     msg -> chksum = crc8_func((msg -> sz)+5, msg -> chksumBuff);
+ 173              		.loc 1 27 5 is_stmt 1 view .LVU42
+ 174              		.loc 1 27 36 is_stmt 0 view .LVU43
+ 175 0004 B0F90200 		ldrsh	r0, [r0, #2]
+ 176              	.LVL15:
+ 177              		.loc 1 27 21 view .LVU44
+ 178 0008 04F16801 		add	r1, r4, #104
+ 179 000c 0530     		adds	r0, r0, #5
+ 180 000e FFF7FEFF 		bl	crc8_func
+ 181              	.LVL16:
+ 182              		.loc 1 27 19 view .LVU45
+ 183 0012 84F8CC00 		strb	r0, [r4, #204]
+  28:Core/drogui/src/opticalFlow.c **** }
+ 184              		.loc 1 28 1 view .LVU46
+ 185 0016 10BD     		pop	{r4, pc}
+ 186              		.loc 1 28 1 view .LVU47
+ 187              		.cfi_endproc
+ 188              	.LFE143:
+ 190              		.section	.text.initOptFlow,"ax",%progbits
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 5
+
+
+ 191              		.align	1
+ 192              		.global	initOptFlow
+ 193              		.syntax unified
+ 194              		.thumb
+ 195              		.thumb_func
+ 196              		.fpu fpv5-sp-d16
+ 198              	initOptFlow:
+ 199              	.LVL17:
+ 200              	.LFB144:
+  29:Core/drogui/src/opticalFlow.c **** 
+  30:Core/drogui/src/opticalFlow.c **** 
+  31:Core/drogui/src/opticalFlow.c **** 
+  32:Core/drogui/src/opticalFlow.c **** void initOptFlow(optFlow *of, serial* ser){
+ 201              		.loc 1 32 43 is_stmt 1 view -0
+ 202              		.cfi_startproc
+ 203              		@ args = 0, pretend = 0, frame = 0
+ 204              		@ frame_needed = 0, uses_anonymous_args = 0
+ 205              		@ link register save eliminated.
+  33:Core/drogui/src/opticalFlow.c ****     of->off_x = 0;
+ 206              		.loc 1 33 5 view .LVU49
+ 207              		.loc 1 33 15 is_stmt 0 view .LVU50
+ 208 0000 0023     		movs	r3, #0
+ 209 0002 C0F8E030 		str	r3, [r0, #224]
+  34:Core/drogui/src/opticalFlow.c ****     of->off_y = 0;
+ 210              		.loc 1 34 5 is_stmt 1 view .LVU51
+ 211              		.loc 1 34 15 is_stmt 0 view .LVU52
+ 212 0006 C0F8E430 		str	r3, [r0, #228]
+  35:Core/drogui/src/opticalFlow.c ****     of->vel_x = 0;
+ 213              		.loc 1 35 5 is_stmt 1 view .LVU53
+ 214              		.loc 1 35 15 is_stmt 0 view .LVU54
+ 215 000a C0F8D830 		str	r3, [r0, #216]
+  36:Core/drogui/src/opticalFlow.c ****     of->vel_y = 0;
+ 216              		.loc 1 36 5 is_stmt 1 view .LVU55
+ 217              		.loc 1 36 15 is_stmt 0 view .LVU56
+ 218 000e C0F8DC30 		str	r3, [r0, #220]
+  37:Core/drogui/src/opticalFlow.c ****     of->dis   = 0;
+ 219              		.loc 1 37 5 is_stmt 1 view .LVU57
+ 220              		.loc 1 37 15 is_stmt 0 view .LVU58
+ 221 0012 C0F8E830 		str	r3, [r0, #232]
+  38:Core/drogui/src/opticalFlow.c **** 	of->rcv_pack.ser = ser;
+ 222              		.loc 1 38 2 is_stmt 1 view .LVU59
+ 223              		.loc 1 38 19 is_stmt 0 view .LVU60
+ 224 0016 C0F8D010 		str	r1, [r0, #208]
+  39:Core/drogui/src/opticalFlow.c **** }
+ 225              		.loc 1 39 1 view .LVU61
+ 226 001a 7047     		bx	lr
+ 227              		.cfi_endproc
+ 228              	.LFE144:
+ 230              		.section	.text.readOptFlow,"ax",%progbits
+ 231              		.align	1
+ 232              		.global	readOptFlow
+ 233              		.syntax unified
+ 234              		.thumb
+ 235              		.thumb_func
+ 236              		.fpu fpv5-sp-d16
+ 238              	readOptFlow:
+ 239              	.LVL18:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 6
+
+
+ 240              	.LFB145:
+  40:Core/drogui/src/opticalFlow.c **** 
+  41:Core/drogui/src/opticalFlow.c **** 
+  42:Core/drogui/src/opticalFlow.c **** 
+  43:Core/drogui/src/opticalFlow.c **** 
+  44:Core/drogui/src/opticalFlow.c **** int readOptFlow(optPacket *op, uint32_t timeout){
+ 241              		.loc 1 44 49 is_stmt 1 view -0
+ 242              		.cfi_startproc
+ 243              		@ args = 0, pretend = 0, frame = 0
+ 244              		@ frame_needed = 0, uses_anonymous_args = 0
+ 245              		.loc 1 44 49 is_stmt 0 view .LVU63
+ 246 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 247              	.LCFI2:
+ 248              		.cfi_def_cfa_offset 32
+ 249              		.cfi_offset 3, -32
+ 250              		.cfi_offset 4, -28
+ 251              		.cfi_offset 5, -24
+ 252              		.cfi_offset 6, -20
+ 253              		.cfi_offset 7, -16
+ 254              		.cfi_offset 8, -12
+ 255              		.cfi_offset 9, -8
+ 256              		.cfi_offset 14, -4
+ 257 0004 0446     		mov	r4, r0
+ 258 0006 0F46     		mov	r7, r1
+ 259 0008 4FF00009 		mov	r9, #0
+  45:Core/drogui/src/opticalFlow.c **** 	uint8_t sync1 = 0, sync2 = 0;
+ 260              		.loc 1 45 2 is_stmt 1 view .LVU64
+ 261              	.LVL19:
+  46:Core/drogui/src/opticalFlow.c ****     uint8_t cntLSB, cntMSB;
+ 262              		.loc 1 46 5 view .LVU65
+  47:Core/drogui/src/opticalFlow.c ****     uint8_t idMSB, idLSB;
+ 263              		.loc 1 47 5 view .LVU66
+  48:Core/drogui/src/opticalFlow.c **** 	uint8_t checksum, flag = 0;
+ 264              		.loc 1 48 2 view .LVU67
+  49:Core/drogui/src/opticalFlow.c **** 	uint32_t tim = TIME;
+ 265              		.loc 1 49 2 view .LVU68
+ 266              		.loc 1 49 17 is_stmt 0 view .LVU69
+ 267 000c 524B     		ldr	r3, .L34
+ 268 000e 1B68     		ldr	r3, [r3]
+ 269              		.loc 1 49 11 view .LVU70
+ 270 0010 D3F82480 		ldr	r8, [r3, #36]
+ 271              	.LVL20:
+  50:Core/drogui/src/opticalFlow.c **** 
+  51:Core/drogui/src/opticalFlow.c **** 	while(TIME - tim < timeout){
+ 272              		.loc 1 51 2 is_stmt 1 view .LVU71
+  45:Core/drogui/src/opticalFlow.c ****     uint8_t cntLSB, cntMSB;
+ 273              		.loc 1 45 21 is_stmt 0 view .LVU72
+ 274 0014 4D46     		mov	r5, r9
+  45:Core/drogui/src/opticalFlow.c ****     uint8_t cntLSB, cntMSB;
+ 275              		.loc 1 45 10 view .LVU73
+ 276 0016 4E46     		mov	r6, r9
+ 277              		.loc 1 51 7 view .LVU74
+ 278 0018 03E0     		b	.L15
+ 279              	.LVL21:
+ 280              	.L16:
+  52:Core/drogui/src/opticalFlow.c **** 		if(serialAvailable(op->ser)){
+  53:Core/drogui/src/opticalFlow.c **** 			sync1 = sync2;
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 7
+
+
+  54:Core/drogui/src/opticalFlow.c **** 			sync2 = serialRead(op->ser);
+  55:Core/drogui/src/opticalFlow.c **** 		}
+  56:Core/drogui/src/opticalFlow.c **** 
+  57:Core/drogui/src/opticalFlow.c **** 		if(sync1 == OPT_SYNCH_1 && sync2 == OPT_SYNCH_2){
+ 281              		.loc 1 57 3 is_stmt 1 view .LVU75
+ 282              		.loc 1 57 5 is_stmt 0 view .LVU76
+ 283 001a 242E     		cmp	r6, #36
+ 284 001c 08BF     		it	eq
+ 285 001e 582D     		cmpeq	r5, #88
+ 286 0020 14D0     		beq	.L17
+ 287              	.LVL22:
+ 288              	.L15:
+  51:Core/drogui/src/opticalFlow.c **** 		if(serialAvailable(op->ser)){
+ 289              		.loc 1 51 7 is_stmt 1 view .LVU77
+  51:Core/drogui/src/opticalFlow.c **** 		if(serialAvailable(op->ser)){
+ 290              		.loc 1 51 8 is_stmt 0 view .LVU78
+ 291 0022 4D4B     		ldr	r3, .L34
+ 292 0024 1B68     		ldr	r3, [r3]
+ 293 0026 5B6A     		ldr	r3, [r3, #36]
+  51:Core/drogui/src/opticalFlow.c **** 		if(serialAvailable(op->ser)){
+ 294              		.loc 1 51 13 view .LVU79
+ 295 0028 A3EB0803 		sub	r3, r3, r8
+  51:Core/drogui/src/opticalFlow.c **** 		if(serialAvailable(op->ser)){
+ 296              		.loc 1 51 7 view .LVU80
+ 297 002c BB42     		cmp	r3, r7
+ 298 002e 80F08680 		bcs	.L32
+  52:Core/drogui/src/opticalFlow.c **** 		if(serialAvailable(op->ser)){
+ 299              		.loc 1 52 3 is_stmt 1 view .LVU81
+  52:Core/drogui/src/opticalFlow.c **** 		if(serialAvailable(op->ser)){
+ 300              		.loc 1 52 6 is_stmt 0 view .LVU82
+ 301 0032 D4F8D000 		ldr	r0, [r4, #208]
+ 302 0036 FFF7FEFF 		bl	serialAvailable
+ 303              	.LVL23:
+  52:Core/drogui/src/opticalFlow.c **** 		if(serialAvailable(op->ser)){
+ 304              		.loc 1 52 5 view .LVU83
+ 305 003a 0028     		cmp	r0, #0
+ 306 003c EDD0     		beq	.L16
+  53:Core/drogui/src/opticalFlow.c **** 			sync2 = serialRead(op->ser);
+ 307              		.loc 1 53 4 is_stmt 1 view .LVU84
+ 308              	.LVL24:
+  54:Core/drogui/src/opticalFlow.c **** 		}
+ 309              		.loc 1 54 4 view .LVU85
+  54:Core/drogui/src/opticalFlow.c **** 		}
+ 310              		.loc 1 54 12 is_stmt 0 view .LVU86
+ 311 003e D4F8D000 		ldr	r0, [r4, #208]
+ 312 0042 FFF7FEFF 		bl	serialRead
+ 313              	.LVL25:
+  53:Core/drogui/src/opticalFlow.c **** 			sync2 = serialRead(op->ser);
+ 314              		.loc 1 53 10 view .LVU87
+ 315 0046 2E46     		mov	r6, r5
+  54:Core/drogui/src/opticalFlow.c **** 		}
+ 316              		.loc 1 54 12 view .LVU88
+ 317 0048 0546     		mov	r5, r0
+ 318              	.LVL26:
+  54:Core/drogui/src/opticalFlow.c **** 		}
+ 319              		.loc 1 54 12 view .LVU89
+ 320 004a E6E7     		b	.L16
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 8
+
+
+ 321              	.LVL27:
+ 322              	.L17:
+  58:Core/drogui/src/opticalFlow.c **** 			
+  59:Core/drogui/src/opticalFlow.c ****             while(!serialAvailable(op->ser)){};
+ 323              		.loc 1 59 46 is_stmt 1 discriminator 1 view .LVU90
+ 324              		.loc 1 59 18 discriminator 1 view .LVU91
+ 325              		.loc 1 59 20 is_stmt 0 discriminator 1 view .LVU92
+ 326 004c D4F8D000 		ldr	r0, [r4, #208]
+ 327 0050 FFF7FEFF 		bl	serialAvailable
+ 328              	.LVL28:
+ 329              		.loc 1 59 18 discriminator 1 view .LVU93
+ 330 0054 0028     		cmp	r0, #0
+ 331 0056 F9D0     		beq	.L17
+ 332              		.loc 1 59 47 is_stmt 1 discriminator 2 view .LVU94
+  60:Core/drogui/src/opticalFlow.c **** 			op->dir = serialRead(op->ser);
+ 333              		.loc 1 60 4 discriminator 2 view .LVU95
+ 334              		.loc 1 60 14 is_stmt 0 discriminator 2 view .LVU96
+ 335 0058 D4F8D000 		ldr	r0, [r4, #208]
+ 336 005c FFF7FEFF 		bl	serialRead
+ 337              	.LVL29:
+ 338              		.loc 1 60 12 discriminator 2 view .LVU97
+ 339 0060 84F8CD00 		strb	r0, [r4, #205]
+  61:Core/drogui/src/opticalFlow.c **** 
+  62:Core/drogui/src/opticalFlow.c ****             while(!serialAvailable(op->ser)){};
+ 340              		.loc 1 62 13 is_stmt 1 discriminator 2 view .LVU98
+ 341              	.L18:
+ 342              		.loc 1 62 46 discriminator 1 view .LVU99
+ 343              		.loc 1 62 18 discriminator 1 view .LVU100
+ 344              		.loc 1 62 20 is_stmt 0 discriminator 1 view .LVU101
+ 345 0064 D4F8D000 		ldr	r0, [r4, #208]
+ 346 0068 FFF7FEFF 		bl	serialAvailable
+ 347              	.LVL30:
+ 348              		.loc 1 62 18 discriminator 1 view .LVU102
+ 349 006c 0028     		cmp	r0, #0
+ 350 006e F9D0     		beq	.L18
+ 351              		.loc 1 62 47 is_stmt 1 discriminator 2 view .LVU103
+  63:Core/drogui/src/opticalFlow.c **** 			op->chksumBuff[0] = op->flag = serialRead(op->ser);
+ 352              		.loc 1 63 4 discriminator 2 view .LVU104
+ 353              		.loc 1 63 35 is_stmt 0 discriminator 2 view .LVU105
+ 354 0070 D4F8D000 		ldr	r0, [r4, #208]
+ 355 0074 FFF7FEFF 		bl	serialRead
+ 356              	.LVL31:
+ 357              		.loc 1 63 33 discriminator 2 view .LVU106
+ 358 0078 84F8CE00 		strb	r0, [r4, #206]
+ 359              		.loc 1 63 22 discriminator 2 view .LVU107
+ 360 007c 84F86800 		strb	r0, [r4, #104]
+  64:Core/drogui/src/opticalFlow.c **** 
+  65:Core/drogui/src/opticalFlow.c **** 			while(!serialAvailable(op->ser)){};
+ 361              		.loc 1 65 4 is_stmt 1 discriminator 2 view .LVU108
+ 362              	.L19:
+ 363              		.loc 1 65 37 discriminator 1 view .LVU109
+ 364              		.loc 1 65 9 discriminator 1 view .LVU110
+ 365              		.loc 1 65 11 is_stmt 0 discriminator 1 view .LVU111
+ 366 0080 D4F8D000 		ldr	r0, [r4, #208]
+ 367 0084 FFF7FEFF 		bl	serialAvailable
+ 368              	.LVL32:
+ 369              		.loc 1 65 9 discriminator 1 view .LVU112
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 9
+
+
+ 370 0088 0028     		cmp	r0, #0
+ 371 008a F9D0     		beq	.L19
+ 372              		.loc 1 65 38 is_stmt 1 discriminator 2 view .LVU113
+  66:Core/drogui/src/opticalFlow.c **** 			op->chksumBuff[1] = idLSB = serialRead(op->ser);
+ 373              		.loc 1 66 4 discriminator 2 view .LVU114
+ 374              		.loc 1 66 32 is_stmt 0 discriminator 2 view .LVU115
+ 375 008c D4F8D000 		ldr	r0, [r4, #208]
+ 376 0090 FFF7FEFF 		bl	serialRead
+ 377              	.LVL33:
+ 378 0094 0546     		mov	r5, r0
+ 379              	.LVL34:
+ 380              		.loc 1 66 22 discriminator 2 view .LVU116
+ 381 0096 84F86900 		strb	r0, [r4, #105]
+  67:Core/drogui/src/opticalFlow.c **** 			while(!serialAvailable(op->ser)){};
+ 382              		.loc 1 67 4 is_stmt 1 discriminator 2 view .LVU117
+ 383              	.LVL35:
+ 384              	.L20:
+ 385              		.loc 1 67 37 discriminator 1 view .LVU118
+ 386              		.loc 1 67 9 discriminator 1 view .LVU119
+ 387              		.loc 1 67 11 is_stmt 0 discriminator 1 view .LVU120
+ 388 009a D4F8D000 		ldr	r0, [r4, #208]
+ 389 009e FFF7FEFF 		bl	serialAvailable
+ 390              	.LVL36:
+ 391              		.loc 1 67 9 discriminator 1 view .LVU121
+ 392 00a2 0028     		cmp	r0, #0
+ 393 00a4 F9D0     		beq	.L20
+ 394              		.loc 1 67 38 is_stmt 1 discriminator 2 view .LVU122
+  68:Core/drogui/src/opticalFlow.c **** 			op->chksumBuff[2] = idMSB = serialRead(op->ser);
+ 395              		.loc 1 68 4 discriminator 2 view .LVU123
+ 396              		.loc 1 68 32 is_stmt 0 discriminator 2 view .LVU124
+ 397 00a6 D4F8D000 		ldr	r0, [r4, #208]
+ 398 00aa FFF7FEFF 		bl	serialRead
+ 399              	.LVL37:
+ 400              		.loc 1 68 22 discriminator 2 view .LVU125
+ 401 00ae 84F86A00 		strb	r0, [r4, #106]
+  69:Core/drogui/src/opticalFlow.c **** 
+  70:Core/drogui/src/opticalFlow.c ****             op->type = (uint16_t) (idMSB << 8) | (idLSB & 0xFF);
+ 402              		.loc 1 70 13 is_stmt 1 discriminator 2 view .LVU126
+ 403              		.loc 1 70 48 is_stmt 0 discriminator 2 view .LVU127
+ 404 00b2 45EA0025 		orr	r5, r5, r0, lsl #8
+ 405              		.loc 1 70 22 discriminator 2 view .LVU128
+ 406 00b6 2580     		strh	r5, [r4]	@ movhi
+  71:Core/drogui/src/opticalFlow.c **** 
+  72:Core/drogui/src/opticalFlow.c **** 			while(!serialAvailable(op->ser));
+ 407              		.loc 1 72 4 is_stmt 1 discriminator 2 view .LVU129
+ 408              	.LVL38:
+ 409              	.L21:
+ 410              		.loc 1 72 36 discriminator 1 view .LVU130
+ 411              		.loc 1 72 9 discriminator 1 view .LVU131
+ 412              		.loc 1 72 11 is_stmt 0 discriminator 1 view .LVU132
+ 413 00b8 D4F8D000 		ldr	r0, [r4, #208]
+ 414 00bc FFF7FEFF 		bl	serialAvailable
+ 415              	.LVL39:
+ 416              		.loc 1 72 9 discriminator 1 view .LVU133
+ 417 00c0 0028     		cmp	r0, #0
+ 418 00c2 F9D0     		beq	.L21
+  73:Core/drogui/src/opticalFlow.c **** 			op->chksumBuff[3] = cntLSB = serialRead(op->ser);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 10
+
+
+ 419              		.loc 1 73 4 is_stmt 1 view .LVU134
+ 420              		.loc 1 73 33 is_stmt 0 view .LVU135
+ 421 00c4 D4F8D000 		ldr	r0, [r4, #208]
+ 422 00c8 FFF7FEFF 		bl	serialRead
+ 423              	.LVL40:
+ 424 00cc 0546     		mov	r5, r0
+ 425              	.LVL41:
+ 426              		.loc 1 73 22 view .LVU136
+ 427 00ce 84F86B00 		strb	r0, [r4, #107]
+  74:Core/drogui/src/opticalFlow.c **** 			while(!serialAvailable(op->ser));
+ 428              		.loc 1 74 4 is_stmt 1 view .LVU137
+ 429              	.LVL42:
+ 430              	.L22:
+ 431              		.loc 1 74 36 discriminator 1 view .LVU138
+ 432              		.loc 1 74 9 discriminator 1 view .LVU139
+ 433              		.loc 1 74 11 is_stmt 0 discriminator 1 view .LVU140
+ 434 00d2 D4F8D000 		ldr	r0, [r4, #208]
+ 435 00d6 FFF7FEFF 		bl	serialAvailable
+ 436              	.LVL43:
+ 437              		.loc 1 74 9 discriminator 1 view .LVU141
+ 438 00da 0028     		cmp	r0, #0
+ 439 00dc F9D0     		beq	.L22
+  75:Core/drogui/src/opticalFlow.c **** 			op->chksumBuff[4] = cntMSB = serialRead(op->ser);
+ 440              		.loc 1 75 4 is_stmt 1 view .LVU142
+ 441              		.loc 1 75 33 is_stmt 0 view .LVU143
+ 442 00de D4F8D000 		ldr	r0, [r4, #208]
+ 443 00e2 FFF7FEFF 		bl	serialRead
+ 444              	.LVL44:
+ 445              		.loc 1 75 22 view .LVU144
+ 446 00e6 84F86C00 		strb	r0, [r4, #108]
+  76:Core/drogui/src/opticalFlow.c **** 
+  77:Core/drogui/src/opticalFlow.c **** 			op->sz = (uint16_t) (cntMSB << 8) | (cntLSB & 0xFF);
+ 447              		.loc 1 77 4 is_stmt 1 view .LVU145
+ 448              		.loc 1 77 38 is_stmt 0 view .LVU146
+ 449 00ea 45EA0025 		orr	r5, r5, r0, lsl #8
+ 450              		.loc 1 77 11 view .LVU147
+ 451 00ee 6580     		strh	r5, [r4, #2]	@ movhi
+  78:Core/drogui/src/opticalFlow.c ****             
+  79:Core/drogui/src/opticalFlow.c **** 
+  80:Core/drogui/src/opticalFlow.c **** 			for(int i = 0; i < op->sz ; i++){
+ 452              		.loc 1 80 4 is_stmt 1 view .LVU148
+ 453              	.LBB5:
+ 454              		.loc 1 80 8 view .LVU149
+ 455              	.LVL45:
+ 456              		.loc 1 80 12 is_stmt 0 view .LVU150
+ 457 00f0 0025     		movs	r5, #0
+ 458              		.loc 1 80 4 view .LVU151
+ 459 00f2 10E0     		b	.L23
+ 460              	.LVL46:
+ 461              	.L24:
+  81:Core/drogui/src/opticalFlow.c **** 				while(!serialAvailable(op->ser));
+ 462              		.loc 1 81 37 is_stmt 1 discriminator 1 view .LVU152
+ 463              		.loc 1 81 10 discriminator 1 view .LVU153
+ 464              		.loc 1 81 12 is_stmt 0 discriminator 1 view .LVU154
+ 465 00f4 D4F8D000 		ldr	r0, [r4, #208]
+ 466 00f8 FFF7FEFF 		bl	serialAvailable
+ 467              	.LVL47:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 11
+
+
+ 468              		.loc 1 81 10 discriminator 1 view .LVU155
+ 469 00fc 0028     		cmp	r0, #0
+ 470 00fe F9D0     		beq	.L24
+  82:Core/drogui/src/opticalFlow.c **** 				op->chksumBuff[5+i] = op->payload[i] = serialRead(op->ser);
+ 471              		.loc 1 82 5 is_stmt 1 discriminator 2 view .LVU156
+ 472              		.loc 1 82 44 is_stmt 0 discriminator 2 view .LVU157
+ 473 0100 D4F8D000 		ldr	r0, [r4, #208]
+ 474 0104 FFF7FEFF 		bl	serialRead
+ 475              	.LVL48:
+ 476              		.loc 1 82 42 discriminator 2 view .LVU158
+ 477 0108 6319     		adds	r3, r4, r5
+ 478 010a 1871     		strb	r0, [r3, #4]
+ 479              		.loc 1 82 21 discriminator 2 view .LVU159
+ 480 010c 6B1D     		adds	r3, r5, #5
+ 481              		.loc 1 82 25 discriminator 2 view .LVU160
+ 482 010e 2344     		add	r3, r3, r4
+ 483 0110 83F86800 		strb	r0, [r3, #104]
+  80:Core/drogui/src/opticalFlow.c **** 				while(!serialAvailable(op->ser));
+ 484              		.loc 1 80 32 is_stmt 1 discriminator 2 view .LVU161
+  80:Core/drogui/src/opticalFlow.c **** 				while(!serialAvailable(op->ser));
+ 485              		.loc 1 80 33 is_stmt 0 discriminator 2 view .LVU162
+ 486 0114 0135     		adds	r5, r5, #1
+ 487              	.LVL49:
+ 488              	.L23:
+  80:Core/drogui/src/opticalFlow.c **** 				while(!serialAvailable(op->ser));
+ 489              		.loc 1 80 19 is_stmt 1 discriminator 1 view .LVU163
+  80:Core/drogui/src/opticalFlow.c **** 				while(!serialAvailable(op->ser));
+ 490              		.loc 1 80 25 is_stmt 0 discriminator 1 view .LVU164
+ 491 0116 B4F90230 		ldrsh	r3, [r4, #2]
+  80:Core/drogui/src/opticalFlow.c **** 				while(!serialAvailable(op->ser));
+ 492              		.loc 1 80 4 discriminator 1 view .LVU165
+ 493 011a AB42     		cmp	r3, r5
+ 494 011c EADC     		bgt	.L24
+ 495              	.L25:
+ 496              	.LBE5:
+  83:Core/drogui/src/opticalFlow.c **** 			}
+  84:Core/drogui/src/opticalFlow.c **** 
+  85:Core/drogui/src/opticalFlow.c **** 			while(!serialAvailable(op->ser));
+ 497              		.loc 1 85 36 is_stmt 1 discriminator 1 view .LVU166
+ 498              		.loc 1 85 9 discriminator 1 view .LVU167
+ 499              		.loc 1 85 11 is_stmt 0 discriminator 1 view .LVU168
+ 500 011e D4F8D000 		ldr	r0, [r4, #208]
+ 501 0122 FFF7FEFF 		bl	serialAvailable
+ 502              	.LVL50:
+ 503              		.loc 1 85 9 discriminator 1 view .LVU169
+ 504 0126 0028     		cmp	r0, #0
+ 505 0128 F9D0     		beq	.L25
+  86:Core/drogui/src/opticalFlow.c **** 			checksum = serialRead(op->ser);
+ 506              		.loc 1 86 4 is_stmt 1 view .LVU170
+ 507              		.loc 1 86 15 is_stmt 0 view .LVU171
+ 508 012a D4F8D000 		ldr	r0, [r4, #208]
+ 509 012e FFF7FEFF 		bl	serialRead
+ 510              	.LVL51:
+ 511 0132 8146     		mov	r9, r0
+ 512              	.LVL52:
+  87:Core/drogui/src/opticalFlow.c **** 
+  88:Core/drogui/src/opticalFlow.c **** 			calcChksum(op);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 12
+
+
+ 513              		.loc 1 88 4 is_stmt 1 view .LVU172
+ 514 0134 2046     		mov	r0, r4
+ 515 0136 FFF7FEFF 		bl	calcChksum
+ 516              	.LVL53:
+  89:Core/drogui/src/opticalFlow.c **** 			flag = 1;
+ 517              		.loc 1 89 4 view .LVU173
+  90:Core/drogui/src/opticalFlow.c **** 		}
+  91:Core/drogui/src/opticalFlow.c **** 
+  92:Core/drogui/src/opticalFlow.c **** 		if(flag == 1) break;
+ 518              		.loc 1 92 3 view .LVU174
+  89:Core/drogui/src/opticalFlow.c **** 			flag = 1;
+ 519              		.loc 1 89 9 is_stmt 0 view .LVU175
+ 520 013a 0123     		movs	r3, #1
+ 521 013c 00E0     		b	.L26
+ 522              	.LVL54:
+ 523              	.L32:
+  89:Core/drogui/src/opticalFlow.c **** 			flag = 1;
+ 524              		.loc 1 89 9 view .LVU176
+ 525 013e 0023     		movs	r3, #0
+ 526              	.LVL55:
+ 527              	.L26:
+  93:Core/drogui/src/opticalFlow.c **** 
+  94:Core/drogui/src/opticalFlow.c **** 	}
+  95:Core/drogui/src/opticalFlow.c **** 
+  96:Core/drogui/src/opticalFlow.c **** 	if(flag == 0) return OPT_TIMEOUT;
+ 528              		.loc 1 96 2 is_stmt 1 view .LVU177
+ 529              		.loc 1 96 4 is_stmt 0 view .LVU178
+ 530 0140 43B1     		cbz	r3, .L29
+  97:Core/drogui/src/opticalFlow.c **** 	if(op->chksum == checksum) return OPT_OK;
+ 531              		.loc 1 97 2 is_stmt 1 view .LVU179
+ 532              		.loc 1 97 7 is_stmt 0 view .LVU180
+ 533 0142 94F8CC30 		ldrb	r3, [r4, #204]	@ zero_extendqisi2
+ 534              	.LVL56:
+ 535              		.loc 1 97 4 view .LVU181
+ 536 0146 4B45     		cmp	r3, r9
+ 537 0148 02D0     		beq	.L33
+  98:Core/drogui/src/opticalFlow.c **** 	else return OPT_WRG_CHKSUM;
+ 538              		.loc 1 98 14 view .LVU182
+ 539 014a 0620     		movs	r0, #6
+ 540              	.L14:
+  99:Core/drogui/src/opticalFlow.c **** }
+ 541              		.loc 1 99 1 view .LVU183
+ 542 014c BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 543              	.LVL57:
+ 544              	.L33:
+  97:Core/drogui/src/opticalFlow.c **** 	if(op->chksum == checksum) return OPT_OK;
+ 545              		.loc 1 97 36 view .LVU184
+ 546 0150 0520     		movs	r0, #5
+ 547 0152 FBE7     		b	.L14
+ 548              	.LVL58:
+ 549              	.L29:
+  96:Core/drogui/src/opticalFlow.c **** 	if(op->chksum == checksum) return OPT_OK;
+ 550              		.loc 1 96 23 view .LVU185
+ 551 0154 0120     		movs	r0, #1
+ 552 0156 F9E7     		b	.L14
+ 553              	.L35:
+ 554              		.align	2
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 13
+
+
+ 555              	.L34:
+ 556 0158 00000000 		.word	htim5
+ 557              		.cfi_endproc
+ 558              	.LFE145:
+ 560              		.section	.text.readFlowRange,"ax",%progbits
+ 561              		.align	1
+ 562              		.global	readFlowRange
+ 563              		.syntax unified
+ 564              		.thumb
+ 565              		.thumb_func
+ 566              		.fpu fpv5-sp-d16
+ 568              	readFlowRange:
+ 569              	.LVL59:
+ 570              	.LFB146:
+ 100:Core/drogui/src/opticalFlow.c **** 
+ 101:Core/drogui/src/opticalFlow.c **** /*
+ 102:Core/drogui/src/opticalFlow.c **** void printPacket(ubxPacket *mp){
+ 103:Core/drogui/src/opticalFlow.c ****     serialPrintf("Class:\t %d \tID:\t %d \tlen:\t %d \n", mp->cls, mp->id, mp->len); 
+ 104:Core/drogui/src/opticalFlow.c **** 
+ 105:Core/drogui/src/opticalFlow.c **** 	for( int i = 0; i < mp->len ; i++) 
+ 106:Core/drogui/src/opticalFlow.c **** 		serialPrintf("%x ", mp->payload[i]);
+ 107:Core/drogui/src/opticalFlow.c **** 	serialPrint("\n");
+ 108:Core/drogui/src/opticalFlow.c **** }*/
+ 109:Core/drogui/src/opticalFlow.c **** 
+ 110:Core/drogui/src/opticalFlow.c **** 
+ 111:Core/drogui/src/opticalFlow.c **** int readFlowRange(optFlow *of){
+ 571              		.loc 1 111 31 is_stmt 1 view -0
+ 572              		.cfi_startproc
+ 573              		@ args = 0, pretend = 0, frame = 0
+ 574              		@ frame_needed = 0, uses_anonymous_args = 0
+ 575              		.loc 1 111 31 is_stmt 0 view .LVU187
+ 576 0000 38B5     		push	{r3, r4, r5, lr}
+ 577              	.LCFI3:
+ 578              		.cfi_def_cfa_offset 16
+ 579              		.cfi_offset 3, -16
+ 580              		.cfi_offset 4, -12
+ 581              		.cfi_offset 5, -8
+ 582              		.cfi_offset 14, -4
+ 583 0002 0446     		mov	r4, r0
+ 112:Core/drogui/src/opticalFlow.c **** 	if(serialAvailable(of->rcv_pack.ser)){ 
+ 584              		.loc 1 112 2 is_stmt 1 view .LVU188
+ 585              		.loc 1 112 5 is_stmt 0 view .LVU189
+ 586 0004 D0F8D000 		ldr	r0, [r0, #208]
+ 587              	.LVL60:
+ 588              		.loc 1 112 5 view .LVU190
+ 589 0008 FFF7FEFF 		bl	serialAvailable
+ 590              	.LVL61:
+ 591              		.loc 1 112 4 view .LVU191
+ 592 000c 10B9     		cbnz	r0, .L48
+ 113:Core/drogui/src/opticalFlow.c **** 		int ret = readOptFlow(&(of->rcv_pack), 1000); 
+ 114:Core/drogui/src/opticalFlow.c **** 		serialFlush(of->rcv_pack.ser);
+ 115:Core/drogui/src/opticalFlow.c **** 		if( ret != OPT_OK) return ret;
+ 116:Core/drogui/src/opticalFlow.c **** 		
+ 117:Core/drogui/src/opticalFlow.c **** 
+ 118:Core/drogui/src/opticalFlow.c **** 		if(of->rcv_pack.type == OPT_FLOW){
+ 119:Core/drogui/src/opticalFlow.c **** 		
+ 120:Core/drogui/src/opticalFlow.c **** 			of -> q_vel = (of->rcv_pack).payload[0];
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 14
+
+
+ 121:Core/drogui/src/opticalFlow.c ****             of->vel_x = 0, of->vel_y = 0;
+ 122:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 123:Core/drogui/src/opticalFlow.c ****                 of->vel_x = (of->vel_x << 8) | (of->rcv_pack).payload[1+i];
+ 124:Core/drogui/src/opticalFlow.c ****               
+ 125:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 126:Core/drogui/src/opticalFlow.c ****                 of->vel_y = (of->vel_y << 8) | (of->rcv_pack).payload[5+i];
+ 127:Core/drogui/src/opticalFlow.c **** 			
+ 128:Core/drogui/src/opticalFlow.c ****             return OPT_VEL;
+ 129:Core/drogui/src/opticalFlow.c **** 		}
+ 130:Core/drogui/src/opticalFlow.c **** 		else if(of->rcv_pack.type == RNG_FNDR){
+ 131:Core/drogui/src/opticalFlow.c ****             of->q_rng = (of->rcv_pack).payload[0];
+ 132:Core/drogui/src/opticalFlow.c ****             of->dis = 0;
+ 133:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 134:Core/drogui/src/opticalFlow.c ****                 of->dis = (of->dis << 8) | (of->rcv_pack).payload[1+i];
+ 135:Core/drogui/src/opticalFlow.c ****             
+ 136:Core/drogui/src/opticalFlow.c ****             return OPT_RNG;
+ 137:Core/drogui/src/opticalFlow.c **** 		}
+ 138:Core/drogui/src/opticalFlow.c ****         else{
+ 139:Core/drogui/src/opticalFlow.c ****             return OPT_WRG_ID;
+ 140:Core/drogui/src/opticalFlow.c ****         }
+ 141:Core/drogui/src/opticalFlow.c **** 	}
+ 142:Core/drogui/src/opticalFlow.c **** 	return OPT_NO_DATA;
+ 593              		.loc 1 142 9 view .LVU192
+ 594 000e 0025     		movs	r5, #0
+ 595              	.L36:
+ 143:Core/drogui/src/opticalFlow.c **** }...
+ 596              		.loc 1 143 1 view .LVU193
+ 597 0010 2846     		mov	r0, r5
+ 598 0012 38BD     		pop	{r3, r4, r5, pc}
+ 599              	.LVL62:
+ 600              	.L48:
+ 601              	.LBB6:
+ 113:Core/drogui/src/opticalFlow.c **** 		int ret = readOptFlow(&(of->rcv_pack), 1000); 
+ 602              		.loc 1 113 3 is_stmt 1 view .LVU194
+ 113:Core/drogui/src/opticalFlow.c **** 		int ret = readOptFlow(&(of->rcv_pack), 1000); 
+ 603              		.loc 1 113 13 is_stmt 0 view .LVU195
+ 604 0014 4FF47A71 		mov	r1, #1000
+ 605 0018 2046     		mov	r0, r4
+ 606 001a FFF7FEFF 		bl	readOptFlow
+ 607              	.LVL63:
+ 608 001e 0546     		mov	r5, r0
+ 609              	.LVL64:
+ 114:Core/drogui/src/opticalFlow.c **** 		serialFlush(of->rcv_pack.ser);
+ 610              		.loc 1 114 3 is_stmt 1 view .LVU196
+ 611 0020 D4F8D000 		ldr	r0, [r4, #208]
+ 612              	.LVL65:
+ 114:Core/drogui/src/opticalFlow.c **** 		serialFlush(of->rcv_pack.ser);
+ 613              		.loc 1 114 3 is_stmt 0 view .LVU197
+ 614 0024 FFF7FEFF 		bl	serialFlush
+ 615              	.LVL66:
+ 115:Core/drogui/src/opticalFlow.c **** 		if( ret != OPT_OK) return ret;
+ 616              		.loc 1 115 3 is_stmt 1 view .LVU198
+ 115:Core/drogui/src/opticalFlow.c **** 		if( ret != OPT_OK) return ret;
+ 617              		.loc 1 115 5 is_stmt 0 view .LVU199
+ 618 0028 052D     		cmp	r5, #5
+ 619 002a F1D1     		bne	.L36
+ 118:Core/drogui/src/opticalFlow.c **** 		if(of->rcv_pack.type == OPT_FLOW){
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 15
+
+
+ 620              		.loc 1 118 3 is_stmt 1 view .LVU200
+ 118:Core/drogui/src/opticalFlow.c **** 		if(of->rcv_pack.type == OPT_FLOW){
+ 621              		.loc 1 118 18 is_stmt 0 view .LVU201
+ 622 002c B4F90030 		ldrsh	r3, [r4]
+ 118:Core/drogui/src/opticalFlow.c **** 		if(of->rcv_pack.type == OPT_FLOW){
+ 623              		.loc 1 118 5 view .LVU202
+ 624 0030 41F60272 		movw	r2, #7938
+ 625 0034 9342     		cmp	r3, r2
+ 626 0036 05D0     		beq	.L49
+ 130:Core/drogui/src/opticalFlow.c **** 		else if(of->rcv_pack.type == RNG_FNDR){
+ 627              		.loc 1 130 8 is_stmt 1 view .LVU203
+ 130:Core/drogui/src/opticalFlow.c **** 		else if(of->rcv_pack.type == RNG_FNDR){
+ 628              		.loc 1 130 10 is_stmt 0 view .LVU204
+ 629 0038 41F60172 		movw	r2, #7937
+ 630 003c 9342     		cmp	r3, r2
+ 631 003e 27D0     		beq	.L50
+ 139:Core/drogui/src/opticalFlow.c ****             return OPT_WRG_ID;
+ 632              		.loc 1 139 20 view .LVU205
+ 633 0040 0225     		movs	r5, #2
+ 634              	.LVL67:
+ 139:Core/drogui/src/opticalFlow.c ****             return OPT_WRG_ID;
+ 635              		.loc 1 139 20 view .LVU206
+ 636 0042 E5E7     		b	.L36
+ 637              	.LVL68:
+ 638              	.L49:
+ 120:Core/drogui/src/opticalFlow.c **** 			of -> q_vel = (of->rcv_pack).payload[0];
+ 639              		.loc 1 120 4 is_stmt 1 view .LVU207
+ 120:Core/drogui/src/opticalFlow.c **** 			of -> q_vel = (of->rcv_pack).payload[0];
+ 640              		.loc 1 120 40 is_stmt 0 view .LVU208
+ 641 0044 2379     		ldrb	r3, [r4, #4]	@ zero_extendqisi2
+ 120:Core/drogui/src/opticalFlow.c **** 			of -> q_vel = (of->rcv_pack).payload[0];
+ 642              		.loc 1 120 16 view .LVU209
+ 643 0046 84F8D430 		strb	r3, [r4, #212]
+ 121:Core/drogui/src/opticalFlow.c ****             of->vel_x = 0, of->vel_y = 0;
+ 644              		.loc 1 121 13 is_stmt 1 view .LVU210
+ 121:Core/drogui/src/opticalFlow.c ****             of->vel_x = 0, of->vel_y = 0;
+ 645              		.loc 1 121 23 is_stmt 0 view .LVU211
+ 646 004a 0023     		movs	r3, #0
+ 647 004c C4F8D830 		str	r3, [r4, #216]
+ 121:Core/drogui/src/opticalFlow.c ****             of->vel_x = 0, of->vel_y = 0;
+ 648              		.loc 1 121 38 view .LVU212
+ 649 0050 C4F8DC30 		str	r3, [r4, #220]
+ 122:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 650              		.loc 1 122 13 is_stmt 1 view .LVU213
+ 651              	.LBB7:
+ 122:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 652              		.loc 1 122 17 view .LVU214
+ 653              	.LVL69:
+ 122:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 654              		.loc 1 122 21 is_stmt 0 view .LVU215
+ 655 0054 0323     		movs	r3, #3
+ 122:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 656              		.loc 1 122 13 view .LVU216
+ 657 0056 09E0     		b	.L39
+ 658              	.LVL70:
+ 659              	.L40:
+ 123:Core/drogui/src/opticalFlow.c ****                 of->vel_x = (of->vel_x << 8) | (of->rcv_pack).payload[1+i];
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 16
+
+
+ 660              		.loc 1 123 17 is_stmt 1 discriminator 3 view .LVU217
+ 123:Core/drogui/src/opticalFlow.c ****                 of->vel_x = (of->vel_x << 8) | (of->rcv_pack).payload[1+i];
+ 661              		.loc 1 123 32 is_stmt 0 discriminator 3 view .LVU218
+ 662 0058 D4F8D800 		ldr	r0, [r4, #216]
+ 123:Core/drogui/src/opticalFlow.c ****                 of->vel_x = (of->vel_x << 8) | (of->rcv_pack).payload[1+i];
+ 663              		.loc 1 123 72 discriminator 3 view .LVU219
+ 664 005c 591C     		adds	r1, r3, #1
+ 123:Core/drogui/src/opticalFlow.c ****                 of->vel_x = (of->vel_x << 8) | (of->rcv_pack).payload[1+i];
+ 665              		.loc 1 123 70 discriminator 3 view .LVU220
+ 666 005e 2144     		add	r1, r1, r4
+ 667 0060 0A79     		ldrb	r2, [r1, #4]	@ zero_extendqisi2
+ 123:Core/drogui/src/opticalFlow.c ****                 of->vel_x = (of->vel_x << 8) | (of->rcv_pack).payload[1+i];
+ 668              		.loc 1 123 46 discriminator 3 view .LVU221
+ 669 0062 42EA0022 		orr	r2, r2, r0, lsl #8
+ 123:Core/drogui/src/opticalFlow.c ****                 of->vel_x = (of->vel_x << 8) | (of->rcv_pack).payload[1+i];
+ 670              		.loc 1 123 27 discriminator 3 view .LVU222
+ 671 0066 C4F8D820 		str	r2, [r4, #216]
+ 122:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 672              		.loc 1 122 38 is_stmt 1 discriminator 3 view .LVU223
+ 122:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 673              		.loc 1 122 39 is_stmt 0 discriminator 3 view .LVU224
+ 674 006a 013B     		subs	r3, r3, #1
+ 675              	.LVL71:
+ 676              	.L39:
+ 122:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 677              		.loc 1 122 29 is_stmt 1 discriminator 1 view .LVU225
+ 122:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 678              		.loc 1 122 13 is_stmt 0 discriminator 1 view .LVU226
+ 679 006c 002B     		cmp	r3, #0
+ 680 006e F3DA     		bge	.L40
+ 681              	.LBE7:
+ 682              	.LBB8:
+ 125:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 683              		.loc 1 125 21 view .LVU227
+ 684 0070 0323     		movs	r3, #3
+ 685              	.LVL72:
+ 125:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 686              		.loc 1 125 21 view .LVU228
+ 687 0072 09E0     		b	.L41
+ 688              	.LVL73:
+ 689              	.L42:
+ 126:Core/drogui/src/opticalFlow.c ****                 of->vel_y = (of->vel_y << 8) | (of->rcv_pack).payload[5+i];
+ 690              		.loc 1 126 17 is_stmt 1 discriminator 3 view .LVU229
+ 126:Core/drogui/src/opticalFlow.c ****                 of->vel_y = (of->vel_y << 8) | (of->rcv_pack).payload[5+i];
+ 691              		.loc 1 126 32 is_stmt 0 discriminator 3 view .LVU230
+ 692 0074 D4F8DC00 		ldr	r0, [r4, #220]
+ 126:Core/drogui/src/opticalFlow.c ****                 of->vel_y = (of->vel_y << 8) | (of->rcv_pack).payload[5+i];
+ 693              		.loc 1 126 72 discriminator 3 view .LVU231
+ 694 0078 591D     		adds	r1, r3, #5
+ 126:Core/drogui/src/opticalFlow.c ****                 of->vel_y = (of->vel_y << 8) | (of->rcv_pack).payload[5+i];
+ 695              		.loc 1 126 70 discriminator 3 view .LVU232
+ 696 007a 2144     		add	r1, r1, r4
+ 697 007c 0A79     		ldrb	r2, [r1, #4]	@ zero_extendqisi2
+ 126:Core/drogui/src/opticalFlow.c ****                 of->vel_y = (of->vel_y << 8) | (of->rcv_pack).payload[5+i];
+ 698              		.loc 1 126 46 discriminator 3 view .LVU233
+ 699 007e 42EA0022 		orr	r2, r2, r0, lsl #8
+ 126:Core/drogui/src/opticalFlow.c ****                 of->vel_y = (of->vel_y << 8) | (of->rcv_pack).payload[5+i];
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 17
+
+
+ 700              		.loc 1 126 27 discriminator 3 view .LVU234
+ 701 0082 C4F8DC20 		str	r2, [r4, #220]
+ 125:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 702              		.loc 1 125 38 is_stmt 1 discriminator 3 view .LVU235
+ 125:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 703              		.loc 1 125 39 is_stmt 0 discriminator 3 view .LVU236
+ 704 0086 013B     		subs	r3, r3, #1
+ 705              	.LVL74:
+ 706              	.L41:
+ 125:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 707              		.loc 1 125 29 is_stmt 1 discriminator 1 view .LVU237
+ 125:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 708              		.loc 1 125 13 is_stmt 0 discriminator 1 view .LVU238
+ 709 0088 002B     		cmp	r3, #0
+ 710 008a F3DA     		bge	.L42
+ 711              	.LBE8:
+ 128:Core/drogui/src/opticalFlow.c ****             return OPT_VEL;
+ 712              		.loc 1 128 20 view .LVU239
+ 713 008c 0325     		movs	r5, #3
+ 714              	.LVL75:
+ 128:Core/drogui/src/opticalFlow.c ****             return OPT_VEL;
+ 715              		.loc 1 128 20 view .LVU240
+ 716 008e BFE7     		b	.L36
+ 717              	.LVL76:
+ 718              	.L50:
+ 131:Core/drogui/src/opticalFlow.c ****             of->q_rng = (of->rcv_pack).payload[0];
+ 719              		.loc 1 131 13 is_stmt 1 view .LVU241
+ 131:Core/drogui/src/opticalFlow.c ****             of->q_rng = (of->rcv_pack).payload[0];
+ 720              		.loc 1 131 47 is_stmt 0 view .LVU242
+ 721 0090 2379     		ldrb	r3, [r4, #4]	@ zero_extendqisi2
+ 131:Core/drogui/src/opticalFlow.c ****             of->q_rng = (of->rcv_pack).payload[0];
+ 722              		.loc 1 131 23 view .LVU243
+ 723 0092 84F8D530 		strb	r3, [r4, #213]
+ 132:Core/drogui/src/opticalFlow.c ****             of->dis = 0;
+ 724              		.loc 1 132 13 is_stmt 1 view .LVU244
+ 132:Core/drogui/src/opticalFlow.c ****             of->dis = 0;
+ 725              		.loc 1 132 21 is_stmt 0 view .LVU245
+ 726 0096 0023     		movs	r3, #0
+ 727 0098 C4F8E830 		str	r3, [r4, #232]
+ 133:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 728              		.loc 1 133 13 is_stmt 1 view .LVU246
+ 729              	.LBB9:
+ 133:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 730              		.loc 1 133 17 view .LVU247
+ 731              	.LVL77:
+ 133:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 732              		.loc 1 133 21 is_stmt 0 view .LVU248
+ 733 009c 0323     		movs	r3, #3
+ 133:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 734              		.loc 1 133 13 view .LVU249
+ 735 009e 09E0     		b	.L43
+ 736              	.LVL78:
+ 737              	.L44:
+ 134:Core/drogui/src/opticalFlow.c ****                 of->dis = (of->dis << 8) | (of->rcv_pack).payload[1+i];
+ 738              		.loc 1 134 17 is_stmt 1 discriminator 3 view .LVU250
+ 134:Core/drogui/src/opticalFlow.c ****                 of->dis = (of->dis << 8) | (of->rcv_pack).payload[1+i];
+ 739              		.loc 1 134 30 is_stmt 0 discriminator 3 view .LVU251
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 18
+
+
+ 740 00a0 D4F8E800 		ldr	r0, [r4, #232]
+ 134:Core/drogui/src/opticalFlow.c ****                 of->dis = (of->dis << 8) | (of->rcv_pack).payload[1+i];
+ 741              		.loc 1 134 68 discriminator 3 view .LVU252
+ 742 00a4 591C     		adds	r1, r3, #1
+ 134:Core/drogui/src/opticalFlow.c ****                 of->dis = (of->dis << 8) | (of->rcv_pack).payload[1+i];
+ 743              		.loc 1 134 66 discriminator 3 view .LVU253
+ 744 00a6 2144     		add	r1, r1, r4
+ 745 00a8 0A79     		ldrb	r2, [r1, #4]	@ zero_extendqisi2
+ 134:Core/drogui/src/opticalFlow.c ****                 of->dis = (of->dis << 8) | (of->rcv_pack).payload[1+i];
+ 746              		.loc 1 134 42 discriminator 3 view .LVU254
+ 747 00aa 42EA0022 		orr	r2, r2, r0, lsl #8
+ 134:Core/drogui/src/opticalFlow.c ****                 of->dis = (of->dis << 8) | (of->rcv_pack).payload[1+i];
+ 748              		.loc 1 134 25 discriminator 3 view .LVU255
+ 749 00ae C4F8E820 		str	r2, [r4, #232]
+ 133:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 750              		.loc 1 133 38 is_stmt 1 discriminator 3 view .LVU256
+ 133:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 751              		.loc 1 133 39 is_stmt 0 discriminator 3 view .LVU257
+ 752 00b2 013B     		subs	r3, r3, #1
+ 753              	.LVL79:
+ 754              	.L43:
+ 133:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 755              		.loc 1 133 29 is_stmt 1 discriminator 1 view .LVU258
+ 133:Core/drogui/src/opticalFlow.c ****             for(int i = 3 ; i >= 0 ; i--)
+ 756              		.loc 1 133 13 is_stmt 0 discriminator 1 view .LVU259
+ 757 00b4 002B     		cmp	r3, #0
+ 758 00b6 F3DA     		bge	.L44
+ 759              	.LBE9:
+ 136:Core/drogui/src/opticalFlow.c ****             return OPT_RNG;
+ 760              		.loc 1 136 20 view .LVU260
+ 761 00b8 0425     		movs	r5, #4
+ 762              	.LVL80:
+ 763              	.LBB10:
+ 136:Core/drogui/src/opticalFlow.c ****             return OPT_RNG;
+ 764              		.loc 1 136 20 view .LVU261
+ 765 00ba A9E7     		b	.L36
+ 766              	.LBE10:
+ 767              	.LBE6:
+ 768              		.cfi_endproc
+ 769              	.LFE146:
+ 771              		.text
+ 772              	.Letext0:
+ 773              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 774              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 775              		.file 4 "Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f746xx.h"
+ 776              		.file 5 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h"
+ 777              		.file 6 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_dma.h"
+ 778              		.file 7 "Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim.h"
+ 779              		.file 8 "Core/drogui/include/serial.h"
+ 780              		.file 9 "Core/drogui/include/opticalFlow.h"
+ 781              		.file 10 "Core/Inc/tim.h"
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s 			page 19
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 opticalFlow.c
+C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s:18     .text.crc8_dvb_s2:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s:26     .text.crc8_dvb_s2:00000000 crc8_dvb_s2
+C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s:89     .text.crc8_func:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s:96     .text.crc8_func:00000000 crc8_func
+C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s:152    .text.calcChksum:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s:159    .text.calcChksum:00000000 calcChksum
+C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s:191    .text.initOptFlow:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s:198    .text.initOptFlow:00000000 initOptFlow
+C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s:231    .text.readOptFlow:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s:238    .text.readOptFlow:00000000 readOptFlow
+C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s:556    .text.readOptFlow:00000158 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s:561    .text.readFlowRange:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccOgHOHk.s:568    .text.readFlowRange:00000000 readFlowRange
+
+UNDEFINED SYMBOLS
+serialAvailable
+serialRead
+htim5
+serialFlush
