@@ -94,9 +94,9 @@ int readOptFlow(optPacket *op, uint32_t timeout){
 
 	}
 
-	if(flag == 0) return OPT_TIMEOUT;
-	if(op->chksum == checksum) return OPT_OK;
-	else return OPT_WRG_CHKSUM;
+	if(flag == 0) return TIMEOUT;
+	if(op->chksum == checksum) return OK;
+	else return WRG_CHKSUM;
 }
 
 /*
@@ -113,7 +113,7 @@ int readFlowRange(optFlow *of){
 	if(serialAvailable(of->rcv_pack.ser)){ 
 		int ret = readOptFlow(&(of->rcv_pack), 1000); 
 		serialFlush(of->rcv_pack.ser);
-		if( ret != OPT_OK) return ret;
+		if( ret != OK) return ret;
 		
 
 		if(of->rcv_pack.type == OPT_FLOW){
@@ -137,8 +137,8 @@ int readFlowRange(optFlow *of){
             return OPT_RNG;
 		}
         else{
-            return OPT_WRG_ID;
+            return WRG_ID;
         }
 	}
-	return OPT_NO_DATA;
+	return NO_DATA;
 }

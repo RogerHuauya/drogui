@@ -106,7 +106,7 @@ void gpsTask(){
     int ret = readLatLon(&myGPS); 
     setReg(GPS_STATE, ret);
     
-    if(ret == GPS_OK){
+    if(ret == OK){
         if(getReg(START_GPS) <= 0)
             myGPS.off_x = myGPS.latitude, myGPS.off_y = myGPS.longitud;
         
