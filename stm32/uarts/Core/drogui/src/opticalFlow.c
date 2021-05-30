@@ -30,6 +30,7 @@ void calcChksum(optPacket *msg){
 
 
 void initOptFlow(optFlow *of, serial* ser){
+	changeBaudrate(ser, 115200);
     of->off_x = 0;
     of->off_y = 0;
     of->vel_x = 0;

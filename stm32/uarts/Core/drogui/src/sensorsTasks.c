@@ -9,11 +9,7 @@
 #include "ICM20948.h"
 #include "MPU9250.h"
 
-#ifdef ICM20948
-    icm20948 myIMU;
-#elif defined(MPU9250)
-    mpu9250 myIMU;
-#endif
+imu myIMU;
 
 
 mahony myRPY;
@@ -184,11 +180,11 @@ void xyzTask(){
     
     
     if(getReg(START_GPS) > 0){
-            kalmanUpdateIMU(ax, ay, az, raw_roll, raw_pitch, raw_yaw);
+        kalmanUpdateIMU(ax, ay, az, raw_roll, raw_pitch, raw_yaw);
 
-            if(getReg(GPS_AVAILABLE) > 0)
-                setReg(GPS_AVAILABLE, 0),
-                kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), 0);
+        if(getReg(GPS_AVAILABLE) > 0)
+            setReg(GPS_AVAILABLE, 0),
+            kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), 0);
     }
     else{
         clearKalman();

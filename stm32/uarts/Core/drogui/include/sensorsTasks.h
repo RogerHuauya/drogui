@@ -17,11 +17,9 @@ extern float    roll,       pitch,      yaw,
                 x,          y,          z,
                 xp,         yp,         z_of; 
 
-#ifdef ICM20948
-    extern icm20948 myIMU;
-#elif defined(MPU9250)
-    extern mpu9250 myIMU;
-#endif
+
+extern imu myIMU;
+
 
 extern bmp388 myBMP; 
 extern float altitude;

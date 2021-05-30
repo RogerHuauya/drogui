@@ -100,6 +100,8 @@ typedef struct _icm20948{
 
 } icm20948;
 
+typedef icm20948 imu;
+
 //TODO: fix comments
 
 

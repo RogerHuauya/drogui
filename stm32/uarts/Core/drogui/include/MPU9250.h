@@ -74,6 +74,9 @@ typedef struct _mpu9250{
 
 } mpu9250;
 
+
+typedef icm20948 imu;
+
 //TODO: fix comments
 
 
