@@ -4,8 +4,8 @@
 #include "_main.h"
 #include "serial.h"
 #include <stdbool.h>
+#include "utils.h"
 
-enum GPS_STATUS {NO_DATA, TIMEOUT, WRG_CLS_ID, GPS_OK, WRG_CHKSUM};
 extern uint8_t defaultCfgPort[];
 extern uint8_t defaultCfgRate[];
 extern uint8_t defaultCfgMsg[];
@@ -306,7 +306,7 @@ int readLatLon(m8q* mg);
 
 int initM8Q(m8q *mg, serial* ser);
 
-int readM8Q(ubxPacket *mp, uint32_t timeout);
+enum SENSOR_STATUS readM8Q(ubxPacket *mp, uint32_t timeout);
 void printPacket(ubxPacket *mp);
 
 

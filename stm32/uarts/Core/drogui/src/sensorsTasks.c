@@ -9,6 +9,7 @@
 #include "ICM20948.h"
 #include "MPU9250.h"
 
+
 #ifdef ICM20948
     icm20948 myIMU;
 #elif defined(MPU9250)
@@ -110,7 +111,7 @@ void gpsTask(){
     int ret = readLatLon(&myGPS); 
     setReg(GPS_STATE, ret);
     
-    if(ret == GPS_OK){
+    if(ret == OK){
         if(getReg(START_GPS) <= 0)
             myGPS.off_x = myGPS.latitude, myGPS.off_y = myGPS.longitud;
         

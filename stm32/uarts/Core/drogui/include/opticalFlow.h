@@ -4,9 +4,9 @@
 
 #include "_main.h"
 #include "serial.h"
+#include "utils.h"
 
-enum OPTFLOW_STATUS {OPT_NO_DATA, OPT_TIMEOUT, OPT_WRG_ID, OPT_VEL, OPT_RNG, OPT_OK, OPT_WRG_CHKSUM};
-
+enum OPT_VAR {OPT_VEL, OPT_RNG};
 
 #define RNG_FNDR 0x1F01
 #define OPT_FLOW 0x1F02
