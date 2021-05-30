@@ -97,6 +97,19 @@ void readIcmRawAcc(icm20948* m){ // m/s^2
     m -> raw_ay = _ay;
     m -> raw_az = _az; 
 }
+
+void readIcmRawGyro(icm20948* m){ // m/s^2
+    uint8_t Buf[6];
+    I2Cread(ICM20948_ADDRESS, ICM_GYRO_XOUT_H, 6, Buf);
+    int16_t _gx =   (Buf[0]<<8) | Buf[1];
+    int16_t _gy =   (Buf[2]<<8) | Buf[3];
+    int16_t _gz =   (Buf[4]<<8) | Buf[5];
+    
+    m -> raw_gx = _gx;
+    m -> raw_gy = _gy;
+    m -> raw_gz = _gz; 
+}
+//
 void initIcm(icm20948* m){
     I2CwriteByte(ICM20948_ADDRESS, CHANGE_BANK, 0);
     I2CwriteByte(ICM20948_ADDRESS, PWR_MGT, 9);
@@ -143,14 +156,15 @@ void loop() {
   // put your main code here, to run repeatedly:
   readIcmRawMag(&imu);
   readIcmRawAcc(&imu);
+  readIcmRawGyro(&imu);
   uint8_t a;
   I2Cread(ICM_MAG_ADDRESS, 0x31, 1, &a);
   Serial.print(int(a), HEX); Serial.print("\t");
-  Serial.print(imu.raw_mx); Serial.print("\t");
+  Serial.print(imu.raw_gx); Serial.print("\t");
   
-  Serial.print(imu.raw_my); Serial.print("\t");
+  Serial.print(imu.raw_gy); Serial.print("\t");
   
-  Serial.print(imu.raw_mz); Serial.print("\n");
+  Serial.print(imu.raw_gz); Serial.print("\n");
   delay(100);
 }
 
