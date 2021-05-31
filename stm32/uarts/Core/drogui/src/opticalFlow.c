@@ -42,7 +42,7 @@ void initOptFlow(optFlow *of, serial* ser){
 
 
 
-int readOptFlow(optPacket *op, uint32_t timeout){
+SENSOR_STATUS readOptFlow(optPacket *op, uint32_t timeout){
 	uint8_t sync1 = 0, sync2 = 0;
     uint8_t cntLSB, cntMSB;
     uint8_t idMSB, idLSB;
@@ -109,7 +109,7 @@ void printPacket(ubxPacket *mp){
 }*/
 
 
-int readFlowRange(optFlow *of){
+SENSOR_STATUS readFlowRange(optFlow *of, OPT_VAR *var){
 	if(serialAvailable(of->rcv_pack.ser)){ 
 		int ret = readOptFlow(&(of->rcv_pack), 1000); 
 		serialFlush(of->rcv_pack.ser);
@@ -126,7 +126,8 @@ int readFlowRange(optFlow *of){
             for(int i = 3 ; i >= 0 ; i--)
                 of->vel_y = (of->vel_y << 8) | (of->rcv_pack).payload[5+i];
 			
-            return OPT_VEL;
+			*var = OPT_VEL;
+            return OK;
 		}
 		else if(of->rcv_pack.type == RNG_FNDR){
             of->q_rng = (of->rcv_pack).payload[0];
@@ -134,7 +135,8 @@ int readFlowRange(optFlow *of){
             for(int i = 3 ; i >= 0 ; i--)
                 of->dis = (of->dis << 8) | (of->rcv_pack).payload[1+i];
             
-            return OPT_RNG;
+			*var = OPT_RNG;
+            return OK;
 		}
         else{
             return WRG_ID;

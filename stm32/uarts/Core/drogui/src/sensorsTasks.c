@@ -103,7 +103,7 @@ void altitudeTask(){
 
 void gpsTask(){
 
-    int ret = readLatLon(&myGPS); 
+    SENSOR_STATUS ret = readLatLon(&myGPS); 
     setReg(GPS_STATE, ret);
     
     if(ret == OK){
@@ -123,11 +123,12 @@ void gpsTask(){
 
 
 void optTask(){
-
-    int ret = readFlowRange(&myOF);
+    
+    OPT_VAR var;
+    SENSOR_STATUS ret = readFlowRange(&myOF, &var);
     setReg(OPT_STATE, ret);
            
-    if(ret == OPT_VEL || ret == OPT_RNG){
+    if(ret == OK){
         if( z >= 0.05)
             xp  = -myOF.vel_x*0.001, yp = myOF.vel_y*0.001;
         else 

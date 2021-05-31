@@ -1,4 +1,4 @@
-#define M8Q_TEST
+//#define M8Q_TEST
 #ifdef M8Q_TEST
 #include "_main.h"
 #include "tim.h"
@@ -23,8 +23,8 @@ void _main(){
     initM8Q(&myGPSt, &serial2);
 
     while(1){
-        int ret = readLatLon(&myGPSt);
-        if(ret == GPS_OK)
+        SENSOR_STATUS ret = readLatLon(&myGPSt);
+        if(ret == OK)
             serialPrintf(&serial3, "lat: %d, lon: %d\n", myGPSt.latitude, myGPSt.longitud);
         else if(ret != NO_DATA)
             serialPrintf(&serial3, "Error: %d\n", ret);

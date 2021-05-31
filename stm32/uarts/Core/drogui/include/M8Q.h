@@ -302,11 +302,10 @@ void cfgM8QPort(ubxPacket *mp, uint8_t *cfgPortArray);
 void cfgM8QMsg(ubxPacket *mp, uint8_t *cfgMsgArray);
 void cfgM8QRate(ubxPacket *mp, uint8_t *cfgRateArray);
 
-int readLatLon(m8q* mg);
+SENSOR_STATUS readLatLon(m8q* mg);
+SENSOR_STATUS initM8Q(m8q *mg, serial* ser);
 
-int initM8Q(m8q *mg, serial* ser);
-
-enum SENSOR_STATUS readM8Q(ubxPacket *mp, uint32_t timeout);
+SENSOR_STATUS readM8Q(ubxPacket *mp, uint32_t timeout);
 void printPacket(ubxPacket *mp);
 
 

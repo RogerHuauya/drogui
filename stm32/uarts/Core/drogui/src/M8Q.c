@@ -58,7 +58,7 @@ void sendSerialCommand(ubxPacket *outgoingUBX)
 }
 
 
-int initM8Q(m8q *mg, serial* ser){
+SENSOR_STATUS initM8Q(m8q *mg, serial* ser){
 	int ret;
 	
 	mg->rcv_pack.ser = ser; 
@@ -133,7 +133,7 @@ void cfgM8QRate(ubxPacket *mp, uint8_t *cfgRateArray){
 
 
 
-enum SENSOR_STATUS readM8Q(ubxPacket *mp, uint32_t timeout){
+SENSOR_STATUS readM8Q(ubxPacket *mp, uint32_t timeout){
 	uint8_t sync1 = 0, sync2 = 0, cntLSB, cntMSB;
 	uint8_t checksumA, checksumB, flag = 0;
 	uint32_t tim = TIME;
@@ -190,7 +190,7 @@ void printPacket(ubxPacket *mp){
 }
 
 
-int readLatLon(m8q *mg){
+SENSOR_STATUS readLatLon(m8q *mg){
 	if(serialAvailable(mg->rcv_pack.ser)){ 
 		int ret = readM8Q(&(mg->rcv_pack), 1000); 
 		//serialFlush();
