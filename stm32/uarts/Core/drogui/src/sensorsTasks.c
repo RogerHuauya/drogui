@@ -8,14 +8,15 @@
 #include "opticalFlow.h"
 #include "ICM20948.h"
 #include "MPU9250.h"
+#include "teraRanger.h"
 
 imu myIMU;
-
 
 mahony myRPY;
 
 m8q myGPS;
 optFlow myOF;
+tRanger myTera;
 
 filter filter_roll, filter_pitch, filter_yaw;
 
@@ -25,7 +26,7 @@ float   roll,       pitch,      yaw,
         gx,         gy,         gz, 
         mx,         my,         mz, 
         x,          y,          z, 
-        xp,         yp,         z_of; 
+        xp,         yp,         z_of,       z_tera; 
 
 bool mag_available = false;
 
@@ -139,6 +140,16 @@ void optTask(){
 
 }
 
+void teraTask(){
+    
+    SENSOR_STATUS ret = readTeraRange(&myTera);
+
+    if(ret == OK) 
+        z_tera = myTera.distance/1000.0;
+    else if(ret != NO_DATA ) 
+        z_tera = 0;
+    
+}
 
 void rpyTask(){
     
@@ -193,6 +204,8 @@ void xyzTask(){
     getPosition(&x, &y, &z);
     
     z = z_of;
+    if(z_tera >= 0.5)
+        z = z_tera;
     /*if( cfilt_z <= 50 && fabs(z-z_ant) > 0.2) cfilt_z++, z = z_ant;
     else z_ant = z,  cfilt_z = 0;*/
     
@@ -205,7 +218,7 @@ void xyzTask(){
 void initSensorsTasks(){
     
     initImu(&myIMU);
-    initMahony(&myRPY, 2, 0.1, 500);
+    initMahony(&myRPY, 2, 0.1, 50);
 
 
     initFilter(&filter_roll, 6, k_1_10, v_1_10);
@@ -222,9 +235,10 @@ void initSensorsTasks(){
 
     initMatGlobal();
 
-    initM8Q(&myGPS, &serial2);
+    //initM8Q(&myGPS, &serial2);
     initOptFlow(&myOF, &serial4);
-    
+    initTeraRanger(&myTera, &serial2);
+
     
     calib_status = 0;
 
@@ -235,14 +249,15 @@ void initSensorsTasks(){
     initFilter(&filter_z, 4, k_1_20, v_1_20);
 
     addTask(&gyroTask, 1000, 3);
-    addTask(&accelTask, 1000, 3);
-    addTask(&magTask, 100000, 2);
+    //addTask(&accelTask, 1000, 3);
+    //addTask(&magTask, 100000, 2);
     addTask(&rpyTask, 2000, 2);
     //addTask(&altitudeTask,10000,2);s
     
     addTask(&xyzTask, 10000, 3);
-    addTask(&gpsTask, 125000, 3);
-    addTask(&optTask, 1000, 1);
+    //addTask(&gpsTask, 125000, 3);
+    addTask(&optTask, 10000, 1);
+    addTask(&teraTask, 10000, 1);
     
 
 }
