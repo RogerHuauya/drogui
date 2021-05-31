@@ -14,7 +14,7 @@ void blinkTask(void *argument){
 void debugTask(void *argument){
     
     
-    serialPrintf(&serial3, "%f\t%f\t%d\n", z, z_ref, state);
+    serialPrintf(&serial3, "%f\n", z*1000);
 
 }
 

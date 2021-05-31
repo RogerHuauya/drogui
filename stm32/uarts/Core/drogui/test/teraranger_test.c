@@ -1,8 +1,8 @@
-#define TERARANGER
+//#define TERARANGER
 #ifdef TERARANGER
 #include "_main.h"
 #include "serial.h"
-#include "teraranger.h"
+#include "teraRanger.h"
 
 tRanger myTera;
 

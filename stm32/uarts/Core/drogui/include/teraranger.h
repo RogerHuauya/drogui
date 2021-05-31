@@ -18,7 +18,6 @@ typedef struct _tRanger{
 } tRanger;
 
 void initTeraRanger(tRanger *tera, serial *ser);
-void calcChksum(tRPacket *tpacket);
 SENSOR_STATUS readTRanger(tRPacket *tpacket, uint32_t timeout);
 SENSOR_STATUS readTeraRange(tRanger *tera);
 
