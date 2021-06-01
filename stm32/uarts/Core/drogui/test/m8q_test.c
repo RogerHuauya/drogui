@@ -1,4 +1,4 @@
-//#define M8Q_TEST
+#define M8Q_TEST
 #ifdef M8Q_TEST
 #include "_main.h"
 #include "tim.h"
@@ -20,7 +20,11 @@ int pos_x, pos_y;
 
 void _main(){
     HAL_Delay(1000);
-    initM8Q(&myGPSt, &serial2);
+	serialsBegin();
+	serialPrint(&serial3, "Init\n");
+    SENSOR_STATUS ret_init = initM8Q(&myGPSt, &serial4);
+    
+	serialPrintf(&serial3, "Ret init %d\n", ret_init);
 
     while(1){
         SENSOR_STATUS ret = readLatLon(&myGPSt);

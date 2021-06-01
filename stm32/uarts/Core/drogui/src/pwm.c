@@ -1,8 +1,5 @@
 #include "pwm.h"
 
-
-
-
 void setPwm(pwm* p, float percent){
     *(p->duty) = 12500.0 + 12500.0*(percent)/100.0; 
 }

@@ -59,7 +59,7 @@ void sendSerialCommand(ubxPacket *outgoingUBX)
 
 
 SENSOR_STATUS initM8Q(m8q *mg, serial* ser){
-	int ret;
+	SENSOR_STATUS ret;
 	
 	mg->rcv_pack.ser = ser; 
 	mg->snd_pack.ser = ser;
