@@ -2,6 +2,8 @@
 #include "serial.h"
 #include "task.h"
 
+char bin_mode[] = {0x00, 0x11, 0x02, 0x4C};
+
 static const uint8_t crc_table[] = {
   0x00, 0x07, 0x0e, 0x09, 0x1c, 0x1b, 0x12, 0x15, 0x38, 0x3f, 0x36, 0x31,
   0x24, 0x23, 0x2a, 0x2d, 0x70, 0x77, 0x7e, 0x79, 0x6c, 0x6b, 0x62, 0x65,
@@ -28,7 +30,11 @@ static const uint8_t crc_table[] = {
 };
 
 void initTeraRanger(tRanger *tera, serial *ser){
-    tera->distance = 0;
+    changeBaudrate(ser, 115200);
+
+	for(int i = 0; i < 4; i++) serialWrite(ser, bin_mode[i]);
+    
+	tera->distance = 0;
     tera->rcv_pack.ser = ser;
     tera->rcv_pack.chksum = 0;
 }

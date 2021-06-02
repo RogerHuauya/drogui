@@ -26,7 +26,9 @@ float   roll,       pitch,      yaw,
         gx,         gy,         gz, 
         mx,         my,         mz, 
         x,          y,          z, 
-        xp,         yp,         z_of,       z_tera; 
+		x_gps,		y_gps,
+        xp,         yp,
+		z_of,       z_tera; 
 
 bool mag_available = false;
 
@@ -44,7 +46,7 @@ int cfilt_z = 0;
 void accelTask(){   
     
     readAcc(&myIMU);
-    ax = myIMU.ax, ay = myIMU.ay, az = myIMU.az; 
+    ax = -myIMU.ay, ay = myIMU.ax, az = myIMU.az; 
 
     if( calib_status & 1 ){
         cleanFiltAcc(&myIMU.fAccX); 
@@ -61,7 +63,7 @@ void accelTask(){
 void gyroTask(){
     
     readGyro(&myIMU);
-    gx = myIMU.gx, gy = myIMU.gy, gz = myIMU.gz; 
+    gx = -myIMU.gy, gy = myIMU.gx, gz = myIMU.gz; 
 
     
 
@@ -81,8 +83,8 @@ void gyroTask(){
 
 void magTask(){
     readMag(&myIMU);
-    mx = myIMU.mx;
-    my = myIMU.my;
+    mx = -myIMU.my;
+    my = myIMU.mx;
     mz = myIMU.mz;
     setReg(MAG_X, mx);
     setReg(MAG_Y, my);
@@ -113,7 +115,8 @@ void gpsTask(){
         
         int x_lat = myGPS.latitude - myGPS.off_x;
         int y_lon = myGPS.longitud - myGPS.off_y;
-        
+        x_gps = myGPS.latitude;
+		y_gps = myGPS.longitud;
 
         setReg(GPS_AVAILABLE, 1);
         setReg(GPS_X, 0.01*x_lat),
@@ -149,7 +152,7 @@ void teraTask(){
         z_tera = myTera.distance/1000.0;
     else if(ret != NO_DATA ) 
         z_tera = 0;
-    
+
 }
 
 void rpyTask(){
@@ -205,7 +208,7 @@ void xyzTask(){
     getPosition(&x, &y, &z);
     
     z = z_of;
-    if(z_tera >= 0.5)
+    if(z_tera >= 0.5 && z_tera <= 50)
         z = z_tera;
     /*if( cfilt_z <= 50 && fabs(z-z_ant) > 0.2) cfilt_z++, z = z_ant;
     else z_ant = z,  cfilt_z = 0;*/
@@ -236,7 +239,7 @@ void initSensorsTasks(){
 
     initMatGlobal();
 
-    //initM8Q(&myGPS, &serial2);
+    initM8Q(&myGPS, &serial5);
     initOptFlow(&myOF, &serial4);
     initTeraRanger(&myTera, &serial2);
 
@@ -249,15 +252,15 @@ void initSensorsTasks(){
     initEmaFilter(&ema_bmp, 0.9, 0.1, 0.8);
     initFilter(&filter_z, 4, k_1_20, v_1_20);
 
-    addTask(&gyroTask, 1000, 3);
+    //addTask(&gyroTask, 1000, 3);
     //addTask(&accelTask, 1000, 3);
     //addTask(&magTask, 100000, 2);
-    addTask(&rpyTask, 2000, 2);
+    //addTask(&rpyTask, 2000, 2);
     //addTask(&altitudeTask,10000,2);s
     
-    addTask(&xyzTask, 10000, 3);
+    //addTask(&xyzTask, 10000, 3);
     //addTask(&gpsTask, 125000, 3);
-    addTask(&optTask, 10000, 1);
+    //addTask(&optTask, 10000, 1);
     addTask(&teraTask, 10000, 1);
     
 

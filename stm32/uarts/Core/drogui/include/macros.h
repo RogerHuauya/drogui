@@ -1,6 +1,6 @@
 #ifndef MACROS_H
 #define MACROS_H
 
-#define ICM20948
+#define MPU9250 
 
 #endif

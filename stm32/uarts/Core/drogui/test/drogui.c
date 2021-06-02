@@ -15,7 +15,7 @@ void _main(){
     HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
     HAL_Delay(1000);
     
-    //serialPrint(&serial3, "Start System\n");
+    serialPrint(&serial3, "Start System\n");
     
     
     initDebug();

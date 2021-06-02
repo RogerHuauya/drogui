@@ -7,14 +7,14 @@
 #include "filter.h"
 
 void blinkTask(void *argument){
-    HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+    HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
 }
 
 
 void debugTask(void *argument){
     
     
-    serialPrintf(&serial3, "%f\n", z*1000);
+    serialPrintf(&serial3, "%f %f %f %f\n", x_gps, y_gps, z_of, z_tera);
 
 }
 
@@ -47,7 +47,7 @@ void securityTask(){
 
 void initDebug(){
     state = SEC_STOP;
-    addTask(&debugTask, 100000, 1);
+    addTask(&debugTask, 10000, 1);
 
     addTask(&blinkTask, 100000, 1);   
     
