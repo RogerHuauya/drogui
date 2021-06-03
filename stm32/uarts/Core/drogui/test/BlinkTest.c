@@ -1,4 +1,4 @@
-#define BLINK_TEST
+//#define BLINK_TEST
 #ifdef BLINK_TEST
 #include "_main.h"
 #include "tim.h"

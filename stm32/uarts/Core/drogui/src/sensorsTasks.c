@@ -9,6 +9,7 @@
 #include "ICM20948.h"
 #include "MPU9250.h"
 #include "teraRanger.h"
+#include "macros.h"
 
 imu myIMU;
 
@@ -222,7 +223,7 @@ void xyzTask(){
 void initSensorsTasks(){
     
     initImu(&myIMU);
-    initMahony(&myRPY, 2, 0.1, 50);
+    initMahony(&myRPY, 2, 0.1, 500);
 
 
     initFilter(&filter_roll, 6, k_1_10, v_1_10);
@@ -239,9 +240,9 @@ void initSensorsTasks(){
 
     initMatGlobal();
 
-    initM8Q(&myGPS, &serial5);
-    initOptFlow(&myOF, &serial4);
-    initTeraRanger(&myTera, &serial2);
+    initM8Q(&myGPS, SER_GPS);
+    initOptFlow(&myOF, SER_OPT);
+    initTeraRanger(&myTera, SER_TER);
 
     
     calib_status = 0;
@@ -252,16 +253,15 @@ void initSensorsTasks(){
     initEmaFilter(&ema_bmp, 0.9, 0.1, 0.8);
     initFilter(&filter_z, 4, k_1_20, v_1_20);
 
-    //addTask(&gyroTask, 1000, 3);
-    //addTask(&accelTask, 1000, 3);
-    //addTask(&magTask, 100000, 2);
-    //addTask(&rpyTask, 2000, 2);
-    //addTask(&altitudeTask,10000,2);s
-    
+    addTask(&gyroTask, 1000, 3);
+    addTask(&accelTask, 1000, 3);
+    addTask(&magTask, 100000, 2);
+    addTask(&rpyTask, 2000, 2);
+    //addTask(&altitudeTask,10000,2);    
     //addTask(&xyzTask, 10000, 3);
     //addTask(&gpsTask, 125000, 3);
     //addTask(&optTask, 10000, 1);
-    addTask(&teraTask, 10000, 1);
+    //addTask(&teraTask, 10000, 1);
     
 
 }
