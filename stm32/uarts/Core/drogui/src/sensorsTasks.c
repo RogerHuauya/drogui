@@ -9,6 +9,7 @@
 #include "ICM20948.h"
 #include "MPU9250.h"
 #include "teraRanger.h"
+#include "macros.h"
 
 imu myIMU;
 
@@ -222,7 +223,7 @@ void xyzTask(){
 void initSensorsTasks(){
     
     initImu(&myIMU);
-    initMahony(&myRPY, 2, 0.1, 50);
+    initMahony(&myRPY, 2, 0.1, 500);
 
 
     initFilter(&filter_roll, 6, k_1_10, v_1_10);
@@ -239,9 +240,9 @@ void initSensorsTasks(){
 
     initMatGlobal();
 
-    initM8Q(&myGPS, &serial5);
-    initOptFlow(&myOF, &serial4);
-    initTeraRanger(&myTera, &serial2);
+    initM8Q(&myGPS, SER_GPS);
+    initOptFlow(&myOF, SER_OPT);
+    initTeraRanger(&myTera, SER_TER);
 
     
     calib_status = 0;
