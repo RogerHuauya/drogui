@@ -14,8 +14,10 @@ void blinkTask(void *argument){
 void debugTask(void *argument){
     
     
-    serialPrintf(&serial3, "%f %f %f %f\n", x_gps, y_gps, z_of, z_tera);
-
+    //serialPrintf(&serial3, "%f %f\n", roll*180/PI, pitch*180/PI);
+    //serialPrintf(&serial3, "%f %f %f\n", gx, gy, gz);
+    //serialPrintf(&serial3, "%f %f %f\n", mx, my, mz);
+	serialPrintf(&serial3, "%f %f %f\n", ax, ay, az);
 }
 
 void securityTask(){

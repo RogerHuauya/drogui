@@ -1,4 +1,4 @@
-//#define DROGUI
+#define DROGUI
 #ifdef DROGUI
 #include "_main.h"
 #include "tim.h"
@@ -19,7 +19,7 @@ void _main(){
     
     
     initDebug();
-    //initControlTasks();
+    initControlTasks();
     initSensorsTasks();
 
     //sprintf(auxbuff, "%d\n", __FPU_USED);
