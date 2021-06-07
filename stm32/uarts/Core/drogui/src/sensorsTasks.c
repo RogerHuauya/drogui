@@ -258,10 +258,10 @@ void initSensorsTasks(){
     addTask(&magTask, 100000, 2);
     addTask(&rpyTask, 2000, 2);
     //addTask(&altitudeTask,10000,2);    
-    //addTask(&xyzTask, 10000, 3);
-    //addTask(&gpsTask, 125000, 3);
-    //addTask(&optTask, 10000, 1);
-    //addTask(&teraTask, 10000, 1);
+    addTask(&xyzTask, 10000, 3);
+    addTask(&gpsTask, 125000, 3);
+    addTask(&optTask, 10000, 1);
+    addTask(&teraTask, 10000, 1);
     
 
 }
