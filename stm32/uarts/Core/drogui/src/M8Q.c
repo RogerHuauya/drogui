@@ -58,8 +58,8 @@ void sendSerialCommand(ubxPacket *outgoingUBX)
 }
 
 
-int initM8Q(m8q *mg, serial* ser){
-	int ret;
+SENSOR_STATUS initM8Q(m8q *mg, serial* ser){
+	SENSOR_STATUS ret;
 	
 	mg->rcv_pack.ser = ser; 
 	mg->snd_pack.ser = ser;
@@ -76,17 +76,17 @@ int initM8Q(m8q *mg, serial* ser){
     cfgM8QRate(&(mg->snd_pack), defaultCfgRate);
 	
     ret = readM8Q(&(mg->rcv_pack), 10000);
-	if(ret != GPS_OK) return ret; 
+	if(ret != OK) return ret; 
 
     cfgM8QMsg(&(mg->snd_pack), defaultCfgMsg);
 
     ret = readM8Q(&(mg->rcv_pack), 10000);
-	if(ret != GPS_OK) return ret;
+	if(ret != OK) return ret;
 
     HAL_Delay(100);
 
 	mg->cnt = 0;
-	return GPS_OK;
+	return OK;
 }
 
 
@@ -133,7 +133,7 @@ void cfgM8QRate(ubxPacket *mp, uint8_t *cfgRateArray){
 
 
 
-int readM8Q(ubxPacket *mp, uint32_t timeout){
+SENSOR_STATUS readM8Q(ubxPacket *mp, uint32_t timeout){
 	uint8_t sync1 = 0, sync2 = 0, cntLSB, cntMSB;
 	uint8_t checksumA, checksumB, flag = 0;
 	uint32_t tim = TIME;
@@ -176,7 +176,7 @@ int readM8Q(ubxPacket *mp, uint32_t timeout){
 	}
 
 	if(flag == 0) return TIMEOUT;
-	if((mp->checksumA == checksumA) && (mp->checksumB == checksumB)) return GPS_OK;
+	if((mp->checksumA == checksumA) && (mp->checksumB == checksumB)) return OK;
 	else return WRG_CHKSUM;
 }
 
@@ -190,11 +190,11 @@ void printPacket(ubxPacket *mp){
 }
 
 
-int readLatLon(m8q *mg){
+SENSOR_STATUS readLatLon(m8q *mg){
 	if(serialAvailable(mg->rcv_pack.ser)){ 
 		int ret = readM8Q(&(mg->rcv_pack), 1000); 
 		//serialFlush();
-		if( ret != GPS_OK) return ret;
+		if( ret != OK) return ret;
 		
 
 		if(mg->rcv_pack.cls == 1 && mg->rcv_pack.id == 2){
@@ -205,10 +205,10 @@ int readLatLon(m8q *mg){
 			for(int i = 0 ; i < 4 ; i++) 
 				mg->longitud = (mg->longitud << 8) | (mg->rcv_pack.payload[11-i]);
 			
-			return GPS_OK;
+			return OK;
 		}
 		else{
-			return WRG_CLS_ID;
+			return WRG_ID;
 		}
 	}
 	return NO_DATA;

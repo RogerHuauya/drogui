@@ -1,6 +1,8 @@
 raspberry/main
 raspberry/logs/*
 stm32/Blink/build/*
+stm32/H7/build/*
+stm32/uarts/build/*
 rpicurses/logs/*
 *.map
 *.bin

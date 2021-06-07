@@ -5,17 +5,20 @@
 #include "controlTasks.h"
 #include "task.h"
 #include "filter.h"
+#include "macros.h"
 
 void blinkTask(void *argument){
-    HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+    HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
 }
 
 
 void debugTask(void *argument){
     
     
-    serialPrintf(&serial3, "%f\t%f\t%d\n", z, z_ref, state);
-
+    serialPrintf(SER_DBG, "%f %f\n", roll*180/PI, pitch*180/PI);
+    //serialPrintf(SER_DBG, "%f %f %f\n", gx, gy, gz);
+    //serialPrintf(SER_DBG, "%f %f %f\n", mx, my, mz);
+	//serialPrintf(SER_DBG, "%f %f %f\n", ax, ay, az);
 }
 
 void securityTask(){
@@ -47,7 +50,7 @@ void securityTask(){
 
 void initDebug(){
     state = SEC_STOP;
-    addTask(&debugTask, 100000, 1);
+    addTask(&debugTask, 10000, 1);
 
     addTask(&blinkTask, 100000, 1);   
     

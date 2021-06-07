@@ -9,19 +9,19 @@
 #include "BMP388.h"
 
 
-extern float    roll,       pitch,      yaw,
-                raw_roll,   raw_pitch,  raw_yaw,
-                ax,         ay,         az, 
-                gx,         gy,         gz, 
-                mx,         my,         mz, 
-                x,          y,          z,
-                xp,         yp,         z_of; 
+extern float	roll,       pitch,      yaw,
+				raw_roll,   raw_pitch,  raw_yaw,
+				ax,         ay,         az, 
+				gx,         gy,         gz, 
+				mx,         my,         mz, 
+				x,          y,          z, 
+				x_gps,		y_gps,
+				xp,         yp,
+				z_of,       z_tera; 
 
-#ifdef ICM20948
-    extern icm20948 myIMU;
-#elif defined(MPU9250)
-    extern mpu9250 myIMU;
-#endif
+
+extern imu myIMU;
+
 
 extern bmp388 myBMP; 
 extern float altitude;

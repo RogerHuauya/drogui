@@ -13,11 +13,12 @@
 #define copysign(x, y) ( ( (((x) > 0) && ((y) < 0)) || (((x) < 0) && ((y) > 0)) ) ? (-1)*(x) : (x) )
 
 
-enum STATES {DESCEND, SEC_STOP, WAITING, ARM_MOTORS, CONTROL_LOOP};
+typedef enum STATES {DESCEND, SEC_STOP, WAITING, ARM_MOTORS, CONTROL_LOOP} STATES;
+typedef enum SENSOR_STATUS {NO_DATA, TIMEOUT, WRG_ID, OK, WRG_CHKSUM} SENSOR_STATUS;
 
 extern uint8_t i2cReg[300][4];
 extern bool security;
-extern int state;
+extern STATES state;
 extern int calib_status;
 
 

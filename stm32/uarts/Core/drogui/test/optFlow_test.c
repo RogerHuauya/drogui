@@ -11,26 +11,20 @@ optFlow of;
 
 char auxbuff[50];
 void _main(){
-    initOptFlow(&of);
+    serialsBegin();
+    initOptFlow(&of,&serial2);
+    
     while(1){
-        /*
-        while(serialAvailable()){
-            serialPrintf("%c\n", serialRead());
-        }
-        
-        else
-            serialPrint("no data\n");*/
-
 
         int ret = readFlowRange(&of);
            
         if(ret == OPT_VEL || ret == OPT_RNG){
-            serialPrintf("%d %d %d\n", of.dis, of.vel_x, of.vel_y);
+            serialPrintf(&serial3, "%d %d %d\n", of.dis, of.vel_x, of.vel_y);
         }
         else if( ret != OPT_NO_DATA){
-            serialPrintf("Error %d %X\n", ret, of.rcv_pack.type);
+            serialPrintf(&serial3, "Error %d %X\n", ret, of.rcv_pack.type);
         }
-
+        //serialPrint(&serial3, "Hola mundo\n");
         HAL_Delay(1);
     }
     

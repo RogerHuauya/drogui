@@ -8,18 +8,16 @@
 #include "opticalFlow.h"
 #include "ICM20948.h"
 #include "MPU9250.h"
+#include "teraRanger.h"
+#include "macros.h"
 
-#ifdef ICM20948
-    icm20948 myIMU;
-#elif defined(MPU9250)
-    mpu9250 myIMU;
-#endif
-
+imu myIMU;
 
 mahony myRPY;
 
 m8q myGPS;
 optFlow myOF;
+tRanger myTera;
 
 filter filter_roll, filter_pitch, filter_yaw;
 
@@ -29,7 +27,9 @@ float   roll,       pitch,      yaw,
         gx,         gy,         gz, 
         mx,         my,         mz, 
         x,          y,          z, 
-        xp,         yp,         z_of; 
+		x_gps,		y_gps,
+        xp,         yp,
+		z_of,       z_tera; 
 
 bool mag_available = false;
 
@@ -47,7 +47,7 @@ int cfilt_z = 0;
 void accelTask(){   
     
     readAcc(&myIMU);
-    ax = myIMU.ax, ay = myIMU.ay, az = myIMU.az; 
+    ax = -myIMU.ay, ay = myIMU.ax, az = myIMU.az; 
 
     if( calib_status & 1 ){
         cleanFiltAcc(&myIMU.fAccX); 
@@ -64,7 +64,7 @@ void accelTask(){
 void gyroTask(){
     
     readGyro(&myIMU);
-    gx = myIMU.gx, gy = myIMU.gy, gz = myIMU.gz; 
+    gx = -myIMU.gy, gy = myIMU.gx, gz = myIMU.gz; 
 
     
 
@@ -84,8 +84,8 @@ void gyroTask(){
 
 void magTask(){
     readMag(&myIMU);
-    mx = myIMU.mx;
-    my = myIMU.my;
+    mx = -myIMU.my;
+    my = myIMU.mx;
     mz = myIMU.mz;
     setReg(MAG_X, mx);
     setReg(MAG_Y, my);
@@ -107,16 +107,17 @@ void altitudeTask(){
 
 void gpsTask(){
 
-    int ret = readLatLon(&myGPS); 
+    SENSOR_STATUS ret = readLatLon(&myGPS); 
     setReg(GPS_STATE, ret);
     
-    if(ret == GPS_OK){
+    if(ret == OK){
         if(getReg(START_GPS) <= 0)
             myGPS.off_x = myGPS.latitude, myGPS.off_y = myGPS.longitud;
         
         int x_lat = myGPS.latitude - myGPS.off_x;
         int y_lon = myGPS.longitud - myGPS.off_y;
-        
+        x_gps = myGPS.latitude;
+		y_gps = myGPS.longitud;
 
         setReg(GPS_AVAILABLE, 1);
         setReg(GPS_X, 0.01*x_lat),
@@ -127,11 +128,12 @@ void gpsTask(){
 
 
 void optTask(){
-
-    int ret = readFlowRange(&myOF);
+    
+    OPT_VAR var;
+    SENSOR_STATUS ret = readFlowRange(&myOF, &var);
     setReg(OPT_STATE, ret);
            
-    if(ret == OPT_VEL || ret == OPT_RNG){
+    if(ret == OK){
         if( z >= 0.05)
             xp  = -myOF.vel_x*0.001, yp = myOF.vel_y*0.001;
         else 
@@ -143,6 +145,16 @@ void optTask(){
 
 }
 
+void teraTask(){
+    
+    SENSOR_STATUS ret = readTeraRange(&myTera);
+
+    if(ret == OK) 
+        z_tera = myTera.distance/1000.0;
+    else if(ret != NO_DATA ) 
+        z_tera = 0;
+
+}
 
 void rpyTask(){
     
@@ -184,11 +196,11 @@ void xyzTask(){
     
     
     if(getReg(START_GPS) > 0){
-            kalmanUpdateIMU(ax, ay, az, raw_roll, raw_pitch, raw_yaw);
+        kalmanUpdateIMU(ax, ay, az, raw_roll, raw_pitch, raw_yaw);
 
-            if(getReg(GPS_AVAILABLE) > 0)
-                setReg(GPS_AVAILABLE, 0),
-                kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), 0);
+        if(getReg(GPS_AVAILABLE) > 0)
+            setReg(GPS_AVAILABLE, 0),
+            kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), 0);
     }
     else{
         clearKalman();
@@ -197,6 +209,8 @@ void xyzTask(){
     getPosition(&x, &y, &z);
     
     z = z_of;
+    if(z_tera >= 0.5 && z_tera <= 50)
+        z = z_tera;
     /*if( cfilt_z <= 50 && fabs(z-z_ant) > 0.2) cfilt_z++, z = z_ant;
     else z_ant = z,  cfilt_z = 0;*/
     
@@ -226,9 +240,10 @@ void initSensorsTasks(){
 
     initMatGlobal();
 
-    initM8Q(&myGPS, &serial2);
-    initOptFlow(&myOF, &serial4);
-    
+    initM8Q(&myGPS, SER_GPS);
+    initOptFlow(&myOF, SER_OPT);
+    initTeraRanger(&myTera, SER_TER);
+
     
     calib_status = 0;
 
@@ -242,11 +257,11 @@ void initSensorsTasks(){
     addTask(&accelTask, 1000, 3);
     addTask(&magTask, 100000, 2);
     addTask(&rpyTask, 2000, 2);
-    //addTask(&altitudeTask,10000,2);s
-    
-    addTask(&xyzTask, 10000, 3);
-    addTask(&gpsTask, 125000, 3);
-    addTask(&optTask, 1000, 1);
+    //addTask(&altitudeTask,10000,2);    
+    //addTask(&xyzTask, 10000, 3);
+    //addTask(&gpsTask, 125000, 3);
+    //addTask(&optTask, 10000, 1);
+    //addTask(&teraTask, 10000, 1);
     
 
 }

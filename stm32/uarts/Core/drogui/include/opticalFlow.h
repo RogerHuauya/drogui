@@ -4,9 +4,9 @@
 
 #include "_main.h"
 #include "serial.h"
+#include "utils.h"
 
-enum OPTFLOW_STATUS {OPT_NO_DATA, OPT_TIMEOUT, OPT_WRG_ID, OPT_VEL, OPT_RNG, OPT_OK, OPT_WRG_CHKSUM};
-
+typedef enum OPT_VAR {OPT_VEL, OPT_RNG} OPT_VAR;
 
 #define RNG_FNDR 0x1F01
 #define OPT_FLOW 0x1F02
@@ -31,8 +31,8 @@ typedef struct _optFlow{
 
 void calcChksum(optPacket *op);
 void initOptFlow(optFlow *of, serial* ser);
-int readOptFlow(optPacket *op, uint32_t timeout);
-int readFlowRange(optFlow *of);
+SENSOR_STATUS readOptFlow(optPacket *op, uint32_t timeout);
+SENSOR_STATUS readFlowRange(optFlow *of, OPT_VAR *var);
 
 
 #endif

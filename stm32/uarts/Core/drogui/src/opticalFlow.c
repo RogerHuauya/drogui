@@ -30,6 +30,7 @@ void calcChksum(optPacket *msg){
 
 
 void initOptFlow(optFlow *of, serial* ser){
+	changeBaudrate(ser, 115200);
     of->off_x = 0;
     of->off_y = 0;
     of->vel_x = 0;
@@ -41,7 +42,7 @@ void initOptFlow(optFlow *of, serial* ser){
 
 
 
-int readOptFlow(optPacket *op, uint32_t timeout){
+SENSOR_STATUS readOptFlow(optPacket *op, uint32_t timeout){
 	uint8_t sync1 = 0, sync2 = 0;
     uint8_t cntLSB, cntMSB;
     uint8_t idMSB, idLSB;
@@ -93,9 +94,9 @@ int readOptFlow(optPacket *op, uint32_t timeout){
 
 	}
 
-	if(flag == 0) return OPT_TIMEOUT;
-	if(op->chksum == checksum) return OPT_OK;
-	else return OPT_WRG_CHKSUM;
+	if(flag == 0) return TIMEOUT;
+	if(op->chksum == checksum) return OK;
+	else return WRG_CHKSUM;
 }
 
 /*
@@ -108,11 +109,11 @@ void printPacket(ubxPacket *mp){
 }*/
 
 
-int readFlowRange(optFlow *of){
+SENSOR_STATUS readFlowRange(optFlow *of, OPT_VAR *var){
 	if(serialAvailable(of->rcv_pack.ser)){ 
 		int ret = readOptFlow(&(of->rcv_pack), 1000); 
 		serialFlush(of->rcv_pack.ser);
-		if( ret != OPT_OK) return ret;
+		if( ret != OK) return ret;
 		
 
 		if(of->rcv_pack.type == OPT_FLOW){
@@ -125,7 +126,8 @@ int readFlowRange(optFlow *of){
             for(int i = 3 ; i >= 0 ; i--)
                 of->vel_y = (of->vel_y << 8) | (of->rcv_pack).payload[5+i];
 			
-            return OPT_VEL;
+			*var = OPT_VEL;
+            return OK;
 		}
 		else if(of->rcv_pack.type == RNG_FNDR){
             of->q_rng = (of->rcv_pack).payload[0];
@@ -133,11 +135,12 @@ int readFlowRange(optFlow *of){
             for(int i = 3 ; i >= 0 ; i--)
                 of->dis = (of->dis << 8) | (of->rcv_pack).payload[1+i];
             
-            return OPT_RNG;
+			*var = OPT_RNG;
+            return OK;
 		}
         else{
-            return OPT_WRG_ID;
+            return WRG_ID;
         }
 	}
-	return OPT_NO_DATA;
+	return NO_DATA;
 }

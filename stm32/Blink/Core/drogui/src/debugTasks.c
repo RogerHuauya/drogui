@@ -22,7 +22,7 @@
             else setReg(START_GPS,0);
         }*/
         
-        serialPrintf("%f\t%f\t%d\n", z, z_ref, state);
+        serialPrintf("%f\t%f\n", roll*180/PI, pitch*180/PI);
         //serialPrint("I am debugging\n");
 
     }
@@ -64,7 +64,7 @@ void securityTask(){
 void initDebug(){
     state = SEC_STOP;
     #if PORT == DEBUG   
-        addTask(&debugTask, 100000, 1);
+        addTask(&debugTask, 10000, 1);
     #elif PORT == LED
         addTask(&blinkTask, 100000, 1);   
     #endif

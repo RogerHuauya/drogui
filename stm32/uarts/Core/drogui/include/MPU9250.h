@@ -1,5 +1,4 @@
 #include "macros.h"
-
 #ifdef MPU9250
 
 #ifndef MPU9250_H
@@ -12,7 +11,7 @@
 
 enum MPU_CONFIGS{
     MPU_MASTER_CONFIG = 26,
-    MPU_GYRO_CONFIG = 27,
+    MPU_GYRO_CONFIG   = 27,
     MPU_ACCEL_CONFIG1 = 28,
     MPU_ACCEL_CONFIG2 = 29
 };
@@ -73,6 +72,9 @@ typedef struct _mpu9250{
     filtAcc fAccX, fAccY, fAccZ;
 
 } mpu9250;
+
+
+typedef mpu9250 imu;
 
 //TODO: fix comments
 
