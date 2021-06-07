@@ -11,7 +11,7 @@ xyzfile = dir('*xyz.txt').name;
 
 rpy =   '500/300 20 -1000';
 wrpy =  '5/8/10 10/16/30 500';
-xy  =   '0.2 0.08 1.5'; 
+xy  =   '0.3 0.1 0'; 
 z =     '10 2 750 Comp 28';
 
 Drpy = appendTest(Drpy, rpyfile, rpy, wrpy, xy, z);
