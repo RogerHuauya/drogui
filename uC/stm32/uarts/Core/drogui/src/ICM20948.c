@@ -434,7 +434,7 @@ void calibrateMag(icm20948* m){
     matTrans(&Ht, &H);
     matMult(&prod, &Ht, &H);
     
-    matInverse(&inverse, &prod);
+    matInv(&inverse, &prod);
     matMult(&prod2, &inverse, &Ht);
     matMult(&X, &prod2, &w);
     

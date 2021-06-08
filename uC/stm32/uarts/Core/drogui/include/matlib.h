@@ -1,14 +1,16 @@
 #ifndef MATLIB_H
 #define MATLIB_H
 
+#include "main.h"
 #include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include "arm_math.h"
 
 typedef struct _mat{
     int row, col;
-    float** val;
-    float* aux;
+    float* val;
+    arm_matrix_instance_f32 M;
 } mat;
 /**
  * @brief Initialice matrix without any value 
@@ -90,7 +92,7 @@ void matSubs(mat* ans, mat* a, mat* b);
  * @param R Matrix (struct mat)
  * @param Rinv Inversed matrix (struct mat) 
 */
-void matInv3(mat* Rinv, mat* R);
+void matInv(mat* Rinv, mat* R);
 /**
  * @brief Transpose of a matrix   
  * @param R Matrix (struct mat)
@@ -118,12 +120,7 @@ void rpyToR(mat* R, float roll, float pitch, float yaw);
  * @param ans Matrix (struct mat) 
 */
 void gaussElimination3x3(mat* a, mat* b, mat* ans);
-/**
- * @brief Inverse of a matrix    
- * @param A Matrix (struct mat)
- * @param inverse Inversed matrix (struct mat)
-*/
-bool matInverse(mat* inverse, mat* A);
+
 /**
  * @brief Get the Determinant of a matrix     
  * @param A Matrix (struct mat)

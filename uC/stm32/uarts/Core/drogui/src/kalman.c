@@ -132,7 +132,7 @@ void getKalmanGain(){
 
     matMult(&aux1, &Hm, &aux2);
     matAdd(&aux1, &aux1, &Rc);
-    matInv3(&aux4, &aux1);
+    matInv(&aux4, &aux1);
 
     matMult(&KalmanGain, &aux2, &aux4);
 

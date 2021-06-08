@@ -1,4 +1,4 @@
-#define DROGUI
+//#define DROGUI
 #ifdef DROGUI
 #include "_main.h"
 #include "tim.h"
