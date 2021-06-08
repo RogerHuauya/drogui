@@ -1,0 +1,30 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"C_Cpp.default.includePath": [
+				"C:\\Program Files\\Microchip\\xc16\\v1.50\\support\\dsPIC33E\\h",
+				"C:\\Program Files\\Microchip\\xc16\\v1.50\\support\\generic\\h",
+				"C:\\Program Files (x86)\\Microchip\\xc16\\v1.41\\support\\dsPIC33E\\h",
+				"C:\\Program Files (x86)\\Microchip\\xc16\\v1.41\\support\\generic\\h",
+				"C:\\Program Files\\Microchip\\xc16\\v1.61\\support\\dsPIC33E\\h",
+				"C:\\Program Files\\Microchip\\xc16\\v1.61\\support\\generic\\h",
+				"${workspaceFolder}\\headers",
+				"/opt/microchip/xc16/v1.50/support/generic/h",
+				"/opt/microchip/xc16/v1.50/support/dspic33E/h"
+				
+			],
+			"files.associations": {
+				"array": "c",
+				"functional": "c",
+				"istream": "c",
+				"ostream": "c",
+				"tuple": "c",
+				"type_traits": "c",
+				"utility": "c"
+			}
+	}
+}
