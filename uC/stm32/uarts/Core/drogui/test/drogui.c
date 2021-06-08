@@ -12,7 +12,7 @@
 char auxbuff[50];
 void _main(){
     serialsBegin();
-    
+    changeBaudrate(SER_DBG, 2000000); 
     HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
     HAL_Delay(1000);
     
