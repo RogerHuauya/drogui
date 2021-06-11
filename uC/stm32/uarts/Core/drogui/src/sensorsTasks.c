@@ -66,8 +66,6 @@ void gyroTask(){
     readGyro(&myIMU);
     gx = -myIMU.gy, gy = myIMU.gx, gz = myIMU.gz; 
 
-    
-
     if( calib_status & 2 ){
         
         cleanFiltGyro(&myIMU.fGyroX); 
@@ -84,9 +82,9 @@ void gyroTask(){
 
 void magTask(){
     readMag(&myIMU);
-    mx = -myIMU.my;
-    my = myIMU.mx;
-    mz = myIMU.mz;
+    mx = -myIMU.mx;
+    my = myIMU.my;
+    mz = -myIMU.mz;
     setReg(MAG_X, mx);
     setReg(MAG_Y, my);
     setReg(MAG_Z, mz);
@@ -159,10 +157,10 @@ void teraTask(){
 void rpyTask(){
     
     float rpy[3];
-   
-    mahonyUpdate(&myRPY, gx*PI/180.0, gy*PI/180.0, gz*PI/180.0, ax, ay, az, 0, 0, 0);
+	
+	mahonyUpdate(&myRPY, gx*PI/180.0, gy*PI/180.0, gz*PI/180.0, ax, ay, az, mx, my, mz);
     getMahonyEuler(&myRPY, rpy);
-    raw_roll = rpy[0], raw_pitch = rpy[1], raw_yaw = rpy[2];
+    raw_roll = rpy[0], raw_pitch = rpy[1], raw_yaw = rpy[2]+pi/2;
     
     /*roll += fmax(fmin(Kdfilt, (rpy[0] - roll)),-Kdfilt);
     pitch += fmax(fmin(Kdfilt, (rpy[1] - pitch)),-Kdfilt);
