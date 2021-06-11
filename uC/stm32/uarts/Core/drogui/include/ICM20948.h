@@ -59,6 +59,13 @@ enum ICM_ACCEL_SCALE{
     ICM_ACC_FULL_SCALE_16_G = 0x06
 };
 
+/**
+ * @brief Structure gyroscope filter   
+ * @param first First filter type normal (structure filter)
+ * @param second Second filter type normal filter (structure filter)
+ * @param thrid Thrid filter type Dynamic Notch (structure dNotchFilter)
+ * @param fourth Fourth filter type Dynamic Notch (structure dNotchFilter)
+*/
 typedef struct _filtGyro{
     
     filter first, second, fifth;
@@ -66,6 +73,11 @@ typedef struct _filtGyro{
 
 } filtGyro;
 
+/**
+ * @brief Structure accelerometer filter   
+ * @param first First filter type normal (structure filter)
+ * @param second Second filter type Dynamic Notch (structure dNotchFilter)
+*/
 typedef struct _filtAcc{
     
     filter first;
@@ -73,6 +85,58 @@ typedef struct _filtAcc{
 
 } filtAcc;
 
+/**
+ * @brief Structure ICM20948  
+ * @param ax Accelerometer value in x direction (float)
+ * @param ay Accelerometer value in y direction (float)
+ * @param az Accelerometer value in z direction (float)
+ * @param gx Gyroscope value in x direction (float)
+ * @param gy Gyroscope value in y direction (float)
+ * @param gz Gyroscope value in z direction (float)
+ * @param mx Magnetometer value in x direction (float)
+ * @param my Magnetometer value in y direction (float)
+ * @param mz Magnetometer value in z direction (float) 
+ * @param raw_ax Raw Accelerometer value in x direction (float)
+ * @param raw_ay Raw Accelerometer value in y direction (float)
+ * @param raw_az Raw Accelerometer value in z direction (float)
+ * @param raw_gx Raw Gyroscope value in x direction (float)
+ * @param raw_gy Raw Gyroscope value in y direction (float)
+ * @param raw_gz Raw Gyroscope value in z direction (float)
+ * @param raw_mx Raw Magnetometer value in x direction (float)
+ * @param raw_my Raw Magnetometer value in y direction (float)
+ * @param raw_mz Raw Magnetometer value in z direction (float) 
+ * @param filt_ax Filtered Accelerometer value in x direction (float)
+ * @param filt_ay Filtered Accelerometer value in y direction (float)
+ * @param filt_az Filtered Accelerometer value in z direction (float)
+ * @param filt_gx Filtered Gyroscope value in x direction (float)
+ * @param filt_gy Filtered Gyroscope value in y direction (float)
+ * @param filt_gz Filtered Gyroscope value in z direction (float)
+ * @param off_ax Offset of Accelerometer value in x direction (float)
+ * @param off_ay Offset of Accelerometer value in y direction (float)
+ * @param off_az Offset of Accelerometer value in z direction (float)
+ * @param scl_ac Scale factor of accelerometer (float)
+ * @param off_gx Offset of Gyroscope value in x direction (float)
+ * @param off_gy Offset of Gyroscope value in y direction (float)
+ * @param off_gz Offset of Gyroscope value in z direction (float)
+ * @param off_mx Offset of Magnetometer value in x direction (float)
+ * @param off_my Offset of Magnetometer value in y direction (float)
+ * @param off_mz Offset of Magnetometer value in z direction (float)
+ * @param scl_magx Scale factor of magnetometer in x direction (float)
+ * @param scl_magy Scale factor of magnetometer in y direction (float)
+ * @param scl_magz Scale factor of magnetometer in z direction (float)
+ * @param accScale Scale factor which depends on the configuration of sensor (float)
+ * @param gyroScale Scale factor which depends on the configuration of sensor (float)
+ * @param magScale Scale factor which depends on the configuration of sensor (float)
+ * @param isGyroCalibrated Describe if gyroscope is calibrated (bool)
+ * @param isAccelGyroCalibrated Describe if accelerometer is calibrated (bool)
+ * @param isMagCalibrated Describe if magnetometer is calibrated (bool)
+ * @param fGyroX Gyroscope filter in x direction (structure filter)
+ * @param fGyroY Gyroscope filter in y direction (structure filter)
+ * @param fGyroZ Gyroscope filter in z direction (structure filter)
+ * @param fAccX Accelerometer filter x direction (structure filter)
+ * @param fAccY Accelerometer filter y direction (structure filter)
+ * @param fAccZ Accelerometer filter z direction (structure filter)
+*/
 typedef struct _icm20948{  
     
     float ax, ay, az; 
@@ -102,47 +166,124 @@ typedef struct _icm20948{
 
 typedef icm20948 imu;
 
-//TODO: fix comments
-
-
-
+/**
+ * @brief Initialize gyroscope filter   
+ * @param fg (pointer of structure filtGyro)
+*/
 void initFiltGyro(filtGyro *fg);
+
+/**
+ * @brief Initialize accelerometer filter   
+ * @param fa (pointer of structure filtAcc)
+*/
 void initFiltAcc(filtAcc *fa);
 
-
+/**
+ * @brief Compute acclerometer filter  
+ * @param fg (pointer of structure filtGyro)
+ * @param val Current sensor value (float)
+ * @return Filtered current value
+*/
 float computeFiltGyro(filtGyro *fg, float val);
+
+/**
+ * @brief Compute acclerometer filter  
+ * @param fa (pointer of structure filtAcc)
+ * @param val Current sensor value (float)
+ * @return Filtered current value
+*/
 float computeFiltAcc(filtAcc *fa, float val);
 
-
+/**
+ * @brief Clean gyroscope filter 
+ * @param m ICM20948 (pointer of struct icm20948)
+*/
 void cleanFiltGyro(filtGyro *fg);
+
+/**
+ * @brief Clean accelerometer filter 
+ * @param m ICM20948 (pointer of struct icm20948)
+*/
 void cleanFiltAcc(filtAcc *fa);
 
 
-
+/**
+ * @brief Initialize ICM20948
+ * @param m ICM20948 (pointer of struct icm20948)
+*/
 void initImu(icm20948* m);
 
+/**
+ * @brief Read raw data from Accelerometer 
+ * @param m ICM20948 (pointer of struct icm20948)
+*/
 void readRawAcc(icm20948* m);
 
+/**
+ * @brief Read filtered data from Accelerometer 
+ * @param m ICM20948 (pointer of struct icm20948)
+*/
 void readFiltAcc(icm20948* m);
 
+/**
+ * @brief Get data transformed from Accelerometer due to offset and scale     
+ * @param m ICM20948 (pointer of struct icm20948)
+*/
 void readAcc(icm20948* m);
 
+/**
+ * @brief Read raw data from Gyroscope 
+ * @param m ICM20948 (pointer of struct icm20948)
+*/
 void readRawGyro(icm20948* m);
 
+/**
+ * @brief Read filtered data from Gyroscope 
+ * @param m ICM20948 (pointer of struct icm20948)
+*/
 void readFiltGyro(icm20948* m);
 
+/**
+ * @brief Get data transformed from Gyroscope due to offset and scale
+ * @param m ICM20948 (pointer of struct icm20948)
+*/
 void readGyro(icm20948* m);
 
+/**
+ * @brief Get data transformed from Magnetometer due to offset and scale
+ * @param m ICM20948 (pointer of struct icm20948)
+*/
 void readMag(icm20948* m);
 
+/**
+ * @brief Read raw data from Magnetometer
+ * @param m ICM20948 (pointer of struct icm20948)
+*/
 void readRawMag(icm20948* m);
 
+/**
+ * @brief Calibrate Gyroscope taking data, for this the system must be quiet  
+ * @param m ICM20948 (pointer of struct icm20948)
+*/
 void calibrateGyro(icm20948* m);
 
+/**
+ * @brief Calibrate Accelerometer, for this the system must be quiet and in 6 different positions
+ * @param m ICM20948 (pointer of struct icm20948)
+*/
 void calibrateAccel(icm20948* m);
 
+/**
+ * @brief Calibrate Magnetometer, for this the system must move in 100 different positions
+ * @param m ICM20948 (pointer of struct icm20948)
+*/
 void calibrateMag(icm20948* m);
 
+/**
+ * @brief Update offsets and scales of all sensors 
+ * @param m ICM20948 (pointer of struct icm20948)
+ * @return 
+*/
 int updateCalibOffset(icm20948* m);
 
 #endif

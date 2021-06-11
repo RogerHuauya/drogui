@@ -147,10 +147,35 @@ extern float SG13[];
 */
 void rampValue(float *var, float desired, float step);
 
-
+/**
+*   @brief Read data from a register through i2c communication 
+*   @param Address (uint8_t)
+*   @param Register Register to be read (uint8_t)
+*   @param Nbytes Number of bytes to be read (uint8_t)
+*   @param Data Buffer where bytes will be stored (uint8_t*)
+*   @return 
+*/
 void I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t* Data);
+
+/**
+*   @brief Write data in a register through i2c communication     
+*   @param Address (uint8_t)
+*   @param Register Register to be written (uint8_t)
+*   @param Data Data to be written in a specific register (uint8_t)
+*   @return 
+*/
 void I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data);
 
+/**
+*   @brief Get 3D distance of two poits   
+*   @param x Component x of the first point  (float)
+*   @param y Component y of the first point (float)
+*   @param z Component z of the first point (float)
+*   @param a Component x of the second point (float)
+*   @param b Component y of the second point (float)
+*   @param c Component z of the second point (float)
+*   @return 3D Distance 
+*/
 float dis3d(float x,float y,float z, float a, float b, float c);
 
 #endif

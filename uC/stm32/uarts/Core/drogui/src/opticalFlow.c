@@ -99,15 +99,6 @@ SENSOR_STATUS readOptFlow(optPacket *op, uint32_t timeout){
 	else return WRG_CHKSUM;
 }
 
-/*
-void printPacket(ubxPacket *mp){
-    serialPrintf("Class:\t %d \tID:\t %d \tlen:\t %d \n", mp->cls, mp->id, mp->len); 
-
-	for( int i = 0; i < mp->len ; i++) 
-		serialPrintf("%x ", mp->payload[i]);
-	serialPrint("\n");
-}*/
-
 
 SENSOR_STATUS readFlowRange(optFlow *of, OPT_VAR *var){
 	if(serialAvailable(of->rcv_pack.ser)){ 

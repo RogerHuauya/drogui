@@ -144,13 +144,31 @@ void initMvAvgFilter(mvAvgFilter* mf, int n);
 */
 float computeMvAvgFilter(mvAvgFilter* mf, float val);
 
+/**
+ * @brief Structure Savitzky-Golay Filter 
+ * @param n Number of values (int)
+ * @param head (int)
+ * @param values Array of values (float*)
+ * @param coeffs Array of coefficients (float*) 
+*/
 typedef struct _savGolDFilter{
     int n, head;
     float *values, *coeffs;
 } savGolDFilter;
 
-// TODO: Comments
+/**
+ * @brief Initialize Savitzky-Golay Filter 
+ * @param sg (Pointer of structure savGolDFilter)
+ * @param n Number of values (int)
+*/
 void initSavGolDFilter(savGolDFilter* sg, int n);
+
+/**
+ * @brief Compute Savitzky-Golay Filter 
+ * @param sg (Pointer of structure savGolDFilter)
+ * @param value Currente sensor value (int)
+ * @return Filtered value (float)
+*/
 float computeSavGolDFilter(savGolDFilter* sg, float value);
 
 
