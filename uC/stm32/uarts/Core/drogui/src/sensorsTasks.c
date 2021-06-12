@@ -137,7 +137,7 @@ void optTask(){
         else 
             xp = yp = 0;
         if(myOF.dis != -1) z_of= myOF.dis*0.001;
-        setReg(XP_VAL, xp), setReg(YP_VAL, yp), setReg(Z_RNG, z_of);
+        setReg(XP_VAL, xp), setReg(YP_VAL, yp), setReg(Z_RNG, z_of),setReg(Q_OF,myOF.q_vel);
 
     }
 
