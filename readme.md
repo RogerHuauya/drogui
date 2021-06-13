@@ -2,5 +2,5 @@
 Proyecto de dron autonomo MDP
 
 ## Caracteristicas
-* control de angu
+* control de angulo
 * control de altura
