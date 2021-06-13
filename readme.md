@@ -4,4 +4,4 @@ Proyecto de dron autonomo MDP
 * control de angulo
 * control de altura
 
-First realese
+First realese 0.1.0
