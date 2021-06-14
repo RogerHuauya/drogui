@@ -15,7 +15,7 @@ void blinkTask(void *argument){
 void debugTask(void *argument){
     
     
-    serialPrintf(SER_DBG, "%f %f\n", roll*180/PI, pitch*180/PI);
+    serialPrintf(SER_DBG, "%f %f %f %f\n",getReg(X_VAL), getReg(Y_VAL), getReg(ROLL_SCURVE), getReg(PITCH_SCURVE),getReg(RAW_YAW));
     //serialPrintf(SER_DBG, "%f %f %f\n", gx, gy, gz);
     //serialPrintf(SER_DBG, "%f %f %f\n", mx, my, mz);
 	//serialPrintf(SER_DBG, "%f %f %f\n", ax, ay, az);
