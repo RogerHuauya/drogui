@@ -318,9 +318,13 @@ void initControlTasks(){
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
     setReg(N_FILTER, 50);
+    setReg(START_GPS, 1);
+    setReg(START_XYC,1);
+
 
     addTask(&wControlTask, 1000, 1);
     addTask(&rpyControlTask, 2000, 1);
     addTask(&xyzControlTask, 10000, 1);
+
     
 }
