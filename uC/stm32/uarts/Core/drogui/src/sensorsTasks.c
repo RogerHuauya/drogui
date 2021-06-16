@@ -146,9 +146,6 @@ void optTask(){
 		if(state == ARM_MOTORS || state == CONTROL_LOOP)
 			state = DESCEND;
 	}
-	else if(ret == NO_DATA){
-		xp = 0; yp = 0; z_of = 0;
-	}
 
 }
 
@@ -162,8 +159,6 @@ void teraTask(){
 		if(state == ARM_MOTORS || state == CONTROL_LOOP)
 			state = DESCEND;
 	}
-	else if(ret == NO_DATA)
-		z_tera = 0;
 
 }
 
