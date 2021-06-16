@@ -121,7 +121,8 @@ void gpsTask(){
         setReg(GPS_CNT, myGPS.cnt++);     
     }
     else if( ret == CRASHED ){
-        state = DESCEND;
+        if(state == ARM_MOTORS || state == CONTROL_LOOP)
+			state = DESCEND;
     }
 }
 
@@ -142,7 +143,8 @@ void optTask(){
 
 	}
 	else if(ret == CRASHED){
-		state = DESCEND;
+		if(state == ARM_MOTORS || state == CONTROL_LOOP)
+			state = DESCEND;
 	}
 	else if(ret == NO_DATA){
 		xp = 0; yp = 0; z_of = 0;
@@ -156,8 +158,10 @@ void teraTask(){
 
 	if(ret == OK)
 		z_tera = myTera.distance/1000.0;
-	else if(ret == CRASHED)
-		state = DESCEND;
+	else if(ret == CRASHED){
+		if(state == ARM_MOTORS || state == CONTROL_LOOP)
+			state = DESCEND;
+	}
 	else if(ret == NO_DATA)
 		z_tera = 0;
 
