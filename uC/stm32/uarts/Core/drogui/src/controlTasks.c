@@ -238,7 +238,7 @@ void xyzControlTask(){
     
     if(state == DESCEND){
         if(!descend) 
-            setTrayectory(&H_sp, H_comp, 0, z*10, TIME), descend = true;
+            setTrayectory(&H_sp, H_comp, 0, z*5, TIME), descend = true;
         H_comp = getSetpoint(&H_sp, TIME); 
         z_ref = 0;
         
