@@ -115,15 +115,15 @@ void gpsTask(){
 		x_gps = myGPS.latitude;
 		y_gps = myGPS.longitud;
 
-        setReg(GPS_AVAILABLE, 1);
-        setReg(GPS_X, 0.01*x_lat),
-        setReg(GPS_Y, 0.01*y_lon),
-        setReg(GPS_CNT, myGPS.cnt++);     
-    }
-    else if( ret == CRASHED ){
-        if(state == ARM_MOTORS || state == CONTROL_LOOP)
+		setReg(GPS_AVAILABLE, 1);
+		setReg(GPS_X, 0.01*x_lat),
+			setReg(GPS_Y, 0.01*y_lon),
+			setReg(GPS_CNT, myGPS.cnt++);
+	}
+	else if( ret == CRASHED ){
+		if(state == ARM_MOTORS || state == CONTROL_LOOP)
 			state = DESCEND;
-    }
+	}
 }
 
 
