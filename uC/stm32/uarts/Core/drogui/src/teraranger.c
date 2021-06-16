@@ -37,6 +37,8 @@ void initTeraRanger(tRanger *tera, serial *ser){
 	tera->distance = 0;
     tera->rcv_pack.ser = ser;
     tera->rcv_pack.chksum = 0;
+	tera->last_tim = TIME;
+	tera->treshold = 500000;
 }
 
 uint8_t crc8_tera(int len, uint8_t* msg){
@@ -93,11 +95,15 @@ SENSOR_STATUS readTeraRange(tRanger *tera){
 		int ret = readTRanger(&(tera->rcv_pack), 1000); 
 		serialFlush(tera->rcv_pack.ser);
 
-		if( ret != OK) return ret;
+		if( ret != OK){ 
+			if(TIME - tera->last_tim > tera->treshold) return CRASHED; 
+			return ret;
+		}
         
-        tera->distance = ((uint16_t) tera->rcv_pack.payload[0] << 8) | tera->rcv_pack.payload[1];;
-            
+        tera->distance = ((uint16_t) tera->rcv_pack.payload[0] << 8) | tera->rcv_pack.payload[1];
+        tera->last_tim = TIME; 
         return OK;
 	}
+	if(TIME - tera->last_tim > tera->treshold) return CRASHED; 
 	return NO_DATA;   
 }
