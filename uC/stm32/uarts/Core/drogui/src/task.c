@@ -19,7 +19,8 @@ task Tasks[100];
 
 void executeTask(task* t, int _id){
     t->last_time = TIME;
-    t->function();
+	setReg(Q_OF, _id);
+	t->function();
 }
 
 bool isTaskReady(task* t){
