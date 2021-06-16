@@ -122,6 +122,9 @@ void gpsTask(){
         setReg(GPS_Y, 0.01*y_lon),
         setReg(GPS_CNT, myGPS.cnt++);     
     }
+    else if( ret == CRASHED ){
+        state = DESCEND;
+    }
 }
 
 
