@@ -3,6 +3,8 @@
 #include "string.h"
 #include "stdio.h"
 #include <stdbool.h>
+#include "registerMap.h"
+
 int tasks_count = 0;
 
 typedef struct _task{
@@ -15,7 +17,7 @@ typedef struct _task{
 task Tasks[100]; 
 
 
-void executeTask(task* t){
+void executeTask(task* t, int _id){
     t->last_time = TIME;
     t->function();
 }
@@ -51,7 +53,7 @@ void initRTOS(){
 
         if(id >= 0){
             //sprintf(buffer3, "Init %d\t%lu;\n",id,TIME - Tasks[id].last_time);
-            executeTask(&Tasks[id]), Tasks[id].ignored = 0;
+            executeTask(&Tasks[id],id), Tasks[id].ignored = 0;
             //HAL_UART_Transmit(&huart2, (uint8_t*) buffer3, strlen(buffer3), 100);
             //serialPrint("execute\n");
         }

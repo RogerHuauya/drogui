@@ -150,8 +150,8 @@ void rpyControlTask(){
     if(state == CONTROL_LOOP || state == DESCEND){
         if(getReg(START_XYC) > 0){
                 
-                /*roll_ref = -Y_C*cos(raw_yaw) - X_C*sin(raw_yaw);
-                pitch_ref = -Y_C*sin(raw_yaw) + X_C*cos(raw_yaw);
+                roll_ref  = -Y_C*cos(raw_yaw) + X_C*sin(raw_yaw);
+                pitch_ref =  Y_C*sin(raw_yaw) + X_C*cos(raw_yaw);
 
                 float rel = roll_ref/(pitch_ref + EPS);
                 
@@ -163,9 +163,9 @@ void rpyControlTask(){
                     roll_ref = copysign(ANG_MAX, roll_ref);
                     pitch_ref = roll_ref/rel;
                 }
-                */
-                roll_ref = -Y_C;
-                pitch_ref = X_C;
+                
+                /*roll_ref = -Y_C;
+                pitch_ref = X_C;*/
         }
         else{
 
@@ -228,8 +228,8 @@ void xyzControlTask(){
             setTrayectory(&z_sp, z_sp.fin, getReg(Z_REF), getReg(Z_PERIOD), TIME);
         z_ref =  getSetpoint(&z_sp, TIME);
 
-        X_C = computePid(&x_control, x_ref - xp, TIME, H);
-        Y_C = computePid(&y_control, y_ref - yp, TIME, H);
+        X_C = computePid(&x_control, x_ref - x, TIME, H);
+        Y_C = computePid(&y_control, y_ref - y, TIME, H);
 
         H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG);
         rampValue(&H, H_ref, 0.15);
@@ -319,8 +319,10 @@ void initControlTasks(){
     setReg(PID_VAR, -1);
     setReg(N_FILTER, 50);
 
+
     addTask(&wControlTask, 1000, 1);
     addTask(&rpyControlTask, 2000, 1);
     addTask(&xyzControlTask, 10000, 1);
+
     
 }

@@ -10,14 +10,15 @@ void _main(){
 	serialsBegin();
 	HAL_Delay(1000);
 	HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
-	changeBaudrate(&serial2, 115200);
+	changeBaudrate(&serial3, 115200);
+	serialPrint(&serial3, "test\n");
 	while(1){
 		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
-		while(serialAvailable(&serial2)){
-			serialWrite(&serial2, serialRead(&serial2));
+		while(serialAvailable(&serial3)){
+			serialWrite(&serial3, serialRead(&serial3));
 		}
 
-		HAL_Delay(10);
+		HAL_Delay(100);
 	}
 
 }

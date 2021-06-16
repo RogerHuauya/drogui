@@ -68,12 +68,17 @@ SENSOR_STATUS readTRanger(tRPacket *tpacket, uint32_t timeout){
 		if(sync == TR_SYNCH){
             tpacket->chksumBuff[0] = TR_SYNCH;
 			for(int i = 0; i < 2 ; i++){
-				while(!serialAvailable(tpacket->ser));
+				while(!serialAvailable(tpacket->ser)){
+                    if( TIME - tim > timeout ) return TIMEOUT;    
+                }
                 tpacket->chksumBuff[i+1] = tpacket->payload[i] = serialRead(tpacket->ser);
                 
 			}
 
-			while(!serialAvailable(tpacket->ser));
+			while(!serialAvailable(tpacket->ser)){
+                if( TIME - tim > timeout ) return TIMEOUT;
+            }
+
 			checksum = serialRead(tpacket->ser);
 
 			calcTeraChksum(tpacket);

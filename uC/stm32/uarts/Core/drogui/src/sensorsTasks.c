@@ -268,6 +268,4 @@ void initSensorsTasks(){
 	addTask(&gpsTask, 125000, 3);
 	addTask(&optTask, 10000, 1);
 	addTask(&teraTask, 10000, 1);
-
-
 }
