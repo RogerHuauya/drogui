@@ -35,7 +35,7 @@ bool mag_available = false;
 
 float z_ant = 0;
 float Kdfilt = 0.01;
-
+int opt_timeout_cnt = 0, tera_timeout_cnt = 0;
 bmp388 myBMP;
 float altitude,offset_alt;
 
@@ -132,6 +132,7 @@ void optTask(){
     setReg(OPT_STATE, ret);
            
     if(ret == OK){
+		opt_timeout_cnt = 0;
         if( z >= 0.05)
             xp  = -myOF.vel_x*0.001, yp = myOF.vel_y*0.001;
         else 
@@ -141,6 +142,17 @@ void optTask(){
 
     }
 
+	else if(ret == NO_DATA){
+		xp = 0; yp = 0; z_of = 0;
+	}
+		
+	else if(ret == TIMEOUT){
+		opt_timeout_cnt++;
+	}
+
+	if(opt_timeout_cnt > 3){
+		state = DESCEND;
+	}
 }
 
 void teraTask(){
@@ -149,8 +161,17 @@ void teraTask(){
 
     if(ret == OK) 
         z_tera = myTera.distance/1000.0;
-    else if(ret != NO_DATA ) 
-        z_tera = 0;
+	else if(ret == NO_DATA){
+		z_tera = 0;
+	}
+	else if(ret == TIMEOUT){
+		tera_timeout_cnt++;
+	}
+
+	if(tera_timeout_cnt > 3){
+		state = DESCEND;
+	}
+
 
 }
 
