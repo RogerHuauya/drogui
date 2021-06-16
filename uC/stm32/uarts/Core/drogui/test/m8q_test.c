@@ -21,8 +21,10 @@ int pos_x, pos_y;
 void _main(){
     HAL_Delay(1000);
 	serialsBegin();
-	serialPrint(&serial3, "Init\n");
-    SENSOR_STATUS ret_init = initM8Q(&myGPSt, &serial2);
+	changeBaudrate(&serial3,2000000);
+    serialPrint(&serial3, "Init\n");
+    
+    SENSOR_STATUS ret_init = initM8Q(&myGPSt, &serial4);
     
 	serialPrintf(&serial3, "Ret init %d\n", ret_init);
 

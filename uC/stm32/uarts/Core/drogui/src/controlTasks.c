@@ -150,8 +150,8 @@ void rpyControlTask(){
     if(state == CONTROL_LOOP || state == DESCEND){
         if(getReg(START_XYC) > 0){
                 
-                roll_ref = -Y_C*cos(raw_yaw) - X_C*sin(raw_yaw);
-                pitch_ref = -Y_C*sin(raw_yaw) + X_C*cos(raw_yaw);
+                roll_ref  = -Y_C*cos(raw_yaw) + X_C*sin(raw_yaw);
+                pitch_ref =  Y_C*sin(raw_yaw) + X_C*cos(raw_yaw);
 
                 float rel = roll_ref/(pitch_ref + EPS);
                 
@@ -318,8 +318,6 @@ void initControlTasks(){
     setReg(PID_INDEX, -1);
     setReg(PID_VAR, -1);
     setReg(N_FILTER, 50);
-    setReg(START_GPS, 1);
-    setReg(START_XYC,1);
 
 
     addTask(&wControlTask, 1000, 1);

@@ -5,7 +5,6 @@ ubxPacket myPacket, readPacket;
 int flag = 0, head = 0;
 uint8_t buff[1000];
 int _main(){
-
     delay(1000);
     Serial1.begin(9600);
     cfgPort(&myPacket, defaultCfgPort);
@@ -19,6 +18,7 @@ int _main(){
     delay(100);
 
     while(1){
+
         if(Serial1.available()){
             if(readM8Q(&readPacket)){
                 
