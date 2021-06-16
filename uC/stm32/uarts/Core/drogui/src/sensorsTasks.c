@@ -35,9 +35,7 @@ bool mag_available = false;
 
 float z_ant = 0;
 float Kdfilt = 0.01;
-// int opt_timeout_cnt = 0, tera_timeout_cnt = 0;
 bmp388 myBMP;
-//float altitude,offset_alt;
 
 emaFilter ema_bmp;
 mvAvgFilter mvAvg_bmp;

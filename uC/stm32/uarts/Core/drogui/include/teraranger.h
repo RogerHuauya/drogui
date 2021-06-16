@@ -28,7 +28,7 @@ typedef struct _tRPacket{
 typedef struct _tRanger{
     tRPacket rcv_pack;
     uint16_t distance;
-	uint32_t treshold;
+	uint32_t threshold;
 	uint32_t last_tim;
 } tRanger;
 

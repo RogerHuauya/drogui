@@ -37,6 +37,8 @@ void initOptFlow(optFlow *of, serial* ser){
     of->vel_y = 0;
     of->dis   = 0;
 	of->rcv_pack.ser = ser;
+	of->last_tim = TIME;
+	of->threshold = 1000000;
 }
 
 
@@ -105,7 +107,7 @@ SENSOR_STATUS readFlowRange(optFlow *of, OPT_VAR *var){
 		serialFlush(of->rcv_pack.ser);
 	
 		if( ret != OK) {
-			if(TIME - last_tim = of -> threshold) return CRASHED;
+			if(TIME - of->last_tim > of->threshold) return CRASHED;
 		    return ret;
 		}
 
@@ -134,10 +136,10 @@ SENSOR_STATUS readFlowRange(optFlow *of, OPT_VAR *var){
             return OK;
 		}
         else{
-			if(TIME - last_tim = of -> threshold) return CRASHED;
+			if(TIME - of->last_tim > of -> threshold) return CRASHED;
             return WRG_ID;
 		}
 	}
-	if(TIME - last_tim = of -> threshold) return CRASHED;
+	if(TIME - of->last_tim > of -> threshold) return CRASHED;
 	return NO_DATA;
 }
