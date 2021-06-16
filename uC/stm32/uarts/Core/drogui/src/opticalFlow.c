@@ -99,25 +99,28 @@ SENSOR_STATUS readOptFlow(optPacket *op, uint32_t timeout){
 	else return WRG_CHKSUM;
 }
 
-
 SENSOR_STATUS readFlowRange(optFlow *of, OPT_VAR *var){
 	if(serialAvailable(of->rcv_pack.ser)){ 
 		int ret = readOptFlow(&(of->rcv_pack), 1000); 
 		serialFlush(of->rcv_pack.ser);
-		if( ret != OK) return ret;
-		
+	
+		if( ret != OK) {
+			if(TIME - last_tim = of -> threshold) return CRASHED;
+		    return ret;
+		}
 
 		if(of->rcv_pack.type == OPT_FLOW){
 		
-			of -> q_vel = (of->rcv_pack).payload[0];
-            of->vel_x = 0, of->vel_y = 0;
+		    of -> q_vel = (of->rcv_pack).payload[0];
+		    of->vel_x = 0, of->vel_y = 0;
             for(int i = 3 ; i >= 0 ; i--)
-                of->vel_x = (of->vel_x << 8) | (of->rcv_pack).payload[1+i];
+            	of->vel_x = (of->vel_x << 8) | (of->rcv_pack).payload[1+i];
               
             for(int i = 3 ; i >= 0 ; i--)
                 of->vel_y = (of->vel_y << 8) | (of->rcv_pack).payload[5+i];
 			
 			*var = OPT_VEL;
+			of -> last_tim = TIME;
             return OK;
 		}
 		else if(of->rcv_pack.type == RNG_FNDR){
@@ -127,11 +130,14 @@ SENSOR_STATUS readFlowRange(optFlow *of, OPT_VAR *var){
                 of->dis = (of->dis << 8) | (of->rcv_pack).payload[1+i];
             
 			*var = OPT_RNG;
+			of -> last_tim = TIME;
             return OK;
 		}
         else{
+			if(TIME - last_tim = of -> threshold) return CRASHED;
             return WRG_ID;
-        }
+		}
 	}
+	if(TIME - last_tim = of -> threshold) return CRASHED;
 	return NO_DATA;
 }

@@ -48,6 +48,8 @@ typedef struct _optFlow{
     int vel_x, vel_y;
 	int off_x, off_y;
     int dis;
+	uint32_t last_tim, threshold;
+
 } optFlow;
 
 /**
