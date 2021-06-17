@@ -200,13 +200,16 @@ void rpyTask(){
 
 void xyzTask(){
 
+	z = z_of;
+	if(z_tera >= 0.5 && z_tera <= 50)
+		z = z_tera;
 
 	if(getReg(START_GPS) > 0){
 		kalmanUpdateIMU(ax, ay, az, raw_roll, raw_pitch, raw_yaw);
 
 		if(getReg(GPS_AVAILABLE) > 0)
 			setReg(GPS_AVAILABLE, 0),
-				kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), 0);
+				kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), z);
 	}
 	else{
 		clearKalman();
@@ -214,9 +217,6 @@ void xyzTask(){
 
 	getPosition(&x, &y, &z);
 
-	z = z_of;
-	if(z_tera >= 0.5 && z_tera <= 50)
-		z = z_tera;
 	/*if( cfilt_z <= 50 && fabs(z-z_ant) > 0.2) cfilt_z++, z = z_ant;
 	  else z_ant = z,  cfilt_z = 0;*/
 
