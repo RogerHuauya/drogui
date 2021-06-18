@@ -10,7 +10,7 @@ pwm m1, m2, m3, m4;
 pid roll2w, pitch2w, yaw2w; 
 pid wroll_control, wpitch_control, wyaw_control;
 pid z_control, x_control, y_control;
-
+pid xp_control, yp_control;
 filter filter_wroll, filter_wpitch, filter_wyaw;
 filter filter_R, filter_P, filter_Y, filter_H;
 
@@ -21,6 +21,7 @@ float M1,M2,M3,M4;
 
 float wroll_ref, wpitch_ref, wyaw_ref;
 float roll_ref, pitch_ref, yaw_ref;
+float xp_ref = 0, yp_ref = 0;
 float x_ref = 0, y_ref = 0, z_ref = 0;
 float Ixx = 0, Iyy = 0;
 //float aux_wref, aux_wref2;
@@ -71,15 +72,17 @@ void updatePID(){
         break;
 
         case PID_X:
-            x_control.kp[0] = getReg(X_KP);
-            x_control.ki[0] = getReg(X_KI);
-            x_control.kd[0] = getReg(X_KD);
+			if(index == 0)
+            	x_control.kp[0] = getReg(X_KP), x_control.ki[0] = getReg(X_KI), x_control.kd[0] = getReg(X_KD);
+			else if(index == 1)
+            	xp_control.kp[0] = getReg(X_KP), xp_control.ki[0] = getReg(X_KI), xp_control.kd[0] = getReg(X_KD);
         break;
 
         case PID_Y:
-            y_control.kp[0] = getReg(Y_KP);
-            y_control.ki[0] = getReg(Y_KI);
-            y_control.kd[0] = getReg(Y_KD);
+			if(index == 0)
+            	y_control.kp[0] = getReg(Y_KP), y_control.ki[0] = getReg(Y_KI), y_control.kd[0] = getReg(Y_KD);
+			else if (index == 1)	
+            	yp_control.kp[0] = getReg(Y_KP), yp_control.ki[0] = getReg(Y_KI), yp_control.kd[0] = getReg(Y_KD);
         break;
 
         case PID_Z:
@@ -277,6 +280,20 @@ void xyzControlTask(){
 
 }
 
+void xypControlTask(){
+	if(state == CONTROL_LOOP){
+		xp_ref  = -Y_C*cos(raw_yaw) + X_C*sin(raw_yaw);
+		yp_ref =  Y_C*sin(raw_yaw) + X_C*cos(raw_yaw);
+
+		roll_ref = computePid(&xp_control, xp_ref - xp, TIME, 0);
+		pitch_ref = computePid(&yp_control, yp_ref - yp, TIME, 0);
+	}
+
+	if(state == ARM_MOTORS){
+        resetPid(&xp_control, TIME);
+        resetPid(&yp_control, TIME);
+    }
+}
 
 void initControlTasks(){
     
@@ -289,6 +306,10 @@ void initControlTasks(){
     initPwm(&m1, &htim3, TIM_CHANNEL_2, &(htim3.Instance->CCR2));
     initPwm(&m3, &htim4, TIM_CHANNEL_3, &(htim4.Instance->CCR3));
     initPwm(&m2, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
+
+
+    initPid(&xp_control,  0.1, 0.3,    0.2, 0, 50 , 10, 3, (NORMAL | D_SG));
+    initPid(&yp_control,  0.1, 0.3,    0.2, 0, 50 , 10, 3, (NORMAL | D_SG));
 
     initPid(&z_control,  10, 750,    2, 0, 50 , 10, 30, (NORMAL | D_SG));
     initPid(&x_control, 0.2, 1.5, 0.08, 0, 50 , 10, ANG_MAX, D_SG);
@@ -320,9 +341,9 @@ void initControlTasks(){
     setReg(N_FILTER, 50);
 
 
-    addTask(&wControlTask, 1000, 1);
-    addTask(&rpyControlTask, 2000, 1);
+    addTask(&wControlTask,    1000, 1);
+    addTask(&rpyControlTask,  2000, 1);
+	addTask(&xypControlTask, 10000, 1);
     addTask(&xyzControlTask, 10000, 1);
-
     
 }

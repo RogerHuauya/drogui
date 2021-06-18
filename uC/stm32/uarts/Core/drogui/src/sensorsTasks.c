@@ -134,12 +134,15 @@ void optTask(){
 	setReg(OPT_STATE, ret);
 
 	if(ret == OK){
+		/*
 		if( z >= 0.05)
 			xp  = -myOF.vel_x*0.001, yp = myOF.vel_y*0.001;
 		else
 			xp = yp = 0;
+		*/
 		if(myOF.dis != -1) z_of= myOF.dis*0.001;
-		setReg(XP_VAL, xp), setReg(YP_VAL, yp), setReg(Z_RNG, z_of);
+		//setReg(XP_VAL, xp), setReg(YP_VAL, yp);
+		setReg(Z_RNG, z_of);
 
 	}
 	else if(ret == CRASHED){
@@ -216,7 +219,7 @@ void xyzTask(){
 	}
 
 	getPosition(&x, &y, &z);
-
+	getVelocity(&xp, &yp);
 	/*if( cfilt_z <= 50 && fabs(z-z_ant) > 0.2) cfilt_z++, z = z_ant;
 	  else z_ant = z,  cfilt_z = 0;*/
 
@@ -224,6 +227,9 @@ void xyzTask(){
 	setReg(X_VAL, x);
 	setReg(Y_VAL, y);
 	setReg(Z_VAL, z);
+
+	setReg(XP_VAL, xp);
+	setReg(YP_VAL, yp);
 }
 
 void initSensorsTasks(){

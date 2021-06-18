@@ -218,6 +218,11 @@ void getPosition(float *x, float *y, float *z){
     *z = getMatVal(&p, 2, 0);
 }
 
+void getVelocity(float *xp, float *yp){
+    *xp = getMatVal(&v, 0, 0);
+    *yp = getMatVal(&v, 1, 0);
+}
+
 void clearKalman(){
         
     for(int i = 0 ; i < 3 ; i++){
