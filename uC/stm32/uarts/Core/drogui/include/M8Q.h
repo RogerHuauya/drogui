@@ -307,6 +307,8 @@ typedef struct _m8q{
     ubxPacket snd_pack, rcv_pack;
     int latitude, longitud;
 	int off_x, off_y;
+	uint32_t threshold;
+	uint32_t last_tim;
 	int cnt;
 } m8q;
 

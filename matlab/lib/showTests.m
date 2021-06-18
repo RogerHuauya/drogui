@@ -7,7 +7,8 @@ function showTests(datos)
         mat(i, 4) = datos(i).xy;
         mat(i, 5) = datos(i).z;
         mat(i, 6) = datos(i).description;
+        mat(i, 7) = datos(i).time;
     end
-    t = array2table(mat, 'VariableNames', {'index', 'rpy' 'wrpy' 'xy' 'z' 'desc'});
+    t = array2table(mat, 'VariableNames', {'index', 'rpy' 'wrpy' 'xy' 'z' 'desc' 'time'});
     disp(t)
 end

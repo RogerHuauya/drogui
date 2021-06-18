@@ -5,4 +5,5 @@ function ret = importTest(nombre, rpy, wrpy, xy, z)
     ret.xy = xy;
     ret.z = z;
     ret.datos = importTable(nombre);
+    ret.time = nombre(1:end-8);
 end

@@ -61,6 +61,9 @@ void sendSerialCommand(ubxPacket *outgoingUBX)
 SENSOR_STATUS initM8Q(m8q *mg, serial* ser){
 	SENSOR_STATUS ret;
 	
+	mg->last_tim = TIME;
+	mg->threshold = 2000000;
+
 	mg->rcv_pack.ser = ser; 
 	mg->snd_pack.ser = ser;
 
@@ -194,9 +197,11 @@ SENSOR_STATUS readLatLon(m8q *mg){
 	if(serialAvailable(mg->rcv_pack.ser)){ 
 		int ret = readM8Q(&(mg->rcv_pack), 1000); 
 		//serialFlush();
-		if( ret != OK) return ret;
+		if( ret != OK){
+			if(  TIME - mg->last_tim > mg->threshold )  return CRASHED;
+			return ret;	
+		} 
 		
-
 		if(mg->rcv_pack.cls == 1 && mg->rcv_pack.id == 2){
 		
 			mg->latitude = 0, mg->longitud = 0;
@@ -205,11 +210,14 @@ SENSOR_STATUS readLatLon(m8q *mg){
 			for(int i = 0 ; i < 4 ; i++) 
 				mg->longitud = (mg->longitud << 8) | (mg->rcv_pack.payload[11-i]);
 			
+			mg->last_tim = TIME;
 			return OK;
 		}
 		else{
+			if(  TIME - mg->last_tim > mg->threshold )  return CRASHED;
 			return WRG_ID;
 		}
 	}
+	if(  TIME - mg->last_tim > mg->threshold )  return CRASHED;
 	return NO_DATA;
 }

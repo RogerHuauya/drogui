@@ -6,6 +6,7 @@ classdef testClass
         xy
         z
         description = ""
+        time = ""
     end
     methods
         function plotRoll(obj)
