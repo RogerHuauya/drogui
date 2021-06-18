@@ -189,7 +189,7 @@ void kalmanUpdateIMU(float ax, float ay, float az,float roll, float pitch, float
     kynematics();
     UpdatePm();
 
-    matAdd(&p, &p, &bias_p);
+    //matAdd(&p, &p, &bias_p);
 }
 
 void kalmanUpdateGPS(float x_gps, float y_gps, float z_gps){
@@ -204,9 +204,10 @@ void kalmanUpdateGPS(float x_gps, float y_gps, float z_gps){
     
     UpdatePmCovGPS();
     
-    matScale(&bias_v, &bias_v, 1/1.3);
+    //matScale(&bias_v, &bias_v, 1/1.3);
     matAdd(&v, &v, &bias_v);
-    matScale(&bias_p, &bias_p, N);
+	matAdd(&p, &p, &bias_p);
+    //matScale(&bias_p, &bias_p, N);
 }
 
 

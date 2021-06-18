@@ -1,10 +1,10 @@
 close all;
-load('DataRoger.mat')
+load('gpsTest-1706-4pm.mat')
 Gr = 1;
 Ts = 0.01;
 
-Trpy = Drpy(end).datos(1:15487,:);
-Txyz = Dxyz(end).datos;
+Trpy = Drpy(end-3).datos;
+Txyz = Dxyz(end-3).datos;
 
 
 N = length(Trpy.ACC_X);
@@ -29,8 +29,8 @@ mx = Trpy.MAG_Z(rng)*pi/180;
 gpsX = Txyz.GPS_X;
 gpsY = Txyz.GPS_Y;
 
-ox = Txyz.XP_VAL(rng+shif);
-oy = Txyz.YP_VAL(rng+shif);
+% ox = Txyz.XP_VAL(rng+shif);
+% oy = Txyz.YP_VAL(rng+shif);
 
 
 
@@ -74,7 +74,7 @@ deltas = zeros(9,1);
 for i = 2:N
 
     Rq = rpy2R(roll(i), pitch(i), yaw(i));
-    accR(:,i) = Rq'*[ax(i) ay(i) az(i)]' - g  + bias_u;
+    accR(:,i) = Rq'*[ax(i) ay(i) az(i)]' - g;
     
     p(:,i) = p(:,i-1) + Ts*v(:,i-1) + (Ts^2)/2*(accR(:,i));
     v(:,i) = v(:,i-1) + Ts*(accR(:,i));
@@ -98,10 +98,11 @@ for i = 2:N
         deltas = [zeros(6,1); bias_u] + K*(ye);
         P = (eye(9) - K*H)*P;
         bias_u = deltas(7:9);
+        p(:,i) = p(:,i) + deltas(1:3);
+        v(:,i) = v(:,i) + deltas(4:6);
 
     end
-    p(:,i) = p(:,i) + deltas(1:3)/12.5  ;
-    v(:,i) = v(:,i) + deltas(4:6)/12.5;
+    
 end
 
 figure
@@ -110,12 +111,12 @@ plotHold([p(1,:)',p_gps(1,:)'])
 figure
 plotHold([ p(2,:)', p_gps(2,:)'])
 
-figure
-plotHold([ v(1,:)', ox*20])
-figure
-plotHold([ v(2,:)', oy*20])
-
-figure
-plotHold([ v(1,:)', ox*20])
+% figure
+% plotHold([ v(1,:)', ox*20])
+% figure
+% plotHold([ v(2,:)', oy*20])
+% 
+% figure
+% plotHold([ v(1,:)', ox*20])
 figure
 plotHold([accR(1,:)', accR(2,:)', accR(3,:)'])
