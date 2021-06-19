@@ -213,8 +213,8 @@ void xyzControlTask(){
             setTrayectory(&z_sp, z_sp.fin, getReg(Z_REF), getReg(Z_PERIOD), TIME);
         z_ref =  getSetpoint(&z_sp, TIME);
 
-        vx_ref = computePid(&x_control, x_ref - x, TIME, H);
-        vy_ref = computePid(&y_control, y_ref - y, TIME, H);
+        vx_ref = computePid(&x_control, x_ref - x, TIME, 0);
+        vy_ref = computePid(&y_control, y_ref - y, TIME, 0);
 
         H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG);
         rampValue(&H, H_ref, 0.15);
@@ -264,8 +264,11 @@ void xyzControlTask(){
 
 void xypControlTask(){
 	if(state == CONTROL_LOOP){
-		xp_ref  = -vy_ref*cos(raw_yaw) + vx_ref*sin(raw_yaw);
-		yp_ref =  vy_ref*sin(raw_yaw) + vx_ref*cos(raw_yaw);
+		xp_ref  = vx_ref*cos(raw_yaw) + vy_ref*sin(raw_yaw);
+		yp_ref =  -vx_ref*sin(raw_yaw) + vy_ref*cos(raw_yaw);
+		
+		setReg(OPT_STATE, xp_ref);
+		setReg(Q_OF, yp_ref);
 
         if(getReg(START_XYC) > 0){
 			roll_ref = -computePid(&yp_control, yp_ref - yp, TIME, 0);
@@ -296,12 +299,12 @@ void initControlTasks(){
     initPwm(&m2, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
 
-    initPid(&xp_control,  0.1, 0.3,    0.2, 0, 50 , 10, 3, (NORMAL | D_SG));
-    initPid(&yp_control,  0.1, 0.3,    0.2, 0, 50 , 10, 3, (NORMAL | D_SG));
+    initPid(&xp_control,  0.1, 0.3,    0.2, 0, 50 , 10, ANG_MAX, (NORMAL | D_SG));
+    initPid(&yp_control,  0.1, 0.3,    0.2, 0, 50 , 10, ANG_MAX, (NORMAL | D_SG));
 
     initPid(&z_control,  10, 750,    2, 0, 50 , 10, 30, (NORMAL | D_SG));
-    initPid(&x_control, 0.2, 1.5, 0.08, 0, 50 , 10, ANG_MAX, D_SG);
-    initPid(&y_control, 0.2, 1.5, 0.08, 0, 50 , 10, ANG_MAX, D_SG);
+    initPid(&x_control, 0.2, 1.5, 0.08, 0, 50 , 10, 10, D_SG);
+    initPid(&y_control, 0.2, 1.5, 0.08, 0, 50 , 10, 10, D_SG);
 
     initPidFilter(&roll2w,  500, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
     initPidFilter(&pitch2w, 300, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
