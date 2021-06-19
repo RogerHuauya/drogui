@@ -132,7 +132,7 @@ void optTask(){
 
 	OPT_VAR var;
 	SENSOR_STATUS ret = readFlowRange(&myOF, &var);
-	setReg(OPT_STATE, ret);
+	//setReg(OPT_STATE, ret);
 
 	if(ret == OK){
 		/*
@@ -222,8 +222,8 @@ void xyzTask(){
 	getPosition(&x, &y, &z);
 	getVelocity(&vx, &vy);
 
-	xp = -vy*cos(raw_yaw) + vx*sin(raw_yaw);
-	yp =  vy*sin(raw_yaw) + vx*cos(raw_yaw);
+	xp = vx*cos(raw_yaw) + vy*sin(raw_yaw);
+	yp = -vx*sin(raw_yaw) + vy*cos(raw_yaw);
 
 	setReg(X_VAL, x);
 	setReg(Y_VAL, y);
