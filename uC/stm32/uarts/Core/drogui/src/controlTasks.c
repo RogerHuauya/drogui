@@ -277,6 +277,10 @@ void xypControlTask(){
         resetPid(&xp_control, TIME);
         resetPid(&yp_control, TIME);
     }
+
+    setReg(XP_REF,xp_ref);
+    setReg(YP_REF,yp_ref)
+
 }
 
 void initControlTasks(){
