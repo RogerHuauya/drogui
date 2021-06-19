@@ -19,7 +19,7 @@ task Tasks[100];
 
 void executeTask(task* t, int _id){
     t->last_time = TIME;
-	setReg(Q_OF, _id);
+	//setReg(Q_OF, _id);
 	t->function();
 }
 
