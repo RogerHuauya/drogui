@@ -22,6 +22,7 @@ float M1,M2,M3,M4;
 float wroll_ref, wpitch_ref, wyaw_ref;
 float roll_ref, pitch_ref, yaw_ref;
 float xp_ref = 0, yp_ref = 0;
+float vx_ref = 0, vy_ref = 0;
 float x_ref = 0, y_ref = 0, z_ref = 0;
 float Ixx = 0, Iyy = 0;
 //float aux_wref, aux_wref2;
@@ -151,26 +152,7 @@ void wControlTask(){
 
 void rpyControlTask(){
     if(state == CONTROL_LOOP || state == DESCEND){
-        if(getReg(START_XYC) > 0){
-                
-                roll_ref  = -Y_C*cos(raw_yaw) + X_C*sin(raw_yaw);
-                pitch_ref =  Y_C*sin(raw_yaw) + X_C*cos(raw_yaw);
-
-                float rel = roll_ref/(pitch_ref + EPS);
-                
-                if( fabs(rel) < 1  &&  fabs(pitch_ref) >= ANG_MAX  ){
-                    pitch_ref = copysign(ANG_MAX, pitch_ref);
-                    roll_ref = pitch_ref * rel;
-                }
-                else if (fabs(rel) >= 1 && fabs(roll_ref) >= ANG_MAX  ){
-                    roll_ref = copysign(ANG_MAX, roll_ref);
-                    pitch_ref = roll_ref/rel;
-                }
-                
-                /*roll_ref = -Y_C;
-                pitch_ref = X_C;*/
-        }
-        else{
+        if(getReg(START_XYC) <= 0){
 
             if(getReg(ROLL_REF) != roll_sp.fin) 
                 setTrayectory(&roll_sp, roll_sp.fin, getReg(ROLL_REF), getReg(ROLL_PERIOD), TIME);
@@ -231,8 +213,8 @@ void xyzControlTask(){
             setTrayectory(&z_sp, z_sp.fin, getReg(Z_REF), getReg(Z_PERIOD), TIME);
         z_ref =  getSetpoint(&z_sp, TIME);
 
-        X_C = computePid(&x_control, x_ref - x, TIME, H);
-        Y_C = computePid(&y_control, y_ref - y, TIME, H);
+        vx_ref = computePid(&x_control, x_ref - x, TIME, H);
+        vy_ref = computePid(&y_control, y_ref - y, TIME, H);
 
         H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG);
         rampValue(&H, H_ref, 0.15);
@@ -282,11 +264,13 @@ void xyzControlTask(){
 
 void xypControlTask(){
 	if(state == CONTROL_LOOP){
-		xp_ref  = -Y_C*cos(raw_yaw) + X_C*sin(raw_yaw);
-		yp_ref =  Y_C*sin(raw_yaw) + X_C*cos(raw_yaw);
+		xp_ref  = -vy_ref*cos(raw_yaw) + vx_ref*sin(raw_yaw);
+		yp_ref =  vy_ref*sin(raw_yaw) + vx_ref*cos(raw_yaw);
 
-		roll_ref = computePid(&xp_control, xp_ref - xp, TIME, 0);
-		pitch_ref = computePid(&yp_control, yp_ref - yp, TIME, 0);
+        if(getReg(START_XYC) > 0){
+			roll_ref = -computePid(&yp_control, yp_ref - yp, TIME, 0);
+			pitch_ref = computePid(&xp_control, xp_ref - xp, TIME, 0);
+		}
 	}
 
 	if(state == ARM_MOTORS){

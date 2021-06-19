@@ -29,7 +29,8 @@ float   roll,       pitch,      yaw,
 		x,          y,          z,
 		x_gps,		y_gps,
 		xp,         yp,
-		z_of,       z_tera;
+		z_of,       z_tera,
+		vx,			vy;
 
 bool mag_available = false;
 
@@ -219,10 +220,10 @@ void xyzTask(){
 	}
 
 	getPosition(&x, &y, &z);
-	getVelocity(&xp, &yp);
-	/*if( cfilt_z <= 50 && fabs(z-z_ant) > 0.2) cfilt_z++, z = z_ant;
-	  else z_ant = z,  cfilt_z = 0;*/
+	getVelocity(&vx, &vy);
 
+	xp = -vy*cos(raw_yaw) + vx*sin(raw_yaw);
+	yp =  vy*sin(raw_yaw) + vx*cos(raw_yaw);
 
 	setReg(X_VAL, x);
 	setReg(Y_VAL, y);
