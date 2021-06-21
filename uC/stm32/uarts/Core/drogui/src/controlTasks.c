@@ -281,8 +281,8 @@ void xypControlTask(){
         resetPid(&yp_control, TIME);
     }
 
-    setReg(XP_REF,xp_ref);
-    setReg(YP_REF,yp_ref)
+    //setReg(XP_REF,xp_ref);
+    //setReg(YP_REF,yp_ref);
 
 }
 
