@@ -276,6 +276,7 @@ void xypControlTask(){
 		}
 	}
 
+
 	if(state == ARM_MOTORS){
         resetPid(&xp_control, TIME);
         resetPid(&yp_control, TIME);
@@ -303,8 +304,8 @@ void initControlTasks(){
     initPid(&yp_control,  0.1, 0.3,    0.2, 0, 50 , 10, ANG_MAX, (NORMAL | D_SG));
 
     initPid(&z_control,  10, 750,    2, 0, 50 , 10, 30, (NORMAL | D_SG));
-    initPid(&x_control, 0.2, 1.5, 0.08, 0, 50 , 10, 5, D_SG);
-    initPid(&y_control, 0.2, 1.5, 0.08, 0, 50 , 10, 5, D_SG);
+    initPid(&x_control, 0.2, 1.5, 0.08, 0, 50 , 10, 10, D_SG);
+    initPid(&y_control, 0.2, 1.5, 0.08, 0, 50 , 10, 10, D_SG);
 
     initPidFilter(&roll2w,  500, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
     initPidFilter(&pitch2w, 300, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
