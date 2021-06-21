@@ -267,8 +267,8 @@ void xypControlTask(){
 		xp_ref  = vx_ref*cos(raw_yaw) + vy_ref*sin(raw_yaw);
 		yp_ref =  -vx_ref*sin(raw_yaw) + vy_ref*cos(raw_yaw);
 		
-		setReg(OPT_STATE, xp_ref);
-		setReg(Q_OF, yp_ref);
+		setReg(XP_REF, xp_ref);
+		setReg(YP_REF, yp_ref);
 
         if(getReg(START_XYC) > 0){
 			roll_ref = -computePid(&yp_control, yp_ref - yp, TIME, 0);
@@ -303,8 +303,8 @@ void initControlTasks(){
     initPid(&yp_control,  0.1, 0.3,    0.2, 0, 50 , 10, ANG_MAX, (NORMAL | D_SG));
 
     initPid(&z_control,  10, 750,    2, 0, 50 , 10, 30, (NORMAL | D_SG));
-    initPid(&x_control, 0.2, 1.5, 0.08, 0, 50 , 10, 10, D_SG);
-    initPid(&y_control, 0.2, 1.5, 0.08, 0, 50 , 10, 10, D_SG);
+    initPid(&x_control, 0.2, 1.5, 0.08, 0, 50 , 10, 5, D_SG);
+    initPid(&y_control, 0.2, 1.5, 0.08, 0, 50 , 10, 5, D_SG);
 
     initPidFilter(&roll2w,  500, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
     initPidFilter(&pitch2w, 300, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
