@@ -219,7 +219,7 @@ void xyzControlTask(){
         H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG);
         rampValue(&H, H_ref, 0.15);
         H_comp = H/(cos(roll)*cos(pitch));
-    }
+	}
     
     if(state == DESCEND){
         if(!descend) 
@@ -259,7 +259,9 @@ void xyzControlTask(){
     setReg(DER_X,x_control.errd);
     setReg(DER_Y,y_control.errd);
     setReg(DER_Z,z_control.errd);
-
+    setReg(VX_REF, vx_ref);
+    setReg(VY_REF, vy_ref);
+	
 }
 
 void xypControlTask(){
@@ -300,12 +302,12 @@ void initControlTasks(){
     initPwm(&m2, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
 
-    initPid(&xp_control,  0.1, 0.3,    0.2, 0, 50 , 10, ANG_MAX, (NORMAL | D_SG));
-    initPid(&yp_control,  0.1, 0.3,    0.2, 0, 50 , 10, ANG_MAX, (NORMAL | D_SG));
+    initPid(&xp_control,  0.01, 0, 0, 0, 50 , 5, ANG_MAX, D_SG);
+    initPid(&yp_control,  0.01, 0, 0, 0, 50 , 5, ANG_MAX, D_SG);
 
-    initPid(&z_control,  10, 750,    2, 0, 50 , 10, 30, (NORMAL | D_SG));
-    initPid(&x_control, 0.2, 1.5, 0.08, 0, 50 , 10, 10, D_SG);
-    initPid(&y_control, 0.2, 1.5, 0.08, 0, 50 , 10, 10, D_SG);
+    initPid(&z_control,  10, 750,    2, 0, 50 , 10, 30, D_SG);
+    initPid(&x_control, 1, 0, 0, 0, 50 , 2, 1, D_SG);
+    initPid(&y_control, 1, 0, 0, 0, 50 , 2, 1, D_SG);
 
     initPidFilter(&roll2w,  500, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
     initPidFilter(&pitch2w, 300, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
