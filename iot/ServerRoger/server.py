@@ -7,7 +7,6 @@ import types
 
 sel = selectors.DefaultSelector()
 
-
 def accept_wrapper(sock):
     conn, addr = sock.accept()  # Should be ready to read
     print("accepted connection from", addr)
@@ -17,7 +16,7 @@ def accept_wrapper(sock):
     sel.register(conn, events, data=data)
 
 
-def service_connection(key, mask):
+def service_connection(key, mask, events):
     sock = key.fileobj
     data = key.data
     if mask & selectors.EVENT_READ:
@@ -29,10 +28,13 @@ def service_connection(key, mask):
             sel.unregister(sock)
             sock.close()
     if mask & selectors.EVENT_WRITE:
-        if data.outb:
-            print("echoing", repr(data.outb), "to", data.addr)
-            sent = sock.send(data.outb)  # Should be ready to write
-            data.outb = data.outb[sent:]
+        for _key, _mask in events:
+            if _key.data !=None:
+                if _key != key and key.data.outb:
+                    print("echoing", repr(key.data.outb), "to", _key.data.addr)
+                    sent = _key.fileobj.send(data.outb)  # Should be ready to write
+                    data.outb = data.outb[sent:]
+
 
 
 if len(sys.argv) != 3:
@@ -54,7 +56,7 @@ try:
             if key.data is None:
                 accept_wrapper(key.fileobj)
             else:
-                service_connection(key, mask)
+                service_connection(key, mask, events)
 except KeyboardInterrupt:
     print("caught keyboard interrupt, exiting")
 finally:
