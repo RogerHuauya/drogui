@@ -3,8 +3,8 @@ import socket
 import time
 import threading
 
-HOST = '127.0.0.1'  # The server's hostname or IP address
-PORT = 1024        # The port used by the server
+HOST = '191.98.175.75'  # The server's hostname or IP address
+PORT = 1194        # The port used by the server
 global msg
 msg = ""
 def thread_function():
