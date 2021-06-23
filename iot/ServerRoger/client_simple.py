@@ -3,14 +3,17 @@ import socket
 import time
 import threading
 
-HOST = '192.168.1.30'  # The server's hostname or IP address
-PORT = 1024        # The port used by the server
+HOST = '191.98.175.75'  # The server's hostname or IP address
+PORT = 1194        # The port used by the server
 global msg
 msg = ""
+
 def thread_function():
     global msg
     while True:
         msg = input()
+
+
 x = threading.Thread(target=thread_function)
 name = input('Input your name: ')
 name = name + ": "
@@ -28,4 +31,4 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         except:
             pass
         if data != '':
-            print(data.decode())
+            print('Received', repr(data))
