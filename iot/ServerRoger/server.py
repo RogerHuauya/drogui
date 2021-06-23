@@ -31,10 +31,9 @@ def service_connection(key, mask, events):
         for _key, _mask in events:
             if _key.data !=None:
                 if _key != key and key.data.outb:
-                    print("echoing", repr(key.data.outb), "to", _key.data.addr)
-                    sent = _key.fileobj.send(data.outb)  # Should be ready to write
-                    data.outb = data.outb[sent:]
-
+                    print("echoing", repr(data.outb), "to", _key.data.addr)
+                    sent = _key.fileobj.sendall(data.outb)  # Should be ready to write
+        data.outb = b''           
 
 
 if len(sys.argv) != 3:
