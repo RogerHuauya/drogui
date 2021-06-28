@@ -4,7 +4,7 @@
 
 | **Data** | **Bytes** | **Description** |
 |----|----|----|
-|$d | 2 Byte | Drogui message header|
+|d$ | 2 Byte | Drogui message header|
 |a<sup>[1](#actions)</sup> | 1 Byte | Action byte|
 |pyld| n<sup>[1](#actions)</sup> Byte | Depending on action|
 
