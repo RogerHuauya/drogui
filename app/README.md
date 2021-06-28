@@ -1,6 +1,6 @@
 # Drogui App
 
-## Comunication protocol
+## Communication protocol
 
 | **Data** | **Bytes** | **Description** |
 |----|----|----|
