@@ -1,16 +1,22 @@
-# test_app
+# Drogui App
 
-A new Flutter project.
+## Comunication protocol
 
-## Getting Started
+| **Data** | **Bytes** | **Description** |
+|----|----|----|
+|$d | 2 Byte | Drogui message header|
+|a<sup>[1](#actions)</sup> | 1 Byte | Action byte|
+|pyld| n<sup>[1](#actions)</sup> Byte | Depending on action|
 
-This project is a starting point for a Flutter application.
+### Actions
+| **Character**| **#N Bytes** | **Payload**|
+|----|----|----|
+| 'r'| 1 Byte | Register[1]|
+| 'w'| 5 Bytes | Register[1] + Value[4] |
+| 'c'| 1 Byte | Command id<sup>[2](#commands)</sup>[1]|
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### Commands
+| **Character**| **Description**|
+|----|----|
+| 'l'| Start logging|
+| 'n'| Stop logging|

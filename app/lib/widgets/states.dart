@@ -1,60 +1,60 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'dart:convert';
+import 'package:test_app/global.dart';
+import 'package:test_app/utils/registerMap.dart';
+import 'package:test_app/utils/utils.dart';
 
-class ButtonWithText extends StatelessWidget{
+class ButtonWithText extends StatelessWidget {
+  final IconData icon;
+  final GestureTapCallback function;
+  final String text;
 
-    final IconData? icon;
-    final GestureTapCallback? function;
-    final String? text;
-    
-    ButtonWithText({@required this.icon, this.function, this.text});
-    
-    
+  ButtonWithText(
+      {required this.icon, required this.function, required this.text});
 
-    @override
-    Widget build(BuildContext context){
-        return Expanded(
-            child:GestureDetector(
-                onTap: function,
-                child: Card(child:Column(
-                    children: <Widget>[
-                        Icon(icon),
-                        Text(text!)
-                    ],
-                ),),
-            )
-        );
-    }
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+        child: InkWell(
+            onTap: function,
+            child: Card(
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: <Widget>[Icon(icon), Text(text)],
+                ),
+              ),
+            )));
+  }
 }
 
+class StateBar extends StatelessWidget {
+  void writeReg(int reg, double val, BuildContext context) {
+    bool aux = GlobalWidget.of(context).droguiWrite(reg, val);
+    logg((aux ? 'Sent $reg = $val!' : 'Not Connected :/'), context);
+  }
 
-
-class StateBar extends StatelessWidget{
-	final Socket? sock;
-	StateBar({@required this.sock});
-	void arm(){
-		sock!.add(utf8.encode('arm'));
-	}
-	void start(){
-		sock!.add(utf8.encode('start'));
-	}
-    void descend(){
-		sock!.add(utf8.encode('descend'));
-	}
-    stop() => sock!.add(utf8.encode('stop'));
-    
-	@override
-	Widget build(BuildContext context){
-
-		return Row(
-			mainAxisAlignment: MainAxisAlignment.center,
-			children: <Widget>[
-                ButtonWithText(text: 'Descend', icon: Icons.paragliding, function: descend),
-                ButtonWithText(text: 'Stop', icon: Icons.anchor, function: stop),
-                ButtonWithText(text: 'Arm', icon: Icons.construction, function: arm),
-                ButtonWithText(text: 'Start', icon: Icons.airplanemode_active, function: start),
-			],
-		); 
-	}
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        ButtonWithText(
+            text: 'Descend',
+            icon: Icons.paragliding,
+            function: () => writeReg(DESC, 1.0, context)),
+        ButtonWithText(
+            text: 'Stop',
+            icon: Icons.anchor,
+            function: () => writeReg(STOP, 1.0, context)),
+        ButtonWithText(
+            text: 'Arm',
+            icon: Icons.construction,
+            function: () => writeReg(ARM, 1.0, context)),
+        ButtonWithText(
+            text: 'Start',
+            icon: Icons.airplanemode_active,
+            function: () => writeReg(START, 1.0, context)),
+      ],
+    );
+  }
 }

@@ -1,26 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/pages/calibration.dart';
+import 'package:test_app/pages/readWrite.dart';
+import 'package:test_app/pages/sensors.dart';
 import 'dart:io';
+import 'utils/utils.dart';
 import 'widgets/states.dart';
-import 'pages/pid.dart';
-import 'pages/setpoint.dart';
+import 'pages/pidXYZ.dart';
+import 'pages/slideSetpoint.dart';
+import 'pages/options.dart';
+import 'utils/constants.dart';
+import 'global.dart';
 
-late Socket socket;
-void main() async {
-  socket = await Socket.connect('191.98.175.75', 1194);
+Socket? socket;
+bool connected = false;
+void main() {
   runApp(MyApp());
+}
+
+class MyBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
+  }
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MasterWidget(
+        child: MaterialApp(
+      builder: (context, child) {
+        return ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: child!,
+        );
+      },
       title: 'Drogui',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: primaryColor,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+      home: MyHomePage(title: 'Drogui'),
+    ));
   }
 }
 
@@ -28,65 +50,70 @@ class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool connected = true;
-  // send hello
   final pgController = PageController(
     initialPage: 1,
   );
 
-  void close() {
-    socket.close();
-    connected = false;
-    print('disconnected');
+  bool connected = false;
+
+  void connectSocket() {
+    GlobalWidget.of(context).connectSocket();
+    if (!connected) {
+      logg('Cannot connect :(', context);
+    }
     setState(() {});
   }
 
-  void conn() async {
-    socket = await Socket.connect('191.98.175.75', 1194);
-    connected = true;
-    print('connected');
+  void closeSocket() {
+    GlobalWidget.of(context).closeSocket();
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-				
-        leading: GestureDetector(
-          onTap: (connected ? close : conn),
-          child: Icon(
-            (connected
-                ? Icons.power_off_sharp 
-                : Icons.power_rounded  ), // add custom icons also
-          ),
-        ),
-      ),
-      body: Stack(
-          fit: StackFit.expand,
-          alignment: Alignment.center,
-          children: <Widget>[
-            Padding(
-                padding: EdgeInsets.all(50),
-                child: PageView(
-                  controller: pgController,
-                  children: [PIDPage(sock: socket), SetPointPage(sock: socket)],
-                )),
-            Positioned(
-                bottom: 20,
-                left: 20,
-                right: 20,
-                child: StateBar(
-                  sock: socket,
-                ))
-          ]),
-    );
+        appBar: AppBar(
+            title: Text(widget.title),
+            backgroundColor: (GlobalWidget.of(context).connected
+                ? Colors.green
+                : Colors.red),
+            actions: [
+              IconButton(
+                  onPressed: (GlobalWidget.of(context).connected
+                      ? closeSocket
+                      : () => connectSocket()),
+                  icon: Icon((GlobalWidget.of(context).connected
+                          ? Icons.power_off_sharp
+                          : Icons.power_rounded) // add custom icons also
+                      )),
+              SizedBox(width: 10)
+            ]),
+        body: SingleChildScrollView(
+            physics: ClampingScrollPhysics(),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.8,
+              child: Stack(
+                  fit: StackFit.expand,
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    Padding(
+                        padding: EdgeInsets.all(50),
+                        child: PageView(controller: pgController, children: [
+                          OptionsPage(),
+                          SlideSetpointPage(),
+                          SensorsPage(),
+                          ReadWritePage(),
+                          PIDThreePage(),
+                          CalibrationPage()
+                        ])),
+                    Positioned(
+                        bottom: 20, left: 20, right: 20, child: StateBar())
+                  ]),
+            )));
   }
 }
