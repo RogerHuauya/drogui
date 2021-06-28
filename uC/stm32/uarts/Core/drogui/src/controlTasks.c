@@ -213,8 +213,8 @@ void xyzControlTask(){
             setTrayectory(&z_sp, z_sp.fin, getReg(Z_REF), getReg(Z_PERIOD), TIME);
         z_ref =  getSetpoint(&z_sp, TIME);
 
-        vx_ref = computePid(&x_control, x_ref - x, TIME, 0);
-        vy_ref = computePid(&y_control, y_ref - y, TIME, 0);
+        vx_ref = x;//computePid(&x_control, x_ref - x, TIME, 0);
+        vy_ref = y;//computePid(&y_control, y_ref - y, TIME, 0);
 
         H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG);
         rampValue(&H, H_ref, 0.15);
