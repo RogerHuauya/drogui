@@ -15,7 +15,7 @@ void blinkTask(void *argument){
 void debugTask(void *argument){
     
     
-    serialPrintf(SER_DBG, "%f %f\n",getReg(XP_REF), getReg(YP_REF));
+    serialPrintf(SER_DBG, "%f %f %f %f\n", xp_ref, xp,xp_ref -xp, pitch_ref);
     //serialPrintf(SER_DBG, "%f %f %f\n", gx, gy, gz);
     //serialPrintf(SER_DBG, "%f %f %f\n", mx, my, mz);
 	//serialPrintf(SER_DBG, "%f %f %f\n", ax, ay, az);
@@ -50,7 +50,7 @@ void securityTask(){
 
 void initDebug(){
     state = SEC_STOP;
-    //addTask(&debugTask, 100000, 1);
+    //addTask(&debugTask, 10000, 1);
 
     addTask(&blinkTask, 100000, 1);   
     

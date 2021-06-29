@@ -74,16 +74,16 @@ void updatePID(){
 
         case PID_X:
 			if(index == 0)
-            	x_control.kp[0] = getReg(X_KP), x_control.ki[0] = getReg(X_KI), x_control.kd[0] = getReg(X_KD);
+				x_control.kp[0] = getReg(X_KP), x_control.ki[0] = getReg(X_KI), x_control.kd[0] = getReg(X_KD);
 			else if(index == 1)
-            	xp_control.kp[0] = getReg(X_KP), xp_control.ki[0] = getReg(X_KI), xp_control.kd[0] = getReg(X_KD);
+				xp_control.kp[0] = getReg(X_KP), xp_control.ki[0] = getReg(X_KI), xp_control.kd[0] = getReg(X_KD);
         break;
 
         case PID_Y:
 			if(index == 0)
-            	y_control.kp[0] = getReg(Y_KP), y_control.ki[0] = getReg(Y_KI), y_control.kd[0] = getReg(Y_KD);
+				y_control.kp[0] = getReg(Y_KP), y_control.ki[0] = getReg(Y_KI), y_control.kd[0] = getReg(Y_KD);
 			else if (index == 1)	
-            	yp_control.kp[0] = getReg(Y_KP), yp_control.ki[0] = getReg(Y_KI), yp_control.kd[0] = getReg(Y_KD);
+				yp_control.kp[0] = getReg(Y_KP), yp_control.ki[0] = getReg(Y_KI), yp_control.kd[0] = getReg(Y_KD);
         break;
 
         case PID_Z:
@@ -92,7 +92,6 @@ void updatePID(){
             z_control.kd[0] = getReg(Z_KD);
         break;
 
-    
     }
     roll2w.N_filt = pitch2w.N_filt = yaw2w.N_filt = wroll_control.N_filt = wpitch_control.N_filt = wyaw_control.N_filt = getReg(N_FILTER);
 }
@@ -116,8 +115,6 @@ void wControlTask(){
 
         saturateM(H_comp*100);
     }
-
-    
 
     if(state == SEC_STOP){
         M1 = M2 = M3 = M4 = 0;
@@ -171,9 +168,9 @@ void rpyControlTask(){
     }
     
     if(state == SEC_STOP){
-        setTrayectory(&roll_sp, 0, 0, 1, TIME);
-        setTrayectory(&pitch_sp, 0, 0, 1, TIME);
-        setReg(ROLL_REF, 0), setReg(PITCH_REF, 0), setReg(YAW_REF, 0);
+        setTrayectory(&roll_sp, 0, 0, 0, TIME);
+        setTrayectory(&pitch_sp, 0, 0, 0, TIME);
+		roll_ref = pitch_ref = yaw_ref = 0; 
     }
 
     if(state == ARM_MOTORS){
@@ -239,8 +236,8 @@ void xyzControlTask(){
         setTrayectory(&x_sp, 0, 0, 0, TIME);
         setTrayectory(&y_sp, 0, 0, 0, TIME);
         setTrayectory(&z_sp, 0, 0, 0, TIME);
-        //setReg(X_REF, 0), setReg(Y_REF, 0), setReg(Z_REF, 0);
-        //setReg(Z_MG, 10);
+        x_ref = y_ref = z_ref = 0;
+		vx_ref = vy_ref = 0;
     }
 
     if(state == ARM_MOTORS){
@@ -269,8 +266,6 @@ void xypControlTask(){
 		xp_ref  = vx_ref*cos(raw_yaw) + vy_ref*sin(raw_yaw);
 		yp_ref =  -vx_ref*sin(raw_yaw) + vy_ref*cos(raw_yaw);
 		
-		setReg(XP_REF, xp_ref);
-		setReg(YP_REF, yp_ref);
 
         if(getReg(START_XYC) > 0){
 			roll_ref = -computePid(&yp_control, yp_ref - yp, TIME, 0);
@@ -278,15 +273,17 @@ void xypControlTask(){
 		}
 	}
 
-
 	if(state == ARM_MOTORS){
         resetPid(&xp_control, TIME);
         resetPid(&yp_control, TIME);
     }
+    
+	if(state == SEC_STOP){
+		xp_ref = yp_ref = 0;
+    }
 
-    //setReg(XP_REF,xp_ref);
-    //setReg(YP_REF,yp_ref);
-
+	setReg(XP_REF, xp_ref);
+	setReg(YP_REF, yp_ref);
 }
 
 void initControlTasks(){
