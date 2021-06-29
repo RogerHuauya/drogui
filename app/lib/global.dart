@@ -36,7 +36,7 @@ class MasTerWidgetState extends State<MasterWidget> {
     msg.setUint8(1, '\$'.codeUnitAt(0));
     msg.setUint8(2, 'w'.codeUnitAt(0));
     msg.setUint8(3, reg);
-    msg.setFloat32(4, val);
+    msg.setFloat32(4, val, Endian.little);
 
     socket.add(msg.buffer.asUint8List().cast<int>());
     return true;
@@ -96,7 +96,7 @@ class MasTerWidgetState extends State<MasterWidget> {
 
   void connectSocket() async {
     try {
-      socket = await Socket.connect('192.168.0.12', 8000,
+      socket = await Socket.connect('192.168.0.101', 8000,
           timeout: Duration(seconds: 3));
 
       socket.listen(recieved, onDone: serverClosed);
