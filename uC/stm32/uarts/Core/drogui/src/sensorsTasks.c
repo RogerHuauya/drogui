@@ -122,6 +122,7 @@ void gpsTask(){
 			setReg(GPS_CNT, myGPS.cnt++);
 	}
 	else if( ret == CRASHED ){
+		serialPrint(SER_DBG, "GPS Crashed\n");
 		if(state == ARM_MOTORS || state == CONTROL_LOOP)
 			state = DESCEND;
 	}
@@ -147,6 +148,7 @@ void optTask(){
 
 	}
 	else if(ret == CRASHED){
+		serialPrint(SER_DBG, "OPT Crashed\n");
 		if(state == ARM_MOTORS || state == CONTROL_LOOP)
 			state = DESCEND;
 	}
@@ -160,6 +162,7 @@ void teraTask(){
 	if(ret == OK)
 		z_tera = myTera.distance/1000.0;
 	else if(ret == CRASHED){
+		serialPrint(SER_DBG, "Tera Crashed\n");
 		if(state == ARM_MOTORS || state == CONTROL_LOOP)
 			state = DESCEND;
 	}
