@@ -3,7 +3,7 @@ import time
 import threading
 import struct
 
-HOST = '192.168.0.12'  # The server's hostname or IP address
+HOST = '192.168.0.101'  # The server's hostname or IP address
 PORT = 8000       # The port used by the server
 global msg
 msg = ""
