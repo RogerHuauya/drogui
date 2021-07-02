@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:test_app/global.dart';
 import 'package:test_app/utils/constants.dart';
@@ -54,7 +56,9 @@ class SensorsPageState extends State<SensorsPage>
 
   void readReg(int id) {
     bool aux = GlobalWidget.of(context).droguiRead(var1[id]);
+    sleep(Duration(milliseconds: 200));
     aux &= GlobalWidget.of(context).droguiRead(var2[id]);
+    sleep(Duration(milliseconds: 200));
     aux &= GlobalWidget.of(context).droguiRead(var3[id]);
     logg(
         (aux ? 'Read ${var1[id]} ${var2[id]} ${var3[id]}' : 'Not Connected :/'),

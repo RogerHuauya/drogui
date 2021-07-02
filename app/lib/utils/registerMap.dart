@@ -104,42 +104,47 @@ const int X_REF = 	0x78;
 const int Y_REF = 	0x7A;
 const int Z_REF = 	0x7C;
 
-const int ROLL_REF_SIZE = 	0x7E;
-const int PITCH_REF_SIZE = 	0x80;
-const int YAW_REF_SIZE = 	0x82;
-const int X_REF_SIZE = 	0x84;
-const int Y_REF_SIZE = 	0x86;
-const int Z_REF_SIZE = 	0x88;
+const int VX_REF = 	0x7E;
+const int VY_REF = 	0x80;
+const int XP_REF = 	0x82;
+const int YP_REF = 	0x84;
 
-const int ROLL_PERIOD = 	0x8A;
-const int PITCH_PERIOD = 	0x8C;
-const int YAW_PERIOD = 	0x8E;
-const int X_PERIOD = 	0x90;
-const int Y_PERIOD = 	0x92;
-const int Z_PERIOD = 	0x94;
+const int ROLL_REF_SIZE = 	0x86;
+const int PITCH_REF_SIZE = 	0x88;
+const int YAW_REF_SIZE = 	0x8A;
+const int X_REF_SIZE = 	0x8C;
+const int Y_REF_SIZE = 	0x8E;
+const int Z_REF_SIZE = 	0x90;
 
-const int ROLL_SCURVE = 	0x96;
-const int PITCH_SCURVE = 	0x98;
-const int YAW_SCURVE = 	0x9A;
-const int X_SCURVE = 	0x9C;
-const int Y_SCURVE = 	0x9E;
-const int Z_SCURVE = 	0xA0;
+const int ROLL_PERIOD = 	0x92;
+const int PITCH_PERIOD = 	0x94;
+const int YAW_PERIOD = 	0x96;
+const int X_PERIOD = 	0x98;
+const int Y_PERIOD = 	0x9A;
+const int Z_PERIOD = 	0x9C;
 
-const int GYRO_X_REF = 	0xA2;
-const int GYRO_Y_REF = 	0xA4;
-const int GYRO_Z_REF = 	0xA6;
+const int ROLL_SCURVE = 	0x9E;
+const int PITCH_SCURVE = 	0xA0;
+const int YAW_SCURVE = 	0xA2;
+const int X_SCURVE = 	0xA4;
+const int Y_SCURVE = 	0xA6;
+const int Z_SCURVE = 	0xA8;
+
+const int GYRO_X_REF = 	0xAA;
+const int GYRO_Y_REF = 	0xAC;
+const int GYRO_Z_REF = 	0xAE;
 
 ///**********************************
 // * State
 // **********************************/
 
-const int ROLL_VAL = 	0xA8;
-const int PITCH_VAL = 	0xAA;
-const int YAW_VAL = 	0xAC;
+const int ROLL_VAL = 	0xB0;
+const int PITCH_VAL = 	0xB2;
+const int YAW_VAL = 	0xB4;
 
-const int X_VAL = 	0xAE;
-const int Y_VAL = 	0xB0;
-const int Z_VAL = 	0xB2;
+const int X_VAL = 	0xB6;
+const int Y_VAL = 	0xB8;
+const int Z_VAL = 	0xBA;
 
 
 
@@ -148,18 +153,18 @@ const int Z_VAL = 	0xB2;
 // **********************************/
 
 //// XYZ
-const int DER_X = 	0xB4;
-const int DER_Y = 	0xB6;
-const int DER_Z = 	0xB8;
+const int DER_X = 	0xBC;
+const int DER_Y = 	0xBE;
+const int DER_Z = 	0xC0;
 
 //// RPY
-const int RAW_ROLL = 	0xBA;
-const int RAW_PITCH = 	0xBC;
-const int RAW_YAW = 	0xBE;
+const int RAW_ROLL = 	0xC2;
+const int RAW_PITCH = 	0xC4;
+const int RAW_YAW = 	0xC6;
 
-const int DER_ROLL = 	0xC0;
-const int DER_PITCH = 	0xC2;
-const int DER_YAW = 	0xC4;
+const int DER_ROLL = 	0xC8;
+const int DER_PITCH = 	0xCA;
+const int DER_YAW = 	0xCC;
 
 ////// BMP
 ////#define	RAW_TEMP
@@ -168,43 +173,43 @@ const int DER_YAW = 	0xC4;
 ////#define	PRESS_ABS
 
 //// GPS
-const int GPS_X = 	0xC6;
-const int GPS_Y = 	0xC8;
-const int GPS_CNT = 	0xCA;
-const int GPS_STATE = 	0xCC;
-const int GPS_AVAILABLE = 	0xCE;
-const int START_GPS = 	0xD0;
+const int GPS_X = 	0xCE;
+const int GPS_Y = 	0xD0;
+const int GPS_CNT = 	0xD2;
+const int GPS_STATE = 	0xD4;
+const int GPS_AVAILABLE = 	0xD6;
+const int START_GPS = 	0xD8;
 
 //// Accelerometer
-const int ACC_X = 	0xD2;
-const int ACC_Y = 	0xD4;
-const int ACC_Z = 	0xD6;
+const int ACC_X = 	0xDA;
+const int ACC_Y = 	0xDC;
+const int ACC_Z = 	0xDE;
 
 //// Gyroscope
-const int GYRO_X = 	0xD8;
-const int GYRO_Y = 	0xDA;
-const int GYRO_Z = 	0xDC;
+const int GYRO_X = 	0xE0;
+const int GYRO_Y = 	0xE2;
+const int GYRO_Z = 	0xE4;
 
-const int DER_GYRO_X = 	0xDE;
-const int DER_GYRO_Y = 	0xE0;
+const int DER_GYRO_X = 	0xE6;
+const int DER_GYRO_Y = 	0xE8;
 
 //// Magnetometer
-const int MAG_X = 	0xE2;
-const int MAG_Y = 	0xE4;
-const int MAG_Z = 	0xE6;
+const int MAG_X = 	0xEA;
+const int MAG_Y = 	0xEC;
+const int MAG_Z = 	0xEE;
 
 //// Optical Flow
-const int XP_VAL = 	0xE8;
-const int YP_VAL = 	0xEA;
-const int Z_RNG = 	0xEC;
-const int OPT_STATE = 	0xEE;
-const int Q_OF = 	0xF0;
+const int XP_VAL = 	0xF0;
+const int YP_VAL = 	0xF2;
+const int Z_RNG = 	0xF4;
+////#define OPT_STATE
+////#define Q_OF
 
 //// State Machine
-const int DESC = 	0xF2;
-const int STOP = 	0xF4;
-const int START = 	0xF6;
-const int ARM = 	0xF8;
+const int DESC = 	0xF6;
+const int STOP = 	0xF8;
+const int START = 	0xFA;
+const int ARM = 	0xFC;
 
 
 //#endif 		
