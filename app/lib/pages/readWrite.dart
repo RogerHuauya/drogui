@@ -5,10 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:test_app/utils/constants.dart';
 import 'package:test_app/global.dart';
 import 'package:test_app/utils/utils.dart';
+import 'package:test_app/widgets/myicons.dart';
 
 class ReadWritePage extends StatefulWidget {
   ReadWritePageState createState() => ReadWritePageState();
 }
+
 
 class ReadWritePageState extends State<ReadWritePage>
     with AutomaticKeepAliveClientMixin {
@@ -52,7 +54,7 @@ class ReadWritePageState extends State<ReadWritePage>
                   Text('Read '),
                   Expanded(
                       child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: EdgeInsets.symmetric(horizontal: 5),
                           child: TextField(
                               textAlign: TextAlign.center,
                               keyboardType: TextInputType.number,
@@ -66,19 +68,15 @@ class ReadWritePageState extends State<ReadWritePage>
                               .getReg(int.tryParse(readRg.text) ?? 0)
                               .toStringAsFixed(2),
                           textAlign: TextAlign.center)),
-                  IconButton(
-                      onPressed: () => readReg(int.tryParse(readRg.text) ?? 0),
-                      constraints: BoxConstraints(maxHeight: 20, maxWidth: 20),
-                      splashRadius: 20,
-                      padding: new EdgeInsets.all(0.0),
-                      iconSize: 20.0,
-                      icon: Icon(Icons.read_more))
+                  MyIconButton(
+                      function: () => readReg(int.tryParse(readRg.text) ?? 0),
+                      icon: Icons.read_more)
                 ]),
                 Row(children: [
                   Text('Write'),
                   Expanded(
                       child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: EdgeInsets.symmetric(horizontal: 5),
                           child: TextField(
                               textAlign: TextAlign.center,
                               keyboardType: TextInputType.number,
@@ -88,19 +86,15 @@ class ReadWritePageState extends State<ReadWritePage>
                               controller: writeRg))),
                   Expanded(
                       child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: EdgeInsets.symmetric(horizontal: 5),
                           child: TextField(
                               textAlign: TextAlign.center,
                               keyboardType: TextInputType.number,
                               controller: writeVal))),
-                  IconButton(
-                      onPressed: () => writeReg(int.tryParse(writeRg.text) ?? 0,
+                  MyIconButton(
+                      function: () => writeReg(int.tryParse(writeRg.text) ?? 0,
                           double.tryParse(writeVal.text) ?? 0),
-                      constraints: BoxConstraints(maxHeight: 20, maxWidth: 20),
-                      splashRadius: 20,
-                      padding: new EdgeInsets.all(0.0),
-                      iconSize: 20.0,
-                      icon: Icon(Icons.send))
+                      icon: Icons.send)
                 ])
               ],
             ),

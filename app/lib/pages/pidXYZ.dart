@@ -4,6 +4,7 @@ import 'package:test_app/utils/constants.dart';
 import 'package:test_app/global.dart';
 import 'package:test_app/utils/registerMap.dart';
 import 'package:test_app/utils/utils.dart';
+import 'package:test_app/widgets/myicons.dart';
 
 class ThreeTextFields extends StatefulWidget {
   final String name;
@@ -21,7 +22,7 @@ class _MyTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(
         child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 5),
             child: TextField(
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.number,
@@ -75,7 +76,7 @@ class ThreeTextFieldsState extends State<ThreeTextFields>
             punto = true;
           }
         }),
-        child: Text(name),
+        child: Padding(padding: EdgeInsets.fromLTRB(0, 0, 10, 0), child: Text(name)),
       ),
       Expanded(
           child: Row(children: [
@@ -83,13 +84,7 @@ class ThreeTextFieldsState extends State<ThreeTextFields>
         _MyTextField(ed: ki),
         _MyTextField(ed: kd)
       ])),
-      IconButton(
-          constraints: BoxConstraints(maxHeight: 20, maxWidth: 20),
-          splashRadius: 20,
-          padding: new EdgeInsets.all(0.0),
-          onPressed: writeRegs,
-          iconSize: 20.0,
-          icon: Icon(Icons.send))
+      MyIconButton(function: writeRegs, icon: Icons.send)
     ]);
   }
 }
@@ -122,7 +117,7 @@ class PIDThreePage extends StatelessWidget {
       children: [
         Card(
             child: Padding(
-                padding: EdgeInsets.fromLTRB(25, 30, 25, 30),
+                padding: EdgeInsets.fromLTRB(10, 30, 10, 30),
                 child: Column(children: [
                   Row(children: [
                     _MyTitleLetter(letter: 'P'),

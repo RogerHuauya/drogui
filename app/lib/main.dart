@@ -102,8 +102,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   alignment: Alignment.center,
                   children: <Widget>[
                     Padding(
-                        padding: EdgeInsets.all(50),
-                        child: PageView(controller: pgController, children: [
+                        padding: EdgeInsets.all(25),
+                        child: PageView(
+                          scrollDirection: Axis.vertical,
+                          controller: pgController, children: [
                           OptionsPage(),
                           SlideSetpointPage(),
                           SensorsPage(),

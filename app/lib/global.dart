@@ -96,7 +96,7 @@ class MasTerWidgetState extends State<MasterWidget> {
 
   void connectSocket() async {
     try {
-      socket = await Socket.connect('192.168.0.101', 8000,
+      socket = await Socket.connect('191.98.175.75', 1194,
           timeout: Duration(seconds: 3));
 
       socket.listen(recieved, onDone: serverClosed);

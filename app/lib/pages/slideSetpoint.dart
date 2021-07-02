@@ -3,6 +3,7 @@ import 'package:test_app/utils/constants.dart';
 import 'package:test_app/global.dart';
 import 'package:test_app/utils/registerMap.dart';
 import 'package:test_app/utils/utils.dart';
+import 'package:test_app/widgets/myicons.dart';
 
 class SliderSent extends StatefulWidget {
   final String name;
@@ -20,6 +21,8 @@ class SliderSent extends StatefulWidget {
     return SliderState();
   }
 }
+
+
 
 class SliderState extends State<SliderSent> {
   double val = 0;
@@ -44,16 +47,12 @@ class SliderState extends State<SliderSent> {
                       val = newVal;
                     }),
                 value: val)),
-        IconButton(
-            constraints: BoxConstraints(maxHeight: 20, maxWidth: 20),
-            splashRadius: 20,
-            padding: new EdgeInsets.all(0.0),
-            onPressed: () {
+        MyIconButton(
+            function: () {
               writeReg(widget.regVar, val);
               writeReg(widget.regTim, widget.time);
             },
-            iconSize: 20.0,
-            icon: Icon(Icons.send))
+            icon: Icons.send)
       ],
     );
   }

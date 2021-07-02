@@ -18,7 +18,7 @@ class ButtonWithText extends StatelessWidget {
             onTap: function,
             child: Card(
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(5),
                 child: Column(
                   children: <Widget>[Icon(icon), Text(text)],
                 ),
