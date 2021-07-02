@@ -2,7 +2,7 @@
 #define SOCKETS_H
 #if defined WIN32
 #include <winsock.h>
-#else
+#else   
 #define closesocket close
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -33,13 +33,8 @@ struct Socket{
     void readBuffer(unsigned char buff[], int len);
     void sendBuffer(unsigned char buff[], int len);
 
-<<<<<<< HEAD
     void sendJson(string s);
     void readJson(string s);
-=======
-    void sendJson(std::string s);
-    void readJson(std::string * s);
->>>>>>> 73f29d6b904f8ab1a13527ba1a88c293307797fd
 
     Socket(const char* _ip, int _port){
         ip = (char *)_ip, port = _port;

@@ -1,0 +1,215 @@
+//#ifndef REGISTER_MAP_H
+//#define REGISTER_MAP_H
+
+
+//enum PIDVAR {PID_ROLL, PID_PITCH, PID_YAW, PID_X, PID_Y, PID_Z};
+
+
+///**********************************
+// * Calibration
+// **********************************/
+
+const int CAL_SYS = 	0x02;
+const int CAL_GYR = 	0x04;
+const int CAL_ACC = 	0x06;
+const int CAL_MAG = 	0x08;
+
+const int CAL_GYR_TRG = 	0x0A;
+const int CAL_ACC_TRG = 	0x0C;
+const int CAL_MAG_TRG = 	0x0E;
+
+
+const int ROLL_OFFSET = 	0x10;
+const int PITCH_OFFSET = 	0x12;
+const int YAW_OFFSET = 	0x14;
+
+const int GYR_X_OFF = 	0x16;
+const int GYR_Y_OFF = 	0x18;
+const int GYR_Z_OFF = 	0x1A;
+
+const int ACC_X_OFF = 	0x1C;
+const int ACC_Y_OFF = 	0x1E;
+const int ACC_Z_OFF = 	0x20;
+const int ACC_SCALE = 	0x22;
+
+const int MAG_X_OFF = 	0x24;
+const int MAG_Y_OFF = 	0x26;
+const int MAG_Z_OFF = 	0x28;
+const int MAG_X_SCALE = 	0x2A;
+const int MAG_Y_SCALE = 	0x2C;
+const int MAG_Z_SCALE = 	0x2E;
+
+
+///**********************************
+// * Control Constants
+// **********************************/
+
+const int ROLL_KP = 	0x30;
+const int ROLL_KI = 	0x32;
+const int ROLL_KD = 	0x34;
+
+const int PITCH_KP = 	0x36;
+const int PITCH_KI = 	0x38;
+const int PITCH_KD = 	0x3A;
+
+const int YAW_KP = 	0x3C;
+const int YAW_KI = 	0x3E;
+const int YAW_KD = 	0x40;
+
+const int X_KP = 	0x42;
+const int X_KI = 	0x44;
+const int X_KD = 	0x46;
+
+const int Y_KP = 	0x48;
+const int Y_KI = 	0x4A;
+const int Y_KD = 	0x4C;
+
+const int Z_KP = 	0x4E;
+const int Z_KI = 	0x50;
+const int Z_KD = 	0x52;
+
+const int PID_INDEX = 	0x54;
+const int PID_VAR = 	0x56;
+const int N_FILTER = 	0x58;
+const int START_XYC = 	0x5A;
+
+
+///**********************************
+// * Control Law
+// **********************************/
+
+
+const int ROLL_U = 	0x5C;
+const int PITCH_U = 	0x5E;
+const int YAW_U = 	0x60;
+const int X_U = 	0x62;
+const int Y_U = 	0x64;
+const int Z_U = 	0x66;
+
+const int MOTOR_1 = 	0x68;
+const int MOTOR_2 = 	0x6A;
+const int MOTOR_3 = 	0x6C;
+const int MOTOR_4 = 	0x6E;
+
+const int Z_MG = 	0x70;
+
+///**********************************
+// * Control Setpoint
+// **********************************/
+
+const int ROLL_REF = 	0x72;
+const int PITCH_REF = 	0x74;
+const int YAW_REF = 	0x76;
+const int X_REF = 	0x78;
+const int Y_REF = 	0x7A;
+const int Z_REF = 	0x7C;
+
+const int VX_REF = 	0x7E;
+const int VY_REF = 	0x80;
+const int XP_REF = 	0x82;
+const int YP_REF = 	0x84;
+
+const int ROLL_REF_SIZE = 	0x86;
+const int PITCH_REF_SIZE = 	0x88;
+const int YAW_REF_SIZE = 	0x8A;
+const int X_REF_SIZE = 	0x8C;
+const int Y_REF_SIZE = 	0x8E;
+const int Z_REF_SIZE = 	0x90;
+
+const int ROLL_PERIOD = 	0x92;
+const int PITCH_PERIOD = 	0x94;
+const int YAW_PERIOD = 	0x96;
+const int X_PERIOD = 	0x98;
+const int Y_PERIOD = 	0x9A;
+const int Z_PERIOD = 	0x9C;
+
+const int ROLL_SCURVE = 	0x9E;
+const int PITCH_SCURVE = 	0xA0;
+const int YAW_SCURVE = 	0xA2;
+const int X_SCURVE = 	0xA4;
+const int Y_SCURVE = 	0xA6;
+const int Z_SCURVE = 	0xA8;
+
+const int GYRO_X_REF = 	0xAA;
+const int GYRO_Y_REF = 	0xAC;
+const int GYRO_Z_REF = 	0xAE;
+
+///**********************************
+// * State
+// **********************************/
+
+const int ROLL_VAL = 	0xB0;
+const int PITCH_VAL = 	0xB2;
+const int YAW_VAL = 	0xB4;
+
+const int X_VAL = 	0xB6;
+const int Y_VAL = 	0xB8;
+const int Z_VAL = 	0xBA;
+
+
+
+///**********************************
+// * Sensors
+// **********************************/
+
+//// XYZ
+const int DER_X = 	0xBC;
+const int DER_Y = 	0xBE;
+const int DER_Z = 	0xC0;
+
+//// RPY
+const int RAW_ROLL = 	0xC2;
+const int RAW_PITCH = 	0xC4;
+const int RAW_YAW = 	0xC6;
+
+const int DER_ROLL = 	0xC8;
+const int DER_PITCH = 	0xCA;
+const int DER_YAW = 	0xCC;
+
+////// BMP
+////#define	RAW_TEMP
+////#define	TEMP_ABS
+////#define	RAW_PRESS
+////#define	PRESS_ABS
+
+//// GPS
+const int GPS_X = 	0xCE;
+const int GPS_Y = 	0xD0;
+const int GPS_CNT = 	0xD2;
+const int GPS_STATE = 	0xD4;
+const int GPS_AVAILABLE = 	0xD6;
+const int START_GPS = 	0xD8;
+
+//// Accelerometer
+const int ACC_X = 	0xDA;
+const int ACC_Y = 	0xDC;
+const int ACC_Z = 	0xDE;
+
+//// Gyroscope
+const int GYRO_X = 	0xE0;
+const int GYRO_Y = 	0xE2;
+const int GYRO_Z = 	0xE4;
+
+const int DER_GYRO_X = 	0xE6;
+const int DER_GYRO_Y = 	0xE8;
+
+//// Magnetometer
+const int MAG_X = 	0xEA;
+const int MAG_Y = 	0xEC;
+const int MAG_Z = 	0xEE;
+
+//// Optical Flow
+const int XP_VAL = 	0xF0;
+const int YP_VAL = 	0xF2;
+const int Z_RNG = 	0xF4;
+////#define OPT_STATE
+////#define Q_OF
+
+//// State Machine
+const int DESC = 	0xF6;
+const int STOP = 	0xF8;
+const int START = 	0xFA;
+const int ARM = 	0xFC;
+
+
+//#endif 		
