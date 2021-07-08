@@ -121,7 +121,7 @@ AS_INCLUDES =
 
 # C includes
 C_INCLUDES =  \
--I../../../drogui_rpi/registerMap \
+-I../../../drogui_global/registerMap \
 -ICore/drogui/include \
 -ICore/Inc \
 -IDrivers/STM32F7xx_HAL_Driver/Inc \
