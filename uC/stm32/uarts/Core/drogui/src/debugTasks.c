@@ -15,10 +15,13 @@ void blinkTask(void *argument){
 void debugTask(void *argument){
     
     
-    serialPrintf(SER_DBG, "%f %f %f %f\n", xp_ref, xp,xp_ref -xp, pitch_ref);
-    //serialPrintf(SER_DBG, "%f %f %f\n", gx, gy, gz);
+    //serialPrintf(SER_DBG, "%f %f %f %f\n", xp_ref, xp,xp_ref -xp, pitch_ref);
+	//serialPrintf(SER_DBG, "%f %f %f ", ax, ay, az);
+    //serialPrintf(SER_DBG, "%f %f %f ", gx, gy, gz);
     //serialPrintf(SER_DBG, "%f %f %f\n", mx, my, mz);
-	//serialPrintf(SER_DBG, "%f %f %f\n", ax, ay, az);
+	//serialPrintf(SER_DBG, "%f %f %f ", raw_roll*180/pi, raw_pitch*180/pi, raw_yaw*180/pi);
+	serialPrintf(SER_DBG, "%f ", z*100);
+	serialPrintf(SER_DBG, "\n");
 }
 
 void securityTask(){
