@@ -19,8 +19,13 @@ def accept_wrapper(sock):
 def service_connection(key, mask, events):
     sock = key.fileobj
     data = key.data
+#    try:
+    recv_data = b''
     if mask & selectors.EVENT_READ:
-        recv_data = sock.recv(1024)  # Should be ready to read
+        try:
+            recv_data = sock.recv(1024)  # Should be ready to read
+        except:
+            pass
         if recv_data:
             data.outb += recv_data
         else:
@@ -34,7 +39,8 @@ def service_connection(key, mask, events):
                     print("echoing", repr(data.outb), "to", _key.data.addr)
                     sent = _key.fileobj.sendall(data.outb)  # Should be ready to write
         data.outb = b''           
-
+ #   except:
+  #      pass
 
 if len(sys.argv) != 3:
     print("usage:", sys.argv[0], "<host> <port>")
