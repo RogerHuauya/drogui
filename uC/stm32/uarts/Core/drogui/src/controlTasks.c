@@ -7,10 +7,10 @@
 
 
 pwm m1, m2, m3, m4;
-pid roll2w, pitch2w, yaw2w; 
+pid roll2w, pitch2w, yaw2w;
 pid wroll_control, wpitch_control, wyaw_control;
 pid z_control, x_control, y_control;
-
+pid xp_control, yp_control;
 filter filter_wroll, filter_wpitch, filter_wyaw;
 filter filter_R, filter_P, filter_Y, filter_H;
 
@@ -21,6 +21,8 @@ float M1,M2,M3,M4;
 
 float wroll_ref, wpitch_ref, wyaw_ref;
 float roll_ref, pitch_ref, yaw_ref;
+float xp_ref = 0, yp_ref = 0;
+float vx_ref = 0, vy_ref = 0;
 float x_ref = 0, y_ref = 0, z_ref = 0;
 float Ixx = 0, Iyy = 0;
 //float aux_wref, aux_wref2;
@@ -71,15 +73,17 @@ void updatePID(){
         break;
 
         case PID_X:
-            x_control.kp[0] = getReg(X_KP);
-            x_control.ki[0] = getReg(X_KI);
-            x_control.kd[0] = getReg(X_KD);
+			if(index == 0)
+				x_control.kp[0] = getReg(X_KP), x_control.ki[0] = getReg(X_KI), x_control.kd[0] = getReg(X_KD);
+			else if(index == 1)
+				xp_control.kp[0] = getReg(X_KP), xp_control.ki[0] = getReg(X_KI), xp_control.kd[0] = getReg(X_KD);
         break;
 
         case PID_Y:
-            y_control.kp[0] = getReg(Y_KP);
-            y_control.ki[0] = getReg(Y_KI);
-            y_control.kd[0] = getReg(Y_KD);
+			if(index == 0)
+				y_control.kp[0] = getReg(Y_KP), y_control.ki[0] = getReg(Y_KI), y_control.kd[0] = getReg(Y_KD);
+			else if (index == 1)	
+				yp_control.kp[0] = getReg(Y_KP), yp_control.ki[0] = getReg(Y_KI), yp_control.kd[0] = getReg(Y_KD);
         break;
 
         case PID_Z:
@@ -88,7 +92,6 @@ void updatePID(){
             z_control.kd[0] = getReg(Z_KD);
         break;
 
-    
     }
     roll2w.N_filt = pitch2w.N_filt = yaw2w.N_filt = wroll_control.N_filt = wpitch_control.N_filt = wyaw_control.N_filt = getReg(N_FILTER);
 }
@@ -112,8 +115,6 @@ void wControlTask(){
 
         saturateM(H_comp*100);
     }
-
-    
 
     if(state == SEC_STOP){
         M1 = M2 = M3 = M4 = 0;
@@ -148,26 +149,7 @@ void wControlTask(){
 
 void rpyControlTask(){
     if(state == CONTROL_LOOP || state == DESCEND){
-        if(getReg(START_XYC) > 0){
-                
-                roll_ref  = -Y_C*cos(raw_yaw) + X_C*sin(raw_yaw);
-                pitch_ref =  Y_C*sin(raw_yaw) + X_C*cos(raw_yaw);
-
-                float rel = roll_ref/(pitch_ref + EPS);
-                
-                if( fabs(rel) < 1  &&  fabs(pitch_ref) >= ANG_MAX  ){
-                    pitch_ref = copysign(ANG_MAX, pitch_ref);
-                    roll_ref = pitch_ref * rel;
-                }
-                else if (fabs(rel) >= 1 && fabs(roll_ref) >= ANG_MAX  ){
-                    roll_ref = copysign(ANG_MAX, roll_ref);
-                    pitch_ref = roll_ref/rel;
-                }
-                
-                /*roll_ref = -Y_C;
-                pitch_ref = X_C;*/
-        }
-        else{
+        if(getReg(START_XYC) <= 0){
 
             if(getReg(ROLL_REF) != roll_sp.fin) 
                 setTrayectory(&roll_sp, roll_sp.fin, getReg(ROLL_REF), getReg(ROLL_PERIOD), TIME);
@@ -186,9 +168,9 @@ void rpyControlTask(){
     }
     
     if(state == SEC_STOP){
-        setTrayectory(&roll_sp, 0, 0, 1, TIME);
-        setTrayectory(&pitch_sp, 0, 0, 1, TIME);
-        setReg(ROLL_REF, 0), setReg(PITCH_REF, 0), setReg(YAW_REF, 0);
+        setTrayectory(&roll_sp, 0, 0, 0, TIME);
+        setTrayectory(&pitch_sp, 0, 0, 0, TIME);
+		roll_ref = pitch_ref = yaw_ref = 0; 
     }
 
     if(state == ARM_MOTORS){
@@ -228,13 +210,13 @@ void xyzControlTask(){
             setTrayectory(&z_sp, z_sp.fin, getReg(Z_REF), getReg(Z_PERIOD), TIME);
         z_ref =  getSetpoint(&z_sp, TIME);
 
-        X_C = computePid(&x_control, x_ref - x, TIME, H);
-        Y_C = computePid(&y_control, y_ref - y, TIME, H);
+        vx_ref = computePid(&x_control, x_ref - x, TIME, 0);
+        vy_ref = computePid(&y_control, y_ref - y, TIME, 0);
 
         H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG);
         rampValue(&H, H_ref, 0.15);
         H_comp = H/(cos(roll)*cos(pitch));
-    }
+	}
     
     if(state == DESCEND){
         if(!descend) 
@@ -254,8 +236,8 @@ void xyzControlTask(){
         setTrayectory(&x_sp, 0, 0, 0, TIME);
         setTrayectory(&y_sp, 0, 0, 0, TIME);
         setTrayectory(&z_sp, 0, 0, 0, TIME);
-        //setReg(X_REF, 0), setReg(Y_REF, 0), setReg(Z_REF, 0);
-        //setReg(Z_MG, 10);
+        x_ref = y_ref = z_ref = 0;
+		vx_ref = vy_ref = 0;
     }
 
     if(state == ARM_MOTORS){
@@ -274,9 +256,35 @@ void xyzControlTask(){
     setReg(DER_X,x_control.errd);
     setReg(DER_Y,y_control.errd);
     setReg(DER_Z,z_control.errd);
-
+    setReg(VX_REF, vx_ref);
+    setReg(VY_REF, vy_ref);
+	
 }
 
+void xypControlTask(){
+	if(state == CONTROL_LOOP){
+		xp_ref  = vx_ref*cos(raw_yaw) + vy_ref*sin(raw_yaw);
+		yp_ref =  -vx_ref*sin(raw_yaw) + vy_ref*cos(raw_yaw);
+		
+
+        if(getReg(START_XYC) > 0){
+			roll_ref = -computePid(&yp_control, yp_ref - yp, TIME, 0);
+			pitch_ref = computePid(&xp_control, xp_ref - xp, TIME, 0);
+		}
+	}
+
+	if(state == ARM_MOTORS){
+        resetPid(&xp_control, TIME);
+        resetPid(&yp_control, TIME);
+    }
+    
+	if(state == SEC_STOP){
+		xp_ref = yp_ref = 0;
+    }
+
+	setReg(XP_REF, xp_ref);
+	setReg(YP_REF, yp_ref);
+}
 
 void initControlTasks(){
     
@@ -290,9 +298,13 @@ void initControlTasks(){
     initPwm(&m3, &htim4, TIM_CHANNEL_3, &(htim4.Instance->CCR3));
     initPwm(&m2, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
-    initPid(&z_control,  10, 750,    2, 0, 50 , 10, 30, (NORMAL | D_SG));
-    initPid(&x_control, 0.2, 1.5, 0.08, 0, 50 , 10, ANG_MAX, D_SG);
-    initPid(&y_control, 0.2, 1.5, 0.08, 0, 50 , 10, ANG_MAX, D_SG);
+
+    initPid(&xp_control,  0.1, 2, 0, 0, 50 , 5, ANG_MAX, D_SG);
+    initPid(&yp_control,  0.2, 2, 0, 0, 50 , 5, ANG_MAX, D_SG);
+
+    initPid(&z_control,  10, 750,    2, 0, 50 , 10, 30, D_SG);
+    initPid(&x_control, 0.1, 0.2, 0, 0, 50 , 2, 1, D_SG);
+    initPid(&y_control, 0.1, 0.2, 0, 0, 50 , 2, 1, D_SG);
 
     initPidFilter(&roll2w,  500, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
     initPidFilter(&pitch2w, 300, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
@@ -320,9 +332,9 @@ void initControlTasks(){
     setReg(N_FILTER, 50);
 
 
-    addTask(&wControlTask, 1000, 1);
-    addTask(&rpyControlTask, 2000, 1);
+    addTask(&wControlTask,    1000, 1);
+    addTask(&rpyControlTask,  2000, 1);
+	addTask(&xypControlTask, 10000, 1);
     addTask(&xyzControlTask, 10000, 1);
-
     
 }
