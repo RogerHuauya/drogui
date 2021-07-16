@@ -68,6 +68,10 @@ void getPosition(float *x, float *y, float *z);
 /**
  * @brief Set number of samples  
  */
+void getVelocity(float *xp, float *yp);
+/**
+ * @brief Set number of samples  
+ */
 void setKalmanTsGps(float ts);
 /**
  * @brief Set all matrices with zeros 

@@ -12,13 +12,13 @@
 char auxbuff[50];
 void _main(){
     serialsBegin();
-    changeBaudrate(SER_DBG, 2000000); 
+    changeBaudrate(SER_DBG, 2000000);
     HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
     HAL_Delay(1000);
-    
+
     serialPrint(SER_DBG, "Start System\n");
-    
-    
+
+
     initDebug();
     initControlTasks();
     initSensorsTasks();
@@ -26,7 +26,7 @@ void _main(){
     //sprintf(auxbuff, "%d\n", __FPU_USED);
     //HAL_UART_Transmit(&huart2, (uint8_t*) auxbuff, strlen(auxbuff), 100);
     initRTOS();
-    
+
 }
 
 #endif

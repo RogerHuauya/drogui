@@ -213,7 +213,7 @@ bool mpuQuiet(mpu9250* m, int n, float treshold, bool cal){
         HAL_Delay(1);
     }
     
-    //serialPrintf("%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
+    //serialPrintf(SER_DBG,"%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
 
     if( ( max_gyro[0]-min_gyro[0] < (treshold + 1.8) ) &&\
         ( max_gyro[1]-min_gyro[1] < (treshold + 3.8) ) && \
@@ -271,14 +271,14 @@ void calibrateAccel(mpu9250* m){
         while(!mpuQuiet(m, 100, 2, false));
         readRawAcc(m);
         valid = true;
-        for(int i = 1 ; i <= tot-1 ; i++){
+        for(int i = 1 ; i <= cnt ; i++){
             int j = (head - i + tot) % tot;
             // Serial.println("quiet ");
             float d = dis3d(m->raw_ax, m->raw_ay, m->raw_az, acc[j][0],acc[j][1],acc[j][2]);
             
             //sprintf(buffcal, "%f\t%f\t%f\t%f\n", d, m->filt_ax, m->filt_ay, m->filt_az);
             //HAL_UART_Transmit(&huart2, (uint8_t*) buffcal, strlen(buffcal), 100);
-
+			//serialPrintf(SER_DBG, "%f\t%f\t%f\t%f\n", m->raw_ax, m->raw_ay, m->raw_az, d);
             if(d < 3000){
                 valid = false; break;
             } 

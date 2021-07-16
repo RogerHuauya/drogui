@@ -29,7 +29,8 @@ float   roll,       pitch,      yaw,
 		x,          y,          z,
 		x_gps,		y_gps,
 		xp,         yp,
-		z_of,       z_tera;
+		z_of,       z_tera,
+		vx,			vy;
 
 bool mag_available = false;
 
@@ -121,6 +122,7 @@ void gpsTask(){
 			setReg(GPS_CNT, myGPS.cnt++);
 	}
 	else if( ret == CRASHED ){
+		serialPrint(SER_DBG, "GPS Crashed\n");
 		if(state == ARM_MOTORS || state == CONTROL_LOOP)
 			state = DESCEND;
 	}
@@ -131,18 +133,22 @@ void optTask(){
 
 	OPT_VAR var;
 	SENSOR_STATUS ret = readFlowRange(&myOF, &var);
-	setReg(OPT_STATE, ret);
+	//setReg(OPT_STATE, ret);
 
 	if(ret == OK){
+		/*
 		if( z >= 0.05)
 			xp  = -myOF.vel_x*0.001, yp = myOF.vel_y*0.001;
 		else
 			xp = yp = 0;
+		*/
 		if(myOF.dis != -1) z_of= myOF.dis*0.001;
-		setReg(XP_VAL, xp), setReg(YP_VAL, yp), setReg(Z_RNG, z_of);
+		//setReg(XP_VAL, xp), setReg(YP_VAL, yp);
+		setReg(Z_RNG, z_of);
 
 	}
 	else if(ret == CRASHED){
+		serialPrint(SER_DBG, "OPT Crashed\n");
 		if(state == ARM_MOTORS || state == CONTROL_LOOP)
 			state = DESCEND;
 	}
@@ -156,6 +162,7 @@ void teraTask(){
 	if(ret == OK)
 		z_tera = myTera.distance/1000.0;
 	else if(ret == CRASHED){
+		serialPrint(SER_DBG, "Tera Crashed\n");
 		if(state == ARM_MOTORS || state == CONTROL_LOOP)
 			state = DESCEND;
 	}
@@ -216,14 +223,17 @@ void xyzTask(){
 	}
 
 	getPosition(&x, &y, &z);
+	getVelocity(&vx, &vy);
 
-	/*if( cfilt_z <= 50 && fabs(z-z_ant) > 0.2) cfilt_z++, z = z_ant;
-	  else z_ant = z,  cfilt_z = 0;*/
-
+	xp = vx*cos(raw_yaw) + vy*sin(raw_yaw);
+	yp = -vx*sin(raw_yaw) + vy*cos(raw_yaw);
 
 	setReg(X_VAL, x);
 	setReg(Y_VAL, y);
 	setReg(Z_VAL, z);
+
+	setReg(XP_VAL, xp);
+	setReg(YP_VAL, yp);
 }
 
 void initSensorsTasks(){
