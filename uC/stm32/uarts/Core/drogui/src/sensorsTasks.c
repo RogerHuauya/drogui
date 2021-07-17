@@ -123,8 +123,10 @@ void gpsTask(){
 
 		setReg(GPS_AVAILABLE, 1);
 		setReg(GPS_X, 0.01*x_lat),
-			setReg(GPS_Y, 0.01*y_lon),
-			setReg(GPS_CNT, myGPS.cnt++);
+		setReg(GPS_Y, 0.01*y_lon),
+		setReg(GPS_VX, vx_gps),
+		setReg(GPS_VY, vy_gps);
+		//setReg(GPS_CNT, myGPS.cnt++);
 	}
 	else if( ret == CRASHED ){
 		serialPrint(SER_DBG, "GPS Crashed\n");

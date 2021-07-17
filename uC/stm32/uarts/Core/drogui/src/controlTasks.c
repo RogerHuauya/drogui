@@ -132,8 +132,8 @@ void wControlTask(){
     setPwm(&m3, fmin(fmax(M3,0), 100));
     setPwm(&m4, fmin(fmax(M4,0), 100));
     
-    setReg(DER_GYRO_X, wroll_control.errd);
-    setReg(DER_GYRO_Y, wpitch_control.errd);
+    //setReg(DER_GYRO_X, wroll_control.errd);
+    //setReg(DER_GYRO_Y, wpitch_control.errd);
 
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
@@ -180,9 +180,9 @@ void rpyControlTask(){
         resetPid(&yaw2w, TIME);
     }
     
-    setReg(DER_ROLL,roll2w.errd); 
-    setReg(DER_PITCH,pitch2w.errd); 
-    setReg(DER_YAW,yaw2w.errd); 
+    //setReg(DER_ROLL,roll2w.errd); 
+    //setReg(DER_PITCH,pitch2w.errd); 
+    //setReg(DER_YAW,yaw2w.errd); 
 
     setReg(GYRO_X_REF,wroll_ref);
     setReg(GYRO_Y_REF,wpitch_ref);
