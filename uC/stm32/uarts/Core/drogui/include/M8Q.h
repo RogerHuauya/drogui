@@ -287,7 +287,7 @@ typedef struct _ubxPacket{
 
 	uint8_t cls, id;
 	uint16_t len, counter;
-	uint8_t payload[200]; 
+	uint8_t payload[500]; 
 	uint8_t checksumA, checksumB;
 	serial* ser;
 	
@@ -306,6 +306,7 @@ typedef struct _ubxPacket{
 typedef struct _m8q{
     ubxPacket snd_pack, rcv_pack;
     int latitude, longitud;
+	int north_vel, east_vel;
 	int off_x, off_y;
 	uint32_t threshold;
 	uint32_t last_tim;

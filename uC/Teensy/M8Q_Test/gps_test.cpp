@@ -31,7 +31,7 @@ int _main(){
         if(Serial1.available()){
             if(readM8Q(&readPacket)){
                 
-                //printPacket(&readPacket);
+                printPacket(&readPacket);
                 
                 int latitude = 0, longitud = 0;
                 
@@ -46,7 +46,7 @@ int _main(){
                 for( int i = 0; i < 4; i++)
                     velD = (velD << 8) | (readPacket.payload[59-i] & 0xFF);                                
                 for( int i = 0; i < 4; i++)
-                    headMot = (headMot << 8) | (readPacket.payload[67-i] & 0xFF);                                
+                    headMot = (headMot << 8) | (readPacket.payload[69-i] & 0xFF);                                
                 
                 fheadMot = headMot/100000.0;
                 fvelN = velN/1000.0;
@@ -54,13 +54,11 @@ int _main(){
                 fvelD = velD/1000.0; 
                 
                 
-                /*Serial.print("Head Mot: ");
-                Serial.print(fheadMot);
-                Serial.print("\t");*/
-
-                Serial.print(fvelN*100.0,3);
-                Serial.print("\t");
-                Serial.println(fvelE*100.0,3);
+                //Serial.println(fheadMot,5);
+                //Serial.print("\t");
+                //Serial.print(fvelN*100.0,3);
+                //Serial.print("\t");
+                //Serial.println(fvelE*100.0,3);
 
                 /*int latitude = 0, longitud = 0;
                 for(int i = 0 ; i < 4 ; i++) 

@@ -28,6 +28,7 @@ float   roll,       pitch,      yaw,
 		mx,         my,         mz,
 		x,          y,          z,
 		x_gps,		y_gps,
+		vx_gps,		vy_gps,
 		xp,         yp,
 		z_of,       z_tera,
 		vx,			vy;
@@ -113,6 +114,10 @@ void gpsTask(){
 
 		int x_lat = myGPS.latitude - myGPS.off_x;
 		int y_lon = myGPS.longitud - myGPS.off_y;
+		
+		vy_gps = myGPS.north_vel/1000.0;
+		vx_gps = myGPS.east_vel/1000.0;
+
 		x_gps = myGPS.latitude;
 		y_gps = myGPS.longitud;
 

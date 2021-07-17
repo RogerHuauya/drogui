@@ -1,6 +1,8 @@
 #include "M8Q.h"
 #include "serial.h"
 #include "task.h"
+#include "macros.h"
+
 
 // https://www.u-blox.com/en/ubx-viewer/view/u-blox8-M8_ReceiverDescrProtSpec_UBX-13003221?url=https%3A%2F%2Fwww.u-blox.com%2Fsites%2Fdefault%2Ffiles%2Fproducts%2Fdocuments%2Fu-blox8-M8_ReceiverDescrProtSpec_UBX-13003221.pdf#%5B%7B%22num%22%3A775%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C0%2C748.35%2Cnull%5D
 uint8_t defaultCfgPort[20] = { 1, 0, 0, 0, 0xC0, 8, 0, 0, 0x00, 0x08, 0x07, 0, 7, 0, 1, 0, 0, 0, 0, 0};
@@ -10,7 +12,7 @@ uint8_t defaultCfgPort[20] = { 1, 0, 0, 0, 0xC0, 8, 0, 0, 0x00, 0x08, 0x07, 0, 7
 uint8_t defaultCfgRate[6]  = { 0x7D, 0, 1, 0, 1, 0 }; // 8hz
 
 //https://www.u-blox.com/en/ubx-viewer/view/u-blox8-M8_ReceiverDescrProtSpec_UBX-13003221?url=https%3A%2F%2Fwww.u-blox.com%2Fsites%2Fdefault%2Ffiles%2Fproducts%2Fdocuments%2Fu-blox8-M8_ReceiverDescrProtSpec_UBX-13003221.pdf#%5B%7B%22num%22%3A691%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C0%2C654.8%2Cnull%5D
-uint8_t defaultCfgMsg[3]   = {UBX_CLASS_NAV, UBX_NAV_POSLLH, 1};
+uint8_t defaultCfgMsg[3]   = {UBX_CLASS_NAV, UBX_NAV_PVT, 1};
 
 void calcChecksum(ubxPacket *msg){
 
@@ -197,19 +199,26 @@ SENSOR_STATUS readLatLon(m8q *mg){
 	if(serialAvailable(mg->rcv_pack.ser)){ 
 		int ret = readM8Q(&(mg->rcv_pack), 1000); 
 		//serialFlush();
+
 		if( ret != OK){
 			if(  TIME - mg->last_tim > mg->threshold )  return CRASHED;
 			return ret;	
 		} 
 		
-		if(mg->rcv_pack.cls == 1 && mg->rcv_pack.id == 2){
+		if(mg->rcv_pack.cls == 1 && mg->rcv_pack.id == 7){
 		
 			mg->latitude = 0, mg->longitud = 0;
 			for(int i = 0 ; i < 4 ; i++) 
-				mg->latitude = (mg->latitude << 8) | (mg->rcv_pack.payload[7-i]);
+				mg->latitude = (mg->latitude << 8) | (mg->rcv_pack.payload[31-i]);
 			for(int i = 0 ; i < 4 ; i++) 
-				mg->longitud = (mg->longitud << 8) | (mg->rcv_pack.payload[11-i]);
-			
+				mg->longitud = (mg->longitud << 8) | (mg->rcv_pack.payload[27-i]);
+		
+			mg->north_vel = 0, mg->east_vel = 0;
+			for(int i = 0 ; i < 4 ; i++) 
+				mg->north_vel = (mg->north_vel << 8) | (mg->rcv_pack.payload[51-i]);
+			for(int i = 0 ; i < 4 ; i++) 
+				mg->east_vel = (mg->east_vel << 8) | (mg->rcv_pack.payload[55-i]);
+
 			mg->last_tim = TIME;
 			return OK;
 		}
