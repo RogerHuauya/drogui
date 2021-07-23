@@ -213,7 +213,7 @@ bool mpuQuiet(mpu9250* m, int n, float treshold, bool cal){
         HAL_Delay(1);
     }
     
-    //serialPrintf(SER_DBG,"%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
+    serialPrintf(SER_DBG,"%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
 
     if( ( max_gyro[0]-min_gyro[0] < (treshold + 1.8) ) &&\
         ( max_gyro[1]-min_gyro[1] < (treshold + 3.8) ) && \
@@ -373,7 +373,7 @@ void calibrateMag(mpu9250* m){
         magY = m->raw_my*scaleGlobal;
         magZ = m->raw_mz*scaleGlobal;
         
-        //sprintf(aux_buff, "%f %f %f\n", m->raw_mx, m->raw_my, m->raw_mz);
+        //serialPrintf(SER_DBG, "%f %f %f\n", m->raw_mx, m->raw_my, m->raw_mz);
         //HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
         valid = true;
         for(int i = 1 ; i <= cnt ; i++){

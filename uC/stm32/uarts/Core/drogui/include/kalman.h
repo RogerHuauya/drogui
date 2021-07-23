@@ -52,7 +52,7 @@ void kalmanUpdateIMU(float ax, float ay, float az, float roll, float pitch,float
  * @param y_gps (float)
  * @param z_gps (float)
  */
-void kalmanUpdateGPS(float x_gps, float y_gps, float z_gps);
+void kalmanUpdateGPS(float x_gps, float y_gps, float vx_gps, float vy_gps);
 /**
  * @brief Set sampling time  
  * @param ts (float)
@@ -64,7 +64,7 @@ void setKalmanTsImu(float ts);
  * @param y Y position (float*)
  * @param z Z position (float*)
  */
-void getPosition(float *x, float *y, float *z);
+void getPosition(float *x, float *y);
 /**
  * @brief Set number of samples  
  */

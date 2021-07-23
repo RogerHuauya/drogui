@@ -113,7 +113,7 @@ for i= 2:length(t_mm)
     end
     
     if(cnt < 40)
-        p(:, i) = p(:, i) + delta(1:3)/0;
+        p(:, i) = p(:, i) + delta(1:3)/40;
     end
     cnt = cnt + 1;
     %pause(0.1);
@@ -138,10 +138,10 @@ else
 end
 figure
 hold on
-quiver(p(1,:), p(2, :), v(1, :), v(2, :), 'b');
-quiver(p(1,:), p(2, :), s_rot(1, :), s_rot(2, :), 'g');
-plot(p(1,:), p(2, :), 'r');
-plot(p_gps_ext(1,:), p_gps_ext(2, :), 'm');
+quiver(p(1,:), p(2, 🙂, v(1, 🙂, v(2, 🙂, 'b');
+quiver(p(1,:), p(2, 🙂, s_rot(1, 🙂, s_rot(2, 🙂, 'g');
+plot(p(1,:), p(2, 🙂, 'r');
+plot(p_gps_ext(1,:), p_gps_ext(2, 🙂, 'm');
 legend('Velocidad', 'Aceleracion','Sesor Fusion','GPS');
 hold off
 % Unshowed Plot
@@ -194,5 +194,3 @@ hold off
 %      hold on
 %      plot(v(i,:), '-');
 % end
-
-
