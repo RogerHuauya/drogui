@@ -1,0 +1,7 @@
+-target
+i686-pc-windows-gnu
+-I
+Core\drogui\include\
+-I
+Core\Inc\
+

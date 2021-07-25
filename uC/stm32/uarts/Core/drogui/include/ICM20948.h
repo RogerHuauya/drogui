@@ -17,6 +17,12 @@
 #define INT_PIN_CFG 0x0F
 #define USER_CTRL 0x03
 
+#define AK09916_WHO_I_AM1 0x00
+#define AK09916_WHO_I_AM2 0x01
+#define AK09916_CNTL2 0x31 
+#define AK09916_ST1 0x10
+#define AK09916_ST2 0x18
+
 enum ICM_DATA_REGS{
     ICM_ACCEL_XOUT_H = 0x2D,
     ICM_ACCEL_XOUT_L = 0x2E,
@@ -32,6 +38,17 @@ enum ICM_DATA_REGS{
     ICM_GYRO_ZOUT_H = 0x37,
     ICM_GYRO_ZOUT_L = 0x38,
 };
+
+typedef enum {
+  AK09916_MAG_DATARATE_SHUTDOWN = 0x0, ///< Stops measurement updates
+  AK09916_MAG_DATARATE_SINGLE =
+      0x1, ///< Takes a single measurement then switches to
+           ///< AK09916_MAG_DATARATE_SHUTDOWN
+  AK09916_MAG_DATARATE_10_HZ = 0x2,  ///< updates at 10Hz
+  AK09916_MAG_DATARATE_20_HZ = 0x4,  ///< updates at 20Hz
+  AK09916_MAG_DATARATE_50_HZ = 0x6,  ///< updates at 50Hz
+  AK09916_MAG_DATARATE_100_HZ = 0x8, ///< updates at 100Hz
+} ak09916_data_rate_t;
 
 
 // Bank 2

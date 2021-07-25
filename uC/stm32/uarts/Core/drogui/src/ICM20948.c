@@ -54,6 +54,10 @@ void initImu(icm20948* m){
     // Init magnetometer
     I2CwriteByte(ICM20948_ADDRESS, INT_PIN_CFG, 2);
     I2CwriteByte(ICM20948_ADDRESS, USER_CTRL, 0);
+
+	I2CwriteByte(ICM_MAG_ADDRESS, AK09916_CNTL2, AK09916_MAG_DATARATE_SHUTDOWN);
+    HAL_Delay(100);
+    I2CwriteByte(ICM_MAG_ADDRESS, AK09916_CNTL2, AK09916_MAG_DATARATE_100_HZ);
     
     m->scl_acc = 1;
 
@@ -133,15 +137,19 @@ void readRawGyro(icm20948* m){ // degrees/sec
 }
 
 void readRawMag(icm20948* m){ // m/s^2
-
-    uint8_t Buf[7];
-    I2Cread(ICM_MAG_ADDRESS, 0x11, 6, Buf);
-    int16_t _mx = (Buf[1]<<8) | Buf[0];
-    int16_t _my = (Buf[3]<<8) | Buf[2];
-    int16_t _mz = (Buf[5]<<8) | Buf[4];
-    m -> raw_mx = _mx;
-    m -> raw_my = _my;
-    m -> raw_mz = _mz; 
+	uint8_t st1, st2;
+    I2Cread(ICM_MAG_ADDRESS, AK09916_ST1, 1, &st1);
+	I2Cread(ICM_MAG_ADDRESS, AK09916_ST2, 1, &st2);
+	if(st1 & 1){
+		uint8_t Buf[7];
+		I2Cread(ICM_MAG_ADDRESS, 0x11, 7, Buf);
+		int16_t _mx = (Buf[1]<<8) | Buf[0];
+		int16_t _my = (Buf[3]<<8) | Buf[2];
+		int16_t _mz = (Buf[5]<<8) | Buf[4];
+		m -> raw_mx = _mx;
+		m -> raw_my = _my;
+		m -> raw_mz = _mz; 
+	}
 }
 
 void readFiltAcc(icm20948* m){ // m/s^2
