@@ -44,7 +44,7 @@ void initImu(icm20948* m){
     I2CwriteByte(ICM20948_ADDRESS, PWR_MGT, 9);
     I2CwriteByte(ICM20948_ADDRESS, CHANGE_BANK, 2<<4);
     I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_SMPLRT_DIV, 0);
-    I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_CONFIG1, ICM_GYRO_FULL_SCALE_2000_DPS);
+    I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_CONFIG1, ICM_GYRO_FULL_SCALE_500_DPS);
     I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_CONFIG1,ICM_ACC_FULL_SCALE_2_G);
     I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_SMPLRT_DIV_MSB, 0);
     I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_SMPLRT_DIV_LSB, 0);
@@ -228,11 +228,11 @@ bool icmQuiet(icm20948* m, int n, float treshold, bool cal){
         HAL_Delay(1);
     }
     
-    //serialPrintf("%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
+    serialPrintf(SER_DBG, "%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
 
-    if( ( max_gyro[0]-min_gyro[0] < (treshold + 2.0 /*1.8*/) ) &&\
-        ( max_gyro[1]-min_gyro[1] < (treshold + 4.0 /*3.8*/) ) && \
-        ( max_gyro[2]-min_gyro[2] < (treshold + 5.0) ) ){
+    if( ( max_gyro[0]-min_gyro[0] < (treshold + 5.0 /*1.8*/) ) &&\
+        ( max_gyro[1]-min_gyro[1] < (treshold + 5.0 /*3.8*/) ) && \
+        ( max_gyro[2]-min_gyro[2] < (treshold + 7.0) ) ){
         if(cal){
             m->off_gx = -1.0*acum_gyro[0]/n;
             m->off_gy = -1.0*acum_gyro[1]/n;
@@ -398,7 +398,7 @@ void calibrateMag(icm20948* m){
             int j = (head - i + n) % n;
             float d = dis3d(magX, magY, magZ, mag[j][0], mag[j][1], mag[j][2]);
 
-            //sprintf(aux_buff, "%f \n", d);
+            serialPrintf(SER_DBG, "%f \n", d);
             //HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
 
             if(d < 20*scaleGlobal){
