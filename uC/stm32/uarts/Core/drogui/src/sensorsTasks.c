@@ -8,7 +8,7 @@
 #include "opticalFlow.h"
 #include "ICM20948.h"
 #include "MPU9250.h"
-#include "teraRanger.h"
+#include "teraranger.h"
 #include "macros.h"
 
 imu myIMU;
