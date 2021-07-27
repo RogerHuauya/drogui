@@ -156,25 +156,35 @@ void readFiltGyro(mpu9250* m){ // degrees/sec
 
 void readAcc(mpu9250* m){ // m/s^2
     readFiltAcc(m);
-    m -> ax = (m->filt_ax + m->off_ax)/m->scl_acc;
-    m -> ay = (m->filt_ay + m->off_ay)/m->scl_acc;
-    m -> az = (m->filt_az + m->off_az)/m->scl_acc; 
+    float ax = (m->filt_ax + m->off_ax)/m->scl_acc;
+    float ay = (m->filt_ay + m->off_ay)/m->scl_acc;
+    float az = (m->filt_az + m->off_az)/m->scl_acc; 
+	m -> ax = -ay;
+	m -> ay =  ax;
+	m -> az =  az;
 }
 
 
 void readGyro(mpu9250* m){ // degrees/sec
     readFiltGyro(m);
-    m -> gx = m->filt_gx + m->off_gx;
-    m -> gy = m->filt_gy + m->off_gy;
-    m -> gz = m->filt_gz + m->off_gz; 
+    float gx = m->filt_gx + m->off_gx;
+    float gy = m->filt_gy + m->off_gy;
+    float gz = m->filt_gz + m->off_gz; 
+	m -> gx = -gy;
+	m -> gy =  gx;
+	m -> gz =  gz;
 }
 
 void readMag(mpu9250* m){ // m/s^2
     readRawMag(m);
 
-    m -> mx = (m->raw_mx - m->off_mx)/m->scl_magx;
-    m -> my = (m->raw_my - m->off_my)/m->scl_magy;
-    m -> mz = (m->raw_mz - m->off_mz)/m->scl_magz; 
+    float mx = (m->raw_mx - m->off_mx)/m->scl_magx;
+    float my = (m->raw_my - m->off_my)/m->scl_magy;
+    float mz = (m->raw_mz - m->off_mz)/m->scl_magz; 
+
+	m -> mx = -mx;
+	m -> my =  my;
+	m -> mz = -mz;
 }
 
 // 120 260 380

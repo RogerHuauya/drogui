@@ -18,15 +18,11 @@ void _main(){
 
     serialPrint(SER_DBG, "Start System\n");
 
-
     initDebug();
     initControlTasks();
     initSensorsTasks();
 
-    //sprintf(auxbuff, "%d\n", __FPU_USED);
-    //HAL_UART_Transmit(&huart2, (uint8_t*) auxbuff, strlen(auxbuff), 100);
     initRTOS();
-
 }
 
 #endif

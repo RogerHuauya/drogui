@@ -48,7 +48,7 @@ int cfilt_z = 0;
 void accelTask(){
 
 	readAcc(&myIMU);
-	ax = -myIMU.ay, ay = myIMU.ax, az = myIMU.az;
+	ax = myIMU.ax, ay = myIMU.ay, az = myIMU.az;
 
 	if( calib_status & 1 ){
 		cleanFiltAcc(&myIMU.fAccX);
@@ -65,7 +65,7 @@ void accelTask(){
 void gyroTask(){
 
 	readGyro(&myIMU);
-	gx = -myIMU.gy, gy = myIMU.gx, gz = myIMU.gz;
+	gx = myIMU.gx, gy = myIMU.gy, gz = myIMU.gz;
 
 	if( calib_status & 2 ){
 
@@ -83,9 +83,9 @@ void gyroTask(){
 
 void magTask(){
 	readMag(&myIMU);
-	mx = -myIMU.mx;
+	mx = myIMU.mx;
 	my = myIMU.my;
-	mz = -myIMU.mz;
+	mz = myIMU.mz;
 	setReg(MAG_X, mx);
 	setReg(MAG_Y, my);
 	setReg(MAG_Z, mz);
@@ -93,14 +93,10 @@ void magTask(){
 }
 
 void altitudeTask(){
-
 	bmp388ReadAltitude(&myBMP);
-	//z = computeMvAvgFilter( &mvAvg_bmp, myBMP.altitude );
 	z = computeEmaFilter( &ema_bmp, myBMP.altitude);
 	z = computeFilter( &filter_z, z );
-
 	setReg(Z_VAL, z);
-
 }
 
 
@@ -142,26 +138,17 @@ void optTask(){
 
 	OPT_VAR var;
 	SENSOR_STATUS ret = readFlowRange(&myOF, &var);
-	//setReg(OPT_STATE, ret);
 
 	if(ret == OK){
-		/*
-		if( z >= 0.05)
-			xp  = -myOF.vel_x*0.001, yp = myOF.vel_y*0.001;
-		else
-			xp = yp = 0;
-		*/
 		if(myOF.dis != -1) z_of= myOF.dis*0.001;
 		//setReg(XP_VAL, xp), setReg(YP_VAL, yp);
 		setReg(Z_RNG, z_of);
-
 	}
 	else if(ret == CRASHED){
 		serialPrint(SER_DBG, "OPT Crashed\n");
 		if(state == ARM_MOTORS || state == CONTROL_LOOP)
 			state = DESCEND;
 	}
-
 }
 
 void teraTask(){
@@ -175,7 +162,6 @@ void teraTask(){
 		if(state == ARM_MOTORS || state == CONTROL_LOOP)
 			state = DESCEND;
 	}
-
 }
 
 void rpyTask(){
@@ -185,10 +171,6 @@ void rpyTask(){
 	mahonyUpdate(&myRPY, gx*PI/180.0, gy*PI/180.0, gz*PI/180.0, ax, ay, az, mx, my, mz);
 	getMahonyEuler(&myRPY, rpy);
 	raw_roll = rpy[0], raw_pitch = rpy[1], raw_yaw = rpy[2] + pi/2;
-
-	/*roll += fmax(fmin(Kdfilt, (rpy[0] - roll)),-Kdfilt);
-	  pitch += fmax(fmin(Kdfilt, (rpy[1] - pitch)),-Kdfilt);
-	  yaw += fmax(fmin(Kdfilt,(rpy[2] - yaw)),-Kdfilt);*/
 
 	raw_roll = computeFilter(&filter_roll, raw_roll);
 	raw_pitch = computeFilter(&filter_pitch, raw_pitch);
