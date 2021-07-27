@@ -2,7 +2,8 @@
 #include "mahony.h"
 #include "task.h"
 #include "utils.h"
-#include "M8Q.h"
+#include "SAM_M8Q.h"
+#include "ZED_F9P.h"
 #include "kalman.h"
 #include "serial.h"
 #include "opticalFlow.h"
@@ -15,7 +16,7 @@ imu myIMU;
 
 mahony myRPY;
 
-m8q myGPS;
+gps myGPS;
 optFlow myOF;
 tRanger myTera;
 
@@ -105,7 +106,7 @@ void altitudeTask(){
 
 void gpsTask(){
 
-	SENSOR_STATUS ret = readLatLon(&myGPS);
+	SENSOR_STATUS ret = readGPS(&myGPS);
 	setReg(GPS_STATE, ret);
 
 	if(ret == OK){
@@ -264,7 +265,7 @@ void initSensorsTasks(){
 
 	initMatGlobal();
 
-	initM8Q(&myGPS, SER_GPS);
+	initGPS(&myGPS, SER_GPS);
 	initOptFlow(&myOF, SER_OPT);
 	initTeraRanger(&myTera, SER_TER);
 

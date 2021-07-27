@@ -1,14 +1,14 @@
-#ifndef M8Q_H
-#define M8Q_H
+#include "macros.h"
+
+#ifdef ZED_F9P
+
+#ifndef ZED_F9P_H
+#define ZED_F9P_H
 
 #include "_main.h"
 #include "serial.h"
 #include <stdbool.h>
 #include "utils.h"
-
-extern uint8_t defaultCfgPort[];
-extern uint8_t defaultCfgRate[];
-extern uint8_t defaultCfgMsg[];
 
 //Registers
 #define UBX_SYNCH_1  0xB5
@@ -81,7 +81,7 @@ typedef struct _ubxPacket{
  * @param off_y Offset in y direction (int)
  * @param cnt Auxiliar counter (int)
  */
-typedef struct _m8q{
+typedef struct _zed{
 	ubxPacket snd_pack, rcv_pack;
 	int latitude, longitud;
 	int north_vel, east_vel;
@@ -89,64 +89,24 @@ typedef struct _m8q{
 	uint32_t threshold;
 	uint32_t last_tim;
 	int cnt;
-} m8q;
+} zed;
 
-/**
- * @brief Get Checksum of payload
- * @param msg (Pointer of structure ubxPacket)
- */
-void calcChecksum(ubxPacket *msg);
-
-/**
- * @brief Send command through serial communication
- * @param outgoingUBX (Pointer of structure ubxPacket)
- */
-void sendSerialCommand(ubxPacket *outgoingUBX);
-
-/**
- * @brief Config Frecuency Sample and lecture mode of M8Q
- * @param mp Packet (Pointer of structure ubxPacket)
- * @param id Identifier (uint8_t)
- * @param len Length of Config array (uint8_t)
- * @param cfgArray Contain information which will change frecuency sample an other features  (uint8_t)
- */
-void cfgM8Q(ubxPacket *mp, uint8_t id,uint8_t len, uint8_t *cfgArray);
-
-/**
- * @brief Config Port
- * @param mp Packet (Pointer of structure ubxPacket)
- * @param cfgArray Contain information which will change frecuency sample an other features  (uint8_t)
- */
-void cfgM8QPort(ubxPacket *mp, uint8_t *cfgPortArray);
-
-/**
- * @brief Config Msg
- * @param mp Packet (Pointer of structure ubxPacket)
- * @param cfgArray Contain information which will change frecuency sample an other features  (uint8_t)
- */
-void cfgM8QMsg(ubxPacket *mp, uint8_t *cfgMsgArray);
-
-/**
- * @brief Config Baudrate
- * @param mp Packet (Pointer of structure ubxPacket)
- * @param cfgArray Contain information which will change frecuency sample an other features  (uint8_t)
- */
-void cfgM8QRate(ubxPacket *mp, uint8_t *cfgRateArray);
+typedef zed gps;
 
 /**
  * @brief Read Latitude and Longitde
- * @param mg (Pointer of structure m8q)
+ * @param mg (Pointer of structure zed)
  * @return OK,WRG_ID OR NO_DATA from SENSOR_STATUS
  */
-SENSOR_STATUS readLatLon(m8q* mg);
+SENSOR_STATUS readGPS(zed* mg);
 
 /**
  * @brief Initialize SAM M8Q
- * @param mg (Pointer of structure m8q)
+ * @param mg (Pointer of structure zed)
  * @param ser (Pointer of structure serial)
  * @return (SENSOR_STATUS)
  */
-SENSOR_STATUS initM8Q(m8q *mg, serial* ser);
+SENSOR_STATUS initGPS(zed *mg, serial* ser);
 
 /**
  * @brief Read data from SAM M8Q
@@ -154,12 +114,8 @@ SENSOR_STATUS initM8Q(m8q *mg, serial* ser);
  * @param timeout  (uint32_t)
  * @return It depends if the checksum was received or the time limit passed (SENSOR_STATUS)
  */
-SENSOR_STATUS readM8Q(ubxPacket *mp, uint32_t timeout);
+SENSOR_STATUS readPacket(ubxPacket *mp, uint32_t timeout);
 
-/**
- * @brief Print data received from sensor
- * @param mp (Pointer of structure ubxPacket)
- */
-void printPacket(ubxPacket *mp);
+#endif
 
 #endif

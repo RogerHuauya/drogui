@@ -1,10 +1,11 @@
+-Wunused-function
 --target=i686-pc-windows-gnu
 -mcpu=cortex-m7
 -mthumb
 -mfloat-abi=hard
 -mfpu=fpv5-sp-d16
 -DUSE_HAL_DRIVER
--DSTM32F746xx 
+-DSTM32F746xx
 -ICore/Inc/
 -ICore/drogui/include/
 -I../../../drogui_global/registerMap

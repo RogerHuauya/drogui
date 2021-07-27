@@ -3,7 +3,7 @@
 
 #include "_main.h"
 #include "serial.h"
-#include "M8Q.h"
+#include "SAM_M8Q.h"
 #include "kalman.h"
 #include "sensorsTasks.h"
 #include "registerMap.h"

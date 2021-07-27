@@ -1,4 +1,4 @@
-#include "teraRanger.h"
+#include "teraranger.h"
 #include "serial.h"
 #include "task.h"
 
@@ -51,7 +51,7 @@ uint8_t crc8_tera(int len, uint8_t* msg){
     return (uint8_t) crc8;
 }
 
-void calcTeraChksum(tRPacket *tpacket){
+static void calcChecksum(tRPacket *tpacket){
     tpacket -> chksum = crc8_tera(3, tpacket -> chksumBuff);
 }
 
@@ -81,7 +81,7 @@ SENSOR_STATUS readTRanger(tRPacket *tpacket, uint32_t timeout){
 
 			checksum = serialRead(tpacket->ser);
 
-			calcTeraChksum(tpacket);
+			calcChecksum(tpacket);
 			flag = 1;
 		}
 

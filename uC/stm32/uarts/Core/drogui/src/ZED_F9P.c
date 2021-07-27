@@ -1,18 +1,20 @@
-#include "M8Q.h"
+#include "macros.h"
+
+#ifdef ZED_F9P
+
+#include "ZED_F9P.h"
 #include "serial.h"
 #include "task.h"
 #include "macros.h"
+#include <stdint.h>
 
 
-// https://www.u-blox.com/en/ubx-viewer/view/u-blox8-M8_ReceiverDescrProtSpec_UBX-13003221?url=https%3A%2F%2Fwww.u-blox.com%2Fsites%2Fdefault%2Ffiles%2Fproducts%2Fdocuments%2Fu-blox8-M8_ReceiverDescrProtSpec_UBX-13003221.pdf#%5B%7B%22num%22%3A775%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C0%2C748.35%2Cnull%5D
-uint8_t defaultCfgPort[20] = { 1, 0, 0, 0, 0xC0, 8, 0, 0, 0x00, 0x10, 0x0E, 0, 1, 0, 1, 0, 0, 0, 0, 0};
+static uint8_t defaultCfgPort[20] = { 1, 0, 0, 0, 0xC0, 8, 0, 0, 0x00, 0x10, 0x0E, 0, 1, 0, 1, 0, 0, 0, 0, 0};
 
-// https://www.u-blox.com/en/ubx-viewer/view/u-blox8-M8_ReceiverDescrProtSpec_UBX-13003221?url=https%3A%2F%2Fwww.u-blox.com%2Fsites%2Fdefault%2Ffiles%2Fproducts%2Fdocuments%2Fu-blox8-M8_ReceiverDescrProtSpec_UBX-13003221.pdf#%5B%7B%22num%22%3A808%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C0%2C612.28%2Cnull%5D
 //uint8_t defaultCfgRate[6]  = { 0xF4, 1, 1, 0, 1, 0 };
-uint8_t defaultCfgRate[6]  = { 0x7D, 0, 1, 0, 1, 0 }; // 8hz
+static uint8_t defaultCfgRate[6]  = { 0x7D, 0, 1, 0, 1, 0 }; // 8hz
 
-//https://www.u-blox.com/en/ubx-viewer/view/u-blox8-M8_ReceiverDescrProtSpec_UBX-13003221?url=https%3A%2F%2Fwww.u-blox.com%2Fsites%2Fdefault%2Ffiles%2Fproducts%2Fdocuments%2Fu-blox8-M8_ReceiverDescrProtSpec_UBX-13003221.pdf#%5B%7B%22num%22%3A691%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C0%2C654.8%2Cnull%5D
-uint8_t defaultCfgMsg[3]   = {UBX_CLASS_NAV, UBX_NAV_PVT, 1};
+static uint8_t defaultCfgMsg[3]   = {UBX_CLASS_NAV, UBX_NAV_PVT, 1};
 
 void calcChecksum(ubxPacket *msg){
 
@@ -38,8 +40,7 @@ void calcChecksum(ubxPacket *msg){
 	}
 }
 
-void sendSerialCommand(ubxPacket *outgoingUBX)
-{
+static void sendSerialCommand(ubxPacket *outgoingUBX){
 	//Write header bytes
 	serialWrite(outgoingUBX->ser, UBX_SYNCH_1); //μ - oh ublox, you're funny. I will call you micro-blox from now on.
 	serialWrite(outgoingUBX->ser, UBX_SYNCH_2); //b
@@ -59,86 +60,7 @@ void sendSerialCommand(ubxPacket *outgoingUBX)
 	serialWrite(outgoingUBX->ser, outgoingUBX->checksumB);
 }
 
-
-SENSOR_STATUS initM8Q(m8q *mg, serial* ser){
-	SENSOR_STATUS ret;
-
-	mg->last_tim = TIME;
-	mg->threshold = 2000000;
-
-	mg->rcv_pack.ser = ser;
-	mg->snd_pack.ser = ser;
-
-	changeBaudrate(mg->rcv_pack.ser,9600);
-
-	HAL_Delay(1000);
-	cfgM8QPort(&(mg->snd_pack), defaultCfgPort);
-
-	HAL_Delay(100);
-	changeBaudrate(mg->rcv_pack.ser,460800);
-	HAL_Delay(100);
-
-	cfgM8QRate(&(mg->snd_pack), defaultCfgRate);
-
-	ret = readM8Q(&(mg->rcv_pack), 10000);
-	if(ret != OK) return ret;
-
-	cfgM8QMsg(&(mg->snd_pack), defaultCfgMsg);
-
-	ret = readM8Q(&(mg->rcv_pack), 10000);
-	if(ret != OK) return ret;
-
-	HAL_Delay(100);
-
-	mg->cnt = 0;
-	return OK;
-}
-
-
-void cfgM8Q(ubxPacket *mp, uint8_t id,uint8_t len, uint8_t *cfgArray){
-	mp->cls = UBX_CLASS_CFG;
-	mp->id  = id;
-	mp->len = len;
-	for( int i = 0; i < len; i++ ) mp->payload[i] = cfgArray[i];
-	calcChecksum(mp);
-	sendSerialCommand(mp);
-}
-
-
-void cfgM8QPort(ubxPacket *mp, uint8_t *cfgPortArray){
-	mp->cls = UBX_CLASS_CFG;
-	mp->id  = UBX_CFG_PRT;
-	mp->len = 20;
-	for( int i = 0; i < 20; i++ ) mp->payload[i] = cfgPortArray[i];
-	calcChecksum(mp);
-	sendSerialCommand(mp);
-}
-
-void cfgM8QMsg(ubxPacket *mp, uint8_t *cfgMsgArray){
-
-	mp->cls = UBX_CLASS_CFG;
-	mp->id = UBX_CFG_MSG;
-	mp->len = 3;
-	for( int i = 0; i < 3; i++ ) mp->payload[i] = cfgMsgArray[i];
-
-	calcChecksum(mp);
-	sendSerialCommand(mp);
-}
-
-void cfgM8QRate(ubxPacket *mp, uint8_t *cfgRateArray){
-
-	mp->cls = UBX_CLASS_CFG;
-	mp->id = UBX_CFG_RATE;
-	mp->len = 6;
-	for( int i = 0; i < 6; i++ ) mp->payload[i] = cfgRateArray[i];
-
-	calcChecksum(mp);
-	sendSerialCommand(mp);
-}
-
-
-
-SENSOR_STATUS readM8Q(ubxPacket *mp, uint32_t timeout){
+SENSOR_STATUS readPacket(ubxPacket *mp, uint32_t timeout){
 	uint8_t sync1 = 0, sync2 = 0, cntLSB, cntMSB;
 	uint8_t checksumA, checksumB, flag = 0;
 	uint32_t tim = TIME;
@@ -186,7 +108,7 @@ SENSOR_STATUS readM8Q(ubxPacket *mp, uint32_t timeout){
 }
 
 
-void printPacket(ubxPacket *mp){
+static void printPacket(ubxPacket *mp){
 	serialPrintf(mp->ser,"Class:\t %d \tID:\t %d \tlen:\t %d \n", mp->cls, mp->id, mp->len);
 
 	for( int i = 0; i < mp->len ; i++)
@@ -194,10 +116,54 @@ void printPacket(ubxPacket *mp){
 	serialPrint(mp->ser,"\n");
 }
 
+void sndUBX(ubxPacket *mp, uint8_t class, uint8_t id,uint8_t len, uint8_t *array){
+	mp->cls = class;
+	mp->id  = id;
+	mp->len = len;
+	for( int i = 0; i < len; i++ ) mp->payload[i] = array[i];
+	calcChecksum(mp);
+	sendSerialCommand(mp);
+}
 
-SENSOR_STATUS readLatLon(m8q *mg){
+
+SENSOR_STATUS initGPS(zed *mg, serial* ser){
+	SENSOR_STATUS ret;
+
+	mg->last_tim = TIME;
+	mg->threshold = 2000000;
+
+	mg->rcv_pack.ser = ser;
+	mg->snd_pack.ser = ser;
+
+	changeBaudrate(mg->rcv_pack.ser,9600);
+
+	HAL_Delay(1000);
+	sndUBX(&(mg->snd_pack), UBX_CLASS_CFG, UBX_CFG_PRT, 20, defaultCfgPort);
+
+	HAL_Delay(100);
+	changeBaudrate(mg->rcv_pack.ser,460800);
+	HAL_Delay(100);
+
+	sndUBX(&(mg->snd_pack), UBX_CLASS_CFG, UBX_CFG_RATE, 6, defaultCfgRate);
+
+	ret = readPacket(&(mg->rcv_pack), 10000);
+	if(ret != OK) return ret;
+
+	sndUBX(&(mg->snd_pack), UBX_CLASS_CFG, UBX_CFG_MSG, 3, defaultCfgMsg);
+
+	ret = readPacket(&(mg->rcv_pack), 10000);
+	if(ret != OK) return ret;
+
+	HAL_Delay(100);
+
+	mg->cnt = 0;
+	return OK;
+}
+
+
+SENSOR_STATUS readGPS(zed *mg){
 	if(serialAvailable(mg->rcv_pack.ser)){
-		int ret = readM8Q(&(mg->rcv_pack), 1000);
+		int ret = readPacket(&(mg->rcv_pack), 1000);
 		//serialFlush();
 
 		if( ret != OK){
@@ -230,3 +196,4 @@ SENSOR_STATUS readLatLon(m8q *mg){
 	if(  TIME - mg->last_tim > mg->threshold )  return CRASHED;
 	return NO_DATA;
 }
+#endif

@@ -5,7 +5,7 @@
 #include "macros.h"
 #include "task.h"
 #include "serial.h"
-#include "M8Q.h"
+#include "SAM_M8Q.h"
 #include "registerMap.h"
 
 m8q myGPSt;

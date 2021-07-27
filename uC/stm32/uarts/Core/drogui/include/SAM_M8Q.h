@@ -1,14 +1,15 @@
-#ifndef M8Q_H
-#define M8Q_H
+#include "macros.h"
+
+#ifdef SAM_M8Q
+
+#ifndef SAM_M8Q_H
+#define SAM_M8Q_H
 
 #include "_main.h"
 #include "serial.h"
 #include <stdbool.h>
 #include "utils.h"
 
-extern uint8_t defaultCfgPort[];
-extern uint8_t defaultCfgRate[];
-extern uint8_t defaultCfgMsg[];
 
 //Registers
 #define UBX_SYNCH_1  0xB5
@@ -273,7 +274,7 @@ extern uint8_t defaultCfgMsg[];
 #define COM_TYPE_RTCM3  (1 << 5)
 
 /**
- * @brief Structure ubxPacket  
+ * @brief Structure ubxPacket
  * @param cls Class (uint8_t)
  * @param id  ID (uint8_t)
  * @param len Length of packet (uint16_t)
@@ -282,19 +283,19 @@ extern uint8_t defaultCfgMsg[];
  * @param checksumA Lower Checksum value  (uint8_t)
  * @param checksumB Checksum value (uint8_t)
  * @param ser (Pointer of structure serial)
-*/
+ */
 typedef struct _ubxPacket{
 
 	uint8_t cls, id;
 	uint16_t len, counter;
-	uint8_t payload[500]; 
+	uint8_t payload[500];
 	uint8_t checksumA, checksumB;
 	serial* ser;
-	
+
 } ubxPacket;
 
 /**
- * @brief Structure M8Q  
+ * @brief Structure M8Q
  * @param snd_pack Packet to be sent (ubxPacket)
  * @param rcv_pack Packet to be received (ubxPacket)
  * @param latitude Latitude value (int)
@@ -302,10 +303,10 @@ typedef struct _ubxPacket{
  * @param off_x Offset in x direction (int)
  * @param off_y Offset in y direction (int)
  * @param cnt Auxiliar counter (int)
-*/
+ */
 typedef struct _m8q{
-    ubxPacket snd_pack, rcv_pack;
-    int latitude, longitud;
+	ubxPacket snd_pack, rcv_pack;
+	int latitude, longitud;
 	int north_vel, east_vel;
 	int off_x, off_y;
 	uint32_t threshold;
@@ -313,75 +314,23 @@ typedef struct _m8q{
 	int cnt;
 } m8q;
 
-/**
- * @brief Get Checksum of payload 
- * @param msg (Pointer of structure ubxPacket)
-*/
-void calcChecksum(ubxPacket *msg);
+typedef m8q gps;
 
 /**
- * @brief Send command through serial communication 
- * @param outgoingUBX (Pointer of structure ubxPacket)
-*/
-void sendSerialCommand(ubxPacket *outgoingUBX);
-
-/**
- * @brief Config Frecuency Sample and lecture mode of M8Q 
- * @param mp Packet (Pointer of structure ubxPacket)
- * @param id Identifier (uint8_t)
- * @param len Length of Config array (uint8_t)
- * @param cfgArray Contain information which will change frecuency sample an other features  (uint8_t)
-*/
-void cfgM8Q(ubxPacket *mp, uint8_t id,uint8_t len, uint8_t *cfgArray);
-
-/**
- * @brief Config Port  
- * @param mp Packet (Pointer of structure ubxPacket)
- * @param cfgArray Contain information which will change frecuency sample an other features  (uint8_t)
-*/
-void cfgM8QPort(ubxPacket *mp, uint8_t *cfgPortArray);
-
-/**
- * @brief Config Msg  
- * @param mp Packet (Pointer of structure ubxPacket)
- * @param cfgArray Contain information which will change frecuency sample an other features  (uint8_t)
-*/
-void cfgM8QMsg(ubxPacket *mp, uint8_t *cfgMsgArray);
-
-/**
- * @brief Config Baudrate 
- * @param mp Packet (Pointer of structure ubxPacket)
- * @param cfgArray Contain information which will change frecuency sample an other features  (uint8_t)
-*/
-void cfgM8QRate(ubxPacket *mp, uint8_t *cfgRateArray);
-
-/**
- * @brief Read Latitude and Longitde  
+ * @brief Read Latitude and Longitde
  * @param mg (Pointer of structure m8q)
  * @return OK,WRG_ID OR NO_DATA from SENSOR_STATUS
-*/
-SENSOR_STATUS readLatLon(m8q* mg);
+ */
+SENSOR_STATUS readGPS(m8q* mg);
 
 /**
  * @brief Initialize SAM M8Q
  * @param mg (Pointer of structure m8q)
  * @param ser (Pointer of structure serial)
  * @return (SENSOR_STATUS)
-*/
-SENSOR_STATUS initM8Q(m8q *mg, serial* ser);
+ */
+SENSOR_STATUS initGPS(m8q *mg, serial* ser);
 
-/**
- * @brief Read data from SAM M8Q 
- * @param mp (Pointer of structure ubxPacket)
- * @param timeout  (uint32_t)
- * @return It depends if the checksum was received or the time limit passed (SENSOR_STATUS)
-*/
-SENSOR_STATUS readM8Q(ubxPacket *mp, uint32_t timeout);
-
-/**
- * @brief Print data received from sensor  
- * @param mp (Pointer of structure ubxPacket)
-*/
-void printPacket(ubxPacket *mp);
+#endif
 
 #endif
