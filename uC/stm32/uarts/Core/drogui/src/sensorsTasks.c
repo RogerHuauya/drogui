@@ -109,8 +109,8 @@ void gpsTask(){
 		if(getReg(START_GPS) <= 0)
 			myGPS.off_x = myGPS.longitud, myGPS.off_y = myGPS.latitude;
 
-		int x_lat = myGPS.longitud - myGPS.off_x;
-		int y_lon = myGPS.latitude - myGPS.off_y;
+		int x_lon = myGPS.longitud - myGPS.off_x;
+		int y_lat = myGPS.latitude - myGPS.off_y;
 
 		vx_gps = myGPS.east_vel/1000.0;
 		vy_gps = myGPS.north_vel/1000.0;
@@ -119,8 +119,8 @@ void gpsTask(){
 		y_gps = myGPS.latitude;
 
 		setReg(GPS_AVAILABLE, 1);
-		setReg(GPS_X, 0.01*x_lat),
-		setReg(GPS_Y, 0.01*y_lon),
+		setReg(GPS_X, 0.01*x_lon),
+		setReg(GPS_Y, 0.01*y_lat),
 		setReg(GPS_VX, vx_gps),
 		setReg(GPS_VY, vy_gps);
 		//setReg(GPS_CNT, myGPS.cnt++);
@@ -222,8 +222,8 @@ void xyzTask(){
 	setReg(Y_VAL, y);
 	setReg(Z_VAL, z);
 
-	setReg(XP_VAL, vx);
-	setReg(YP_VAL, vy);
+	setReg(XP_VAL, xp);
+	setReg(YP_VAL, yp);
 }
 
 void initSensorsTasks(){
