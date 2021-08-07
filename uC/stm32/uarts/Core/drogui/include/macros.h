@@ -3,12 +3,12 @@
 
 // gps
 // ---
-// #define ZED-F9P
+//#define ZED_F9P
 #define SAM_M8Q
 
 // imu
 // ---
-// #define MPU9250
+//#define MPU9250
 #define ICM20948 
 
 #define SER_DBG &serial3

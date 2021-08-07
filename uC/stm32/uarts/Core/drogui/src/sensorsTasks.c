@@ -107,17 +107,16 @@ void gpsTask(){
 
 	if(ret == OK){
 		if(getReg(START_GPS) <= 0)
-			myGPS.off_x = myGPS.longitud, myGPS.off_y = myGPS.latitude;
+			myGPS.off_x = myGPS.latitude, myGPS.off_y = myGPS.longitud;
 
 		int x_lat = myGPS.latitude - myGPS.off_x;
 		int y_lon = myGPS.longitud - myGPS.off_y;
 
-		vy_gps = myGPS.north_vel/1000.0;
-		vx_gps = myGPS.east_vel/1000.0;
-		vy_gps = myGPS.north_vel/1000.0;
+		vx_gps = myGPS.north_vel/1000.0;
+		vy_gps = myGPS.east_vel/1000.0;
 
-		x_gps = myGPS.longitud;
-		y_gps = myGPS.latitude;
+		x_gps = myGPS.latitude;
+		y_gps = myGPS.longitud;
 
 		setReg(GPS_AVAILABLE, 1);
 		setReg(GPS_X, 0.01*x_lat),
@@ -170,7 +169,7 @@ void rpyTask(){
 
 	mahonyUpdate(&myRPY, gx*PI/180.0, gy*PI/180.0, gz*PI/180.0, ax, ay, az, mx, my, mz);
 	getMahonyEuler(&myRPY, rpy);
-	raw_roll = rpy[0], raw_pitch = rpy[1], raw_yaw = rpy[2] + pi/2;
+	raw_roll = rpy[0], raw_pitch = rpy[1], raw_yaw = rpy[2];
 
 	raw_roll = computeFilter(&filter_roll, raw_roll);
 	raw_pitch = computeFilter(&filter_pitch, raw_pitch);

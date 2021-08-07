@@ -59,7 +59,7 @@ void initImu(icm20948* m){
     HAL_Delay(100);
     I2CwriteByte(ICM_MAG_ADDRESS, AK09916_CNTL2, AK09916_MAG_DATARATE_100_HZ);
 
-    m->scl_acc = 1;
+    m->scl_acc = m->scl_magx = m-> scl_magy = m-> scl_magz = 1;
 
     initFiltGyro(&(m->fGyroX)), initFiltGyro(&(m->fGyroY)), initFiltGyro(&(m->fGyroZ));
     initFiltAcc(&(m->fAccX)), initFiltAcc(&(m->fAccY)), initFiltAcc(&(m->fAccZ));
@@ -86,7 +86,7 @@ float computeFiltGyro(filtGyro *fg, float val){
     val = computeDNotch(&(fg->third), val);
     val = computeDNotch(&(fg->fourth), val);
     //val = computeFilter(&(fg->fifth), val);
-    return val / 16.4;
+    return val / 65.5;
 }
 
 float computeFiltAcc(filtAcc *fa, float val){
@@ -239,9 +239,9 @@ bool icmQuiet(icm20948* m, int n, float treshold, bool cal){
 
     serialPrintf(SER_DBG, "%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
 
-    if( ( max_gyro[0]-min_gyro[0] < (treshold + 5.0 /*1.8*/) ) &&\
-        ( max_gyro[1]-min_gyro[1] < (treshold + 5.0 /*3.8*/) ) && \
-        ( max_gyro[2]-min_gyro[2] < (treshold + 7.0) ) ){
+    if( ( max_gyro[0]-min_gyro[0] < (treshold + 2.0 /*1.8*/) ) &&\
+        ( max_gyro[1]-min_gyro[1] < (treshold + 2.0 /*3.8*/) ) && \
+        ( max_gyro[2]-min_gyro[2] < (treshold + 2.0) ) ){
         if(cal){
             m->off_gx = -1.0*acum_gyro[0]/n;
             m->off_gy = -1.0*acum_gyro[1]/n;
@@ -305,7 +305,7 @@ void calibrateAccel(icm20948* m){
             //sprintf(buffcal, "%f\t%f\t%f\t%f\n", d, m->filt_ax, m->filt_ay, m->filt_az);
             //HAL_UART_Transmit(&huart2, (uint8_t*) buffcal, strlen(buffcal), 100);
 
-            if(d < 3000){
+            if(d < 5000){
                 valid = false; break;
             }
         }
