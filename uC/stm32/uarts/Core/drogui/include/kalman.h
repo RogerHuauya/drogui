@@ -9,7 +9,6 @@
 void initMatGlobal();
 /**
  * @brief Compute Kynematics with Rq and v matrices to get estimated position matrix
-
 */
 void kynematics();
 /**
@@ -52,7 +51,7 @@ void kalmanUpdateIMU(float ax, float ay, float az, float roll, float pitch,float
  * @param y_gps (float)
  * @param z_gps (float)
  */
-void kalmanUpdateGPS(float x_gps, float y_gps, float vx_gps, float vy_gps);
+void kalmanUpdateGPS(float x_gps, float y_gps, float z_gps);
 /**
  * @brief Set sampling time  
  * @param ts (float)
@@ -64,7 +63,7 @@ void setKalmanTsImu(float ts);
  * @param y Y position (float*)
  * @param z Z position (float*)
  */
-void getPosition(float *x, float *y);
+void getPosition(float *x, float *y, float *z);
 /**
  * @brief Set number of samples  
  */

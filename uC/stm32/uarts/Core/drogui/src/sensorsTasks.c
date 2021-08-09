@@ -173,7 +173,8 @@ void rpyTask(){
 
 	raw_roll = computeFilter(&filter_roll, raw_roll);
 	raw_pitch = computeFilter(&filter_pitch, raw_pitch);
-	raw_yaw = computeFilter(&filter_yaw, raw_yaw);
+	
+	//raw_yaw = computeFilter(&filter_yaw, raw_yaw);
 
 	setReg(RAW_ROLL, raw_roll);
 	setReg(RAW_PITCH, raw_pitch);
@@ -206,14 +207,18 @@ void xyzTask(){
 
 		if(getReg(GPS_AVAILABLE) > 0)
 			setReg(GPS_AVAILABLE, 0),
-				kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), getReg(GPS_VX), getReg(GPS_VY));
+				kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), z);
 	}
 	else{
 		clearKalman();
 	}
 
-	getPosition(&x, &y);
+	getPosition(&x, &y, &z);
 	getVelocity(&vx, &vy);
+
+	z = z_of;
+	if(z_tera >= 0.5 && z_tera <= 50)
+		z = z_tera;
 
 	xp = vx*cos(raw_yaw) + vy*sin(raw_yaw);
 	yp = -vx*sin(raw_yaw) + vy*cos(raw_yaw);
@@ -229,7 +234,7 @@ void xyzTask(){
 void initSensorsTasks(){
 
 	initImu(&myIMU);
-	initMahony(&myRPY, 2, 0.1, 500);
+	initMahony(&myRPY, 1, 0.1, 500);
 
 
 	initFilter(&filter_roll, 6, k_1_10, v_1_10);

@@ -5,7 +5,7 @@ extern char buffer[150];
 #define GRAVITY 1
 float Ts, N;
 mat p, v, Rq,Rc, u, s;
-mat Fm, Gm, Hm, bias_p, bias_v, bias_u,Pm, Q12, ye, KalmanGain, p_gps, v_gps, delta;
+mat Fm, Gm, Hm, bias_p, bias_v, bias_u,Pm, Q12, ye, KalmanGain, p_gps, delta;
 
 void setKalmanTsImu(float ts){
     Ts = ts;
@@ -24,14 +24,13 @@ void initMatGlobal(){
     matInit(&bias_p, 3, 1);
     matInit(&bias_u, 3, 1);
     matInit(&bias_v, 3, 1);
-    matInit(&ye, 4, 1);
-    matInit(&p_gps, 2, 1);
-	matInit(&v_gps, 2, 1);
-    matInit(&KalmanGain, 9, 4);    
+    matInit(&ye, 3, 1);
+    matInit(&p_gps,3, 1);
+    matInit(&KalmanGain, 9, 3);    
     matInit(&delta, 9, 1);
 
-    matInit(&Rc, 4, 4);
-    for(int i = 0; i < 4;  i++) setMatVal(&Rc,i,i,0.1);
+    matInit(&Rc, 3, 3);
+    for(int i = 0; i < 3;  i++) setMatVal(&Rc,i,i,0.1);
 
     matInit(&Q12, 6, 6); 
     for(int i = 0; i < 6;  i++) setMatVal(&Q12,i,i,0.1);
@@ -43,11 +42,9 @@ void initMatGlobal(){
     for(int i = 0; i < 9 ; i++) setMatVal(&Fm, i, i, 1);
     for(int i = 0; i < 3; i++) setMatVal(&Fm, i, i+3, Ts);
 
-    matInit(&Hm, 4, 9); 
-    for(int i = 0; i < 2; i++) {
-		setMatVal(&Hm, i, i,1);
-		setMatVal(&Hm, i+2, i+3,1);
-	}
+    matInit(&Hm, 3, 9); 
+    for(int i = 0; i <3; i++) setMatVal(&Hm, i, i,1);
+
     matInit(&Gm,9,6);
     for( int i = 6;  i < 9; i++ ) setMatVal(&Gm, i, i-3,1);
     
@@ -125,10 +122,10 @@ void getKalmanGain(){
     mat aux1, aux2, aux3,aux4;
 
 
-    matInit(&aux1, 4, 4);
-    matInit(&aux2, 9, 4);   
-    matInit(&aux3, 9, 4);
-    matInit(&aux4, 4, 4);
+    matInit(&aux1, 3, 3);
+    matInit(&aux2, 9, 3);   
+    matInit(&aux3, 9, 3);
+    matInit(&aux4, 3, 3);
 
     matTrans(&aux3, &Hm);
     matMult(&aux2, &Pm, &aux3);
@@ -165,13 +162,8 @@ void UpdatePmCovGPS(){
 void getBias(){
 
 
-    //matSubs(&ye, &p_gps,  &p);
-    setMatVal(&ye, 0, 0, getMatVal(&p_gps, 0, 0) - getMatVal(&p, 0, 0));
-    setMatVal(&ye, 1, 0, getMatVal(&p_gps, 1, 0) - getMatVal(&p, 1, 0));
-    setMatVal(&ye, 2, 0, getMatVal(&v_gps, 0, 0) - getMatVal(&v, 0, 0));
-    setMatVal(&ye, 3, 0, getMatVal(&v_gps, 1, 0) - getMatVal(&v, 1, 0));
-
-	matMult(&delta, &KalmanGain, &ye);
+    matSubs(&ye, &p_gps,  &p);
+    matMult(&delta, &KalmanGain, &ye);
 
     setMatVal(&delta, 6, 0, getMatVal(&delta, 6, 0) + getMatVal(&bias_u, 0, 0));
     setMatVal(&delta, 7, 0, getMatVal(&delta, 7, 0) + getMatVal(&bias_u, 1, 0));
@@ -188,6 +180,7 @@ void getBias(){
 
 void kalmanUpdateIMU(float ax, float ay, float az,float roll, float pitch, float yaw){
     
+    //quaternionToR(&Rq, qw, qx, qy, qz);
     rpyToR(&Rq, roll, pitch, yaw);
     setMatVal(&u, 0, 0, ax*GRAVITY);
     setMatVal(&u, 1, 0, ay*GRAVITY);
@@ -195,31 +188,34 @@ void kalmanUpdateIMU(float ax, float ay, float az,float roll, float pitch, float
     //matAdd(&u, &s, &bias_u);
     kynematics();
     UpdatePm();
+
+    //matAdd(&p, &p, &bias_p);
 }
 
-void kalmanUpdateGPS(float x_gps, float y_gps, float vx_gps, float vy_gps){
+void kalmanUpdateGPS(float x_gps, float y_gps, float z_gps){
 
     setMatVal(&p_gps, 0, 0, x_gps);
     setMatVal(&p_gps, 1, 0, y_gps);
+    setMatVal(&p_gps, 2, 0, z_gps);
     
-    setMatVal(&v_gps, 0, 0, vx_gps);
-    setMatVal(&v_gps, 1, 0, vy_gps);
-
     getKalmanGain();
 
     getBias();
     
     UpdatePmCovGPS();
     
+    //matScale(&bias_v, &bias_v, 1/1.3);
     matAdd(&v, &v, &bias_v);
 	matAdd(&p, &p, &bias_p);
+    //matScale(&bias_p, &bias_p, N);
 }
 
 
 
-void getPosition(float *x, float *y){
+void getPosition(float *x, float *y, float *z){
     *x = getMatVal(&p, 0, 0);
     *y = getMatVal(&p, 1, 0);
+    *z = getMatVal(&p, 2, 0);
 }
 
 void getVelocity(float *xp, float *yp){
@@ -233,11 +229,10 @@ void clearKalman(){
         setMatVal(&p, i, 0, 0);
         setMatVal(&v, i, 0, 0);
         setMatVal(&bias_p, i, 0, 0);
-        setMatVal(&bias_v, i, 0, 0);
     }
     for(int i = 0; i < 9;  i++){
         for(int j = 0; j < 9; j++) setMatVal(&Pm, i, j, 0);
-        for(int j = 0; j < 4; j++) setMatVal(&KalmanGain, i, j, 0);
+        for(int j = 0; j < 3; j++) setMatVal(&KalmanGain, i, j, 0);
         
         setMatVal(&delta, i, 0, 0);
         setMatVal(&Pm,i,i,0.1);

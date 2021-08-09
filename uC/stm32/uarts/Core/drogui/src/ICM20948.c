@@ -237,11 +237,11 @@ bool icmQuiet(icm20948* m, int n, float treshold, bool cal){
         HAL_Delay(1);
     }
 
-    serialPrintf(SER_DBG, "%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
+    //serialPrintf(SER_DBG, "%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
 
-    if( ( max_gyro[0]-min_gyro[0] < (treshold + 2.0 /*1.8*/) ) &&\
+    if( ( max_gyro[0]-min_gyro[0] < (treshold + 2.2 /*1.8*/) ) &&\
         ( max_gyro[1]-min_gyro[1] < (treshold + 2.0 /*3.8*/) ) && \
-        ( max_gyro[2]-min_gyro[2] < (treshold + 2.0) ) ){
+        ( max_gyro[2]-min_gyro[2] < (treshold + 3.5) ) ){
         if(cal){
             m->off_gx = -1.0*acum_gyro[0]/n;
             m->off_gy = -1.0*acum_gyro[1]/n;
