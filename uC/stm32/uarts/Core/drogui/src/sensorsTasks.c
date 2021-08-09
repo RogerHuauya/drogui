@@ -206,7 +206,7 @@ void xyzTask(){
 
 		if(getReg(GPS_AVAILABLE) > 0)
 			setReg(GPS_AVAILABLE, 0),
-				kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), getReg(GPS_VX), getReg(GPS_VY));
+			kalmanUpdateGPS(getReg(GPS_X), getReg(GPS_Y), getReg(GPS_VX), getReg(GPS_VY));
 	}
 	else{
 		clearKalman();

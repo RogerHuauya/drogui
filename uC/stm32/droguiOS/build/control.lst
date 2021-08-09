@@ -1,0 +1,1770 @@
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"control.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	__aeabi_ui2d
+  18              		.global	__aeabi_ddiv
+  19              		.global	__aeabi_d2f
+  20              		.global	__aeabi_f2d
+  21              		.global	__aeabi_dmul
+  22              		.global	__aeabi_dadd
+  23              		.global	__aeabi_dcmpgt
+  24              		.section	.text.computePid,"ax",%progbits
+  25              		.align	1
+  26              		.global	computePid
+  27              		.arch armv7e-m
+  28              		.syntax unified
+  29              		.thumb
+  30              		.thumb_func
+  31              		.fpu fpv5-sp-d16
+  33              	computePid:
+  34              	.LVL0:
+  35              	.LFB282:
+  36              		.file 1 "Core/drogui/math/various/src/control.c"
+   1:Core/drogui/math/various/src/control.c **** #include "control.h"
+   2:Core/drogui/math/various/src/control.c **** #include <math.h>
+   3:Core/drogui/math/various/src/control.c **** #include "usart.h"
+   4:Core/drogui/math/various/src/control.c **** #include <stdio.h>
+   5:Core/drogui/math/various/src/control.c **** #include <string.h>
+   6:Core/drogui/math/various/src/control.c **** #include "serial.h"
+   7:Core/drogui/math/various/src/control.c **** 
+   8:Core/drogui/math/various/src/control.c **** char buffct[50]="";
+   9:Core/drogui/math/various/src/control.c **** 
+  10:Core/drogui/math/various/src/control.c **** float computePid(pid* p, float error, uint32_t t, float h){
+  37              		.loc 1 10 59 view -0
+  38              		.cfi_startproc
+  39              		@ args = 0, pretend = 0, frame = 0
+  40              		@ frame_needed = 0, uses_anonymous_args = 0
+  41              		.loc 1 10 59 is_stmt 0 view .LVU1
+  42 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  43              	.LCFI0:
+  44              		.cfi_def_cfa_offset 40
+  45              		.cfi_offset 3, -40
+  46              		.cfi_offset 4, -36
+  47              		.cfi_offset 5, -32
+  48              		.cfi_offset 6, -28
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 2
+
+
+  49              		.cfi_offset 7, -24
+  50              		.cfi_offset 8, -20
+  51              		.cfi_offset 9, -16
+  52              		.cfi_offset 10, -12
+  53              		.cfi_offset 11, -8
+  54              		.cfi_offset 14, -4
+  55 0004 2DED068B 		vpush.64	{d8, d9, d10}
+  56              	.LCFI1:
+  57              		.cfi_def_cfa_offset 64
+  58              		.cfi_offset 80, -64
+  59              		.cfi_offset 81, -60
+  60              		.cfi_offset 82, -56
+  61              		.cfi_offset 83, -52
+  62              		.cfi_offset 84, -48
+  63              		.cfi_offset 85, -44
+  64 0008 8246     		mov	r10, r0
+  65 000a B0EE408A 		vmov.f32	s16, s0
+  66 000e 0D46     		mov	r5, r1
+  67 0010 B0EE60AA 		vmov.f32	s20, s1
+  11:Core/drogui/math/various/src/control.c **** 
+  12:Core/drogui/math/various/src/control.c ****     float kp = 1, kd = 1, ki = 1;
+  68              		.loc 1 12 5 is_stmt 1 view .LVU2
+  69              	.LVL1:
+  13:Core/drogui/math/various/src/control.c **** 
+  14:Core/drogui/math/various/src/control.c ****     p->dt = (t - p->tant)/1000000.0;
+  70              		.loc 1 14 5 view .LVU3
+  71              		.loc 1 14 19 is_stmt 0 view .LVU4
+  72 0014 006F     		ldr	r0, [r0, #112]
+  73              	.LVL2:
+  74              		.loc 1 14 26 view .LVU5
+  75 0016 081A     		subs	r0, r1, r0
+  76 0018 FFF7FEFF 		bl	__aeabi_ui2d
+  77              	.LVL3:
+  78              		.loc 1 14 26 view .LVU6
+  79 001c EAA3     		adr	r3, .L39+32
+  80 001e D3E90023 		ldrd	r2, [r3]
+  81 0022 FFF7FEFF 		bl	__aeabi_ddiv
+  82              	.LVL4:
+  83 0026 FFF7FEFF 		bl	__aeabi_d2f
+  84              	.LVL5:
+  85 002a 0446     		mov	r4, r0	@ float
+  86              		.loc 1 14 11 view .LVU7
+  87 002c CAF87C00 		str	r0, [r10, #124]	@ float
+  15:Core/drogui/math/various/src/control.c ****     p->tant = t;
+  88              		.loc 1 15 5 is_stmt 1 view .LVU8
+  89              		.loc 1 15 13 is_stmt 0 view .LVU9
+  90 0030 CAF87050 		str	r5, [r10, #112]
+  16:Core/drogui/math/various/src/control.c ****     p->erri = fmax(fmin(p->erri + 0.5*(error+p->err_ant1)*p->dt,p->isat),-p->isat);
+  91              		.loc 1 16 5 is_stmt 1 view .LVU10
+  92              		.loc 1 16 26 is_stmt 0 view .LVU11
+  93 0034 DAF85000 		ldr	r0, [r10, #80]	@ float
+  94 0038 FFF7FEFF 		bl	__aeabi_f2d
+  95              	.LVL6:
+  96 003c 0646     		mov	r6, r0
+  97 003e 0F46     		mov	r7, r1
+  98              		.loc 1 16 47 view .LVU12
+  99 0040 DAED168A 		vldr.32	s17, [r10, #88]
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 3
+
+
+ 100              		.loc 1 16 45 view .LVU13
+ 101 0044 78EE887A 		vadd.f32	s15, s17, s16
+ 102 0048 17EE900A 		vmov	r0, s15
+ 103 004c FFF7FEFF 		bl	__aeabi_f2d
+ 104              	.LVL7:
+ 105              		.loc 1 16 38 view .LVU14
+ 106 0050 0022     		movs	r2, #0
+ 107 0052 D74B     		ldr	r3, .L39+8
+ 108 0054 FFF7FEFF 		bl	__aeabi_dmul
+ 109              	.LVL8:
+ 110 0058 8046     		mov	r8, r0
+ 111 005a 8946     		mov	r9, r1
+ 112              		.loc 1 16 60 view .LVU15
+ 113 005c 2046     		mov	r0, r4	@ float
+ 114 005e FFF7FEFF 		bl	__aeabi_f2d
+ 115              	.LVL9:
+ 116 0062 0446     		mov	r4, r0
+ 117 0064 0D46     		mov	r5, r1
+ 118              	.LVL10:
+ 119              		.loc 1 16 58 view .LVU16
+ 120 0066 0246     		mov	r2, r0
+ 121 0068 0B46     		mov	r3, r1
+ 122 006a 4046     		mov	r0, r8
+ 123 006c 4946     		mov	r1, r9
+ 124 006e FFF7FEFF 		bl	__aeabi_dmul
+ 125              	.LVL11:
+ 126 0072 8046     		mov	r8, r0
+ 127 0074 8946     		mov	r9, r1
+ 128              		.loc 1 16 66 view .LVU17
+ 129 0076 DAF874B0 		ldr	fp, [r10, #116]	@ float
+ 130              		.loc 1 16 15 view .LVU18
+ 131 007a 5846     		mov	r0, fp	@ float
+ 132 007c FFF7FEFF 		bl	__aeabi_f2d
+ 133              	.LVL12:
+ 134 0080 41EC190B 		vmov	d9, r0, r1
+ 135 0084 4246     		mov	r2, r8
+ 136 0086 4B46     		mov	r3, r9
+ 137 0088 3046     		mov	r0, r6
+ 138 008a 3946     		mov	r1, r7
+ 139 008c FFF7FEFF 		bl	__aeabi_dadd
+ 140              	.LVL13:
+ 141 0090 B0EE491A 		vmov.f32	s2, s18
+ 142 0094 F0EE691A 		vmov.f32	s3, s19
+ 143 0098 41EC100B 		vmov	d0, r0, r1
+ 144 009c FFF7FEFF 		bl	fmin
+ 145              	.LVL14:
+ 146 00a0 B0EE409A 		vmov.f32	s18, s0
+ 147 00a4 F0EE609A 		vmov.f32	s19, s1
+ 148 00a8 8BF00040 		eor	r0, fp, #-2147483648
+ 149 00ac FFF7FEFF 		bl	__aeabi_f2d
+ 150              	.LVL15:
+ 151 00b0 41EC110B 		vmov	d1, r0, r1
+ 152 00b4 B0EE490A 		vmov.f32	s0, s18
+ 153 00b8 F0EE690A 		vmov.f32	s1, s19
+ 154 00bc FFF7FEFF 		bl	fmax
+ 155              	.LVL16:
+ 156 00c0 51EC100B 		vmov	r0, r1, d0
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 4
+
+
+ 157 00c4 FFF7FEFF 		bl	__aeabi_d2f
+ 158              	.LVL17:
+ 159              		.loc 1 16 13 view .LVU19
+ 160 00c8 CAF85000 		str	r0, [r10, #80]	@ float
+  17:Core/drogui/math/various/src/control.c **** 
+  18:Core/drogui/math/various/src/control.c ****     //if( !( (error*p->u_ant > 0)  && abs(p->u_ant) == p-> osat)  )
+  19:Core/drogui/math/various/src/control.c ****     //    p->erri += 0.5*(error+p->err_ant1)*p->dt;
+  20:Core/drogui/math/various/src/control.c ****     //p->errd = errord;
+  21:Core/drogui/math/various/src/control.c ****     p->errd = (error - p->err_ant1)/(p->dt + EPS);
+ 161              		.loc 1 21 5 is_stmt 1 view .LVU20
+ 162              		.loc 1 21 22 is_stmt 0 view .LVU21
+ 163 00cc 78EE687A 		vsub.f32	s15, s16, s17
+ 164 00d0 17EE900A 		vmov	r0, s15
+ 165 00d4 FFF7FEFF 		bl	__aeabi_f2d
+ 166              	.LVL18:
+ 167 00d8 0646     		mov	r6, r0
+ 168 00da 0F46     		mov	r7, r1
+ 169              		.loc 1 21 44 view .LVU22
+ 170 00dc B2A3     		adr	r3, .L39
+ 171 00de D3E90023 		ldrd	r2, [r3]
+ 172 00e2 2046     		mov	r0, r4
+ 173 00e4 2946     		mov	r1, r5
+ 174 00e6 FFF7FEFF 		bl	__aeabi_dadd
+ 175              	.LVL19:
+ 176 00ea 0246     		mov	r2, r0
+ 177 00ec 0B46     		mov	r3, r1
+ 178              		.loc 1 21 36 view .LVU23
+ 179 00ee 3046     		mov	r0, r6
+ 180 00f0 3946     		mov	r1, r7
+ 181 00f2 FFF7FEFF 		bl	__aeabi_ddiv
+ 182              	.LVL20:
+ 183 00f6 FFF7FEFF 		bl	__aeabi_d2f
+ 184              	.LVL21:
+ 185              		.loc 1 21 13 view .LVU24
+ 186 00fa CAF85C00 		str	r0, [r10, #92]	@ float
+  22:Core/drogui/math/various/src/control.c **** 
+  23:Core/drogui/math/various/src/control.c ****     p->err_ant2 = p->err_ant1;
+ 187              		.loc 1 23 5 is_stmt 1 view .LVU25
+ 188              		.loc 1 23 17 is_stmt 0 view .LVU26
+ 189 00fe CAED158A 		vstr.32	s17, [r10, #84]
+  24:Core/drogui/math/various/src/control.c ****     p->err_ant1 = error;
+ 190              		.loc 1 24 5 is_stmt 1 view .LVU27
+ 191              		.loc 1 24 17 is_stmt 0 view .LVU28
+ 192 0102 8AED168A 		vstr.32	s16, [r10, #88]
+  25:Core/drogui/math/various/src/control.c **** 
+  26:Core/drogui/math/various/src/control.c ****     if( p->type & D_INT){
+ 193              		.loc 1 26 5 is_stmt 1 view .LVU29
+ 194              		.loc 1 26 10 is_stmt 0 view .LVU30
+ 195 0106 DAF88060 		ldr	r6, [r10, #128]
+ 196              		.loc 1 26 7 view .LVU31
+ 197 010a 16F0100F 		tst	r6, #16
+ 198 010e 29D0     		beq	.L2
+  27:Core/drogui/math/various/src/control.c ****         p->errd = p->N_filt*(error - p->errd_acum);
+ 199              		.loc 1 27 9 is_stmt 1 view .LVU32
+ 200              		.loc 1 27 20 is_stmt 0 view .LVU33
+ 201 0110 DAED277A 		vldr.32	s15, [r10, #156]
+ 202              		.loc 1 27 39 view .LVU34
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 5
+
+
+ 203 0114 DAED198A 		vldr.32	s17, [r10, #100]
+ 204              		.loc 1 27 36 view .LVU35
+ 205 0118 38EE687A 		vsub.f32	s14, s16, s17
+ 206              		.loc 1 27 28 view .LVU36
+ 207 011c 67EE877A 		vmul.f32	s15, s15, s14
+ 208              		.loc 1 27 17 view .LVU37
+ 209 0120 CAED177A 		vstr.32	s15, [r10, #92]
+  28:Core/drogui/math/various/src/control.c ****         p->errd_acum += 0.5*(p->errd+p->errd_ant)*p->dt;
+ 210              		.loc 1 28 9 is_stmt 1 view .LVU38
+ 211              		.loc 1 28 39 is_stmt 0 view .LVU39
+ 212 0124 9AED187A 		vldr.32	s14, [r10, #96]
+ 213              		.loc 1 28 37 view .LVU40
+ 214 0128 77EE877A 		vadd.f32	s15, s15, s14
+ 215 012c 17EE900A 		vmov	r0, s15
+ 216 0130 FFF7FEFF 		bl	__aeabi_f2d
+ 217              	.LVL22:
+ 218              		.loc 1 28 28 view .LVU41
+ 219 0134 0022     		movs	r2, #0
+ 220 0136 9E4B     		ldr	r3, .L39+8
+ 221 0138 FFF7FEFF 		bl	__aeabi_dmul
+ 222              	.LVL23:
+ 223 013c 0246     		mov	r2, r0
+ 224 013e 0B46     		mov	r3, r1
+ 225              		.loc 1 28 50 view .LVU42
+ 226 0140 2046     		mov	r0, r4
+ 227 0142 2946     		mov	r1, r5
+ 228 0144 FFF7FEFF 		bl	__aeabi_dmul
+ 229              	.LVL24:
+ 230 0148 0446     		mov	r4, r0
+ 231 014a 0D46     		mov	r5, r1
+ 232              		.loc 1 28 22 view .LVU43
+ 233 014c 18EE900A 		vmov	r0, s17
+ 234 0150 FFF7FEFF 		bl	__aeabi_f2d
+ 235              	.LVL25:
+ 236 0154 2246     		mov	r2, r4
+ 237 0156 2B46     		mov	r3, r5
+ 238 0158 FFF7FEFF 		bl	__aeabi_dadd
+ 239              	.LVL26:
+ 240 015c FFF7FEFF 		bl	__aeabi_d2f
+ 241              	.LVL27:
+ 242 0160 CAF86400 		str	r0, [r10, #100]	@ float
+ 243              	.L2:
+  29:Core/drogui/math/various/src/control.c ****     }
+  30:Core/drogui/math/various/src/control.c **** 
+  31:Core/drogui/math/various/src/control.c ****     if( p->type & D_SG){
+ 244              		.loc 1 31 5 is_stmt 1 view .LVU44
+ 245              		.loc 1 31 7 is_stmt 0 view .LVU45
+ 246 0164 16F0200F 		tst	r6, #32
+ 247 0168 1ED1     		bne	.L36
+ 248              	.L3:
+  32:Core/drogui/math/various/src/control.c ****         p->errd = computeSavGolDFilter(&(p->sgd), error);
+  33:Core/drogui/math/various/src/control.c ****         //if(h==50) serialPrintf("%f\t", p->errd);
+  34:Core/drogui/math/various/src/control.c ****     }
+  35:Core/drogui/math/various/src/control.c **** 
+  36:Core/drogui/math/various/src/control.c ****     if(p->type & D_FILTER){
+ 249              		.loc 1 36 5 is_stmt 1 view .LVU46
+ 250              		.loc 1 36 9 is_stmt 0 view .LVU47
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 6
+
+
+ 251 016a DAF88030 		ldr	r3, [r10, #128]
+ 252              		.loc 1 36 7 view .LVU48
+ 253 016e 13F0080F 		tst	r3, #8
+ 254 0172 22D1     		bne	.L37
+ 255              	.L4:
+  37:Core/drogui/math/various/src/control.c **** 
+  38:Core/drogui/math/various/src/control.c ****         p->errd = computeFilter(&(p->f), p->errd);
+  39:Core/drogui/math/various/src/control.c ****         //if(h==50)serialPrintf("%f\n", p->errd);
+  40:Core/drogui/math/various/src/control.c ****     }
+  41:Core/drogui/math/various/src/control.c **** 
+  42:Core/drogui/math/various/src/control.c ****     //return max(min(p->kp[0]*error + p->ki[0]*p->erri + p->kd[0]*p->errd,p->osat),-p->osat);
+  43:Core/drogui/math/various/src/control.c ****     if(p->type & P2ID) error *= fabs(error);
+ 256              		.loc 1 43 5 is_stmt 1 view .LVU49
+ 257              		.loc 1 43 9 is_stmt 0 view .LVU50
+ 258 0174 DAF88030 		ldr	r3, [r10, #128]
+ 259              		.loc 1 43 7 view .LVU51
+ 260 0178 13F0010F 		tst	r3, #1
+ 261 017c 03D0     		beq	.L5
+ 262              		.loc 1 43 24 is_stmt 1 discriminator 1 view .LVU52
+ 263              		.loc 1 43 33 is_stmt 0 discriminator 1 view .LVU53
+ 264 017e F0EEC87A 		vabs.f32	s15, s16
+ 265              		.loc 1 43 30 discriminator 1 view .LVU54
+ 266 0182 28EE278A 		vmul.f32	s16, s16, s15
+ 267              	.LVL28:
+ 268              	.L5:
+  44:Core/drogui/math/various/src/control.c **** 
+  45:Core/drogui/math/various/src/control.c ****     if(p->type & INDEXED){
+ 269              		.loc 1 45 5 is_stmt 1 view .LVU55
+ 270              		.loc 1 45 7 is_stmt 0 view .LVU56
+ 271 0186 13F0020F 		tst	r3, #2
+ 272 018a 57D0     		beq	.L6
+  46:Core/drogui/math/various/src/control.c ****         if(h <= 60)         kp = p->kp[0], kd = p->kd[0], ki = p->ki[0];
+ 273              		.loc 1 46 9 is_stmt 1 view .LVU57
+ 274              		.loc 1 46 11 is_stmt 0 view .LVU58
+ 275 018c DFED897A 		vldr.32	s15, .L39+12
+ 276 0190 B4EEE7AA 		vcmpe.f32	s20, s15
+ 277 0194 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 278 0198 18D8     		bhi	.L30
+ 279              		.loc 1 46 29 is_stmt 1 discriminator 1 view .LVU59
+ 280              		.loc 1 46 32 is_stmt 0 discriminator 1 view .LVU60
+ 281 019a 9AED000A 		vldr.32	s0, [r10]
+ 282              	.LVL29:
+ 283              		.loc 1 46 47 discriminator 1 view .LVU61
+ 284 019e DAED057A 		vldr.32	s15, [r10, #20]
+ 285              	.LVL30:
+ 286              		.loc 1 46 62 discriminator 1 view .LVU62
+ 287 01a2 9AED0AAA 		vldr.32	s20, [r10, #40]
+ 288              	.LVL31:
+ 289              		.loc 1 46 62 discriminator 1 view .LVU63
+ 290 01a6 4FE0     		b	.L9
+ 291              	.LVL32:
+ 292              	.L36:
+  32:Core/drogui/math/various/src/control.c ****         //if(h==50) serialPrintf("%f\t", p->errd);
+ 293              		.loc 1 32 9 is_stmt 1 view .LVU64
+  32:Core/drogui/math/various/src/control.c ****         //if(h==50) serialPrintf("%f\t", p->errd);
+ 294              		.loc 1 32 19 is_stmt 0 view .LVU65
+ 295 01a8 B0EE480A 		vmov.f32	s0, s16
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 7
+
+
+ 296 01ac 0AF1A000 		add	r0, r10, #160
+ 297 01b0 FFF7FEFF 		bl	computeSavGolDFilter
+ 298              	.LVL33:
+  32:Core/drogui/math/various/src/control.c ****         //if(h==50) serialPrintf("%f\t", p->errd);
+ 299              		.loc 1 32 17 view .LVU66
+ 300 01b4 8AED170A 		vstr.32	s0, [r10, #92]
+ 301 01b8 D7E7     		b	.L3
+ 302              	.L37:
+  38:Core/drogui/math/various/src/control.c ****         //if(h==50)serialPrintf("%f\n", p->errd);
+ 303              		.loc 1 38 9 is_stmt 1 view .LVU67
+  38:Core/drogui/math/various/src/control.c ****         //if(h==50)serialPrintf("%f\n", p->errd);
+ 304              		.loc 1 38 19 is_stmt 0 view .LVU68
+ 305 01ba 9AED170A 		vldr.32	s0, [r10, #92]
+ 306 01be 0AF18400 		add	r0, r10, #132
+ 307 01c2 FFF7FEFF 		bl	computeFilter
+ 308              	.LVL34:
+  38:Core/drogui/math/various/src/control.c ****         //if(h==50)serialPrintf("%f\n", p->errd);
+ 309              		.loc 1 38 17 view .LVU69
+ 310 01c6 8AED170A 		vstr.32	s0, [r10, #92]
+ 311 01ca D3E7     		b	.L4
+ 312              	.L30:
+  47:Core/drogui/math/various/src/control.c ****         else if(h <= 70)    kp = p->kp[1], kd = p->kd[1], ki = p->ki[1];
+ 313              		.loc 1 47 14 is_stmt 1 view .LVU70
+ 314              		.loc 1 47 16 is_stmt 0 view .LVU71
+ 315 01cc DFED7A7A 		vldr.32	s15, .L39+16
+ 316 01d0 B4EEE7AA 		vcmpe.f32	s20, s15
+ 317 01d4 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 318 01d8 06D8     		bhi	.L31
+ 319              		.loc 1 47 29 is_stmt 1 discriminator 1 view .LVU72
+ 320              		.loc 1 47 32 is_stmt 0 discriminator 1 view .LVU73
+ 321 01da 9AED010A 		vldr.32	s0, [r10, #4]
+ 322              	.LVL35:
+ 323              		.loc 1 47 47 discriminator 1 view .LVU74
+ 324 01de DAED067A 		vldr.32	s15, [r10, #24]
+ 325              	.LVL36:
+ 326              		.loc 1 47 62 discriminator 1 view .LVU75
+ 327 01e2 9AED0BAA 		vldr.32	s20, [r10, #44]
+ 328              	.LVL37:
+ 329              		.loc 1 47 62 discriminator 1 view .LVU76
+ 330 01e6 2FE0     		b	.L9
+ 331              	.LVL38:
+ 332              	.L31:
+  48:Core/drogui/math/various/src/control.c ****         else if(h <= 80)    kp = p->kp[2], kd = p->kd[2], ki = p->ki[2];
+ 333              		.loc 1 48 14 is_stmt 1 view .LVU77
+ 334              		.loc 1 48 16 is_stmt 0 view .LVU78
+ 335 01e8 DFED747A 		vldr.32	s15, .L39+20
+ 336 01ec B4EEE7AA 		vcmpe.f32	s20, s15
+ 337 01f0 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 338 01f4 06D8     		bhi	.L32
+ 339              		.loc 1 48 29 is_stmt 1 discriminator 1 view .LVU79
+ 340              		.loc 1 48 32 is_stmt 0 discriminator 1 view .LVU80
+ 341 01f6 9AED020A 		vldr.32	s0, [r10, #8]
+ 342              	.LVL39:
+ 343              		.loc 1 48 47 discriminator 1 view .LVU81
+ 344 01fa DAED077A 		vldr.32	s15, [r10, #28]
+ 345              	.LVL40:
+ 346              		.loc 1 48 62 discriminator 1 view .LVU82
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 8
+
+
+ 347 01fe 9AED0CAA 		vldr.32	s20, [r10, #48]
+ 348              	.LVL41:
+ 349              		.loc 1 48 62 discriminator 1 view .LVU83
+ 350 0202 21E0     		b	.L9
+ 351              	.LVL42:
+ 352              	.L32:
+  49:Core/drogui/math/various/src/control.c ****         else if(h <= 90)    kp = p->kp[3], kd = p->kd[3], ki = p->ki[3];
+ 353              		.loc 1 49 14 is_stmt 1 view .LVU84
+ 354              		.loc 1 49 16 is_stmt 0 view .LVU85
+ 355 0204 DFED6E7A 		vldr.32	s15, .L39+24
+ 356 0208 B4EEE7AA 		vcmpe.f32	s20, s15
+ 357 020c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 358 0210 06D8     		bhi	.L33
+ 359              		.loc 1 49 29 is_stmt 1 discriminator 1 view .LVU86
+ 360              		.loc 1 49 32 is_stmt 0 discriminator 1 view .LVU87
+ 361 0212 9AED030A 		vldr.32	s0, [r10, #12]
+ 362              	.LVL43:
+ 363              		.loc 1 49 47 discriminator 1 view .LVU88
+ 364 0216 DAED087A 		vldr.32	s15, [r10, #32]
+ 365              	.LVL44:
+ 366              		.loc 1 49 62 discriminator 1 view .LVU89
+ 367 021a 9AED0DAA 		vldr.32	s20, [r10, #52]
+ 368              	.LVL45:
+ 369              		.loc 1 49 62 discriminator 1 view .LVU90
+ 370 021e 13E0     		b	.L9
+ 371              	.LVL46:
+ 372              	.L33:
+  50:Core/drogui/math/various/src/control.c ****         else if(h <= 100)   kp = p->kp[4], kd = p->kd[4], ki = p->ki[4];
+ 373              		.loc 1 50 14 is_stmt 1 view .LVU91
+ 374              		.loc 1 50 16 is_stmt 0 view .LVU92
+ 375 0220 DFED687A 		vldr.32	s15, .L39+28
+ 376 0224 B4EEE7AA 		vcmpe.f32	s20, s15
+ 377 0228 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 378 022c 79D8     		bhi	.L34
+ 379              		.loc 1 50 29 is_stmt 1 discriminator 1 view .LVU93
+ 380              		.loc 1 50 32 is_stmt 0 discriminator 1 view .LVU94
+ 381 022e 9AED040A 		vldr.32	s0, [r10, #16]
+ 382              	.LVL47:
+ 383              		.loc 1 50 47 discriminator 1 view .LVU95
+ 384 0232 DAED097A 		vldr.32	s15, [r10, #36]
+ 385              	.LVL48:
+ 386              		.loc 1 50 62 discriminator 1 view .LVU96
+ 387 0236 9AED0EAA 		vldr.32	s20, [r10, #56]
+ 388              	.LVL49:
+ 389              		.loc 1 50 62 discriminator 1 view .LVU97
+ 390 023a 05E0     		b	.L9
+ 391              	.LVL50:
+ 392              	.L6:
+  51:Core/drogui/math/various/src/control.c ****     }
+  52:Core/drogui/math/various/src/control.c ****     else{kp = p->kp[0], kd = p->kd[0], ki = p->ki[0];}
+ 393              		.loc 1 52 10 is_stmt 1 view .LVU98
+ 394              		.loc 1 52 13 is_stmt 0 view .LVU99
+ 395 023c 9AED000A 		vldr.32	s0, [r10]
+ 396              	.LVL51:
+ 397              		.loc 1 52 28 view .LVU100
+ 398 0240 DAED057A 		vldr.32	s15, [r10, #20]
+ 399              	.LVL52:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 9
+
+
+ 400              		.loc 1 52 43 view .LVU101
+ 401 0244 9AED0AAA 		vldr.32	s20, [r10, #40]
+ 402              	.LVL53:
+ 403              	.L9:
+  53:Core/drogui/math/various/src/control.c **** 
+  54:Core/drogui/math/various/src/control.c ****     if(p->type & PIDABS){
+ 404              		.loc 1 54 5 is_stmt 1 view .LVU102
+ 405              		.loc 1 54 7 is_stmt 0 view .LVU103
+ 406 0248 13F0040F 		tst	r3, #4
+ 407 024c 74D0     		beq	.L17
+ 408              	.LBB2:
+  55:Core/drogui/math/various/src/control.c ****         float newd = copysign(fmin( fabs(kp*error), fabs(kd*p->errd) ), p->errd);
+ 409              		.loc 1 55 9 is_stmt 1 view .LVU104
+ 410              		.loc 1 55 22 is_stmt 0 view .LVU105
+ 411 024e 28EE008A 		vmul.f32	s16, s16, s0
+ 412              	.LVL54:
+ 413              		.loc 1 55 22 view .LVU106
+ 414 0252 F0EEC8AA 		vabs.f32	s21, s16
+ 415 0256 DAED178A 		vldr.32	s17, [r10, #92]
+ 416 025a 68EEA77A 		vmul.f32	s15, s17, s15
+ 417              	.LVL55:
+ 418              		.loc 1 55 22 view .LVU107
+ 419 025e F0EEE77A 		vabs.f32	s15, s15
+ 420 0262 17EE900A 		vmov	r0, s15
+ 421 0266 FFF7FEFF 		bl	__aeabi_f2d
+ 422              	.LVL56:
+ 423              		.loc 1 55 22 view .LVU108
+ 424 026a 41EC190B 		vmov	d9, r0, r1
+ 425 026e 1AEE900A 		vmov	r0, s21
+ 426 0272 FFF7FEFF 		bl	__aeabi_f2d
+ 427              	.LVL57:
+ 428 0276 B0EE491A 		vmov.f32	s2, s18
+ 429 027a F0EE691A 		vmov.f32	s3, s19
+ 430 027e 41EC100B 		vmov	d0, r0, r1
+ 431 0282 FFF7FEFF 		bl	fmin
+ 432              	.LVL58:
+ 433 0286 55EC104B 		vmov	r4, r5, d0
+ 434 028a 0022     		movs	r2, #0
+ 435 028c 0023     		movs	r3, #0
+ 436 028e 10EE100A 		vmov	r0, s0	@ int
+ 437 0292 2946     		mov	r1, r5
+ 438 0294 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 439              	.LVL59:
+ 440 0298 20B1     		cbz	r0, .L18
+ 441              		.loc 1 55 22 discriminator 1 view .LVU109
+ 442 029a F5EEC08A 		vcmpe.f32	s17, #0
+ 443 029e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 444 02a2 45D4     		bmi	.L38
+ 445              	.L18:
+ 446              		.loc 1 55 15 discriminator 6 view .LVU110
+ 447 02a4 2046     		mov	r0, r4
+ 448 02a6 2946     		mov	r1, r5
+ 449 02a8 FFF7FEFF 		bl	__aeabi_d2f
+ 450              	.LVL60:
+ 451 02ac 07EE900A 		vmov	s15, r0
+ 452              	.LVL61:
+  56:Core/drogui/math/various/src/control.c ****         p->u = fmax(fmin(kp*error + ki*p->erri + newd, p->osat), -p->osat);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 10
+
+
+ 453              		.loc 1 56 9 is_stmt 1 discriminator 6 view .LVU111
+ 454              		.loc 1 56 41 is_stmt 0 discriminator 6 view .LVU112
+ 455 02b0 9AED140A 		vldr.32	s0, [r10, #80]
+ 456              		.loc 1 56 39 discriminator 6 view .LVU113
+ 457 02b4 20EE0A0A 		vmul.f32	s0, s0, s20
+ 458              		.loc 1 56 35 discriminator 6 view .LVU114
+ 459 02b8 38EE008A 		vadd.f32	s16, s16, s0
+ 460              		.loc 1 56 48 discriminator 6 view .LVU115
+ 461 02bc 38EE278A 		vadd.f32	s16, s16, s15
+ 462              		.loc 1 56 57 discriminator 6 view .LVU116
+ 463 02c0 DAF87840 		ldr	r4, [r10, #120]	@ float
+ 464              		.loc 1 56 16 discriminator 6 view .LVU117
+ 465 02c4 2046     		mov	r0, r4	@ float
+ 466              	.LVL62:
+ 467              		.loc 1 56 16 discriminator 6 view .LVU118
+ 468 02c6 FFF7FEFF 		bl	__aeabi_f2d
+ 469              	.LVL63:
+ 470              		.loc 1 56 16 discriminator 6 view .LVU119
+ 471 02ca 41EC190B 		vmov	d9, r0, r1
+ 472 02ce 18EE100A 		vmov	r0, s16
+ 473 02d2 FFF7FEFF 		bl	__aeabi_f2d
+ 474              	.LVL64:
+ 475 02d6 B0EE491A 		vmov.f32	s2, s18
+ 476 02da F0EE691A 		vmov.f32	s3, s19
+ 477 02de 41EC100B 		vmov	d0, r0, r1
+ 478 02e2 FFF7FEFF 		bl	fmin
+ 479              	.LVL65:
+ 480 02e6 B0EE408A 		vmov.f32	s16, s0
+ 481 02ea F0EE608A 		vmov.f32	s17, s1
+ 482 02ee 84F00040 		eor	r0, r4, #-2147483648
+ 483 02f2 FFF7FEFF 		bl	__aeabi_f2d
+ 484              	.LVL66:
+ 485 02f6 41EC110B 		vmov	d1, r0, r1
+ 486 02fa B0EE480A 		vmov.f32	s0, s16
+ 487 02fe F0EE680A 		vmov.f32	s1, s17
+ 488 0302 FFF7FEFF 		bl	fmax
+ 489              	.LVL67:
+ 490 0306 51EC100B 		vmov	r0, r1, d0
+ 491 030a FFF7FEFF 		bl	__aeabi_d2f
+ 492              	.LVL68:
+ 493              		.loc 1 56 14 discriminator 6 view .LVU120
+ 494 030e CAF86800 		str	r0, [r10, #104]	@ float
+ 495              	.L21:
+ 496              		.loc 1 56 14 discriminator 6 view .LVU121
+ 497              	.LBE2:
+  57:Core/drogui/math/various/src/control.c ****     }
+  58:Core/drogui/math/various/src/control.c ****     else{
+  59:Core/drogui/math/various/src/control.c ****         p->u = fmax(fmin(kp*error + ki*p->erri + kd*p->errd, p->osat), -p->osat);
+  60:Core/drogui/math/various/src/control.c ****     }
+  61:Core/drogui/math/various/src/control.c ****     p->u_ant = p->u;
+ 498              		.loc 1 61 5 is_stmt 1 view .LVU122
+ 499              		.loc 1 61 17 is_stmt 0 view .LVU123
+ 500 0312 9AED1A0A 		vldr.32	s0, [r10, #104]
+ 501              		.loc 1 61 14 view .LVU124
+ 502 0316 8AED1B0A 		vstr.32	s0, [r10, #108]
+  62:Core/drogui/math/various/src/control.c **** 
+  63:Core/drogui/math/various/src/control.c **** 
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 11
+
+
+  64:Core/drogui/math/various/src/control.c ****     return p->u;
+ 503              		.loc 1 64 5 is_stmt 1 view .LVU125
+  65:Core/drogui/math/various/src/control.c **** }
+ 504              		.loc 1 65 1 is_stmt 0 view .LVU126
+ 505 031a BDEC068B 		vldm	sp!, {d8-d10}
+ 506              	.LCFI2:
+ 507              		.cfi_remember_state
+ 508              		.cfi_restore 84
+ 509              		.cfi_restore 85
+ 510              		.cfi_restore 82
+ 511              		.cfi_restore 83
+ 512              		.cfi_restore 80
+ 513              		.cfi_restore 81
+ 514              		.cfi_def_cfa_offset 40
+ 515              	.LVL69:
+ 516              		.loc 1 65 1 view .LVU127
+ 517 031e BDE8F88F 		pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 518              	.LVL70:
+ 519              	.L34:
+ 520              	.LCFI3:
+ 521              		.cfi_restore_state
+  12:Core/drogui/math/various/src/control.c **** 
+ 522              		.loc 1 12 27 view .LVU128
+ 523 0322 B7EE00AA 		vmov.f32	s20, #1.0e+0
+ 524              	.LVL71:
+  12:Core/drogui/math/various/src/control.c **** 
+ 525              		.loc 1 12 19 view .LVU129
+ 526 0326 F0EE4A7A 		vmov.f32	s15, s20
+  12:Core/drogui/math/various/src/control.c **** 
+ 527              		.loc 1 12 11 view .LVU130
+ 528 032a B0EE4A0A 		vmov.f32	s0, s20
+ 529 032e 8BE7     		b	.L9
+ 530              	.LVL72:
+ 531              	.L38:
+ 532              	.LBB3:
+  55:Core/drogui/math/various/src/control.c ****         p->u = fmax(fmin(kp*error + ki*p->erri + newd, p->osat), -p->osat);
+ 533              		.loc 1 55 22 discriminator 3 view .LVU131
+ 534 0330 05F10043 		add	r3, r5, #-2147483648
+ 535 0334 1D46     		mov	r5, r3
+ 536 0336 B5E7     		b	.L18
+ 537              	.LVL73:
+ 538              	.L17:
+  55:Core/drogui/math/various/src/control.c ****         p->u = fmax(fmin(kp*error + ki*p->erri + newd, p->osat), -p->osat);
+ 539              		.loc 1 55 22 discriminator 3 view .LVU132
+ 540              	.LBE3:
+  59:Core/drogui/math/various/src/control.c ****     }
+ 541              		.loc 1 59 9 is_stmt 1 view .LVU133
+  59:Core/drogui/math/various/src/control.c ****     }
+ 542              		.loc 1 59 28 is_stmt 0 view .LVU134
+ 543 0338 28EE008A 		vmul.f32	s16, s16, s0
+ 544              	.LVL74:
+  59:Core/drogui/math/various/src/control.c ****     }
+ 545              		.loc 1 59 41 view .LVU135
+ 546 033c 9AED140A 		vldr.32	s0, [r10, #80]
+ 547              	.LVL75:
+  59:Core/drogui/math/various/src/control.c ****     }
+ 548              		.loc 1 59 39 view .LVU136
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 12
+
+
+ 549 0340 20EE0A0A 		vmul.f32	s0, s0, s20
+  59:Core/drogui/math/various/src/control.c ****     }
+ 550              		.loc 1 59 35 view .LVU137
+ 551 0344 38EE008A 		vadd.f32	s16, s16, s0
+  59:Core/drogui/math/various/src/control.c ****     }
+ 552              		.loc 1 59 54 view .LVU138
+ 553 0348 9AED177A 		vldr.32	s14, [r10, #92]
+  59:Core/drogui/math/various/src/control.c ****     }
+ 554              		.loc 1 59 52 view .LVU139
+ 555 034c 67EE277A 		vmul.f32	s15, s14, s15
+ 556              	.LVL76:
+  59:Core/drogui/math/various/src/control.c ****     }
+ 557              		.loc 1 59 48 view .LVU140
+ 558 0350 38EE278A 		vadd.f32	s16, s16, s15
+  59:Core/drogui/math/various/src/control.c ****     }
+ 559              		.loc 1 59 63 view .LVU141
+ 560 0354 DAF87840 		ldr	r4, [r10, #120]	@ float
+  59:Core/drogui/math/various/src/control.c ****     }
+ 561              		.loc 1 59 16 view .LVU142
+ 562 0358 2046     		mov	r0, r4	@ float
+ 563 035a FFF7FEFF 		bl	__aeabi_f2d
+ 564              	.LVL77:
+ 565 035e 41EC190B 		vmov	d9, r0, r1
+ 566 0362 18EE100A 		vmov	r0, s16
+ 567 0366 FFF7FEFF 		bl	__aeabi_f2d
+ 568              	.LVL78:
+ 569 036a B0EE491A 		vmov.f32	s2, s18
+ 570 036e F0EE691A 		vmov.f32	s3, s19
+ 571 0372 41EC100B 		vmov	d0, r0, r1
+ 572 0376 FFF7FEFF 		bl	fmin
+ 573              	.LVL79:
+ 574 037a B0EE408A 		vmov.f32	s16, s0
+ 575 037e F0EE608A 		vmov.f32	s17, s1
+ 576 0382 84F00040 		eor	r0, r4, #-2147483648
+ 577 0386 FFF7FEFF 		bl	__aeabi_f2d
+ 578              	.LVL80:
+ 579 038a 41EC110B 		vmov	d1, r0, r1
+ 580 038e B0EE480A 		vmov.f32	s0, s16
+ 581 0392 F0EE680A 		vmov.f32	s1, s17
+ 582 0396 FFF7FEFF 		bl	fmax
+ 583              	.LVL81:
+ 584 039a 51EC100B 		vmov	r0, r1, d0
+ 585 039e FFF7FEFF 		bl	__aeabi_d2f
+ 586              	.LVL82:
+  59:Core/drogui/math/various/src/control.c ****     }
+ 587              		.loc 1 59 14 view .LVU143
+ 588 03a2 CAF86800 		str	r0, [r10, #104]	@ float
+ 589 03a6 B4E7     		b	.L21
+ 590              	.L40:
+ 591              		.align	3
+ 592              	.L39:
+ 593 03a8 95D626E8 		.word	-400107883
+ 594 03ac 0B2E113E 		.word	1041313291
+ 595 03b0 0000E03F 		.word	1071644672
+ 596 03b4 00007042 		.word	1114636288
+ 597 03b8 00008C42 		.word	1116471296
+ 598 03bc 0000A042 		.word	1117782016
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 13
+
+
+ 599 03c0 0000B442 		.word	1119092736
+ 600 03c4 0000C842 		.word	1120403456
+ 601 03c8 00000000 		.word	0
+ 602 03cc 80842E41 		.word	1093567616
+ 603              		.cfi_endproc
+ 604              	.LFE282:
+ 606              		.section	.text.computePidD,"ax",%progbits
+ 607              		.align	1
+ 608              		.global	computePidD
+ 609              		.syntax unified
+ 610              		.thumb
+ 611              		.thumb_func
+ 612              		.fpu fpv5-sp-d16
+ 614              	computePidD:
+ 615              	.LVL83:
+ 616              	.LFB283:
+  66:Core/drogui/math/various/src/control.c **** 
+  67:Core/drogui/math/various/src/control.c **** 
+  68:Core/drogui/math/various/src/control.c **** float computePidD(pid* p, float error, uint32_t t, float h, float dp){
+ 617              		.loc 1 68 70 is_stmt 1 view -0
+ 618              		.cfi_startproc
+ 619              		@ args = 0, pretend = 0, frame = 8
+ 620              		@ frame_needed = 0, uses_anonymous_args = 0
+ 621              		.loc 1 68 70 is_stmt 0 view .LVU145
+ 622 0000 2DE9704F 		push	{r4, r5, r6, r8, r9, r10, fp, lr}
+ 623              	.LCFI4:
+ 624              		.cfi_def_cfa_offset 32
+ 625              		.cfi_offset 4, -32
+ 626              		.cfi_offset 5, -28
+ 627              		.cfi_offset 6, -24
+ 628              		.cfi_offset 8, -20
+ 629              		.cfi_offset 9, -16
+ 630              		.cfi_offset 10, -12
+ 631              		.cfi_offset 11, -8
+ 632              		.cfi_offset 14, -4
+ 633 0004 2DED068B 		vpush.64	{d8, d9, d10}
+ 634              	.LCFI5:
+ 635              		.cfi_def_cfa_offset 56
+ 636              		.cfi_offset 80, -56
+ 637              		.cfi_offset 81, -52
+ 638              		.cfi_offset 82, -48
+ 639              		.cfi_offset 83, -44
+ 640              		.cfi_offset 84, -40
+ 641              		.cfi_offset 85, -36
+ 642 0008 82B0     		sub	sp, sp, #8
+ 643              	.LCFI6:
+ 644              		.cfi_def_cfa_offset 64
+ 645 000a 8246     		mov	r10, r0
+ 646 000c B0EE408A 		vmov.f32	s16, s0
+ 647 0010 0D46     		mov	r5, r1
+ 648 0012 F0EE608A 		vmov.f32	s17, s1
+ 649 0016 11EE10BA 		vmov	fp, s2
+  69:Core/drogui/math/various/src/control.c **** 
+  70:Core/drogui/math/various/src/control.c ****     float kp = 1, kd = 1, ki = 1;
+ 650              		.loc 1 70 5 is_stmt 1 view .LVU146
+ 651              	.LVL84:
+  71:Core/drogui/math/various/src/control.c **** 
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 14
+
+
+  72:Core/drogui/math/various/src/control.c ****     p->dt = (t - p->tant)/1000000.0;
+ 652              		.loc 1 72 5 view .LVU147
+ 653              		.loc 1 72 19 is_stmt 0 view .LVU148
+ 654 001a 006F     		ldr	r0, [r0, #112]
+ 655              	.LVL85:
+ 656              		.loc 1 72 26 view .LVU149
+ 657 001c 081A     		subs	r0, r1, r0
+ 658 001e FFF7FEFF 		bl	__aeabi_ui2d
+ 659              	.LVL86:
+ 660              		.loc 1 72 26 view .LVU150
+ 661 0022 DFA3     		adr	r3, .L79+24
+ 662 0024 D3E90023 		ldrd	r2, [r3]
+ 663 0028 FFF7FEFF 		bl	__aeabi_ddiv
+ 664              	.LVL87:
+ 665 002c FFF7FEFF 		bl	__aeabi_d2f
+ 666              	.LVL88:
+ 667 0030 0446     		mov	r4, r0	@ float
+ 668              		.loc 1 72 11 view .LVU151
+ 669 0032 CAF87C00 		str	r0, [r10, #124]	@ float
+  73:Core/drogui/math/various/src/control.c ****     p->tant = t;
+ 670              		.loc 1 73 5 is_stmt 1 view .LVU152
+ 671              		.loc 1 73 13 is_stmt 0 view .LVU153
+ 672 0036 CAF87050 		str	r5, [r10, #112]
+  74:Core/drogui/math/various/src/control.c ****     p->erri = fmax(fmin(p->erri + 0.5*(error+p->err_ant1)*p->dt,p->isat),-p->isat);
+ 673              		.loc 1 74 5 is_stmt 1 view .LVU154
+ 674              		.loc 1 74 26 is_stmt 0 view .LVU155
+ 675 003a DAF85000 		ldr	r0, [r10, #80]	@ float
+ 676 003e FFF7FEFF 		bl	__aeabi_f2d
+ 677              	.LVL89:
+ 678 0042 CDE90001 		strd	r0, [sp]
+ 679              		.loc 1 74 47 view .LVU156
+ 680 0046 9AED16AA 		vldr.32	s20, [r10, #88]
+ 681              		.loc 1 74 45 view .LVU157
+ 682 004a 7AEE087A 		vadd.f32	s15, s20, s16
+ 683 004e 17EE900A 		vmov	r0, s15
+ 684 0052 FFF7FEFF 		bl	__aeabi_f2d
+ 685              	.LVL90:
+ 686              		.loc 1 74 38 view .LVU158
+ 687 0056 0022     		movs	r2, #0
+ 688 0058 CB4B     		ldr	r3, .L79
+ 689 005a FFF7FEFF 		bl	__aeabi_dmul
+ 690              	.LVL91:
+ 691 005e 8046     		mov	r8, r0
+ 692 0060 8946     		mov	r9, r1
+ 693              		.loc 1 74 60 view .LVU159
+ 694 0062 2046     		mov	r0, r4	@ float
+ 695 0064 FFF7FEFF 		bl	__aeabi_f2d
+ 696              	.LVL92:
+ 697 0068 0446     		mov	r4, r0
+ 698 006a 0D46     		mov	r5, r1
+ 699              	.LVL93:
+ 700              		.loc 1 74 58 view .LVU160
+ 701 006c 0246     		mov	r2, r0
+ 702 006e 0B46     		mov	r3, r1
+ 703 0070 4046     		mov	r0, r8
+ 704 0072 4946     		mov	r1, r9
+ 705 0074 FFF7FEFF 		bl	__aeabi_dmul
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 15
+
+
+ 706              	.LVL94:
+ 707 0078 8046     		mov	r8, r0
+ 708 007a 8946     		mov	r9, r1
+ 709              		.loc 1 74 66 view .LVU161
+ 710 007c DAF87460 		ldr	r6, [r10, #116]	@ float
+ 711              		.loc 1 74 15 view .LVU162
+ 712 0080 3046     		mov	r0, r6	@ float
+ 713 0082 FFF7FEFF 		bl	__aeabi_f2d
+ 714              	.LVL95:
+ 715 0086 41EC190B 		vmov	d9, r0, r1
+ 716 008a 4246     		mov	r2, r8
+ 717 008c 4B46     		mov	r3, r9
+ 718 008e DDE90001 		ldrd	r0, [sp]
+ 719 0092 FFF7FEFF 		bl	__aeabi_dadd
+ 720              	.LVL96:
+ 721 0096 B0EE491A 		vmov.f32	s2, s18
+ 722 009a F0EE691A 		vmov.f32	s3, s19
+ 723 009e 41EC100B 		vmov	d0, r0, r1
+ 724 00a2 FFF7FEFF 		bl	fmin
+ 725              	.LVL97:
+ 726 00a6 B0EE409A 		vmov.f32	s18, s0
+ 727 00aa F0EE609A 		vmov.f32	s19, s1
+ 728 00ae 86F00040 		eor	r0, r6, #-2147483648
+ 729 00b2 FFF7FEFF 		bl	__aeabi_f2d
+ 730              	.LVL98:
+ 731 00b6 41EC110B 		vmov	d1, r0, r1
+ 732 00ba B0EE490A 		vmov.f32	s0, s18
+ 733 00be F0EE690A 		vmov.f32	s1, s19
+ 734 00c2 FFF7FEFF 		bl	fmax
+ 735              	.LVL99:
+ 736 00c6 51EC100B 		vmov	r0, r1, d0
+ 737 00ca FFF7FEFF 		bl	__aeabi_d2f
+ 738              	.LVL100:
+ 739              		.loc 1 74 13 view .LVU163
+ 740 00ce CAF85000 		str	r0, [r10, #80]	@ float
+  75:Core/drogui/math/various/src/control.c **** 
+  76:Core/drogui/math/various/src/control.c ****     //if( !( (error*p->u_ant > 0)  && abs(p->u_ant) == p-> osat)  )
+  77:Core/drogui/math/various/src/control.c ****     //    p->erri += 0.5*(error+p->err_ant1)*p->dt;
+  78:Core/drogui/math/various/src/control.c ****     //p->errd = errord;
+  79:Core/drogui/math/various/src/control.c ****     p->errd = dp;
+ 741              		.loc 1 79 5 is_stmt 1 view .LVU164
+ 742              		.loc 1 79 13 is_stmt 0 view .LVU165
+ 743 00d2 CAF85CB0 		str	fp, [r10, #92]	@ float
+  80:Core/drogui/math/various/src/control.c **** 
+  81:Core/drogui/math/various/src/control.c ****     p->err_ant2 = p->err_ant1;
+ 744              		.loc 1 81 5 is_stmt 1 view .LVU166
+ 745              		.loc 1 81 17 is_stmt 0 view .LVU167
+ 746 00d6 8AED15AA 		vstr.32	s20, [r10, #84]
+  82:Core/drogui/math/various/src/control.c ****     p->err_ant1 = error;
+ 747              		.loc 1 82 5 is_stmt 1 view .LVU168
+ 748              		.loc 1 82 17 is_stmt 0 view .LVU169
+ 749 00da 8AED168A 		vstr.32	s16, [r10, #88]
+  83:Core/drogui/math/various/src/control.c **** 
+  84:Core/drogui/math/various/src/control.c ****     if( p->type & D_INT){
+ 750              		.loc 1 84 5 is_stmt 1 view .LVU170
+ 751              		.loc 1 84 10 is_stmt 0 view .LVU171
+ 752 00de DAF88060 		ldr	r6, [r10, #128]
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 16
+
+
+ 753              		.loc 1 84 7 view .LVU172
+ 754 00e2 16F0100F 		tst	r6, #16
+ 755 00e6 29D0     		beq	.L42
+  85:Core/drogui/math/various/src/control.c ****         p->errd = p->N_filt*(error - p->errd_acum);
+ 756              		.loc 1 85 9 is_stmt 1 view .LVU173
+ 757              		.loc 1 85 20 is_stmt 0 view .LVU174
+ 758 00e8 DAED277A 		vldr.32	s15, [r10, #156]
+ 759              		.loc 1 85 39 view .LVU175
+ 760 00ec 9AED199A 		vldr.32	s18, [r10, #100]
+ 761              		.loc 1 85 36 view .LVU176
+ 762 00f0 38EE497A 		vsub.f32	s14, s16, s18
+ 763              		.loc 1 85 28 view .LVU177
+ 764 00f4 67EE877A 		vmul.f32	s15, s15, s14
+ 765              		.loc 1 85 17 view .LVU178
+ 766 00f8 CAED177A 		vstr.32	s15, [r10, #92]
+  86:Core/drogui/math/various/src/control.c ****         p->errd_acum += 0.5*(p->errd+p->errd_ant)*p->dt;
+ 767              		.loc 1 86 9 is_stmt 1 view .LVU179
+ 768              		.loc 1 86 39 is_stmt 0 view .LVU180
+ 769 00fc 9AED187A 		vldr.32	s14, [r10, #96]
+ 770              		.loc 1 86 37 view .LVU181
+ 771 0100 77EE877A 		vadd.f32	s15, s15, s14
+ 772 0104 17EE900A 		vmov	r0, s15
+ 773 0108 FFF7FEFF 		bl	__aeabi_f2d
+ 774              	.LVL101:
+ 775              		.loc 1 86 28 view .LVU182
+ 776 010c 0022     		movs	r2, #0
+ 777 010e 9E4B     		ldr	r3, .L79
+ 778 0110 FFF7FEFF 		bl	__aeabi_dmul
+ 779              	.LVL102:
+ 780 0114 0246     		mov	r2, r0
+ 781 0116 0B46     		mov	r3, r1
+ 782              		.loc 1 86 50 view .LVU183
+ 783 0118 2046     		mov	r0, r4
+ 784 011a 2946     		mov	r1, r5
+ 785 011c FFF7FEFF 		bl	__aeabi_dmul
+ 786              	.LVL103:
+ 787 0120 0446     		mov	r4, r0
+ 788 0122 0D46     		mov	r5, r1
+ 789              		.loc 1 86 22 view .LVU184
+ 790 0124 19EE100A 		vmov	r0, s18
+ 791 0128 FFF7FEFF 		bl	__aeabi_f2d
+ 792              	.LVL104:
+ 793 012c 2246     		mov	r2, r4
+ 794 012e 2B46     		mov	r3, r5
+ 795 0130 FFF7FEFF 		bl	__aeabi_dadd
+ 796              	.LVL105:
+ 797 0134 FFF7FEFF 		bl	__aeabi_d2f
+ 798              	.LVL106:
+ 799 0138 CAF86400 		str	r0, [r10, #100]	@ float
+ 800              	.L42:
+  87:Core/drogui/math/various/src/control.c ****     }
+  88:Core/drogui/math/various/src/control.c **** 
+  89:Core/drogui/math/various/src/control.c ****     if( p->type & D_SG){
+ 801              		.loc 1 89 5 is_stmt 1 view .LVU185
+ 802              		.loc 1 89 7 is_stmt 0 view .LVU186
+ 803 013c 16F0200F 		tst	r6, #32
+ 804 0140 1ED1     		bne	.L76
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 17
+
+
+ 805              	.L43:
+  90:Core/drogui/math/various/src/control.c ****         p->errd = computeSavGolDFilter(&(p->sgd), error);
+  91:Core/drogui/math/various/src/control.c ****         //if(h==50) serialPrintf("%f\t", p->errd);
+  92:Core/drogui/math/various/src/control.c ****     }
+  93:Core/drogui/math/various/src/control.c **** 
+  94:Core/drogui/math/various/src/control.c ****     if(p->type & D_FILTER){
+ 806              		.loc 1 94 5 is_stmt 1 view .LVU187
+ 807              		.loc 1 94 9 is_stmt 0 view .LVU188
+ 808 0142 DAF88030 		ldr	r3, [r10, #128]
+ 809              		.loc 1 94 7 view .LVU189
+ 810 0146 13F0080F 		tst	r3, #8
+ 811 014a 22D1     		bne	.L77
+ 812              	.L44:
+  95:Core/drogui/math/various/src/control.c **** 
+  96:Core/drogui/math/various/src/control.c ****         p->errd = computeFilter(&(p->f), p->errd);
+  97:Core/drogui/math/various/src/control.c ****         //if(h==50)serialPrintf("%f\n", p->errd);
+  98:Core/drogui/math/various/src/control.c ****     }
+  99:Core/drogui/math/various/src/control.c **** 
+ 100:Core/drogui/math/various/src/control.c ****     //return max(min(p->kp[0]*error + p->ki[0]*p->erri + p->kd[0]*p->errd,p->osat),-p->osat);
+ 101:Core/drogui/math/various/src/control.c ****     if(p->type & P2ID) error *= fabs(error);
+ 813              		.loc 1 101 5 is_stmt 1 view .LVU190
+ 814              		.loc 1 101 9 is_stmt 0 view .LVU191
+ 815 014c DAF88030 		ldr	r3, [r10, #128]
+ 816              		.loc 1 101 7 view .LVU192
+ 817 0150 13F0010F 		tst	r3, #1
+ 818 0154 03D0     		beq	.L45
+ 819              		.loc 1 101 24 is_stmt 1 discriminator 1 view .LVU193
+ 820              		.loc 1 101 33 is_stmt 0 discriminator 1 view .LVU194
+ 821 0156 F0EEC87A 		vabs.f32	s15, s16
+ 822              		.loc 1 101 30 discriminator 1 view .LVU195
+ 823 015a 28EE278A 		vmul.f32	s16, s16, s15
+ 824              	.LVL107:
+ 825              	.L45:
+ 102:Core/drogui/math/various/src/control.c **** 
+ 103:Core/drogui/math/various/src/control.c ****     if(p->type & INDEXED){
+ 826              		.loc 1 103 5 is_stmt 1 view .LVU196
+ 827              		.loc 1 103 7 is_stmt 0 view .LVU197
+ 828 015e 13F0020F 		tst	r3, #2
+ 829 0162 57D0     		beq	.L46
+ 104:Core/drogui/math/various/src/control.c ****         if(h <= 60)         kp = p->kp[0], kd = p->kd[0], ki = p->ki[0];
+ 830              		.loc 1 104 9 is_stmt 1 view .LVU198
+ 831              		.loc 1 104 11 is_stmt 0 view .LVU199
+ 832 0164 DFED897A 		vldr.32	s15, .L79+4
+ 833 0168 F4EEE78A 		vcmpe.f32	s17, s15
+ 834 016c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 835 0170 18D8     		bhi	.L70
+ 836              		.loc 1 104 29 is_stmt 1 discriminator 1 view .LVU200
+ 837              		.loc 1 104 32 is_stmt 0 discriminator 1 view .LVU201
+ 838 0172 9AED000A 		vldr.32	s0, [r10]
+ 839              	.LVL108:
+ 840              		.loc 1 104 47 discriminator 1 view .LVU202
+ 841 0176 DAED057A 		vldr.32	s15, [r10, #20]
+ 842              	.LVL109:
+ 843              		.loc 1 104 62 discriminator 1 view .LVU203
+ 844 017a 9AED0AAA 		vldr.32	s20, [r10, #40]
+ 845              	.LVL110:
+ 846              		.loc 1 104 62 discriminator 1 view .LVU204
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 18
+
+
+ 847 017e 4FE0     		b	.L49
+ 848              	.LVL111:
+ 849              	.L76:
+  90:Core/drogui/math/various/src/control.c ****         //if(h==50) serialPrintf("%f\t", p->errd);
+ 850              		.loc 1 90 9 is_stmt 1 view .LVU205
+  90:Core/drogui/math/various/src/control.c ****         //if(h==50) serialPrintf("%f\t", p->errd);
+ 851              		.loc 1 90 19 is_stmt 0 view .LVU206
+ 852 0180 B0EE480A 		vmov.f32	s0, s16
+ 853 0184 0AF1A000 		add	r0, r10, #160
+ 854 0188 FFF7FEFF 		bl	computeSavGolDFilter
+ 855              	.LVL112:
+  90:Core/drogui/math/various/src/control.c ****         //if(h==50) serialPrintf("%f\t", p->errd);
+ 856              		.loc 1 90 17 view .LVU207
+ 857 018c 8AED170A 		vstr.32	s0, [r10, #92]
+ 858 0190 D7E7     		b	.L43
+ 859              	.L77:
+  96:Core/drogui/math/various/src/control.c ****         //if(h==50)serialPrintf("%f\n", p->errd);
+ 860              		.loc 1 96 9 is_stmt 1 view .LVU208
+  96:Core/drogui/math/various/src/control.c ****         //if(h==50)serialPrintf("%f\n", p->errd);
+ 861              		.loc 1 96 19 is_stmt 0 view .LVU209
+ 862 0192 9AED170A 		vldr.32	s0, [r10, #92]
+ 863 0196 0AF18400 		add	r0, r10, #132
+ 864 019a FFF7FEFF 		bl	computeFilter
+ 865              	.LVL113:
+  96:Core/drogui/math/various/src/control.c ****         //if(h==50)serialPrintf("%f\n", p->errd);
+ 866              		.loc 1 96 17 view .LVU210
+ 867 019e 8AED170A 		vstr.32	s0, [r10, #92]
+ 868 01a2 D3E7     		b	.L44
+ 869              	.L70:
+ 105:Core/drogui/math/various/src/control.c ****         else if(h <= 70)    kp = p->kp[1], kd = p->kd[1], ki = p->ki[1];
+ 870              		.loc 1 105 14 is_stmt 1 view .LVU211
+ 871              		.loc 1 105 16 is_stmt 0 view .LVU212
+ 872 01a4 DFED7A7A 		vldr.32	s15, .L79+8
+ 873 01a8 F4EEE78A 		vcmpe.f32	s17, s15
+ 874 01ac F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 875 01b0 06D8     		bhi	.L71
+ 876              		.loc 1 105 29 is_stmt 1 discriminator 1 view .LVU213
+ 877              		.loc 1 105 32 is_stmt 0 discriminator 1 view .LVU214
+ 878 01b2 9AED010A 		vldr.32	s0, [r10, #4]
+ 879              	.LVL114:
+ 880              		.loc 1 105 47 discriminator 1 view .LVU215
+ 881 01b6 DAED067A 		vldr.32	s15, [r10, #24]
+ 882              	.LVL115:
+ 883              		.loc 1 105 62 discriminator 1 view .LVU216
+ 884 01ba 9AED0BAA 		vldr.32	s20, [r10, #44]
+ 885              	.LVL116:
+ 886              		.loc 1 105 62 discriminator 1 view .LVU217
+ 887 01be 2FE0     		b	.L49
+ 888              	.LVL117:
+ 889              	.L71:
+ 106:Core/drogui/math/various/src/control.c ****         else if(h <= 80)    kp = p->kp[2], kd = p->kd[2], ki = p->ki[2];
+ 890              		.loc 1 106 14 is_stmt 1 view .LVU218
+ 891              		.loc 1 106 16 is_stmt 0 view .LVU219
+ 892 01c0 DFED747A 		vldr.32	s15, .L79+12
+ 893 01c4 F4EEE78A 		vcmpe.f32	s17, s15
+ 894 01c8 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 895 01cc 06D8     		bhi	.L72
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 19
+
+
+ 896              		.loc 1 106 29 is_stmt 1 discriminator 1 view .LVU220
+ 897              		.loc 1 106 32 is_stmt 0 discriminator 1 view .LVU221
+ 898 01ce 9AED020A 		vldr.32	s0, [r10, #8]
+ 899              	.LVL118:
+ 900              		.loc 1 106 47 discriminator 1 view .LVU222
+ 901 01d2 DAED077A 		vldr.32	s15, [r10, #28]
+ 902              	.LVL119:
+ 903              		.loc 1 106 62 discriminator 1 view .LVU223
+ 904 01d6 9AED0CAA 		vldr.32	s20, [r10, #48]
+ 905              	.LVL120:
+ 906              		.loc 1 106 62 discriminator 1 view .LVU224
+ 907 01da 21E0     		b	.L49
+ 908              	.LVL121:
+ 909              	.L72:
+ 107:Core/drogui/math/various/src/control.c ****         else if(h <= 90)    kp = p->kp[3], kd = p->kd[3], ki = p->ki[3];
+ 910              		.loc 1 107 14 is_stmt 1 view .LVU225
+ 911              		.loc 1 107 16 is_stmt 0 view .LVU226
+ 912 01dc DFED6E7A 		vldr.32	s15, .L79+16
+ 913 01e0 F4EEE78A 		vcmpe.f32	s17, s15
+ 914 01e4 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 915 01e8 06D8     		bhi	.L73
+ 916              		.loc 1 107 29 is_stmt 1 discriminator 1 view .LVU227
+ 917              		.loc 1 107 32 is_stmt 0 discriminator 1 view .LVU228
+ 918 01ea 9AED030A 		vldr.32	s0, [r10, #12]
+ 919              	.LVL122:
+ 920              		.loc 1 107 47 discriminator 1 view .LVU229
+ 921 01ee DAED087A 		vldr.32	s15, [r10, #32]
+ 922              	.LVL123:
+ 923              		.loc 1 107 62 discriminator 1 view .LVU230
+ 924 01f2 9AED0DAA 		vldr.32	s20, [r10, #52]
+ 925              	.LVL124:
+ 926              		.loc 1 107 62 discriminator 1 view .LVU231
+ 927 01f6 13E0     		b	.L49
+ 928              	.LVL125:
+ 929              	.L73:
+ 108:Core/drogui/math/various/src/control.c ****         else if(h <= 100)   kp = p->kp[4], kd = p->kd[4], ki = p->ki[4];
+ 930              		.loc 1 108 14 is_stmt 1 view .LVU232
+ 931              		.loc 1 108 16 is_stmt 0 view .LVU233
+ 932 01f8 DFED687A 		vldr.32	s15, .L79+20
+ 933 01fc F4EEE78A 		vcmpe.f32	s17, s15
+ 934 0200 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 935 0204 7AD8     		bhi	.L74
+ 936              		.loc 1 108 29 is_stmt 1 discriminator 1 view .LVU234
+ 937              		.loc 1 108 32 is_stmt 0 discriminator 1 view .LVU235
+ 938 0206 9AED040A 		vldr.32	s0, [r10, #16]
+ 939              	.LVL126:
+ 940              		.loc 1 108 47 discriminator 1 view .LVU236
+ 941 020a DAED097A 		vldr.32	s15, [r10, #36]
+ 942              	.LVL127:
+ 943              		.loc 1 108 62 discriminator 1 view .LVU237
+ 944 020e 9AED0EAA 		vldr.32	s20, [r10, #56]
+ 945              	.LVL128:
+ 946              		.loc 1 108 62 discriminator 1 view .LVU238
+ 947 0212 05E0     		b	.L49
+ 948              	.LVL129:
+ 949              	.L46:
+ 109:Core/drogui/math/various/src/control.c ****     }
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 20
+
+
+ 110:Core/drogui/math/various/src/control.c ****     else{kp = p->kp[0], kd = p->kd[0], ki = p->ki[0];}
+ 950              		.loc 1 110 10 is_stmt 1 view .LVU239
+ 951              		.loc 1 110 13 is_stmt 0 view .LVU240
+ 952 0214 9AED000A 		vldr.32	s0, [r10]
+ 953              	.LVL130:
+ 954              		.loc 1 110 28 view .LVU241
+ 955 0218 DAED057A 		vldr.32	s15, [r10, #20]
+ 956              	.LVL131:
+ 957              		.loc 1 110 43 view .LVU242
+ 958 021c 9AED0AAA 		vldr.32	s20, [r10, #40]
+ 959              	.LVL132:
+ 960              	.L49:
+ 111:Core/drogui/math/various/src/control.c **** 
+ 112:Core/drogui/math/various/src/control.c ****     if(p->type & PIDABS){
+ 961              		.loc 1 112 5 is_stmt 1 view .LVU243
+ 962              		.loc 1 112 7 is_stmt 0 view .LVU244
+ 963 0220 13F0040F 		tst	r3, #4
+ 964 0224 75D0     		beq	.L57
+ 965              	.LBB4:
+ 113:Core/drogui/math/various/src/control.c ****         float newd = copysign(fmin( fabs(kp*error), fabs(kd*p->errd) ), p->errd);
+ 966              		.loc 1 113 9 is_stmt 1 view .LVU245
+ 967              		.loc 1 113 22 is_stmt 0 view .LVU246
+ 968 0226 28EE008A 		vmul.f32	s16, s16, s0
+ 969              	.LVL133:
+ 970              		.loc 1 113 22 view .LVU247
+ 971 022a F0EEC8AA 		vabs.f32	s21, s16
+ 972 022e DAED178A 		vldr.32	s17, [r10, #92]
+ 973              	.LVL134:
+ 974              		.loc 1 113 22 view .LVU248
+ 975 0232 68EEA77A 		vmul.f32	s15, s17, s15
+ 976              	.LVL135:
+ 977              		.loc 1 113 22 view .LVU249
+ 978 0236 F0EEE77A 		vabs.f32	s15, s15
+ 979 023a 17EE900A 		vmov	r0, s15
+ 980 023e FFF7FEFF 		bl	__aeabi_f2d
+ 981              	.LVL136:
+ 982              		.loc 1 113 22 view .LVU250
+ 983 0242 41EC190B 		vmov	d9, r0, r1
+ 984 0246 1AEE900A 		vmov	r0, s21
+ 985 024a FFF7FEFF 		bl	__aeabi_f2d
+ 986              	.LVL137:
+ 987 024e B0EE491A 		vmov.f32	s2, s18
+ 988 0252 F0EE691A 		vmov.f32	s3, s19
+ 989 0256 41EC100B 		vmov	d0, r0, r1
+ 990 025a FFF7FEFF 		bl	fmin
+ 991              	.LVL138:
+ 992 025e 55EC104B 		vmov	r4, r5, d0
+ 993 0262 0022     		movs	r2, #0
+ 994 0264 0023     		movs	r3, #0
+ 995 0266 10EE100A 		vmov	r0, s0	@ int
+ 996 026a 2946     		mov	r1, r5
+ 997 026c FFF7FEFF 		bl	__aeabi_dcmpgt
+ 998              	.LVL139:
+ 999 0270 20B1     		cbz	r0, .L58
+ 1000              		.loc 1 113 22 discriminator 1 view .LVU251
+ 1001 0272 F5EEC08A 		vcmpe.f32	s17, #0
+ 1002 0276 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 21
+
+
+ 1003 027a 46D4     		bmi	.L78
+ 1004              	.L58:
+ 1005              		.loc 1 113 15 discriminator 6 view .LVU252
+ 1006 027c 2046     		mov	r0, r4
+ 1007 027e 2946     		mov	r1, r5
+ 1008 0280 FFF7FEFF 		bl	__aeabi_d2f
+ 1009              	.LVL140:
+ 1010 0284 07EE900A 		vmov	s15, r0
+ 1011              	.LVL141:
+ 114:Core/drogui/math/various/src/control.c ****         p->u = fmax(fmin(kp*error + ki*p->erri + newd, p->osat), -p->osat);
+ 1012              		.loc 1 114 9 is_stmt 1 discriminator 6 view .LVU253
+ 1013              		.loc 1 114 41 is_stmt 0 discriminator 6 view .LVU254
+ 1014 0288 9AED140A 		vldr.32	s0, [r10, #80]
+ 1015              		.loc 1 114 39 discriminator 6 view .LVU255
+ 1016 028c 20EE0A0A 		vmul.f32	s0, s0, s20
+ 1017              		.loc 1 114 35 discriminator 6 view .LVU256
+ 1018 0290 38EE008A 		vadd.f32	s16, s16, s0
+ 1019              		.loc 1 114 48 discriminator 6 view .LVU257
+ 1020 0294 38EE278A 		vadd.f32	s16, s16, s15
+ 1021              		.loc 1 114 57 discriminator 6 view .LVU258
+ 1022 0298 DAF87840 		ldr	r4, [r10, #120]	@ float
+ 1023              		.loc 1 114 16 discriminator 6 view .LVU259
+ 1024 029c 2046     		mov	r0, r4	@ float
+ 1025              	.LVL142:
+ 1026              		.loc 1 114 16 discriminator 6 view .LVU260
+ 1027 029e FFF7FEFF 		bl	__aeabi_f2d
+ 1028              	.LVL143:
+ 1029              		.loc 1 114 16 discriminator 6 view .LVU261
+ 1030 02a2 41EC190B 		vmov	d9, r0, r1
+ 1031 02a6 18EE100A 		vmov	r0, s16
+ 1032 02aa FFF7FEFF 		bl	__aeabi_f2d
+ 1033              	.LVL144:
+ 1034 02ae B0EE491A 		vmov.f32	s2, s18
+ 1035 02b2 F0EE691A 		vmov.f32	s3, s19
+ 1036 02b6 41EC100B 		vmov	d0, r0, r1
+ 1037 02ba FFF7FEFF 		bl	fmin
+ 1038              	.LVL145:
+ 1039 02be B0EE408A 		vmov.f32	s16, s0
+ 1040 02c2 F0EE608A 		vmov.f32	s17, s1
+ 1041 02c6 84F00040 		eor	r0, r4, #-2147483648
+ 1042 02ca FFF7FEFF 		bl	__aeabi_f2d
+ 1043              	.LVL146:
+ 1044 02ce 41EC110B 		vmov	d1, r0, r1
+ 1045 02d2 B0EE480A 		vmov.f32	s0, s16
+ 1046 02d6 F0EE680A 		vmov.f32	s1, s17
+ 1047 02da FFF7FEFF 		bl	fmax
+ 1048              	.LVL147:
+ 1049 02de 51EC100B 		vmov	r0, r1, d0
+ 1050 02e2 FFF7FEFF 		bl	__aeabi_d2f
+ 1051              	.LVL148:
+ 1052              		.loc 1 114 14 discriminator 6 view .LVU262
+ 1053 02e6 CAF86800 		str	r0, [r10, #104]	@ float
+ 1054              	.L61:
+ 1055              		.loc 1 114 14 discriminator 6 view .LVU263
+ 1056              	.LBE4:
+ 115:Core/drogui/math/various/src/control.c ****     }
+ 116:Core/drogui/math/various/src/control.c ****     else{
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 22
+
+
+ 117:Core/drogui/math/various/src/control.c ****         p->u = fmax(fmin(kp*error + ki*p->erri + kd*p->errd, p->osat), -p->osat);
+ 118:Core/drogui/math/various/src/control.c ****     }
+ 119:Core/drogui/math/various/src/control.c ****     p->u_ant = p->u;
+ 1057              		.loc 1 119 5 is_stmt 1 view .LVU264
+ 1058              		.loc 1 119 17 is_stmt 0 view .LVU265
+ 1059 02ea 9AED1A0A 		vldr.32	s0, [r10, #104]
+ 1060              		.loc 1 119 14 view .LVU266
+ 1061 02ee 8AED1B0A 		vstr.32	s0, [r10, #108]
+ 120:Core/drogui/math/various/src/control.c **** 
+ 121:Core/drogui/math/various/src/control.c **** 
+ 122:Core/drogui/math/various/src/control.c ****     return p->u;
+ 1062              		.loc 1 122 5 is_stmt 1 view .LVU267
+ 123:Core/drogui/math/various/src/control.c **** }
+ 1063              		.loc 1 123 1 is_stmt 0 view .LVU268
+ 1064 02f2 02B0     		add	sp, sp, #8
+ 1065              	.LCFI7:
+ 1066              		.cfi_remember_state
+ 1067              		.cfi_def_cfa_offset 56
+ 1068              		@ sp needed
+ 1069 02f4 BDEC068B 		vldm	sp!, {d8-d10}
+ 1070              	.LCFI8:
+ 1071              		.cfi_restore 84
+ 1072              		.cfi_restore 85
+ 1073              		.cfi_restore 82
+ 1074              		.cfi_restore 83
+ 1075              		.cfi_restore 80
+ 1076              		.cfi_restore 81
+ 1077              		.cfi_def_cfa_offset 32
+ 1078              	.LVL149:
+ 1079              		.loc 1 123 1 view .LVU269
+ 1080 02f8 BDE8708F 		pop	{r4, r5, r6, r8, r9, r10, fp, pc}
+ 1081              	.LVL150:
+ 1082              	.L74:
+ 1083              	.LCFI9:
+ 1084              		.cfi_restore_state
+  70:Core/drogui/math/various/src/control.c **** 
+ 1085              		.loc 1 70 27 view .LVU270
+ 1086 02fc B7EE00AA 		vmov.f32	s20, #1.0e+0
+  70:Core/drogui/math/various/src/control.c **** 
+ 1087              		.loc 1 70 19 view .LVU271
+ 1088 0300 F0EE4A7A 		vmov.f32	s15, s20
+  70:Core/drogui/math/various/src/control.c **** 
+ 1089              		.loc 1 70 11 view .LVU272
+ 1090 0304 B0EE4A0A 		vmov.f32	s0, s20
+ 1091 0308 8AE7     		b	.L49
+ 1092              	.LVL151:
+ 1093              	.L78:
+ 1094              	.LBB5:
+ 113:Core/drogui/math/various/src/control.c ****         p->u = fmax(fmin(kp*error + ki*p->erri + newd, p->osat), -p->osat);
+ 1095              		.loc 1 113 22 discriminator 3 view .LVU273
+ 1096 030a 05F10043 		add	r3, r5, #-2147483648
+ 1097 030e 1D46     		mov	r5, r3
+ 1098 0310 B4E7     		b	.L58
+ 1099              	.LVL152:
+ 1100              	.L57:
+ 113:Core/drogui/math/various/src/control.c ****         p->u = fmax(fmin(kp*error + ki*p->erri + newd, p->osat), -p->osat);
+ 1101              		.loc 1 113 22 discriminator 3 view .LVU274
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 23
+
+
+ 1102              	.LBE5:
+ 117:Core/drogui/math/various/src/control.c ****     }
+ 1103              		.loc 1 117 9 is_stmt 1 view .LVU275
+ 117:Core/drogui/math/various/src/control.c ****     }
+ 1104              		.loc 1 117 28 is_stmt 0 view .LVU276
+ 1105 0312 28EE008A 		vmul.f32	s16, s16, s0
+ 1106              	.LVL153:
+ 117:Core/drogui/math/various/src/control.c ****     }
+ 1107              		.loc 1 117 41 view .LVU277
+ 1108 0316 9AED140A 		vldr.32	s0, [r10, #80]
+ 1109              	.LVL154:
+ 117:Core/drogui/math/various/src/control.c ****     }
+ 1110              		.loc 1 117 39 view .LVU278
+ 1111 031a 20EE0A0A 		vmul.f32	s0, s0, s20
+ 117:Core/drogui/math/various/src/control.c ****     }
+ 1112              		.loc 1 117 35 view .LVU279
+ 1113 031e 38EE008A 		vadd.f32	s16, s16, s0
+ 117:Core/drogui/math/various/src/control.c ****     }
+ 1114              		.loc 1 117 54 view .LVU280
+ 1115 0322 9AED177A 		vldr.32	s14, [r10, #92]
+ 117:Core/drogui/math/various/src/control.c ****     }
+ 1116              		.loc 1 117 52 view .LVU281
+ 1117 0326 67EE277A 		vmul.f32	s15, s14, s15
+ 1118              	.LVL155:
+ 117:Core/drogui/math/various/src/control.c ****     }
+ 1119              		.loc 1 117 48 view .LVU282
+ 1120 032a 38EE278A 		vadd.f32	s16, s16, s15
+ 117:Core/drogui/math/various/src/control.c ****     }
+ 1121              		.loc 1 117 63 view .LVU283
+ 1122 032e DAF87840 		ldr	r4, [r10, #120]	@ float
+ 117:Core/drogui/math/various/src/control.c ****     }
+ 1123              		.loc 1 117 16 view .LVU284
+ 1124 0332 2046     		mov	r0, r4	@ float
+ 1125 0334 FFF7FEFF 		bl	__aeabi_f2d
+ 1126              	.LVL156:
+ 1127 0338 41EC190B 		vmov	d9, r0, r1
+ 1128 033c 18EE100A 		vmov	r0, s16
+ 1129 0340 FFF7FEFF 		bl	__aeabi_f2d
+ 1130              	.LVL157:
+ 1131 0344 B0EE491A 		vmov.f32	s2, s18
+ 1132 0348 F0EE691A 		vmov.f32	s3, s19
+ 1133 034c 41EC100B 		vmov	d0, r0, r1
+ 1134 0350 FFF7FEFF 		bl	fmin
+ 1135              	.LVL158:
+ 1136 0354 B0EE408A 		vmov.f32	s16, s0
+ 1137 0358 F0EE608A 		vmov.f32	s17, s1
+ 1138 035c 84F00040 		eor	r0, r4, #-2147483648
+ 1139 0360 FFF7FEFF 		bl	__aeabi_f2d
+ 1140              	.LVL159:
+ 1141 0364 41EC110B 		vmov	d1, r0, r1
+ 1142 0368 B0EE480A 		vmov.f32	s0, s16
+ 1143 036c F0EE680A 		vmov.f32	s1, s17
+ 1144 0370 FFF7FEFF 		bl	fmax
+ 1145              	.LVL160:
+ 1146 0374 51EC100B 		vmov	r0, r1, d0
+ 1147 0378 FFF7FEFF 		bl	__aeabi_d2f
+ 1148              	.LVL161:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 24
+
+
+ 117:Core/drogui/math/various/src/control.c ****     }
+ 1149              		.loc 1 117 14 view .LVU285
+ 1150 037c CAF86800 		str	r0, [r10, #104]	@ float
+ 1151 0380 B3E7     		b	.L61
+ 1152              	.L80:
+ 1153 0382 00BFAFF3 		.align	3
+ 1153      0080
+ 1154              	.L79:
+ 1155 0388 0000E03F 		.word	1071644672
+ 1156 038c 00007042 		.word	1114636288
+ 1157 0390 00008C42 		.word	1116471296
+ 1158 0394 0000A042 		.word	1117782016
+ 1159 0398 0000B442 		.word	1119092736
+ 1160 039c 0000C842 		.word	1120403456
+ 1161 03a0 00000000 		.word	0
+ 1162 03a4 80842E41 		.word	1093567616
+ 1163              		.cfi_endproc
+ 1164              	.LFE283:
+ 1166              		.section	.text.resetPid,"ax",%progbits
+ 1167              		.align	1
+ 1168              		.global	resetPid
+ 1169              		.syntax unified
+ 1170              		.thumb
+ 1171              		.thumb_func
+ 1172              		.fpu fpv5-sp-d16
+ 1174              	resetPid:
+ 1175              	.LVL162:
+ 1176              	.LFB284:
+ 124:Core/drogui/math/various/src/control.c **** 
+ 125:Core/drogui/math/various/src/control.c **** 
+ 126:Core/drogui/math/various/src/control.c **** void resetPid(pid* p, uint32_t ti){
+ 1177              		.loc 1 126 35 is_stmt 1 view -0
+ 1178              		.cfi_startproc
+ 1179              		@ args = 0, pretend = 0, frame = 0
+ 1180              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1181              		@ link register save eliminated.
+ 127:Core/drogui/math/various/src/control.c ****     p->tant = ti;
+ 1182              		.loc 1 127 5 view .LVU287
+ 1183              		.loc 1 127 13 is_stmt 0 view .LVU288
+ 1184 0000 0167     		str	r1, [r0, #112]
+ 128:Core/drogui/math/various/src/control.c ****     p->erri = 0;
+ 1185              		.loc 1 128 5 is_stmt 1 view .LVU289
+ 1186              		.loc 1 128 13 is_stmt 0 view .LVU290
+ 1187 0002 0023     		movs	r3, #0
+ 1188 0004 0365     		str	r3, [r0, #80]	@ float
+ 129:Core/drogui/math/various/src/control.c ****     p->err_ant1 = p->err_ant2 = 0;
+ 1189              		.loc 1 129 5 is_stmt 1 view .LVU291
+ 1190              		.loc 1 129 31 is_stmt 0 view .LVU292
+ 1191 0006 4365     		str	r3, [r0, #84]	@ float
+ 1192              		.loc 1 129 17 view .LVU293
+ 1193 0008 8365     		str	r3, [r0, #88]	@ float
+ 130:Core/drogui/math/various/src/control.c ****     p->errd_acum = 0;
+ 1194              		.loc 1 130 5 is_stmt 1 view .LVU294
+ 1195              		.loc 1 130 18 is_stmt 0 view .LVU295
+ 1196 000a 4366     		str	r3, [r0, #100]	@ float
+ 131:Core/drogui/math/various/src/control.c ****     p->u_ant = 0;
+ 1197              		.loc 1 131 5 is_stmt 1 view .LVU296
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 25
+
+
+ 1198              		.loc 1 131 14 is_stmt 0 view .LVU297
+ 1199 000c C366     		str	r3, [r0, #108]	@ float
+ 132:Core/drogui/math/various/src/control.c **** }
+ 1200              		.loc 1 132 1 view .LVU298
+ 1201 000e 7047     		bx	lr
+ 1202              		.cfi_endproc
+ 1203              	.LFE284:
+ 1205              		.section	.text.initPid,"ax",%progbits
+ 1206              		.align	1
+ 1207              		.global	initPid
+ 1208              		.syntax unified
+ 1209              		.thumb
+ 1210              		.thumb_func
+ 1211              		.fpu fpv5-sp-d16
+ 1213              	initPid:
+ 1214              	.LVL163:
+ 1215              	.LFB285:
+ 133:Core/drogui/math/various/src/control.c **** 
+ 134:Core/drogui/math/various/src/control.c **** void initPid(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float isat, float osat, int
+ 1216              		.loc 1 134 106 is_stmt 1 view -0
+ 1217              		.cfi_startproc
+ 1218              		@ args = 0, pretend = 0, frame = 0
+ 1219              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1220              		.loc 1 134 106 is_stmt 0 view .LVU300
+ 1221 0000 08B5     		push	{r3, lr}
+ 1222              	.LCFI10:
+ 1223              		.cfi_def_cfa_offset 8
+ 1224              		.cfi_offset 3, -8
+ 1225              		.cfi_offset 14, -4
+ 135:Core/drogui/math/various/src/control.c ****     for(int i = 0; i < 5; i++){
+ 1226              		.loc 1 135 5 is_stmt 1 view .LVU301
+ 1227              	.LBB6:
+ 1228              		.loc 1 135 9 view .LVU302
+ 1229              	.LVL164:
+ 1230              		.loc 1 135 13 is_stmt 0 view .LVU303
+ 1231 0002 0023     		movs	r3, #0
+ 1232              		.loc 1 135 5 view .LVU304
+ 1233 0004 10E0     		b	.L83
+ 1234              	.LVL165:
+ 1235              	.L84:
+ 136:Core/drogui/math/various/src/control.c ****         p->kp[i] = kp;
+ 1236              		.loc 1 136 9 is_stmt 1 discriminator 3 view .LVU305
+ 1237              		.loc 1 136 18 is_stmt 0 discriminator 3 view .LVU306
+ 1238 0006 00EB830C 		add	ip, r0, r3, lsl #2
+ 1239 000a 8CED000A 		vstr.32	s0, [ip]
+ 137:Core/drogui/math/various/src/control.c ****         p->kd[i] = kd;
+ 1240              		.loc 1 137 9 is_stmt 1 discriminator 3 view .LVU307
+ 1241              		.loc 1 137 18 is_stmt 0 discriminator 3 view .LVU308
+ 1242 000e 03F1040C 		add	ip, r3, #4
+ 1243 0012 00EB8C0C 		add	ip, r0, ip, lsl #2
+ 1244 0016 CCED010A 		vstr.32	s1, [ip, #4]
+ 138:Core/drogui/math/various/src/control.c ****         p->ki[i] = ki;
+ 1245              		.loc 1 138 9 is_stmt 1 discriminator 3 view .LVU309
+ 1246              		.loc 1 138 18 is_stmt 0 discriminator 3 view .LVU310
+ 1247 001a 03F10A0C 		add	ip, r3, #10
+ 1248 001e 00EB8C0C 		add	ip, r0, ip, lsl #2
+ 1249 0022 8CED001A 		vstr.32	s2, [ip]
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 26
+
+
+ 135:Core/drogui/math/various/src/control.c ****         p->kp[i] = kp;
+ 1250              		.loc 1 135 27 is_stmt 1 discriminator 3 view .LVU311
+ 135:Core/drogui/math/various/src/control.c ****         p->kp[i] = kp;
+ 1251              		.loc 1 135 28 is_stmt 0 discriminator 3 view .LVU312
+ 1252 0026 0133     		adds	r3, r3, #1
+ 1253              	.LVL166:
+ 1254              	.L83:
+ 135:Core/drogui/math/various/src/control.c ****         p->kp[i] = kp;
+ 1255              		.loc 1 135 20 is_stmt 1 discriminator 1 view .LVU313
+ 135:Core/drogui/math/various/src/control.c ****         p->kp[i] = kp;
+ 1256              		.loc 1 135 5 is_stmt 0 discriminator 1 view .LVU314
+ 1257 0028 042B     		cmp	r3, #4
+ 1258 002a ECDD     		ble	.L84
+ 1259              	.LBE6:
+ 139:Core/drogui/math/various/src/control.c ****     }
+ 140:Core/drogui/math/various/src/control.c ****     p->N_filt = N;
+ 1260              		.loc 1 140 5 is_stmt 1 view .LVU315
+ 1261              		.loc 1 140 15 is_stmt 0 view .LVU316
+ 1262 002c C0ED271A 		vstr.32	s3, [r0, #156]
+ 141:Core/drogui/math/various/src/control.c ****     p->errd_acum = 0;
+ 1263              		.loc 1 141 5 is_stmt 1 view .LVU317
+ 1264              		.loc 1 141 18 is_stmt 0 view .LVU318
+ 1265 0030 0023     		movs	r3, #0
+ 1266              	.LVL167:
+ 1267              		.loc 1 141 18 view .LVU319
+ 1268 0032 4366     		str	r3, [r0, #100]	@ float
+ 142:Core/drogui/math/various/src/control.c ****     p->errd_ant = 0;
+ 1269              		.loc 1 142 5 is_stmt 1 view .LVU320
+ 1270              		.loc 1 142 17 is_stmt 0 view .LVU321
+ 1271 0034 0366     		str	r3, [r0, #96]	@ float
+ 143:Core/drogui/math/various/src/control.c ****     p->u_ant = 0;
+ 1272              		.loc 1 143 5 is_stmt 1 view .LVU322
+ 1273              		.loc 1 143 14 is_stmt 0 view .LVU323
+ 1274 0036 C366     		str	r3, [r0, #108]	@ float
+ 144:Core/drogui/math/various/src/control.c ****     p->tant = ti;
+ 1275              		.loc 1 144 5 is_stmt 1 view .LVU324
+ 1276              		.loc 1 144 13 is_stmt 0 view .LVU325
+ 1277 0038 0167     		str	r1, [r0, #112]
+ 145:Core/drogui/math/various/src/control.c ****     p->osat = osat;
+ 1278              		.loc 1 145 5 is_stmt 1 view .LVU326
+ 1279              		.loc 1 145 13 is_stmt 0 view .LVU327
+ 1280 003a C0ED1E2A 		vstr.32	s5, [r0, #120]
+ 146:Core/drogui/math/various/src/control.c ****     p->type = type;
+ 1281              		.loc 1 146 5 is_stmt 1 view .LVU328
+ 1282              		.loc 1 146 13 is_stmt 0 view .LVU329
+ 1283 003e C0F88020 		str	r2, [r0, #128]
+ 147:Core/drogui/math/various/src/control.c ****     p->isat = isat;
+ 1284              		.loc 1 147 5 is_stmt 1 view .LVU330
+ 1285              		.loc 1 147 13 is_stmt 0 view .LVU331
+ 1286 0042 80ED1D2A 		vstr.32	s4, [r0, #116]
+ 148:Core/drogui/math/various/src/control.c ****     initSavGolDFilter(&(p->sgd), 13);
+ 1287              		.loc 1 148 5 is_stmt 1 view .LVU332
+ 1288 0046 0D21     		movs	r1, #13
+ 1289              	.LVL168:
+ 1290              		.loc 1 148 5 is_stmt 0 view .LVU333
+ 1291 0048 A030     		adds	r0, r0, #160
+ 1292              	.LVL169:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 27
+
+
+ 1293              		.loc 1 148 5 view .LVU334
+ 1294 004a FFF7FEFF 		bl	initSavGolDFilter
+ 1295              	.LVL170:
+ 149:Core/drogui/math/various/src/control.c **** }
+ 1296              		.loc 1 149 1 view .LVU335
+ 1297 004e 08BD     		pop	{r3, pc}
+ 1298              		.cfi_endproc
+ 1299              	.LFE285:
+ 1301              		.section	.text.initPidFilter,"ax",%progbits
+ 1302              		.align	1
+ 1303              		.global	initPidFilter
+ 1304              		.syntax unified
+ 1305              		.thumb
+ 1306              		.thumb_func
+ 1307              		.fpu fpv5-sp-d16
+ 1309              	initPidFilter:
+ 1310              	.LVL171:
+ 1311              	.LFB286:
+ 150:Core/drogui/math/various/src/control.c **** 
+ 151:Core/drogui/math/various/src/control.c **** void initPidFilter(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float isat, float osa
+ 1312              		.loc 1 151 139 is_stmt 1 view -0
+ 1313              		.cfi_startproc
+ 1314              		@ args = 8, pretend = 0, frame = 0
+ 1315              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1316              		.loc 1 151 139 is_stmt 0 view .LVU337
+ 1317 0000 38B5     		push	{r3, r4, r5, lr}
+ 1318              	.LCFI11:
+ 1319              		.cfi_def_cfa_offset 16
+ 1320              		.cfi_offset 3, -16
+ 1321              		.cfi_offset 4, -12
+ 1322              		.cfi_offset 5, -8
+ 1323              		.cfi_offset 14, -4
+ 1324 0002 0446     		mov	r4, r0
+ 1325 0004 1D46     		mov	r5, r3
+ 152:Core/drogui/math/various/src/control.c **** 
+ 153:Core/drogui/math/various/src/control.c ****     for(int i = 0; i < 5; i++){
+ 1326              		.loc 1 153 5 is_stmt 1 view .LVU338
+ 1327              	.LBB7:
+ 1328              		.loc 1 153 9 view .LVU339
+ 1329              	.LVL172:
+ 1330              		.loc 1 153 13 is_stmt 0 view .LVU340
+ 1331 0006 4FF0000C 		mov	ip, #0
+ 1332              		.loc 1 153 5 view .LVU341
+ 1333 000a 11E0     		b	.L87
+ 1334              	.LVL173:
+ 1335              	.L88:
+ 154:Core/drogui/math/various/src/control.c ****         p->kp[i] = kp;
+ 1336              		.loc 1 154 9 is_stmt 1 discriminator 3 view .LVU342
+ 1337              		.loc 1 154 18 is_stmt 0 discriminator 3 view .LVU343
+ 1338 000c 04EB8C00 		add	r0, r4, ip, lsl #2
+ 1339 0010 80ED000A 		vstr.32	s0, [r0]
+ 155:Core/drogui/math/various/src/control.c ****         p->kd[i] = kd;
+ 1340              		.loc 1 155 9 is_stmt 1 discriminator 3 view .LVU344
+ 1341              		.loc 1 155 18 is_stmt 0 discriminator 3 view .LVU345
+ 1342 0014 0CF10400 		add	r0, ip, #4
+ 1343 0018 04EB8000 		add	r0, r4, r0, lsl #2
+ 1344 001c C0ED010A 		vstr.32	s1, [r0, #4]
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 28
+
+
+ 156:Core/drogui/math/various/src/control.c ****         p->ki[i] = ki;
+ 1345              		.loc 1 156 9 is_stmt 1 discriminator 3 view .LVU346
+ 1346              		.loc 1 156 18 is_stmt 0 discriminator 3 view .LVU347
+ 1347 0020 0CF10A00 		add	r0, ip, #10
+ 1348 0024 04EB8000 		add	r0, r4, r0, lsl #2
+ 1349 0028 80ED001A 		vstr.32	s2, [r0]
+ 153:Core/drogui/math/various/src/control.c ****         p->kp[i] = kp;
+ 1350              		.loc 1 153 27 is_stmt 1 discriminator 3 view .LVU348
+ 153:Core/drogui/math/various/src/control.c ****         p->kp[i] = kp;
+ 1351              		.loc 1 153 28 is_stmt 0 discriminator 3 view .LVU349
+ 1352 002c 0CF1010C 		add	ip, ip, #1
+ 1353              	.LVL174:
+ 1354              	.L87:
+ 153:Core/drogui/math/various/src/control.c ****         p->kp[i] = kp;
+ 1355              		.loc 1 153 20 is_stmt 1 discriminator 1 view .LVU350
+ 153:Core/drogui/math/various/src/control.c ****         p->kp[i] = kp;
+ 1356              		.loc 1 153 5 is_stmt 0 discriminator 1 view .LVU351
+ 1357 0030 BCF1040F 		cmp	ip, #4
+ 1358 0034 EADD     		ble	.L88
+ 1359              	.LBE7:
+ 157:Core/drogui/math/various/src/control.c ****     }
+ 158:Core/drogui/math/various/src/control.c **** 
+ 159:Core/drogui/math/various/src/control.c ****     p->N_filt = N;
+ 1360              		.loc 1 159 5 is_stmt 1 view .LVU352
+ 1361              		.loc 1 159 15 is_stmt 0 view .LVU353
+ 1362 0036 C4ED271A 		vstr.32	s3, [r4, #156]
+ 160:Core/drogui/math/various/src/control.c ****     p->errd_acum = 0;
+ 1363              		.loc 1 160 5 is_stmt 1 view .LVU354
+ 1364              		.loc 1 160 18 is_stmt 0 view .LVU355
+ 1365 003a 0023     		movs	r3, #0
+ 1366              	.LVL175:
+ 1367              		.loc 1 160 18 view .LVU356
+ 1368 003c 6366     		str	r3, [r4, #100]	@ float
+ 161:Core/drogui/math/various/src/control.c ****     p->errd_ant = 0;
+ 1369              		.loc 1 161 5 is_stmt 1 view .LVU357
+ 1370              		.loc 1 161 17 is_stmt 0 view .LVU358
+ 1371 003e 2366     		str	r3, [r4, #96]	@ float
+ 162:Core/drogui/math/various/src/control.c ****     p->u_ant = 0;
+ 1372              		.loc 1 162 5 is_stmt 1 view .LVU359
+ 1373              		.loc 1 162 14 is_stmt 0 view .LVU360
+ 1374 0040 E366     		str	r3, [r4, #108]	@ float
+ 163:Core/drogui/math/various/src/control.c ****     p->tant = ti;
+ 1375              		.loc 1 163 5 is_stmt 1 view .LVU361
+ 1376              		.loc 1 163 13 is_stmt 0 view .LVU362
+ 1377 0042 2167     		str	r1, [r4, #112]
+ 164:Core/drogui/math/various/src/control.c ****     p->isat = isat,
+ 1378              		.loc 1 164 5 is_stmt 1 view .LVU363
+ 1379              		.loc 1 164 13 is_stmt 0 view .LVU364
+ 1380 0044 84ED1D2A 		vstr.32	s4, [r4, #116]
+ 165:Core/drogui/math/various/src/control.c ****     p->osat = osat;
+ 1381              		.loc 1 165 13 view .LVU365
+ 1382 0048 C4ED1E2A 		vstr.32	s5, [r4, #120]
+ 166:Core/drogui/math/various/src/control.c ****     p->type = type;
+ 1383              		.loc 1 166 5 is_stmt 1 view .LVU366
+ 1384              		.loc 1 166 13 is_stmt 0 view .LVU367
+ 1385 004c C4F88020 		str	r2, [r4, #128]
+ 167:Core/drogui/math/various/src/control.c **** 
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 29
+
+
+ 168:Core/drogui/math/various/src/control.c ****     initSavGolDFilter(&(p->sgd), 13);
+ 1386              		.loc 1 168 5 is_stmt 1 view .LVU368
+ 1387 0050 0D21     		movs	r1, #13
+ 1388              	.LVL176:
+ 1389              		.loc 1 168 5 is_stmt 0 view .LVU369
+ 1390 0052 04F1A000 		add	r0, r4, #160
+ 1391 0056 FFF7FEFF 		bl	initSavGolDFilter
+ 1392              	.LVL177:
+ 169:Core/drogui/math/various/src/control.c **** 
+ 170:Core/drogui/math/various/src/control.c ****     if(p->type & D_FILTER){
+ 1393              		.loc 1 170 5 is_stmt 1 view .LVU370
+ 1394              		.loc 1 170 9 is_stmt 0 view .LVU371
+ 1395 005a D4F88030 		ldr	r3, [r4, #128]
+ 1396              		.loc 1 170 7 view .LVU372
+ 1397 005e 13F0080F 		tst	r3, #8
+ 1398 0062 00D1     		bne	.L91
+ 1399              	.L86:
+ 171:Core/drogui/math/various/src/control.c ****         initFilter(&(p->f), n, a, b);
+ 172:Core/drogui/math/various/src/control.c ****     }
+ 173:Core/drogui/math/various/src/control.c **** }
+ 1400              		.loc 1 173 1 view .LVU373
+ 1401 0064 38BD     		pop	{r3, r4, r5, pc}
+ 1402              	.LVL178:
+ 1403              	.L91:
+ 171:Core/drogui/math/various/src/control.c ****         initFilter(&(p->f), n, a, b);
+ 1404              		.loc 1 171 9 is_stmt 1 view .LVU374
+ 1405 0066 059B     		ldr	r3, [sp, #20]
+ 1406 0068 049A     		ldr	r2, [sp, #16]
+ 1407 006a 2946     		mov	r1, r5
+ 1408 006c 04F18400 		add	r0, r4, #132
+ 1409 0070 FFF7FEFF 		bl	initFilter
+ 1410              	.LVL179:
+ 1411              		.loc 1 173 1 is_stmt 0 view .LVU375
+ 1412 0074 F6E7     		b	.L86
+ 1413              		.cfi_endproc
+ 1414              	.LFE286:
+ 1416              		.global	buffct
+ 1417              		.section	.bss.buffct,"aw",%nobits
+ 1418              		.align	2
+ 1421              	buffct:
+ 1422 0000 00000000 		.space	50
+ 1422      00000000 
+ 1422      00000000 
+ 1422      00000000 
+ 1422      00000000 
+ 1423              		.text
+ 1424              	.Letext0:
+ 1425              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 1426              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 1427              		.file 4 "Drivers/CMSIS/DSP/Include/arm_math.h"
+ 1428              		.file 5 "Core/drogui/math/various/include/filter.h"
+ 1429              		.file 6 "Core/drogui/math/various/include/control.h"
+ 1430              		.file 7 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s 			page 30
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 control.c
+C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s:25     .text.computePid:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s:33     .text.computePid:00000000 computePid
+C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s:593    .text.computePid:000003a8 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s:607    .text.computePidD:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s:614    .text.computePidD:00000000 computePidD
+C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s:1155   .text.computePidD:00000388 $d
+C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s:1167   .text.resetPid:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s:1174   .text.resetPid:00000000 resetPid
+C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s:1206   .text.initPid:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s:1213   .text.initPid:00000000 initPid
+C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s:1302   .text.initPidFilter:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s:1309   .text.initPidFilter:00000000 initPidFilter
+C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s:1421   .bss.buffct:00000000 buffct
+C:\Users\GUILLE~1\AppData\Local\Temp\cceEFAJc.s:1418   .bss.buffct:00000000 $d
+
+UNDEFINED SYMBOLS
+__aeabi_ui2d
+__aeabi_ddiv
+__aeabi_d2f
+__aeabi_f2d
+__aeabi_dmul
+__aeabi_dadd
+__aeabi_dcmpgt
+fmin
+fmax
+computeSavGolDFilter
+computeFilter
+initSavGolDFilter
+initFilter

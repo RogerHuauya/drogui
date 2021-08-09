@@ -1,0 +1,2353 @@
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"matlib.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.matInit,"ax",%progbits
+  18              		.align	1
+  19              		.global	matInit
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv5-sp-d16
+  26              	matInit:
+  27              	.LVL0:
+  28              	.LFB279:
+  29              		.file 1 "Core/drogui/math/various/src/matlib.c"
+   1:Core/drogui/math/various/src/matlib.c **** #include "matlib.h"
+   2:Core/drogui/math/various/src/matlib.c **** #include <stdbool.h>
+   3:Core/drogui/math/various/src/matlib.c **** 
+   4:Core/drogui/math/various/src/matlib.c **** 
+   5:Core/drogui/math/various/src/matlib.c **** void getCofactor(mat* A, mat* temp, int p, int q);
+   6:Core/drogui/math/various/src/matlib.c **** void matInit(mat* m, int row, int col){
+  30              		.loc 1 6 39 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 6 39 is_stmt 0 view .LVU1
+  35 0000 70B5     		push	{r4, r5, r6, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 16
+  38              		.cfi_offset 4, -16
+  39              		.cfi_offset 5, -12
+  40              		.cfi_offset 6, -8
+  41              		.cfi_offset 14, -4
+  42 0002 0446     		mov	r4, r0
+  43 0004 0D46     		mov	r5, r1
+  44 0006 1646     		mov	r6, r2
+   7:Core/drogui/math/various/src/matlib.c **** 	m->row = row;
+  45              		.loc 1 7 2 is_stmt 1 view .LVU2
+  46              		.loc 1 7 9 is_stmt 0 view .LVU3
+  47 0008 0160     		str	r1, [r0]
+   8:Core/drogui/math/various/src/matlib.c **** 	m->col = col;
+  48              		.loc 1 8 2 is_stmt 1 view .LVU4
+  49              		.loc 1 8 9 is_stmt 0 view .LVU5
+  50 000a 4260     		str	r2, [r0, #4]
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 2
+
+
+   9:Core/drogui/math/various/src/matlib.c **** 	m->val = (float*) calloc(row*col, sizeof(float));
+  51              		.loc 1 9 2 is_stmt 1 view .LVU6
+  52              		.loc 1 9 20 is_stmt 0 view .LVU7
+  53 000c 0421     		movs	r1, #4
+  54              	.LVL1:
+  55              		.loc 1 9 20 view .LVU8
+  56 000e 02FB05F0 		mul	r0, r2, r5
+  57              	.LVL2:
+  58              		.loc 1 9 20 view .LVU9
+  59 0012 FFF7FEFF 		bl	calloc
+  60              	.LVL3:
+  61              		.loc 1 9 20 view .LVU10
+  62 0016 0346     		mov	r3, r0
+  63              		.loc 1 9 9 view .LVU11
+  64 0018 A060     		str	r0, [r4, #8]
+  10:Core/drogui/math/various/src/matlib.c **** 	arm_mat_init_f32(&(m->M), row, col, m->val);
+  65              		.loc 1 10 2 is_stmt 1 view .LVU12
+  66 001a B2B2     		uxth	r2, r6
+  67 001c A9B2     		uxth	r1, r5
+  68 001e 04F10C00 		add	r0, r4, #12
+  69 0022 FFF7FEFF 		bl	arm_mat_init_f32
+  70              	.LVL4:
+  11:Core/drogui/math/various/src/matlib.c **** }
+  71              		.loc 1 11 1 is_stmt 0 view .LVU13
+  72 0026 70BD     		pop	{r4, r5, r6, pc}
+  73              		.loc 1 11 1 view .LVU14
+  74              		.cfi_endproc
+  75              	.LFE279:
+  77              		.section	.text.matMult,"ax",%progbits
+  78              		.align	1
+  79              		.global	matMult
+  80              		.syntax unified
+  81              		.thumb
+  82              		.thumb_func
+  83              		.fpu fpv5-sp-d16
+  85              	matMult:
+  86              	.LVL5:
+  87              	.LFB280:
+  12:Core/drogui/math/various/src/matlib.c **** 
+  13:Core/drogui/math/various/src/matlib.c **** void matMult(mat* ans, mat* a, mat* b){
+  88              		.loc 1 13 39 is_stmt 1 view -0
+  89              		.cfi_startproc
+  90              		@ args = 0, pretend = 0, frame = 0
+  91              		@ frame_needed = 0, uses_anonymous_args = 0
+  92              		.loc 1 13 39 is_stmt 0 view .LVU16
+  93 0000 08B5     		push	{r3, lr}
+  94              	.LCFI1:
+  95              		.cfi_def_cfa_offset 8
+  96              		.cfi_offset 3, -8
+  97              		.cfi_offset 14, -4
+  98 0002 0B46     		mov	r3, r1
+  99 0004 1146     		mov	r1, r2
+ 100              	.LVL6:
+  14:Core/drogui/math/various/src/matlib.c **** 	arm_mat_mult_f32(&(a->M), &(b->M), &(ans->M));
+ 101              		.loc 1 14 2 is_stmt 1 view .LVU17
+ 102 0006 00F10C02 		add	r2, r0, #12
+ 103              	.LVL7:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 3
+
+
+ 104              		.loc 1 14 2 is_stmt 0 view .LVU18
+ 105 000a 0C31     		adds	r1, r1, #12
+ 106              	.LVL8:
+ 107              		.loc 1 14 2 view .LVU19
+ 108 000c 03F10C00 		add	r0, r3, #12
+ 109              	.LVL9:
+ 110              		.loc 1 14 2 view .LVU20
+ 111 0010 FFF7FEFF 		bl	arm_mat_mult_f32
+ 112              	.LVL10:
+  15:Core/drogui/math/various/src/matlib.c **** }
+ 113              		.loc 1 15 1 view .LVU21
+ 114 0014 08BD     		pop	{r3, pc}
+ 115              		.cfi_endproc
+ 116              	.LFE280:
+ 118              		.section	.text.matScale,"ax",%progbits
+ 119              		.align	1
+ 120              		.global	matScale
+ 121              		.syntax unified
+ 122              		.thumb
+ 123              		.thumb_func
+ 124              		.fpu fpv5-sp-d16
+ 126              	matScale:
+ 127              	.LVL11:
+ 128              	.LFB281:
+  16:Core/drogui/math/various/src/matlib.c **** 
+  17:Core/drogui/math/various/src/matlib.c **** void matScale(mat* ans, mat* a, float alpha){
+ 129              		.loc 1 17 45 is_stmt 1 view -0
+ 130              		.cfi_startproc
+ 131              		@ args = 0, pretend = 0, frame = 0
+ 132              		@ frame_needed = 0, uses_anonymous_args = 0
+ 133              		.loc 1 17 45 is_stmt 0 view .LVU23
+ 134 0000 08B5     		push	{r3, lr}
+ 135              	.LCFI2:
+ 136              		.cfi_def_cfa_offset 8
+ 137              		.cfi_offset 3, -8
+ 138              		.cfi_offset 14, -4
+ 139 0002 0B46     		mov	r3, r1
+  18:Core/drogui/math/various/src/matlib.c **** 	arm_mat_scale_f32(&(a->M), alpha, &(ans->M));
+ 140              		.loc 1 18 2 is_stmt 1 view .LVU24
+ 141 0004 00F10C01 		add	r1, r0, #12
+ 142              	.LVL12:
+ 143              		.loc 1 18 2 is_stmt 0 view .LVU25
+ 144 0008 03F10C00 		add	r0, r3, #12
+ 145              	.LVL13:
+ 146              		.loc 1 18 2 view .LVU26
+ 147 000c FFF7FEFF 		bl	arm_mat_scale_f32
+ 148              	.LVL14:
+  19:Core/drogui/math/various/src/matlib.c **** }
+ 149              		.loc 1 19 1 view .LVU27
+ 150 0010 08BD     		pop	{r3, pc}
+ 151              		.cfi_endproc
+ 152              	.LFE281:
+ 154              		.section	.text.matAdd,"ax",%progbits
+ 155              		.align	1
+ 156              		.global	matAdd
+ 157              		.syntax unified
+ 158              		.thumb
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 4
+
+
+ 159              		.thumb_func
+ 160              		.fpu fpv5-sp-d16
+ 162              	matAdd:
+ 163              	.LVL15:
+ 164              	.LFB282:
+  20:Core/drogui/math/various/src/matlib.c **** 
+  21:Core/drogui/math/various/src/matlib.c **** void matAdd(mat* ans, mat* a, mat* b){
+ 165              		.loc 1 21 38 is_stmt 1 view -0
+ 166              		.cfi_startproc
+ 167              		@ args = 0, pretend = 0, frame = 0
+ 168              		@ frame_needed = 0, uses_anonymous_args = 0
+ 169              		.loc 1 21 38 is_stmt 0 view .LVU29
+ 170 0000 08B5     		push	{r3, lr}
+ 171              	.LCFI3:
+ 172              		.cfi_def_cfa_offset 8
+ 173              		.cfi_offset 3, -8
+ 174              		.cfi_offset 14, -4
+ 175 0002 0B46     		mov	r3, r1
+ 176 0004 1146     		mov	r1, r2
+ 177              	.LVL16:
+  22:Core/drogui/math/various/src/matlib.c **** 	arm_mat_add_f32(&(a->M), &(b->M), &(ans->M));
+ 178              		.loc 1 22 2 is_stmt 1 view .LVU30
+ 179 0006 00F10C02 		add	r2, r0, #12
+ 180              	.LVL17:
+ 181              		.loc 1 22 2 is_stmt 0 view .LVU31
+ 182 000a 0C31     		adds	r1, r1, #12
+ 183              	.LVL18:
+ 184              		.loc 1 22 2 view .LVU32
+ 185 000c 03F10C00 		add	r0, r3, #12
+ 186              	.LVL19:
+ 187              		.loc 1 22 2 view .LVU33
+ 188 0010 FFF7FEFF 		bl	arm_mat_add_f32
+ 189              	.LVL20:
+  23:Core/drogui/math/various/src/matlib.c **** }
+ 190              		.loc 1 23 1 view .LVU34
+ 191 0014 08BD     		pop	{r3, pc}
+ 192              		.cfi_endproc
+ 193              	.LFE282:
+ 195              		.section	.text.matSubs,"ax",%progbits
+ 196              		.align	1
+ 197              		.global	matSubs
+ 198              		.syntax unified
+ 199              		.thumb
+ 200              		.thumb_func
+ 201              		.fpu fpv5-sp-d16
+ 203              	matSubs:
+ 204              	.LVL21:
+ 205              	.LFB283:
+  24:Core/drogui/math/various/src/matlib.c **** 
+  25:Core/drogui/math/various/src/matlib.c **** void matSubs(mat* ans, mat* a, mat* b){
+ 206              		.loc 1 25 39 is_stmt 1 view -0
+ 207              		.cfi_startproc
+ 208              		@ args = 0, pretend = 0, frame = 0
+ 209              		@ frame_needed = 0, uses_anonymous_args = 0
+ 210              		.loc 1 25 39 is_stmt 0 view .LVU36
+ 211 0000 08B5     		push	{r3, lr}
+ 212              	.LCFI4:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 5
+
+
+ 213              		.cfi_def_cfa_offset 8
+ 214              		.cfi_offset 3, -8
+ 215              		.cfi_offset 14, -4
+ 216 0002 0B46     		mov	r3, r1
+ 217 0004 1146     		mov	r1, r2
+ 218              	.LVL22:
+  26:Core/drogui/math/various/src/matlib.c **** 	arm_mat_sub_f32(&(a->M), &(b->M), &(ans->M));
+ 219              		.loc 1 26 2 is_stmt 1 view .LVU37
+ 220 0006 00F10C02 		add	r2, r0, #12
+ 221              	.LVL23:
+ 222              		.loc 1 26 2 is_stmt 0 view .LVU38
+ 223 000a 0C31     		adds	r1, r1, #12
+ 224              	.LVL24:
+ 225              		.loc 1 26 2 view .LVU39
+ 226 000c 03F10C00 		add	r0, r3, #12
+ 227              	.LVL25:
+ 228              		.loc 1 26 2 view .LVU40
+ 229 0010 FFF7FEFF 		bl	arm_mat_sub_f32
+ 230              	.LVL26:
+  27:Core/drogui/math/various/src/matlib.c **** }
+ 231              		.loc 1 27 1 view .LVU41
+ 232 0014 08BD     		pop	{r3, pc}
+ 233              		.cfi_endproc
+ 234              	.LFE283:
+ 236              		.section	.text.matTrans,"ax",%progbits
+ 237              		.align	1
+ 238              		.global	matTrans
+ 239              		.syntax unified
+ 240              		.thumb
+ 241              		.thumb_func
+ 242              		.fpu fpv5-sp-d16
+ 244              	matTrans:
+ 245              	.LVL27:
+ 246              	.LFB284:
+  28:Core/drogui/math/various/src/matlib.c **** 
+  29:Core/drogui/math/various/src/matlib.c **** void matTrans(mat* ans,mat* a){
+ 247              		.loc 1 29 31 is_stmt 1 view -0
+ 248              		.cfi_startproc
+ 249              		@ args = 0, pretend = 0, frame = 0
+ 250              		@ frame_needed = 0, uses_anonymous_args = 0
+ 251              		.loc 1 29 31 is_stmt 0 view .LVU43
+ 252 0000 08B5     		push	{r3, lr}
+ 253              	.LCFI5:
+ 254              		.cfi_def_cfa_offset 8
+ 255              		.cfi_offset 3, -8
+ 256              		.cfi_offset 14, -4
+ 257 0002 0B46     		mov	r3, r1
+  30:Core/drogui/math/various/src/matlib.c **** 	arm_mat_trans_f32(&(a->M), &(ans->M));
+ 258              		.loc 1 30 2 is_stmt 1 view .LVU44
+ 259 0004 00F10C01 		add	r1, r0, #12
+ 260              	.LVL28:
+ 261              		.loc 1 30 2 is_stmt 0 view .LVU45
+ 262 0008 03F10C00 		add	r0, r3, #12
+ 263              	.LVL29:
+ 264              		.loc 1 30 2 view .LVU46
+ 265 000c FFF7FEFF 		bl	arm_mat_trans_f32
+ 266              	.LVL30:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 6
+
+
+  31:Core/drogui/math/various/src/matlib.c **** }
+ 267              		.loc 1 31 1 view .LVU47
+ 268 0010 08BD     		pop	{r3, pc}
+ 269              		.cfi_endproc
+ 270              	.LFE284:
+ 272              		.section	.text.det3,"ax",%progbits
+ 273              		.align	1
+ 274              		.global	det3
+ 275              		.syntax unified
+ 276              		.thumb
+ 277              		.thumb_func
+ 278              		.fpu fpv5-sp-d16
+ 280              	det3:
+ 281              	.LVL31:
+ 282              	.LFB285:
+  32:Core/drogui/math/various/src/matlib.c **** 
+  33:Core/drogui/math/various/src/matlib.c **** 
+  34:Core/drogui/math/various/src/matlib.c **** float det3(mat* R){
+ 283              		.loc 1 34 19 is_stmt 1 view -0
+ 284              		.cfi_startproc
+ 285              		@ args = 0, pretend = 0, frame = 0
+ 286              		@ frame_needed = 0, uses_anonymous_args = 0
+ 287              		@ link register save eliminated.
+  35:Core/drogui/math/various/src/matlib.c **** 	float det = + ((R->val[0*(R->col) + 0]) * (R->val[1*(R->col) + 1]) * (R->val[2*(R->col) + 2]))
+ 288              		.loc 1 35 2 view .LVU49
+ 289              		.loc 1 35 19 is_stmt 0 view .LVU50
+ 290 0000 8368     		ldr	r3, [r0, #8]
+ 291              		.loc 1 35 24 view .LVU51
+ 292 0002 93ED007A 		vldr.32	s14, [r3]
+ 293              		.loc 1 35 56 view .LVU52
+ 294 0006 4268     		ldr	r2, [r0, #4]
+ 295              		.loc 1 35 51 view .LVU53
+ 296 0008 511C     		adds	r1, r2, #1
+ 297 000a 03EB8100 		add	r0, r3, r1, lsl #2
+ 298              	.LVL32:
+ 299              		.loc 1 35 51 view .LVU54
+ 300 000e 90ED005A 		vldr.32	s10, [r0]
+ 301              		.loc 1 35 42 view .LVU55
+ 302 0012 67EE057A 		vmul.f32	s15, s14, s10
+ 303              		.loc 1 35 78 view .LVU56
+ 304 0016 03EBC101 		add	r1, r3, r1, lsl #3
+ 305 001a D1ED006A 		vldr.32	s13, [r1]
+ 306              		.loc 1 35 69 view .LVU57
+ 307 001e 67EEA67A 		vmul.f32	s15, s15, s13
+  36:Core/drogui/math/various/src/matlib.c **** 		+ ((R->val[0*(R->col) + 1]) * (R->val[1*(R->col) + 2]) * (R->val[2*(R->col) + 0]))
+ 308              		.loc 1 36 13 view .LVU58
+ 309 0022 93ED016A 		vldr.32	s12, [r3, #4]
+ 310              		.loc 1 36 40 view .LVU59
+ 311 0026 911C     		adds	r1, r2, #2
+ 312 0028 03EB8101 		add	r1, r3, r1, lsl #2
+ 313 002c 91ED004A 		vldr.32	s8, [r1]
+ 314              		.loc 1 36 31 view .LVU60
+ 315 0030 66EE044A 		vmul.f32	s9, s12, s8
+ 316              		.loc 1 36 67 view .LVU61
+ 317 0034 03EBC201 		add	r1, r3, r2, lsl #3
+ 318 0038 D1ED005A 		vldr.32	s11, [r1]
+ 319              		.loc 1 36 58 view .LVU62
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 7
+
+
+ 320 003c 64EEA54A 		vmul.f32	s9, s9, s11
+ 321              		.loc 1 36 3 view .LVU63
+ 322 0040 77EEA47A 		vadd.f32	s15, s15, s9
+  37:Core/drogui/math/various/src/matlib.c **** 		+ ((R->val[0*(R->col) + 2]) * (R->val[1*(R->col) + 0]) * (R->val[2*(R->col) + 1]))
+ 323              		.loc 1 37 13 view .LVU64
+ 324 0044 93ED023A 		vldr.32	s6, [r3, #8]
+ 325              		.loc 1 37 40 view .LVU65
+ 326 0048 03EB8203 		add	r3, r3, r2, lsl #2
+ 327 004c D3ED003A 		vldr.32	s7, [r3]
+ 328              		.loc 1 37 31 view .LVU66
+ 329 0050 63EE234A 		vmul.f32	s9, s6, s7
+ 330              		.loc 1 37 67 view .LVU67
+ 331 0054 91ED010A 		vldr.32	s0, [r1, #4]
+ 332              		.loc 1 37 58 view .LVU68
+ 333 0058 64EE804A 		vmul.f32	s9, s9, s0
+ 334              		.loc 1 37 3 view .LVU69
+ 335 005c 77EEA47A 		vadd.f32	s15, s15, s9
+  38:Core/drogui/math/various/src/matlib.c **** 		- ((R->val[0*(R->col) + 2]) * (R->val[1*(R->col) + 1]) * (R->val[2*(R->col) + 0]))
+ 336              		.loc 1 38 31 view .LVU70
+ 337 0060 25EE035A 		vmul.f32	s10, s10, s6
+ 338              		.loc 1 38 58 view .LVU71
+ 339 0064 65EE855A 		vmul.f32	s11, s11, s10
+ 340              		.loc 1 38 3 view .LVU72
+ 341 0068 77EEE57A 		vsub.f32	s15, s15, s11
+  39:Core/drogui/math/various/src/matlib.c **** 		- ((R->val[0*(R->col) + 1]) * (R->val[1*(R->col) + 0]) * (R->val[2*(R->col) + 2]))
+ 342              		.loc 1 39 31 view .LVU73
+ 343 006c 26EE236A 		vmul.f32	s12, s12, s7
+ 344              		.loc 1 39 58 view .LVU74
+ 345 0070 66EE866A 		vmul.f32	s13, s13, s12
+ 346              		.loc 1 39 3 view .LVU75
+ 347 0074 77EEE67A 		vsub.f32	s15, s15, s13
+  40:Core/drogui/math/various/src/matlib.c **** 		- ((R->val[0*(R->col) + 0]) * (R->val[1*(R->col) + 2]) * (R->val[2*(R->col) + 1]));
+ 348              		.loc 1 40 31 view .LVU76
+ 349 0078 27EE047A 		vmul.f32	s14, s14, s8
+ 350              		.loc 1 40 58 view .LVU77
+ 351 007c 20EE070A 		vmul.f32	s0, s0, s14
+ 352              	.LVL33:
+  41:Core/drogui/math/various/src/matlib.c **** 
+  42:Core/drogui/math/various/src/matlib.c **** 	return det;
+ 353              		.loc 1 42 2 is_stmt 1 view .LVU78
+  43:Core/drogui/math/various/src/matlib.c **** }
+ 354              		.loc 1 43 1 is_stmt 0 view .LVU79
+ 355 0080 37EEC00A 		vsub.f32	s0, s15, s0
+ 356              	.LVL34:
+ 357              		.loc 1 43 1 view .LVU80
+ 358 0084 7047     		bx	lr
+ 359              		.cfi_endproc
+ 360              	.LFE285:
+ 362              		.section	.text.quaternionToR,"ax",%progbits
+ 363              		.align	1
+ 364              		.global	quaternionToR
+ 365              		.syntax unified
+ 366              		.thumb
+ 367              		.thumb_func
+ 368              		.fpu fpv5-sp-d16
+ 370              	quaternionToR:
+ 371              	.LVL35:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 8
+
+
+ 372              	.LFB287:
+  44:Core/drogui/math/various/src/matlib.c **** 
+  45:Core/drogui/math/various/src/matlib.c **** 
+  46:Core/drogui/math/various/src/matlib.c **** void matInv(mat* ans, mat* a){
+  47:Core/drogui/math/various/src/matlib.c **** 	mat aux;
+  48:Core/drogui/math/various/src/matlib.c **** 	matInit(&aux, a->row, a->col);
+  49:Core/drogui/math/various/src/matlib.c **** 	matCopy(&aux, a);
+  50:Core/drogui/math/various/src/matlib.c **** 	arm_mat_inverse_f32	(&(aux.M), &(ans->M));
+  51:Core/drogui/math/various/src/matlib.c **** 	matDestruct(&aux);
+  52:Core/drogui/math/various/src/matlib.c **** }
+  53:Core/drogui/math/various/src/matlib.c **** 
+  54:Core/drogui/math/various/src/matlib.c **** void quaternionToR(mat* R, float n, float ex, float ey, float ez){
+ 373              		.loc 1 54 66 is_stmt 1 view -0
+ 374              		.cfi_startproc
+ 375              		@ args = 0, pretend = 0, frame = 0
+ 376              		@ frame_needed = 0, uses_anonymous_args = 0
+ 377              		@ link register save eliminated.
+  55:Core/drogui/math/various/src/matlib.c **** 	R->row = R->col = 3;
+ 378              		.loc 1 55 2 view .LVU82
+ 379              		.loc 1 55 18 is_stmt 0 view .LVU83
+ 380 0000 0323     		movs	r3, #3
+ 381 0002 4360     		str	r3, [r0, #4]
+ 382              		.loc 1 55 9 view .LVU84
+ 383 0004 0360     		str	r3, [r0]
+  56:Core/drogui/math/various/src/matlib.c **** 
+  57:Core/drogui/math/various/src/matlib.c **** 	R->val[0*(R->col)+0] = 2*(n*n + ex*ex) - 1;
+ 384              		.loc 1 57 2 is_stmt 1 view .LVU85
+ 385              		.loc 1 57 29 is_stmt 0 view .LVU86
+ 386 0006 60EE007A 		vmul.f32	s15, s0, s0
+ 387              		.loc 1 57 36 view .LVU87
+ 388 000a 20EEA07A 		vmul.f32	s14, s1, s1
+ 389              		.loc 1 57 32 view .LVU88
+ 390 000e 37EE877A 		vadd.f32	s14, s15, s14
+ 391              		.loc 1 57 26 view .LVU89
+ 392 0012 37EE077A 		vadd.f32	s14, s14, s14
+ 393              		.loc 1 57 3 view .LVU90
+ 394 0016 8368     		ldr	r3, [r0, #8]
+ 395              		.loc 1 57 41 view .LVU91
+ 396 0018 B7EE005A 		vmov.f32	s10, #1.0e+0
+ 397 001c 37EE457A 		vsub.f32	s14, s14, s10
+ 398              		.loc 1 57 23 view .LVU92
+ 399 0020 83ED007A 		vstr.32	s14, [r3]
+  58:Core/drogui/math/various/src/matlib.c **** 	R->val[0*(R->col)+1] = 2*(ex*ey - n*ez);
+ 400              		.loc 1 58 2 is_stmt 1 view .LVU93
+ 401              		.loc 1 58 30 is_stmt 0 view .LVU94
+ 402 0024 20EE816A 		vmul.f32	s12, s1, s2
+ 403              		.loc 1 58 37 view .LVU95
+ 404 0028 20EE214A 		vmul.f32	s8, s0, s3
+ 405              		.loc 1 58 34 view .LVU96
+ 406 002c 36EE447A 		vsub.f32	s14, s12, s8
+ 407              		.loc 1 58 3 view .LVU97
+ 408 0030 8368     		ldr	r3, [r0, #8]
+ 409              		.loc 1 58 26 view .LVU98
+ 410 0032 37EE077A 		vadd.f32	s14, s14, s14
+ 411              		.loc 1 58 23 view .LVU99
+ 412 0036 83ED017A 		vstr.32	s14, [r3, #4]
+  59:Core/drogui/math/various/src/matlib.c **** 	R->val[0*(R->col)+2] = 2*(ex*ez + n*ey);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 9
+
+
+ 413              		.loc 1 59 2 is_stmt 1 view .LVU100
+ 414              		.loc 1 59 30 is_stmt 0 view .LVU101
+ 415 003a 60EEA16A 		vmul.f32	s13, s1, s3
+ 416              		.loc 1 59 37 view .LVU102
+ 417 003e 60EE014A 		vmul.f32	s9, s0, s2
+ 418              		.loc 1 59 34 view .LVU103
+ 419 0042 76EEA45A 		vadd.f32	s11, s13, s9
+ 420              		.loc 1 59 3 view .LVU104
+ 421 0046 8368     		ldr	r3, [r0, #8]
+ 422              		.loc 1 59 26 view .LVU105
+ 423 0048 75EEA55A 		vadd.f32	s11, s11, s11
+ 424              		.loc 1 59 23 view .LVU106
+ 425 004c C3ED025A 		vstr.32	s11, [r3, #8]
+  60:Core/drogui/math/various/src/matlib.c **** 
+  61:Core/drogui/math/various/src/matlib.c **** 	R->val[1*(R->col)+0] = 2*(ex*ey + n*ez);
+ 426              		.loc 1 61 2 is_stmt 1 view .LVU107
+ 427              		.loc 1 61 34 is_stmt 0 view .LVU108
+ 428 0050 36EE046A 		vadd.f32	s12, s12, s8
+ 429              		.loc 1 61 2 view .LVU109
+ 430 0054 8368     		ldr	r3, [r0, #8]
+ 431              		.loc 1 61 13 view .LVU110
+ 432 0056 4268     		ldr	r2, [r0, #4]
+ 433              		.loc 1 61 8 view .LVU111
+ 434 0058 03EB8203 		add	r3, r3, r2, lsl #2
+ 435              		.loc 1 61 26 view .LVU112
+ 436 005c 36EE066A 		vadd.f32	s12, s12, s12
+ 437              		.loc 1 61 23 view .LVU113
+ 438 0060 83ED006A 		vstr.32	s12, [r3]
+  62:Core/drogui/math/various/src/matlib.c **** 	R->val[1*(R->col)+1] = 2*(n*n + ey*ey) - 1;
+ 439              		.loc 1 62 2 is_stmt 1 view .LVU114
+ 440              		.loc 1 62 36 is_stmt 0 view .LVU115
+ 441 0064 21EE017A 		vmul.f32	s14, s2, s2
+ 442              		.loc 1 62 32 view .LVU116
+ 443 0068 37EE877A 		vadd.f32	s14, s15, s14
+ 444              		.loc 1 62 26 view .LVU117
+ 445 006c 37EE077A 		vadd.f32	s14, s14, s14
+ 446              		.loc 1 62 3 view .LVU118
+ 447 0070 8368     		ldr	r3, [r0, #8]
+ 448              		.loc 1 62 13 view .LVU119
+ 449 0072 4268     		ldr	r2, [r0, #4]
+ 450              		.loc 1 62 8 view .LVU120
+ 451 0074 0132     		adds	r2, r2, #1
+ 452 0076 03EB8203 		add	r3, r3, r2, lsl #2
+ 453              		.loc 1 62 41 view .LVU121
+ 454 007a 37EE457A 		vsub.f32	s14, s14, s10
+ 455              		.loc 1 62 23 view .LVU122
+ 456 007e 83ED007A 		vstr.32	s14, [r3]
+  63:Core/drogui/math/various/src/matlib.c **** 	R->val[1*(R->col)+2] = 2*(ey*ez - n*ex);
+ 457              		.loc 1 63 2 is_stmt 1 view .LVU123
+ 458              		.loc 1 63 30 is_stmt 0 view .LVU124
+ 459 0082 21EE211A 		vmul.f32	s2, s2, s3
+ 460              	.LVL36:
+ 461              		.loc 1 63 37 view .LVU125
+ 462 0086 20EE200A 		vmul.f32	s0, s0, s1
+ 463              	.LVL37:
+ 464              		.loc 1 63 34 view .LVU126
+ 465 008a 31EE406A 		vsub.f32	s12, s2, s0
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 10
+
+
+ 466              		.loc 1 63 3 view .LVU127
+ 467 008e 8368     		ldr	r3, [r0, #8]
+ 468              		.loc 1 63 13 view .LVU128
+ 469 0090 4268     		ldr	r2, [r0, #4]
+ 470              		.loc 1 63 8 view .LVU129
+ 471 0092 0232     		adds	r2, r2, #2
+ 472 0094 03EB8203 		add	r3, r3, r2, lsl #2
+ 473              		.loc 1 63 26 view .LVU130
+ 474 0098 36EE066A 		vadd.f32	s12, s12, s12
+ 475              		.loc 1 63 23 view .LVU131
+ 476 009c 83ED006A 		vstr.32	s12, [r3]
+  64:Core/drogui/math/various/src/matlib.c **** 
+  65:Core/drogui/math/various/src/matlib.c **** 	R->val[2*(R->col)+0] = 2*(ex*ez - n*ey);
+ 477              		.loc 1 65 2 is_stmt 1 view .LVU132
+ 478              		.loc 1 65 34 is_stmt 0 view .LVU133
+ 479 00a0 36EEE47A 		vsub.f32	s14, s13, s9
+ 480              		.loc 1 65 2 view .LVU134
+ 481 00a4 8368     		ldr	r3, [r0, #8]
+ 482              		.loc 1 65 13 view .LVU135
+ 483 00a6 4268     		ldr	r2, [r0, #4]
+ 484              		.loc 1 65 8 view .LVU136
+ 485 00a8 03EBC203 		add	r3, r3, r2, lsl #3
+ 486              		.loc 1 65 26 view .LVU137
+ 487 00ac 37EE077A 		vadd.f32	s14, s14, s14
+ 488              		.loc 1 65 23 view .LVU138
+ 489 00b0 83ED007A 		vstr.32	s14, [r3]
+  66:Core/drogui/math/various/src/matlib.c **** 	R->val[2*(R->col)+1] = 2*(ey*ez + n*ex);
+ 490              		.loc 1 66 2 is_stmt 1 view .LVU139
+ 491              		.loc 1 66 34 is_stmt 0 view .LVU140
+ 492 00b4 31EE001A 		vadd.f32	s2, s2, s0
+ 493              		.loc 1 66 3 view .LVU141
+ 494 00b8 8268     		ldr	r2, [r0, #8]
+ 495              		.loc 1 66 13 view .LVU142
+ 496 00ba 4368     		ldr	r3, [r0, #4]
+ 497              		.loc 1 66 8 view .LVU143
+ 498 00bc DB00     		lsls	r3, r3, #3
+ 499 00be 0433     		adds	r3, r3, #4
+ 500 00c0 1344     		add	r3, r3, r2
+ 501              		.loc 1 66 26 view .LVU144
+ 502 00c2 31EE011A 		vadd.f32	s2, s2, s2
+ 503              		.loc 1 66 23 view .LVU145
+ 504 00c6 83ED001A 		vstr.32	s2, [r3]
+  67:Core/drogui/math/various/src/matlib.c **** 	R->val[2*(R->col)+2] = 2*(n*n + ez*ez) - 1;
+ 505              		.loc 1 67 2 is_stmt 1 view .LVU146
+ 506              		.loc 1 67 36 is_stmt 0 view .LVU147
+ 507 00ca 61EEA11A 		vmul.f32	s3, s3, s3
+ 508              	.LVL38:
+ 509              		.loc 1 67 32 view .LVU148
+ 510 00ce 77EEA17A 		vadd.f32	s15, s15, s3
+ 511              		.loc 1 67 26 view .LVU149
+ 512 00d2 77EEA77A 		vadd.f32	s15, s15, s15
+ 513              		.loc 1 67 3 view .LVU150
+ 514 00d6 8368     		ldr	r3, [r0, #8]
+ 515              		.loc 1 67 13 view .LVU151
+ 516 00d8 4268     		ldr	r2, [r0, #4]
+ 517              		.loc 1 67 8 view .LVU152
+ 518 00da 0132     		adds	r2, r2, #1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 11
+
+
+ 519 00dc 03EBC203 		add	r3, r3, r2, lsl #3
+ 520              		.loc 1 67 41 view .LVU153
+ 521 00e0 77EEC57A 		vsub.f32	s15, s15, s10
+ 522              		.loc 1 67 23 view .LVU154
+ 523 00e4 C3ED007A 		vstr.32	s15, [r3]
+  68:Core/drogui/math/various/src/matlib.c **** }
+ 524              		.loc 1 68 1 view .LVU155
+ 525 00e8 7047     		bx	lr
+ 526              		.cfi_endproc
+ 527              	.LFE287:
+ 529              		.global	__aeabi_f2d
+ 530              		.global	__aeabi_dmul
+ 531              		.global	__aeabi_d2f
+ 532              		.global	__aeabi_dsub
+ 533              		.global	__aeabi_dadd
+ 534              		.section	.text.rpyToR,"ax",%progbits
+ 535              		.align	1
+ 536              		.global	rpyToR
+ 537              		.syntax unified
+ 538              		.thumb
+ 539              		.thumb_func
+ 540              		.fpu fpv5-sp-d16
+ 542              	rpyToR:
+ 543              	.LVL39:
+ 544              	.LFB288:
+  69:Core/drogui/math/various/src/matlib.c **** 
+  70:Core/drogui/math/various/src/matlib.c **** void rpyToR(mat* R, float roll, float pitch, float yaw){
+ 545              		.loc 1 70 56 is_stmt 1 view -0
+ 546              		.cfi_startproc
+ 547              		@ args = 0, pretend = 0, frame = 40
+ 548              		@ frame_needed = 0, uses_anonymous_args = 0
+ 549              		.loc 1 70 56 is_stmt 0 view .LVU157
+ 550 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 551              	.LCFI6:
+ 552              		.cfi_def_cfa_offset 36
+ 553              		.cfi_offset 4, -36
+ 554              		.cfi_offset 5, -32
+ 555              		.cfi_offset 6, -28
+ 556              		.cfi_offset 7, -24
+ 557              		.cfi_offset 8, -20
+ 558              		.cfi_offset 9, -16
+ 559              		.cfi_offset 10, -12
+ 560              		.cfi_offset 11, -8
+ 561              		.cfi_offset 14, -4
+ 562 0004 2DED048B 		vpush.64	{d8, d9}
+ 563              	.LCFI7:
+ 564              		.cfi_def_cfa_offset 52
+ 565              		.cfi_offset 80, -52
+ 566              		.cfi_offset 81, -48
+ 567              		.cfi_offset 82, -44
+ 568              		.cfi_offset 83, -40
+ 569 0008 8BB0     		sub	sp, sp, #44
+ 570              	.LCFI8:
+ 571              		.cfi_def_cfa_offset 96
+ 572 000a 8246     		mov	r10, r0
+ 573 000c 10EE104A 		vmov	r4, s0
+ 574 0010 10EE905A 		vmov	r5, s1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 12
+
+
+ 575 0014 11EE100A 		vmov	r0, s2
+ 576              	.LVL40:
+  71:Core/drogui/math/various/src/matlib.c **** 	R->row = R->col = 3;
+ 577              		.loc 1 71 2 is_stmt 1 view .LVU158
+ 578              		.loc 1 71 18 is_stmt 0 view .LVU159
+ 579 0018 0323     		movs	r3, #3
+ 580 001a CAF80430 		str	r3, [r10, #4]
+ 581              		.loc 1 71 9 view .LVU160
+ 582 001e CAF80030 		str	r3, [r10]
+  72:Core/drogui/math/various/src/matlib.c **** 
+  73:Core/drogui/math/various/src/matlib.c **** 	R->val[0*(R->col)+0] = cos(yaw)*cos(pitch);
+ 583              		.loc 1 73 2 is_stmt 1 view .LVU161
+ 584              		.loc 1 73 25 is_stmt 0 view .LVU162
+ 585 0022 FFF7FEFF 		bl	__aeabi_f2d
+ 586              	.LVL41:
+ 587              		.loc 1 73 25 view .LVU163
+ 588 0026 41EC190B 		vmov	d9, r0, r1
+ 589 002a 41EC100B 		vmov	d0, r0, r1
+ 590 002e FFF7FEFF 		bl	cos
+ 591              	.LVL42:
+ 592 0032 57EC106B 		vmov	r6, r7, d0
+ 593              		.loc 1 73 34 view .LVU164
+ 594 0036 2846     		mov	r0, r5	@ float
+ 595 0038 FFF7FEFF 		bl	__aeabi_f2d
+ 596              	.LVL43:
+ 597 003c 41EC180B 		vmov	d8, r0, r1
+ 598 0040 41EC100B 		vmov	d0, r0, r1
+ 599 0044 FFF7FEFF 		bl	cos
+ 600              	.LVL44:
+ 601 0048 53EC102B 		vmov	r2, r3, d0
+ 602              		.loc 1 73 3 view .LVU165
+ 603 004c DAF80850 		ldr	r5, [r10, #8]
+ 604              	.LVL45:
+ 605              		.loc 1 73 33 view .LVU166
+ 606 0050 8DED060B 		vstr.64	d0, [sp, #24]
+ 607 0054 3046     		mov	r0, r6
+ 608 0056 3946     		mov	r1, r7
+ 609 0058 FFF7FEFF 		bl	__aeabi_dmul
+ 610              	.LVL46:
+ 611 005c FFF7FEFF 		bl	__aeabi_d2f
+ 612              	.LVL47:
+ 613              		.loc 1 73 23 view .LVU167
+ 614 0060 2860     		str	r0, [r5]	@ float
+  74:Core/drogui/math/various/src/matlib.c **** 	R->val[0*(R->col)+1] = cos(yaw)*sin(pitch)*sin(roll) - sin(yaw)*cos(roll);
+ 615              		.loc 1 74 2 is_stmt 1 view .LVU168
+ 616              		.loc 1 74 34 is_stmt 0 view .LVU169
+ 617 0062 B0EE480A 		vmov.f32	s0, s16
+ 618 0066 F0EE680A 		vmov.f32	s1, s17
+ 619 006a FFF7FEFF 		bl	sin
+ 620              	.LVL48:
+ 621 006e 52EC101B 		vmov	r1, r2, d0
+ 622              		.loc 1 74 33 view .LVU170
+ 623 0072 8DED080B 		vstr.64	d0, [sp, #32]
+ 624 0076 1346     		mov	r3, r2
+ 625 0078 10EE102A 		vmov	r2, s0	@ int
+ 626 007c CDE90467 		strd	r6, [sp, #16]
+ 627 0080 3046     		mov	r0, r6
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 13
+
+
+ 628 0082 3946     		mov	r1, r7
+ 629 0084 FFF7FEFF 		bl	__aeabi_dmul
+ 630              	.LVL49:
+ 631 0088 0646     		mov	r6, r0
+ 632 008a 0F46     		mov	r7, r1
+ 633              		.loc 1 74 45 view .LVU171
+ 634 008c 2046     		mov	r0, r4	@ float
+ 635 008e FFF7FEFF 		bl	__aeabi_f2d
+ 636              	.LVL50:
+ 637 0092 41EC180B 		vmov	d8, r0, r1
+ 638 0096 41EC100B 		vmov	d0, r0, r1
+ 639 009a FFF7FEFF 		bl	sin
+ 640              	.LVL51:
+ 641 009e 54EC103B 		vmov	r3, r4, d0
+ 642              		.loc 1 74 44 view .LVU172
+ 643 00a2 8DED020B 		vstr.64	d0, [sp, #8]
+ 644 00a6 10EE102A 		vmov	r2, s0	@ int
+ 645 00aa 2346     		mov	r3, r4
+ 646 00ac 3046     		mov	r0, r6
+ 647 00ae 3946     		mov	r1, r7
+ 648 00b0 FFF7FEFF 		bl	__aeabi_dmul
+ 649              	.LVL52:
+ 650 00b4 8046     		mov	r8, r0
+ 651 00b6 8946     		mov	r9, r1
+ 652              		.loc 1 74 57 view .LVU173
+ 653 00b8 B0EE490A 		vmov.f32	s0, s18
+ 654 00bc F0EE690A 		vmov.f32	s1, s19
+ 655 00c0 FFF7FEFF 		bl	sin
+ 656              	.LVL53:
+ 657 00c4 55EC104B 		vmov	r4, r5, d0
+ 658              	.LVL54:
+ 659              		.loc 1 74 66 view .LVU174
+ 660 00c8 B0EE480A 		vmov.f32	s0, s16
+ 661 00cc F0EE680A 		vmov.f32	s1, s17
+ 662 00d0 FFF7FEFF 		bl	cos
+ 663              	.LVL55:
+ 664 00d4 53EC102B 		vmov	r2, r3, d0
+ 665              		.loc 1 74 65 view .LVU175
+ 666 00d8 8DED000B 		vstr.64	d0, [sp]
+ 667 00dc 2046     		mov	r0, r4
+ 668 00de 2946     		mov	r1, r5
+ 669 00e0 FFF7FEFF 		bl	__aeabi_dmul
+ 670              	.LVL56:
+ 671 00e4 0246     		mov	r2, r0
+ 672 00e6 0B46     		mov	r3, r1
+ 673              		.loc 1 74 3 view .LVU176
+ 674 00e8 DAF808B0 		ldr	fp, [r10, #8]
+ 675              		.loc 1 74 55 view .LVU177
+ 676 00ec 4046     		mov	r0, r8
+ 677 00ee 4946     		mov	r1, r9
+ 678 00f0 FFF7FEFF 		bl	__aeabi_dsub
+ 679              	.LVL57:
+ 680 00f4 FFF7FEFF 		bl	__aeabi_d2f
+ 681              	.LVL58:
+ 682              		.loc 1 74 23 view .LVU178
+ 683 00f8 CBF80400 		str	r0, [fp, #4]	@ float
+  75:Core/drogui/math/various/src/matlib.c **** 	R->val[0*(R->col)+2] = cos(yaw)*sin(pitch)*cos(roll) + sin(yaw)*sin(roll);
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 14
+
+
+ 684              		.loc 1 75 2 is_stmt 1 view .LVU179
+ 685              		.loc 1 75 44 is_stmt 0 view .LVU180
+ 686 00fc DDE90023 		ldrd	r2, [sp]
+ 687 0100 3046     		mov	r0, r6
+ 688 0102 3946     		mov	r1, r7
+ 689 0104 FFF7FEFF 		bl	__aeabi_dmul
+ 690              	.LVL59:
+ 691 0108 0646     		mov	r6, r0
+ 692 010a 0F46     		mov	r7, r1
+ 693              		.loc 1 75 65 view .LVU181
+ 694 010c 2246     		mov	r2, r4
+ 695 010e 2B46     		mov	r3, r5
+ 696 0110 DDE90201 		ldrd	r0, [sp, #8]
+ 697 0114 FFF7FEFF 		bl	__aeabi_dmul
+ 698              	.LVL60:
+ 699 0118 0246     		mov	r2, r0
+ 700 011a 0B46     		mov	r3, r1
+ 701              		.loc 1 75 3 view .LVU182
+ 702 011c DAF80880 		ldr	r8, [r10, #8]
+ 703              		.loc 1 75 55 view .LVU183
+ 704 0120 3046     		mov	r0, r6
+ 705 0122 3946     		mov	r1, r7
+ 706 0124 FFF7FEFF 		bl	__aeabi_dadd
+ 707              	.LVL61:
+ 708 0128 FFF7FEFF 		bl	__aeabi_d2f
+ 709              	.LVL62:
+ 710              		.loc 1 75 23 view .LVU184
+ 711 012c C8F80800 		str	r0, [r8, #8]	@ float
+  76:Core/drogui/math/various/src/matlib.c **** 
+  77:Core/drogui/math/various/src/matlib.c **** 	R->val[1*(R->col)+0] = sin(yaw)*cos(pitch);
+ 712              		.loc 1 77 2 is_stmt 1 view .LVU185
+ 713 0130 DAF80860 		ldr	r6, [r10, #8]
+ 714              		.loc 1 77 13 is_stmt 0 view .LVU186
+ 715 0134 DAF80430 		ldr	r3, [r10, #4]
+ 716              		.loc 1 77 8 view .LVU187
+ 717 0138 06EB8306 		add	r6, r6, r3, lsl #2
+ 718              		.loc 1 77 33 view .LVU188
+ 719 013c 2246     		mov	r2, r4
+ 720 013e 2B46     		mov	r3, r5
+ 721 0140 DDE90601 		ldrd	r0, [sp, #24]
+ 722 0144 FFF7FEFF 		bl	__aeabi_dmul
+ 723              	.LVL63:
+ 724 0148 FFF7FEFF 		bl	__aeabi_d2f
+ 725              	.LVL64:
+ 726              		.loc 1 77 23 view .LVU189
+ 727 014c 3060     		str	r0, [r6]	@ float
+  78:Core/drogui/math/various/src/matlib.c **** 	R->val[1*(R->col)+1] = sin(yaw)*sin(pitch)*sin(roll) + cos(yaw)*cos(roll);
+ 728              		.loc 1 78 2 is_stmt 1 view .LVU190
+ 729              		.loc 1 78 33 is_stmt 0 view .LVU191
+ 730 014e 2246     		mov	r2, r4
+ 731 0150 2B46     		mov	r3, r5
+ 732 0152 DDE90801 		ldrd	r0, [sp, #32]
+ 733 0156 FFF7FEFF 		bl	__aeabi_dmul
+ 734              	.LVL65:
+ 735 015a 0446     		mov	r4, r0
+ 736 015c 0D46     		mov	r5, r1
+ 737              		.loc 1 78 44 view .LVU192
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 15
+
+
+ 738 015e 0246     		mov	r2, r0
+ 739 0160 0B46     		mov	r3, r1
+ 740 0162 DDE90201 		ldrd	r0, [sp, #8]
+ 741 0166 FFF7FEFF 		bl	__aeabi_dmul
+ 742              	.LVL66:
+ 743 016a 0646     		mov	r6, r0
+ 744 016c 0F46     		mov	r7, r1
+ 745              		.loc 1 78 65 view .LVU193
+ 746 016e DDE90023 		ldrd	r2, [sp]
+ 747 0172 DDE90401 		ldrd	r0, [sp, #16]
+ 748 0176 FFF7FEFF 		bl	__aeabi_dmul
+ 749              	.LVL67:
+ 750              		.loc 1 78 3 view .LVU194
+ 751 017a DAF80820 		ldr	r2, [r10, #8]
+ 752              		.loc 1 78 13 view .LVU195
+ 753 017e DAF80430 		ldr	r3, [r10, #4]
+ 754              		.loc 1 78 8 view .LVU196
+ 755 0182 0133     		adds	r3, r3, #1
+ 756 0184 02EB8308 		add	r8, r2, r3, lsl #2
+ 757              		.loc 1 78 55 view .LVU197
+ 758 0188 0246     		mov	r2, r0
+ 759 018a 0B46     		mov	r3, r1
+ 760 018c 3046     		mov	r0, r6
+ 761 018e 3946     		mov	r1, r7
+ 762 0190 FFF7FEFF 		bl	__aeabi_dadd
+ 763              	.LVL68:
+ 764 0194 FFF7FEFF 		bl	__aeabi_d2f
+ 765              	.LVL69:
+ 766              		.loc 1 78 23 view .LVU198
+ 767 0198 C8F80000 		str	r0, [r8]	@ float
+  79:Core/drogui/math/various/src/matlib.c **** 	R->val[1*(R->col)+2] = sin(yaw)*sin(pitch)*cos(roll) - cos(yaw)*sin(roll);
+ 768              		.loc 1 79 2 is_stmt 1 view .LVU199
+ 769              		.loc 1 79 44 is_stmt 0 view .LVU200
+ 770 019c 2246     		mov	r2, r4
+ 771 019e 2B46     		mov	r3, r5
+ 772 01a0 DDE90001 		ldrd	r0, [sp]
+ 773 01a4 FFF7FEFF 		bl	__aeabi_dmul
+ 774              	.LVL70:
+ 775 01a8 0446     		mov	r4, r0
+ 776 01aa 0D46     		mov	r5, r1
+ 777              		.loc 1 79 65 view .LVU201
+ 778 01ac DDE90278 		ldrd	r7, [sp, #8]
+ 779 01b0 3A46     		mov	r2, r7
+ 780 01b2 4346     		mov	r3, r8
+ 781 01b4 DDE90401 		ldrd	r0, [sp, #16]
+ 782 01b8 FFF7FEFF 		bl	__aeabi_dmul
+ 783              	.LVL71:
+ 784              		.loc 1 79 3 view .LVU202
+ 785 01bc DAF80860 		ldr	r6, [r10, #8]
+ 786              		.loc 1 79 13 view .LVU203
+ 787 01c0 DAF80430 		ldr	r3, [r10, #4]
+ 788              		.loc 1 79 8 view .LVU204
+ 789 01c4 0233     		adds	r3, r3, #2
+ 790 01c6 06EB8306 		add	r6, r6, r3, lsl #2
+ 791              		.loc 1 79 55 view .LVU205
+ 792 01ca 0246     		mov	r2, r0
+ 793 01cc 0B46     		mov	r3, r1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 16
+
+
+ 794 01ce 2046     		mov	r0, r4
+ 795 01d0 2946     		mov	r1, r5
+ 796 01d2 FFF7FEFF 		bl	__aeabi_dsub
+ 797              	.LVL72:
+ 798 01d6 FFF7FEFF 		bl	__aeabi_d2f
+ 799              	.LVL73:
+ 800              		.loc 1 79 23 view .LVU206
+ 801 01da 3060     		str	r0, [r6]	@ float
+  80:Core/drogui/math/various/src/matlib.c **** 
+  81:Core/drogui/math/various/src/matlib.c **** 	R->val[2*(R->col)+0] = -sin(pitch);
+ 802              		.loc 1 81 2 is_stmt 1 view .LVU207
+ 803              		.loc 1 81 26 is_stmt 0 view .LVU208
+ 804 01dc DDE90801 		ldrd	r0, [sp, #32]
+ 805 01e0 FFF7FEFF 		bl	__aeabi_d2f
+ 806              	.LVL74:
+ 807              		.loc 1 81 2 view .LVU209
+ 808 01e4 DAF80830 		ldr	r3, [r10, #8]
+ 809              		.loc 1 81 13 view .LVU210
+ 810 01e8 DAF80420 		ldr	r2, [r10, #4]
+ 811              		.loc 1 81 8 view .LVU211
+ 812 01ec 03EBC203 		add	r3, r3, r2, lsl #3
+ 813              		.loc 1 81 23 view .LVU212
+ 814 01f0 07EE900A 		vmov	s15, r0
+ 815 01f4 F1EE677A 		vneg.f32	s15, s15
+ 816 01f8 C3ED007A 		vstr.32	s15, [r3]
+  82:Core/drogui/math/various/src/matlib.c **** 	R->val[2*(R->col)+1] = cos(pitch)*sin(roll);
+ 817              		.loc 1 82 2 is_stmt 1 view .LVU213
+ 818              		.loc 1 82 3 is_stmt 0 view .LVU214
+ 819 01fc DAF80840 		ldr	r4, [r10, #8]
+ 820              		.loc 1 82 13 view .LVU215
+ 821 0200 DAF80430 		ldr	r3, [r10, #4]
+ 822              		.loc 1 82 8 view .LVU216
+ 823 0204 DB00     		lsls	r3, r3, #3
+ 824 0206 0433     		adds	r3, r3, #4
+ 825 0208 1C44     		add	r4, r4, r3
+ 826              		.loc 1 82 35 view .LVU217
+ 827 020a 3A46     		mov	r2, r7
+ 828 020c 4346     		mov	r3, r8
+ 829 020e DDE90656 		ldrd	r5, [sp, #24]
+ 830 0212 2846     		mov	r0, r5
+ 831 0214 3146     		mov	r1, r6
+ 832 0216 FFF7FEFF 		bl	__aeabi_dmul
+ 833              	.LVL75:
+ 834 021a FFF7FEFF 		bl	__aeabi_d2f
+ 835              	.LVL76:
+ 836              		.loc 1 82 23 view .LVU218
+ 837 021e 2060     		str	r0, [r4]	@ float
+  83:Core/drogui/math/various/src/matlib.c **** 	R->val[2*(R->col)+2] = cos(pitch)*cos(roll);
+ 838              		.loc 1 83 2 is_stmt 1 view .LVU219
+ 839              		.loc 1 83 3 is_stmt 0 view .LVU220
+ 840 0220 DAF80840 		ldr	r4, [r10, #8]
+ 841              		.loc 1 83 13 view .LVU221
+ 842 0224 DAF80430 		ldr	r3, [r10, #4]
+ 843              		.loc 1 83 8 view .LVU222
+ 844 0228 0133     		adds	r3, r3, #1
+ 845 022a 04EBC304 		add	r4, r4, r3, lsl #3
+ 846              		.loc 1 83 35 view .LVU223
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 17
+
+
+ 847 022e DDE90023 		ldrd	r2, [sp]
+ 848 0232 2846     		mov	r0, r5
+ 849 0234 3146     		mov	r1, r6
+ 850 0236 FFF7FEFF 		bl	__aeabi_dmul
+ 851              	.LVL77:
+ 852 023a FFF7FEFF 		bl	__aeabi_d2f
+ 853              	.LVL78:
+ 854              		.loc 1 83 23 view .LVU224
+ 855 023e 2060     		str	r0, [r4]	@ float
+  84:Core/drogui/math/various/src/matlib.c **** }
+ 856              		.loc 1 84 1 view .LVU225
+ 857 0240 0BB0     		add	sp, sp, #44
+ 858              	.LCFI9:
+ 859              		.cfi_def_cfa_offset 52
+ 860              		@ sp needed
+ 861 0242 BDEC048B 		vldm	sp!, {d8-d9}
+ 862              	.LCFI10:
+ 863              		.cfi_restore 82
+ 864              		.cfi_restore 83
+ 865              		.cfi_restore 80
+ 866              		.cfi_restore 81
+ 867              		.cfi_def_cfa_offset 36
+ 868 0246 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 869              		.loc 1 84 1 view .LVU226
+ 870              		.cfi_endproc
+ 871              	.LFE288:
+ 873              		.section	.text.eye,"ax",%progbits
+ 874              		.align	1
+ 875              		.global	eye
+ 876              		.syntax unified
+ 877              		.thumb
+ 878              		.thumb_func
+ 879              		.fpu fpv5-sp-d16
+ 881              	eye:
+ 882              	.LVL79:
+ 883              	.LFB289:
+  85:Core/drogui/math/various/src/matlib.c **** 
+  86:Core/drogui/math/various/src/matlib.c **** void eye(mat* m, int n){
+ 884              		.loc 1 86 24 is_stmt 1 view -0
+ 885              		.cfi_startproc
+ 886              		@ args = 0, pretend = 0, frame = 0
+ 887              		@ frame_needed = 0, uses_anonymous_args = 0
+ 888              		.loc 1 86 24 is_stmt 0 view .LVU228
+ 889 0000 38B5     		push	{r3, r4, r5, lr}
+ 890              	.LCFI11:
+ 891              		.cfi_def_cfa_offset 16
+ 892              		.cfi_offset 3, -16
+ 893              		.cfi_offset 4, -12
+ 894              		.cfi_offset 5, -8
+ 895              		.cfi_offset 14, -4
+ 896 0002 0446     		mov	r4, r0
+ 897 0004 0D46     		mov	r5, r1
+  87:Core/drogui/math/various/src/matlib.c **** 	matInit(m, n, n);
+ 898              		.loc 1 87 2 is_stmt 1 view .LVU229
+ 899 0006 0A46     		mov	r2, r1
+ 900 0008 FFF7FEFF 		bl	matInit
+ 901              	.LVL80:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 18
+
+
+  88:Core/drogui/math/various/src/matlib.c **** 	for(int i = 0; i < n; i++)  m->val[i*(m->col) + i] = 1;
+ 902              		.loc 1 88 2 view .LVU230
+ 903              	.LBB2:
+ 904              		.loc 1 88 6 view .LVU231
+ 905              		.loc 1 88 10 is_stmt 0 view .LVU232
+ 906 000c 0023     		movs	r3, #0
+ 907              		.loc 1 88 2 view .LVU233
+ 908 000e 0AE0     		b	.L18
+ 909              	.LVL81:
+ 910              	.L19:
+ 911              		.loc 1 88 30 is_stmt 1 discriminator 3 view .LVU234
+ 912              		.loc 1 88 48 is_stmt 0 discriminator 3 view .LVU235
+ 913 0010 6268     		ldr	r2, [r4, #4]
+ 914 0012 03FB023C 		mla	ip, r3, r2, r3
+ 915              		.loc 1 88 36 discriminator 3 view .LVU236
+ 916 0016 A268     		ldr	r2, [r4, #8]
+ 917 0018 02EB8C0C 		add	ip, r2, ip, lsl #2
+ 918              		.loc 1 88 53 discriminator 3 view .LVU237
+ 919 001c 4FF07E50 		mov	r0, #1065353216
+ 920 0020 CCF80000 		str	r0, [ip]	@ float
+ 921              		.loc 1 88 24 is_stmt 1 discriminator 3 view .LVU238
+ 922              		.loc 1 88 25 is_stmt 0 discriminator 3 view .LVU239
+ 923 0024 0133     		adds	r3, r3, #1
+ 924              	.LVL82:
+ 925              	.L18:
+ 926              		.loc 1 88 17 is_stmt 1 discriminator 1 view .LVU240
+ 927              		.loc 1 88 2 is_stmt 0 discriminator 1 view .LVU241
+ 928 0026 AB42     		cmp	r3, r5
+ 929 0028 F2DB     		blt	.L19
+ 930              	.LBE2:
+  89:Core/drogui/math/various/src/matlib.c **** }
+ 931              		.loc 1 89 1 view .LVU242
+ 932 002a 38BD     		pop	{r3, r4, r5, pc}
+ 933              		.loc 1 89 1 view .LVU243
+ 934              		.cfi_endproc
+ 935              	.LFE289:
+ 937              		.section	.text.setMatVal,"ax",%progbits
+ 938              		.align	1
+ 939              		.global	setMatVal
+ 940              		.syntax unified
+ 941              		.thumb
+ 942              		.thumb_func
+ 943              		.fpu fpv5-sp-d16
+ 945              	setMatVal:
+ 946              	.LVL83:
+ 947              	.LFB290:
+  90:Core/drogui/math/various/src/matlib.c **** 
+  91:Core/drogui/math/various/src/matlib.c **** void setMatVal(mat* m, int i, int j, float value){
+ 948              		.loc 1 91 50 is_stmt 1 view -0
+ 949              		.cfi_startproc
+ 950              		@ args = 0, pretend = 0, frame = 0
+ 951              		@ frame_needed = 0, uses_anonymous_args = 0
+ 952              		@ link register save eliminated.
+  92:Core/drogui/math/various/src/matlib.c **** 	m->val[i*(m->col) + j] = value;
+ 953              		.loc 1 92 2 view .LVU245
+ 954              		.loc 1 92 3 is_stmt 0 view .LVU246
+ 955 0000 8368     		ldr	r3, [r0, #8]
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 19
+
+
+ 956              		.loc 1 92 13 view .LVU247
+ 957 0002 4068     		ldr	r0, [r0, #4]
+ 958              	.LVL84:
+ 959              		.loc 1 92 20 view .LVU248
+ 960 0004 01FB0022 		mla	r2, r1, r0, r2
+ 961              	.LVL85:
+ 962              		.loc 1 92 8 view .LVU249
+ 963 0008 03EB8203 		add	r3, r3, r2, lsl #2
+ 964              		.loc 1 92 25 view .LVU250
+ 965 000c 83ED000A 		vstr.32	s0, [r3]
+  93:Core/drogui/math/various/src/matlib.c **** }
+ 966              		.loc 1 93 1 view .LVU251
+ 967 0010 7047     		bx	lr
+ 968              		.cfi_endproc
+ 969              	.LFE290:
+ 971              		.section	.text.getMatVal,"ax",%progbits
+ 972              		.align	1
+ 973              		.global	getMatVal
+ 974              		.syntax unified
+ 975              		.thumb
+ 976              		.thumb_func
+ 977              		.fpu fpv5-sp-d16
+ 979              	getMatVal:
+ 980              	.LVL86:
+ 981              	.LFB291:
+  94:Core/drogui/math/various/src/matlib.c **** 
+  95:Core/drogui/math/various/src/matlib.c **** float getMatVal(mat* m, int i, int j){
+ 982              		.loc 1 95 38 is_stmt 1 view -0
+ 983              		.cfi_startproc
+ 984              		@ args = 0, pretend = 0, frame = 0
+ 985              		@ frame_needed = 0, uses_anonymous_args = 0
+ 986              		@ link register save eliminated.
+  96:Core/drogui/math/various/src/matlib.c **** 	return m->val[i*m->col + j];
+ 987              		.loc 1 96 2 view .LVU253
+ 988              		.loc 1 96 10 is_stmt 0 view .LVU254
+ 989 0000 8368     		ldr	r3, [r0, #8]
+ 990              		.loc 1 96 19 view .LVU255
+ 991 0002 4068     		ldr	r0, [r0, #4]
+ 992              	.LVL87:
+ 993              		.loc 1 96 25 view .LVU256
+ 994 0004 01FB0022 		mla	r2, r1, r0, r2
+ 995              	.LVL88:
+ 996              		.loc 1 96 15 view .LVU257
+ 997 0008 03EB8203 		add	r3, r3, r2, lsl #2
+  97:Core/drogui/math/various/src/matlib.c **** }
+ 998              		.loc 1 97 1 view .LVU258
+ 999 000c 93ED000A 		vldr.32	s0, [r3]
+ 1000 0010 7047     		bx	lr
+ 1001              		.cfi_endproc
+ 1002              	.LFE291:
+ 1004              		.section	.text.matCopy,"ax",%progbits
+ 1005              		.align	1
+ 1006              		.global	matCopy
+ 1007              		.syntax unified
+ 1008              		.thumb
+ 1009              		.thumb_func
+ 1010              		.fpu fpv5-sp-d16
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 20
+
+
+ 1012              	matCopy:
+ 1013              	.LVL89:
+ 1014              	.LFB292:
+  98:Core/drogui/math/various/src/matlib.c **** 
+  99:Core/drogui/math/various/src/matlib.c **** void matCopy(mat* des, mat* src){
+ 1015              		.loc 1 99 33 is_stmt 1 view -0
+ 1016              		.cfi_startproc
+ 1017              		@ args = 0, pretend = 0, frame = 0
+ 1018              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1019              		.loc 1 99 33 is_stmt 0 view .LVU260
+ 1020 0000 10B5     		push	{r4, lr}
+ 1021              	.LCFI12:
+ 1022              		.cfi_def_cfa_offset 8
+ 1023              		.cfi_offset 4, -8
+ 1024              		.cfi_offset 14, -4
+ 100:Core/drogui/math/various/src/matlib.c **** 	for(int i = 0 ; i < des->row ; i++)
+ 1025              		.loc 1 100 2 is_stmt 1 view .LVU261
+ 1026              	.LBB3:
+ 1027              		.loc 1 100 6 view .LVU262
+ 1028              	.LVL90:
+ 1029              		.loc 1 100 10 is_stmt 0 view .LVU263
+ 1030 0002 4FF0000E 		mov	lr, #0
+ 1031              		.loc 1 100 2 view .LVU264
+ 1032 0006 14E0     		b	.L24
+ 1033              	.LVL91:
+ 1034              	.L25:
+ 1035              	.LBB4:
+ 101:Core/drogui/math/various/src/matlib.c **** 		for(int j = 0 ; j < des->col ; j++)
+ 102:Core/drogui/math/various/src/matlib.c **** 			des->val[i*(des->col) + j] = src->val[i*(src->col) + j];
+ 1036              		.loc 1 102 4 is_stmt 1 discriminator 3 view .LVU265
+ 1037              		.loc 1 102 55 is_stmt 0 discriminator 3 view .LVU266
+ 1038 0008 4C68     		ldr	r4, [r1, #4]
+ 1039 000a 0EFB043C 		mla	ip, lr, r4, r3
+ 1040              		.loc 1 102 26 discriminator 3 view .LVU267
+ 1041 000e 0EFB0232 		mla	r2, lr, r2, r3
+ 1042              		.loc 1 102 12 discriminator 3 view .LVU268
+ 1043 0012 8468     		ldr	r4, [r0, #8]
+ 1044 0014 04EB8202 		add	r2, r4, r2, lsl #2
+ 1045              		.loc 1 102 41 discriminator 3 view .LVU269
+ 1046 0018 8C68     		ldr	r4, [r1, #8]
+ 1047 001a 04EB8C0C 		add	ip, r4, ip, lsl #2
+ 1048 001e DCF800C0 		ldr	ip, [ip]	@ float
+ 1049              		.loc 1 102 31 discriminator 3 view .LVU270
+ 1050 0022 C2F800C0 		str	ip, [r2]	@ float
+ 101:Core/drogui/math/various/src/matlib.c **** 		for(int j = 0 ; j < des->col ; j++)
+ 1051              		.loc 1 101 34 is_stmt 1 discriminator 3 view .LVU271
+ 101:Core/drogui/math/various/src/matlib.c **** 		for(int j = 0 ; j < des->col ; j++)
+ 1052              		.loc 1 101 35 is_stmt 0 discriminator 3 view .LVU272
+ 1053 0026 0133     		adds	r3, r3, #1
+ 1054              	.LVL92:
+ 1055              	.L26:
+ 101:Core/drogui/math/various/src/matlib.c **** 		for(int j = 0 ; j < des->col ; j++)
+ 1056              		.loc 1 101 19 is_stmt 1 discriminator 1 view .LVU273
+ 101:Core/drogui/math/various/src/matlib.c **** 		for(int j = 0 ; j < des->col ; j++)
+ 1057              		.loc 1 101 26 is_stmt 0 discriminator 1 view .LVU274
+ 1058 0028 4268     		ldr	r2, [r0, #4]
+ 101:Core/drogui/math/various/src/matlib.c **** 		for(int j = 0 ; j < des->col ; j++)
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 21
+
+
+ 1059              		.loc 1 101 3 discriminator 1 view .LVU275
+ 1060 002a 9A42     		cmp	r2, r3
+ 1061 002c ECDC     		bgt	.L25
+ 1062              	.LBE4:
+ 100:Core/drogui/math/various/src/matlib.c **** 	for(int i = 0 ; i < des->row ; i++)
+ 1063              		.loc 1 100 33 is_stmt 1 discriminator 2 view .LVU276
+ 100:Core/drogui/math/various/src/matlib.c **** 	for(int i = 0 ; i < des->row ; i++)
+ 1064              		.loc 1 100 34 is_stmt 0 discriminator 2 view .LVU277
+ 1065 002e 0EF1010E 		add	lr, lr, #1
+ 1066              	.LVL93:
+ 1067              	.L24:
+ 100:Core/drogui/math/various/src/matlib.c **** 	for(int i = 0 ; i < des->row ; i++)
+ 1068              		.loc 1 100 18 is_stmt 1 discriminator 1 view .LVU278
+ 100:Core/drogui/math/various/src/matlib.c **** 	for(int i = 0 ; i < des->row ; i++)
+ 1069              		.loc 1 100 25 is_stmt 0 discriminator 1 view .LVU279
+ 1070 0032 0368     		ldr	r3, [r0]
+ 100:Core/drogui/math/various/src/matlib.c **** 	for(int i = 0 ; i < des->row ; i++)
+ 1071              		.loc 1 100 2 discriminator 1 view .LVU280
+ 1072 0034 7345     		cmp	r3, lr
+ 1073 0036 01DD     		ble	.L29
+ 1074              	.LBB5:
+ 101:Core/drogui/math/various/src/matlib.c **** 		for(int j = 0 ; j < des->col ; j++)
+ 1075              		.loc 1 101 11 view .LVU281
+ 1076 0038 0023     		movs	r3, #0
+ 1077 003a F5E7     		b	.L26
+ 1078              	.L29:
+ 1079              	.LBE5:
+ 1080              	.LBE3:
+ 103:Core/drogui/math/various/src/matlib.c **** }
+ 1081              		.loc 1 103 1 view .LVU282
+ 1082 003c 10BD     		pop	{r4, pc}
+ 1083              		.cfi_endproc
+ 1084              	.LFE292:
+ 1086              		.section	.text.matDestruct,"ax",%progbits
+ 1087              		.align	1
+ 1088              		.global	matDestruct
+ 1089              		.syntax unified
+ 1090              		.thumb
+ 1091              		.thumb_func
+ 1092              		.fpu fpv5-sp-d16
+ 1094              	matDestruct:
+ 1095              	.LVL94:
+ 1096              	.LFB293:
+ 104:Core/drogui/math/various/src/matlib.c **** 
+ 105:Core/drogui/math/various/src/matlib.c **** void matDestruct(mat* m){
+ 1097              		.loc 1 105 25 is_stmt 1 view -0
+ 1098              		.cfi_startproc
+ 1099              		@ args = 0, pretend = 0, frame = 0
+ 1100              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1101              		.loc 1 105 25 is_stmt 0 view .LVU284
+ 1102 0000 08B5     		push	{r3, lr}
+ 1103              	.LCFI13:
+ 1104              		.cfi_def_cfa_offset 8
+ 1105              		.cfi_offset 3, -8
+ 1106              		.cfi_offset 14, -4
+ 106:Core/drogui/math/various/src/matlib.c **** 	free(m->val);
+ 1107              		.loc 1 106 2 is_stmt 1 view .LVU285
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 22
+
+
+ 1108 0002 8068     		ldr	r0, [r0, #8]
+ 1109              	.LVL95:
+ 1110              		.loc 1 106 2 is_stmt 0 view .LVU286
+ 1111 0004 FFF7FEFF 		bl	free
+ 1112              	.LVL96:
+ 107:Core/drogui/math/various/src/matlib.c **** }
+ 1113              		.loc 1 107 1 view .LVU287
+ 1114 0008 08BD     		pop	{r3, pc}
+ 1115              		.cfi_endproc
+ 1116              	.LFE293:
+ 1118              		.section	.text.matInv,"ax",%progbits
+ 1119              		.align	1
+ 1120              		.global	matInv
+ 1121              		.syntax unified
+ 1122              		.thumb
+ 1123              		.thumb_func
+ 1124              		.fpu fpv5-sp-d16
+ 1126              	matInv:
+ 1127              	.LVL97:
+ 1128              	.LFB286:
+  46:Core/drogui/math/various/src/matlib.c **** 	mat aux;
+ 1129              		.loc 1 46 30 is_stmt 1 view -0
+ 1130              		.cfi_startproc
+ 1131              		@ args = 0, pretend = 0, frame = 24
+ 1132              		@ frame_needed = 0, uses_anonymous_args = 0
+  46:Core/drogui/math/various/src/matlib.c **** 	mat aux;
+ 1133              		.loc 1 46 30 is_stmt 0 view .LVU289
+ 1134 0000 30B5     		push	{r4, r5, lr}
+ 1135              	.LCFI14:
+ 1136              		.cfi_def_cfa_offset 12
+ 1137              		.cfi_offset 4, -12
+ 1138              		.cfi_offset 5, -8
+ 1139              		.cfi_offset 14, -4
+ 1140 0002 87B0     		sub	sp, sp, #28
+ 1141              	.LCFI15:
+ 1142              		.cfi_def_cfa_offset 40
+ 1143 0004 0546     		mov	r5, r0
+ 1144 0006 0C46     		mov	r4, r1
+  47:Core/drogui/math/various/src/matlib.c **** 	matInit(&aux, a->row, a->col);
+ 1145              		.loc 1 47 2 is_stmt 1 view .LVU290
+  48:Core/drogui/math/various/src/matlib.c **** 	matCopy(&aux, a);
+ 1146              		.loc 1 48 2 view .LVU291
+ 1147 0008 4A68     		ldr	r2, [r1, #4]
+ 1148 000a 0968     		ldr	r1, [r1]
+ 1149              	.LVL98:
+  48:Core/drogui/math/various/src/matlib.c **** 	matCopy(&aux, a);
+ 1150              		.loc 1 48 2 is_stmt 0 view .LVU292
+ 1151 000c 01A8     		add	r0, sp, #4
+ 1152              	.LVL99:
+  48:Core/drogui/math/various/src/matlib.c **** 	matCopy(&aux, a);
+ 1153              		.loc 1 48 2 view .LVU293
+ 1154 000e FFF7FEFF 		bl	matInit
+ 1155              	.LVL100:
+  49:Core/drogui/math/various/src/matlib.c **** 	arm_mat_inverse_f32	(&(aux.M), &(ans->M));
+ 1156              		.loc 1 49 2 is_stmt 1 view .LVU294
+ 1157 0012 2146     		mov	r1, r4
+ 1158 0014 01A8     		add	r0, sp, #4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 23
+
+
+ 1159 0016 FFF7FEFF 		bl	matCopy
+ 1160              	.LVL101:
+  50:Core/drogui/math/various/src/matlib.c **** 	matDestruct(&aux);
+ 1161              		.loc 1 50 2 view .LVU295
+ 1162 001a 05F10C01 		add	r1, r5, #12
+ 1163 001e 04A8     		add	r0, sp, #16
+ 1164 0020 FFF7FEFF 		bl	arm_mat_inverse_f32
+ 1165              	.LVL102:
+  51:Core/drogui/math/various/src/matlib.c **** }
+ 1166              		.loc 1 51 2 view .LVU296
+ 1167 0024 01A8     		add	r0, sp, #4
+ 1168 0026 FFF7FEFF 		bl	matDestruct
+ 1169              	.LVL103:
+  52:Core/drogui/math/various/src/matlib.c **** 
+ 1170              		.loc 1 52 1 is_stmt 0 view .LVU297
+ 1171 002a 07B0     		add	sp, sp, #28
+ 1172              	.LCFI16:
+ 1173              		.cfi_def_cfa_offset 12
+ 1174              		@ sp needed
+ 1175 002c 30BD     		pop	{r4, r5, pc}
+  52:Core/drogui/math/various/src/matlib.c **** 
+ 1176              		.loc 1 52 1 view .LVU298
+ 1177              		.cfi_endproc
+ 1178              	.LFE286:
+ 1180              		.section	.text.gaussElimination3x3,"ax",%progbits
+ 1181              		.align	1
+ 1182              		.global	gaussElimination3x3
+ 1183              		.syntax unified
+ 1184              		.thumb
+ 1185              		.thumb_func
+ 1186              		.fpu fpv5-sp-d16
+ 1188              	gaussElimination3x3:
+ 1189              	.LVL104:
+ 1190              	.LFB294:
+ 108:Core/drogui/math/various/src/matlib.c **** 
+ 109:Core/drogui/math/various/src/matlib.c **** void gaussElimination3x3(mat* a, mat* b, mat* ans){
+ 1191              		.loc 1 109 51 is_stmt 1 view -0
+ 1192              		.cfi_startproc
+ 1193              		@ args = 0, pretend = 0, frame = 0
+ 1194              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1195              		.loc 1 109 51 is_stmt 0 view .LVU300
+ 1196 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1197              	.LCFI17:
+ 1198              		.cfi_def_cfa_offset 24
+ 1199              		.cfi_offset 4, -24
+ 1200              		.cfi_offset 5, -20
+ 1201              		.cfi_offset 6, -16
+ 1202              		.cfi_offset 7, -12
+ 1203              		.cfi_offset 8, -8
+ 1204              		.cfi_offset 14, -4
+ 1205 0004 2DED028B 		vpush.64	{d8}
+ 1206              	.LCFI18:
+ 1207              		.cfi_def_cfa_offset 32
+ 1208              		.cfi_offset 80, -32
+ 1209              		.cfi_offset 81, -28
+ 1210 0008 0446     		mov	r4, r0
+ 1211 000a 0F46     		mov	r7, r1
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 24
+
+
+ 1212 000c 9046     		mov	r8, r2
+ 110:Core/drogui/math/various/src/matlib.c **** 	float c;
+ 1213              		.loc 1 110 2 is_stmt 1 view .LVU301
+ 111:Core/drogui/math/various/src/matlib.c **** 	for(int j = 0; j < a->row; j++)
+ 1214              		.loc 1 111 2 view .LVU302
+ 1215              	.LBB6:
+ 1216              		.loc 1 111 6 view .LVU303
+ 1217              	.LVL105:
+ 1218              		.loc 1 111 10 is_stmt 0 view .LVU304
+ 1219 000e 0026     		movs	r6, #0
+ 1220              		.loc 1 111 2 view .LVU305
+ 1221 0010 42E0     		b	.L35
+ 1222              	.LVL106:
+ 1223              	.L38:
+ 1224              	.LBB7:
+ 1225              	.LBB8:
+ 112:Core/drogui/math/various/src/matlib.c **** 		for(int i = 0; i < a->row; i++){
+ 113:Core/drogui/math/various/src/matlib.c **** 			if(i!=j){
+ 114:Core/drogui/math/various/src/matlib.c **** 				c = getMatVal(a, i, j)/getMatVal(a, j, j);
+ 115:Core/drogui/math/various/src/matlib.c **** 				for(int k = 0; k < a->row; k++) a->val[i*(a->col)+k] = a->val[i*(a->col)+k] - c*a->val[j*(a->co
+ 1226              		.loc 1 115 37 is_stmt 1 discriminator 3 view .LVU306
+ 1227              		.loc 1 115 61 is_stmt 0 discriminator 3 view .LVU307
+ 1228 0012 A268     		ldr	r2, [r4, #8]
+ 1229              		.loc 1 115 71 discriminator 3 view .LVU308
+ 1230 0014 6168     		ldr	r1, [r4, #4]
+ 1231              		.loc 1 115 77 discriminator 3 view .LVU309
+ 1232 0016 05FB013C 		mla	ip, r5, r1, r3
+ 1233              		.loc 1 115 66 discriminator 3 view .LVU310
+ 1234 001a 02EB8C0C 		add	ip, r2, ip, lsl #2
+ 1235 001e DCED007A 		vldr.32	s15, [ip]
+ 1236              		.loc 1 115 102 discriminator 3 view .LVU311
+ 1237 0022 06FB0131 		mla	r1, r6, r1, r3
+ 1238              		.loc 1 115 91 discriminator 3 view .LVU312
+ 1239 0026 02EB8102 		add	r2, r2, r1, lsl #2
+ 1240 002a 92ED007A 		vldr.32	s14, [r2]
+ 1241              		.loc 1 115 84 discriminator 3 view .LVU313
+ 1242 002e 27EE267A 		vmul.f32	s14, s14, s13
+ 1243              		.loc 1 115 81 discriminator 3 view .LVU314
+ 1244 0032 77EEC77A 		vsub.f32	s15, s15, s14
+ 1245              		.loc 1 115 58 discriminator 3 view .LVU315
+ 1246 0036 CCED007A 		vstr.32	s15, [ip]
+ 1247              		.loc 1 115 32 is_stmt 1 discriminator 3 view .LVU316
+ 1248              		.loc 1 115 33 is_stmt 0 discriminator 3 view .LVU317
+ 1249 003a 0133     		adds	r3, r3, #1
+ 1250              	.LVL107:
+ 1251              	.L37:
+ 1252              		.loc 1 115 20 is_stmt 1 discriminator 1 view .LVU318
+ 1253              		.loc 1 115 25 is_stmt 0 discriminator 1 view .LVU319
+ 1254 003c 2268     		ldr	r2, [r4]
+ 1255              		.loc 1 115 5 discriminator 1 view .LVU320
+ 1256 003e 9A42     		cmp	r2, r3
+ 1257 0040 E7DC     		bgt	.L38
+ 1258              	.LBE8:
+ 116:Core/drogui/math/various/src/matlib.c **** 				b->val[i*(b->col)+0] = b->val[i*(b->col)+0] - c*b->val[j*(b->col)+0];
+ 1259              		.loc 1 116 5 is_stmt 1 view .LVU321
+ 1260 0042 BA68     		ldr	r2, [r7, #8]
+ 1261              		.loc 1 116 39 is_stmt 0 view .LVU322
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 25
+
+
+ 1262 0044 7968     		ldr	r1, [r7, #4]
+ 1263              		.loc 1 116 36 view .LVU323
+ 1264 0046 05FB01F3 		mul	r3, r5, r1
+ 1265              	.LVL108:
+ 1266              		.loc 1 116 34 view .LVU324
+ 1267 004a 02EB8303 		add	r3, r2, r3, lsl #2
+ 1268 004e D3ED007A 		vldr.32	s15, [r3]
+ 1269              		.loc 1 116 61 view .LVU325
+ 1270 0052 06FB01F1 		mul	r1, r6, r1
+ 1271              		.loc 1 116 59 view .LVU326
+ 1272 0056 02EB8102 		add	r2, r2, r1, lsl #2
+ 1273 005a 92ED007A 		vldr.32	s14, [r2]
+ 1274              		.loc 1 116 52 view .LVU327
+ 1275 005e 67EE266A 		vmul.f32	s13, s14, s13
+ 1276              	.LVL109:
+ 1277              		.loc 1 116 49 view .LVU328
+ 1278 0062 77EEE66A 		vsub.f32	s13, s15, s13
+ 1279              		.loc 1 116 26 view .LVU329
+ 1280 0066 C3ED006A 		vstr.32	s13, [r3]
+ 1281              	.LVL110:
+ 1282              	.L36:
+ 112:Core/drogui/math/various/src/matlib.c **** 		for(int i = 0; i < a->row; i++){
+ 1283              		.loc 1 112 30 is_stmt 1 discriminator 2 view .LVU330
+ 112:Core/drogui/math/various/src/matlib.c **** 		for(int i = 0; i < a->row; i++){
+ 1284              		.loc 1 112 31 is_stmt 0 discriminator 2 view .LVU331
+ 1285 006a 0135     		adds	r5, r5, #1
+ 1286              	.LVL111:
+ 1287              	.L40:
+ 112:Core/drogui/math/various/src/matlib.c **** 		for(int i = 0; i < a->row; i++){
+ 1288              		.loc 1 112 18 is_stmt 1 discriminator 1 view .LVU332
+ 112:Core/drogui/math/various/src/matlib.c **** 		for(int i = 0; i < a->row; i++){
+ 1289              		.loc 1 112 23 is_stmt 0 discriminator 1 view .LVU333
+ 1290 006c 2368     		ldr	r3, [r4]
+ 112:Core/drogui/math/various/src/matlib.c **** 		for(int i = 0; i < a->row; i++){
+ 1291              		.loc 1 112 3 discriminator 1 view .LVU334
+ 1292 006e AB42     		cmp	r3, r5
+ 1293 0070 11DD     		ble	.L45
+ 113:Core/drogui/math/various/src/matlib.c **** 				c = getMatVal(a, i, j)/getMatVal(a, j, j);
+ 1294              		.loc 1 113 4 is_stmt 1 view .LVU335
+ 113:Core/drogui/math/various/src/matlib.c **** 				c = getMatVal(a, i, j)/getMatVal(a, j, j);
+ 1295              		.loc 1 113 6 is_stmt 0 view .LVU336
+ 1296 0072 AE42     		cmp	r6, r5
+ 1297 0074 F9D0     		beq	.L36
+ 114:Core/drogui/math/various/src/matlib.c **** 				for(int k = 0; k < a->row; k++) a->val[i*(a->col)+k] = a->val[i*(a->col)+k] - c*a->val[j*(a->co
+ 1298              		.loc 1 114 5 is_stmt 1 view .LVU337
+ 114:Core/drogui/math/various/src/matlib.c **** 				for(int k = 0; k < a->row; k++) a->val[i*(a->col)+k] = a->val[i*(a->col)+k] - c*a->val[j*(a->co
+ 1299              		.loc 1 114 9 is_stmt 0 view .LVU338
+ 1300 0076 3246     		mov	r2, r6
+ 1301 0078 2946     		mov	r1, r5
+ 1302 007a 2046     		mov	r0, r4
+ 1303 007c FFF7FEFF 		bl	getMatVal
+ 1304              	.LVL112:
+ 1305 0080 B0EE408A 		vmov.f32	s16, s0
+ 114:Core/drogui/math/various/src/matlib.c **** 				for(int k = 0; k < a->row; k++) a->val[i*(a->col)+k] = a->val[i*(a->col)+k] - c*a->val[j*(a->co
+ 1306              		.loc 1 114 28 view .LVU339
+ 1307 0084 3246     		mov	r2, r6
+ 1308 0086 3146     		mov	r1, r6
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 26
+
+
+ 1309 0088 2046     		mov	r0, r4
+ 1310 008a FFF7FEFF 		bl	getMatVal
+ 1311              	.LVL113:
+ 114:Core/drogui/math/various/src/matlib.c **** 				for(int k = 0; k < a->row; k++) a->val[i*(a->col)+k] = a->val[i*(a->col)+k] - c*a->val[j*(a->co
+ 1312              		.loc 1 114 7 view .LVU340
+ 1313 008e C8EE006A 		vdiv.f32	s13, s16, s0
+ 1314              	.LVL114:
+ 115:Core/drogui/math/various/src/matlib.c **** 				b->val[i*(b->col)+0] = b->val[i*(b->col)+0] - c*b->val[j*(b->col)+0];
+ 1315              		.loc 1 115 5 is_stmt 1 view .LVU341
+ 1316              	.LBB9:
+ 115:Core/drogui/math/various/src/matlib.c **** 				b->val[i*(b->col)+0] = b->val[i*(b->col)+0] - c*b->val[j*(b->col)+0];
+ 1317              		.loc 1 115 9 view .LVU342
+ 115:Core/drogui/math/various/src/matlib.c **** 				b->val[i*(b->col)+0] = b->val[i*(b->col)+0] - c*b->val[j*(b->col)+0];
+ 1318              		.loc 1 115 13 is_stmt 0 view .LVU343
+ 1319 0092 0023     		movs	r3, #0
+ 115:Core/drogui/math/various/src/matlib.c **** 				b->val[i*(b->col)+0] = b->val[i*(b->col)+0] - c*b->val[j*(b->col)+0];
+ 1320              		.loc 1 115 5 view .LVU344
+ 1321 0094 D2E7     		b	.L37
+ 1322              	.LVL115:
+ 1323              	.L45:
+ 115:Core/drogui/math/various/src/matlib.c **** 				b->val[i*(b->col)+0] = b->val[i*(b->col)+0] - c*b->val[j*(b->col)+0];
+ 1324              		.loc 1 115 5 view .LVU345
+ 1325              	.LBE9:
+ 1326              	.LBE7:
+ 111:Core/drogui/math/various/src/matlib.c **** 		for(int i = 0; i < a->row; i++){
+ 1327              		.loc 1 111 29 is_stmt 1 discriminator 2 view .LVU346
+ 111:Core/drogui/math/various/src/matlib.c **** 		for(int i = 0; i < a->row; i++){
+ 1328              		.loc 1 111 30 is_stmt 0 discriminator 2 view .LVU347
+ 1329 0096 0136     		adds	r6, r6, #1
+ 1330              	.LVL116:
+ 1331              	.L35:
+ 111:Core/drogui/math/various/src/matlib.c **** 		for(int i = 0; i < a->row; i++){
+ 1332              		.loc 1 111 17 is_stmt 1 discriminator 1 view .LVU348
+ 111:Core/drogui/math/various/src/matlib.c **** 		for(int i = 0; i < a->row; i++){
+ 1333              		.loc 1 111 22 is_stmt 0 discriminator 1 view .LVU349
+ 1334 0098 2368     		ldr	r3, [r4]
+ 111:Core/drogui/math/various/src/matlib.c **** 		for(int i = 0; i < a->row; i++){
+ 1335              		.loc 1 111 2 discriminator 1 view .LVU350
+ 1336 009a B342     		cmp	r3, r6
+ 1337 009c 01DD     		ble	.L46
+ 1338              	.LBB10:
+ 112:Core/drogui/math/various/src/matlib.c **** 			if(i!=j){
+ 1339              		.loc 1 112 11 view .LVU351
+ 1340 009e 0025     		movs	r5, #0
+ 1341 00a0 E4E7     		b	.L40
+ 1342              	.L46:
+ 1343              	.LBE10:
+ 1344              	.LBE6:
+ 1345              	.LBB11:
+ 117:Core/drogui/math/various/src/matlib.c **** 			}
+ 118:Core/drogui/math/various/src/matlib.c **** 		}
+ 119:Core/drogui/math/various/src/matlib.c **** 	for(int i = 0; i < a->row; i++) ans->val[i*(ans->col)+0] = b->val[i*(b->col)+0]/a->val[i*(a->col)+
+ 1346              		.loc 1 119 10 view .LVU352
+ 1347 00a2 0023     		movs	r3, #0
+ 1348 00a4 1CE0     		b	.L41
+ 1349              	.LVL117:
+ 1350              	.L42:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 27
+
+
+ 1351              		.loc 1 119 34 is_stmt 1 discriminator 3 view .LVU353
+ 1352              		.loc 1 119 2 is_stmt 0 discriminator 3 view .LVU354
+ 1353 00a6 BA68     		ldr	r2, [r7, #8]
+ 1354              		.loc 1 119 72 discriminator 3 view .LVU355
+ 1355 00a8 7968     		ldr	r1, [r7, #4]
+ 1356              		.loc 1 119 69 discriminator 3 view .LVU356
+ 1357 00aa 03FB01F1 		mul	r1, r3, r1
+ 1358              		.loc 1 119 67 discriminator 3 view .LVU357
+ 1359 00ae 02EB8102 		add	r2, r2, r1, lsl #2
+ 1360 00b2 D2ED006A 		vldr.32	s13, [r2]
+ 1361              		.loc 1 119 83 discriminator 3 view .LVU358
+ 1362 00b6 A268     		ldr	r2, [r4, #8]
+ 1363              		.loc 1 119 93 discriminator 3 view .LVU359
+ 1364 00b8 6168     		ldr	r1, [r4, #4]
+ 1365              		.loc 1 119 99 discriminator 3 view .LVU360
+ 1366 00ba 03FB0131 		mla	r1, r3, r1, r3
+ 1367              		.loc 1 119 88 discriminator 3 view .LVU361
+ 1368 00be 02EB8102 		add	r2, r2, r1, lsl #2
+ 1369 00c2 92ED007A 		vldr.32	s14, [r2]
+ 1370              		.loc 1 119 2 discriminator 3 view .LVU362
+ 1371 00c6 D8F80820 		ldr	r2, [r8, #8]
+ 1372              		.loc 1 119 49 discriminator 3 view .LVU363
+ 1373 00ca D8F80410 		ldr	r1, [r8, #4]
+ 1374              		.loc 1 119 44 discriminator 3 view .LVU364
+ 1375 00ce 03FB01F1 		mul	r1, r3, r1
+ 1376              		.loc 1 119 42 discriminator 3 view .LVU365
+ 1377 00d2 02EB8102 		add	r2, r2, r1, lsl #2
+ 1378              		.loc 1 119 81 discriminator 3 view .LVU366
+ 1379 00d6 C6EE877A 		vdiv.f32	s15, s13, s14
+ 1380              		.loc 1 119 59 discriminator 3 view .LVU367
+ 1381 00da C2ED007A 		vstr.32	s15, [r2]
+ 1382              		.loc 1 119 29 is_stmt 1 discriminator 3 view .LVU368
+ 1383              		.loc 1 119 30 is_stmt 0 discriminator 3 view .LVU369
+ 1384 00de 0133     		adds	r3, r3, #1
+ 1385              	.LVL118:
+ 1386              	.L41:
+ 1387              		.loc 1 119 17 is_stmt 1 discriminator 1 view .LVU370
+ 1388              		.loc 1 119 22 is_stmt 0 discriminator 1 view .LVU371
+ 1389 00e0 2268     		ldr	r2, [r4]
+ 1390              		.loc 1 119 2 discriminator 1 view .LVU372
+ 1391 00e2 9A42     		cmp	r2, r3
+ 1392 00e4 DFDC     		bgt	.L42
+ 1393              	.LBE11:
+ 120:Core/drogui/math/various/src/matlib.c **** }
+ 1394              		.loc 1 120 1 view .LVU373
+ 1395 00e6 BDEC028B 		vldm	sp!, {d8}
+ 1396              	.LCFI19:
+ 1397              		.cfi_restore 80
+ 1398              		.cfi_restore 81
+ 1399              		.cfi_def_cfa_offset 24
+ 1400 00ea BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1401              		.loc 1 120 1 view .LVU374
+ 1402              		.cfi_endproc
+ 1403              	.LFE294:
+ 1405              		.section	.text.getCofactor,"ax",%progbits
+ 1406              		.align	1
+ 1407              		.global	getCofactor
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 28
+
+
+ 1408              		.syntax unified
+ 1409              		.thumb
+ 1410              		.thumb_func
+ 1411              		.fpu fpv5-sp-d16
+ 1413              	getCofactor:
+ 1414              	.LVL119:
+ 1415              	.LFB296:
+ 121:Core/drogui/math/various/src/matlib.c **** 
+ 122:Core/drogui/math/various/src/matlib.c **** float matDet(mat* A){
+ 123:Core/drogui/math/various/src/matlib.c **** 
+ 124:Core/drogui/math/various/src/matlib.c **** 	float D = 0;
+ 125:Core/drogui/math/various/src/matlib.c **** 	int n = 0;
+ 126:Core/drogui/math/various/src/matlib.c **** 	if(A->row == A->col) n = A->row;
+ 127:Core/drogui/math/various/src/matlib.c **** 	if (A->row == 1)
+ 128:Core/drogui/math/various/src/matlib.c **** 		return getMatVal(A, 0, 0);
+ 129:Core/drogui/math/various/src/matlib.c **** 
+ 130:Core/drogui/math/various/src/matlib.c **** 	mat temp; // To store cofactors
+ 131:Core/drogui/math/various/src/matlib.c **** 	matInit(&temp, A->row-1, A->row -1 );
+ 132:Core/drogui/math/various/src/matlib.c **** 	int sign = 1;  // To store sign multiplier
+ 133:Core/drogui/math/various/src/matlib.c **** 
+ 134:Core/drogui/math/various/src/matlib.c **** 	// Iterate for each element of first row
+ 135:Core/drogui/math/various/src/matlib.c **** 	for (int f = 0; f < n; f++)
+ 136:Core/drogui/math/various/src/matlib.c **** 	{
+ 137:Core/drogui/math/various/src/matlib.c **** 		// Getting Cofactor of A[0][f]
+ 138:Core/drogui/math/various/src/matlib.c **** 		getCofactor(A, &temp, 0, f);
+ 139:Core/drogui/math/various/src/matlib.c **** 		D += sign * getMatVal(A, 0, f)*matDet(&temp);
+ 140:Core/drogui/math/various/src/matlib.c **** 
+ 141:Core/drogui/math/various/src/matlib.c **** 		// terms are to be added with alternate sign
+ 142:Core/drogui/math/various/src/matlib.c **** 		sign = -sign;
+ 143:Core/drogui/math/various/src/matlib.c **** 	}
+ 144:Core/drogui/math/various/src/matlib.c **** 	matDestruct(&temp);
+ 145:Core/drogui/math/various/src/matlib.c **** 	return D;
+ 146:Core/drogui/math/various/src/matlib.c **** }
+ 147:Core/drogui/math/various/src/matlib.c **** 
+ 148:Core/drogui/math/various/src/matlib.c **** void getCofactor(mat* A, mat* temp, int p, int q)
+ 149:Core/drogui/math/various/src/matlib.c **** {
+ 1416              		.loc 1 149 1 is_stmt 1 view -0
+ 1417              		.cfi_startproc
+ 1418              		@ args = 0, pretend = 0, frame = 8
+ 1419              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1420              		.loc 1 149 1 is_stmt 0 view .LVU376
+ 1421 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1422              	.LCFI20:
+ 1423              		.cfi_def_cfa_offset 36
+ 1424              		.cfi_offset 4, -36
+ 1425              		.cfi_offset 5, -32
+ 1426              		.cfi_offset 6, -28
+ 1427              		.cfi_offset 7, -24
+ 1428              		.cfi_offset 8, -20
+ 1429              		.cfi_offset 9, -16
+ 1430              		.cfi_offset 10, -12
+ 1431              		.cfi_offset 11, -8
+ 1432              		.cfi_offset 14, -4
+ 1433 0004 83B0     		sub	sp, sp, #12
+ 1434              	.LCFI21:
+ 1435              		.cfi_def_cfa_offset 48
+ 1436 0006 0546     		mov	r5, r0
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 29
+
+
+ 1437 0008 0191     		str	r1, [sp, #4]
+ 1438 000a 9046     		mov	r8, r2
+ 1439 000c 1F46     		mov	r7, r3
+ 150:Core/drogui/math/various/src/matlib.c **** 	int i = 0, j = 0;
+ 1440              		.loc 1 150 2 is_stmt 1 view .LVU377
+ 1441              	.LVL120:
+ 151:Core/drogui/math/various/src/matlib.c **** 
+ 152:Core/drogui/math/various/src/matlib.c **** 	for (int row = 0; row < A->row; row++) {
+ 1442              		.loc 1 152 2 view .LVU378
+ 1443              	.LBB12:
+ 1444              		.loc 1 152 7 view .LVU379
+ 1445              		.loc 1 152 11 is_stmt 0 view .LVU380
+ 1446 000e 0026     		movs	r6, #0
+ 1447              	.LBE12:
+ 150:Core/drogui/math/various/src/matlib.c **** 	int i = 0, j = 0;
+ 1448              		.loc 1 150 13 view .LVU381
+ 1449 0010 B146     		mov	r9, r6
+ 150:Core/drogui/math/various/src/matlib.c **** 	int i = 0, j = 0;
+ 1450              		.loc 1 150 6 view .LVU382
+ 1451 0012 B346     		mov	fp, r6
+ 1452              	.LBB15:
+ 1453              		.loc 1 152 2 view .LVU383
+ 1454 0014 1EE0     		b	.L48
+ 1455              	.LVL121:
+ 1456              	.L56:
+ 1457              	.LBB13:
+ 153:Core/drogui/math/various/src/matlib.c **** 		for (int col = 0; col < A->col; col++) {
+ 154:Core/drogui/math/various/src/matlib.c **** 			if (row != p && col != q) {
+ 155:Core/drogui/math/various/src/matlib.c **** 				setMatVal(temp, i, j++, getMatVal(A, row, col));
+ 156:Core/drogui/math/various/src/matlib.c **** 				if (j == A->row - 1) {
+ 157:Core/drogui/math/various/src/matlib.c **** 					j = 0;
+ 1458              		.loc 1 157 6 is_stmt 1 view .LVU384
+ 158:Core/drogui/math/various/src/matlib.c **** 					i++;
+ 1459              		.loc 1 158 6 view .LVU385
+ 1460              		.loc 1 158 7 is_stmt 0 view .LVU386
+ 1461 0016 0BF1010B 		add	fp, fp, #1
+ 1462              	.LVL122:
+ 157:Core/drogui/math/various/src/matlib.c **** 					i++;
+ 1463              		.loc 1 157 8 view .LVU387
+ 1464 001a 4FF00009 		mov	r9, #0
+ 1465              	.LVL123:
+ 1466              	.L49:
+ 153:Core/drogui/math/various/src/matlib.c **** 		for (int col = 0; col < A->col; col++) {
+ 1467              		.loc 1 153 35 is_stmt 1 discriminator 2 view .LVU388
+ 153:Core/drogui/math/various/src/matlib.c **** 		for (int col = 0; col < A->col; col++) {
+ 1468              		.loc 1 153 38 is_stmt 0 discriminator 2 view .LVU389
+ 1469 001e 0134     		adds	r4, r4, #1
+ 1470              	.LVL124:
+ 1471              	.L51:
+ 153:Core/drogui/math/various/src/matlib.c **** 		for (int col = 0; col < A->col; col++) {
+ 1472              		.loc 1 153 21 is_stmt 1 discriminator 1 view .LVU390
+ 153:Core/drogui/math/various/src/matlib.c **** 		for (int col = 0; col < A->col; col++) {
+ 1473              		.loc 1 153 28 is_stmt 0 discriminator 1 view .LVU391
+ 1474 0020 6B68     		ldr	r3, [r5, #4]
+ 153:Core/drogui/math/various/src/matlib.c **** 		for (int col = 0; col < A->col; col++) {
+ 1475              		.loc 1 153 3 discriminator 1 view .LVU392
+ 1476 0022 A342     		cmp	r3, r4
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 30
+
+
+ 1477 0024 15DD     		ble	.L55
+ 154:Core/drogui/math/various/src/matlib.c **** 				setMatVal(temp, i, j++, getMatVal(A, row, col));
+ 1478              		.loc 1 154 4 is_stmt 1 view .LVU393
+ 154:Core/drogui/math/various/src/matlib.c **** 				setMatVal(temp, i, j++, getMatVal(A, row, col));
+ 1479              		.loc 1 154 7 is_stmt 0 view .LVU394
+ 1480 0026 4645     		cmp	r6, r8
+ 1481 0028 18BF     		it	ne
+ 1482 002a BC42     		cmpne	r4, r7
+ 1483 002c F7D0     		beq	.L49
+ 155:Core/drogui/math/various/src/matlib.c **** 				if (j == A->row - 1) {
+ 1484              		.loc 1 155 5 is_stmt 1 view .LVU395
+ 1485 002e 09F1010A 		add	r10, r9, #1
+ 1486              	.LVL125:
+ 155:Core/drogui/math/various/src/matlib.c **** 				if (j == A->row - 1) {
+ 1487              		.loc 1 155 5 is_stmt 0 view .LVU396
+ 1488 0032 2246     		mov	r2, r4
+ 1489 0034 3146     		mov	r1, r6
+ 1490 0036 2846     		mov	r0, r5
+ 1491 0038 FFF7FEFF 		bl	getMatVal
+ 1492              	.LVL126:
+ 1493 003c 4A46     		mov	r2, r9
+ 1494 003e 5946     		mov	r1, fp
+ 1495 0040 0198     		ldr	r0, [sp, #4]
+ 1496 0042 FFF7FEFF 		bl	setMatVal
+ 1497              	.LVL127:
+ 156:Core/drogui/math/various/src/matlib.c **** 					j = 0;
+ 1498              		.loc 1 156 5 is_stmt 1 view .LVU397
+ 156:Core/drogui/math/various/src/matlib.c **** 					j = 0;
+ 1499              		.loc 1 156 15 is_stmt 0 view .LVU398
+ 1500 0046 2B68     		ldr	r3, [r5]
+ 156:Core/drogui/math/various/src/matlib.c **** 					j = 0;
+ 1501              		.loc 1 156 21 view .LVU399
+ 1502 0048 013B     		subs	r3, r3, #1
+ 156:Core/drogui/math/various/src/matlib.c **** 					j = 0;
+ 1503              		.loc 1 156 8 view .LVU400
+ 1504 004a 5345     		cmp	r3, r10
+ 1505 004c E3D0     		beq	.L56
+ 155:Core/drogui/math/various/src/matlib.c **** 				if (j == A->row - 1) {
+ 1506              		.loc 1 155 5 view .LVU401
+ 1507 004e D146     		mov	r9, r10
+ 1508 0050 E5E7     		b	.L49
+ 1509              	.LVL128:
+ 1510              	.L55:
+ 155:Core/drogui/math/various/src/matlib.c **** 				if (j == A->row - 1) {
+ 1511              		.loc 1 155 5 view .LVU402
+ 1512              	.LBE13:
+ 152:Core/drogui/math/various/src/matlib.c **** 		for (int col = 0; col < A->col; col++) {
+ 1513              		.loc 1 152 34 is_stmt 1 discriminator 2 view .LVU403
+ 152:Core/drogui/math/various/src/matlib.c **** 		for (int col = 0; col < A->col; col++) {
+ 1514              		.loc 1 152 37 is_stmt 0 discriminator 2 view .LVU404
+ 1515 0052 0136     		adds	r6, r6, #1
+ 1516              	.LVL129:
+ 1517              	.L48:
+ 152:Core/drogui/math/various/src/matlib.c **** 		for (int col = 0; col < A->col; col++) {
+ 1518              		.loc 1 152 20 is_stmt 1 discriminator 1 view .LVU405
+ 152:Core/drogui/math/various/src/matlib.c **** 		for (int col = 0; col < A->col; col++) {
+ 1519              		.loc 1 152 27 is_stmt 0 discriminator 1 view .LVU406
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 31
+
+
+ 1520 0054 2B68     		ldr	r3, [r5]
+ 152:Core/drogui/math/various/src/matlib.c **** 		for (int col = 0; col < A->col; col++) {
+ 1521              		.loc 1 152 2 discriminator 1 view .LVU407
+ 1522 0056 B342     		cmp	r3, r6
+ 1523 0058 01DD     		ble	.L57
+ 1524              	.LBB14:
+ 153:Core/drogui/math/various/src/matlib.c **** 			if (row != p && col != q) {
+ 1525              		.loc 1 153 12 view .LVU408
+ 1526 005a 0024     		movs	r4, #0
+ 1527 005c E0E7     		b	.L51
+ 1528              	.L57:
+ 1529              	.LBE14:
+ 1530              	.LBE15:
+ 159:Core/drogui/math/various/src/matlib.c **** 				}
+ 160:Core/drogui/math/various/src/matlib.c **** 			}
+ 161:Core/drogui/math/various/src/matlib.c **** 		}
+ 162:Core/drogui/math/various/src/matlib.c **** 	}
+ 163:Core/drogui/math/various/src/matlib.c **** }
+ 1531              		.loc 1 163 1 view .LVU409
+ 1532 005e 03B0     		add	sp, sp, #12
+ 1533              	.LCFI22:
+ 1534              		.cfi_def_cfa_offset 36
+ 1535              		@ sp needed
+ 1536 0060 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1537              		.loc 1 163 1 view .LVU410
+ 1538              		.cfi_endproc
+ 1539              	.LFE296:
+ 1541              		.section	.text.matDet,"ax",%progbits
+ 1542              		.align	1
+ 1543              		.global	matDet
+ 1544              		.syntax unified
+ 1545              		.thumb
+ 1546              		.thumb_func
+ 1547              		.fpu fpv5-sp-d16
+ 1549              	matDet:
+ 1550              	.LVL130:
+ 1551              	.LFB295:
+ 122:Core/drogui/math/various/src/matlib.c **** 
+ 1552              		.loc 1 122 21 is_stmt 1 view -0
+ 1553              		.cfi_startproc
+ 1554              		@ args = 0, pretend = 0, frame = 24
+ 1555              		@ frame_needed = 0, uses_anonymous_args = 0
+ 122:Core/drogui/math/various/src/matlib.c **** 
+ 1556              		.loc 1 122 21 is_stmt 0 view .LVU412
+ 1557 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1558              	.LCFI23:
+ 1559              		.cfi_def_cfa_offset 20
+ 1560              		.cfi_offset 4, -20
+ 1561              		.cfi_offset 5, -16
+ 1562              		.cfi_offset 6, -12
+ 1563              		.cfi_offset 7, -8
+ 1564              		.cfi_offset 14, -4
+ 1565 0002 2DED028B 		vpush.64	{d8}
+ 1566              	.LCFI24:
+ 1567              		.cfi_def_cfa_offset 28
+ 1568              		.cfi_offset 80, -28
+ 1569              		.cfi_offset 81, -24
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 32
+
+
+ 1570 0006 87B0     		sub	sp, sp, #28
+ 1571              	.LCFI25:
+ 1572              		.cfi_def_cfa_offset 56
+ 1573 0008 0546     		mov	r5, r0
+ 124:Core/drogui/math/various/src/matlib.c **** 	int n = 0;
+ 1574              		.loc 1 124 2 is_stmt 1 view .LVU413
+ 1575              	.LVL131:
+ 125:Core/drogui/math/various/src/matlib.c **** 	if(A->row == A->col) n = A->row;
+ 1576              		.loc 1 125 2 view .LVU414
+ 126:Core/drogui/math/various/src/matlib.c **** 	if (A->row == 1)
+ 1577              		.loc 1 126 2 view .LVU415
+ 126:Core/drogui/math/various/src/matlib.c **** 	if (A->row == 1)
+ 1578              		.loc 1 126 6 is_stmt 0 view .LVU416
+ 1579 000a 0168     		ldr	r1, [r0]
+ 126:Core/drogui/math/various/src/matlib.c **** 	if (A->row == 1)
+ 1580              		.loc 1 126 16 view .LVU417
+ 1581 000c 4368     		ldr	r3, [r0, #4]
+ 126:Core/drogui/math/various/src/matlib.c **** 	if (A->row == 1)
+ 1582              		.loc 1 126 4 view .LVU418
+ 1583 000e 9942     		cmp	r1, r3
+ 1584 0010 0CD0     		beq	.L64
+ 125:Core/drogui/math/various/src/matlib.c **** 	if(A->row == A->col) n = A->row;
+ 1585              		.loc 1 125 6 view .LVU419
+ 1586 0012 0027     		movs	r7, #0
+ 1587              	.L59:
+ 1588              	.LVL132:
+ 127:Core/drogui/math/various/src/matlib.c **** 		return getMatVal(A, 0, 0);
+ 1589              		.loc 1 127 2 is_stmt 1 view .LVU420
+ 127:Core/drogui/math/various/src/matlib.c **** 		return getMatVal(A, 0, 0);
+ 1590              		.loc 1 127 5 is_stmt 0 view .LVU421
+ 1591 0014 0129     		cmp	r1, #1
+ 1592 0016 0BD0     		beq	.L66
+ 130:Core/drogui/math/various/src/matlib.c **** 	matInit(&temp, A->row-1, A->row -1 );
+ 1593              		.loc 1 130 2 is_stmt 1 view .LVU422
+ 131:Core/drogui/math/various/src/matlib.c **** 	int sign = 1;  // To store sign multiplier
+ 1594              		.loc 1 131 2 view .LVU423
+ 1595 0018 0139     		subs	r1, r1, #1
+ 1596 001a 0A46     		mov	r2, r1
+ 1597 001c 01A8     		add	r0, sp, #4
+ 1598              	.LVL133:
+ 131:Core/drogui/math/various/src/matlib.c **** 	int sign = 1;  // To store sign multiplier
+ 1599              		.loc 1 131 2 is_stmt 0 view .LVU424
+ 1600 001e FFF7FEFF 		bl	matInit
+ 1601              	.LVL134:
+ 132:Core/drogui/math/various/src/matlib.c **** 
+ 1602              		.loc 1 132 2 is_stmt 1 view .LVU425
+ 135:Core/drogui/math/various/src/matlib.c **** 	{
+ 1603              		.loc 1 135 2 view .LVU426
+ 1604              	.LBB16:
+ 135:Core/drogui/math/various/src/matlib.c **** 	{
+ 1605              		.loc 1 135 7 view .LVU427
+ 135:Core/drogui/math/various/src/matlib.c **** 	{
+ 1606              		.loc 1 135 11 is_stmt 0 view .LVU428
+ 1607 0022 0024     		movs	r4, #0
+ 1608              	.LBE16:
+ 132:Core/drogui/math/various/src/matlib.c **** 
+ 1609              		.loc 1 132 6 view .LVU429
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 33
+
+
+ 1610 0024 0126     		movs	r6, #1
+ 124:Core/drogui/math/various/src/matlib.c **** 	int n = 0;
+ 1611              		.loc 1 124 8 view .LVU430
+ 1612 0026 DFED198A 		vldr.32	s17, .L67
+ 1613              	.LBB17:
+ 135:Core/drogui/math/various/src/matlib.c **** 	{
+ 1614              		.loc 1 135 2 view .LVU431
+ 1615 002a 23E0     		b	.L62
+ 1616              	.LVL135:
+ 1617              	.L64:
+ 135:Core/drogui/math/various/src/matlib.c **** 	{
+ 1618              		.loc 1 135 2 view .LVU432
+ 1619              	.LBE17:
+ 126:Core/drogui/math/various/src/matlib.c **** 	if (A->row == 1)
+ 1620              		.loc 1 126 25 view .LVU433
+ 1621 002c 0F46     		mov	r7, r1
+ 1622 002e F1E7     		b	.L59
+ 1623              	.LVL136:
+ 1624              	.L66:
+ 128:Core/drogui/math/various/src/matlib.c **** 
+ 1625              		.loc 1 128 3 is_stmt 1 view .LVU434
+ 128:Core/drogui/math/various/src/matlib.c **** 
+ 1626              		.loc 1 128 10 is_stmt 0 view .LVU435
+ 1627 0030 0022     		movs	r2, #0
+ 1628 0032 1146     		mov	r1, r2
+ 1629 0034 2846     		mov	r0, r5
+ 1630              	.LVL137:
+ 128:Core/drogui/math/various/src/matlib.c **** 
+ 1631              		.loc 1 128 10 view .LVU436
+ 1632 0036 FFF7FEFF 		bl	getMatVal
+ 1633              	.LVL138:
+ 1634 003a F0EE408A 		vmov.f32	s17, s0
+ 1635 003e 1EE0     		b	.L58
+ 1636              	.LVL139:
+ 1637              	.L63:
+ 1638              	.LBB18:
+ 138:Core/drogui/math/various/src/matlib.c **** 		D += sign * getMatVal(A, 0, f)*matDet(&temp);
+ 1639              		.loc 1 138 3 is_stmt 1 discriminator 3 view .LVU437
+ 1640 0040 2346     		mov	r3, r4
+ 1641 0042 0022     		movs	r2, #0
+ 1642 0044 01A9     		add	r1, sp, #4
+ 1643 0046 2846     		mov	r0, r5
+ 1644 0048 FFF7FEFF 		bl	getCofactor
+ 1645              	.LVL140:
+ 139:Core/drogui/math/various/src/matlib.c **** 
+ 1646              		.loc 1 139 3 discriminator 3 view .LVU438
+ 139:Core/drogui/math/various/src/matlib.c **** 
+ 1647              		.loc 1 139 15 is_stmt 0 discriminator 3 view .LVU439
+ 1648 004c 2246     		mov	r2, r4
+ 1649 004e 0021     		movs	r1, #0
+ 1650 0050 2846     		mov	r0, r5
+ 1651 0052 FFF7FEFF 		bl	getMatVal
+ 1652              	.LVL141:
+ 139:Core/drogui/math/various/src/matlib.c **** 
+ 1653              		.loc 1 139 13 discriminator 3 view .LVU440
+ 1654 0056 07EE906A 		vmov	s15, r6	@ int
+ 1655 005a B8EEE78A 		vcvt.f32.s32	s16, s15
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 34
+
+
+ 1656 005e 28EE008A 		vmul.f32	s16, s16, s0
+ 139:Core/drogui/math/various/src/matlib.c **** 
+ 1657              		.loc 1 139 34 discriminator 3 view .LVU441
+ 1658 0062 01A8     		add	r0, sp, #4
+ 1659 0064 FFF7FEFF 		bl	matDet
+ 1660              	.LVL142:
+ 139:Core/drogui/math/various/src/matlib.c **** 
+ 1661              		.loc 1 139 33 discriminator 3 view .LVU442
+ 1662 0068 28EE008A 		vmul.f32	s16, s16, s0
+ 139:Core/drogui/math/various/src/matlib.c **** 
+ 1663              		.loc 1 139 5 discriminator 3 view .LVU443
+ 1664 006c 78EE888A 		vadd.f32	s17, s17, s16
+ 1665              	.LVL143:
+ 142:Core/drogui/math/various/src/matlib.c **** 	}
+ 1666              		.loc 1 142 3 is_stmt 1 discriminator 3 view .LVU444
+ 142:Core/drogui/math/various/src/matlib.c **** 	}
+ 1667              		.loc 1 142 8 is_stmt 0 discriminator 3 view .LVU445
+ 1668 0070 7642     		rsbs	r6, r6, #0
+ 1669              	.LVL144:
+ 135:Core/drogui/math/various/src/matlib.c **** 	{
+ 1670              		.loc 1 135 25 is_stmt 1 discriminator 3 view .LVU446
+ 135:Core/drogui/math/various/src/matlib.c **** 	{
+ 1671              		.loc 1 135 26 is_stmt 0 discriminator 3 view .LVU447
+ 1672 0072 0134     		adds	r4, r4, #1
+ 1673              	.LVL145:
+ 1674              	.L62:
+ 135:Core/drogui/math/various/src/matlib.c **** 	{
+ 1675              		.loc 1 135 18 is_stmt 1 discriminator 1 view .LVU448
+ 135:Core/drogui/math/various/src/matlib.c **** 	{
+ 1676              		.loc 1 135 2 is_stmt 0 discriminator 1 view .LVU449
+ 1677 0074 A742     		cmp	r7, r4
+ 1678 0076 E3DC     		bgt	.L63
+ 1679              	.LBE18:
+ 144:Core/drogui/math/various/src/matlib.c **** 	return D;
+ 1680              		.loc 1 144 2 is_stmt 1 view .LVU450
+ 1681 0078 01A8     		add	r0, sp, #4
+ 1682 007a FFF7FEFF 		bl	matDestruct
+ 1683              	.LVL146:
+ 145:Core/drogui/math/various/src/matlib.c **** }
+ 1684              		.loc 1 145 2 view .LVU451
+ 1685              	.L58:
+ 146:Core/drogui/math/various/src/matlib.c **** 
+ 1686              		.loc 1 146 1 is_stmt 0 view .LVU452
+ 1687 007e B0EE680A 		vmov.f32	s0, s17
+ 1688 0082 07B0     		add	sp, sp, #28
+ 1689              	.LCFI26:
+ 1690              		.cfi_def_cfa_offset 28
+ 1691              		@ sp needed
+ 1692 0084 BDEC028B 		vldm	sp!, {d8}
+ 1693              	.LCFI27:
+ 1694              		.cfi_restore 80
+ 1695              		.cfi_restore 81
+ 1696              		.cfi_def_cfa_offset 20
+ 1697 0088 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1698              	.LVL147:
+ 1699              	.L68:
+ 146:Core/drogui/math/various/src/matlib.c **** 
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 35
+
+
+ 1700              		.loc 1 146 1 view .LVU453
+ 1701 008a 00BF     		.align	2
+ 1702              	.L67:
+ 1703 008c 00000000 		.word	0
+ 1704              		.cfi_endproc
+ 1705              	.LFE295:
+ 1707              		.section	.text.adjoint,"ax",%progbits
+ 1708              		.align	1
+ 1709              		.global	adjoint
+ 1710              		.syntax unified
+ 1711              		.thumb
+ 1712              		.thumb_func
+ 1713              		.fpu fpv5-sp-d16
+ 1715              	adjoint:
+ 1716              	.LVL148:
+ 1717              	.LFB297:
+ 164:Core/drogui/math/various/src/matlib.c **** 
+ 165:Core/drogui/math/various/src/matlib.c **** void adjoint(mat* A, mat* adj) {
+ 1718              		.loc 1 165 32 is_stmt 1 view -0
+ 1719              		.cfi_startproc
+ 1720              		@ args = 0, pretend = 0, frame = 24
+ 1721              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1722              		.loc 1 165 32 is_stmt 0 view .LVU455
+ 1723 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1724              	.LCFI28:
+ 1725              		.cfi_def_cfa_offset 24
+ 1726              		.cfi_offset 4, -24
+ 1727              		.cfi_offset 5, -20
+ 1728              		.cfi_offset 6, -16
+ 1729              		.cfi_offset 7, -12
+ 1730              		.cfi_offset 8, -8
+ 1731              		.cfi_offset 14, -4
+ 1732 0004 2DED028B 		vpush.64	{d8}
+ 1733              	.LCFI29:
+ 1734              		.cfi_def_cfa_offset 32
+ 1735              		.cfi_offset 80, -32
+ 1736              		.cfi_offset 81, -28
+ 1737 0008 86B0     		sub	sp, sp, #24
+ 1738              	.LCFI30:
+ 1739              		.cfi_def_cfa_offset 56
+ 1740 000a 0746     		mov	r7, r0
+ 1741 000c 8846     		mov	r8, r1
+ 166:Core/drogui/math/various/src/matlib.c **** 	int N = 0;
+ 1742              		.loc 1 166 2 is_stmt 1 view .LVU456
+ 1743              	.LVL149:
+ 167:Core/drogui/math/various/src/matlib.c **** 	if(A->row == A->col){N = A->row;}
+ 1744              		.loc 1 167 2 view .LVU457
+ 1745              		.loc 1 167 6 is_stmt 0 view .LVU458
+ 1746 000e 0668     		ldr	r6, [r0]
+ 1747              		.loc 1 167 16 view .LVU459
+ 1748 0010 4368     		ldr	r3, [r0, #4]
+ 1749              		.loc 1 167 4 view .LVU460
+ 1750 0012 9E42     		cmp	r6, r3
+ 1751 0014 09D1     		bne	.L76
+ 1752              		.loc 1 167 23 is_stmt 1 discriminator 1 view .LVU461
+ 1753              	.LVL150:
+ 168:Core/drogui/math/various/src/matlib.c **** 	if (N == 1) {
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 36
+
+
+ 1754              		.loc 1 168 2 discriminator 1 view .LVU462
+ 1755              		.loc 1 168 5 is_stmt 0 discriminator 1 view .LVU463
+ 1756 0016 012E     		cmp	r6, #1
+ 1757 0018 08D1     		bne	.L70
+ 169:Core/drogui/math/various/src/matlib.c **** 		setMatVal(adj, 0, 0, 1);
+ 1758              		.loc 1 169 3 is_stmt 1 view .LVU464
+ 1759 001a B7EE000A 		vmov.f32	s0, #1.0e+0
+ 1760 001e 0022     		movs	r2, #0
+ 1761 0020 1146     		mov	r1, r2
+ 1762              	.LVL151:
+ 1763              		.loc 1 169 3 is_stmt 0 view .LVU465
+ 1764 0022 4046     		mov	r0, r8
+ 1765              	.LVL152:
+ 1766              		.loc 1 169 3 view .LVU466
+ 1767 0024 FFF7FEFF 		bl	setMatVal
+ 1768              	.LVL153:
+ 170:Core/drogui/math/various/src/matlib.c **** 		return;
+ 1769              		.loc 1 170 3 is_stmt 1 view .LVU467
+ 1770 0028 2DE0     		b	.L69
+ 1771              	.LVL154:
+ 1772              	.L76:
+ 166:Core/drogui/math/various/src/matlib.c **** 	if(A->row == A->col){N = A->row;}
+ 1773              		.loc 1 166 6 is_stmt 0 view .LVU468
+ 1774 002a 0026     		movs	r6, #0
+ 1775              	.LVL155:
+ 1776              	.L70:
+ 171:Core/drogui/math/various/src/matlib.c **** 	}
+ 172:Core/drogui/math/various/src/matlib.c **** 
+ 173:Core/drogui/math/various/src/matlib.c **** 	int sign = 1;
+ 1777              		.loc 1 173 2 is_stmt 1 view .LVU469
+ 174:Core/drogui/math/various/src/matlib.c **** 	mat temp;
+ 1778              		.loc 1 174 2 view .LVU470
+ 175:Core/drogui/math/various/src/matlib.c **** 	matInit(&temp, N-1 , N-1);
+ 1779              		.loc 1 175 2 view .LVU471
+ 1780 002c 711E     		subs	r1, r6, #1
+ 1781              	.LVL156:
+ 1782              		.loc 1 175 2 is_stmt 0 view .LVU472
+ 1783 002e 0A46     		mov	r2, r1
+ 1784 0030 01A8     		add	r0, sp, #4
+ 1785              	.LVL157:
+ 1786              		.loc 1 175 2 view .LVU473
+ 1787 0032 FFF7FEFF 		bl	matInit
+ 1788              	.LVL158:
+ 176:Core/drogui/math/various/src/matlib.c **** 
+ 177:Core/drogui/math/various/src/matlib.c **** 	for (int i = 0; i < N; i++) {
+ 1789              		.loc 1 177 2 is_stmt 1 view .LVU474
+ 1790              	.LBB19:
+ 1791              		.loc 1 177 7 view .LVU475
+ 1792              		.loc 1 177 11 is_stmt 0 view .LVU476
+ 1793 0036 0025     		movs	r5, #0
+ 1794              		.loc 1 177 2 view .LVU477
+ 1795 0038 1EE0     		b	.L72
+ 1796              	.LVL159:
+ 1797              	.L77:
+ 1798              	.LBB20:
+ 178:Core/drogui/math/various/src/matlib.c **** 		for (int j = 0; j < N; j++) {
+ 179:Core/drogui/math/various/src/matlib.c **** 
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 37
+
+
+ 180:Core/drogui/math/various/src/matlib.c **** 			getCofactor(A, &temp, i, j);
+ 181:Core/drogui/math/various/src/matlib.c **** 			sign = ((i+j)%2 == 0) ? 1 : -1;
+ 1799              		.loc 1 181 30 view .LVU478
+ 1800 003a 9FED158A 		vldr.32	s16, .L82	@ int
+ 1801              	.L73:
+ 1802              	.LVL160:
+ 182:Core/drogui/math/various/src/matlib.c **** 			setMatVal(adj, j, i, (sign)*(matDet(&temp)));
+ 1803              		.loc 1 182 4 is_stmt 1 discriminator 4 view .LVU479
+ 1804              		.loc 1 182 33 is_stmt 0 discriminator 4 view .LVU480
+ 1805 003e 01A8     		add	r0, sp, #4
+ 1806 0040 FFF7FEFF 		bl	matDet
+ 1807              	.LVL161:
+ 1808              		.loc 1 182 4 discriminator 4 view .LVU481
+ 1809 0044 B8EEC88A 		vcvt.f32.s32	s16, s16
+ 1810              	.LVL162:
+ 1811              		.loc 1 182 4 discriminator 4 view .LVU482
+ 1812 0048 28EE000A 		vmul.f32	s0, s16, s0
+ 1813 004c 2A46     		mov	r2, r5
+ 1814 004e 2146     		mov	r1, r4
+ 1815 0050 4046     		mov	r0, r8
+ 1816 0052 FFF7FEFF 		bl	setMatVal
+ 1817              	.LVL163:
+ 178:Core/drogui/math/various/src/matlib.c **** 		for (int j = 0; j < N; j++) {
+ 1818              		.loc 1 178 26 is_stmt 1 discriminator 4 view .LVU483
+ 178:Core/drogui/math/various/src/matlib.c **** 		for (int j = 0; j < N; j++) {
+ 1819              		.loc 1 178 27 is_stmt 0 discriminator 4 view .LVU484
+ 1820 0056 0134     		adds	r4, r4, #1
+ 1821              	.LVL164:
+ 1822              	.L75:
+ 178:Core/drogui/math/various/src/matlib.c **** 		for (int j = 0; j < N; j++) {
+ 1823              		.loc 1 178 19 is_stmt 1 discriminator 2 view .LVU485
+ 178:Core/drogui/math/various/src/matlib.c **** 		for (int j = 0; j < N; j++) {
+ 1824              		.loc 1 178 3 is_stmt 0 discriminator 2 view .LVU486
+ 1825 0058 A642     		cmp	r6, r4
+ 1826 005a 0CDD     		ble	.L80
+ 180:Core/drogui/math/various/src/matlib.c **** 			sign = ((i+j)%2 == 0) ? 1 : -1;
+ 1827              		.loc 1 180 4 is_stmt 1 view .LVU487
+ 1828 005c 2346     		mov	r3, r4
+ 1829 005e 2A46     		mov	r2, r5
+ 1830 0060 01A9     		add	r1, sp, #4
+ 1831 0062 3846     		mov	r0, r7
+ 1832 0064 FFF7FEFF 		bl	getCofactor
+ 1833              	.LVL165:
+ 181:Core/drogui/math/various/src/matlib.c **** 			setMatVal(adj, j, i, (sign)*(matDet(&temp)));
+ 1834              		.loc 1 181 4 view .LVU488
+ 181:Core/drogui/math/various/src/matlib.c **** 			setMatVal(adj, j, i, (sign)*(matDet(&temp)));
+ 1835              		.loc 1 181 14 is_stmt 0 view .LVU489
+ 1836 0068 2B19     		adds	r3, r5, r4
+ 181:Core/drogui/math/various/src/matlib.c **** 			setMatVal(adj, j, i, (sign)*(matDet(&temp)));
+ 1837              		.loc 1 181 30 view .LVU490
+ 1838 006a 13F0010F 		tst	r3, #1
+ 1839 006e E4D1     		bne	.L77
+ 181:Core/drogui/math/various/src/matlib.c **** 			setMatVal(adj, j, i, (sign)*(matDet(&temp)));
+ 1840              		.loc 1 181 30 view .LVU491
+ 1841 0070 9FED088A 		vldr.32	s16, .L82+4	@ int
+ 1842 0074 E3E7     		b	.L73
+ 1843              	.L80:
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 38
+
+
+ 181:Core/drogui/math/various/src/matlib.c **** 			setMatVal(adj, j, i, (sign)*(matDet(&temp)));
+ 1844              		.loc 1 181 30 view .LVU492
+ 1845              	.LBE20:
+ 177:Core/drogui/math/various/src/matlib.c **** 		for (int j = 0; j < N; j++) {
+ 1846              		.loc 1 177 25 is_stmt 1 discriminator 2 view .LVU493
+ 177:Core/drogui/math/various/src/matlib.c **** 		for (int j = 0; j < N; j++) {
+ 1847              		.loc 1 177 26 is_stmt 0 discriminator 2 view .LVU494
+ 1848 0076 0135     		adds	r5, r5, #1
+ 1849              	.LVL166:
+ 1850              	.L72:
+ 177:Core/drogui/math/various/src/matlib.c **** 		for (int j = 0; j < N; j++) {
+ 1851              		.loc 1 177 18 is_stmt 1 discriminator 1 view .LVU495
+ 177:Core/drogui/math/various/src/matlib.c **** 		for (int j = 0; j < N; j++) {
+ 1852              		.loc 1 177 2 is_stmt 0 discriminator 1 view .LVU496
+ 1853 0078 AE42     		cmp	r6, r5
+ 1854 007a 01DD     		ble	.L81
+ 1855              	.LBB21:
+ 178:Core/drogui/math/various/src/matlib.c **** 
+ 1856              		.loc 1 178 12 view .LVU497
+ 1857 007c 0024     		movs	r4, #0
+ 1858 007e EBE7     		b	.L75
+ 1859              	.L81:
+ 1860              	.LBE21:
+ 1861              	.LBE19:
+ 183:Core/drogui/math/various/src/matlib.c **** 		}
+ 184:Core/drogui/math/various/src/matlib.c **** 	}
+ 185:Core/drogui/math/various/src/matlib.c **** 	matDestruct(&temp);
+ 1862              		.loc 1 185 2 is_stmt 1 view .LVU498
+ 1863 0080 01A8     		add	r0, sp, #4
+ 1864 0082 FFF7FEFF 		bl	matDestruct
+ 1865              	.LVL167:
+ 1866              	.L69:
+ 186:Core/drogui/math/various/src/matlib.c **** }
+ 1867              		.loc 1 186 1 is_stmt 0 view .LVU499
+ 1868 0086 06B0     		add	sp, sp, #24
+ 1869              	.LCFI31:
+ 1870              		.cfi_def_cfa_offset 32
+ 1871              		@ sp needed
+ 1872 0088 BDEC028B 		vldm	sp!, {d8}
+ 1873              	.LCFI32:
+ 1874              		.cfi_restore 80
+ 1875              		.cfi_restore 81
+ 1876              		.cfi_def_cfa_offset 24
+ 1877 008c BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1878              	.LVL168:
+ 1879              	.L83:
+ 1880              		.loc 1 186 1 view .LVU500
+ 1881              		.align	2
+ 1882              	.L82:
+ 1883 0090 FFFFFFFF 		.word	-1
+ 1884 0094 01000000 		.word	1
+ 1885              		.cfi_endproc
+ 1886              	.LFE297:
+ 1888              		.text
+ 1889              	.Letext0:
+ 1890              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 1891              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 39
+
+
+ 1892              		.file 4 "Drivers/CMSIS/DSP/Include/arm_math.h"
+ 1893              		.file 5 "Core/drogui/math/various/include/matlib.h"
+ 1894              		.file 6 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ 1895              		.file 7 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2020-q4-major\\arm-none-eabi\\inc
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 40
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 matlib.c
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:18     .text.matInit:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:26     .text.matInit:00000000 matInit
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:78     .text.matMult:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:85     .text.matMult:00000000 matMult
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:119    .text.matScale:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:126    .text.matScale:00000000 matScale
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:155    .text.matAdd:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:162    .text.matAdd:00000000 matAdd
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:196    .text.matSubs:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:203    .text.matSubs:00000000 matSubs
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:237    .text.matTrans:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:244    .text.matTrans:00000000 matTrans
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:273    .text.det3:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:280    .text.det3:00000000 det3
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:363    .text.quaternionToR:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:370    .text.quaternionToR:00000000 quaternionToR
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:535    .text.rpyToR:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:542    .text.rpyToR:00000000 rpyToR
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:874    .text.eye:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:881    .text.eye:00000000 eye
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:938    .text.setMatVal:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:945    .text.setMatVal:00000000 setMatVal
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:972    .text.getMatVal:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:979    .text.getMatVal:00000000 getMatVal
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:1005   .text.matCopy:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:1012   .text.matCopy:00000000 matCopy
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:1087   .text.matDestruct:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:1094   .text.matDestruct:00000000 matDestruct
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:1119   .text.matInv:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:1126   .text.matInv:00000000 matInv
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:1181   .text.gaussElimination3x3:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:1188   .text.gaussElimination3x3:00000000 gaussElimination3x3
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:1406   .text.getCofactor:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:1413   .text.getCofactor:00000000 getCofactor
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:1542   .text.matDet:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:1549   .text.matDet:00000000 matDet
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:1703   .text.matDet:0000008c $d
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:1708   .text.adjoint:00000000 $t
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:1715   .text.adjoint:00000000 adjoint
+C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s:1883   .text.adjoint:00000090 $d
+
+UNDEFINED SYMBOLS
+calloc
+arm_mat_init_f32
+arm_mat_mult_f32
+arm_mat_scale_f32
+arm_mat_add_f32
+arm_mat_sub_f32
+arm_mat_trans_f32
+__aeabi_f2d
+__aeabi_dmul
+__aeabi_d2f
+__aeabi_dsub
+__aeabi_dadd
+cos
+ARM GAS  C:\Users\GUILLE~1\AppData\Local\Temp\ccnEqjCi.s 			page 41
+
+
+sin
+free
+arm_mat_inverse_f32
