@@ -15,7 +15,7 @@ imu myIMU;
 mahony myRPY;
 
 gps myGPS;
-kalmanPV myKalman;
+kalman myKalman;
 optFlow myOF;
 tRanger myTera;
 
@@ -203,15 +203,25 @@ void xyzTask(){
 	if(getReg(START_GPS) > 0){
 		kalmanUpdateIMU(&myKalman, ax, ay, az, raw_roll, raw_pitch, raw_yaw);
 
-		if(getReg(GPS_AVAILABLE) > 0)
-			setReg(GPS_AVAILABLE, 0),
+		if(getReg(GPS_AVAILABLE) > 0){
+			setReg(GPS_AVAILABLE, 0);
+			#ifdef KALMANP
+			kalmanUpdateGPS(&myKalman, getReg(GPS_X), getReg(GPS_Y), z);
+			#elif defined KALMANPV
 			kalmanUpdateGPS(&myKalman, getReg(GPS_X), getReg(GPS_Y), getReg(GPS_VX), getReg(GPS_VY));
+			#endif
+		}
 	}
 	else{
 		clearKalman(&myKalman);
 	}
 
+	#ifdef KALMANP
+	getPosition(&myKalman, &x, &y, &z);
+	#elif defined KALMANPV
 	getPosition(&myKalman, &x, &y);
+	#endif
+
 	getVelocity(&myKalman, &vx, &vy);
 
 	xp = vx*cos(raw_yaw) + vy*sin(raw_yaw);

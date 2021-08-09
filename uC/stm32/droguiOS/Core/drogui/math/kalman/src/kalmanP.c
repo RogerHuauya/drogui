@@ -22,14 +22,13 @@ void initMatGlobal(kalmanP* kp){
 	matInit(&(kp->bias_p), 3, 1);
 	matInit(&(kp->bias_u), 3, 1);
 	matInit(&(kp->bias_v), 3, 1);
-	matInit(&(kp->ye), 4, 1);
-	matInit(&(kp->p_gps), 2, 1);
-	matInit(&(kp->v_gps), 2, 1);
-	matInit(&(kp->KalmanGain), 9, 4);
+	matInit(&(kp->ye), 3, 1);
+	matInit(&(kp->p_gps), 3, 1);
+	matInit(&(kp->KalmanGain), 9, 3);
 	matInit(&(kp->delta), 9, 1);
 
-	matInit(&(kp->Rc), 4, 4);
-	for(int i = 0; i < 4;  i++) setMatVal(&(kp->Rc),i,i,0.1);
+	matInit(&(kp->Rc), 3, 3);
+	for(int i = 0; i < 3;  i++) setMatVal(&(kp->Rc),i,i,0.1);
 
 	matInit(&(kp->Q12), 6, 6);
 	for(int i = 0; i < 6;  i++) setMatVal(&(kp->Q12),i,i,0.1);
@@ -41,11 +40,10 @@ void initMatGlobal(kalmanP* kp){
 	for(int i = 0; i < 9 ; i++) setMatVal(&(kp->Fm), i, i, 1);
 	for(int i = 0; i < 3; i++) setMatVal(&(kp->Fm), i, i+3, kp->Ts);
 
-	matInit(&(kp->Hm), 4, 9);
-	for(int i = 0; i < 2; i++) {
+	matInit(&(kp->Hm), 3, 9);
+	for(int i = 0; i < 3; i++)
 		setMatVal(&(kp->Hm), i, i,1);
-		setMatVal(&(kp->Hm), i+2, i+3,1);
-	}
+
 	matInit(&(kp->Gm),9,6);
 	for( int i = 6;  i < 9; i++ ) setMatVal(&(kp->Gm), i, i-3,1);
 
@@ -123,10 +121,10 @@ void getKalmanGain(kalmanP *kp){
 	mat aux1, aux2, aux3,aux4;
 
 
-	matInit(&aux1, 4, 4);
-	matInit(&aux2, 9, 4);
-	matInit(&aux3, 9, 4);
-	matInit(&aux4, 4, 4);
+	matInit(&aux1, 3, 3);
+	matInit(&aux2, 9, 3);
+	matInit(&aux3, 9, 3);
+	matInit(&aux4, 3, 3);
 
 	matTrans(&aux3, &(kp->Hm));
 	matMult(&aux2, &(kp->Pm), &aux3);
@@ -163,12 +161,7 @@ void UpdatePmCovGPS(kalmanP *kp){
 void getBias(kalmanP *kp){
 
 
-	//matSubs(&ye, &p_gps,  &p);
-	setMatVal(&(kp->ye), 0, 0, getMatVal(&(kp->p_gps), 0, 0) - getMatVal(&(kp->p), 0, 0));
-	setMatVal(&(kp->ye), 1, 0, getMatVal(&(kp->p_gps), 1, 0) - getMatVal(&(kp->p), 1, 0));
-	setMatVal(&(kp->ye), 2, 0, getMatVal(&(kp->v_gps), 0, 0) - getMatVal(&(kp->v), 0, 0));
-	setMatVal(&(kp->ye), 3, 0, getMatVal(&(kp->v_gps), 1, 0) - getMatVal(&(kp->v), 1, 0));
-
+	matSubs(&(kp->ye), &(kp->p_gps),  &(kp->p));
 	matMult(&(kp->delta), &(kp->KalmanGain), &(kp->ye));
 
 	setMatVal(&(kp->delta), 6, 0, getMatVal(&(kp->delta), 6, 0) + getMatVal(&(kp->bias_u), 0, 0));
@@ -195,13 +188,11 @@ void kalmanUpdateIMU(kalmanP *kp, float ax, float ay, float az,float roll, float
 	UpdatePm(kp);
 }
 
-void kalmanUpdateGPS(kalmanP *kp,float x_gps, float y_gps, float vx_gps, float vy_gps){
+void kalmanUpdateGPS(kalmanP *kp,float x_gps, float y_gps, float z_gps){
 
 	setMatVal(&(kp->p_gps), 0, 0, x_gps);
 	setMatVal(&(kp->p_gps), 1, 0, y_gps);
-
-	setMatVal(&(kp->v_gps), 0, 0, vx_gps);
-	setMatVal(&(kp->v_gps), 1, 0, vy_gps);
+	setMatVal(&(kp->p_gps), 2, 0, z_gps);
 
 	getKalmanGain(kp);
 
@@ -215,9 +206,10 @@ void kalmanUpdateGPS(kalmanP *kp,float x_gps, float y_gps, float vx_gps, float v
 
 
 
-void getPosition(kalmanP *kp, float *x, float *y){
+void getPosition(kalmanP *kp, float *x, float *y, float *z){
 	*x = getMatVal(&(kp->p), 0, 0);
 	*y = getMatVal(&(kp->p), 1, 0);
+	*z = getMatVal(&(kp->p), 2, 0);
 }
 
 void getVelocity(kalmanP *kp, float *xp, float *yp){
@@ -235,7 +227,7 @@ void clearKalman(kalmanP *kp){
 	}
 	for(int i = 0; i < 9;  i++){
 		for(int j = 0; j < 9; j++) setMatVal(&(kp->Pm), i, j, 0);
-		for(int j = 0; j < 4; j++) setMatVal(&(kp->KalmanGain), i, j, 0);
+		for(int j = 0; j < 3; j++) setMatVal(&(kp->KalmanGain), i, j, 0);
 
 		setMatVal(&(kp->delta), i, 0, 0);
 		setMatVal(&(kp->Pm),i,i,0.1);
