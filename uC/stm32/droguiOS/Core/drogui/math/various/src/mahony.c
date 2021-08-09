@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "utils.h"
+#define G 9.81
 /*
 
 //====================================================================================================
@@ -46,8 +47,9 @@ void mahonyUpdate(mahony *m, float gx, float gy, float gz, float ax, float ay, f
 	float q0q0, q0q1, q0q2, q0q3, q1q1, q1q2, q1q3, q2q2, q2q3, q3q3;
 	float hx, hy, bx, bz;
 	float halfvx, halfvy, halfvz, halfwx, halfwy, halfwz;
-	float halfex, halfey, halfez;
+	float halfex = 0, halfey = 0, halfez = 0;
 	float qa, qb, qc;
+	bool useAcc = true;
 
 	// Use IMU algorithm if magnetometer measurement invalid (avoids NaN in magnetometer normalisation)
 	if( ((mx == 0.0f) && (my == 0.0f) && (mz == 0.0f) ) || isnan(mx) || isnan(my) || isnan(mz)) {
@@ -56,71 +58,81 @@ void mahonyUpdate(mahony *m, float gx, float gy, float gz, float ax, float ay, f
 	}
 
 	// Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisation)
-	if(!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f))) {
+	float accMod = sqrtf(ax*ax + ay*ay + az*az);
+	if(!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f)) || accMod < G*0.8 || accMod > 1.2*G) {
+		useAcc = false;
+	}
 
+	// Auxiliary variables to avoid repeated arithmetic
+	q0q0 = (m->q0) * (m->q0);
+	q0q1 = (m->q0) * (m->q1);
+	q0q2 = (m->q0) * (m->q2);
+	q0q3 = (m->q0) * (m->q3);
+	q1q1 = (m->q1) * (m->q1);
+	q1q2 = (m->q1) * (m->q2);
+	q1q3 = (m->q1) * (m->q3);
+	q2q2 = (m->q2) * (m->q2);
+	q2q3 = (m->q2) * (m->q3);
+	q3q3 = (m->q3) * (m->q3);
+
+	// Normalise magnetometer measurement
+	recipNorm = invSqrt(mx * mx + my * my + mz * mz);
+	mx *= recipNorm;
+	my *= recipNorm;
+	mz *= recipNorm;
+
+	// Reference direction of Earth's magnetic field
+	hx = 2.0f * (mx * (0.5f - q2q2 - q3q3) + my * (q1q2 - q0q3) + mz * (q1q3 + q0q2));
+	hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
+	bx = sqrt(hx * hx + hy * hy);
+	bz = 2.0f * (mx * (q1q3 - q0q2) + my * (q2q3 + q0q1) + mz * (0.5f - q1q1 - q2q2));
+
+	// Estimated direction of gravity and magnetic field
+	halfvx = q1q3 - q0q2;
+	halfvy = q0q1 + q2q3;
+	halfvz = q0q0 - 0.5f + q3q3;
+	halfwx = bx * (0.5f - q2q2 - q3q3) + bz * (q1q3 - q0q2);
+	halfwy = bx * (q1q2 - q0q3) + bz * (q0q1 + q2q3);
+	halfwz = bx * (q0q2 + q1q3) + bz * (0.5f - q1q1 - q2q2);
+
+	// Error is sum of cross product between estimated direction and measured direction of field vectors
+	halfex += (my * halfwz - mz * halfwy);
+	halfey += (mz * halfwx - mx * halfwz);
+	halfez += (mx * halfwy - my * halfwx);
+
+	if(useAcc){
 		// Normalise accelerometer measurement
 		recipNorm = invSqrt(ax * ax + ay * ay + az * az);
 		ax *= recipNorm;
 		ay *= recipNorm;
 		az *= recipNorm;
 
-		// Normalise magnetometer measurement
-		recipNorm = invSqrt(mx * mx + my * my + mz * mz);
-		mx *= recipNorm;
-		my *= recipNorm;
-		mz *= recipNorm;
-
-		// Auxiliary variables to avoid repeated arithmetic
-		q0q0 = (m->q0) * (m->q0);
-		q0q1 = (m->q0) * (m->q1);
-		q0q2 = (m->q0) * (m->q2);
-		q0q3 = (m->q0) * (m->q3);
-		q1q1 = (m->q1) * (m->q1);
-		q1q2 = (m->q1) * (m->q2);
-		q1q3 = (m->q1) * (m->q3);
-		q2q2 = (m->q2) * (m->q2);
-		q2q3 = (m->q2) * (m->q3);
-		q3q3 = (m->q3) * (m->q3);
-
-		// Reference direction of Earth's magnetic field
-		hx = 2.0f * (mx * (0.5f - q2q2 - q3q3) + my * (q1q2 - q0q3) + mz * (q1q3 + q0q2));
-		hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
-		bx = sqrt(hx * hx + hy * hy);
-		bz = 2.0f * (mx * (q1q3 - q0q2) + my * (q2q3 + q0q1) + mz * (0.5f - q1q1 - q2q2));
-
-		// Estimated direction of gravity and magnetic field
-		halfvx = q1q3 - q0q2;
-		halfvy = q0q1 + q2q3;
-		halfvz = q0q0 - 0.5f + q3q3;
-		halfwx = bx * (0.5f - q2q2 - q3q3) + bz * (q1q3 - q0q2);
-		halfwy = bx * (q1q2 - q0q3) + bz * (q0q1 + q2q3);
-		halfwz = bx * (q0q2 + q1q3) + bz * (0.5f - q1q1 - q2q2);
-
 		// Error is sum of cross product between estimated direction and measured direction of field vectors
-		halfex = (ay * halfvz - az * halfvy) + (my * halfwz - mz * halfwy);
-		halfey = (az * halfvx - ax * halfvz) + (mz * halfwx - mx * halfwz);
-		halfez = (ax * halfvy - ay * halfvx) + (mx * halfwy - my * halfwx);
-
-		// Compute and apply integral feedback if enabled
-		if((m->twoKi) > 0.0f) {
-			(m->integralFBx) += (m->twoKi) * halfex * (1.0f / (m->sampleFreq));	// integral error scaled by Ki
-			(m->integralFBy) += (m->twoKi) * halfey * (1.0f / (m->sampleFreq));
-			(m->integralFBz) += (m->twoKi) * halfez * (1.0f / (m->sampleFreq));
-			gx += (m->integralFBx);	// apply integral feedback
-			gy += (m->integralFBy);
-			gz += (m->integralFBz);
-		}
-		else {
-			(m->integralFBx) = 0.0f;	// prevent integral windup
-			(m->integralFBy) = 0.0f;
-			(m->integralFBz) = 0.0f;
-		}
-
-		// Apply proportional feedback
-		gx += (m->twoKp) * halfex;
-		gy += (m->twoKp) * halfey;
-		gz += (m->twoKp) * halfez;
+		halfex += (ay * halfvz - az * halfvy);
+		halfey += (az * halfvx - ax * halfvz);
+		halfez += (ax * halfvy - ay * halfvx);
 	}
+
+
+	// Compute and apply integral feedback if enabled
+	if((m->twoKi) > 0.0f) {
+		(m->integralFBx) += (m->twoKi) * halfex * (1.0f / (m->sampleFreq));	// integral error scaled by Ki
+		(m->integralFBy) += (m->twoKi) * halfey * (1.0f / (m->sampleFreq));
+		(m->integralFBz) += (m->twoKi) * halfez * (1.0f / (m->sampleFreq));
+		gx += (m->integralFBx);	// apply integral feedback
+		gy += (m->integralFBy);
+		gz += (m->integralFBz);
+	}
+	else {
+		(m->integralFBx) = 0.0f;	// prevent integral windup
+		(m->integralFBy) = 0.0f;
+		(m->integralFBz) = 0.0f;
+	}
+
+	// Apply proportional feedback
+	gx += (m->twoKp) * halfex;
+	gy += (m->twoKp) * halfey;
+	gz += (m->twoKp) * halfez;
 
 	// Integrate rate of change of quaternion
 	gx *= (0.5f * (1.0f / (m->sampleFreq)));		// pre-multiply common factors
