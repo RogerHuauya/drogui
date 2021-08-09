@@ -1,9 +1,6 @@
-uC/stm32/Blink/build/*
-uC/stm32/H7/build/*
-uC/stm32/uarts/build/*
 *.map
 *.bin
 *.hex
 *.bin
 .vscode/
-
+build/
