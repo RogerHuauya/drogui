@@ -220,6 +220,10 @@ void xyzTask(){
 	getPosition(&myKalman, &x, &y);
 	#endif
 
+	z = z_of;
+	if(z_tera >= 0.5 && z_tera <= 50)
+		z = z_tera;
+
 	getVelocity(&myKalman, &vx, &vy);
 
 	xp = vx*cos(raw_yaw) + vy*sin(raw_yaw);
