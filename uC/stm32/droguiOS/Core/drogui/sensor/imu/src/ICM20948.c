@@ -384,7 +384,7 @@ void calibrateMag(icm20948* m){
 
 	int head = 0, cnt = 0;
 	bool done = false, valid;
-	const int n = 100;
+	const int n = 200;
 	float magX, magY, magZ, scaleGlobal = 0.01;
 	float mag[n][3];
 	for(int i = 0; i < n; i++){
@@ -410,7 +410,7 @@ void calibrateMag(icm20948* m){
 			serialPrintf(SER_DBG, "%f \n", d);
 			//HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
 
-			if(d < 20*scaleGlobal){
+			if(d < 25*scaleGlobal){
 				valid = false; break;
 			}
 		}
@@ -420,7 +420,7 @@ void calibrateMag(icm20948* m){
 			mag[head][0] = magX, mag[head][1] = magY, mag[head][2] = magZ;
 			head++, cnt++, head%= n;
 		}
-		setReg(CAL_MAG, fmin(cnt, 99.0));
+		setReg(CAL_MAG, fmin(cnt/2, 99.0));
 
 		//sprintf(aux_buff, "%d\n", cnt);
 		//HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);

@@ -33,7 +33,6 @@ float   roll,       pitch,      yaw,
 		z_of,       z_tera,
 		vx,			vy;
 
-bool mag_available = false;
 
 float z_ant = 0;
 float Kdfilt = 0.01;
@@ -88,7 +87,6 @@ void magTask(){
 	setReg(MAG_X, mx);
 	setReg(MAG_Y, my);
 	setReg(MAG_Z, mz);
-	mag_available = true;
 }
 
 void altitudeTask(){

@@ -59,7 +59,7 @@ void mahonyUpdate(mahony *m, float gx, float gy, float gz, float ax, float ay, f
 
 	// Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisation)
 	float accMod = sqrtf(ax*ax + ay*ay + az*az);
-	if(!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f)) || accMod < G*0.8 || accMod > 1.2*G) {
+	if(((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f)) || accMod < G*0.8 || accMod > 1.2*G) {
 		useAcc = false;
 	}
 
@@ -112,7 +112,11 @@ void mahonyUpdate(mahony *m, float gx, float gy, float gz, float ax, float ay, f
 		halfey += (az * halfvx - ax * halfvz);
 		halfez += (ax * halfvy - ay * halfvx);
 	}
-
+	else{
+		halfex = 0;
+		halfey = 0;
+		halfez = 0;
+	}
 
 	// Compute and apply integral feedback if enabled
 	if((m->twoKi) > 0.0f) {
