@@ -140,10 +140,10 @@ void wControlTask(){
 	setReg(YAW_U, Y);
 	setReg(Z_U, H_comp);
 
-	setReg(MOTOR_1, M1);
-	setReg(MOTOR_2, M2);
-	setReg(MOTOR_3, M3);
-	setReg(MOTOR_4, M4);
+	//setReg(MOTOR_1, M1);
+	//setReg(MOTOR_2, M2);
+	//setReg(MOTOR_3, M3);
+	//setReg(MOTOR_4, M4);
 
 }
 

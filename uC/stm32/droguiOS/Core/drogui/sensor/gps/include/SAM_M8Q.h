@@ -1,4 +1,5 @@
 #include "macros.h"
+#include "registerMap.h"
 
 #ifdef SAM_M8Q
 

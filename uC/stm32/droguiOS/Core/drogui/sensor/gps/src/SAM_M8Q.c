@@ -174,9 +174,10 @@ SENSOR_STATUS readGPS(m8q *mg){
 			if(  TIME - mg->last_tim > mg->threshold )  return CRASHED;
 			return ret;
 		}
+		
 
 		if(mg->rcv_pack.cls == 1 && mg->rcv_pack.id == 7){
-
+			
 			mg->latitude = 0, mg->longitud = 0;
 			for(int i = 0 ; i < 4 ; i++)
 				mg->latitude = (mg->latitude << 8) | (mg->rcv_pack.payload[31-i]);
@@ -188,6 +189,26 @@ SENSOR_STATUS readGPS(m8q *mg){
 				mg->north_vel = (mg->north_vel << 8) | (mg->rcv_pack.payload[51-i]);
 			for(int i = 0 ; i < 4 ; i++)
 				mg->east_vel = (mg->east_vel << 8) | (mg->rcv_pack.payload[55-i]);
+			
+			int headMot = 0,headVeh = 0;
+			uint32_t headAcc = 0;
+			int16_t magDec = 0;
+
+			for(int i = 0 ; i < 4 ; i++)
+				headMot = (headMot << 8) | (mg->rcv_pack.payload[67-i]);
+				
+			for(int i = 0 ; i < 4 ; i++)
+				headAcc = (headAcc << 8) | (mg->rcv_pack.payload[75-i]);
+				
+			for(int i = 0 ; i < 4 ; i++)
+				headVeh = (headVeh << 8) | (mg->rcv_pack.payload[87-i]);
+			for(int i = 0 ; i < 2 ; i++)
+				magDec = (magDec << 8) | (mg->rcv_pack.payload[89-i]);
+			
+			setReg(MOTOR_1,headMot*1e-5);
+			setReg(MOTOR_2,headAcc*1e-5);
+			setReg(MOTOR_3,magDec*1e-2);
+
 
 			mg->last_tim = TIME;
 			return OK;
