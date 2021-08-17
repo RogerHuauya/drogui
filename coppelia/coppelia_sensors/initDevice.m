@@ -1,0 +1,1 @@
+device = serialport("COM7",1000000);
