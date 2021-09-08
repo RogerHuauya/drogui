@@ -1,4 +1,4 @@
-#define TKF_TEST
+//#define TKF_TEST
 #ifdef TKF_TEST
 
 //#include "sensorsTasks.h"

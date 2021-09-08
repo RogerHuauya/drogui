@@ -16,7 +16,7 @@
 #define SER_OPT &serial4
 #define SER_GPS &serial5
 
-//#define KALMANP
-#define KALMANPV
+#define KALMANP
+//#define KALMANPV
 
 #endif

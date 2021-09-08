@@ -420,7 +420,7 @@ void calibrateMag(icm20948* m){
 			mag[head][0] = magX, mag[head][1] = magY, mag[head][2] = magZ;
 			head++, cnt++, head%= n;
 		}
-		setReg(CAL_MAG, fmin(cnt/2, 99.0));
+		setReg(CAL_MAG, fmin(cnt/2.0, 99.0));
 
 		//sprintf(aux_buff, "%d\n", cnt);
 		//HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
@@ -474,7 +474,7 @@ void calibrateMag(icm20948* m){
 	setReg( MAG_Z_OFF ,m -> off_mz);
 	setReg( MAG_X_SCALE ,m -> scl_magx);
 	setReg( MAG_Y_SCALE ,m -> scl_magy);
-	setReg( MAG_Z_SCALE ,m -> scl_magy);
+	setReg( MAG_Z_SCALE ,m -> scl_magz);
 	setReg( CAL_MAG, 100);
 
 	matDestruct(&H);
