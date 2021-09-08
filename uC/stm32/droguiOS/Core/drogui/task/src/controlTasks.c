@@ -16,7 +16,7 @@ filter filter_R, filter_P, filter_Y, filter_H;
 
 scurve z_sp, x_sp, y_sp, roll_sp, pitch_sp, yaw_sp, H_sp;
 
-float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, ANG_MAX = 3*PI/180.0;
+float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, ANG_MAX = 5*PI/180.0;
 float M1,M2,M3,M4;
 
 float wroll_ref, wpitch_ref, wyaw_ref;
@@ -299,10 +299,10 @@ void initControlTasks(){
 	initPwm(&m2, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
 
-	initPid(&xp_control,  0.1, 2, 0, 0, 50 , 5, ANG_MAX, D_SG);
-	initPid(&yp_control,  0.2, 2, 0, 0, 50 , 5, ANG_MAX, D_SG);
+	initPid(&xp_control,  0.25, 0, 0, 0, 50 , 5, ANG_MAX, D_SG);
+	initPid(&yp_control,  0.25, 0, 0, 0, 50 , 5, ANG_MAX, D_SG);
 
-	initPid(&z_control,  10, 750,    2, 0, 50 , 10, 30, D_SG);
+	initPid(&z_control,  10, 750,    2, 0, 50 , 10, 45, D_SG);
 	initPid(&x_control, 0.1, 0.2, 0, 0, 50 , 2, 1, D_SG);
 	initPid(&y_control, 0.1, 0.2, 0, 0, 50 , 2, 1, D_SG);
 
@@ -310,7 +310,7 @@ void initControlTasks(){
 	initPidFilter(&pitch2w, 300, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
 	initPidFilter(&yaw2w,     0,   0,  0, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
 
-	initPidFilter(&wroll_control,   5, 500, 10, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+	initPidFilter(&wroll_control,   8, 500, 10, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
 	initPidFilter(&wpitch_control,  8, 500, 16, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
 	initPidFilter(&wyaw_control,   10, 500, 30, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
 
