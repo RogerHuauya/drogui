@@ -127,5 +127,7 @@ void gaussElimination3x3(mat* a, mat* b, mat* ans);
  * @return Determinant of a matrix (float)
 */
 float matDet(mat* A);
+void eyeMat(mat* m, int n);
+void printMat(mat* a, char* s);
 
 #endif

@@ -1,4 +1,4 @@
-#define BMP388_TEST
+//#define BMP388_TEST
 #ifdef BMP388_TEST
 
 #include "_main.h"

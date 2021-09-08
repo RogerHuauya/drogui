@@ -1,0 +1,12 @@
+function out = cleanData(in)
+   [m,n] = size(in);
+   out = zeros(m,n);
+    for i = 2:m
+        for j = 1:n
+           if( abs(in(i,j)) - abs(in(i-1,j)) > 10   )
+               in(i,j) = in(i-1,j);
+           end
+           out(i,j) = in(i,j);
+        end
+   end
+end

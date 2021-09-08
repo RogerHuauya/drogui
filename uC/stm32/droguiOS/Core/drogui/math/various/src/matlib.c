@@ -1,3 +1,5 @@
+#include "macros.h"
+#include "serial.h"
 #include "matlib.h"
 #include <stdbool.h>
 
@@ -83,9 +85,9 @@ void rpyToR(mat* R, float roll, float pitch, float yaw){
 	R->val[2*(R->col)+2] = cos(pitch)*cos(roll);
 }
 
-void eye(mat* m, int n){
+void eyeMat(mat* m, int n){
 	matInit(m, n, n);
-	for(int i = 0; i < n; i++)  m->val[i*(m->col) + i] = 1;
+	for(int i = 0; i < n; i++)  setMatVal(m,i,i,1);
 }
 
 void setMatVal(mat* m, int i, int j, float value){
@@ -100,6 +102,17 @@ void matCopy(mat* des, mat* src){
 	for(int i = 0 ; i < des->row ; i++)
 		for(int j = 0 ; j < des->col ; j++)
 			des->val[i*(des->col) + j] = src->val[i*(src->col) + j];
+}
+
+void printMat(mat* a, char* s){
+	serialPrint(SER_DBG, s);
+	serialPrint(SER_DBG, "\n");
+	for(int i = 0; i < a->row; i++){
+		for(int j = 0;  j< a->col; j++){
+			serialPrintf(SER_DBG, "%.3f\t", getMatVal(a, i, j));
+		}
+		serialPrint(SER_DBG, "\n");
+	}
 }
 
 void matDestruct(mat* m){
