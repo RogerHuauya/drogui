@@ -1,0 +1,733 @@
+diff --git a/uC/stm32/droguiOS/Core/drogui/drogui.c b/uC/stm32/droguiOS/Core/drogui/drogui.c
+index 4d2629b3..bda5da2b 100644
+--- a/uC/stm32/droguiOS/Core/drogui/drogui.c
++++ b/uC/stm32/droguiOS/Core/drogui/drogui.c
+@@ -12,7 +12,7 @@
+ char auxbuff[50];
+ void _main(){
+     serialsBegin();
+-    changeBaudrate(SER_DBG, 250000);
++    changeBaudrate(SER_DBG, 2000000);
+     HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
+     HAL_Delay(1000);
+ 
+diff --git a/uC/stm32/droguiOS/Core/drogui/interfaces/test/serial_test.c b/uC/stm32/droguiOS/Core/drogui/interfaces/test/serial_test.c
+index 227f1940..659ecf4f 100644
+--- a/uC/stm32/droguiOS/Core/drogui/interfaces/test/serial_test.c
++++ b/uC/stm32/droguiOS/Core/drogui/interfaces/test/serial_test.c
+@@ -10,12 +10,12 @@ void _main(){
+ 	serialsBegin();
+ 	HAL_Delay(1000);
+ 	HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
+-	changeBaudrate(&serial3, 115200);
+-	serialPrint(&serial3, "test\n");
++	changeBaudrate(&serial4, 115200);
++	serialPrint(&serial4, "test\n");
+ 	while(1){
+ 		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+-		while(serialAvailable(&serial3)){
+-			serialWrite(&serial3, serialRead(&serial3));
++		while(serialAvailable(&serial4)){
++			serialWrite(&serial4, serialRead(&serial4));
+ 		}
+ 
+ 		HAL_Delay(100);
+diff --git a/uC/stm32/droguiOS/Core/drogui/math/kalman/include/kalmanP.h b/uC/stm32/droguiOS/Core/drogui/math/kalman/include/kalmanP.h
+index a1f3fd65..f945602e 100644
+--- a/uC/stm32/droguiOS/Core/drogui/math/kalman/include/kalmanP.h
++++ b/uC/stm32/droguiOS/Core/drogui/math/kalman/include/kalmanP.h
+@@ -18,36 +18,36 @@ typedef kalmanP kalman;
+ /**
+  * @brief Initialize Gm, Hm, Fm, Pm,p _gps, bias, p, v, u, s, ye, Rq matrices
+ */
+-void initMatGlobal(kalmanP *kpv);
++void initMatGlobal(kalmanP *kp);
+ /**
+  * @brief Compute Kynematics with Rq and v matrices to get estimated position matrix
+ 
+ */
+-void kynematics(kalmanP *kpv);
++void kynematics(kalmanP *kp);
+ /**
+  * @brief Get Fm matrix (3x3) from rotation matrix
+  */
+-void getMatFm(kalmanP *kpv);
++void getMatFm(kalmanP *kp);
+ /**
+  * @brief Get Gm matrix (3x3) from rotation matrix
+  */
+-void getMatGm(kalmanP *kpv);
++void getMatGm(kalmanP *kp);
+ /**
+  * @brief Update Pm matrix with Fm and Gm matrices
+  */
+-void UpdatePm(kalmanP *kpv);
++void UpdatePm(kalmanP *kp);
+ /**
+  * @brief Get Kalman Gain from multiplication of Pm,Hm and Rc matrices
+  */
+-void getKalmanGain(kalmanP *kpv);
++void getKalmanGain(kalmanP *kp);
+ /**
+  * @brief Update Covariance matrix of Gps
+  */
+-void UpdatePmCovGPS(kalmanP *kpv);
++void UpdatePmCovGPS(kalmanP *kp);
+ /**
+  * @brief Get bias of position and velocity from current y and estimate y
+  */
+-void getBias(kalmanP *kpv);
++void getBias(kalmanP *kp);
+ /**
+  * @brief Estimate new position with the rotation matrix and accelerometer data
+  * @param ax Accelerometer axis x(float)
+@@ -57,38 +57,38 @@ void getBias(kalmanP *kpv);
+  * @param pitch (float)
+  * @param yaw (float)
+  */
+-void kalmanUpdateIMU(kalmanP *kpv, float ax, float ay, float az, float roll, float pitch,float yaw);
++void kalmanUpdateIMU(kalmanP *kp, float ax, float ay, float az, float roll, float pitch,float yaw);
+ /**
+  * @brief Estimate new position with the rotation matrix and accelerometer data
+  * @param x_gps (float)
+  * @param y_gps (float)
+  * @param z_gps (float)
+  */
+-void kalmanUpdateGPS(kalmanP *kpv, float x_gps, float y_gps, float z_gps, float vx, float vy);
++void kalmanUpdateGPS(kalmanP *kp, float x_gps, float y_gps, float z_gps);
+ /**
+  * @brief Set sampling time
+  * @param ts (float)
+  */
+-void setKalmanTsImu(kalmanP *kpv, float ts);
++void setKalmanTsImu(kalmanP *kp, float ts);
+ /**
+  * @brief Get position from p matrix
+  * @param x X position (float*)
+  * @param y Y position (float*)
+  * @param z Z position (float*)
+  */
+-void getPosition(kalmanP *kpv, float *x, float *y);
++void getPosition(kalmanP *kp, float *x, float *y, float *z);
+ /**
+  * @brief Set number of samples
+  */
+-void getVelocity(kalmanP *kpv, float *xp, float *yp);
++void getVelocity(kalmanP *kp, float *xp, float *yp);
+ /**
+  * @brief Set number of samples
+  */
+-void setKalmanTsGps(kalmanP *kpv, float ts);
++void setKalmanTsGps(kalmanP *kp, float ts);
+ /**
+  * @brief Set all matrices with zeros
+  */
+-void clearKalman(kalmanP *kpv);
++void clearKalman(kalmanP *kp);
+ 
+ 
+ #endif
+diff --git a/uC/stm32/droguiOS/Core/drogui/math/kalman/include/kalmanPV.h b/uC/stm32/droguiOS/Core/drogui/math/kalman/include/kalmanPV.h
+index 66bf433b..43cf2119 100644
+--- a/uC/stm32/droguiOS/Core/drogui/math/kalman/include/kalmanPV.h
++++ b/uC/stm32/droguiOS/Core/drogui/math/kalman/include/kalmanPV.h
+@@ -64,7 +64,7 @@ void kalmanUpdateIMU(kalmanPV *kpv, float ax, float ay, float az, float roll, fl
+  * @param y_gps (float)
+  * @param z_gps (float)
+  */
+-void kalmanUpdateGPS(kalmanPV *kpv, float x_gps, float y_gps, float z_gps, float vx_gps, float vy_gps);
++void kalmanUpdateGPS(kalmanPV *kpv, float x_gps, float y_gps, float vx_gps, float vy_gps);
+ /**
+  * @brief Set sampling time
+  * @param ts (float)
+diff --git a/uC/stm32/droguiOS/Core/drogui/math/kalman/src/kalmanP.c b/uC/stm32/droguiOS/Core/drogui/math/kalman/src/kalmanP.c
+index 0c9f95f0..7f0fc843 100644
+--- a/uC/stm32/droguiOS/Core/drogui/math/kalman/src/kalmanP.c
++++ b/uC/stm32/droguiOS/Core/drogui/math/kalman/src/kalmanP.c
+@@ -41,8 +41,9 @@ void initMatGlobal(kalmanP* kp){
+ 	for(int i = 0; i < 3; i++) setMatVal(&(kp->Fm), i, i+3, kp->Ts);
+ 
+ 	matInit(&(kp->Hm), 3, 9);
+-	for(int i = 0; i < 3; i++) setMatVal(&(kp->Hm), i, i,1);
+-	
++	for(int i = 0; i < 3; i++)
++		setMatVal(&(kp->Hm), i, i,1);
++
+ 	matInit(&(kp->Gm),9,6);
+ 	for( int i = 6;  i < 9; i++ ) setMatVal(&(kp->Gm), i, i-3,1);
+ 
+@@ -161,7 +162,6 @@ void getBias(kalmanP *kp){
+ 
+ 
+ 	matSubs(&(kp->ye), &(kp->p_gps),  &(kp->p));
+-
+ 	matMult(&(kp->delta), &(kp->KalmanGain), &(kp->ye));
+ 
+ 	setMatVal(&(kp->delta), 6, 0, getMatVal(&(kp->delta), 6, 0) + getMatVal(&(kp->bias_u), 0, 0));
+@@ -188,7 +188,7 @@ void kalmanUpdateIMU(kalmanP *kp, float ax, float ay, float az,float roll, float
+ 	UpdatePm(kp);
+ }
+ 
+-void kalmanUpdateGPS(kalmanP *kp,float x_gps, float y_gps, float z_gps, float vx, float vy){
++void kalmanUpdateGPS(kalmanP *kp,float x_gps, float y_gps, float z_gps){
+ 
+ 	setMatVal(&(kp->p_gps), 0, 0, x_gps);
+ 	setMatVal(&(kp->p_gps), 1, 0, y_gps);
+@@ -206,9 +206,10 @@ void kalmanUpdateGPS(kalmanP *kp,float x_gps, float y_gps, float z_gps, float vx
+ 
+ 
+ 
+-void getPosition(kalmanP *kp, float *x, float *y){
++void getPosition(kalmanP *kp, float *x, float *y, float *z){
+ 	*x = getMatVal(&(kp->p), 0, 0);
+ 	*y = getMatVal(&(kp->p), 1, 0);
++	*z = getMatVal(&(kp->p), 2, 0);
+ }
+ 
+ void getVelocity(kalmanP *kp, float *xp, float *yp){
+@@ -226,7 +227,7 @@ void clearKalman(kalmanP *kp){
+ 	}
+ 	for(int i = 0; i < 9;  i++){
+ 		for(int j = 0; j < 9; j++) setMatVal(&(kp->Pm), i, j, 0);
+-		for(int j = 0; j < 4; j++) setMatVal(&(kp->KalmanGain), i, j, 0);
++		for(int j = 0; j < 3; j++) setMatVal(&(kp->KalmanGain), i, j, 0);
+ 
+ 		setMatVal(&(kp->delta), i, 0, 0);
+ 		setMatVal(&(kp->Pm),i,i,0.1);
+diff --git a/uC/stm32/droguiOS/Core/drogui/math/kalman/src/kalmanPV.c b/uC/stm32/droguiOS/Core/drogui/math/kalman/src/kalmanPV.c
+index ca8b88a5..3baed058 100644
+--- a/uC/stm32/droguiOS/Core/drogui/math/kalman/src/kalmanPV.c
++++ b/uC/stm32/droguiOS/Core/drogui/math/kalman/src/kalmanPV.c
+@@ -28,8 +28,8 @@ void initMatGlobal(kalmanPV* kpv){
+ 	matInit(&(kpv->KalmanGain), 9, 4);
+ 	matInit(&(kpv->delta), 9, 1);
+ 
+-	matInit(&(kpv->Rc), 3, 3);
+-	for(int i = 0; i < 3;  i++) setMatVal(&(kpv->Rc),i,i,0.1);
++	matInit(&(kpv->Rc), 4, 4);
++	for(int i = 0; i < 4;  i++) setMatVal(&(kpv->Rc),i,i,0.1);
+ 
+ 	matInit(&(kpv->Q12), 6, 6);
+ 	for(int i = 0; i < 6;  i++) setMatVal(&(kpv->Q12),i,i,0.1);
+@@ -162,6 +162,8 @@ void UpdatePmCovGPS(kalmanPV *kpv){
+ 
+ void getBias(kalmanPV *kpv){
+ 
++
++	//matSubs(&ye, &p_gps,  &p);
+ 	setMatVal(&(kpv->ye), 0, 0, getMatVal(&(kpv->p_gps), 0, 0) - getMatVal(&(kpv->p), 0, 0));
+ 	setMatVal(&(kpv->ye), 1, 0, getMatVal(&(kpv->p_gps), 1, 0) - getMatVal(&(kpv->p), 1, 0));
+ 	setMatVal(&(kpv->ye), 2, 0, getMatVal(&(kpv->v_gps), 0, 0) - getMatVal(&(kpv->v), 0, 0));
+@@ -193,7 +195,7 @@ void kalmanUpdateIMU(kalmanPV *kpv, float ax, float ay, float az,float roll, flo
+ 	UpdatePm(kpv);
+ }
+ 
+-void kalmanUpdateGPS(kalmanPV *kpv,float x_gps, float y_gps, float z_gps, float vx_gps, float vy_gps){
++void kalmanUpdateGPS(kalmanPV *kpv,float x_gps, float y_gps, float vx_gps, float vy_gps){
+ 
+ 	setMatVal(&(kpv->p_gps), 0, 0, x_gps);
+ 	setMatVal(&(kpv->p_gps), 1, 0, y_gps);
+diff --git a/uC/stm32/droguiOS/Core/drogui/math/various/include/matlib.h b/uC/stm32/droguiOS/Core/drogui/math/various/include/matlib.h
+index 56543949..fdf319d2 100644
+--- a/uC/stm32/droguiOS/Core/drogui/math/various/include/matlib.h
++++ b/uC/stm32/droguiOS/Core/drogui/math/various/include/matlib.h
+@@ -128,6 +128,6 @@ void gaussElimination3x3(mat* a, mat* b, mat* ans);
+ */
+ float matDet(mat* A);
+ void eyeMat(mat* m, int n);
+-
+ void printMat(mat* a, char* s);
++
+ #endif
+diff --git a/uC/stm32/droguiOS/Core/drogui/math/various/src/mahony.c b/uC/stm32/droguiOS/Core/drogui/math/various/src/mahony.c
+index 7dae99b7..05c358d5 100644
+--- a/uC/stm32/droguiOS/Core/drogui/math/various/src/mahony.c
++++ b/uC/stm32/droguiOS/Core/drogui/math/various/src/mahony.c
+@@ -2,6 +2,7 @@
+ #include <stdlib.h>
+ #include <math.h>
+ #include "utils.h"
++#define G 9.81
+ /*
+ 
+ //====================================================================================================
+@@ -46,8 +47,9 @@ void mahonyUpdate(mahony *m, float gx, float gy, float gz, float ax, float ay, f
+ 	float q0q0, q0q1, q0q2, q0q3, q1q1, q1q2, q1q3, q2q2, q2q3, q3q3;
+ 	float hx, hy, bx, bz;
+ 	float halfvx, halfvy, halfvz, halfwx, halfwy, halfwz;
+-	float halfex, halfey, halfez;
++	float halfex = 0, halfey = 0, halfez = 0;
+ 	float qa, qb, qc;
++	bool useAcc = true;
+ 
+ 	// Use IMU algorithm if magnetometer measurement invalid (avoids NaN in magnetometer normalisation)
+ 	if( ((mx == 0.0f) && (my == 0.0f) && (mz == 0.0f) ) || isnan(mx) || isnan(my) || isnan(mz)) {
+@@ -56,72 +58,86 @@ void mahonyUpdate(mahony *m, float gx, float gy, float gz, float ax, float ay, f
+ 	}
+ 
+ 	// Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisation)
+-	if(!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f))) {
++	float accMod = sqrtf(ax*ax + ay*ay + az*az);
++	if(((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f)) || accMod < G*0.8 || accMod > 1.2*G) {
++		useAcc = false;
++	}
+ 
++	// Auxiliary variables to avoid repeated arithmetic
++	q0q0 = (m->q0) * (m->q0);
++	q0q1 = (m->q0) * (m->q1);
++	q0q2 = (m->q0) * (m->q2);
++	q0q3 = (m->q0) * (m->q3);
++	q1q1 = (m->q1) * (m->q1);
++	q1q2 = (m->q1) * (m->q2);
++	q1q3 = (m->q1) * (m->q3);
++	q2q2 = (m->q2) * (m->q2);
++	q2q3 = (m->q2) * (m->q3);
++	q3q3 = (m->q3) * (m->q3);
++
++	// Normalise magnetometer measurement
++	recipNorm = invSqrt(mx * mx + my * my + mz * mz);
++	mx *= recipNorm;
++	my *= recipNorm;
++	mz *= recipNorm;
++
++	// Reference direction of Earth's magnetic field
++	hx = 2.0f * (mx * (0.5f - q2q2 - q3q3) + my * (q1q2 - q0q3) + mz * (q1q3 + q0q2));
++	hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
++	bx = sqrt(hx * hx + hy * hy);
++	bz = 2.0f * (mx * (q1q3 - q0q2) + my * (q2q3 + q0q1) + mz * (0.5f - q1q1 - q2q2));
++
++	// Estimated direction of gravity and magnetic field
++	halfvx = q1q3 - q0q2;
++	halfvy = q0q1 + q2q3;
++	halfvz = q0q0 - 0.5f + q3q3;
++	halfwx = bx * (0.5f - q2q2 - q3q3) + bz * (q1q3 - q0q2);
++	halfwy = bx * (q1q2 - q0q3) + bz * (q0q1 + q2q3);
++	halfwz = bx * (q0q2 + q1q3) + bz * (0.5f - q1q1 - q2q2);
++
++	// Error is sum of cross product between estimated direction and measured direction of field vectors
++	halfex += (my * halfwz - mz * halfwy);
++	halfey += (mz * halfwx - mx * halfwz);
++	halfez += (mx * halfwy - my * halfwx);
++
++	if(useAcc){
+ 		// Normalise accelerometer measurement
+ 		recipNorm = invSqrt(ax * ax + ay * ay + az * az);
+ 		ax *= recipNorm;
+ 		ay *= recipNorm;
+ 		az *= recipNorm;
+ 
+-		// Normalise magnetometer measurement
+-		recipNorm = invSqrt(mx * mx + my * my + mz * mz);
+-		mx *= recipNorm;
+-		my *= recipNorm;
+-		mz *= recipNorm;
+-
+-		// Auxiliary variables to avoid repeated arithmetic
+-		q0q0 = (m->q0) * (m->q0);
+-		q0q1 = (m->q0) * (m->q1);
+-		q0q2 = (m->q0) * (m->q2);
+-		q0q3 = (m->q0) * (m->q3);
+-		q1q1 = (m->q1) * (m->q1);
+-		q1q2 = (m->q1) * (m->q2);
+-		q1q3 = (m->q1) * (m->q3);
+-		q2q2 = (m->q2) * (m->q2);
+-		q2q3 = (m->q2) * (m->q3);
+-		q3q3 = (m->q3) * (m->q3);
+-
+-		// Reference direction of Earth's magnetic field
+-		hx = 2.0f * (mx * (0.5f - q2q2 - q3q3) + my * (q1q2 - q0q3) + mz * (q1q3 + q0q2));
+-		hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
+-		bx = sqrt(hx * hx + hy * hy);
+-		bz = 2.0f * (mx * (q1q3 - q0q2) + my * (q2q3 + q0q1) + mz * (0.5f - q1q1 - q2q2));
+-
+-		// Estimated direction of gravity and magnetic field
+-		halfvx = q1q3 - q0q2;
+-		halfvy = q0q1 + q2q3;
+-		halfvz = q0q0 - 0.5f + q3q3;
+-		halfwx = bx * (0.5f - q2q2 - q3q3) + bz * (q1q3 - q0q2);
+-		halfwy = bx * (q1q2 - q0q3) + bz * (q0q1 + q2q3);
+-		halfwz = bx * (q0q2 + q1q3) + bz * (0.5f - q1q1 - q2q2);
+-
+ 		// Error is sum of cross product between estimated direction and measured direction of field vectors
+-		halfex = (ay * halfvz - az * halfvy) + (my * halfwz - mz * halfwy);
+-		halfey = (az * halfvx - ax * halfvz) + (mz * halfwx - mx * halfwz);
+-		halfez = (ax * halfvy - ay * halfvx) + (mx * halfwy - my * halfwx);
+-
+-		// Compute and apply integral feedback if enabled
+-		if((m->twoKi) > 0.0f) {
+-			(m->integralFBx) += (m->twoKi) * halfex * (1.0f / (m->sampleFreq));	// integral error scaled by Ki
+-			(m->integralFBy) += (m->twoKi) * halfey * (1.0f / (m->sampleFreq));
+-			(m->integralFBz) += (m->twoKi) * halfez * (1.0f / (m->sampleFreq));
+-			gx += (m->integralFBx);	// apply integral feedback
+-			gy += (m->integralFBy);
+-			gz += (m->integralFBz);
+-		}
+-		else {
+-			(m->integralFBx) = 0.0f;	// prevent integral windup
+-			(m->integralFBy) = 0.0f;
+-			(m->integralFBz) = 0.0f;
+-		}
++		halfex += (ay * halfvz - az * halfvy);
++		halfey += (az * halfvx - ax * halfvz);
++		halfez += (ax * halfvy - ay * halfvx);
++	}
++	else{
++		halfex = 0;
++		halfey = 0;
++		halfez = 0;
++	}
+ 
+-		// Apply proportional feedback
+-		gx += (m->twoKp) * halfex;
+-		gy += (m->twoKp) * halfey;
+-		gz += (m->twoKp) * halfez;
++	// Compute and apply integral feedback if enabled
++	if((m->twoKi) > 0.0f) {
++		(m->integralFBx) += (m->twoKi) * halfex * (1.0f / (m->sampleFreq));	// integral error scaled by Ki
++		(m->integralFBy) += (m->twoKi) * halfey * (1.0f / (m->sampleFreq));
++		(m->integralFBz) += (m->twoKi) * halfez * (1.0f / (m->sampleFreq));
++		gx += (m->integralFBx);	// apply integral feedback
++		gy += (m->integralFBy);
++		gz += (m->integralFBz);
++	}
++	else {
++		(m->integralFBx) = 0.0f;	// prevent integral windup
++		(m->integralFBy) = 0.0f;
++		(m->integralFBz) = 0.0f;
+ 	}
+ 
++	// Apply proportional feedback
++	gx += (m->twoKp) * halfex;
++	gy += (m->twoKp) * halfey;
++	gz += (m->twoKp) * halfez;
++
+ 	// Integrate rate of change of quaternion
+ 	gx *= (0.5f * (1.0f / (m->sampleFreq)));		// pre-multiply common factors
+ 	gy *= (0.5f * (1.0f / (m->sampleFreq)));
+diff --git a/uC/stm32/droguiOS/Core/drogui/sensor/gps/include/SAM_M8Q.h b/uC/stm32/droguiOS/Core/drogui/sensor/gps/include/SAM_M8Q.h
+index c4488f1a..0c679f1d 100644
+--- a/uC/stm32/droguiOS/Core/drogui/sensor/gps/include/SAM_M8Q.h
++++ b/uC/stm32/droguiOS/Core/drogui/sensor/gps/include/SAM_M8Q.h
+@@ -1,4 +1,5 @@
+ #include "macros.h"
++#include "registerMap.h"
+ 
+ #ifdef SAM_M8Q
+ 
+diff --git a/uC/stm32/droguiOS/Core/drogui/sensor/gps/src/SAM_M8Q.c b/uC/stm32/droguiOS/Core/drogui/sensor/gps/src/SAM_M8Q.c
+index 92541977..067bcd0e 100644
+--- a/uC/stm32/droguiOS/Core/drogui/sensor/gps/src/SAM_M8Q.c
++++ b/uC/stm32/droguiOS/Core/drogui/sensor/gps/src/SAM_M8Q.c
+@@ -174,9 +174,10 @@ SENSOR_STATUS readGPS(m8q *mg){
+ 			if(  TIME - mg->last_tim > mg->threshold )  return CRASHED;
+ 			return ret;
+ 		}
++		
+ 
+ 		if(mg->rcv_pack.cls == 1 && mg->rcv_pack.id == 7){
+-
++			
+ 			mg->latitude = 0, mg->longitud = 0;
+ 			for(int i = 0 ; i < 4 ; i++)
+ 				mg->latitude = (mg->latitude << 8) | (mg->rcv_pack.payload[31-i]);
+@@ -188,6 +189,26 @@ SENSOR_STATUS readGPS(m8q *mg){
+ 				mg->north_vel = (mg->north_vel << 8) | (mg->rcv_pack.payload[51-i]);
+ 			for(int i = 0 ; i < 4 ; i++)
+ 				mg->east_vel = (mg->east_vel << 8) | (mg->rcv_pack.payload[55-i]);
++			
++			int headMot = 0,headVeh = 0;
++			uint32_t headAcc = 0;
++			int16_t magDec = 0;
++
++			for(int i = 0 ; i < 4 ; i++)
++				headMot = (headMot << 8) | (mg->rcv_pack.payload[67-i]);
++				
++			for(int i = 0 ; i < 4 ; i++)
++				headAcc = (headAcc << 8) | (mg->rcv_pack.payload[75-i]);
++				
++			for(int i = 0 ; i < 4 ; i++)
++				headVeh = (headVeh << 8) | (mg->rcv_pack.payload[87-i]);
++			for(int i = 0 ; i < 2 ; i++)
++				magDec = (magDec << 8) | (mg->rcv_pack.payload[89-i]);
++			
++			setReg(MOTOR_1,headMot*1e-5);
++			setReg(MOTOR_2,headAcc*1e-5);
++			setReg(MOTOR_3,magDec*1e-2);
++
+ 
+ 			mg->last_tim = TIME;
+ 			return OK;
+diff --git a/uC/stm32/droguiOS/Core/drogui/sensor/press/test/bmp388_test.c b/uC/stm32/droguiOS/Core/drogui/sensor/press/test/bmp388_test.c
+index 8f70680a..0b2dec12 100644
+--- a/uC/stm32/droguiOS/Core/drogui/sensor/press/test/bmp388_test.c
++++ b/uC/stm32/droguiOS/Core/drogui/sensor/press/test/bmp388_test.c
+@@ -3,43 +3,40 @@
+ 
+ #include "_main.h"
+ #include "BMP388.h"
+-#include <string.h>
+-#include <stdio.h>
+-#include "usart.h"
+ #include "filter.h"
++#include "macros.h"
++#include "serial.h"
+ #include "utils.h"
+-#define N_BMP 25
++#define N_BMP 50
+ 
+ char buffer_bmp[500];
+-bmp388 myBMP;
++bmp388 _myBMP;
+ 
+-emaFilter ema_bmp;
+-mvAvgFilter mvAvg_bmp;
++emaFilter _ema_bmp;
++mvAvgFilter _mvAvg_bmp;
+ 
+ void _main(){
+ 
+-	HAL_UART_Transmit(&huart2,(uint8_t *)"hola mundo\n",12,1000);
+-	initBmp388(&myBMP, 10);
++	serialsBegin();
++	changeBaudrate(SER_DBG, 1000000);
++	serialPrint(SER_DBG, "BMP388_TEST\n");
++	initBmp388(&_myBMP, 10);
+ 
+-	initMvAvgFilter(&mvAvg_bmp, N_BMP);
+-	initEmaFilter(&ema_bmp, 0.6, 0.4, 0.5);
++	initMvAvgFilter(&_mvAvg_bmp, N_BMP);
++	initEmaFilter(&_ema_bmp, 0.9, 0.1, 0.8);
+ 
+ 	while(1){
+-
+ 		float bmp_alt;
+ 
+-		HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+-		bmp388ReadAltitude(&myBMP);
++		HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
++		bmp388ReadAltitude(&_myBMP);
+ 
+-		bmp_alt = computeMvAvgFilter( &mvAvg_bmp, myBMP.altitude );
+-		bmp_alt = computeEmaFilter( &ema_bmp, bmp_alt );
++		bmp_alt = computeMvAvgFilter( &_mvAvg_bmp, _myBMP.altitude );
++		bmp_alt = computeEmaFilter( &_ema_bmp, bmp_alt );
+ 
+-		sprintf(buffer_bmp,"%f %f ;\n", 100*myBMP.altitude, 100*bmp_alt);
+-		HAL_UART_Transmit(&huart2,(uint8_t *)buffer_bmp,strlen(buffer_bmp),1000);
++		serialPrintf(SER_DBG,"%f %f ;\n", 100*_myBMP.altitude, 100*bmp_alt);
+ 		HAL_Delay(5);
+-
+ 	}
+-
+ }
+ 
+ #endif
+diff --git a/uC/stm32/droguiOS/Core/drogui/task/include/sensorsTasks.h b/uC/stm32/droguiOS/Core/drogui/task/include/sensorsTasks.h
+index 1d4bc075..f8bfdbe4 100644
+--- a/uC/stm32/droguiOS/Core/drogui/task/include/sensorsTasks.h
++++ b/uC/stm32/droguiOS/Core/drogui/task/include/sensorsTasks.h
+@@ -10,8 +10,6 @@
+ 
+ extern float	roll,       pitch,      yaw,
+ 	   raw_roll,   raw_pitch,  raw_yaw,
+-	   mah_roll,   mah_pitch,  mah_yaw,
+-	   tkf_roll,   tkf_pitch,  tkf_yaw,
+ 	   ax,         ay,         az,
+ 	   gx,         gy,         gz,
+ 	   mx,         my,         mz,
+diff --git a/uC/stm32/droguiOS/Core/drogui/task/src/controlTasks.c b/uC/stm32/droguiOS/Core/drogui/task/src/controlTasks.c
+index a867a42a..8dae19c8 100644
+--- a/uC/stm32/droguiOS/Core/drogui/task/src/controlTasks.c
++++ b/uC/stm32/droguiOS/Core/drogui/task/src/controlTasks.c
+@@ -16,7 +16,7 @@ filter filter_R, filter_P, filter_Y, filter_H;
+ 
+ scurve z_sp, x_sp, y_sp, roll_sp, pitch_sp, yaw_sp, H_sp;
+ 
+-float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, ANG_MAX = 5*PI/180.0;
++float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, ANG_MAX = 3*PI/180.0;
+ float M1,M2,M3,M4;
+ 
+ float wroll_ref, wpitch_ref, wyaw_ref;
+@@ -140,10 +140,10 @@ void wControlTask(){
+ 	setReg(YAW_U, Y);
+ 	setReg(Z_U, H_comp);
+ 
+-	setReg(MOTOR_1, M1);
+-	setReg(MOTOR_2, M2);
+-	setReg(MOTOR_3, M3);
+-	setReg(MOTOR_4, M4);
++	//setReg(MOTOR_1, M1);
++	//setReg(MOTOR_2, M2);
++	//setReg(MOTOR_3, M3);
++	//setReg(MOTOR_4, M4);
+ 
+ }
+ 
+@@ -303,15 +303,15 @@ void initControlTasks(){
+ 	initPid(&yp_control,  0.2, 2, 0, 0, 50 , 5, ANG_MAX, D_SG);
+ 
+ 	initPid(&z_control,  10, 750,    2, 0, 50 , 10, 30, D_SG);
+-	initPid(&x_control, 0, 0, 0, 0, 50 , 2, 1, D_SG);
+-	initPid(&y_control, 0, 0, 0, 0, 50 , 2, 1, D_SG);
++	initPid(&x_control, 0.1, 0.2, 0, 0, 50 , 2, 1, D_SG);
++	initPid(&y_control, 0.1, 0.2, 0, 0, 50 , 2, 1, D_SG);
+ 
+ 	initPidFilter(&roll2w,  500, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+ 	initPidFilter(&pitch2w, 300, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+ 	initPidFilter(&yaw2w,     0,   0,  0, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+ 
+ 	initPidFilter(&wroll_control,   5, 500, 10, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+-	initPidFilter(&wpitch_control,  5, 500, 10, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
++	initPidFilter(&wpitch_control,  8, 500, 16, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+ 	initPidFilter(&wyaw_control,   10, 500, 30, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+ 
+ 	initFilter(&filter_wroll, 4, k_1_20, v_1_20);
+diff --git a/uC/stm32/droguiOS/Core/drogui/task/src/debugTasks.c b/uC/stm32/droguiOS/Core/drogui/task/src/debugTasks.c
+index d750f78a..46cf27a5 100644
+--- a/uC/stm32/droguiOS/Core/drogui/task/src/debugTasks.c
++++ b/uC/stm32/droguiOS/Core/drogui/task/src/debugTasks.c
+@@ -17,11 +17,14 @@ void debugTask(void *argument){
+ 
+ 
+ 	//serialPrintf(SER_DBG, "%f %f %f %f\n", xp_ref, xp,xp_ref -xp, pitch_ref);
+-	//serialPrintf(SER_DBG, "%f %f %f ", ax, ay, az);
+-	//serialPrintf(SER_DBG, "%f %f %f ", gx, gy, gz);
+-	//serialPrintf(SER_DBG, "%f %f %f ", mx, my, mz);
+-	//serialPrintf(SER_DBG, "%f %f %f ", raw_roll*180/pi, raw_pitch*180/pi, raw_yaw*180/pi);
+-	serialPrintf(SER_DBG, "%f ", raw_yaw*180/pi);
++	//serialPrintf(SER_DBG, "%f,%f,%f,", ax, ay, az);
++	//serialPrintf(SER_DBG, "%f,%f,%f,", gx, gy, gz);
++	//serialPrintf(SER_DBG, "%f,", gz);
++	serialPrintf(SER_DBG, "%f,%f,%f", mx, my, mz);
++	//serialPrintf(SER_DBG, "%f,%f,%f ", raw_roll*180/pi, raw_pitch*180/pi, raw_yaw*180/pi);
++	//serialPrintf(SER_DBG, "%f,%f,%f,%f", getMatVal(&(myTKF.q), 0, 0), getMatVal(&(myTKF.q), 1, 0),getMatVal(&(myTKF.q), 2, 0),getMatVal(&(myTKF.q), 3, 0));
++	//serialPrintf(SER_DBG, "%f,%f,%f,%f", myRPY.q0, myRPY.q1, myRPY.q2, myRPY.q3);
++	//serialPrintf(SER_DBG, "%f ", raw_yaw*180/pi);
+ 	//serialPrintf(SER_DBG, "%f ", tkf_roll*180/pi);//, tkf_pitch*180/pi, tkf_yaw*180/pi);
+ 	//serialPrintf(SER_DBG, "%f ", mah_roll*180/pi);//, mah_pitch*180/pi, mah_yaw*180/pi);
+ 	//serialPrintf(SER_DBG, "%f %f %f %f", vx_gps, vy_gps, vx, vy);
+diff --git a/uC/stm32/droguiOS/Core/drogui/task/src/sensorsTasks.c b/uC/stm32/droguiOS/Core/drogui/task/src/sensorsTasks.c
+index c2ee9b63..75fd81dd 100644
+--- a/uC/stm32/droguiOS/Core/drogui/task/src/sensorsTasks.c
++++ b/uC/stm32/droguiOS/Core/drogui/task/src/sensorsTasks.c
+@@ -1,6 +1,5 @@
+ #include "sensorsTasks.h"
+ #include "mahony.h"
+-#include "tkf.h"
+ #include "task.h"
+ #include "utils.h"
+ #include "kalman.h"
+@@ -14,10 +13,9 @@
+ imu myIMU;
+ 
+ mahony myRPY;
+-//tkf myTKF;
+ 
+ gps myGPS;
+-kalmanP myKalman;
++kalman myKalman;
+ optFlow myOF;
+ tRanger myTera;
+ 
+@@ -25,8 +23,6 @@ filter filter_roll, filter_pitch, filter_yaw;
+ 
+ float   roll,       pitch,      yaw,
+ 		raw_roll,   raw_pitch,  raw_yaw,
+-		tkf_roll,   tkf_pitch,  tkf_yaw,
+-		mah_roll,   mah_pitch,  mah_yaw,
+ 		ax,         ay,         az,
+ 		gx,         gy,         gz,
+ 		mx,         my,         mz,
+@@ -37,7 +33,6 @@ float   roll,       pitch,      yaw,
+ 		z_of,       z_tera,
+ 		vx,			vy;
+ 
+-bool mag_available = false;
+ 
+ float z_ant = 0;
+ float Kdfilt = 0.01;
+@@ -92,7 +87,6 @@ void magTask(){
+ 	setReg(MAG_X, mx);
+ 	setReg(MAG_Y, my);
+ 	setReg(MAG_Z, mz);
+-	mag_available = true;
+ }
+ 
+ void altitudeTask(){
+@@ -172,11 +166,6 @@ void rpyTask(){
+ 
+ 	mahonyUpdate(&myRPY, gx*PI/180.0, gy*PI/180.0, gz*PI/180.0, ax, ay, az, mx, my, mz);
+ 	getMahonyEuler(&myRPY, rpy);
+-	//mah_roll = rpy[0], mah_pitch = rpy[1], mah_yaw = rpy[2] - pi;
+-
+-	//tkfUpdate(&myTKF, gx*PI/180.0, gy*PI/180.0, gz*PI/180.0, ax, ay, az, mx, my, mz);
+-	//getTkfEuler(&myTKF, rpy);
+-	//tkf_roll = rpy[0], tkf_pitch = rpy[1], tkf_yaw = rpy[2] + pi/2;
+ 	raw_roll = rpy[0], raw_pitch = rpy[1], raw_yaw = rpy[2] + pi/2;
+ 
+ 	raw_roll = computeFilter(&filter_roll, raw_roll);
+@@ -212,21 +201,31 @@ void xyzTask(){
+ 	if(getReg(START_GPS) > 0){
+ 		kalmanUpdateIMU(&myKalman, ax, ay, az, raw_roll, raw_pitch, raw_yaw);
+ 
+-		if(getReg(GPS_AVAILABLE) > 0)
+-			setReg(GPS_AVAILABLE, 0),
+-			kalmanUpdateGPS(&myKalman, getReg(GPS_X), getReg(GPS_Y), z, getReg(GPS_VX), getReg(GPS_VY));
++		if(getReg(GPS_AVAILABLE) > 0){
++			setReg(GPS_AVAILABLE, 0);
++			#ifdef KALMANP
++			kalmanUpdateGPS(&myKalman, getReg(GPS_X), getReg(GPS_Y), z);
++			#elif defined KALMANPV
++			kalmanUpdateGPS(&myKalman, getReg(GPS_X), getReg(GPS_Y), getReg(GPS_VX), getReg(GPS_VY));
++			#endif
++		}
+ 	}
+ 	else{
+ 		clearKalman(&myKalman);
+ 	}
+ 
++	#ifdef KALMANP
++	getPosition(&myKalman, &x, &y, &z);
++	#elif defined KALMANPV
+ 	getPosition(&myKalman, &x, &y);
+-	getVelocity(&myKalman, &vx, &vy);
++	#endif
+ 
+ 	z = z_of;
+ 	if(z_tera >= 0.5 && z_tera <= 50)
+ 		z = z_tera;
+ 
++	getVelocity(&myKalman, &vx, &vy);
++
+ 	xp = vx*cos(raw_yaw) + vy*sin(raw_yaw);
+ 	yp = -vx*sin(raw_yaw) + vy*cos(raw_yaw);
+ 
+@@ -242,24 +241,16 @@ void initSensorsTasks(){
+ 
+ 	initImu(&myIMU);
+ 	initMahony(&myRPY, 2, 0.1, 500);
+-	//initTkf(&myTKF, 1.0/500);
+ 
+ 
+ 	initFilter(&filter_roll, 6, k_1_10, v_1_10);
+ 	initFilter(&filter_pitch, 6, k_1_10, v_1_10);
+ 	initFilter(&filter_yaw, 6, k_1_10, v_1_10);
+ 
+-	setReg(ACC_X_OFF,-69.9273);
+-	setReg(ACC_Y_OFF,-69.1215);
+-	setReg(ACC_Z_OFF,18.9836);
+-	setReg(ACC_SCALE,1571.67);
+-
+-	setReg(MAG_X_OFF,201.112);
+-	setReg(MAG_Y_OFF,-92.8901);
+-	setReg(MAG_Z_OFF,264.333);
+-	setReg(MAG_X_SCALE,108.405);
+-	setReg(MAG_Y_SCALE,113.855);
+-	setReg(MAG_Z_SCALE,113.855);
++	setReg(ACC_SCALE,1);
++	setReg(MAG_X_SCALE,1);
++	setReg(MAG_Y_SCALE,1);
++	setReg(MAG_Z_SCALE,1);
+ 
+ 	setKalmanTsImu(&myKalman, 0.01);
+ 	setKalmanTsGps(&myKalman, 0.125);
