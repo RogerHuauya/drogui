@@ -239,8 +239,8 @@ bool icmQuiet(icm20948* m, int n, float treshold, bool cal){
 
 	serialPrintf(SER_DBG, "%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
 
-	if( ( max_gyro[0]-min_gyro[0] < (treshold + 2.0 /*1.8*/) ) &&\
-			( max_gyro[1]-min_gyro[1] < (treshold + 2.0 /*3.8*/) ) && \
+	if( ( max_gyro[0]-min_gyro[0] < (treshold + 1.5 /*1.8*/) ) &&\
+			( max_gyro[1]-min_gyro[1] < (treshold + 1.5 /*3.8*/) ) && \
 			( max_gyro[2]-min_gyro[2] < (treshold + 2.0) ) ){
 		if(cal){
 			m->off_gx = -1.0*acum_gyro[0]/n;
@@ -294,7 +294,7 @@ void calibrateAccel(icm20948* m){
 	bool done = false, valid;
 
 	while(!done){
-		while(!icmQuiet(m, 100, 2, false));
+		while(!icmQuiet(m, 200, 0, false));
 		readRawAcc(m);
 		valid = true;
 		for(int i = 1 ; i <= cnt ; i++){

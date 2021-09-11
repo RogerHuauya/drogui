@@ -160,7 +160,9 @@ void rpyControlTask(){
 			pitch_ref =  getSetpoint(&pitch_sp, TIME);
 
 		}
-		yaw_ref = getReg(YAW_REF);
+		if(getReg(YAW_REF) != yaw_sp.fin)
+			setTrayectory(&yaw_sp, yaw_sp.fin, getReg(YAW_REF), getReg(YAW_PERIOD), TIME);
+		yaw_ref =  getSetpoint(&yaw_sp, TIME);
 
 		wroll_ref = computePid(&roll2w, angle_dif(roll_ref, roll), TIME, 0);
 		wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0);
@@ -170,6 +172,7 @@ void rpyControlTask(){
 	if(state == SEC_STOP){
 		setTrayectory(&roll_sp, 0, 0, 0, TIME);
 		setTrayectory(&pitch_sp, 0, 0, 0, TIME);
+		setTrayectory(&yaw_sp, 0, 0, 0, TIME);
 		roll_ref = pitch_ref = yaw_ref = 0;
 	}
 
@@ -308,9 +311,9 @@ void initControlTasks(){
 
 	initPidFilter(&roll2w,  500, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
 	initPidFilter(&pitch2w, 300, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
-	initPidFilter(&yaw2w,     0,   0,  0, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+	initPidFilter(&yaw2w,    50,   0,  0, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
 
-	initPidFilter(&wroll_control,   8, 500, 10, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+	initPidFilter(&wroll_control,   8, 500, 16, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
 	initPidFilter(&wpitch_control,  8, 500, 16, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
 	initPidFilter(&wyaw_control,   10, 500, 30, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
 
@@ -324,6 +327,7 @@ void initControlTasks(){
 
 	setTrayectory(&roll_sp, 0, 0, 1, TIME);
 	setTrayectory(&pitch_sp, 0, 0, 1, TIME);
+	setTrayectory(&yaw_sp, 0, 0, 1, TIME);
 
 	setTrayectory(&H_sp, 0, 0, 1, TIME);
 
