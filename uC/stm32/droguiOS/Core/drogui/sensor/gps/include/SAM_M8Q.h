@@ -1,11 +1,11 @@
 #include "macros.h"
-#include "registerMap.h"
 
 #ifdef SAM_M8Q
 
 #ifndef SAM_M8Q_H
 #define SAM_M8Q_H
 
+#include "registerMap.h"
 #include "_main.h"
 #include "serial.h"
 #include <stdbool.h>

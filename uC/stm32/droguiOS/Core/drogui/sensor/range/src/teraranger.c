@@ -1,3 +1,7 @@
+#include "macros.h"
+
+#ifdef TERARANGER
+
 #include "teraranger.h"
 #include "serial.h"
 #include "task.h"
@@ -29,7 +33,7 @@ static const uint8_t crc_table[] = {
 	0xfa, 0xfd, 0xf4, 0xf3
 };
 
-void initTeraRanger(tRanger *tera, serial *ser){
+void initRangeFinder(tRanger *tera, serial *ser){
 	changeBaudrate(ser, 115200);
 
 	for(int i = 0; i < 4; i++) serialWrite(ser, bin_mode[i]);
@@ -94,7 +98,7 @@ SENSOR_STATUS readTRanger(tRPacket *tpacket, uint32_t timeout){
 	else return WRG_CHKSUM;
 }
 
-SENSOR_STATUS readTeraRange(tRanger *tera){
+SENSOR_STATUS readRangeFinder(tRanger *tera){
 	if(serialAvailable(tera->rcv_pack.ser)){
 
 		int ret = readTRanger(&(tera->rcv_pack), 1000);
@@ -112,3 +116,4 @@ SENSOR_STATUS readTeraRange(tRanger *tera){
 	if(TIME - tera->last_tim > tera->threshold) return CRASHED;
 	return NO_DATA;
 }
+#endif

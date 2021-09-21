@@ -16,7 +16,14 @@
 #define SER_OPT &serial4
 #define SER_GPS &serial5
 
+// kalman
+// ------
 #define KALMANP
 //#define KALMANPV
+
+// range finder
+// ------------
+// #define TERARANGER
+#define TF02PRO
 
 #endif

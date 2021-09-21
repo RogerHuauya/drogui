@@ -7,7 +7,7 @@
 #include "serial.h"
 #include "opticalFlow.h"
 #include "imu.h"
-#include "teraranger.h"
+#include "rangeFinder.h"
 #include "macros.h"
 
 imu myIMU;
@@ -17,7 +17,7 @@ mahony myRPY;
 gps myGPS;
 kalman myKalman;
 optFlow myOF;
-tRanger myTera;
+rangeFinder myTera;
 
 filter filter_roll, filter_pitch, filter_yaw;
 
@@ -149,7 +149,7 @@ void optTask(){
 
 void teraTask(){
 
-	SENSOR_STATUS ret = readTeraRange(&myTera);
+	SENSOR_STATUS ret = readRangeFinder(&myTera);
 
 	if(ret == OK)
 		z_tera = myTera.distance/1000.0;
@@ -259,7 +259,7 @@ void initSensorsTasks(){
 
 	initGPS(&myGPS, SER_GPS);
 	initOptFlow(&myOF, SER_OPT);
-	initTeraRanger(&myTera, SER_TER);
+	initRangeFinder(&myTera, SER_TER);
 
 
 	calib_status = 0;
