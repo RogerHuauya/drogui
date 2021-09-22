@@ -13,9 +13,9 @@ void initRangeFinder(tf02 *tf, serial *ser){
 	changeBaudrate(ser, 115200);
 
 	for(int i = 0 ; i < 8 ; i++) serialWrite(ser, cfg_rate[i]);
-	for(int i = 0 ; i < 8 ; i++) serialWrite(ser, cfg_baudrate[i]);
+	//for(int i = 0 ; i < 8 ; i++) serialWrite(ser, cfg_baudrate[i]);
 
-	changeBaudrate(ser, 256000);
+	//changeBaudrate(ser, 256000);
 
 	tf->distance = 0;
 	tf->rcv_pack.ser = ser;
@@ -27,7 +27,7 @@ void initRangeFinder(tf02 *tf, serial *ser){
 
 static void calcChecksum(tfPacket *tpacket){
 	uint8_t chksum = 0;
-	for(int i = 0; i < 7; i++) chksum += tpacket->chksumBuff[i];
+	for(int i = 0; i < 8; i++) chksum += tpacket->chksumBuff[i];
 	tpacket -> chksum = chksum;
 }
 
@@ -40,16 +40,15 @@ SENSOR_STATUS readTfPacket(tfPacket *tpacket, uint32_t timeout){
 
 	while(TIME - tim < timeout){
 		if(serialAvailable(tpacket->ser)) sync1 = sync2, sync2 = serialRead(tpacket->ser);
-
 		if(sync1 == TF_SYNCH1 && sync2 == TF_SYNCH2){
-
 			tpacket->chksumBuff[0] = TF_SYNCH1;
+			tpacket->chksumBuff[1] = TF_SYNCH1;
 
 			for(int i = 0; i < 6 ; i++){
 				while(!serialAvailable(tpacket->ser)){
 					if( TIME - tim > timeout ) return TIMEOUT;
 				}
-				tpacket->chksumBuff[i+1] = tpacket->payload[i] = serialRead(tpacket->ser);
+				tpacket->chksumBuff[i+2] = tpacket->payload[i] = serialRead(tpacket->ser);
 
 			}
 
@@ -73,9 +72,8 @@ SENSOR_STATUS readTfPacket(tfPacket *tpacket, uint32_t timeout){
 }
 
 SENSOR_STATUS readRangeFinder(tf02 *tf){
-	if(serialAvailable(tf->rcv_pack.ser)){
-
-		int ret = readTfPacket(&(tf->rcv_pack), 1000);
+	while(serialAvailable(tf->rcv_pack.ser)){
+		int ret = readTfPacket(&(tf->rcv_pack), 100000);
 		serialFlush(tf->rcv_pack.ser);
 
 		if( ret != OK){

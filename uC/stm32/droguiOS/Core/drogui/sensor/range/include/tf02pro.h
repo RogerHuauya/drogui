@@ -18,7 +18,7 @@
  * @param ser Serial used to communication between uC and teraRanger (serial*)
  */
 typedef struct _tfPacket{
-	uint8_t payload[3], chksumBuff[3];
+	uint8_t payload[20], chksumBuff[20];
 	uint8_t chksum;
 	serial * ser;
 } tfPacket;
