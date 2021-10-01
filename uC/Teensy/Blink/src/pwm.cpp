@@ -11,7 +11,7 @@ void initPwmPin(pwm* p, int n){
 
 
 void setPwmFrecuency(pwm* p, float freq){
-    analogWriteFrequency(p->n,3500);
+    analogWriteFrequency(p->n,freq);
     p->period = 1000000.0/freq;
 }
 
@@ -33,7 +33,7 @@ void setPwmDutyTime(pwm *p, float percent){
 
 void initOneshot125(pwm* p, int pin){
     initPwmPin(p, pin);
-    setPwmDutyLimits(p, 125, 250);
-    setPwmFrecuency(p, 3500);
+    setPwmDutyLimits(p, 1000, 2000);
+    setPwmFrecuency(p, 480);
     setPwmDutyTime(p, 0);
 }
