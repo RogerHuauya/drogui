@@ -17,7 +17,7 @@ mahony myRPY;
 gps myGPS;
 kalman myKalman;
 optFlow myOF;
-rangeFinder myTera;
+rangeFinder myRange;
 
 filter filter_roll, filter_pitch, filter_yaw;
 
@@ -30,7 +30,7 @@ float   roll,       pitch,      yaw,
 		x_gps,		y_gps,
 		vx_gps,		vy_gps,
 		xp,         yp,
-		z_of,       z_tera,
+		z_of,       z_rng,
 		vx,			vy;
 
 
@@ -147,14 +147,14 @@ void optTask(){
 	}
 }
 
-void teraTask(){
+void rangeTask(){
 
-	SENSOR_STATUS ret = readRangeFinder(&myTera);
+	SENSOR_STATUS ret = readRangeFinder(&myRange);
 
 	if(ret == OK)
-		z_tera = myTera.distance/1000.0;
+		z_rng = myRange.distance/1000.0;
 	else if(ret == CRASHED){
-		serialPrint(SER_DBG, "Tera Crashed\n");
+		serialPrint(SER_DBG, "Range Crashed\n");
 		if(state == ARM_MOTORS || state == CONTROL_LOOP)
 			state = DESCEND;
 	}
@@ -194,9 +194,7 @@ void rpyTask(){
 
 void xyzTask(){
 
-	z = z_of;
-	if(z_tera >= 0.5 && z_tera <= 50)
-		z = z_tera;
+	z = z_rng;
 
 	if(getReg(START_GPS) > 0){
 		kalmanUpdateIMU(&myKalman, ax, ay, az, raw_roll, raw_pitch, raw_yaw);
@@ -220,9 +218,7 @@ void xyzTask(){
 	getPosition(&myKalman, &x, &y);
 	#endif
 
-	z = z_of;
-	if(z_tera >= 0.5 && z_tera <= 50)
-		z = z_tera;
+	z = z_rng;
 
 	getVelocity(&myKalman, &vx, &vy);
 
@@ -258,8 +254,8 @@ void initSensorsTasks(){
 	initMatGlobal(&myKalman);
 
 	initGPS(&myGPS, SER_GPS);
-	initOptFlow(&myOF, SER_OPT);
-	initRangeFinder(&myTera, SER_TER);
+	//initOptFlow(&myOF, SER_OPT);
+	initRangeFinder(&myRange, SER_RNG);
 
 
 	calib_status = 0;
@@ -277,6 +273,6 @@ void initSensorsTasks(){
 	//addTask(&altitudeTask,10000,2);
 	addTask(&xyzTask, 10000, 3);
 	addTask(&gpsTask, 125000, 3);
-	addTask(&optTask, 10000, 1);
-	addTask(&teraTask, 10000, 1);
+	//addTask(&optTask, 10000, 1);
+	addTask(&rangeTask, 10000, 1);
 }

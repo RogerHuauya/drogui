@@ -82,6 +82,7 @@ SENSOR_STATUS readRangeFinder(tf02 *tf){
 		}
 
 		tf->distance = ((uint16_t) tf->rcv_pack.payload[1] << 8) | tf->rcv_pack.payload[0];
+		tf->distance *= 10.0;
 		tf->strength = ((uint16_t) tf->rcv_pack.payload[3] << 8) | tf->rcv_pack.payload[2];
 		tf->credibility = (uint8_t) tf->rcv_pack.payload[4];
 

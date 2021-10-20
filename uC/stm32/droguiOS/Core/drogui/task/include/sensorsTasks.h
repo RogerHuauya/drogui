@@ -18,7 +18,7 @@ extern float	roll,       pitch,      yaw,
 	   x_gps,		y_gps,
 	   vx_gps,		vy_gps,
 	   xp,         yp,
-	   z_of,       z_tera;
+	   z_of,       z_rng;
 
 
 extern imu myIMU;
