@@ -20,7 +20,7 @@ int main(){
         int pot = analogRead(24);
         
         Serial.println(100*pot/1023);
-        setPwmDuty(&m1, 100*pot/1023);
+        setPwmDutyTime(&m1, 100*pot/1023);
         digitalWrite(13, HIGH);
         delay(100);
 
