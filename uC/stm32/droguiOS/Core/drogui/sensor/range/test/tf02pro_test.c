@@ -1,4 +1,4 @@
-#define TF02PRO_TEST
+//#define TF02PRO_TEST
 #ifdef TF02PRO_TEST
 #include "_main.h"
 #include "serial.h"

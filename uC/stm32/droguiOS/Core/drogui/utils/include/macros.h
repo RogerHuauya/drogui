@@ -3,8 +3,8 @@
 
 // gps
 // ---
-//#define ZED_F9P
-#define SAM_M8Q
+#define ZED_F9P
+//#define SAM_M8Q
 
 // imu
 // ---

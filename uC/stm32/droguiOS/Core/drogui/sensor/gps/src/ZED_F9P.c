@@ -12,7 +12,7 @@
 static uint8_t defaultCfgPort[20] = { 1, 0, 0, 0, 0xC0, 8, 0, 0, 0x00, 0x10, 0x0E, 0, 1, 0, 1, 0, 0, 0, 0, 0};
 
 //uint8_t defaultCfgRate[6]  = { 0xF4, 1, 1, 0, 1, 0 };
-static uint8_t defaultCfgRate[6]  = { 0x7D, 0, 1, 0, 1, 0 }; // 8hz
+static uint8_t defaultCfgRate[6]  = { 0x64, 0, 1, 0, 1, 0 }; // 8hz
 
 static uint8_t defaultCfgMsg[3]   = {UBX_CLASS_NAV, UBX_NAV_PVT, 1};
 
@@ -109,11 +109,11 @@ SENSOR_STATUS readPacket(ubxPacket *mp, uint32_t timeout){
 
 
 static void printPacket(ubxPacket *mp){
-	serialPrintf(mp->ser,"Class:\t %d \tID:\t %d \tlen:\t %d \n", mp->cls, mp->id, mp->len);
+	serialPrintf(SER_DBG,"Class:\t %d \tID:\t %d \tlen:\t %d \n", mp->cls, mp->id, mp->len);
 
 	for( int i = 0; i < mp->len ; i++)
-		serialPrintf(mp->ser,"%x ", mp->payload[i]);
-	serialPrint(mp->ser,"\n");
+		serialPrintf(SER_DBG,"%x ", mp->payload[i]);
+	serialPrint(SER_DBG,"\n");
 }
 
 void sndUBX(ubxPacket *mp, uint8_t class, uint8_t id,uint8_t len, uint8_t *array){
@@ -135,13 +135,13 @@ SENSOR_STATUS initGPS(zed *mg, serial* ser){
 	mg->rcv_pack.ser = ser;
 	mg->snd_pack.ser = ser;
 
-	changeBaudrate(mg->rcv_pack.ser,9600);
+	changeBaudrate(mg->rcv_pack.ser,38400);
 
 	HAL_Delay(1000);
 	sndUBX(&(mg->snd_pack), UBX_CLASS_CFG, UBX_CFG_PRT, 20, defaultCfgPort);
 
 	HAL_Delay(100);
-	changeBaudrate(mg->rcv_pack.ser,460800);
+	changeBaudrate(mg->rcv_pack.ser,921600);
 	HAL_Delay(100);
 
 	sndUBX(&(mg->snd_pack), UBX_CLASS_CFG, UBX_CFG_RATE, 6, defaultCfgRate);
@@ -165,6 +165,7 @@ SENSOR_STATUS readGPS(zed *mg){
 	if(serialAvailable(mg->rcv_pack.ser)){
 		int ret = readPacket(&(mg->rcv_pack), 1000);
 		//serialFlush();
+		//printPacket(&(mg->rcv_pack));
 
 		if( ret != OK){
 			if(  TIME - mg->last_tim > mg->threshold )  return CRASHED;

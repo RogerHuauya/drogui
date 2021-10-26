@@ -20,7 +20,7 @@ void debugTask(void *argument){
 	//serialPrintf(SER_DBG, "%f,%f,%f,", ax, ay, az);
 	//serialPrintf(SER_DBG, "%f,%f,%f,", gx, gy, gz);
 	//serialPrintf(SER_DBG, "%f,", gz);
-	serialPrintf(SER_DBG, "%f,%f,%f", mx, my, mz);
+	//serialPrintf(SER_DBG, "%f,%f,%f", mx, my, mz);
 	//serialPrintf(SER_DBG, "%f,%f,%f ", raw_roll*180/pi, raw_pitch*180/pi, raw_yaw*180/pi);
 	//serialPrintf(SER_DBG, "%f,%f,%f,%f", getMatVal(&(myTKF.q), 0, 0), getMatVal(&(myTKF.q), 1, 0),getMatVal(&(myTKF.q), 2, 0),getMatVal(&(myTKF.q), 3, 0));
 	//serialPrintf(SER_DBG, "%f,%f,%f,%f", myRPY.q0, myRPY.q1, myRPY.q2, myRPY.q3);
@@ -29,7 +29,7 @@ void debugTask(void *argument){
 	//serialPrintf(SER_DBG, "%f ", mah_roll*180/pi);//, mah_pitch*180/pi, mah_yaw*180/pi);
 	//serialPrintf(SER_DBG, "%f %f %f %f", vx_gps, vy_gps, vx, vy);
 	//serialPrintf(SER_DBG, "%f ", z*100);
-	serialPrintf(SER_DBG, "\n");
+	//serialPrintf(SER_DBG, "\n");
 }
 
 void securityTask(){
