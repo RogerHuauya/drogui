@@ -305,10 +305,10 @@ void initControlTasks(){
 	initFilter(&filter_Y, 3, k_3_200, v_3_200);
 	//initFilter(&filter_R, 3, k_3_200, v_3_200);
 
-	initPwm(&m4, &htim3, TIM_CHANNEL_1, &(htim3.Instance->CCR1));
-	initPwm(&m1, &htim3, TIM_CHANNEL_2, &(htim3.Instance->CCR2));
+	initPwm(&m1, &htim3, TIM_CHANNEL_1, &(htim3.Instance->CCR1));
+	initPwm(&m2, &htim3, TIM_CHANNEL_2, &(htim3.Instance->CCR2));
 	initPwm(&m3, &htim4, TIM_CHANNEL_3, &(htim4.Instance->CCR3));
-	initPwm(&m2, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
+	initPwm(&m4, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
 
 	initPid(&xp_control,  0.25, 0, 0, 0, 50 , 5, ANG_MAX, D_SG);
