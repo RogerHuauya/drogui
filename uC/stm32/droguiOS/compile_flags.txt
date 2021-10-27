@@ -17,6 +17,7 @@
 -ICore/drogui/sensor/optical/include
 -ICore/drogui/sensor/press/include
 -ICore/drogui/sensor/range/include
+-ICore/drogui/sensor/rfcontrol/include
 -ICore/drogui
 -ICore/Inc
 -IDrivers/STM32F7xx_HAL_Driver/Inc

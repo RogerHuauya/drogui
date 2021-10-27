@@ -26,4 +26,7 @@
 // #define TERARANGER
 #define TF02PRO
 
+// radio control 
+// ------------
+#define FLYSKY
 #endif
