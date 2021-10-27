@@ -1,4 +1,4 @@
-#define FLYSKY_TEST
+//#define FLYSKY_TEST
 #ifdef FLYSKY_TEST
 #include "_main.h"
 #include "serial.h"

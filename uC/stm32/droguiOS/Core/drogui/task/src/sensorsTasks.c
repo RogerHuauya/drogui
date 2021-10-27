@@ -8,6 +8,7 @@
 #include "opticalFlow.h"
 #include "imu.h"
 #include "rangeFinder.h"
+#include "flysky.h"
 #include "macros.h"
 
 imu myIMU;
@@ -18,6 +19,7 @@ gps myGPS;
 kalman myKalman;
 optFlow myOF;
 rangeFinder myRange;
+fsReceiver myFs;
 
 filter filter_roll, filter_pitch, filter_yaw;
 
@@ -42,6 +44,9 @@ emaFilter ema_bmp;
 mvAvgFilter mvAvg_bmp;
 filter filter_z;
 int cfilt_z = 0;
+bool flag_channel = false;
+int offset_chan1 = 0, offset_chan2 = 0, 
+	offset_chan3 = 0, offset_chan4 = 0;
 
 void accelTask(){
 
@@ -96,6 +101,33 @@ void altitudeTask(){
 	setReg(Z_VAL, z);
 }
 
+void flyskyTask(){
+
+	SENSOR_STATUS ret = readFsReceiver(&myFs);
+
+	if(ret == OK){
+		
+		if(!flag_channel){
+			
+			offset_chan1 = myFs.channel_val[0];
+			offset_chan2 = myFs.channel_val[1];
+			offset_chan3 = myFs.channel_val[2];
+			offset_chan4 = myFs.channel_val[3];
+
+			flag_channel = true;
+		}
+
+		setReg(CHANNEL_1, myFs.channel_val[0] - offset_chan1 );	
+		setReg(CHANNEL_2, myFs.channel_val[1] - offset_chan2 );	
+		setReg(CHANNEL_3, myFs.channel_val[2] - offset_chan3 );	
+		setReg(CHANNEL_4, myFs.channel_val[3] - offset_chan4 );	
+	}
+	else if( ret == CRASHED ){
+		serialPrint(SER_DBG, "FLYSKY Crashed\n");
+		if(state == ARM_MOTORS || state == CONTROL_LOOP)
+			state = DESCEND;
+	}
+}
 
 void gpsTask(){
 
@@ -256,7 +288,7 @@ void initSensorsTasks(){
 	initGPS(&myGPS, SER_GPS);
 	//initOptFlow(&myOF, SER_OPT);
 	initRangeFinder(&myRange, SER_RNG);
-
+	initFsReceiver(&myFs, &serial5);
 
 	calib_status = 0;
 
@@ -275,4 +307,5 @@ void initSensorsTasks(){
 	addTask(&gpsTask, 125000, 3);
 	//addTask(&optTask, 10000, 1);
 	addTask(&rangeTask, 10000, 1);
+	addTask(&flyskyTask, 1000, 1);
 }

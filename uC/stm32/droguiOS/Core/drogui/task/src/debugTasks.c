@@ -29,7 +29,9 @@ void debugTask(void *argument){
 	//serialPrintf(SER_DBG, "%f ", mah_roll*180/pi);//, mah_pitch*180/pi, mah_yaw*180/pi);
 	//serialPrintf(SER_DBG, "%f %f %f %f", vx_gps, vy_gps, vx, vy);
 	//serialPrintf(SER_DBG, "%f ", z*100);
-	//serialPrintf(SER_DBG, "\n");
+	serialPrintf(SER_DBG, "%f,%f,%f,%f", getReg(CHANNEL_1), getReg(CHANNEL_2), getReg(CHANNEL_3), getReg(CHANNEL_4) );	
+	serialPrintf(SER_DBG, "\n");
+	
 }
 
 void securityTask(){
@@ -61,7 +63,7 @@ void securityTask(){
 
 void initDebug(){
 	state = SEC_STOP;
-	addTask(&debugTask, 10000, 1);
+	//addTask(&debugTask, 10000, 1);
 	addTask(&blinkTask, 100000, 1);
 	addTask(&securityTask, 1000, 1);
 }
