@@ -17,7 +17,6 @@ void initFsReceiver(fsReceiver *fsRec, serial *ser){
 	fsRec->threshold = 500000;
 }
 
-
 static void calcChecksum(fsPacket *fspacket){
 	uint16_t chksum = 0xFFFF;
 	for(int i = 0; i < IBUS_BUFFSIZE-2; i++) chksum -= fspacket->chksumBuff[i];
@@ -76,7 +75,12 @@ SENSOR_STATUS readFsReceiver(fsReceiver *fsRec){
 		}
 
 		for(int i = 0; i < CHANNEL_NUM; i++){ 
-			fsRec->channel_val[i] = (fsRec->rcv_pack.payload[2*i+1] << 8) + fsRec->rcv_pack.payload[2*i];}
+			fsRec->raw_channel_val[i] = (fsRec->rcv_pack.payload[2*i+1] << 8) + fsRec->rcv_pack.payload[2*i];
+			fsRec->channel_val[i] = fsRec->raw_channel_val[i];
+			fsRec->channel_val[i] -= fsRec->channel_offset[i];
+			if( i == 2) fsRec->channel_val[i] /= 500.0;
+			else if( i < 4 )fsRec->channel_val[i] /= 1000.0;
+		}
 
 		fsRec->last_tim = TIME;
 		return OK;
@@ -84,4 +88,38 @@ SENSOR_STATUS readFsReceiver(fsReceiver *fsRec){
 	if(TIME - fsRec->last_tim > fsRec->threshold) return CRASHED;
 	return NO_DATA;
 }
+
+void calibrateFsReceiver(fsReceiver *fsRec){
+	
+	readFsReceiver(fsRec);
+	
+	/*switch(fsRec->channel_val[4]){
+		case 1:
+			for(int i = 0; i < CHANNEL_NUM-2; i++){
+				fsRec->channel_max[i] = fsRec->channel_val[i];
+				HAL_Delay(1);
+			}
+			break;
+		case 2:
+			for(int i = 0; i < CHANNEL_NUM-2; i++){
+				fsRec->channel_min[i] = fsRec->channel_val[i];
+				HAL_Delay(1);
+			}
+			break;
+		case 3:
+			for(int i = 0; i < CHANNEL_NUM-2; i++){
+				fsRec->channel_offset[i] = fsRec->channel_val[i];
+				HAL_Delay(1);
+			}
+			break;
+	}*/
+	serialPrint(SER_DBG,"hola\n");
+	for(int i = 0; i < CHANNEL_NUM-2; i++){
+		serialPrintf(SER_DBG," %f\t",fsRec->raw_channel_val[i]);
+		fsRec->channel_offset[i] = fsRec->raw_channel_val[i];
+		HAL_Delay(1);
+	}
+	serialPrint(SER_DBG,"\n");
+}
+
 #endif

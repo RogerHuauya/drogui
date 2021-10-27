@@ -100,10 +100,19 @@ void updatePID(){
 void wControlTask(){
 
 	if(state == DESCEND || state == CONTROL_LOOP){
+	
+		wroll_ref  = rollFs*10.0;
+		wpitch_ref = pitchFs*10.0;
+		wyaw_ref   = yawFs*10.0;
+		
+		H_ref 	   = 10.0 + hFs*16.0;
+		rampValue(&H, H_ref, 0.15);
+		H_comp = H/(cos(roll)*cos(pitch));
+		
 		float wroll_err  = wroll_ref - gx;
 		float wpitch_err = wpitch_ref - gy;
 		float wyaw_err   = wyaw_ref - gz;
-
+	
 		R = computePid(&wroll_control, wroll_err, TIME, 0);
 		P = computePid(&wpitch_control, wpitch_err, TIME, 0);
 		Y = computePid(&wyaw_control, wyaw_err, TIME, 0);
@@ -163,11 +172,7 @@ void rpyControlTask(){
 		if(getReg(YAW_REF) != yaw_sp.fin)
 			setTrayectory(&yaw_sp, yaw_sp.fin, getReg(YAW_REF), getReg(YAW_PERIOD), TIME);
 		yaw_ref =  getSetpoint(&yaw_sp, TIME);
-		
-		roll_ref  = getReg(CHANNEL_1)*ANG_MAX/1000.0;
-		pitch_ref = getReg(CHANNEL_2)*ANG_MAX/1000.0;
-		yaw_ref  = getReg(CHANNEL_3)*PI/4000.0;
-		
+			
 		wroll_ref = computePid(&roll2w, angle_dif(roll_ref, roll), TIME, 0);
 		wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0);
 		wyaw_ref = computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);

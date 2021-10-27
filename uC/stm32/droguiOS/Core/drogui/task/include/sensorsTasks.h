@@ -6,10 +6,13 @@
 #include "registerMap.h"
 #include "utils.h"
 #include "BMP388.h"
+#include "flysky.h"
+
 
 
 extern float	roll,       pitch,      yaw,
 	   raw_roll,   raw_pitch,  raw_yaw,
+	   rollFs,     pitchFs,    yawFs,   hFs,
 	   ax,         ay,         az,
 	   gx,         gy,         gz,
 	   mx,         my,         mz,
@@ -23,6 +26,7 @@ extern float	roll,       pitch,      yaw,
 
 extern imu myIMU;
 
+extern fsReceiver myFS;
 
 extern bmp388 myBMP;
 extern float altitude;

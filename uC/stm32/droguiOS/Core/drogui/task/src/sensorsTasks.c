@@ -19,12 +19,13 @@ gps myGPS;
 kalman myKalman;
 optFlow myOF;
 rangeFinder myRange;
-fsReceiver myFs;
+fsReceiver myFS;
 
 filter filter_roll, filter_pitch, filter_yaw;
 
 float   roll,       pitch,      yaw,
 		raw_roll,   raw_pitch,  raw_yaw,
+		rollFs,     pitchFs,    yawFs,   hFs,
 		ax,         ay,         az,
 		gx,         gy,         gz,
 		mx,         my,         mz,
@@ -44,9 +45,7 @@ emaFilter ema_bmp;
 mvAvgFilter mvAvg_bmp;
 filter filter_z;
 int cfilt_z = 0;
-bool flag_channel = false;
-int offset_chan1 = 0, offset_chan2 = 0, 
-	offset_chan3 = 0, offset_chan4 = 0;
+
 
 void accelTask(){
 
@@ -103,24 +102,15 @@ void altitudeTask(){
 
 void flyskyTask(){
 
-	SENSOR_STATUS ret = readFsReceiver(&myFs);
+	SENSOR_STATUS ret = readFsReceiver(&myFS);
 
 	if(ret == OK){
 		
-		if(!flag_channel){
-			
-			offset_chan1 = myFs.channel_val[0];
-			offset_chan2 = myFs.channel_val[1];
-			offset_chan3 = myFs.channel_val[2];
-			offset_chan4 = myFs.channel_val[3];
+		rollFs  = myFS.channel_val[0];
+		pitchFs = myFS.channel_val[1];
+		yawFs   = myFS.channel_val[2];
+		hFs     = myFS.channel_val[3];
 
-			flag_channel = true;
-		}
-
-		setReg(CHANNEL_1, myFs.channel_val[0] - offset_chan1 );	
-		setReg(CHANNEL_2, myFs.channel_val[1] - offset_chan2 );	
-		setReg(CHANNEL_3, myFs.channel_val[2] - offset_chan3 );	
-		setReg(CHANNEL_4, myFs.channel_val[3] - offset_chan4 );	
 	}
 	else if( ret == CRASHED ){
 		serialPrint(SER_DBG, "FLYSKY Crashed\n");
@@ -288,8 +278,9 @@ void initSensorsTasks(){
 	initGPS(&myGPS, SER_GPS);
 	//initOptFlow(&myOF, SER_OPT);
 	initRangeFinder(&myRange, SER_RNG);
-	initFsReceiver(&myFs, &serial5);
-
+	initFsReceiver(&myFS, &serial5);
+	setReg(CAL_FS_TRG,1);
+	
 	calib_status = 0;
 
 	//initBmp388(&myBMP, 10);

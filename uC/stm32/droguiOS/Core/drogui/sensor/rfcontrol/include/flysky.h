@@ -36,9 +36,13 @@ typedef struct _fsPacket{
  */
 typedef struct _fsReceiver{
 	fsPacket rcv_pack;
-	int16_t channel_val[CHANNEL_NUM];
+	int16_t raw_channel_val[CHANNEL_NUM];
+	float channel_val[CHANNEL_NUM];
+	float max_val[CHANNEL_NUM];
+	float min_val[CHANNEL_NUM];
 	uint32_t threshold;
 	uint32_t last_tim;
+	int channel_offset[CHANNEL_NUM];
 } fsReceiver;
 
 typedef fsReceiver rfControl;
@@ -55,6 +59,8 @@ void initFsReceiver(fsReceiver *fsRec, serial *ser);
  * @param tera (Pointer of structure tRanger )
  * @return Distance (SENSOR_STATUS)
  */
+void calibrateFsReceiver(fsReceiver *fsRec);
+
 SENSOR_STATUS readFsReceiver(fsReceiver *fsRec);
 
 #endif

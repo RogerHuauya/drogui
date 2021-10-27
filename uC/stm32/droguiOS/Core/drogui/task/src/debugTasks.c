@@ -29,7 +29,8 @@ void debugTask(void *argument){
 	//serialPrintf(SER_DBG, "%f ", mah_roll*180/pi);//, mah_pitch*180/pi, mah_yaw*180/pi);
 	//serialPrintf(SER_DBG, "%f %f %f %f", vx_gps, vy_gps, vx, vy);
 	//serialPrintf(SER_DBG, "%f ", z*100);
-	serialPrintf(SER_DBG, "%f,%f,%f,%f", getReg(CHANNEL_1), getReg(CHANNEL_2), getReg(CHANNEL_3), getReg(CHANNEL_4) );	
+	//serialPrintf(SER_DBG, "Fsval %.3f,%.3f,%.3f,%.3f", myFS.channel_offset[0], myFS.channel_offset[1],myFS.channel_offset[2],myFS.channel_offset[3]);	
+	serialPrintf(SER_DBG, "%.3f,%.3f,%.3f,%.3f", rollFs, pitchFs, yawFs, hFs);	
 	serialPrintf(SER_DBG, "\n");
 	
 }
@@ -56,6 +57,7 @@ void securityTask(){
 		if(getReg(CAL_GYR_TRG) == 1) calibrateGyro(&myIMU),  setReg(CAL_GYR_TRG, 0);
 		if(getReg(CAL_ACC_TRG) == 1) calibrateAccel(&myIMU), setReg(CAL_ACC_TRG, 0);
 		if(getReg(CAL_MAG_TRG) == 1) calibrateMag(&myIMU),   setReg(CAL_MAG_TRG, 0);
+		if(getReg(CAL_FS_TRG) == 1)  calibrateFsReceiver(&myFS), setReg(CAL_FS_TRG, 0);
 		updateBmp388Offset(&myBMP);
 		calib_status = updateCalibOffset(&myIMU);
 	}
@@ -63,7 +65,7 @@ void securityTask(){
 
 void initDebug(){
 	state = SEC_STOP;
-	//addTask(&debugTask, 10000, 1);
+	addTask(&debugTask, 10000, 1);
 	addTask(&blinkTask, 100000, 1);
 	addTask(&securityTask, 1000, 1);
 }
