@@ -13,6 +13,7 @@
 
 pwm m1_test, m2_test, m3_test, m4_test;
 void _main(){
+    setReg(ROLL_VAL, 0x20);
     /**
      *
      * 1 4
@@ -26,21 +27,18 @@ void _main(){
     initPwm(&m3_test, &htim4, TIM_CHANNEL_3, &(htim4.Instance->CCR3));
     initPwm(&m4_test, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
+    HAL_Delay(1000);
     while(true){
         HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
 
-        //for(int i = 0; i < 5; i++ ) {
-			setPwm(&m1_test, 0); //2
-			setPwm(&m2_test, 30); //4
-			setPwm(&m3_test, 60); // 3
-			setPwm(&m4_test, 90);//1 
-			
-			HAL_Delay(2000); 
-			//setPwm(&m1_test, 0);
-		//}
-		//setPwm(&m2_test, 20); HAL_Delay(2000); setPwm(&m2_test, 0);
-        //setPwm(&m3_test, 20); HAL_Delay(2000); setPwm(&m3_test, 0);
-        //setPwm(&m4_test, 20); HAL_Delay(2000); setPwm(&m4_test, 0);
+        setPwm(&m4_test, 0); setPwm(&m1_test, 20); 
+        HAL_Delay(2000); 
+        setPwm(&m1_test, 0); setPwm(&m2_test, 20); 
+        HAL_Delay(2000); 
+        setPwm(&m2_test, 0); setPwm(&m3_test, 20); 
+        HAL_Delay(2000); 
+        setPwm(&m3_test, 0); setPwm(&m4_test, 20); 
+        HAL_Delay(2000); 
         HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
         HAL_Delay(1000);
     }
