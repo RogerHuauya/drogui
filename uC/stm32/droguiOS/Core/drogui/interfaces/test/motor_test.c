@@ -27,7 +27,16 @@ void _main(){
     initPwm(&m3_test, &htim4, TIM_CHANNEL_3, &(htim4.Instance->CCR3));
     initPwm(&m4_test, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
-    HAL_Delay(1000);
+    setPwm(&m1_test, 100);
+    setPwm(&m2_test, 100);
+    setPwm(&m3_test, 100);
+    setPwm(&m4_test, 100);
+    HAL_Delay(3000);
+    setPwm(&m1_test, 0);
+    setPwm(&m2_test, 0);
+    setPwm(&m3_test, 0);
+    setPwm(&m4_test, 0);
+    HAL_Delay(10000);
     while(true){
         HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
 
@@ -38,7 +47,7 @@ void _main(){
         setPwm(&m2_test, 0); setPwm(&m3_test, 20); 
         HAL_Delay(2000); 
         setPwm(&m3_test, 0); setPwm(&m4_test, 20); 
-        HAL_Delay(2000); 
+        HAL_Delay(1000); 
         HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
         HAL_Delay(1000);
     }
