@@ -13,7 +13,7 @@
 
 #define SER_DBG &serial3
 #define SER_RNG &serial2
-#define SER_OPT &serial4
+#define SER_FSK &serial4
 #define SER_GPS &serial5
 
 // kalman
@@ -29,4 +29,5 @@
 // radio control 
 // ------------
 #define FLYSKY
+
 #endif

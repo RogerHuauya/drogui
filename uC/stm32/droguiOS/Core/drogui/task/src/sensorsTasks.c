@@ -25,7 +25,7 @@ filter filter_roll, filter_pitch, filter_yaw;
 
 float   roll,       pitch,      yaw,
 		raw_roll,   raw_pitch,  raw_yaw,
-		rollFs,     pitchFs,    yawFs,   hFs,
+		roll_fs,     pitch_fs,    yaw_fs,   h_fs,
 		ax,         ay,         az,
 		gx,         gy,         gz,
 		mx,         my,         mz,
@@ -278,7 +278,7 @@ void initSensorsTasks(){
 	initGPS(&myGPS, SER_GPS);
 	//initOptFlow(&myOF, SER_OPT);
 	initRangeFinder(&myRange, SER_RNG);
-	initFsReceiver(&myFS, &serial5);
+	initFsReceiver(&myFS, SER_FSK);
 	setReg(CAL_FS_TRG,1);
 	
 	calib_status = 0;
@@ -298,5 +298,5 @@ void initSensorsTasks(){
 	addTask(&gpsTask, 125000, 3);
 	//addTask(&optTask, 10000, 1);
 	addTask(&rangeTask, 10000, 1);
-	addTask(&flyskyTask, 1000, 1);
+	addTask(&flyskyTask,10000, 1);
 }

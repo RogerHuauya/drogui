@@ -101,11 +101,14 @@ void wControlTask(){
 
 	if(state == DESCEND || state == CONTROL_LOOP){
 	
-		wroll_ref  = rollFs*10.0;
-		wpitch_ref = pitchFs*10.0;
-		wyaw_ref   = yawFs*10.0;
+#ifdef FLYSKY
+		wroll_ref  = roll_fs*10.0;
+		wpitch_ref = pitch_fs*10.0;
+		wyaw_ref   = yaw_fs*10.0;
 		
-		H_ref 	   = 10.0 + hFs*16.0;
+		H_ref 	   = 10.0 + h_fs*16.0;
+#endif
+
 		rampValue(&H, H_ref, 0.15);
 		H_comp = H/(cos(roll)*cos(pitch));
 		

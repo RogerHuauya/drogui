@@ -12,7 +12,7 @@
 
 extern float	roll,       pitch,      yaw,
 	   raw_roll,   raw_pitch,  raw_yaw,
-	   rollFs,     pitchFs,    yawFs,   hFs,
+	   roll_fs,     pitch_fs,    yaw_fs,   h_fs,
 	   ax,         ay,         az,
 	   gx,         gy,         gz,
 	   mx,         my,         mz,
