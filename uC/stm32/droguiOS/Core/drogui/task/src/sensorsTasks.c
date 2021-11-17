@@ -106,10 +106,10 @@ void flyskyTask(){
 
 	if(ret == OK){
 		
-		rollFs  = myFS.channel_val[0];
-		pitchFs = myFS.channel_val[1];
-		yawFs   = myFS.channel_val[2];
-		hFs     = myFS.channel_val[3];
+		roll_fs  = myFS.channel_val[0];
+		pitch_fs = myFS.channel_val[1];
+		h_fs   = myFS.channel_val[2];
+		yaw_fs     = myFS.channel_val[3];
 
 	}
 	else if( ret == CRASHED ){

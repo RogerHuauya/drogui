@@ -105,13 +105,7 @@ void wControlTask(){
 		wroll_ref  = roll_fs*10.0;
 		wpitch_ref = pitch_fs*10.0;
 		wyaw_ref   = yaw_fs*10.0;
-		
-		H_ref 	   = 10.0 + h_fs*16.0;
 #endif
-
-		rampValue(&H, H_ref, 0.15);
-		H_comp = H/(cos(roll)*cos(pitch));
-		
 		float wroll_err  = wroll_ref - gx;
 		float wpitch_err = wpitch_ref - gy;
 		float wyaw_err   = wyaw_ref - gz;
@@ -133,7 +127,7 @@ void wControlTask(){
 	}
 
 	if(state == ARM_MOTORS){
-		M1 = M2 = M3 = M4 = 30;
+		M1 = M2 = M3 = M4 = 10;
 		resetPid(&wroll_control, TIME);
 		resetPid(&wpitch_control, TIME);
 		resetPid(&wyaw_control, TIME);
@@ -229,6 +223,9 @@ void xyzControlTask(){
 		vy_ref = computePid(&y_control, y_ref - y, TIME, 0);
 
 		H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG);
+#ifdef FLYSKY
+		H_ref 	   = 1 + h_fs*16.0;
+#endif
 		rampValue(&H, H_ref, 0.15);
 		H_comp = H/(cos(roll)*cos(pitch));
 	}
@@ -260,7 +257,7 @@ void xyzControlTask(){
 			resetPid(&y_control, TIME),
 			resetPid(&z_control, TIME);
 
-		H = 10;
+		H = 1;
 		H_comp = H/(cos(roll)*cos(pitch));
 	}
 
