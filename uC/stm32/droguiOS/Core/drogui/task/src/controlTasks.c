@@ -29,17 +29,18 @@ float Ixx = 0, Iyy = 0;
 
 void saturateM(float H){
 	float f_max = 1;
-	/*
-	   float arr_M[] = {M1, M2, M3, M4};
-	   for(int i = 0; i < 4 ; i++){
-	   float delta = fmax(fmax(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
-	   f_max = fmax(f_max, fabs(arr_M[i] / (fabs(arr_M[i]) - delta + 0.0000001)) );
-	   }*/
-
-	M1 = sqrt(M1 / f_max + H);
-	M2 = sqrt(M2 / f_max + H);
-	M3 = sqrt(M3 / f_max + H);
-	M4 = sqrt(M4 / f_max + H);
+	
+	/*float arr_M[] = {M1, M2, M3, M4};
+	for(int i = 0; i < 4 ; i++){
+		float delta = fmax(fmax(arr_M[i] + H - 10000, -arr_M[i]-H), 0);
+		f_max = fmax(f_max, fabs(arr_M[i] / (fabs(arr_M[i]) - delta + 0.0000001)) );
+	}
+	*/
+	
+	M1 = sqrt(fmax(fmin(10000, M1 / f_max + H), 0));
+	M2 = sqrt(fmax(fmin(10000, M2 / f_max + H), 0));
+	M3 = sqrt(fmax(fmin(10000, M3 / f_max + H), 0));
+	M4 = sqrt(fmax(fmin(10000, M4 / f_max + H), 0));
 }
 
 
@@ -101,11 +102,6 @@ void wControlTask(){
 
 	if(state == DESCEND || state == CONTROL_LOOP){
 	
-#ifdef FLYSKY
-		wroll_ref  = roll_fs*10.0;
-		wpitch_ref = pitch_fs*10.0;
-		wyaw_ref   = yaw_fs*10.0;
-#endif
 		float wroll_err  = wroll_ref - gx;
 		float wpitch_err = wpitch_ref - gy;
 		float wyaw_err   = wyaw_ref - gz;
@@ -119,7 +115,9 @@ void wControlTask(){
 		M3 = - R  + P - Y;
 		M4 = + R  + P + Y;
 
+		//serialPrintf(SER_DBG, "%.3f, ", M1);
 		saturateM(H_comp*100);
+		//serialPrintf(SER_DBG, "%.3f \n", M1);
 	}
 
 	if(state == SEC_STOP){
@@ -133,6 +131,7 @@ void wControlTask(){
 		resetPid(&wyaw_control, TIME);
 	}
 
+	//serialPrintf(SER_DBG, "%.3f, %.3f, %.3f, %.3f \n", H_comp, state*1.0, M1, M2);
 	setPwm(&m1, fmin(fmax(M1,0), 100));
 	setPwm(&m2, fmin(fmax(M2,0), 100));
 	setPwm(&m3, fmin(fmax(M3,0), 100));
@@ -170,9 +169,15 @@ void rpyControlTask(){
 			setTrayectory(&yaw_sp, yaw_sp.fin, getReg(YAW_REF), getReg(YAW_PERIOD), TIME);
 		yaw_ref =  getSetpoint(&yaw_sp, TIME);
 			
+#ifdef FLYSKY
+		roll_ref  = roll_fs*10.0*pi/180;
+		pitch_ref = pitch_fs*10.0*pi/180;
+		yaw_ref   = yaw_fs*10.0*pi/180;
+#endif
 		wroll_ref = computePid(&roll2w, angle_dif(roll_ref, roll), TIME, 0);
 		wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0);
 		wyaw_ref = computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);
+
 	}
 
 	if(state == SEC_STOP){
@@ -222,10 +227,11 @@ void xyzControlTask(){
 		vx_ref = computePid(&x_control, x_ref - x, TIME, 0);
 		vy_ref = computePid(&y_control, y_ref - y, TIME, 0);
 
-		H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG);
 #ifdef FLYSKY
-		H_ref 	   = 1 + h_fs*16.0;
+		//H_ref 	   = 1 + h_fs*30.0;
+		z_ref = h_fs*0.5;
 #endif
+		H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG);
 		rampValue(&H, H_ref, 0.15);
 		H_comp = H/(cos(roll)*cos(pitch));
 	}
@@ -320,7 +326,7 @@ void initControlTasks(){
 
 	initPidFilter(&roll2w,  500, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
 	initPidFilter(&pitch2w, 300, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
-	initPidFilter(&yaw2w,    50,   0,  0, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+	initPidFilter(&yaw2w,    0,   0,  0, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
 
 	initPidFilter(&wroll_control,   8, 500, 16, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
 	initPidFilter(&wpitch_control,  8, 500, 16, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );

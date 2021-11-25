@@ -30,7 +30,10 @@ void debugTask(void *argument){
 	//serialPrintf(SER_DBG, "%f %f %f %f", vx_gps, vy_gps, vx, vy);
 	//serialPrintf(SER_DBG, "%f ", z*100);
 	//serialPrintf(SER_DBG, "Fsval %.3f,%.3f,%.3f,%.3f", myFS.channel_offset[0], myFS.channel_offset[1],myFS.channel_offset[2],myFS.channel_offset[3]);	
-	serialPrintf(SER_DBG, "%.3f,%.3f,%.3f,%.3f, %d", roll_fs, pitch_fs, yaw_fs, h_fs, state);	
+	//serialPrintf(SER_DBG, "%.3f,%.3f,%.3f,%.3f, %d", roll_fs, pitch_fs, yaw_fs, h_fs, state);	
+	//serialPrintf(SER_DBG, "%.3f, %.3f, %.3f, %.3f", );
+	//serialPrintf(SER_DBG, "%d, %.3f, %.3f, %.3f ", state, roll_ref, pitch_ref, yaw_ref);
+	serialPrintf(SER_DBG, "%f ", z_ref);
 	serialPrintf(SER_DBG, "\n");
 	
 }
