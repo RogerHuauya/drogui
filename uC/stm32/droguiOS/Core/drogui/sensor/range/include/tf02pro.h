@@ -26,11 +26,12 @@ typedef struct _tfPacket{
 /**
  * @brief Structure TeraRanger
  * @param rcv_pack Packet to be read (tRPacket)
- * @param distance Distance read by TeraRanger (uint16_t)
+ * @param distance Distance read by TF02Pro	 (uint16_t)
  */
 typedef struct _tf02{
 	tfPacket rcv_pack;
 	uint16_t distance;
+	uint16_t offset;
 	uint16_t strength;
 	uint8_t credibility;
 	uint32_t threshold;

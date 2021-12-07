@@ -144,7 +144,7 @@ void gpsTask(){
 		setReg(GPS_VY, vy_gps);
 		//setReg(GPS_CNT, myGPS.cnt++);
 	}
-	else if( ret == CRASHED ){
+		else if( ret == CRASHED ){
 		serialPrint(SER_DBG, "GPS Crashed\n");
 		if(state == ARM_MOTORS || state == CONTROL_LOOP)
 			state = DESCEND;
@@ -174,7 +174,7 @@ void rangeTask(){
 	SENSOR_STATUS ret = readRangeFinder(&myRange);
 
 	if(ret == OK)
-		z_rng = myRange.distance/1000.0;
+		z_rng = (myRange.distance - myRange.offset)/1000.0;
 	else if(ret == CRASHED){
 		serialPrint(SER_DBG, "Range Crashed\n");
 		if(state == ARM_MOTORS || state == CONTROL_LOOP)

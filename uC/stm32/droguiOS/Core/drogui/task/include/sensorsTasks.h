@@ -7,6 +7,7 @@
 #include "utils.h"
 #include "BMP388.h"
 #include "flysky.h"
+#include "rangeFinder.h"
 
 
 
@@ -25,7 +26,7 @@ extern float	roll,       pitch,      yaw,
 
 
 extern imu myIMU;
-
+extern rangeFinder myRange;
 extern fsReceiver myFS;
 
 extern bmp388 myBMP;

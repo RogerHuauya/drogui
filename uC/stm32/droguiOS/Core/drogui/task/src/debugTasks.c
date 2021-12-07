@@ -33,7 +33,20 @@ void debugTask(void *argument){
 	//serialPrintf(SER_DBG, "%.3f,%.3f,%.3f,%.3f, %d", roll_fs, pitch_fs, yaw_fs, h_fs, state);	
 	//serialPrintf(SER_DBG, "%.3f, %.3f, %.3f, %.3f", );
 	//serialPrintf(SER_DBG, "%d, %.3f, %.3f, %.3f ", state, roll_ref, pitch_ref, yaw_ref);
-	serialPrintf(SER_DBG, "%f ", z_ref);
+	/*
+	if(serialAvailable(SER_DBG)){
+		char command = serialRead(SER_DBG);
+		serialPrintf(SER_DBG, "%c ", command);
+		switch (command){
+			case 'A': setReg(ARM, 1.0);
+			case 'S': setReg(START, 1.0);
+			case 'D': setReg(STOP, 1.0);
+			
+		}
+	}
+	*/
+	serialPrintf(SER_DBG, "%d %.3f %.3f %.3f",state, getReg(YAW_U), wyaw_ref, gz);
+	//serialPrintf(SER_DBG, "%f ", z_ref);
 	serialPrintf(SER_DBG, "\n");
 	
 }
@@ -57,7 +70,7 @@ void securityTask(){
 	if(state == SEC_STOP || state == DESCEND){
 		updatePID();
 
-		if(getReg(CAL_GYR_TRG) == 1) calibrateGyro(&myIMU),  setReg(CAL_GYR_TRG, 0);
+		if(getReg(CAL_GYR_TRG) == 1) calibrateGyro(&myIMU), myRange.offset = myRange.distance;  setReg(CAL_GYR_TRG, 0);
 		if(getReg(CAL_ACC_TRG) == 1) calibrateAccel(&myIMU), setReg(CAL_ACC_TRG, 0);
 		if(getReg(CAL_MAG_TRG) == 1) calibrateMag(&myIMU),   setReg(CAL_MAG_TRG, 0);
 		if(getReg(CAL_FS_TRG) == 1)  calibrateFsReceiver(&myFS), setReg(CAL_FS_TRG, 0);

@@ -18,6 +18,7 @@ void initRangeFinder(tf02 *tf, serial *ser){
 	//changeBaudrate(ser, 256000);
 
 	tf->distance = 0;
+	tf->offset = 0;
 	tf->rcv_pack.ser = ser;
 	tf->rcv_pack.chksum = 0;
 	tf->last_tim = TIME;
