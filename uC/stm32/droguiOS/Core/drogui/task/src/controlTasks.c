@@ -326,11 +326,11 @@ void initControlTasks(){
 
 	initPidFilter(&roll2w,  500, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
 	initPidFilter(&pitch2w, 300, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
-	initPidFilter(&yaw2w,    50,   0,  0, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+	initPidFilter(&yaw2w,    50, -1000,  0, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
 
 	initPidFilter(&wroll_control,   8, 500, 16, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
 	initPidFilter(&wpitch_control,  8, 500, 16, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
-	initPidFilter(&wyaw_control,   10, 500, 30, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+	initPidFilter(&wyaw_control,   20, 500, 30, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
 
 	initFilter(&filter_wroll, 4, k_1_20, v_1_20);
 	initFilter(&filter_wpitch, 4, k_1_20, v_1_20);
