@@ -31,8 +31,7 @@ void debugTask(void *argument){
 	//serialPrintf(SER_DBG, "%f ", z*100);
 	//serialPrintf(SER_DBG, "Fsval %.3f,%.3f,%.3f,%.3f", myFS.channel_offset[0], myFS.channel_offset[1],myFS.channel_offset[2],myFS.channel_offset[3]);	
 	//serialPrintf(SER_DBG, "%.3f,%.3f,%.3f,%.3f, %d", roll_fs, pitch_fs, yaw_fs, h_fs, state);	
-	//serialPrintf(SER_DBG, "%.3f, %.3f, %.3f, %.3f", );
-	//serialPrintf(SER_DBG, "%d, %.3f, %.3f, %.3f ", state, roll_ref, pitch_ref, yaw_ref);
+	serialPrintf(SER_DBG, "%.3f, %.3f, %.3f, %.3f, %.3f, %.3f", roll_ref, pitch_ref, vx, vy, vx_ref, vy_ref);
 	/*
 	if(serialAvailable(SER_DBG)){
 		char command = serialRead(SER_DBG);
@@ -45,7 +44,8 @@ void debugTask(void *argument){
 		}
 	}
 	*/
-	serialPrintf(SER_DBG, "%d %.3f %.3f %.3f",state, getReg(YAW_U), wyaw_ref, gz);
+	//serialPrintf(SER_DBG, "%d %.3f %.3f %.3f",state, getReg(YAW_U), wyaw_ref, gz);
+	serialPrintf(SER_DBG, "%d ",state);
 	//serialPrintf(SER_DBG, "%f ", z_ref);
 	serialPrintf(SER_DBG, "\n");
 	
@@ -81,7 +81,7 @@ void securityTask(){
 
 void initDebug(){
 	state = SEC_STOP;
-	addTask(&debugTask, 10000, 1);
+	//addTask(&debugTask, 10000, 1);
 	addTask(&blinkTask, 100000, 1);
 	addTask(&securityTask, 1000, 1);
 }

@@ -170,10 +170,11 @@ void rpyControlTask(){
 		yaw_ref =  getSetpoint(&yaw_sp, TIME);
 			
 #ifdef FLYSKY
-		roll_ref  = roll_fs*10.0*pi/180;
-		pitch_ref = pitch_fs*10.0*pi/180;
+		//roll_ref  = roll_fs*10.0*pi/180;
+		//pitch_ref = pitch_fs*10.0*pi/180;
 		yaw_ref   = yaw_fs*10.0*pi/180;
 #endif
+
 		wroll_ref = computePid(&roll2w, angle_dif(roll_ref, roll), TIME, 0);
 		wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0);
 		wyaw_ref = computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);
@@ -226,11 +227,16 @@ void xyzControlTask(){
 
 		vx_ref = computePid(&x_control, x_ref - x, TIME, 0);
 		vy_ref = computePid(&y_control, y_ref - y, TIME, 0);
+		serialPrintf(SER_DBG, "%.3f %.3f\n", xp_control.errd, yp_control.errd);
 
 #ifdef FLYSKY
 		//H_ref 	   = 1 + h_fs*30.0;
+		vy_ref = -roll_fs;
+		vx_ref = pitch_fs;
+
 		z_ref = h_fs*0.5;
 #endif
+		//serialPrintf(SER_DBG, "%.3f, %.3f \n", vx_ref, vy_ref);
 		H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG);
 		rampValue(&H, H_ref, 0.15);
 		H_comp = H/(cos(roll)*cos(pitch));

@@ -1,6 +1,5 @@
 #include "macros.h"
 
-#ifdef FLYSKY
 
 #include "flysky.h"
 #include "serial.h"
@@ -97,4 +96,3 @@ void calibrateFsReceiver(fsReceiver *fsRec){
 	}
 }
 
-#endif

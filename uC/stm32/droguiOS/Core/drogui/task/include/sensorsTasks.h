@@ -28,7 +28,6 @@ extern float	roll,       pitch,      yaw,
 extern imu myIMU;
 extern rangeFinder myRange;
 extern fsReceiver myFS;
-
 extern bmp388 myBMP;
 extern float altitude;
 

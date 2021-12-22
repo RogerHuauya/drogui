@@ -1,6 +1,5 @@
 #include "macros.h"
 
-#ifdef FLYSKY
 
 #ifndef FLYSKY_H
 #define FLYSKY_H
@@ -63,5 +62,4 @@ void calibrateFsReceiver(fsReceiver *fsRec);
 
 SENSOR_STATUS readFsReceiver(fsReceiver *fsRec);
 
-#endif
 #endif

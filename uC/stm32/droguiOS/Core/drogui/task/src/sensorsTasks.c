@@ -278,8 +278,8 @@ void initSensorsTasks(){
 	initGPS(&myGPS, SER_GPS);
 	//initOptFlow(&myOF, SER_OPT);
 	initRangeFinder(&myRange, SER_RNG);
-	initFsReceiver(&myFS, SER_FSK);
-	setReg(CAL_FS_TRG,1);
+	//initFsReceiver(&myFS, SER_FSK);
+	//setReg(CAL_FS_TRG,1);
 	
 	calib_status = 0;
 
@@ -298,5 +298,5 @@ void initSensorsTasks(){
 	addTask(&gpsTask, 125000, 3);
 	//addTask(&optTask, 10000, 1);
 	addTask(&rangeTask, 10000, 1);
-	addTask(&flyskyTask,10000, 1);
+	//addTask(&flyskyTask,10000, 1);
 }
