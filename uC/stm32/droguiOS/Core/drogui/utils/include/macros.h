@@ -28,6 +28,6 @@
 
 // radio control 
 // ------------
-//#define FLYSKY
+#define FLYSKY
 
 #endif
