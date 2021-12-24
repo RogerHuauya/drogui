@@ -64,7 +64,7 @@ void resetPid(pid* p, uint32_t ti);
  * @param osat Output saturation (float)
  * @param tipo PID Type NORMAL-P2ID-INDEXED-PIDABS-D_FILTER
 */
-void initPid(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float isat,float osat, int tipo );
+void initPid(pid* p, float kp, float ki, float kd,uint32_t ti, float N, float isat,float osat, int tipo );
 /**
  * @brief Initialize PID-(Derivative term Filter) Structure
  * @param p PID (pointer to struct pid)
@@ -79,6 +79,6 @@ void initPid(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float is
  * @param a Denominator elements (float*)
  * @param b Numerator elements (float*)
 */
-void initPidFilter(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float isat,float osat,int tipo, int n, float*a, float*b);
+void initPidFilter(pid* p, float kp, float ki, float kd,uint32_t ti, float N, float isat,float osat,int tipo, int n, float*a, float*b);
 
 #endif

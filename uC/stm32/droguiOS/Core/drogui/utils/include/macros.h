@@ -28,6 +28,10 @@
 
 // radio control 
 // ------------
-#define FLYSKY
+#define FLY_RPY 1
+#define FLY_WRPY 2
+#define FLY_XYP 3
+#define FLY_XY 4
+#define FLYSKY FLY_RPY
 
 #endif
