@@ -70,7 +70,7 @@ void securityTask(){
 	if(state == SEC_STOP || state == DESCEND){
 		updatePID();
 
-		if(getReg(CAL_GYR_TRG) == 1) calibrateGyro(&myIMU), myRange.offset = myRange.distance;  setReg(CAL_GYR_TRG, 0);
+		if(getReg(CAL_GYR_TRG) == 1) calibrateGyro(&myIMU), myRange.offset = myRange.distance,  setReg(CAL_GYR_TRG, 0);
 		if(getReg(CAL_ACC_TRG) == 1) calibrateAccel(&myIMU), setReg(CAL_ACC_TRG, 0);
 		if(getReg(CAL_MAG_TRG) == 1) calibrateMag(&myIMU),   setReg(CAL_MAG_TRG, 0);
 		if(getReg(CAL_FS_TRG) == 1)  calibrateFsReceiver(&myFS), setReg(CAL_FS_TRG, 0);

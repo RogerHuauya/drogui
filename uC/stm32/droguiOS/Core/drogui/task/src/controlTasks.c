@@ -102,6 +102,12 @@ void wControlTask(){
 
 	if(state == DESCEND || state == CONTROL_LOOP){
 	
+	#if defined(FLYSKY) && FLYSKY==FLY_WRPY
+		wroll_ref  = roll_fs*10.0*pi/180;
+		wpitch_ref = pitch_fs*10.0*pi/180;
+		wyaw_ref   = yaw_fs*10.0*pi/180;
+	#endif
+
 		float wroll_err  = wroll_ref - gx;
 		float wpitch_err = wpitch_ref - gy;
 		float wyaw_err   = wyaw_ref - gz;
@@ -170,11 +176,12 @@ void rpyControlTask(){
 		yaw_ref =  getSetpoint(&yaw_sp, TIME);
 			
 #ifdef FLYSKY
-		//roll_ref  = roll_fs*10.0*pi/180;
-		//pitch_ref = pitch_fs*10.0*pi/180;
 		yaw_ref   = yaw_fs*10.0*pi/180;
+	#if FLYSKY==FLY_RPY
+		roll_ref  = roll_fs*10.0*pi/180;
+		pitch_ref = pitch_fs*10.0*pi/180;
+	#endif
 #endif
-
 		wroll_ref = computePid(&roll2w, angle_dif(roll_ref, roll), TIME, 0);
 		wpitch_ref = computePid(&pitch2w, angle_dif(pitch_ref, pitch),TIME, 0);
 		wyaw_ref = computePid(&yaw2w, angle_dif(yaw_ref, yaw),TIME, 0);
@@ -225,18 +232,18 @@ void xyzControlTask(){
 			setTrayectory(&z_sp, z_sp.fin, getReg(Z_REF), getReg(Z_PERIOD), TIME);
 		z_ref =  getSetpoint(&z_sp, TIME);
 
+#ifdef FLYSKY
+		z_ref = h_fs*0.5;
+
+	#if FLYSKY==FLYXY
+		y_ref = -roll_fs*2;
+		x_ref = pitch_fs*2;
+	#endif
+#endif
 		vx_ref = computePid(&x_control, x_ref - x, TIME, 0);
 		vy_ref = computePid(&y_control, y_ref - y, TIME, 0);
 		serialPrintf(SER_DBG, "%.3f %.3f\n", xp_control.errd, yp_control.errd);
 
-#ifdef FLYSKY
-		//H_ref 	   = 1 + h_fs*30.0;
-		vy_ref = -roll_fs;
-		vx_ref = pitch_fs;
-
-		z_ref = h_fs*0.5;
-#endif
-		//serialPrintf(SER_DBG, "%.3f, %.3f \n", vx_ref, vy_ref);
 		H_ref = computePid(&z_control, z_ref - z, TIME,0) + getReg(Z_MG);
 		rampValue(&H, H_ref, 0.15);
 		H_comp = H/(cos(roll)*cos(pitch));
@@ -287,6 +294,10 @@ void xyzControlTask(){
 
 void xypControlTask(){
 	if(state == CONTROL_LOOP){
+#if defined(FLYSKY) && FLYSKY==FLY_XYP
+		vy_ref = -roll_fs;
+		vx_ref = pitch_fs;
+#endif
 		xp_ref  = vx_ref*cos(raw_yaw) + vy_ref*sin(raw_yaw);
 		yp_ref =  -vx_ref*sin(raw_yaw) + vy_ref*cos(raw_yaw);
 
@@ -326,17 +337,17 @@ void initControlTasks(){
 	initPid(&xp_control,  0.25, 0, 0, 0, 50 , 5, ANG_MAX, D_SG);
 	initPid(&yp_control,  0.25, 0, 0, 0, 50 , 5, ANG_MAX, D_SG);
 
-	initPid(&z_control,  10, 750,    2, 0, 50 , 10, 45, D_SG);
-	initPid(&x_control, 0.1, 0.2, 0, 0, 50 , 2, 1, D_SG);
-	initPid(&y_control, 0.1, 0.2, 0, 0, 50 , 2, 1, D_SG);
+	initPid(&z_control,  10,    2, 750, 0, 50 , 10, 45, D_SG);
+	initPid(&x_control, 0.1, 0, 0.2, 0, 50 , 2, 1, D_SG);
+	initPid(&y_control, 0.1, 0, 0.2, 0, 50 , 2, 1, D_SG);
 
-	initPidFilter(&roll2w,  500, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
-	initPidFilter(&pitch2w, 300, -1000, 20, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
-	initPidFilter(&yaw2w,    50, -1000,  0, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+	initPidFilter(&roll2w,  500, 20, -1000, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+	initPidFilter(&pitch2w, 300, 20, -1000, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
+	initPidFilter(&yaw2w,    50,  0, -1000, TIME, 50, pi/9, 3000, (D_SG | D_FILTER), 4, k_1_20, v_1_20 );
 
-	initPidFilter(&wroll_control,   5, 500, 10, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
-	initPidFilter(&wpitch_control,  5, 500, 10, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
-	initPidFilter(&wyaw_control,   20, 500, 30, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+	initPidFilter(&wroll_control,   5, 10, 500, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+	initPidFilter(&wpitch_control,  5, 10, 500, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
+	initPidFilter(&wyaw_control,   20, 30, 500, TIME, 50, 80, 3000, ( D_SG | D_FILTER),  6, k_1_10, v_1_10 );
 
 	initFilter(&filter_wroll, 4, k_1_20, v_1_20);
 	initFilter(&filter_wpitch, 4, k_1_20, v_1_20);

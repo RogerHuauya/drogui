@@ -131,7 +131,7 @@ void resetPid(pid* p, uint32_t ti){
     p->u_ant = 0;
 }
 
-void initPid(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float isat, float osat, int type){
+void initPid(pid* p, float kp, float ki, float kd,uint32_t ti, float N, float isat, float osat, int type){
     for(int i = 0; i < 5; i++){
         p->kp[i] = kp;
         p->kd[i] = kd;
@@ -148,7 +148,7 @@ void initPid(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float is
     initSavGolDFilter(&(p->sgd), 13);
 }
 
-void initPidFilter(pid* p, float kp, float kd, float ki,uint32_t ti, float N, float isat, float osat, int type,int n, float* a , float*b ){
+void initPidFilter(pid* p, float kp, float ki, float kd,uint32_t ti, float N, float isat, float osat, int type,int n, float* a , float*b ){
 
     for(int i = 0; i < 5; i++){
         p->kp[i] = kp;
