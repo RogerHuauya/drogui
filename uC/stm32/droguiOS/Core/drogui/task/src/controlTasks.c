@@ -227,7 +227,9 @@ void xyzControlTask(){
 
 		vx_ref = computePid(&x_control, x_ref - x, TIME, 0);
 		vy_ref = computePid(&y_control, y_ref - y, TIME, 0);
-		serialPrintf(SER_DBG, "%.3f %.3f\n", xp_control.errd, yp_control.errd);
+		//serialPrintf(SER_DBG, "%.3f %.3f\n", xp_control.errd, yp_control.errd);
+		setReg(MOTOR_1, xp_control.errd);
+		setReg(MOTOR_2, yp_control.errd);
 
 #ifdef FLYSKY
 		//H_ref 	   = 1 + h_fs*30.0;
