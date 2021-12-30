@@ -2,5 +2,7 @@
 *.bin
 *.hex
 *.bin
+*.asv
+*.autosave
 .vscode/
 build/
