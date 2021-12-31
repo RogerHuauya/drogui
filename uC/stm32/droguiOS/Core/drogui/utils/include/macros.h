@@ -18,8 +18,8 @@
 
 // kalman
 // ------
-#define KALMANP
-//#define KALMANPV
+//#define KALMANP
+#define KALMANPV
 
 // range finder
 // ------------

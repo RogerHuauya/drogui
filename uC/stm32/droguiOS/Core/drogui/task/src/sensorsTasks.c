@@ -251,8 +251,8 @@ void xyzTask(){
 	setReg(Y_VAL, y);
 	setReg(Z_VAL, z);
 
-	setReg(XP_VAL, xp);
-	setReg(YP_VAL, yp);
+	setReg(XP_VAL, vx);
+	setReg(YP_VAL, vy);
 }
 
 void initSensorsTasks(){
