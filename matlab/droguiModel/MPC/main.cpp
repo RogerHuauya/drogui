@@ -30,6 +30,11 @@ float cost(float kp, float ki, float kd){
 	float J;
 	float w[4] = {1, 1, 0.6, 0.2};
 
+	initPid(&roll_ctrl, 10, 0, 2, 0, 50, 100000,1000000);
+	initPid(&pitch_ctrl, 10, 0, 2, 0, 50, 10000,1000000);
+	initPid(&yaw_ctrl, 20, 1, 10, 0, 50, 10000,1000000);
+	initPid(&z_ctrl, 15, 8, 10, 0, 50, 10000,10000000);
+
 	for(float tim = dt ; tim < 0.5; tim += dt){
 
 		R = computePid(&roll_ctrl, sp[0] - local.a[0], tim, 0);
@@ -64,10 +69,6 @@ float cost(float kp, float ki, float kd){
 int main(){
 	float dt = 0.001;
 	initModel(&drogui);
-	initPid(&roll_ctrl, 10, 0, 2, 0, 50, 100000,1000000);
-	initPid(&pitch_ctrl, 10, 0, 2, 0, 50, 10000,1000000);
-	initPid(&yaw_ctrl, 20, 1, 10, 0, 50, 10000,1000000);
-	initPid(&z_ctrl, 15, 8, 10, 0, 50, 10000,10000000);
 
 	float u[4];
 	float sp[4] = {0.1 ,pi/6, pi/2, 1};
