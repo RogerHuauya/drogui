@@ -4,6 +4,7 @@
 *.bin
 *.asv
 *.autosave
+*slxc
 .vscode/
 build/
 slprj/
