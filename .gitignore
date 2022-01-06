@@ -5,6 +5,8 @@
 *.asv
 *.autosave
 *slxc
+*.aux
+*.log
 .vscode/
 build/
 slprj/

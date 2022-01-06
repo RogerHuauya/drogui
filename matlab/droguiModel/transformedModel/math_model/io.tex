@@ -1,0 +1,112 @@
+\documentclass[varwidth,margin=3mm]{standalone}
+\usepackage{amsmath}
+\begin{document}
+\section{Teoria de IO Linealizacion}
+\begin{gather*}
+	%
+	f(x) = \left [ 
+	\begin{matrix}
+		L^{r{1}}_fh_1\\
+		\vdots\\
+		L^{r{p}}_fh_p\\
+	\end{matrix}
+	\right ]
+	%
+	\\
+	\\
+	%
+	G(x) = 
+	\left [ 
+	\begin{matrix}
+		%
+		L_{g{1}}\left(L^{r_1-1}_fh_1\right)  & \hdots  & L_{g{p}}\left(L^{r_1-1}_fh_1\right)  & \\
+		\vdots  & \ddots & \vdots  & \\
+		L_{g{1}}\left(L^{r_p-1}_fh_p\right)  & \hdots  & L_{g{p}}\left(L^{r_p-1}_fh_p\right) & \\
+		%
+	\end{matrix}
+	\right ]
+	%
+\end{gather*}
+\begin{gather*}
+	%
+	f(x) = \left [ 
+	\begin{matrix}
+		L^2_fx_1\\
+		L^2_fx_2\\
+		L^2_fx_3\\
+		L^2_fx_9\\
+	\end{matrix}
+	\right ]
+	= \left [ 
+	\begin{matrix}
+		L_fx_4\\
+		L_fx_5\\
+		L_fx_6\\
+		L_fx_{12}\\
+	\end{matrix}
+	\right ]
+	= \left [ 
+	\begin{matrix}
+		- 0.77*x_5*x_6\\
+		+ 0.78*x_4*x_6\\
+		- 0.011*x_5*x_4\\
+		0\\
+	\end{matrix}
+	\right ]
+	%
+	\\
+	\\
+	%
+	G(x) = 
+	\left [ 
+	\begin{matrix}
+		%
+		L_{g{1}}\left(L^{1}_fh_1\right)  & L_{g{2}}\left(L^{1}_fh_1\right) & L_{g{3}}\left(L^{1}_fh_1\right)& L_{g{4}}\left(L^{1}_fh_1\right)  & \\
+		L_{g{1}}\left(L^{1}_fh_2\right)  & L_{g{2}}\left(L^{1}_fh_2\right) & L_{g{3}}\left(L^{1}_fh_2\right)& L_{g{4}}\left(L^{1}_fh_2\right)  & \\
+		L_{g{1}}\left(L^{1}_fh_3\right)  & L_{g{2}}\left(L^{1}_fh_3\right) & L_{g{3}}\left(L^{1}_fh_3\right)& L_{g{4}}\left(L^{1}_fh_3\right)  & \\
+		L_{g{1}}\left(L^{1}_fh_4\right)  & L_{g{2}}\left(L^{1}_fh_4\right) & L_{g{3}}\left(L^{1}_fh_4\right)& L_{g{4}}\left(L^{1}_fh_4\right)  & \\
+		%
+	\end{matrix}
+	\right ]
+	\\
+	\\
+	= 
+	\left [ 
+	\begin{matrix}
+		%
+		L_{g{1}}x_4  & L_{g{2}}x_4 & L_{g{3}}x_4& L_{g{4}}x_4  & \\
+		L_{g{1}}x_5  & L_{g{2}}x_5 & L_{g{3}}x_5& L_{g{4}}x_5  & \\
+		L_{g{1}}x_6  & L_{g{2}}x_6 & L_{g{3}}x_6& L_{g{4}}x_6  & \\
+		L_{g{1}}x_{12}  & L_{g{2}}x_{12} & L_{g{3}}x_{12}& L_{g{4}}x_{12}  & \\
+		%
+	\end{matrix}
+	\right ]
+	\\
+	\\
+	= 
+	\left [ 
+	\begin{matrix}
+		%
+		10  & 0 & 0 & 0  & \\
+		0  & 10 & 0 & 0  & \\
+		0  & 0 & 5.8 & 0  & \\
+		0  & 0 & 0 & 0.29*cos(x_2)*cos(x_1)  & \\
+		%
+	\end{matrix}
+	\right ]
+	\\
+	\\
+	G^{-1}(x)= 
+	\left [ 
+	\begin{matrix}
+		%
+		0.1  & 0 & 0 & 0  & \\
+		0  & 0.1 & 0 & 0  & \\
+		0  & 0 & 0.172 & 0  & \\
+		0  & 0 & 0 & \frac{3.45}{(cos(x_2)*cos(x_1))}  & \\
+		%
+	\end{matrix}
+	\right ]
+	%
+\end{gather*}
+\end{document}
