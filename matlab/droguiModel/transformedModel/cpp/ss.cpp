@@ -2,28 +2,29 @@
 #include "ss.hpp"
 using namespace std;
 
-void updateU(droneModel *dm, double in[4]){
+void updateFM(droneModel *dm, float in[4]){
 	for(int i = 0 ; i < 4; i++){
-		(dm->U[i]) = in[i];
+		(dm->F[i]) = 9.81/1000*(-0.0026*in[i]*in[i]*in[i] + 0.4892*in[i]*in[i] - 4.2855*in[i] + 0.8182);
+		(dm->M[i]) = 0.05*(dm->F[i]);
 	}
 }
 
 void updateAPP(droneModel *dm){
-	(dm->app[0]) = 15*(dm->U[0]) - 0.8*(dm->ap[1])*(dm->ap[2]);
-	(dm->app[1]) = 12*(dm->U[1]) + 1.9*(dm->ap[0])*(dm->ap[2]);
-	(dm->app[2]) = 7*(dm->U[2]) - 0.02*(dm->ap[1])*(dm->ap[0]);
+	(dm->app[0]) = 4.2*(dm->F[0]) - 4.2*(dm->F[1]) - 4.2*(dm->F[2]) + 4.2*(dm->F[3]) - 0.77*(dm->ap[1])*(dm->ap[2]);
+	(dm->app[1]) = 4.1*(dm->F[2]) - 4.1*(dm->F[1]) - 4.1*(dm->F[0]) + 4.1*(dm->F[3]) + 0.78*(dm->ap[0])*(dm->ap[2]);
+	(dm->app[2]) = 5.8*(dm->M[1]) - 5.8*(dm->M[0]) - 5.8*(dm->M[2]) + 5.8*(dm->M[3]) - 0.011*(dm->ap[1])*(dm->ap[0]);
 }
 
 void updateXpp(droneModel *dm){
-	(dm->rpp[0]) = 0.29*(sin((dm->a[0]))*sin((dm->a[2])) + cos((dm->a[0]))*cos((dm->a[2]))*sin((dm->a[1])))*((dm->U[3]));
-	(dm->rpp[1]) =-0.29*(cos((dm->a[2]))*sin((dm->a[0])) - 1.0*cos((dm->a[0]))*sin((dm->a[1]))*sin((dm->a[2])))*((dm->U[3]));
-	(dm->rpp[2]) = 0.29*cos((dm->a[1]))*cos((dm->a[0]))*((dm->U[3])) - 9.8;
+	(dm->rpp[0]) = 0.29*(sin((dm->a[0]))*sin((dm->a[2])) + cos((dm->a[0]))*cos((dm->a[2]))*sin((dm->a[1])))*((dm->F[0]) + (dm->F[1]) + (dm->F[2]) + (dm->F[3]));
+	(dm->rpp[1]) =-0.29*(cos((dm->a[2]))*sin((dm->a[0])) - 1.0*cos((dm->a[0]))*sin((dm->a[1]))*sin((dm->a[2])))*((dm->F[0]) + (dm->F[1]) + (dm->F[2]) + (dm->F[3]));
+	(dm->rpp[2]) = 0.29*cos((dm->a[1]))*cos((dm->a[0]))*((dm->F[0]) + (dm->F[1]) + (dm->F[2]) + (dm->F[3])) - 9.8;
 }
 
 
-void computeModel(droneModel *dm, double u[4], double dt){
+void computeModel(droneModel *dm, float u[4], float dt){
 
-		updateU(dm, u);
+		updateFM(dm, u);
 		updateAPP(dm);
 	
 		for(int i = 0 ; i < 3; i++)
@@ -40,12 +41,12 @@ void computeModel(droneModel *dm, double u[4], double dt){
 		for(int i = 0 ; i < 3; i++)
 			(dm->r[i]) += (dm->rp[i])*dt;
 
-		printf("%f\t%f\t%f\t%f\n", (dm->a[0])*180/pi, (dm->a[1])*180/pi, (dm->a[2])*180/pi, (dm->ap[0]));
+		printf("%f\t%f\t%f\t%f\n", (dm->a[0]), (dm->a[1]), (dm->a[2]), (dm->r[2]));
 }
 
 void initModel(droneModel *dm){
 	for(int i = 0 ; i < 4; i++){
-		(dm->U[i]) = 0;
+		(dm->F[i]) = (dm->M[i]) = 0;
 		if(i < 3){
 			(dm->a[i])=0, (dm->ap[i])=0, (dm->app[i])=0,
 			(dm->rpp[i])=0, (dm->rp[i])=0, (dm->r[i])=0;
@@ -56,7 +57,8 @@ void initModel(droneModel *dm){
 droneModel copyModel(droneModel *dm){
 	droneModel aux;
 	for(int i = 0 ; i < 4; i++){
-		aux.U[i] = (dm->U[i]);
+		aux.F[i] = (dm->F[i]);
+		aux.M[i] = (dm->M[i]);
 		if(i < 3){
 	 		(aux.a[i])	= (dm->a[i]);
 	 		(aux.ap[i]) = (dm->ap[i]);
