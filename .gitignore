@@ -1,4 +1,5 @@
 *.map
+*.exe
 *.bin
 *.hex
 *.bin

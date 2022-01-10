@@ -3,7 +3,7 @@
 using namespace std;
 
 void updateFM(droneModel *dm, double in[4]){
-	double bias[4] = {4, -5, 3, 6};
+	double bias[4] = {-4, 5, -3, -6};
 	for(int i = 0 ; i < 4; i++){
 		in[i] += bias[i]; 
 		(dm->F[i]) = 9.81/1000*(-0.0026*in[i]*in[i]*in[i] + 0.4892*in[i]*in[i] - 4.2855*in[i] + 0.8182);
@@ -43,7 +43,7 @@ void computeModel(droneModel *dm, double u[4], double dt){
 		for(int i = 0 ; i < 3; i++)
 			(dm->r[i]) += (dm->rp[i])*dt;
 
-		printf("%f\t%f\t%f\t%f\n", (dm->a[0])*180/pi, (dm->a[1])*180/pi, (dm->a[2])*180/pi, (dm->r[2]));
+		//printf("%f\t%f\t%f\t%f\n", (dm->a[0])*180/pi, (dm->a[1])*180/pi, (dm->a[2])*180/pi, (dm->r[2]));
 }
 
 void initModel(droneModel *dm){
