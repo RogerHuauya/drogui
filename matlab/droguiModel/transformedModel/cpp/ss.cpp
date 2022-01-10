@@ -2,15 +2,17 @@
 #include "ss.hpp"
 using namespace std;
 
-void updateFM(droneModel *dm, float in[4]){
+void updateFM(droneModel *dm, double in[4]){
+	double bias[4] = {4, -5, 3, 6};
 	for(int i = 0 ; i < 4; i++){
+		in[i] += bias[i]; 
 		(dm->F[i]) = 9.81/1000*(-0.0026*in[i]*in[i]*in[i] + 0.4892*in[i]*in[i] - 4.2855*in[i] + 0.8182);
 		(dm->M[i]) = 0.05*(dm->F[i]);
 	}
 }
 
 void updateAPP(droneModel *dm){
-	(dm->app[0]) = 4.2*(dm->F[0]) - 4.2*(dm->F[1]) - 4.2*(dm->F[2]) + 4.2*(dm->F[3]) - 0.77*(dm->ap[1])*(dm->ap[2]);
+	(dm->app[0]) = 1.3*(4.2*(dm->F[0]) - 4.2*(dm->F[1]) - 4.2*(dm->F[2]) + 4.2*(dm->F[3])) - 0.77*(dm->ap[1])*(dm->ap[2]);
 	(dm->app[1]) = 4.1*(dm->F[2]) - 4.1*(dm->F[1]) - 4.1*(dm->F[0]) + 4.1*(dm->F[3]) + 0.78*(dm->ap[0])*(dm->ap[2]);
 	(dm->app[2]) = 5.8*(dm->M[1]) - 5.8*(dm->M[0]) - 5.8*(dm->M[2]) + 5.8*(dm->M[3]) - 0.011*(dm->ap[1])*(dm->ap[0]);
 }
@@ -22,7 +24,7 @@ void updateXpp(droneModel *dm){
 }
 
 
-void computeModel(droneModel *dm, float u[4], float dt){
+void computeModel(droneModel *dm, double u[4], double dt){
 
 		updateFM(dm, u);
 		updateAPP(dm);
@@ -41,7 +43,7 @@ void computeModel(droneModel *dm, float u[4], float dt){
 		for(int i = 0 ; i < 3; i++)
 			(dm->r[i]) += (dm->rp[i])*dt;
 
-		printf("%f\t%f\t%f\t%f\n", (dm->a[0]), (dm->a[1]), (dm->a[2]), (dm->r[2]));
+		printf("%f\t%f\t%f\t%f\n", (dm->a[0])*180/pi, (dm->a[1])*180/pi, (dm->a[2])*180/pi, (dm->r[2]));
 }
 
 void initModel(droneModel *dm){
