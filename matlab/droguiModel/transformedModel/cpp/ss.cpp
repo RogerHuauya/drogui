@@ -18,9 +18,9 @@ void updateAPP(droneModel *dm){
 }
 
 void updateXpp(droneModel *dm){
-	(dm->rpp[0]) = 0.2*(sin((dm->a[0]))*sin((dm->a[2])) + cos((dm->a[0]))*cos((dm->a[2]))*sin((dm->a[1])))*((dm->F[0]) + (dm->F[1]) + (dm->F[2]) + (dm->F[3]));
-	(dm->rpp[1]) =-0.2*(cos((dm->a[2]))*sin((dm->a[0])) - 1.0*cos((dm->a[0]))*sin((dm->a[1]))*sin((dm->a[2])))*((dm->F[0]) + (dm->F[1]) + (dm->F[2]) + (dm->F[3]));
-	(dm->rpp[2]) = 0.2*cos((dm->a[1]))*cos((dm->a[0]))*((dm->F[0]) + (dm->F[1]) + (dm->F[2]) + (dm->F[3])) - 9.8;
+	(dm->rpp[0]) = 0.27*(sin((dm->a[0]))*sin((dm->a[2])) + cos((dm->a[0]))*cos((dm->a[2]))*sin((dm->a[1])))*((dm->F[0]) + (dm->F[1]) + (dm->F[2]) + (dm->F[3]));
+	(dm->rpp[1]) =-0.27*(cos((dm->a[2]))*sin((dm->a[0])) - 1.0*cos((dm->a[0]))*sin((dm->a[1]))*sin((dm->a[2])))*((dm->F[0]) + (dm->F[1]) + (dm->F[2]) + (dm->F[3]));
+	(dm->rpp[2]) = 0.27*cos((dm->a[1]))*cos((dm->a[0]))*((dm->F[0]) + (dm->F[1]) + (dm->F[2]) + (dm->F[3])) - 9.8;
 }
 
 

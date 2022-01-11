@@ -1,10 +1,11 @@
 #include "sensors.hpp"
 
-void initSensor(sensor *s, double delay, double noise, double freq, double* var){
+void initSensor(sensor *s, double delay, double noise, double bias, double freq, double* var){
 	(s->tim) = (s->head) = 0;
 	(s->delay) = delay;
 	(s->noise) = noise;
 	(s->freq) = freq;
+	(s->bias) = bias;
 	(s->delay) = (int) (delay*freq);
 	(s->var) = var;
 	(s->tim_ant) = 0;
@@ -25,5 +26,5 @@ double readSensor(sensor *s, double tim){
 		(s->tim_ant) = tim;
 	}
 
-	return s->mem[((s->head) - 1 - (s->delay) + BUFF_SIZE) % BUFF_SIZE];
+	return s->mem[((s->head) - 1 - (s->delay) + BUFF_SIZE) % BUFF_SIZE] + s->bias;
 }

@@ -14,10 +14,11 @@ typedef struct _sensor{
 	int head;
 	double *var;
 	double tim, tim_ant;
+	double bias;
 } sensor;
 
 
-void initSensor(sensor *s, double delay, double noise, double freq, double* var);
+void initSensor(sensor *s, double delay, double noise, double bias, double freq, double* var);
 double readSensor(sensor *s, double tim);
 
 
