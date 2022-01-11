@@ -15,7 +15,9 @@ extern float	roll,       pitch,      yaw,
 				gx,         gy,         gz, 
 				mx,         my,         mz, 
 				x,          y,          z, 
+				vx,			vy,
 				x_gps,		y_gps,
+				vx_gps,		vy_gps,
 				xp,         yp,
 				z_of,       z_tera; 
 

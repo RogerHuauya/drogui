@@ -156,25 +156,35 @@ void readFiltGyro(mpu9250* m){ // degrees/sec
 
 void readAcc(mpu9250* m){ // m/s^2
     readFiltAcc(m);
-    m -> ax = (m->filt_ax + m->off_ax)/m->scl_acc;
-    m -> ay = (m->filt_ay + m->off_ay)/m->scl_acc;
-    m -> az = (m->filt_az + m->off_az)/m->scl_acc; 
+    float ax = (m->filt_ax + m->off_ax)/m->scl_acc;
+    float ay = (m->filt_ay + m->off_ay)/m->scl_acc;
+    float az = (m->filt_az + m->off_az)/m->scl_acc; 
+	m -> ax = -ay;
+	m -> ay =  ax;
+	m -> az =  az;
 }
 
 
 void readGyro(mpu9250* m){ // degrees/sec
     readFiltGyro(m);
-    m -> gx = m->filt_gx + m->off_gx;
-    m -> gy = m->filt_gy + m->off_gy;
-    m -> gz = m->filt_gz + m->off_gz; 
+    float gx = m->filt_gx + m->off_gx;
+    float gy = m->filt_gy + m->off_gy;
+    float gz = m->filt_gz + m->off_gz; 
+	m -> gx = -gy;
+	m -> gy =  gx;
+	m -> gz =  gz;
 }
 
 void readMag(mpu9250* m){ // m/s^2
     readRawMag(m);
 
-    m -> mx = (m->raw_mx - m->off_mx)/m->scl_magx;
-    m -> my = (m->raw_my - m->off_my)/m->scl_magy;
-    m -> mz = (m->raw_mz - m->off_mz)/m->scl_magz; 
+    float mx = (m->raw_mx - m->off_mx)/m->scl_magx;
+    float my = (m->raw_my - m->off_my)/m->scl_magy;
+    float mz = (m->raw_mz - m->off_mz)/m->scl_magz; 
+
+	m -> mx = -mx;
+	m -> my =  my;
+	m -> mz = -mz;
 }
 
 // 120 260 380
@@ -213,7 +223,7 @@ bool mpuQuiet(mpu9250* m, int n, float treshold, bool cal){
         HAL_Delay(1);
     }
     
-    //serialPrintf(SER_DBG,"%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
+    serialPrintf(SER_DBG,"%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
 
     if( ( max_gyro[0]-min_gyro[0] < (treshold + 1.8) ) &&\
         ( max_gyro[1]-min_gyro[1] < (treshold + 3.8) ) && \
@@ -373,7 +383,7 @@ void calibrateMag(mpu9250* m){
         magY = m->raw_my*scaleGlobal;
         magZ = m->raw_mz*scaleGlobal;
         
-        //sprintf(aux_buff, "%f %f %f\n", m->raw_mx, m->raw_my, m->raw_mz);
+        //serialPrintf(SER_DBG, "%f %f %f\n", m->raw_mx, m->raw_my, m->raw_mz);
         //HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
         valid = true;
         for(int i = 1 ; i <= cnt ; i++){

@@ -1,4 +1,4 @@
-#define POSXY_DELAY
+//#define POSXY_DELAY
 #ifdef POSXY_DELAY
 
 #include "..\headers\timer.h"

@@ -12,6 +12,7 @@ float fvelN, auxvelN = 0;
 float fvelE, auxvelE = 0;
 float fvelD, auxvelD = 0;
 float fheadMot, auxheadMot = 0;
+float fheadAcc, fheadVeh, fmagDec;
 uint8_t buff[1000];
 int _main(){
     delay(1000);
@@ -47,20 +48,35 @@ int _main(){
                     velD = (velD << 8) | (readPacket.payload[59-i] & 0xFF);                                
                 for( int i = 0; i < 4; i++)
                     headMot = (headMot << 8) | (readPacket.payload[67-i] & 0xFF);                                
-                
+                int32_t headVeh = 0;
+                uint32_t headAcc = 0;
+                int16_t magDec = 0;
+
+                for(int i = 0 ; i < 4 ; i++)
+                    headAcc = (headAcc << 8) | (readPacket.payload[75-i] & 0xFF);
+                    
+                for(int i = 0 ; i < 4 ; i++)
+                    headVeh = (headVeh << 8) | (readPacket.payload[87-i] & 0xFF);
+
+                for(int i = 0 ; i < 2 ; i++)
+                    magDec = (magDec << 8) | (readPacket.payload[89-i] & 0xFF);
+
                 fheadMot = headMot/100000.0;
                 fvelN = velN/1000.0;
                 fvelE = velE/1000.0;
                 fvelD = velD/1000.0; 
                 
+                fheadAcc = headAcc/100000.0;
+                fheadVeh = headVeh/100000.0;
+                fmagDec = magDec/100.0;
                 
-                /*Serial.print("Head Mot: ");
-                Serial.print(fheadMot);
-                Serial.print("\t");*/
-
-                Serial.print(fvelN*100.0,3);
+                Serial.print(fheadMot,5);
                 Serial.print("\t");
-                Serial.println(fvelE*100.0,3);
+                Serial.print(fheadAcc,3);
+                Serial.print("\t");
+                Serial.print(fheadVeh,3);
+                Serial.print("\t");
+                Serial.println(fmagDec,3);
 
                 /*int latitude = 0, longitud = 0;
                 for(int i = 0 ; i < 4 ; i++) 
@@ -88,7 +104,6 @@ int _main(){
                 Serial.print(lat,DEC);
                 Serial.print("\t");
                 Serial.println(lon,DEC);*/
-
             }
 
         }

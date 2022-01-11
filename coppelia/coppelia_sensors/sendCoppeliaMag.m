@@ -1,0 +1,6 @@
+function sendCoppeliaMag(sim,  clientID, mag)
+    [~, ~, ~, ~] = sim.simxCallScriptFunction(clientID,'Sphere', ...
+                    sim.sim_scripttype_childscript,'setMag', ...
+                    [],mag,[],[],sim.simx_opmode_blocking);
+end
+

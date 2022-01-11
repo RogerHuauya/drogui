@@ -16,7 +16,7 @@ filter filter_R, filter_P, filter_Y, filter_H;
 
 scurve z_sp, x_sp, y_sp, roll_sp, pitch_sp, yaw_sp, H_sp;
 
-float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, ANG_MAX = 3*PI/180.0;
+float  H, H_comp, R, P, Y, H_ref, X_C, Y_C, ANG_MAX = 5*PI/180.0;
 float M1,M2,M3,M4;
 
 float wroll_ref, wpitch_ref, wyaw_ref;
@@ -132,8 +132,8 @@ void wControlTask(){
     setPwm(&m3, fmin(fmax(M3,0), 100));
     setPwm(&m4, fmin(fmax(M4,0), 100));
     
-    setReg(DER_GYRO_X, wroll_control.errd);
-    setReg(DER_GYRO_Y, wpitch_control.errd);
+    //setReg(DER_GYRO_X, wroll_control.errd);
+    //setReg(DER_GYRO_Y, wpitch_control.errd);
 
     setReg(ROLL_U, R);
     setReg(PITCH_U, P);
@@ -180,9 +180,9 @@ void rpyControlTask(){
         resetPid(&yaw2w, TIME);
     }
     
-    setReg(DER_ROLL,roll2w.errd); 
-    setReg(DER_PITCH,pitch2w.errd); 
-    setReg(DER_YAW,yaw2w.errd); 
+    //setReg(DER_ROLL,roll2w.errd); 
+    //setReg(DER_PITCH,pitch2w.errd); 
+    //setReg(DER_YAW,yaw2w.errd); 
 
     setReg(GYRO_X_REF,wroll_ref);
     setReg(GYRO_Y_REF,wpitch_ref);
@@ -299,8 +299,8 @@ void initControlTasks(){
     initPwm(&m2, &htim4, TIM_CHANNEL_4, &(htim4.Instance->CCR4));
 
 
-    initPid(&xp_control,  0.1, 2, 0, 0, 50 , 5, ANG_MAX, D_SG);
-    initPid(&yp_control,  0.2, 2, 0, 0, 50 , 5, ANG_MAX, D_SG);
+    initPid(&xp_control,  0.1, 2, 0, 0, 50 , 1, ANG_MAX, D_SG);
+    initPid(&yp_control,  0.2, 2, 0, 0, 50 , 1, ANG_MAX, D_SG);
 
     initPid(&z_control,  10, 750,    2, 0, 50 , 10, 30, D_SG);
     initPid(&x_control, 0.1, 0.2, 0, 0, 50 , 2, 1, D_SG);

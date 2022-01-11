@@ -1,0 +1,6 @@
+function sendCoppeliaQuat(sim,  clientID, quat)
+    [~, ~, ~, ~] = sim.simxCallScriptFunction(clientID,'Transformer', ...
+                    sim.sim_scripttype_childscript,'setQuaternion', ...
+                    [],quat,[],[],sim.simx_opmode_blocking);
+end
+

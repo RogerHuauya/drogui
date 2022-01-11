@@ -2,12 +2,10 @@
 #ifdef M8Q_TEST
 #include "_main.h"
 #include "tim.h"
+#include "macros.h"
 #include "task.h"
-#include "usart.h"
-#include <stdio.h>
-#include <string.h>
 #include "serial.h"
-#include "M8Q.h"
+#include "SAM_M8Q.h"
 #include "registerMap.h"
 
 m8q myGPSt;
@@ -21,19 +19,19 @@ int pos_x, pos_y;
 void _main(){
     HAL_Delay(1000);
 	serialsBegin();
-	changeBaudrate(&serial3,2000000);
-    serialPrint(&serial3, "Init\n");
+	changeBaudrate(SER_DBG,2000000);
+    serialPrint(SER_DBG, "Init\n");
     
-    SENSOR_STATUS ret_init = initM8Q(&myGPSt, &serial4);
+    SENSOR_STATUS ret_init = initM8Q(&myGPSt, SER_GPS);
     
-	serialPrintf(&serial3, "Ret init %d\n", ret_init);
+	serialPrintf(SER_DBG, "Ret init %d\n", ret_init);
 
     while(1){
         SENSOR_STATUS ret = readLatLon(&myGPSt);
         if(ret == OK)
-            serialPrintf(&serial3, "lat: %d, lon: %d\n", myGPSt.latitude, myGPSt.longitud);
+            serialPrintf(SER_DBG, "lat: %d, lon: %d\n", myGPSt.latitude, myGPSt.longitud);
         else if(ret != NO_DATA)
-            serialPrintf(&serial3, "Error: %d\n", ret);
+            serialPrintf(SER_DBG, "Error: %d\n", ret);
 
     }
 } 

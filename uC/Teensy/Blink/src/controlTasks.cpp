@@ -2,7 +2,7 @@
 #include "..\headers\filter.h"
 
 
-pwm m1, m2, m3, m4;
+static pwm m1, m2, m3, m4;
 pid roll2w, pitch2w, yaw2w; 
 pid wroll_control, wpitch_control, wyaw_control;
 pid z_control, x_control, y_control;

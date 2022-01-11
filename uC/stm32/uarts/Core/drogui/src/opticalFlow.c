@@ -23,7 +23,7 @@ uint8_t crc8_func(int len, uint8_t* msg){
 }
 
 
-void calcChksum(optPacket *msg){
+static void calcChecksum(optPacket *msg){
     msg -> chksum = crc8_func((msg -> sz)+5, msg -> chksumBuff);
 }
 
@@ -88,7 +88,7 @@ SENSOR_STATUS readOptFlow(optPacket *op, uint32_t timeout){
 			while(!serialAvailable(op->ser));
 			checksum = serialRead(op->ser);
 
-			calcChksum(op);
+			calcChecksum(op);
 			flag = 1;
 		}
 

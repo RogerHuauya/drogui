@@ -2,7 +2,12 @@
 #define ICM_MAG_ADDRESS 0x0C
 #define CHANGE_BANK 0x7F
 #define PWR_MGT 0x06
+#define AK09916_CNTL2 0x31 ///< Magnetometer
 #define AK09916_CNTL3 0x32 ///< Magnetometer
+#define AK09916_WHO_I_AM1 0x00
+#define AK09916_WHO_I_AM2 0x01
+#define AK09916_ST1 0x10
+#define AK09916_ST2 0x18
 
 #define INT_PIN_CFG 0x0F
 #define USER_CTRL 0x03
@@ -125,9 +130,9 @@ void initIcm(icm20948* m){
     // Init magnetometer
     I2CwriteByte(ICM20948_ADDRESS, INT_PIN_CFG, 2);
     I2CwriteByte(ICM20948_ADDRESS, USER_CTRL, 0);
-    I2CwriteByte(ICM_MAG_ADDRESS, AK09916_CNTL3, AK09916_MAG_DATARATE_SHUTDOWN);
+    I2CwriteByte(ICM_MAG_ADDRESS, AK09916_CNTL2, AK09916_MAG_DATARATE_SHUTDOWN);
     delay(100);
-    I2CwriteByte(ICM_MAG_ADDRESS, AK09916_CNTL3, AK09916_MAG_DATARATE_100_HZ);
+    I2CwriteByte(ICM_MAG_ADDRESS, AK09916_CNTL2, AK09916_MAG_DATARATE_100_HZ);
  
     m->scl_acc = 1;
 
@@ -137,6 +142,7 @@ void readIcmRawMag(icm20948* m){ // m/s^2
 
     uint8_t Buf[7];
     I2Cread(ICM_MAG_ADDRESS, 0x11, 7, Buf);
+
     int16_t _mx = -((Buf[3]<<8) | Buf[2]);
     int16_t _my = -((Buf[1]<<8) | Buf[0]);
     int16_t _mz = -((Buf[5]<<8) | Buf[4]);
@@ -154,18 +160,41 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  readIcmRawMag(&imu);
-  readIcmRawAcc(&imu);
-  readIcmRawGyro(&imu);
-  uint8_t a;
-  I2Cread(ICM_MAG_ADDRESS, 0x31, 1, &a);
-  Serial.print(int(a), HEX); Serial.print("\t");
-  Serial.print(imu.raw_gx); Serial.print("\t");
-  
-  Serial.print(imu.raw_gy); Serial.print("\t");
-  
-  Serial.print(imu.raw_gz); Serial.print("\n");
-  delay(100);
+
+	uint8_t wia1, wia2, st1, st2;
+	I2Cread(ICM_MAG_ADDRESS, AK09916_WHO_I_AM1, 1, &wia1);
+	I2Cread(ICM_MAG_ADDRESS, AK09916_WHO_I_AM2, 1, &wia2);
+	Serial.print("Who I am: ");
+	Serial.print(int(wia1), HEX); Serial.print("\t");
+	Serial.print(int(wia2), HEX); Serial.print("\n");
+	while(1){
+    	I2Cread(ICM_MAG_ADDRESS, AK09916_ST1, 1, &st1);
+		/*if(st1 & 2){
+			I2Cread(ICM_MAG_ADDRESS, AK09916_ST2, 1, &st2);
+			//Serial.print(st2); Serial.print("\t");
+
+		}*/
+		
+		I2Cread(ICM_MAG_ADDRESS, AK09916_ST2, 1, &st2);
+
+		if(st1 & 1){
+			readIcmRawMag(&imu);
+			//readIcmRawAcc(&imu);
+			//readIcmRawGyro(&imu);
+			Serial.print(millis()); Serial.print("\t");
+
+			//Serial.print(st1); Serial.print("\t");
+
+
+			Serial.print(imu.raw_mx); Serial.print("\t");
+
+			Serial.print(imu.raw_my); Serial.print("\t");
+
+			Serial.print(imu.raw_mz); Serial.print("\n");
+		}
+		delay(10);
+
+	}
 }
 
 void I2CwriteByte(uint8_t addr, uint8_t reg, uint8_t valor){

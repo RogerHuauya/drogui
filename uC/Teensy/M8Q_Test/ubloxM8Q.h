@@ -206,7 +206,7 @@ const uint8_t UBX_NAV_VELNED = 0x12;	//Velocity Solution in NED
 const uint8_t UBX_RXM_MEASX = 0x14; //Satellite Measurements for RRLP
 const uint8_t UBX_RXM_PMREQ = 0x41; //Requests a Power Management task (two differenent packet sizes)
 const uint8_t UBX_RXM_RAWX = 0x15;	//Multi-GNSS Raw Measurement Data
-const uint8_t UBX_RXM_RLM = 0x59;	//Galileo SAR Short-RLM report (two different packet sizes)
+const uint8_t UBX_RXM_RLM = 0x59;	//Galileo SAR Short-RLM report (two different 5acket sizes)
 const uint8_t UBX_RXM_RTCM = 0x32;	//RTCM input status
 const uint8_t UBX_RXM_SFRBX = 0x13; //Boradcast Navigation Data Subframe
 
@@ -294,7 +294,7 @@ typedef struct _ubxPacket
 	uint16_t len; //Length of the payload. Does not include cls, id, or checksum bytes
 	uint16_t counter; //Keeps track of number of overall bytes received. Some responses are larger than 255 bytes.
 	uint16_t startingSpot; //The counter value needed to go past before we begin recording into payload array
-	uint8_t payload[200]; // We will allocate RAM for the payload if/when needed.
+	uint8_t payload[500]; // We will allocate RAM for the payload if/when needed.
 	uint8_t checksumA; //Given to us from module. Checked against the rolling calculated A/B checksums.
 	uint8_t checksumB;
 	

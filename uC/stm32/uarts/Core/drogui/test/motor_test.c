@@ -28,7 +28,7 @@ void _main(){
 
     while(true){
         HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
-        setPwm(&m1_test, 20); HAL_Delay(2000); setPwm(&m1_test, 0); 
+        setPwm(&m1_test, 20); HAL_Delay(2000); setPwm(&m1_test, 0);
         setPwm(&m2_test, 20); HAL_Delay(2000); setPwm(&m2_test, 0);
         setPwm(&m3_test, 20); HAL_Delay(2000); setPwm(&m3_test, 0);
         setPwm(&m4_test, 20); HAL_Delay(2000); setPwm(&m4_test, 0);

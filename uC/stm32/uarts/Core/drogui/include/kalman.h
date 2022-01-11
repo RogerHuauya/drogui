@@ -9,7 +9,6 @@
 void initMatGlobal();
 /**
  * @brief Compute Kynematics with Rq and v matrices to get estimated position matrix
-
 */
 void kynematics();
 /**

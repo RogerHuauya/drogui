@@ -22,18 +22,18 @@ int updateCalibOffset(icm20948* m){
     if( m->off_gz != getReg(GYR_Z_OFF))  ans |= 2, m->off_gz = getReg(GYR_Z_OFF);
 
     if( m->off_ax  != getReg(ACC_X_OFF)) ans |= 1, m->off_ax = getReg(ACC_X_OFF);
-    if( m->off_ay  != getReg(ACC_Y_OFF)) ans |= 1, m->off_ay = getReg(ACC_Y_OFF); 
+    if( m->off_ay  != getReg(ACC_Y_OFF)) ans |= 1, m->off_ay = getReg(ACC_Y_OFF);
     if( m->off_az  != getReg(ACC_Z_OFF)) ans |= 1, m->off_az = getReg(ACC_Z_OFF);
     if( m->scl_acc != getReg(ACC_SCALE)) ans |= 1, m->scl_acc =  getReg(ACC_SCALE);
 
     if( m->off_mx != getReg(MAG_X_OFF)) ans |= 4, m->off_mx =   getReg(MAG_X_OFF);
-    if( m->off_my != getReg(MAG_Y_OFF)) ans |= 4, m->off_my = getReg(MAG_Y_OFF);     
+    if( m->off_my != getReg(MAG_Y_OFF)) ans |= 4, m->off_my = getReg(MAG_Y_OFF);
     if( m->off_mz != getReg(MAG_Z_OFF)) ans |= 4, m->off_mz = getReg(MAG_Z_OFF);
-    
+
     if( m->scl_magx != getReg(MAG_X_SCALE)) ans |= 4, m->scl_magx = getReg(MAG_X_SCALE);
-    if( m->scl_magy != getReg(MAG_Y_SCALE)) ans |= 4, m->scl_magy = getReg(MAG_Y_SCALE);     
+    if( m->scl_magy != getReg(MAG_Y_SCALE)) ans |= 4, m->scl_magy = getReg(MAG_Y_SCALE);
     if( m->scl_magz != getReg(MAG_Z_SCALE)) ans |= 4, m->scl_magz = getReg(MAG_Z_SCALE);
-    
+
     if(ans != 0) ans |= 8;
 
     return ans;
@@ -44,7 +44,7 @@ void initImu(icm20948* m){
     I2CwriteByte(ICM20948_ADDRESS, PWR_MGT, 9);
     I2CwriteByte(ICM20948_ADDRESS, CHANGE_BANK, 2<<4);
     I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_SMPLRT_DIV, 0);
-    I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_CONFIG1, ICM_GYRO_FULL_SCALE_2000_DPS);
+    I2CwriteByte(ICM20948_ADDRESS, ICM_GYRO_CONFIG1, ICM_GYRO_FULL_SCALE_500_DPS);
     I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_CONFIG1,ICM_ACC_FULL_SCALE_2_G);
     I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_SMPLRT_DIV_MSB, 0);
     I2CwriteByte(ICM20948_ADDRESS, ICM_ACCEL_SMPLRT_DIV_LSB, 0);
@@ -54,8 +54,12 @@ void initImu(icm20948* m){
     // Init magnetometer
     I2CwriteByte(ICM20948_ADDRESS, INT_PIN_CFG, 2);
     I2CwriteByte(ICM20948_ADDRESS, USER_CTRL, 0);
-    
-    m->scl_acc = 1;
+
+	I2CwriteByte(ICM_MAG_ADDRESS, AK09916_CNTL2, AK09916_MAG_DATARATE_SHUTDOWN);
+    HAL_Delay(100);
+    I2CwriteByte(ICM_MAG_ADDRESS, AK09916_CNTL2, AK09916_MAG_DATARATE_100_HZ);
+
+    m->scl_acc = m->scl_magx = m-> scl_magy = m-> scl_magz = 1;
 
     initFiltGyro(&(m->fGyroX)), initFiltGyro(&(m->fGyroY)), initFiltGyro(&(m->fGyroZ));
     initFiltAcc(&(m->fAccX)), initFiltAcc(&(m->fAccY)), initFiltAcc(&(m->fAccZ));
@@ -70,7 +74,7 @@ void initFiltGyro(filtGyro *fg){
 }
 
 void initFiltAcc(filtAcc *fa){
-    
+
     initFilter(&(fa->first), 4 , k_1_20, v_1_20);
     initDNotchFilter(&(fa->second), 64, 40, 1000, 1, 1);
 }
@@ -82,7 +86,7 @@ float computeFiltGyro(filtGyro *fg, float val){
     val = computeDNotch(&(fg->third), val);
     val = computeDNotch(&(fg->fourth), val);
     //val = computeFilter(&(fg->fifth), val);
-    return val / 16.4;
+    return val / 65.5;
 }
 
 float computeFiltAcc(filtAcc *fa, float val){
@@ -114,14 +118,14 @@ void readRawAcc(icm20948* m){ // m/s^2
     int16_t _ax =   (Buf[0]<<8) | Buf[1];
     int16_t _ay =   (Buf[2]<<8) | Buf[3];
     int16_t _az =   (Buf[4]<<8) | Buf[5];
-    
+
     m -> raw_ax = _ax;
     m -> raw_ay = _ay;
-    m -> raw_az = _az; 
+    m -> raw_az = _az;
 }
 
 void readRawGyro(icm20948* m){ // degrees/sec
-    
+
     uint8_t Buf[6];
     I2Cread(ICM20948_ADDRESS, ICM_GYRO_XOUT_H, 6, Buf);
     int16_t _gx =   (Buf[0] << 8) | Buf[1];
@@ -129,31 +133,35 @@ void readRawGyro(icm20948* m){ // degrees/sec
     int16_t _gz =   (Buf[4] << 8) | Buf[5];
     m -> raw_gx = _gx;
     m -> raw_gy = _gy;
-    m -> raw_gz = _gz; 
+    m -> raw_gz = _gz;
 }
 
 void readRawMag(icm20948* m){ // m/s^2
-
-    uint8_t Buf[7];
-    I2Cread(ICM_MAG_ADDRESS, 0x11, 6, Buf);
-    int16_t _mx = (Buf[1]<<8) | Buf[0];
-    int16_t _my = (Buf[3]<<8) | Buf[2];
-    int16_t _mz = (Buf[5]<<8) | Buf[4];
-    m -> raw_mx = _mx;
-    m -> raw_my = _my;
-    m -> raw_mz = _mz; 
+	uint8_t st1, st2;
+    I2Cread(ICM_MAG_ADDRESS, AK09916_ST1, 1, &st1);
+	I2Cread(ICM_MAG_ADDRESS, AK09916_ST2, 1, &st2);
+	if(st1 & 1){
+		uint8_t Buf[7];
+		I2Cread(ICM_MAG_ADDRESS, 0x11, 7, Buf);
+		int16_t _mx = (Buf[1]<<8) | Buf[0];
+		int16_t _my = (Buf[3]<<8) | Buf[2];
+		int16_t _mz = (Buf[5]<<8) | Buf[4];
+		m -> raw_mx = _mx;
+		m -> raw_my = _my;
+		m -> raw_mz = _mz;
+	}
 }
 
 void readFiltAcc(icm20948* m){ // m/s^2
-    
+
     readRawAcc(m);
     m -> filt_ax = computeFiltAcc(&(m->fAccX), m->raw_ax);
     m -> filt_ay = computeFiltAcc(&(m->fAccY), m->raw_ay);
-    m -> filt_az = computeFiltAcc(&(m->fAccZ), m->raw_az); 
+    m -> filt_az = computeFiltAcc(&(m->fAccZ), m->raw_az);
 }
 
 void readFiltGyro(icm20948* m){ // degrees/sec
-    
+
     readRawGyro(m);
     m -> filt_gx = computeFiltGyro(&(m->fGyroX), m->raw_gx);
     m -> filt_gy = computeFiltGyro(&(m->fGyroY), m->raw_gy);
@@ -163,31 +171,40 @@ void readFiltGyro(icm20948* m){ // degrees/sec
 
 void readAcc(icm20948* m){ // m/s^2
     readFiltAcc(m);
-    m -> ax = (m->filt_ax + m->off_ax)/m->scl_acc;
-    m -> ay = (m->filt_ay + m->off_ay)/m->scl_acc;
-    m -> az = (m->filt_az + m->off_az)/m->scl_acc; 
+    float ax = (m->filt_ax + m->off_ax)/m->scl_acc;
+    float ay = (m->filt_ay + m->off_ay)/m->scl_acc;
+    float az = (m->filt_az + m->off_az)/m->scl_acc;
+	m -> ax = -ay;
+	m -> ay =  ax;
+	m -> az =  az;
 }
 
 
 void readGyro(icm20948* m){ // degrees/sec
     readFiltGyro(m);
-    m -> gx = m->filt_gx + m->off_gx;
-    m -> gy = m->filt_gy + m->off_gy;
-    m -> gz = m->filt_gz + m->off_gz; 
+    float gx = m->filt_gx + m->off_gx;
+    float gy = m->filt_gy + m->off_gy;
+    float gz = m->filt_gz + m->off_gz;
+	m -> gx = -gy;
+	m -> gy =  gx;
+	m -> gz =  gz;
 }
 
 void readMag(icm20948* m){ // m/s^2
     readRawMag(m);
     //-226.43	-112.81	131.13	119.36	127.29  129.95
-    m -> mx = (m->raw_mx - m->off_mx)/m->scl_magx;
-    m -> my = (m->raw_my - m->off_my)/m->scl_magy;
-    m -> mz = (m->raw_mz - m->off_mz)/m->scl_magz; 
+    float mx = (m->raw_mx - m->off_mx)/m->scl_magx;
+    float my = (m->raw_my - m->off_my)/m->scl_magy;
+    float mz = (m->raw_mz - m->off_mz)/m->scl_magz;
+	m -> mx =  my;
+	m -> my =  mx;
+	m -> mz = -mz;
 }
 
 // 120 260 380
 
 bool icmQuiet(icm20948* m, int n, float treshold, bool cal){
-    
+
     float max_gyro[3] = {0,0,0};
     float min_gyro[3] = {0,0,0};
     float acum_gyro[3] = {0,0,0};
@@ -195,8 +212,8 @@ bool icmQuiet(icm20948* m, int n, float treshold, bool cal){
     //HAL_UART_Transmit(&huart2, (uint8_t*) "Quiet\n", 8, 100);
 
     for(int i = 0; i < n; i++){
-        
-        readFiltGyro(m);   
+
+        readFiltGyro(m);
 
         if(i == 0){
             max_gyro[0] = m->filt_gx, max_gyro[1] = m->filt_gy, max_gyro[2] = m->filt_gz;
@@ -206,7 +223,7 @@ bool icmQuiet(icm20948* m, int n, float treshold, bool cal){
                 max_gyro[0] = fmax(max_gyro[0], m->filt_gx);
                 max_gyro[1] = fmax(max_gyro[1], m->filt_gy);
                 max_gyro[2] = fmax(max_gyro[2], m->filt_gz);
-                
+
                 min_gyro[0] = fmin(min_gyro[0], m->filt_gx);
                 min_gyro[1] = fmin(min_gyro[1], m->filt_gy);
                 min_gyro[2] = fmin(min_gyro[2], m->filt_gz);
@@ -219,12 +236,12 @@ bool icmQuiet(icm20948* m, int n, float treshold, bool cal){
 
         HAL_Delay(1);
     }
-    
-    //serialPrintf("%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
 
-    if( ( max_gyro[0]-min_gyro[0] < (treshold + 2.0 /*1.8*/) ) &&\
-        ( max_gyro[1]-min_gyro[1] < (treshold + 4.0 /*3.8*/) ) && \
-        ( max_gyro[2]-min_gyro[2] < (treshold + 5.0) ) ){
+    //serialPrintf(SER_DBG, "%f\t%f\t%f\n", max_gyro[0]-min_gyro[0], max_gyro[1]-min_gyro[1], max_gyro[2]-min_gyro[2] );
+
+    if( ( max_gyro[0]-min_gyro[0] < (treshold + 2.2 /*1.8*/) ) &&\
+        ( max_gyro[1]-min_gyro[1] < (treshold + 2.0 /*3.8*/) ) && \
+        ( max_gyro[2]-min_gyro[2] < (treshold + 3.5) ) ){
         if(cal){
             m->off_gx = -1.0*acum_gyro[0]/n;
             m->off_gy = -1.0*acum_gyro[1]/n;
@@ -240,22 +257,22 @@ void calibrateGyro(icm20948* m){
     //HAL_UART_Transmit(&huart2, (uint8_t*) "CalibG\n", 8, 100);
     setReg(CAL_GYR,0);
     while(!icmQuiet(m,1000,0, true));
-    
+
     setReg(GYR_X_OFF, m -> off_gx);
     setReg(GYR_Y_OFF, m -> off_gy);
     setReg(GYR_Z_OFF, m -> off_gz);
 
     setReg(CAL_GYR, 100);
-    
+
     HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-    
+
 }
 
 
 
 
 void calibrateAccel(icm20948* m){
-    
+
     setReg(CAL_ACC,0);
 
     int neq = 4, nval = 2;
@@ -265,7 +282,7 @@ void calibrateAccel(icm20948* m){
     for(int i = 0; i < tot; i++){
         for(int j = 0; j < 3; j++){
             acc[i][j] = 0;
-        }    
+        }
     }
 
     mat A, b, ans;
@@ -275,7 +292,7 @@ void calibrateAccel(icm20948* m){
 
     int head = 0, cnt = 0;
     bool done = false, valid;
-    
+
     while(!done){
         while(!icmQuiet(m, 100, 2, false));
         readRawAcc(m);
@@ -284,20 +301,20 @@ void calibrateAccel(icm20948* m){
             int j = (head - i + tot) % tot;
             // Serial.println("icmQuiet ");
             float d = dis3d(m->raw_ax, m->raw_ay, m->raw_az, acc[j][0],acc[j][1],acc[j][2]);
-            
+
             //sprintf(buffcal, "%f\t%f\t%f\t%f\n", d, m->filt_ax, m->filt_ay, m->filt_az);
             //HAL_UART_Transmit(&huart2, (uint8_t*) buffcal, strlen(buffcal), 100);
 
-            if(d < 3000){
+            if(d < 5000){
                 valid = false; break;
-            } 
+            }
         }
 
         if(valid){
             HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-            
+
             acc[head][0] = m->raw_ax, acc[head][1] = m->raw_ay, acc[head][2] = m->raw_az;
-            head++, cnt++, head%= tot; 
+            head++, cnt++, head%= tot;
         }
         setReg(CAL_ACC, 100*fmin(cnt,6)/7 );
 
@@ -308,7 +325,7 @@ void calibrateAccel(icm20948* m){
                 for(int j = 0; j < 3; j++){
                     setMatVal(&A, i-1, j, 2*(acc[(head + i-1)%6][j] - acc[(head + i)%6][j]));
                     //x2*x2-x1*x1+y2*y2-y1*y1+z2*z2-z1*z1 = 2*c1*(x1-x2)+2*c2*(y1-y2)+2*c3*(z1-z2)
-                    aux += acc[(head + i)%6][j]*acc[(head + i)%6][j] - acc[(head + i-1)%6][j]*acc[(head + i-1)%6][j]; 
+                    aux += acc[(head + i)%6][j]*acc[(head + i)%6][j] - acc[(head + i-1)%6][j]*acc[(head + i-1)%6][j];
                 }
                 setMatVal(&b, i-1, 0, aux);
             }
@@ -343,10 +360,10 @@ void calibrateAccel(icm20948* m){
     m -> scl_acc = scale;
 
     setReg(CAL_ACC, 100);
-    setReg(ACC_X_OFF, m->off_ax );    
+    setReg(ACC_X_OFF, m->off_ax );
     setReg(ACC_Y_OFF, m->off_ay );
     setReg(ACC_Z_OFF, m->off_az );
-    setReg(ACC_SCALE, m->scl_acc);  
+    setReg(ACC_SCALE, m->scl_acc);
 /*
     char buff[50];
 
@@ -360,7 +377,7 @@ void calibrateAccel(icm20948* m){
 
 
 void calibrateMag(icm20948* m){
-    
+
     //char aux_buff[50]="";
 
     setReg(CAL_MAG,0);
@@ -373,7 +390,7 @@ void calibrateMag(icm20948* m){
     for(int i = 0; i < n; i++){
         for(int j = 0; j < 3; j++){
             mag[i][j] = 0;
-        }    
+        }
     }
 
     while (!done){
@@ -382,7 +399,7 @@ void calibrateMag(icm20948* m){
         magX = m->raw_mx*scaleGlobal;
         magY = m->raw_my*scaleGlobal;
         magZ = m->raw_mz*scaleGlobal;
-        
+
         //sprintf(aux_buff, "%f %f %f\n", m->raw_mx, m->raw_my, m->raw_mz);
         //HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
         valid = true;
@@ -390,21 +407,21 @@ void calibrateMag(icm20948* m){
             int j = (head - i + n) % n;
             float d = dis3d(magX, magY, magZ, mag[j][0], mag[j][1], mag[j][2]);
 
-            //sprintf(aux_buff, "%f \n", d);
+            serialPrintf(SER_DBG, "%f \n", d);
             //HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
 
             if(d < 20*scaleGlobal){
                 valid = false; break;
-            } 
+            }
         }
         if(valid){
             HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-            
+
             mag[head][0] = magX, mag[head][1] = magY, mag[head][2] = magZ;
-            head++, cnt++, head%= n; 
+            head++, cnt++, head%= n;
         }
         setReg(CAL_MAG, fmin(cnt, 99.0));
-        
+
         //sprintf(aux_buff, "%d\n", cnt);
         //HAL_UART_Transmit(&huart2, (uint8_t*) aux_buff, strlen(aux_buff), 100);
 
@@ -433,21 +450,21 @@ void calibrateMag(icm20948* m){
     }
     matTrans(&Ht, &H);
     matMult(&prod, &Ht, &H);
-    
+
     matInv(&inverse, &prod);
     matMult(&prod2, &inverse, &Ht);
     matMult(&X, &prod2, &w);
-    
+
     m -> off_mx = getMatVal(&X, 0, 0)/(2);
     m -> off_my = getMatVal(&X, 1, 0)/(2*getMatVal(&X, 3, 0));
     m -> off_mz = getMatVal(&X, 2, 0)/(2*getMatVal(&X, 4, 0));
-    
+
     float temp = getMatVal(&X, 5, 0) + (m -> off_mx) * (m -> off_mx) + (m -> off_my) * (m -> off_my) + (m -> off_mz) * (m -> off_mz);
-    
+
     m -> off_mx /= scaleGlobal;
     m -> off_my /= scaleGlobal;
     m -> off_mz /= scaleGlobal;
-    
+
     m -> scl_magx = sqrt(temp)/ (scaleGlobal);
     m -> scl_magy = sqrt(temp / getMatVal(&X, 3, 0)) / (scaleGlobal);
     m -> scl_magz = sqrt(temp / getMatVal(&X, 4, 0)) / (scaleGlobal);
@@ -459,14 +476,14 @@ void calibrateMag(icm20948* m){
     setReg( MAG_Y_SCALE ,m -> scl_magy);
     setReg( MAG_Z_SCALE ,m -> scl_magy);
     setReg( CAL_MAG, 100);
-    
+
     matDestruct(&H);
     matDestruct(&Ht);
-    matDestruct(&prod);    
-    matDestruct(&prod2); 
-    matDestruct(&inverse); 
-    matDestruct(&w); 
-    matDestruct(&X); 
+    matDestruct(&prod);
+    matDestruct(&prod2);
+    matDestruct(&inverse);
+    matDestruct(&w);
+    matDestruct(&X);
 
 }
 
