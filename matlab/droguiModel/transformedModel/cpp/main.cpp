@@ -40,6 +40,7 @@ void U2umotor(double *U, double *umotor){
 double signFunc(double s){
 	return 2/(1 + exp(-100*s))-1;
 }
+double constrain(double x, double limit){return min(max(x, -limit), limit);}
 
 int main(){
 	double dt = 0.001;
@@ -56,8 +57,8 @@ int main(){
 	initSensor(&pitch, 0.01, 5.0*pi/180, -2*pi/180, 1000, &(drogui.a[1]));
 	initSensor(&yaw, 0.01, 5.0*pi/180, 5*pi/180, 1000, &(drogui.a[2]));
 
-	initSensor(&x, 0.5, 0.1, 0, 100, &(drogui.r[0]));
-	initSensor(&y, 0.5, 0.1, 0, 100, &(drogui.r[1]));
+	initSensor(&x, 0.7, 0.1, 0, 100, &(drogui.r[0]));
+	initSensor(&y, 0.7, 0.1, 0, 100, &(drogui.r[1]));
 	initSensor(&z, 0, 0.01, 0, 100, &(drogui.r[2]));
 
 	initSensor(&vx, 0.1, 0.2, 0, 100, &(drogui.rp[0]));
@@ -95,16 +96,16 @@ int main(){
 		if(int(tim*1000 + 1e-6) %10 == 0 ){
 			err = sp_pos[0] - readSensor(&x,tim);
 			errd = - readSensor(&vx, tim);
-			u_vx = 0.2*err + 0.2*errd;
+			u_vx = constrain(0.2*err + 0.2*errd, 0.4);
 
 			err = sp_pos[1] - readSensor(&y,tim);
 			errd = - readSensor(&vy, tim);
-			u_vy = 0.2*err + 0.2*errd;
+			u_vy = constrain(0.2*err + 0.2*errd, 0.4);
 
 			u_xp = u_vx*cos(readSensor(&yaw, tim)) + u_vy*sin(readSensor(&yaw, tim));
 			u_yp = u_vy*cos(readSensor(&yaw, tim)) - u_vx*sin(readSensor(&yaw, tim));
-			sp[0] = min(max(asin(-u_yp), -5*pi/180), 5*pi/180);
-			sp[1] = min(max(asin(u_xp/cos(readSensor(&roll,tim))), -5*pi/180), 5*pi/180);
+			sp[0] = min(max(asin(min(max(-u_yp, -1.0), 1.0)), -10*pi/180), 10*pi/180);
+			sp[1] = min(max(asin(min(max(u_xp/cos(readSensor(&roll,tim)), -1.0), 1.0)), -10*pi/180), 10*pi/180);
 		}
 		{
 			err = sp[0] - readSensor(&roll, tim);
