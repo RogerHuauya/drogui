@@ -52,12 +52,12 @@ int main(){
 	initSensor(&gy, 0.005, 15.0*pi/180, 0, 1000, &(drogui.ap[1]));
 	initSensor(&gz, 0.005, 15.0*pi/180, 0, 1000, &(drogui.ap[2]));
 
-	initSensor(&roll, 0.01, 5.0*pi/180, 1*pi/180, 1000, &(drogui.a[0]));
+	initSensor(&roll, 0.01, 5.0*pi/180, 5*pi/180, 1000, &(drogui.a[0]));
 	initSensor(&pitch, 0.01, 5.0*pi/180, -2*pi/180, 1000, &(drogui.a[1]));
-	initSensor(&yaw, 0.01, 5.0*pi/180, 5*pi/180, 1000, &(drogui.a[2]));
+	initSensor(&yaw, 0.01, 5.0*pi/180, 0*pi/180, 1000, &(drogui.a[2]));
 
-	initSensor(&x, 0.5, 0.1, 0, 100, &(drogui.r[0]));
-	initSensor(&y, 0.5, 0.1, 0, 100, &(drogui.r[1]));
+	initSensor(&x, 0.0, 0.1, 0, 100, &(drogui.r[0]));
+	initSensor(&y, 0.0, 0.1, 0, 100, &(drogui.r[1]));
 	initSensor(&z, 0, 0.01, 0, 100, &(drogui.r[2]));
 
 	initSensor(&vx, 0.1, 0.2, 0, 100, &(drogui.rp[0]));
@@ -68,6 +68,7 @@ int main(){
 	srand(5);
 	double u[4];
 	double erri[4]={0,0,0,0};
+	double erri_pos[2]={0,0};
 	double g[4];
 	double f[4];
 	double u_c[4];
@@ -94,17 +95,20 @@ int main(){
 
 		if(int(tim*1000 + 1e-6) %10 == 0 ){
 			err = sp_pos[0] - readSensor(&x,tim);
+			erri_pos[0] += err * (0.01);
 			errd = - readSensor(&vx, tim);
-			u_vx = 0.2*err + 0.2*errd;
+			u_vx = 0.2*err + 0.3*errd + 0.08*erri_pos[0];
 
 			err = sp_pos[1] - readSensor(&y,tim);
+			erri_pos[1] += err * (0.01);
 			errd = - readSensor(&vy, tim);
-			u_vy = 0.2*err + 0.2*errd;
+			u_vy = 0.2*err + 0.3*errd + 0.08*erri_pos[1];
 
 			u_xp = u_vx*cos(readSensor(&yaw, tim)) + u_vy*sin(readSensor(&yaw, tim));
 			u_yp = u_vy*cos(readSensor(&yaw, tim)) - u_vx*sin(readSensor(&yaw, tim));
-			sp[0] = min(max(asin(-u_yp), -5*pi/180), 5*pi/180);
-			sp[1] = min(max(asin(u_xp/cos(readSensor(&roll,tim))), -5*pi/180), 5*pi/180);
+
+			sp[0] = min(max(asin(-u_yp), -20*pi/180), 20*pi/180);
+			sp[1] = min(max(asin(u_xp/cos(readSensor(&roll,tim))), -20*pi/180), 20*pi/180);
 		}
 		{
 			err = sp[0] - readSensor(&roll, tim);
@@ -156,7 +160,7 @@ int main(){
 			erri[3] += err*dt;
 			errd = 0 - readSensor(&vz,tim);
 
-			s = errd * 0.1 + err;
+			s = errd * 0.05 + err;
 			u_d[3] = 20*signFunc(s);
 
 			f[3] = -9.81;
