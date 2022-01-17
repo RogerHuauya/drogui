@@ -1,7 +1,7 @@
 #ifndef SENSORS_HPP
 #define SENSORS_HPP
 
-#define BUFF_SIZE 50
+#define BUFF_SIZE 200
 
 #include <bits/stdc++.h>
 #include <time.h>

@@ -57,8 +57,8 @@ int main(){
 	initSensor(&pitch, 0.01, 5.0*pi/180, -2*pi/180, 1000, &(drogui.a[1]));
 	initSensor(&yaw, 0.01, 5.0*pi/180, 0*pi/180, 1000, &(drogui.a[2]));
 
-	initSensor(&x, 0.7, 0.1, 0, 100, &(drogui.r[0]));
-	initSensor(&y, 0.7, 0.1, 0, 100, &(drogui.r[1]));
+	initSensor(&x, 0.5, 0.1, 0, 100, &(drogui.r[0]));
+	initSensor(&y, 0.5, 0.1, 0, 100, &(drogui.r[1]));
 	initSensor(&z, 0, 0.01, 0, 100, &(drogui.r[2]));
 
 	initSensor(&vx, 0.1, 0.2, 0, 100, &(drogui.rp[0]));
@@ -90,7 +90,7 @@ int main(){
 	for(double tim = dt ; tim < 20; tim += dt){
 
 		//double sp[4] = {0.1*sin(tim) ,0.1*cos(tim), 0, 1};
-		sp[2] = pi/2;
+		sp[2] = pi/20;
 		sp[3] = 1;
 		double sp_pos[2] = {2, 0};
 
@@ -98,18 +98,18 @@ int main(){
 			err = sp_pos[0] - readSensor(&x,tim);
 			erri_pos[0] += err * (0.01);
 			errd = - readSensor(&vx, tim);
-			u_vx = 0.2*err + 0.3*errd + 0.08*erri_pos[0];
+			u_vx = constrain(0.2*err + 0.2*errd + 0.08*erri_pos[0], 0.4);
 
 			err = sp_pos[1] - readSensor(&y,tim);
 			erri_pos[1] += err * (0.01);
 			errd = - readSensor(&vy, tim);
 
-			u_vy = 0.2*err + 0.3*errd + 0.08*erri_pos[1];
+			u_vy = constrain(0.2*err + 0.2*errd + 0.08*erri_pos[1], 0.4);
 
 			u_xp = u_vx*cos(readSensor(&yaw, tim)) + u_vy*sin(readSensor(&yaw, tim));
 			u_yp = u_vy*cos(readSensor(&yaw, tim)) - u_vx*sin(readSensor(&yaw, tim));
-			sp[0] = min(max(asin(min(max(-u_yp, -1.0), 1.0)), -10*pi/180), 10*pi/180);
-			sp[1] = min(max(asin(min(max(u_xp/cos(readSensor(&roll,tim)), -1.0), 1.0)), -10*pi/180), 10*pi/180);
+			sp[0] = min(max(asin(-u_yp), -10*pi/180), 10*pi/180);
+			sp[1] = min(max(asin(u_xp/cos(readSensor(&roll,tim))), -10*pi/180), 10*pi/180);
 
 
 
@@ -201,6 +201,8 @@ int main(){
 		plt9.push_back(sp_pos[0]);
 		plt10.push_back(sp_pos[1]);
 		plt11.push_back(drogui.r[0]);
+		//plt9.push_back(readSensor(&x, tim));
+		//plt11.push_back(readSensor(&y, tim) - sp_pos[1]);
 		plt12.push_back(drogui.r[1]);
 
 
