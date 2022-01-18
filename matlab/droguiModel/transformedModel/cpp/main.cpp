@@ -11,6 +11,8 @@ pid x_ctrl, y_ctrl;
 droneModel drogui;
 sensor gx, gy, gz, roll, pitch, yaw, x, y, z, vx, vy, vz;
 
+
+
 double angle_dif(double angle1, double angle2){
 	if(angle1 > angle2){
 		if((angle1 - angle2) > (2*pi - angle1 + angle2)) return -2*pi + angle1 - angle2;
@@ -21,6 +23,8 @@ double angle_dif(double angle1, double angle2){
 		else return angle1 - angle2;
 	}
 }
+
+double noise(double std) {return std*(rand()%2000 -1000.0)/1000.0;}
 
 void U2umotor(double *U, double *umotor){
 	double F[4];
@@ -33,7 +37,7 @@ void U2umotor(double *U, double *umotor){
 	umotor[1] = F[1]*1.0833E+1-(F[1]*F[1])*6.34836E-1+(F[1]*F[1]*F[1])*1.86263E-2-6.6119E-2;
 	umotor[2] = F[2]*1.0833E+1-(F[2]*F[2])*6.34836E-1+(F[2]*F[2]*F[2])*1.86263E-2-6.6119E-2;
 	umotor[3] = F[3]*1.0833E+1-(F[3]*F[3])*6.34836E-1+(F[3]*F[3]*F[3])*1.86263E-2-6.6119E-2;
-	for(int i = 0 ; i < 4; i++) umotor[i] = fmin(fmax(0, umotor[i]),100);
+	for(int i = 0 ; i < 4; i++) umotor[i] = fmin(fmax(0, umotor[i] + noise(5)),100);
 
 }
 
