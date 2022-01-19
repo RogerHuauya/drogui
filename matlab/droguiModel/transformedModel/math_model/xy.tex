@@ -1,0 +1,26 @@
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+\section{XY control}
+\begin{gather*}
+	\ddot{x} = K * ( sin(x_1) * sin(yaw)+ cos(x_1) * sin(x_2) * cos(yaw))\\
+	\ddot{y} = K * ( -cos(yaw)* sin(x_1) + cos(x_1) * sin(x_2) * sin(yaw))
+\end{gather*}
+Multipliying line 1 with cos(yaw) and line 2 sin(yaw)
+
+\begin{gather*}
+	sin(yaw)* \ddot{x} - cos(yaw)* \ddot{y} = K * ( sin(x_1))\\
+	cos(yaw)* \ddot{x} + sin(yaw)* \ddot{y} = K * ( cos(x_1) * sin(x_2) )
+\end{gather*}
+
+\begin{gather*}
+	roll = arcsin \left (\frac{sin(yaw)*\ddot{x} - cos(yaw) * \ddot{y}}{K} \right )\\
+	pitch = arcsin \left (\frac{cos(yaw)*\ddot{x} + sin(yaw) * \ddot{y}}{K * cos(roll)} \right)
+\end{gather*}
+
+\begin{gather*}
+	roll = arcsin(-u_y)\\
+	pitch = arcsin \left ( \frac{u_x}{cos(yaw)} \right )
+\end{gather*}
+
+\end{document}
