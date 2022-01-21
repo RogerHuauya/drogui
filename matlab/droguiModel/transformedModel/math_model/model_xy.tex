@@ -1,0 +1,100 @@
+\documentclass[varwidth,margin=3mm]{standalone}
+\usepackage{amsmath}
+\begin{document}
+\section{Definiendo los estados}
+\begin{gather*}
+	X = \left [ \begin{matrix}
+		x\\
+		y\\
+		\dot{x}\\
+		\dot{y}\\
+	\end{matrix}
+	\right ] =
+	\left [ \begin{matrix}
+		x_1\\
+		x_2\\
+		x_3\\
+		x_4\\
+	\end{matrix}
+	\right ]
+	\\
+	\\
+	U = \left [ \begin{matrix}
+		roll\\
+		pitch\\
+	\end{matrix}
+	\right ]
+	\left [ \begin{matrix}
+		u_1\\
+		u_2\\
+	\end{matrix}
+	\right ]
+\end{gather*}
+
+
+
+\section{Ecuaciones de la dinamica}
+\begin{gather*}
+	\\
+	\ddot{x} = 0.29*U_4*(sin(roll)*sin(yaw) + cos(roll)*cos(yaw)*sin(pitch))\\
+	\ddot{y}= -0.29*U_4*(cos(yaw)*sin(roll) - 1.0*cos(roll)*sin(pitch)*sin(yaw))\\
+	\\
+\end{gather*}
+\section{Espacio estados final}
+\begin{gather*}
+	\dot{x_1} = x_3\\
+	\dot{x_2} = x_4\\
+	\dot{x_3} = 0.29*d_1*(sin(u_1)*sin(d_2) + cos(u_1)*cos(d_2)*sin(u_2))\\
+	\dot{x_4} = 0.29*d_1*(-cos(d_2)*sin(u_1) + 1.0*cos(u_1)*sin(u_2)*sin(d_2))\\
+	\\
+	\dot{y_1} = x_1\\
+	\dot{y_2} = x_2\\
+\end{gather*}
+
+Transformando variables
+\begin{gather*}
+	\dot{x_1} = x_3\\
+	\dot{x_2} = x_4\\
+	\dot{x_3} = 0.29*d_1*(u_1*sin(d_2) + cos(d_2)*u_2)\\
+	\dot{x_4} = 0.29*d_1*(-cos(d_2)*u_1 + u_2*sin(d_2))\\
+\end{gather*}
+
+\section{Input Output}
+\begin{gather*}
+	f = \left [ \begin{matrix}
+			L_f^2y_1\\
+			L_f^2y_2\\
+	\end{matrix}
+	\right ]
+	= \left [ \begin{matrix}
+			L_f^2x_1\\
+			L_f^2x_2\\
+	\end{matrix}
+	\right ]\\
+	= \left [ \begin{matrix}
+			L_fx_3\\
+			L_fx_4\\
+	\end{matrix}
+	\right ]
+	= \left [ \begin{matrix}
+			0\\
+			0\\
+	\end{matrix}
+	\right ]\\\\
+	G = \left [ \begin{matrix}
+			L_{g_1}x_3 & L_{g_2}x_3\\
+			L_{g_1}x_4 & L_{g_2}x_4\\
+	\end{matrix}
+	\right ]
+	= \left [ \begin{matrix}
+			0.29*d_1*sin(d_2) & 0.29*d_1*cos(d_2)\\
+			-0.29*d_1*cos(d_2) & 0.29*d_1*sin(d_2))\\
+	\end{matrix}
+	\right ]\\
+	= 0.29*d_1* \left [ \begin{matrix}
+			sin(d_2) & cos(d_2)\\
+			-cos(d_2) & sin(d_2))\\
+	\end{matrix}
+	\right ]
+\end{gather*}
+\end{document}

@@ -1,11 +1,11 @@
-$$$
+$$
 X = \left [ \begin{matrix}
 
 roll\\
 pitch\\
 yaw\\
 
-\dot{roll}\\
+\dot{oll}\\
 \dot{pitch}\\
 \dot{yaw}\\
 
@@ -49,7 +49,7 @@ u_3\\
 u_4
 \end{matrix}
 \right ]
-$$$
+$$
 
 
 

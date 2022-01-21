@@ -13,7 +13,7 @@ y\\
 z\\
 \dot{x}\\
 \dot{y}\\
-\dot{z}\\
+\dot{zzz }\\
 \end{matrix}
 \right ] = 
 $$
